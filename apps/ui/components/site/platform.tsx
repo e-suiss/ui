@@ -87,7 +87,7 @@ export function PlatformSwitcher({ platforms }: { platforms: Platform[] }) {
     <div
       role="tablist"
       aria-label="Platform"
-      className="flex gap-5 overflow-x-auto overflow-y-hidden border-b border-label/12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="flex gap-5 overflow-x-auto overflow-y-hidden border-b border-foreground/12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {platforms.map((platform) => (
         <button
@@ -99,8 +99,8 @@ export function PlatformSwitcher({ platforms }: { platforms: Platform[] }) {
           className={cn(
             "relative h-10 shrink-0 cursor-pointer text-[15px] font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
             active === platform
-              ? "text-label after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-label"
-              : "text-label/45 hover:text-label"
+              ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-foreground"
+              : "text-foreground/45 hover:text-foreground"
           )}
         >
           {PLATFORM_LABELS[platform]}

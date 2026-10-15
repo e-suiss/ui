@@ -115,7 +115,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <JsonLd data={structuredData} />
       </head>
-      <body className="flex min-h-svh flex-col bg-surface text-label antialiased">
+      <body className="flex min-h-svh flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
           <GlobalNav />
           <div className="flex flex-1 flex-col">{children}</div>

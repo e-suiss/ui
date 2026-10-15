@@ -30,8 +30,8 @@ function RollLink({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "group relative flex h-9 items-center overflow-hidden rounded-full px-4 text-sm leading-5 font-medium tracking-[-0.01em] text-label outline-none transition-colors duration-300 focus-visible:focus-ring",
-        active ? "bg-label text-surface" : "hover:bg-label/8"
+        "group relative flex h-9 items-center overflow-hidden rounded-full px-4 text-sm leading-5 font-medium tracking-[-0.01em] text-foreground outline-none transition-colors duration-300 focus-visible:focus-ring",
+        active ? "bg-foreground text-background" : "hover:bg-foreground/8"
       )}
     >
       <span className="relative block overflow-hidden">
@@ -96,16 +96,16 @@ export function GlobalNav() {
       style={
         home && !menuOpen
           ? ({
-              "--label": "oklch(0.2316 0.0038 286.09)",
-              "--surface": "oklch(1 0 0)",
+              "--foreground": "oklch(0.2316 0.0038 286.09)",
+              "--background": "oklch(1 0 0)",
             } as React.CSSProperties)
           : undefined
       }
       className={cn(
-        "z-50 text-label",
+        "z-50 text-foreground",
         home
           ? "absolute inset-x-0 top-0"
-          : "relative border-b border-label/10 bg-surface"
+          : "relative border-b border-foreground/10 bg-background"
       )}
     >
       <nav
@@ -133,19 +133,19 @@ export function GlobalNav() {
 
         <div className="ms-auto flex items-center gap-2">
           {!home && (
-            <Search className="size-10 rounded-full bg-label/5 text-label transition-colors duration-300 hover:bg-label/10" />
+            <Search className="size-10 rounded-full bg-foreground/5 text-foreground transition-colors duration-300 hover:bg-foreground/10" />
           )}
           <Anchor
             href={repository}
             className={cn(
-              "group hidden h-10 items-center gap-2 rounded-full bg-label ps-4.5 pe-1 text-sm font-medium text-surface outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex",
+              "group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex",
               home && "bg-[#1d1d1f] text-white"
             )}
           >
             {strings.github}
             <span
               className={cn(
-                "flex size-8 items-center justify-center rounded-full bg-surface text-label transition-transform duration-500 group-hover:rotate-45",
+                "flex size-8 items-center justify-center rounded-full bg-background text-foreground transition-transform duration-500 group-hover:rotate-45",
                 ease,
                 home && "bg-white text-[#1d1d1f]"
               )}
@@ -167,7 +167,7 @@ export function GlobalNav() {
               "h-10 rounded-full px-4.5 text-sm font-medium outline-none transition-colors duration-300 focus-visible:focus-ring lg:hidden",
               home && !menuOpen
                 ? "bg-white/35 backdrop-blur-2xl backdrop-saturate-150"
-                : "bg-label/5"
+                : "bg-foreground/5"
             )}
           >
             {menuOpen ? strings.close : strings.menu}
@@ -179,7 +179,7 @@ export function GlobalNav() {
         <div
           data-state={menuOpen ? "open" : "closed"}
           className={cn(
-            "fixed inset-0 flex flex-col overflow-y-auto bg-surface px-5 pt-24 pb-10 transition-opacity duration-500 md:px-10 lg:hidden",
+            "fixed inset-0 flex flex-col overflow-y-auto bg-background px-5 pt-24 pb-10 transition-opacity duration-500 md:px-10 lg:hidden",
             ease,
             menuOpen
               ? "opacity-100 starting:opacity-0"
@@ -194,7 +194,7 @@ export function GlobalNav() {
                   transitionDelay: `${(menuOpen ? index : sections.length - 1 - index) * 40}ms`,
                 }}
                 className={cn(
-                  "border-t border-label/15 transition-[opacity,translate] duration-500",
+                  "border-t border-foreground/15 transition-[opacity,translate] duration-500",
                   ease,
                   menuOpen
                     ? "translate-y-0 opacity-100 starting:translate-y-4 starting:opacity-0"
@@ -205,7 +205,7 @@ export function GlobalNav() {
                   href={section.path}
                   className="flex items-baseline gap-4 py-3 outline-none focus-visible:focus-ring"
                 >
-                  <span className="font-mono text-xs text-label-secondary">
+                  <span className="font-mono text-xs text-muted-foreground">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[clamp(2.75rem,12vw,5rem)] leading-[0.95] font-semibold tracking-tighter">
@@ -215,7 +215,7 @@ export function GlobalNav() {
               </li>
             ))}
           </ul>
-          <div className="mt-auto flex gap-6 border-t border-label/15 pt-6 text-[15px] font-medium">
+          <div className="mt-auto flex gap-6 border-t border-foreground/15 pt-6 text-[15px] font-medium">
             <Anchor href="/docs/installation">{strings.getStarted}</Anchor>
             <Anchor href={repository}>{strings.github}</Anchor>
           </div>

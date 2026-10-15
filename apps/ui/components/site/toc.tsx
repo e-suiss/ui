@@ -97,7 +97,7 @@ function BackToTop() {
       aria-hidden={visible ? undefined : true}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={cn(
-        "group flex h-8 w-fit items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-sm text-label outline-none transition-[opacity,translate,background-color] duration-500 hover:bg-label/15 focus-visible:focus-ring",
+        "group flex h-8 w-fit items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-sm text-foreground outline-none transition-[opacity,translate,background-color] duration-500 hover:bg-foreground/15 focus-visible:focus-ring",
         ease,
         visible
           ? "translate-y-0 opacity-100"
@@ -105,7 +105,7 @@ function BackToTop() {
       )}
     >
       {strings.backToTop}
-      <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
+      <span className="flex size-6 items-center justify-center rounded-full bg-foreground text-background">
         <ArrowUpIcon
           weight="bold"
           className={cn(
@@ -161,7 +161,7 @@ export function Toc({ items }: { items: TableOfContents }) {
   return (
     <div className="flex flex-col gap-8">
       <nav aria-label={strings.onThisPage} className="flex flex-col gap-5">
-        <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+        <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
           {strings.onThisPage}
         </p>
         <ol className="flex flex-col gap-1">
@@ -170,11 +170,13 @@ export function Toc({ items }: { items: TableOfContents }) {
               <a
                 href={section.item.url}
                 className={cn(
-                  "grid grid-cols-[2rem_1fr] items-baseline py-1.5 text-[14px] leading-[1.3] tracking-[-0.015em] transition-colors duration-300 hover:text-label",
-                  index === current ? "font-medium text-label" : "text-label/50"
+                  "grid grid-cols-[2rem_1fr] items-baseline py-1.5 text-[14px] leading-[1.3] tracking-[-0.015em] transition-colors duration-300 hover:text-foreground",
+                  index === current
+                    ? "font-medium text-foreground"
+                    : "text-foreground/50"
                 )}
               >
-                <span className="font-mono text-[11px] font-normal tracking-[0.02em] text-label-tertiary">
+                <span className="font-mono text-[11px] font-normal tracking-[0.02em] text-muted-foreground">
                   {pad(index + 1)}
                 </span>
                 <span>{section.item.title}</span>
@@ -186,11 +188,11 @@ export function Toc({ items }: { items: TableOfContents }) {
                       <a
                         href={child.url}
                         data-active={idOf(child) === active ? "" : undefined}
-                        className="group flex items-center gap-2.5 py-1 text-[13px] leading-[1.3] tracking-[-0.01em] text-label/50 transition-colors duration-300 hover:text-label data-active:text-label"
+                        className="group flex items-center gap-2.5 py-1 text-[13px] leading-[1.3] tracking-[-0.01em] text-foreground/50 transition-colors duration-300 hover:text-foreground data-active:text-foreground"
                       >
                         <span
                           className={cn(
-                            "h-[1.5px] w-2.5 shrink-0 rounded-full bg-label/40 transition-[width,background-color] duration-500 group-hover:bg-label/70 group-data-active:w-4 group-data-active:bg-label",
+                            "h-[1.5px] w-2.5 shrink-0 rounded-full bg-foreground/40 transition-[width,background-color] duration-500 group-hover:bg-foreground/70 group-data-active:w-4 group-data-active:bg-foreground",
                             ease
                           )}
                         />

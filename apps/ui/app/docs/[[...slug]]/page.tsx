@@ -43,14 +43,14 @@ function Neighbour({
     <Anchor
       href={href}
       className={cn(
-        "group flex items-center justify-between gap-6 border-t border-label/12 py-6 outline-none focus-visible:focus-ring md:py-8",
+        "group flex items-center justify-between gap-6 border-t border-foreground/12 py-6 outline-none focus-visible:focus-ring md:py-8",
         !next && "flex-row-reverse"
       )}
     >
       <span
         className={cn("flex flex-col gap-2", !next && "items-end text-end")}
       >
-        <span className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+        <span className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
           {next ? strings.next : strings.previous}
         </span>
         <span
@@ -65,7 +65,7 @@ function Neighbour({
       </span>
       <span
         className={cn(
-          "flex size-12 shrink-0 items-center justify-center rounded-full border border-label/15 transition-colors duration-500 group-hover:border-transparent group-hover:bg-label group-hover:text-surface",
+          "flex size-12 shrink-0 items-center justify-center rounded-full border border-foreground/15 transition-colors duration-500 group-hover:border-transparent group-hover:bg-foreground group-hover:text-background",
           ease
         )}
       >
@@ -162,9 +162,9 @@ async function DocPage(props: {
       >
         <header className="mb-14 flex flex-col gap-5 md:mb-16">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+            <p className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
               {strings.brand}
-              {kind && <span className="text-label-tertiary"> · {kind}</span>}
+              {kind && <span className="text-muted-foreground"> · {kind}</span>}
             </p>
             <PageActions markdownUrl={`/llms.mdx${page.url}`} />
           </div>
@@ -172,12 +172,12 @@ async function DocPage(props: {
             {page.data.title}
           </h1>
           {page.data.description && (
-            <p className="max-w-2xl text-[clamp(1.125rem,1.6vw,1.3125rem)] leading-[1.38] tracking-[-0.02em] text-pretty text-label-secondary">
+            <p className="max-w-2xl text-[clamp(1.125rem,1.6vw,1.3125rem)] leading-[1.38] tracking-[-0.02em] text-pretty text-muted-foreground">
               {page.data.description}
             </p>
           )}
           {summary && (
-            <p className="max-w-2xl text-[15px] leading-[1.5] tracking-[-0.01em] text-pretty text-label-tertiary">
+            <p className="max-w-2xl text-[15px] leading-[1.5] tracking-[-0.01em] text-pretty text-muted-foreground">
               {summary}
             </p>
           )}
@@ -193,7 +193,7 @@ async function DocPage(props: {
         {(previous || next) && (
           <nav
             aria-label="Pagination"
-            className="mt-24 border-b border-label/12"
+            className="mt-24 border-b border-foreground/12"
           >
             {next && (
               <Neighbour direction="next" href={next.url} name={next.name} />

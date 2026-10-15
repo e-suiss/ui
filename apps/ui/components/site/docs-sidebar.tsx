@@ -104,16 +104,18 @@ function Row({ page, group }: { page: PageTree.Item; group?: string }) {
         <span
           aria-hidden
           className={cn(
-            "absolute start-0 top-1/2 h-px -translate-y-1/2 bg-label transition-all duration-300 ease-out",
-            active ? "w-3 h-[2px]" : "w-0 group-hover/row:w-1.5 bg-label/30"
+            "absolute start-0 top-1/2 h-px -translate-y-1/2 bg-foreground transition-all duration-300 ease-out",
+            active
+              ? "w-3 h-[2px]"
+              : "w-0 group-hover/row:w-1.5 bg-foreground/30"
           )}
         />
         <span
           className={cn(
             "truncate text-[15px] tracking-[-0.015em] transition-[color,transform] duration-300 ease-out",
             active
-              ? "font-semibold text-label"
-              : "text-label/60 group-hover/row:translate-x-1 group-hover/row:text-label"
+              ? "font-semibold text-foreground"
+              : "text-foreground/60 group-hover/row:translate-x-1 group-hover/row:text-foreground"
           )}
         >
           {shortName(String(page.name), group)}
@@ -131,7 +133,7 @@ function shortName(name: string, group?: string) {
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="ps-5 pe-2 pt-5 pb-1.5 font-mono text-[11px] tracking-[0.04em] text-label-tertiary uppercase">
+    <div className="ps-5 pe-2 pt-5 pb-1.5 font-mono text-[11px] tracking-[0.04em] text-muted-foreground uppercase">
       {children}
     </div>
   )
@@ -161,7 +163,7 @@ function SectionSwitcher() {
           href={item.path}
           onClick={() => setOpenMobile(false)}
           aria-current={isActive(item.path) ? "page" : undefined}
-          className="flex h-8 items-center rounded-full bg-label/6 px-3.5 text-sm font-medium tracking-[-0.01em] text-label/70 outline-none aria-[current=page]:bg-label aria-[current=page]:text-surface focus-visible:focus-ring"
+          className="flex h-8 items-center rounded-full bg-foreground/6 px-3.5 text-sm font-medium tracking-[-0.01em] text-foreground/70 outline-none aria-[current=page]:bg-foreground aria-[current=page]:text-background focus-visible:focus-ring"
         >
           {item.label}
         </Anchor>
@@ -179,12 +181,12 @@ export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
   )
 
   return (
-    <Sidebar className="sticky top-16 h-[calc(100svh-(--spacing(16)))] border-e-0 [&>[data-slot=sidebar-inner]]:bg-surface">
+    <Sidebar className="sticky top-16 h-[calc(100svh-(--spacing(16)))] border-e-0 [&>[data-slot=sidebar-inner]]:bg-background">
       <SidebarContent className="px-3 py-8">
         <SectionSwitcher />
-        <div className="flex items-baseline justify-between ps-5 pe-2 pb-3 font-mono text-[11px] tracking-[0.04em] text-label uppercase">
+        <div className="flex items-baseline justify-between ps-5 pe-2 pb-3 font-mono text-[11px] tracking-[0.04em] text-foreground uppercase">
           <span>{section.title}</span>
-          <span className="text-label-tertiary tabular-nums">
+          <span className="text-muted-foreground tabular-nums">
             {pages.length}
           </span>
         </div>

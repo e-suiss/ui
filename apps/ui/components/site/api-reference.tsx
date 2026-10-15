@@ -18,18 +18,18 @@ function Tag({
   const name = node.href ? (
     <a
       href={node.href}
-      className="text-accent underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
+      className="text-primary underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
     >
       {node.name}
     </a>
   ) : (
-    <span className="text-label">{node.name}</span>
+    <span className="text-foreground">{node.name}</span>
   )
   return (
     <span>
-      <span className="text-label-tertiary">{closing ? "</" : "<"}</span>
+      <span className="text-muted-foreground">{closing ? "</" : "<"}</span>
       {name}
-      <span className="text-label-tertiary">{selfClosing ? " />" : ">"}</span>
+      <span className="text-muted-foreground">{selfClosing ? " />" : ">"}</span>
     </span>
   )
 }
@@ -52,7 +52,7 @@ function Lines({ nodes, depth }: { nodes: AnatomyNode[]; depth: number }) {
         <div className="relative">
           <span
             aria-hidden
-            className="absolute top-1 bottom-1 border-l border-label/10"
+            className="absolute top-1 bottom-1 border-l border-foreground/10"
             style={{ insetInlineStart: `${depth * 1.25 + 0.3}rem` }}
           />
           <Lines nodes={node.children} depth={depth + 1} />
@@ -115,9 +115,9 @@ export function Anatomy({ children }: { children: React.ReactNode }) {
   return (
     <figure
       data-not-prose
-      className="mt-6 overflow-hidden rounded-3xl bg-surface-secondary"
+      className="mt-6 overflow-hidden rounded-3xl bg-muted"
     >
-      <figcaption className="flex items-center justify-between px-6 pt-5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase">
+      <figcaption className="flex items-center justify-between px-6 pt-5 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
         <span>Anatomy</span>
         <span>{count(tree)} parts</span>
       </figcaption>
@@ -140,10 +140,10 @@ export function ApiPart({
   children: React.ReactNode
 }) {
   return (
-    <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-label/10 [&>:not([data-slot=table])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [&>[data-slot=table]]:mt-5 [&>[data-slot=table]]:rounded-none [&>[data-slot=table]]:border-t [&>[data-slot=table]]:border-label/10 [&>[data-slot=table]]:ring-0 [&>[data-slot=table]_:is(th,td):first-child]:ps-6! [&>[data-slot=table]_:is(th,td):last-child]:pe-6! [&>:last-child:not([data-slot=table])]:mb-6">
+    <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-foreground/10 [&>:not([data-slot=table])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [&>[data-slot=table]]:mt-5 [&>[data-slot=table]]:rounded-none [&>[data-slot=table]]:border-t [&>[data-slot=table]]:border-foreground/10 [&>[data-slot=table]]:ring-0 [&>[data-slot=table]_:is(th,td):first-child]:ps-6! [&>[data-slot=table]_:is(th,td):last-child]:pe-6! [&>:last-child:not([data-slot=table])]:mb-6">
       <span
         aria-hidden
-        className="absolute top-[1.9rem] right-6 font-mono text-[12px] leading-none text-label-tertiary"
+        className="absolute top-[1.9rem] right-6 font-mono text-[12px] leading-none text-muted-foreground"
       >
         {String(index).padStart(2, "0")}
       </span>

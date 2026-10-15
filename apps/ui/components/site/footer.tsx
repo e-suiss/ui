@@ -90,7 +90,7 @@ function Directory() {
     <div
       className={cn(
         frame,
-        "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-label/15 py-14 md:grid-cols-3"
+        "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-foreground/15 py-14 md:grid-cols-3"
       )}
     >
       {columns.map((column) => (
@@ -99,7 +99,7 @@ function Directory() {
           aria-label={column.title}
           className="flex flex-col gap-4"
         >
-          <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+          <p className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
             {column.title}
           </p>
           <ul className="flex flex-col gap-2.5">
@@ -107,7 +107,7 @@ function Directory() {
               <li key={link.href + link.label}>
                 <Anchor
                   href={link.href}
-                  className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label"
+                  className="text-[17px] tracking-[-0.02em] text-foreground/80 transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </Anchor>
@@ -125,7 +125,7 @@ function BottomBar() {
     <div
       className={cn(
         frame,
-        "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary"
+        "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-foreground/15 py-6 text-sm text-muted-foreground"
       )}
     >
       <span>{strings.copyright}</span>
@@ -134,10 +134,10 @@ function BottomBar() {
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="group flex h-8 items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-label outline-none transition-colors hover:bg-label/15 focus-visible:focus-ring"
+          className="group flex h-8 items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-foreground outline-none transition-colors hover:bg-foreground/15 focus-visible:focus-ring"
         >
           {strings.backToTop}
-          <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
+          <span className="flex size-6 items-center justify-center rounded-full bg-foreground text-background">
             <ArrowUpIcon
               weight="bold"
               className={cn(
@@ -157,7 +157,7 @@ export function Footer() {
   if (pathname !== "/") return null
 
   return (
-    <footer className="dark overflow-hidden bg-surface text-label">
+    <footer className="dark overflow-hidden bg-background text-foreground">
       <div
         className={cn(
           frame,
@@ -165,7 +165,7 @@ export function Footer() {
         )}
       >
         <div className="flex flex-col gap-6">
-          <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+          <p className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
             (04) Start
           </p>
           <h2 className="text-[clamp(3.5rem,8vw,8rem)] leading-[0.84] font-semibold tracking-[-0.065em]">
@@ -177,7 +177,7 @@ export function Footer() {
           {paths.map((path) => (
             <li
               key={path.href}
-              className="border-t border-label/15 last:border-b"
+              className="border-t border-foreground/15 last:border-b"
             >
               <Anchor
                 href={path.href}
@@ -193,7 +193,7 @@ export function Footer() {
                 </span>
                 <span
                   className={cn(
-                    "flex size-12 shrink-0 items-center justify-center rounded-full bg-label/10 transition-[rotate,background-color,color] duration-700 group-hover:rotate-45 group-hover:bg-label group-hover:text-surface",
+                    "flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground/10 transition-[rotate,background-color,color] duration-700 group-hover:rotate-45 group-hover:bg-foreground group-hover:text-background",
                     ease
                   )}
                 >

@@ -104,7 +104,7 @@ function CopyButton({ text }: { text: string }) {
         await navigator.clipboard.writeText(text)
         setCopied(true)
       }}
-      className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-label text-surface outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] hover:scale-105 focus-visible:focus-ring [--focus-ring-offset:3px]"
+      className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foreground text-background outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] hover:scale-105 focus-visible:focus-ring [--focus-ring-offset:3px]"
     >
       {copied ? (
         <CheckIcon className="size-4" />
@@ -119,10 +119,10 @@ function Line({ line }: { line: string }) {
   const [tool, ...rest] = line.split(" ")
   return (
     <span className="block">
-      <span className="text-label-tertiary select-none">$ </span>
-      <span className="text-label">{tool}</span>
+      <span className="text-muted-foreground select-none">$ </span>
+      <span className="text-foreground">{tool}</span>
       {rest.length > 0 && (
-        <span className="text-label/70"> {rest.join(" ")}</span>
+        <span className="text-foreground/70"> {rest.join(" ")}</span>
       )}
     </span>
   )
@@ -140,7 +140,7 @@ export function PackageCommand({ command }: { command: string }) {
   return (
     <figure
       data-slot="code-block"
-      className="mt-[1em] grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-3 border-y border-label/12 py-3 sm:grid-cols-[auto_1fr_auto]"
+      className="mt-[1em] grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-3 border-y border-foreground/12 py-3 sm:grid-cols-[auto_1fr_auto]"
     >
       <div
         role="radiogroup"
@@ -159,14 +159,14 @@ export function PackageCommand({ command }: { command: string }) {
               className={cn(
                 "flex cursor-pointer items-center gap-2 py-0.5 font-mono text-[11px] tracking-[0.02em] uppercase outline-none transition-colors duration-300 focus-visible:focus-ring",
                 active
-                  ? "text-label"
-                  : "text-label-tertiary hover:text-label-secondary"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-muted-foreground"
               )}
             >
               <span
                 className={cn(
                   "h-[1.5px] shrink-0 rounded-full transition-[width,background-color] duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)]",
-                  active ? "w-4 bg-label" : "w-2 bg-label/30"
+                  active ? "w-4 bg-foreground" : "w-2 bg-foreground/30"
                 )}
               />
               {item}
@@ -175,7 +175,7 @@ export function PackageCommand({ command }: { command: string }) {
         })}
       </div>
       <CodeScroll
-        className="col-span-2 row-start-2 self-stretch sm:col-span-1 sm:row-start-auto sm:border-s sm:border-label/10"
+        className="col-span-2 row-start-2 self-stretch sm:col-span-1 sm:row-start-auto sm:border-s sm:border-foreground/10"
         viewportClassName="h-full"
       >
         <pre className="h-full w-max min-w-full pb-2 font-mono text-[15px] leading-[1.6] tracking-[-0.03em] sm:ps-6 sm:text-[16px]">

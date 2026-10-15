@@ -34,12 +34,12 @@ function Tile({
   return (
     <li
       className={cn(
-        "relative flex min-h-44 flex-col overflow-hidden rounded-[28px] bg-surface-secondary p-6 md:min-h-60 md:p-7",
+        "relative flex min-h-44 flex-col overflow-hidden rounded-[28px] bg-muted p-6 md:min-h-60 md:p-7",
         className
       )}
     >
       {file && (
-        <p className="font-mono text-[11px] tracking-[0.02em] text-label-secondary">
+        <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground">
           {file}
         </p>
       )}
@@ -49,17 +49,32 @@ function Tile({
 }
 
 const pieces = [
-  { kind: "components", label: "Components", count: 67, color: "var(--blue)" },
-  { kind: "charts", label: "Charts", count: 70, color: "var(--purple)" },
-  { kind: "blocks", label: "Blocks", count: 54, color: "var(--orange)" },
-  { kind: "patterns", label: "Patterns", count: 19, color: "var(--green)" },
+  {
+    kind: "components",
+    label: "Components",
+    count: 67,
+    color: "var(--chart-1)",
+  },
+  {
+    kind: "charts",
+    label: "Charts",
+    count: 70,
+    color: "var(--color-purple-500)",
+  },
+  { kind: "blocks", label: "Blocks", count: 54, color: "var(--chart-4)" },
+  {
+    kind: "patterns",
+    label: "Patterns",
+    count: 19,
+    color: "var(--color-green-500)",
+  },
   {
     kind: "interactions",
     label: "Interactions",
     count: 11,
-    color: "var(--pink)",
+    color: "var(--color-pink-500)",
   },
-  { kind: "hooks", label: "Hooks", count: 4, color: "var(--teal)" },
+  { kind: "hooks", label: "Hooks", count: 4, color: "var(--chart-2)" },
 ].map((piece) => ({ ...piece, fill: `var(--color-${piece.kind})` }))
 
 const chartConfig: ChartConfig = {
@@ -83,7 +98,7 @@ function ChartTile() {
             <p className="text-[clamp(3.5rem,6vw,6rem)] leading-[0.85] font-semibold tracking-[-0.06em] tabular-nums">
               {total}
             </p>
-            <p className="mt-2 text-[17px] tracking-[-0.02em] text-label-secondary">
+            <p className="mt-2 text-[17px] tracking-[-0.02em] text-muted-foreground">
               pieces in the registry
             </p>
           </div>
@@ -98,7 +113,7 @@ function ChartTile() {
                   style={{ background: piece.color }}
                 />
                 <span className="flex-1">{piece.label}</span>
-                <span className="text-label-secondary tabular-nums">
+                <span className="text-muted-foreground tabular-nums">
                   {piece.count}
                 </span>
               </li>
@@ -163,7 +178,7 @@ function AppearanceTile() {
           <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">
             Light and dark.
           </p>
-          <p className="text-[15px] text-label-secondary">
+          <p className="text-[15px] text-muted-foreground">
             Every token has a dark twin. Try it: this switches the whole page.
           </p>
         </div>
@@ -218,7 +233,7 @@ export function Bento() {
 
       <Tile file="avatar.tsx" className="md:col-span-4">
         <div className="flex flex-1 items-center justify-center">
-          <AvatarGroup className="has-data-[size=xl]:-space-x-3 *:data-[slot=avatar]:ring-[3px] *:data-[slot=avatar]:ring-surface-secondary">
+          <AvatarGroup className="has-data-[size=xl]:-space-x-3 *:data-[slot=avatar]:ring-[3px] *:data-[slot=avatar]:ring-muted">
             {avatars.map((avatar) => (
               <Avatar key={avatar.initials} size="xl">
                 <AvatarFallback
@@ -251,7 +266,7 @@ export function Bento() {
         <div className="flex flex-1 flex-col justify-center gap-4">
           <div className="flex items-baseline justify-between text-[15px]">
             <span>Volume</span>
-            <span className="text-label-secondary tabular-nums">64%</span>
+            <span className="text-muted-foreground tabular-nums">64%</span>
           </div>
           <Slider defaultValue={[64]} aria-label="Volume" />
         </div>
@@ -262,7 +277,7 @@ export function Bento() {
           <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">
             Get release notes.
           </p>
-          <p className="text-[15px] text-label-secondary">
+          <p className="text-[15px] text-muted-foreground">
             One email when a new version ships.
           </p>
         </div>

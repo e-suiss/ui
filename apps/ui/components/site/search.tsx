@@ -134,7 +134,7 @@ function Result({
           <Highlight text={page.title} query={query} />
         </span>
         {page.description && (
-          <span className="truncate text-sm text-label-secondary group-data-selected/command-item:text-on-accent/75">
+          <span className="truncate text-sm text-muted-foreground group-data-selected/command-item:text-primary-foreground/75">
             {page.description}
           </span>
         )}
@@ -142,7 +142,7 @@ function Result({
       {showGroup && (
         <span
           data-slot="command-shortcut"
-          className="shrink-0 text-xs text-label-secondary max-sm:hidden group-data-selected/command-item:text-on-accent/75"
+          className="shrink-0 text-xs text-muted-foreground max-sm:hidden group-data-selected/command-item:text-primary-foreground/75"
         >
           {group}
         </span>
@@ -212,7 +212,7 @@ function Results({
 
 function Keys() {
   return (
-    <div className="flex h-11 items-center gap-5 border-t border-separator px-4 text-xs text-label-secondary">
+    <div className="flex h-11 items-center gap-5 border-t border-border px-4 text-xs text-muted-foreground">
       {[
         [["↑", "↓"], strings.searchNavigate],
         [["↵"], strings.searchOpen],
@@ -222,7 +222,7 @@ function Keys() {
           {(keys as string[]).map((key) => (
             <kbd
               key={key}
-              className="flex h-5 min-w-5 items-center justify-center rounded-md bg-label/8 px-1 font-sans text-[11px] font-medium text-label"
+              className="flex h-5 min-w-5 items-center justify-center rounded-md bg-foreground/8 px-1 font-sans text-[11px] font-medium text-foreground"
             >
               {key}
             </kbd>

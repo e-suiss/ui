@@ -32,7 +32,7 @@ export function LocalNav() {
   const isActive = useActiveSection()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-label/10 bg-surface/85 backdrop-blur-xl backdrop-saturate-180">
+    <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/85 backdrop-blur-xl backdrop-saturate-180">
       <nav
         aria-label={strings.documentation}
         className="mx-auto flex h-16 w-full max-w-[1680px] items-stretch gap-8 px-5 md:px-10"
@@ -41,7 +41,7 @@ export function LocalNav() {
           type="button"
           aria-label={strings.menu}
           onClick={toggleSidebar}
-          className="-ms-1.5 -me-5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-label/6 focus-visible:focus-ring md:hidden"
+          className="-ms-1.5 -me-5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-foreground/6 focus-visible:focus-ring md:hidden"
         >
           <SidebarIcon className="size-4.5" />
         </button>
@@ -62,8 +62,8 @@ export function LocalNav() {
                   className={cn(
                     "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:focus-ring",
                     active
-                      ? "text-label after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-label"
-                      : "text-label/55 hover:text-label"
+                      ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-foreground"
+                      : "text-foreground/55 hover:text-foreground"
                   )}
                 >
                   {section.label}
@@ -73,21 +73,21 @@ export function LocalNav() {
           })}
         </ul>
         <div className="ms-auto flex shrink-0 items-center gap-2">
-          <Search className="size-10 rounded-full bg-label/5 text-label transition-colors duration-300 hover:bg-label/10" />
+          <Search className="size-10 rounded-full bg-foreground/5 text-foreground transition-colors duration-300 hover:bg-foreground/10" />
           <Anchor
             href={repository}
-            className="hidden h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors hover:bg-label/5 focus-visible:focus-ring lg:flex"
+            className="hidden h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors hover:bg-foreground/5 focus-visible:focus-ring lg:flex"
           >
             {strings.github}
           </Anchor>
           <Anchor
             href="/docs/installation"
-            className="group hidden h-10 items-center gap-2 rounded-full bg-label ps-4.5 pe-1 text-sm font-medium text-surface outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex"
+            className="group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex"
           >
             {strings.getStarted}
             <span
               className={cn(
-                "flex size-8 items-center justify-center rounded-full bg-surface text-label transition-transform duration-500 group-hover:rotate-45",
+                "flex size-8 items-center justify-center rounded-full bg-background text-foreground transition-transform duration-500 group-hover:rotate-45",
                 ease
               )}
             >

@@ -64,7 +64,7 @@ function LiveFrame({
           window.location.origin
         )
       }
-      className="block w-full bg-surface"
+      className="block w-full bg-background"
       style={{
         aspectRatio:
           width && height
@@ -115,7 +115,7 @@ export function NativeExampleView({
     <div data-not-prose className="mt-[1.2em]">
       <div
         role="tablist"
-        className="flex gap-4 border-b sm:gap-5 border-label/12"
+        className="flex gap-4 border-b sm:gap-5 border-foreground/12"
       >
         {(id ? (["preview", "code"] as const) : (["code"] as const)).map(
           (item) => (
@@ -128,8 +128,8 @@ export function NativeExampleView({
               className={cn(
                 "relative h-9 cursor-pointer text-sm font-medium capitalize tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
                 tab === item
-                  ? "text-label after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-label"
-                  : "text-label/45 hover:text-label"
+                  ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-foreground"
+                  : "text-foreground/45 hover:text-foreground"
               )}
             >
               {item}
@@ -137,7 +137,7 @@ export function NativeExampleView({
           )
         )}
         {id && (
-          <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+          <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
             {showLive ? "Web" : "iOS"}
           </span>
         )}
@@ -146,9 +146,9 @@ export function NativeExampleView({
         <div hidden={tab !== "preview"}>
           <div
             data-slot="preview"
-            className="mt-[1.2em] flex flex-col items-center gap-4 overflow-hidden rounded-[24px] bg-surface-secondary px-6 py-10 ring-1 ring-label/10 md:py-14"
+            className="mt-[1.2em] flex flex-col items-center gap-4 overflow-hidden rounded-[24px] bg-muted px-6 py-10 ring-1 ring-foreground/10 md:py-14"
           >
-            <div className="w-full max-w-[360px] overflow-hidden rounded-[28px] shadow-[0_24px_60px_-28px_rgb(0_0_0/0.35)] ring-1 ring-label/10">
+            <div className="w-full max-w-[360px] overflow-hidden rounded-[28px] shadow-[0_24px_60px_-28px_rgb(0_0_0/0.35)] ring-1 ring-foreground/10">
               {showLive && live ? (
                 <LiveFrame live={live} id={id} width={width} height={height} />
               ) : (
@@ -191,7 +191,7 @@ export function NativeExampleView({
               )}
             </div>
             {showLive && (
-              <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+              <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
                 Web preview
               </p>
             )}

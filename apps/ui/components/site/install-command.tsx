@@ -21,13 +21,13 @@ export function InstallCommand({ command }: { command: string }) {
         await navigator.clipboard.writeText(command)
         setCopied(true)
       }}
-      className="group flex w-full items-center justify-between gap-6 border-y border-label/15 py-8 text-start outline-none focus-visible:focus-ring md:py-12"
+      className="group flex w-full items-center justify-between gap-6 border-y border-foreground/15 py-8 text-start outline-none focus-visible:focus-ring md:py-12"
     >
       <code className="min-w-0 font-mono text-[clamp(1.25rem,4.2vw,4rem)] leading-none tracking-[-0.04em] break-all">
-        <span className="text-label-tertiary">$ </span>
+        <span className="text-muted-foreground">$ </span>
         {command}
       </code>
-      <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-label text-surface transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:scale-110 md:size-20">
+      <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:scale-110 md:size-20">
         {copied ? (
           <CheckIcon className="size-6 md:size-7" />
         ) : (

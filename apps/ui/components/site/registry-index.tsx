@@ -39,15 +39,15 @@ export function RegistryIndex({ category }: { category: string }) {
       {[...groups].map(([group, members]) => (
         <section key={group || "all"} className="flex flex-col gap-4">
           {group && (
-            <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+            <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
               {group} · {String(members.length).padStart(2, "0")}
             </p>
           )}
-          <ul className="grid border-t border-label/12 sm:grid-cols-2">
+          <ul className="grid border-t border-foreground/12 sm:grid-cols-2">
             {members.map((item) => (
               <li
                 key={item.url}
-                className="border-b border-label/12 sm:odd:border-e sm:odd:pe-6 sm:even:ps-6"
+                className="border-b border-foreground/12 sm:odd:border-e sm:odd:pe-6 sm:even:ps-6"
               >
                 <Anchor
                   href={item.url}
@@ -56,7 +56,7 @@ export function RegistryIndex({ category }: { category: string }) {
                   <span className="transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:translate-x-1.5">
                     {item.title}
                   </span>
-                  <ArrowUpRightIcon className="size-3.5 text-label-tertiary transition-[rotate,color] duration-500 group-hover:rotate-45 group-hover:text-label" />
+                  <ArrowUpRightIcon className="size-3.5 text-muted-foreground transition-[rotate,color] duration-500 group-hover:rotate-45 group-hover:text-foreground" />
                 </Anchor>
               </li>
             ))}

@@ -99,18 +99,18 @@ export function CodeBlock({
     <figure
       data-slot="code-block"
       data-terminal={terminal ? "" : undefined}
-      className="group/code relative mt-[0.8em] overflow-hidden rounded-[20px] bg-surface-secondary"
+      className="group/code relative mt-[0.8em] overflow-hidden rounded-[20px] bg-muted"
     >
       <div
         className={cn(
           "flex h-11 items-center gap-3 pe-1.5",
           caption
-            ? "border-b border-label/10 ps-4"
-            : "absolute end-0 top-0 z-10 bg-linear-to-r from-transparent to-surface-secondary to-40% ps-8"
+            ? "border-b border-foreground/10 ps-4"
+            : "absolute end-0 top-0 z-10 bg-linear-to-r from-transparent to-muted to-40% ps-8"
         )}
       >
         {caption && (
-          <figcaption className="truncate font-mono text-[11px] tracking-[0.02em] text-label-secondary uppercase">
+          <figcaption className="truncate font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
             {caption}
           </figcaption>
         )}
@@ -118,7 +118,7 @@ export function CodeBlock({
           type="button"
           aria-label={copied ? strings.copied : strings.copy}
           onClick={copy}
-          className="ms-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-label-secondary outline-none transition-colors hover:bg-label/8 hover:text-label focus-visible:focus-ring"
+          className="ms-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted-foreground outline-none transition-colors hover:bg-foreground/8 hover:text-foreground focus-visible:focus-ring"
         >
           {copied ? (
             <CheckIcon className="size-3.5" />

@@ -8,11 +8,11 @@ import { strings } from "@/lib/strings"
 type CalloutType = "note" | "tip" | "important" | "warning" | "deprecated"
 
 const styles: Record<CalloutType, string> = {
-  note: "border-separator bg-surface-secondary",
-  tip: "border-teal/50 bg-teal/8",
-  important: "border-yellow/60 bg-yellow/10",
-  warning: "border-danger/50 bg-danger-surface",
-  deprecated: "border-orange/50 bg-orange/8",
+  note: "border-border bg-muted",
+  tip: "border-teal-500/50 bg-teal-500/8",
+  important: "border-yellow-500/60 bg-yellow-500/10",
+  warning: "border-destructive/50 bg-destructive/10 dark:bg-destructive/20",
+  deprecated: "border-orange-500/50 bg-orange-500/8",
 }
 
 export function Callout({

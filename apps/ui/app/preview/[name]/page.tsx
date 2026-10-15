@@ -8,11 +8,11 @@ import { framedPreviews } from "@/lib/previews"
 const scrollbars = `
 html, body { overflow: hidden; }
 @layer base {
-* { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--color-label) 22%, transparent) transparent; }
+* { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--color-foreground) 22%, transparent) transparent; }
 *::-webkit-scrollbar { width: 9px; height: 9px; }
 *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner { background: transparent; }
-*::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 9999px; background: color-mix(in oklab, var(--color-label) 22%, transparent) padding-box; }
-*::-webkit-scrollbar-thumb:hover { background-color: color-mix(in oklab, var(--color-label) 35%, transparent); }
+*::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 9999px; background: color-mix(in oklab, var(--color-foreground) 22%, transparent) padding-box; }
+*::-webkit-scrollbar-thumb:hover { background-color: color-mix(in oklab, var(--color-foreground) 35%, transparent); }
 }
 `
 

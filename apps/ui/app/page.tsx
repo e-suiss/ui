@@ -57,7 +57,7 @@ function Label({
   children: React.ReactNode
 }) {
   return (
-    <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+    <p className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
       ({index}) {children}
     </p>
   )
@@ -110,11 +110,11 @@ function Manifesto() {
       <Label index="01">Approach</Label>
       <p className="text-[clamp(2rem,4.4vw,4.5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance">
         Components you own.{" "}
-        <span className="text-label-tertiary">
+        <span className="text-muted-foreground">
           Copy them into your project and change anything you like.
         </span>{" "}
         For React, React Native, SwiftUI and Jetpack Compose.{" "}
-        <span className="text-label-tertiary">
+        <span className="text-muted-foreground">
           One design, accessible, themeable and open source.
         </span>
       </p>
@@ -136,7 +136,7 @@ function Interface() {
           <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
             Every piece is live.
           </h2>
-          <p className="max-w-md text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-label-secondary">
+          <p className="max-w-md text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-muted-foreground">
             No screenshots. These are the React components themselves, running
             on this page. Try them.
           </p>
@@ -149,7 +149,7 @@ function Interface() {
 
       <div className={frame}>
         <div className="mt-20 md:mt-28">
-          <p className="mb-6 font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+          <p className="mb-6 font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
             Start in one line
           </p>
           <InstallCommand command="npx @esuiss/ui@latest init" />
@@ -171,20 +171,20 @@ function Library() {
         <Label index="03">Library</Label>
         <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
           Five collections.{" "}
-          <span className="text-label-tertiary">One design language.</span>
+          <span className="text-muted-foreground">One design language.</span>
         </h2>
       </div>
       <ul className={cn(frame, "flex flex-col")}>
         {collections.map((collection, index) => (
           <li
             key={collection.href}
-            className="border-t border-label/15 last:border-b"
+            className="border-t border-foreground/15 last:border-b"
           >
             <Anchor
               href={collection.href}
               className="group grid items-center gap-4 py-8 outline-none focus-visible:focus-ring md:grid-cols-[1fr_3fr] md:gap-6 md:py-10"
             >
-              <span className="font-mono text-xs text-label-secondary">
+              <span className="font-mono text-xs text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span className="flex items-center justify-between gap-6">
@@ -197,13 +197,13 @@ function Library() {
                   >
                     {collection.title}
                   </span>
-                  <span className="max-w-xl text-[17px] leading-[1.4] tracking-[-0.02em] text-label-secondary">
+                  <span className="max-w-xl text-[17px] leading-[1.4] tracking-[-0.02em] text-muted-foreground">
                     {collection.description}
                   </span>
                 </span>
                 <span
                   className={cn(
-                    "hidden size-12 items-center justify-center rounded-full border border-label/15 transition-colors duration-500 group-hover:border-transparent group-hover:bg-label group-hover:text-surface md:flex",
+                    "hidden size-12 items-center justify-center rounded-full border border-foreground/15 transition-colors duration-500 group-hover:border-transparent group-hover:bg-foreground group-hover:text-background md:flex",
                     ease
                   )}
                 >

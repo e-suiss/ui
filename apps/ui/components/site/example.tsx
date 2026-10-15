@@ -25,7 +25,7 @@ export function Example({
 
   return (
     <div data-not-prose className="mt-[1.2em]">
-      <div role="tablist" className="flex gap-5 border-b border-label/12">
+      <div role="tablist" className="flex gap-5 border-b border-foreground/12">
         {(["preview", "code"] as const).map((item) => (
           <button
             key={item}
@@ -36,8 +36,8 @@ export function Example({
             className={cn(
               "relative h-9 cursor-pointer text-sm font-medium capitalize tracking-[-0.01em] outline-none transition-colors focus-visible:focus-ring",
               tab === item
-                ? "text-label after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-label"
-                : "text-label/45 hover:text-label"
+                ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-[1.5px] after:rounded-full after:bg-foreground"
+                : "text-foreground/45 hover:text-foreground"
             )}
           >
             {item}

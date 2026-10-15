@@ -18,7 +18,7 @@ class Boundary extends React.Component<
   render() {
     if (this.state.failed) {
       return (
-        <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+        <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
           Preview unavailable
         </p>
       )
@@ -94,7 +94,7 @@ function Frame({
         data-slot="preview"
         className={cn(
           "overflow-hidden rounded-[24px]",
-          "bg-surface ring-1 ring-label/10",
+          "bg-background ring-1 ring-foreground/10",
           !wide &&
             layout === "centered" &&
             "flex min-h-56 flex-wrap items-center justify-center gap-3 p-10",
@@ -112,7 +112,7 @@ function Loading({ wide }: { wide?: boolean }) {
     <div
       data-not-prose
       className={cn(
-        "mt-[1.2em] animate-pulse rounded-[24px] bg-surface-secondary",
+        "mt-[1.2em] animate-pulse rounded-[24px] bg-muted",
         wide ? "h-96" : "h-56"
       )}
     />

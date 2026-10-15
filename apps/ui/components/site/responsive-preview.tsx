@@ -19,7 +19,7 @@ const devices = [
 const MIN_SIZE = 30
 
 const dots =
-  "bg-[radial-gradient(var(--color-label)_1px,transparent_1px)] bg-size-[20px_20px] opacity-[0.12]"
+  "bg-[radial-gradient(var(--color-foreground)_1px,transparent_1px)] bg-size-[20px_20px] opacity-[0.12]"
 
 export function useResponsivePreview() {
   const [size, setSize] = React.useState(100)
@@ -39,9 +39,9 @@ export function ResponsiveToolbar({
   onSelect: () => void
 }) {
   const button =
-    "flex size-7 cursor-pointer items-center justify-center rounded-full text-label/60 outline-none transition-colors hover:text-label focus-visible:focus-ring"
+    "flex size-7 cursor-pointer items-center justify-center rounded-full text-foreground/60 outline-none transition-colors hover:text-foreground focus-visible:focus-ring"
   return (
-    <div className="ms-auto hidden items-center gap-0.5 self-center rounded-full bg-label/5 p-0.5 lg:flex">
+    <div className="ms-auto hidden items-center gap-0.5 self-center rounded-full bg-foreground/5 p-0.5 lg:flex">
       {devices.map(({ size, label, Icon }) => (
         <button
           key={size}
@@ -54,13 +54,14 @@ export function ResponsiveToolbar({
           }}
           className={cn(
             button,
-            state.size === size && "bg-label text-surface hover:text-surface"
+            state.size === size &&
+              "bg-foreground text-background hover:text-background"
           )}
         >
           <Icon className="size-4" />
         </button>
       ))}
-      <span aria-hidden className="mx-1 h-4 w-px bg-label/15" />
+      <span aria-hidden className="mx-1 h-4 w-px bg-foreground/15" />
       <a
         href={src}
         target="_blank"
@@ -118,7 +119,7 @@ export function ResponsivePreview({
       <div ref={stage} className="relative pe-3" style={{ height }}>
         <div
           aria-hidden
-          className="absolute inset-y-0 start-0 end-3 overflow-hidden rounded-[24px] bg-label/[0.03]"
+          className="absolute inset-y-0 start-0 end-3 overflow-hidden rounded-[24px] bg-foreground/[0.03]"
         >
           <div className={cn("absolute inset-0", dots)} />
         </div>
@@ -130,14 +131,14 @@ export function ResponsivePreview({
           )}
           style={{ width: `calc(${state.size}% + 0.75rem)` }}
         >
-          <div className="h-full min-w-0 flex-1 overflow-hidden rounded-[24px] bg-surface ring-1 ring-label/10">
+          <div className="h-full min-w-0 flex-1 overflow-hidden rounded-[24px] bg-background ring-1 ring-foreground/10">
             <iframe
               key={state.key}
               src={src}
               title="Preview"
               loading="lazy"
               className={cn(
-                "size-full border-0 bg-surface",
+                "size-full border-0 bg-background",
                 dragging && "pointer-events-none"
               )}
             />
@@ -149,7 +150,7 @@ export function ResponsivePreview({
             onDoubleClick={() => state.setSize(100)}
             className="group/handle relative hidden w-3 shrink-0 cursor-ew-resize outline-none focus-visible:focus-ring lg:block"
           >
-            <span className="absolute top-1/2 right-0 h-8 w-1.5 -translate-y-1/2 rounded-full bg-label/20 transition-all group-hover/handle:h-10 group-hover/handle:bg-label/35" />
+            <span className="absolute top-1/2 right-0 h-8 w-1.5 -translate-y-1/2 rounded-full bg-foreground/20 transition-all group-hover/handle:h-10 group-hover/handle:bg-foreground/35" />
           </button>
         </div>
       </div>

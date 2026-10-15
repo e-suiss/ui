@@ -31,13 +31,13 @@ export function CodeScroll({
         orientation="horizontal"
         className={cn(bar, "h-2.5 flex-col px-3 pb-1")}
       >
-        <ScrollArea.Thumb className="flex-1 rounded-full bg-label/30" />
+        <ScrollArea.Thumb className="flex-1 rounded-full bg-foreground/30" />
       </ScrollArea.Scrollbar>
       <ScrollArea.Scrollbar
         orientation="vertical"
         className={cn(bar, "w-2.5 py-3 pe-1")}
       >
-        <ScrollArea.Thumb className="flex-1 rounded-full bg-label/30" />
+        <ScrollArea.Thumb className="flex-1 rounded-full bg-foreground/30" />
       </ScrollArea.Scrollbar>
     </ScrollArea.Root>
   )

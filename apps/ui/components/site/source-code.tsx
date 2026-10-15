@@ -48,7 +48,7 @@ export function SourceCode({
       {long && (
         <div
           className={cn(
-            "absolute inset-x-0 bottom-0 flex h-32 items-end justify-center rounded-b-[20px] bg-linear-to-t from-surface-secondary via-surface-secondary/85 to-transparent pb-5 transition-opacity duration-500",
+            "absolute inset-x-0 bottom-0 flex h-32 items-end justify-center rounded-b-[20px] bg-linear-to-t from-muted via-muted/85 to-transparent pb-5 transition-opacity duration-500",
             !folded && "pointer-events-none opacity-0"
           )}
         >
@@ -59,7 +59,7 @@ export function SourceCode({
               setOpen(true)
               onExpand?.()
             }}
-            className="h-8 cursor-pointer rounded-full bg-label px-4 text-[13px] font-medium text-surface outline-none focus-visible:focus-ring"
+            className="h-8 cursor-pointer rounded-full bg-foreground px-4 text-[13px] font-medium text-background outline-none focus-visible:focus-ring"
           >
             Expand
           </button>
