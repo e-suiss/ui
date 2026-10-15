@@ -139,7 +139,9 @@ test("Disabled", async () => {
   })
 
   await step("greys out the slots without filling the row", async () => {
-    await expect(canvasElement.querySelector(".cn-input-otp")).toHaveStyle({
+    await expect(
+      canvasElement.querySelector("[data-input-otp-container]")
+    ).toHaveStyle({
       backgroundColor: "rgba(0, 0, 0, 0)",
     })
     const separator = canvasElement.querySelector<HTMLElement>(

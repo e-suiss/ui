@@ -168,7 +168,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 ## Notes
 
 - Styling hooks: `data-slot` values `input-otp`, `input-otp-group`, `input-otp-slot` and `input-otp-separator`. The active slot gets `data-active="true"` and a `primary` border.
-- The container has the `cn-input-otp` class, which slots use to react to the input's invalid and disabled states.
+- Slots react to the invalid and disabled states of the input through the `data-input-otp-container` attribute on its container.
 - The blinking caret uses the `animate-caret-blink` animation.
 - Uses the `secondary`, `primary`, `destructive` and `muted-foreground` colors, and `opacity-50` when disabled.
 
