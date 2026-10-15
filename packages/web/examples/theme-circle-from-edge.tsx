@@ -25,12 +25,12 @@ function ExampleTheme({ children }: { children?: React.ReactNode }) {
 export default function ThemeCircleFromEdge() {
   return (
     <ExampleTheme>
-      <div className="flex min-h-svh flex-col items-center justify-center gap-8 bg-surface px-6 py-16 text-center text-label">
+      <div className="flex min-h-svh flex-col items-center justify-center gap-8 bg-background px-6 py-16 text-center text-foreground">
         <div className="flex max-w-md flex-col gap-3">
           <h1 className="text-4xl font-semibold tracking-tight">
             Light and dark.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             Every surface, label and accent follows the theme tokens, so the
             whole page changes at once.
           </p>

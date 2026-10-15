@@ -13,7 +13,7 @@ function Backdrop() {
         (card) => (
           <div
             key={card}
-            className="flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label"
+            className="flex aspect-[4/3] items-end rounded-2xl bg-primary/15 p-4 text-sm font-semibold text-primary odd:bg-secondary odd:text-foreground"
           >
             {card}
           </div>
@@ -26,7 +26,7 @@ function Backdrop() {
 export default function TabBarDisabledItem() {
   return (
     <div className="h-[32rem] transform-gpu overflow-hidden">
-      <div className="h-full min-h-svh bg-surface">
+      <div className="h-full min-h-svh bg-background">
         <Backdrop />
         <TabBar aria-label="Main">
           <TabBarList>

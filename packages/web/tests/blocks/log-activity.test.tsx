@@ -26,7 +26,7 @@ function days() {
 
 function targets() {
   return Array.from(
-    document.querySelectorAll<HTMLElement>("li .text-xs.text-label-secondary"),
+    document.querySelectorAll<HTMLElement>("li .text-xs.text-muted-foreground"),
     (node) => node.textContent
   )
 }

@@ -289,7 +289,7 @@ function SwipeActionsContent({
     <div
       data-slot="swipe-actions-content"
       className={cn(
-        "relative z-10 translate-x-(--swipe-actions-offset) touch-pan-y bg-surface select-none group-data-animating/swipe-actions:transition-transform group-data-animating/swipe-actions:duration-300 group-data-animating/swipe-actions:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
+        "relative z-10 translate-x-(--swipe-actions-offset) touch-pan-y bg-background select-none group-data-animating/swipe-actions:transition-transform group-data-animating/swipe-actions:duration-300 group-data-animating/swipe-actions:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
         className
       )}
       onPointerDown={onContentPointerDown}
@@ -318,17 +318,17 @@ function SwipeActionsActions({
 }
 
 const swipeActionVariants = cva(
-  "flex min-w-18 flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden px-3 text-center text-xs font-medium wrap-break-word text-on-accent outline-none transition-[flex-grow,opacity] duration-200 focus-visible:-outline-offset-4 focus-visible:focus-ring [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
+  "flex min-w-18 flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden px-3 text-center text-xs font-medium wrap-break-word text-primary-foreground outline-none transition-[flex-grow,opacity] duration-200 focus-visible:-outline-offset-4 focus-visible:focus-ring [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
   {
     variants: {
       variant: {
-        default: "bg-accent",
+        default: "bg-primary",
         destructive:
-          "bg-danger dark:bg-[color-mix(in_oklab,var(--danger),var(--surface)_30%)]",
+          "bg-destructive dark:bg-[color-mix(in_oklab,var(--destructive),var(--background)_30%)]",
         archive:
-          "bg-[color-mix(in_oklab,var(--purple),var(--label)_15%)] dark:bg-[color-mix(in_oklab,var(--purple),var(--surface)_30%)]",
+          "bg-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_15%)] dark:bg-[color-mix(in_oklab,var(--color-purple-500),var(--background)_30%)]",
         neutral:
-          "bg-[color-mix(in_oklab,var(--gray),var(--label)_35%)] dark:bg-[color-mix(in_oklab,var(--gray),var(--surface)_40%)]",
+          "bg-[color-mix(in_oklab,var(--color-zinc-500),var(--foreground)_35%)] dark:bg-[color-mix(in_oklab,var(--color-zinc-500),var(--background)_40%)]",
       },
     },
     defaultVariants: {

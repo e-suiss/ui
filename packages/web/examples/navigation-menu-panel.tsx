@@ -73,7 +73,7 @@ function PanelExample() {
     <div className="w-full">
       <div
         ref={ref}
-        className="sticky top-0 z-50 flex w-full justify-center bg-surface/80 backdrop-blur-xl transition-colors duration-300 has-data-popup-open:bg-surface dark:bg-surface-secondary/80 dark:has-data-popup-open:bg-surface-secondary"
+        className="sticky top-0 z-50 flex w-full justify-center bg-background/80 backdrop-blur-xl transition-colors duration-300 has-data-popup-open:bg-background dark:bg-muted/80 dark:has-data-popup-open:bg-muted"
       >
         <NavigationMenu layout="panel" anchor={ref}>
           <NavigationMenuList>
@@ -120,11 +120,11 @@ function PanelExample() {
       </div>
       <div className="mx-auto flex max-w-245 flex-col items-center gap-3 px-6 py-24 text-center">
         <h2 className="text-5xl font-semibold">Hestia POS</h2>
-        <p className="text-xl text-label-secondary">
+        <p className="text-xl text-muted-foreground">
           Orders, kitchen and tables in one place.
         </p>
         <div className="mt-8 grid w-full grid-cols-3 gap-4">
-          {["bg-blue", "bg-orange", "bg-green"].map((tint) => (
+          {["bg-blue-500", "bg-orange-500", "bg-green-500"].map((tint) => (
             <div key={tint} className={`aspect-4/3 rounded-3xl ${tint}`} />
           ))}
         </div>

@@ -168,7 +168,7 @@ function TipCard({
           role="note"
           data-slot="tip-card"
           className={cn(
-            "relative flex items-start gap-3 rounded-2xl bg-surface-secondary p-4 pe-12",
+            "relative flex items-start gap-3 rounded-2xl bg-muted p-4 pe-12",
             className
           )}
           {...props}
@@ -231,13 +231,13 @@ function TipPopover({
             initialFocus={false}
             finalFocus={false}
             className={cn(
-              "relative flex w-[min(20rem,calc(100vw-2rem))] origin-(--transform-origin) items-start gap-3 rounded-2xl bg-surface-raised p-4 pe-12 text-label [filter:drop-shadow(0_0_0.5px_var(--color-separator-strong))_drop-shadow(0_12px_24px_color-mix(in_oklab,var(--color-label)_14%,transparent))] dark:[filter:drop-shadow(0_0_0.5px_var(--color-separator))_drop-shadow(0_12px_24px_rgb(0_0_0/0.4))] outline-none transition-[opacity,scale] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 motion-reduce:transition-none",
+              "relative flex w-[min(20rem,calc(100vw-2rem))] origin-(--transform-origin) items-start gap-3 rounded-2xl bg-popover p-4 pe-12 text-popover-foreground [filter:drop-shadow(0_0_0.5px_var(--color-input))_drop-shadow(0_12px_24px_color-mix(in_oklab,var(--color-foreground)_14%,transparent))] dark:[filter:drop-shadow(0_0_0.5px_var(--color-border))_drop-shadow(0_12px_24px_rgb(0_0_0/0.4))] outline-none transition-[opacity,scale] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 motion-reduce:transition-none",
               className
             )}
             {...props}
           >
             <PopoverPrimitive.Arrow className="size-4 data-[side=bottom]:-top-2 data-[side=left]:-right-2 data-[side=right]:-left-2 data-[side=top]:-bottom-2">
-              <span className="block size-3 translate-x-0.5 translate-y-0.5 rotate-45 rounded-xs bg-surface-raised" />
+              <span className="block size-3 translate-x-0.5 translate-y-0.5 rotate-45 rounded-xs bg-popover" />
             </PopoverPrimitive.Arrow>
             {children}
           </PopoverPrimitive.Popup>
@@ -253,7 +253,7 @@ function TipIcon({ className, ...props }: React.ComponentProps<"span">) {
       aria-hidden
       data-slot="tip-icon"
       className={cn(
-        "flex shrink-0 text-accent [&_svg:not([class*='size-'])]:size-8",
+        "flex shrink-0 text-primary [&_svg:not([class*='size-'])]:size-8",
         className
       )}
       {...props}
@@ -291,7 +291,7 @@ function TipDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       id={descriptionId}
       data-slot="tip-description"
-      className={cn("text-sm text-label-secondary", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -310,7 +310,7 @@ function TipClose({
       aria-label="Dismiss tip"
       onClick={dismiss}
       className={cn(
-        "absolute inset-e-2 top-2 flex size-8 items-center justify-center rounded-full text-label-secondary outline-none after:absolute after:-inset-1.5 after:content-[''] hover:bg-item-hover hover:text-label focus-visible:focus-ring",
+        "absolute inset-e-2 top-2 flex size-8 items-center justify-center rounded-full text-muted-foreground outline-none after:absolute after:-inset-1.5 after:content-[''] hover:bg-accent hover:text-accent-foreground focus-visible:focus-ring",
         className
       )}
       {...props}

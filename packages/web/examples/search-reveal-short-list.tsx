@@ -43,11 +43,11 @@ function NotesExample({ count }: { count: number }) {
         <SearchRevealField value={query} onValueChange={setQuery} />
         <SearchRevealContent>
           {notes.length === 0 ? (
-            <p className="px-4 py-16 text-center text-sm text-label-secondary">
+            <p className="px-4 py-16 text-center text-sm text-muted-foreground">
               No results for “{query}”
             </p>
           ) : (
-            <ul className="mx-4 overflow-hidden rounded-xl bg-surface-secondary">
+            <ul className="mx-4 overflow-hidden rounded-xl bg-muted">
               {notes.map((note) => (
                 <li key={note.id} className="not-first:border-t">
                   <button
@@ -55,7 +55,7 @@ function NotesExample({ count }: { count: number }) {
                     className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]"
                   >
                     <span className="truncate font-semibold">{note.title}</span>
-                    <span className="truncate text-sm text-label-secondary">
+                    <span className="truncate text-sm text-muted-foreground">
                       {note.preview}
                     </span>
                   </button>
@@ -63,7 +63,7 @@ function NotesExample({ count }: { count: number }) {
               ))}
             </ul>
           )}
-          <p className="px-4 py-3 text-center text-xs text-label-secondary">
+          <p className="px-4 py-3 text-center text-xs text-muted-foreground">
             {notes.length} {notes.length === 1 ? "note" : "notes"}
           </p>
         </SearchRevealContent>

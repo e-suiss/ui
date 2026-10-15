@@ -9,15 +9,27 @@ import {
 } from "@/components/ui/card"
 
 const rings = [
-  { key: "move", label: "Move", value: 720, goal: 600, color: "var(--red)" },
+  {
+    key: "move",
+    label: "Move",
+    value: 720,
+    goal: 600,
+    color: "var(--color-red-500)",
+  },
   {
     key: "exercise",
     label: "Exercise",
     value: 62,
     goal: 30,
-    color: "var(--green)",
+    color: "var(--color-green-500)",
   },
-  { key: "stand", label: "Stand", value: 12, goal: 12, color: "var(--cyan)" },
+  {
+    key: "stand",
+    label: "Stand",
+    value: 12,
+    goal: 12,
+    color: "var(--color-cyan-500)",
+  },
 ]
 
 const SIZE = 200

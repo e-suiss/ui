@@ -26,7 +26,7 @@ export function EmptySearch() {
   return (
     <section className="px-5 py-10 md:px-12">
       <div className="mx-auto flex max-w-170 flex-col gap-6.5">
-        <div className="flex h-13 items-center gap-2.5 border-b border-separator-strong text-label-secondary focus-within:border-accent">
+        <div className="flex h-13 items-center gap-2.5 border-b border-input text-muted-foreground focus-within:border-primary">
           <MagnifyingGlassIcon className="size-5 shrink-0" />
           <input
             ref={inputRef}
@@ -35,7 +35,7 @@ export function EmptySearch() {
             onChange={(event) => setQuery(event.target.value)}
             aria-label="Search suiss"
             placeholder="Search suiss"
-            className="min-w-0 flex-1 bg-transparent text-2xl font-semibold text-label outline-none placeholder:text-label-tertiary [&::-webkit-search-cancel-button]:hidden"
+            className="min-w-0 flex-1 bg-transparent text-2xl font-semibold text-foreground outline-none placeholder:text-muted-foreground [&::-webkit-search-cancel-button]:hidden"
           />
           {query && (
             <Button
@@ -45,7 +45,7 @@ export function EmptySearch() {
                 setQuery("")
                 inputRef.current?.focus()
               }}
-              className="relative size-5.5 bg-label-tertiary text-surface after:absolute after:-inset-2.5 after:content-[''] hover:bg-label-secondary"
+              className="relative size-5.5 bg-muted-foreground text-background after:absolute after:-inset-2.5 after:content-[''] hover:bg-muted-foreground"
             >
               <XIcon weight="bold" className="size-2.75" />
             </Button>
@@ -53,7 +53,7 @@ export function EmptySearch() {
         </div>
         {matches.length > 0 ? (
           <nav aria-label="Suggested" className="flex flex-col gap-1">
-            <p className="mb-1.5 text-xs text-label-secondary">Suggested</p>
+            <p className="mb-1.5 text-xs text-muted-foreground">Suggested</p>
             {matches.map((item) => (
               <button
                 key={item}
@@ -61,7 +61,7 @@ export function EmptySearch() {
                 onClick={() => setQuery(item)}
                 className="flex items-center gap-2.5 rounded-md py-1.5 text-start text-lg outline-none hover:underline focus-visible:focus-ring"
               >
-                <MagnifyingGlassIcon className="size-3.5 text-label-tertiary" />
+                <MagnifyingGlassIcon className="size-3.5 text-muted-foreground" />
                 {item}
               </button>
             ))}

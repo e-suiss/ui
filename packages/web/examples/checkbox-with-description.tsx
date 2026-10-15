@@ -12,7 +12,7 @@ export default function CheckboxWithDescription() {
       />
       <div className="grid gap-1.5">
         <Label htmlFor="marketing">Product updates</Label>
-        <p id="marketing-description" className="text-label-secondary text-sm">
+        <p id="marketing-description" className="text-muted-foreground text-sm">
           Get an email when we release new features.
         </p>
       </div>

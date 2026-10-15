@@ -13,7 +13,7 @@ const booked = new Set(["19:30", "20:00", "20:30"])
 
 export default function WheelPickerDisabledItems() {
   return (
-    <div className="w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10">
+    <div className="w-80 rounded-2xl bg-card p-4 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10">
       <WheelPicker>
         <WheelPickerColumn aria-label="Reservation time" defaultValue="19:00">
           {slots.map((slot) => (

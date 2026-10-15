@@ -26,8 +26,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  thisMonth: { label: "This month", color: "var(--green)" },
-  lastMonth: { label: "Last month", color: "var(--gray)" },
+  thisMonth: { label: "This month", color: "var(--color-green-500)" },
+  lastMonth: { label: "Last month", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 export function RadarChartGridCircle() {
@@ -47,7 +47,7 @@ export function RadarChartGridCircle() {
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <PolarGrid gridType="circle" stroke="var(--separator)" />
+            <PolarGrid gridType="circle" stroke="var(--border)" />
             <PolarAngleAxis dataKey="skill" />
             <Radar
               dataKey="thisMonth"

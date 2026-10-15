@@ -28,11 +28,11 @@ const chartData = [
 
 const chartConfig = {
   users: { label: "Users" },
-  phone: { label: "Phone", color: "var(--blue)" },
-  laptop: { label: "Laptop", color: "var(--teal)" },
-  tablet: { label: "Tablet", color: "var(--indigo)" },
-  watch: { label: "Watch", color: "var(--orange)" },
-  other: { label: "Other", color: "var(--gray)" },
+  phone: { label: "Phone", color: "var(--chart-1)" },
+  laptop: { label: "Laptop", color: "var(--chart-2)" },
+  tablet: { label: "Tablet", color: "var(--chart-3)" },
+  watch: { label: "Watch", color: "var(--chart-4)" },
+  other: { label: "Other", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 export function PieChartLegend() {

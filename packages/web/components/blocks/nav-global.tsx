@@ -113,7 +113,7 @@ const items: NavbarItem[] = [
 
 export function NavGlobal() {
   return (
-    <div className="relative min-h-140 bg-surface-secondary">
+    <div className="relative min-h-140 bg-muted">
       <Navbar
         layout="panel"
         items={items}
@@ -135,7 +135,7 @@ export function NavGlobal() {
             </Button>
           </>
         }
-        className="sticky top-0 h-11 bg-surface/80 backdrop-blur-xl backdrop-saturate-180 transition-colors duration-300 has-data-popup-open:bg-surface dark:has-data-popup-open:bg-surface-secondary md:px-[max(--spacing(5),calc((100%-62.5rem)/2))] [&_[data-slot=navigation-menu-link]]:h-11 [&_[data-slot=navigation-menu-link]]:rounded-sm [&_[data-slot=navigation-menu-link]]:px-2 [&_[data-slot=navigation-menu-link]]:text-xs [&_[data-slot=navigation-menu-link]]:text-label/80 [&_[data-slot=navigation-menu-link]]:hover:bg-transparent [&_[data-slot=navigation-menu-link]]:hover:text-label [&_[data-slot=navigation-menu-trigger]]:h-11 [&_[data-slot=navigation-menu-trigger]]:rounded-sm [&_[data-slot=navigation-menu-trigger]]:px-2 [&_[data-slot=navigation-menu-trigger]]:text-xs [&_[data-slot=navigation-menu-trigger]]:text-label/80 [&_[data-slot=navigation-menu-trigger]]:hover:bg-transparent [&_[data-slot=navigation-menu-trigger]]:hover:text-label [&_[data-slot=navigation-menu-trigger]]:data-popup-open:bg-transparent [&_[data-slot=navigation-menu-trigger]]:data-popup-open:text-label [&_[data-slot=navigation-menu-trigger]>svg]:hidden"
+        className="sticky top-0 h-11 bg-background/80 backdrop-blur-xl backdrop-saturate-180 transition-colors duration-300 has-data-popup-open:bg-background dark:has-data-popup-open:bg-muted md:px-[max(--spacing(5),calc((100%-62.5rem)/2))] [&_[data-slot=navigation-menu-link]]:h-11 [&_[data-slot=navigation-menu-link]]:rounded-sm [&_[data-slot=navigation-menu-link]]:px-2 [&_[data-slot=navigation-menu-link]]:text-xs [&_[data-slot=navigation-menu-link]]:text-foreground/80 [&_[data-slot=navigation-menu-link]]:hover:bg-transparent [&_[data-slot=navigation-menu-link]]:hover:text-foreground [&_[data-slot=navigation-menu-trigger]]:h-11 [&_[data-slot=navigation-menu-trigger]]:rounded-sm [&_[data-slot=navigation-menu-trigger]]:px-2 [&_[data-slot=navigation-menu-trigger]]:text-xs [&_[data-slot=navigation-menu-trigger]]:text-foreground/80 [&_[data-slot=navigation-menu-trigger]]:hover:bg-transparent [&_[data-slot=navigation-menu-trigger]]:hover:text-foreground [&_[data-slot=navigation-menu-trigger]]:data-popup-open:bg-transparent [&_[data-slot=navigation-menu-trigger]]:data-popup-open:text-foreground [&_[data-slot=navigation-menu-trigger]>svg]:hidden"
       />
       <section className="flex flex-col items-center px-6 pt-10 pb-12 text-center">
         <h1 className="text-5xl font-semibold tracking-tight text-balance">
@@ -145,7 +145,7 @@ export function NavGlobal() {
         <img
           src={image}
           alt="A laptop on a wooden desk"
-          className="mt-7 aspect-[1.7] w-full max-w-160 rounded-[1.125rem] bg-control object-cover md:w-[70%]"
+          className="mt-7 aspect-[1.7] w-full max-w-160 rounded-[1.125rem] bg-secondary object-cover md:w-[70%]"
         />
       </section>
     </div>

@@ -36,9 +36,9 @@ const chartData = [
 }))
 
 const chartConfig = {
-  phones: { label: "Phones", color: "var(--blue)" },
-  laptops: { label: "Laptops", color: "var(--teal)" },
-  services: { label: "Services", color: "var(--purple)" },
+  phones: { label: "Phones", color: "var(--chart-1)" },
+  laptops: { label: "Laptops", color: "var(--chart-2)" },
+  services: { label: "Services", color: "var(--color-purple-500)" },
 } satisfies ChartConfig
 
 const INDICATORS: Record<Indicator, string> = {
@@ -87,7 +87,7 @@ export function TooltipChartInteractive() {
     <Card variant="filled" size="sm" className="[--card-spacing:--spacing(5)]">
       <CardHeader className="gap-0.5">
         <p className="text-lg font-semibold">Tooltip settings</p>
-        <p className="text-sm text-label-secondary">
+        <p className="text-sm text-muted-foreground">
           Quarterly revenue · billions · sample data. Change the settings and
           point at the bars.
         </p>
@@ -95,7 +95,7 @@ export function TooltipChartInteractive() {
       <CardContent className="flex flex-col gap-5">
         <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
           <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold text-label-secondary">
+            <span className="text-xs font-semibold text-muted-foreground">
               Indicator
             </span>
             <ToggleGroup
@@ -114,7 +114,7 @@ export function TooltipChartInteractive() {
             </ToggleGroup>
           </div>
           <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold text-label-secondary">
+            <span className="text-xs font-semibold text-muted-foreground">
               Trigger
             </span>
             <ToggleGroup

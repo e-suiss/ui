@@ -79,7 +79,7 @@ function NavbarMenuItem({
                 style={{ transitionDelay: `${60 + index * 40}ms` }}
                 className="group/navbar-column flex flex-col gap-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] starting:-translate-y-1.5 starting:opacity-0 motion-reduce:transition-none data-featured:gap-2.5"
               >
-                <span className="text-xs text-label-secondary">
+                <span className="text-xs text-muted-foreground">
                   {column.label}
                 </span>
                 {column.links.map((link) => (
@@ -119,7 +119,7 @@ function NavbarMenuItem({
                   {link.description ? (
                     <div className="flex flex-col gap-1">
                       <span className="font-medium">{link.label}</span>
-                      <span className="text-label-secondary">
+                      <span className="text-muted-foreground">
                         {link.description}
                       </span>
                     </div>

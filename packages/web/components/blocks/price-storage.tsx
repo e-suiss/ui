@@ -48,7 +48,7 @@ export function PriceStorage() {
   return (
     <section className="flex flex-col items-center gap-6 px-5 py-9 md:px-9">
       <div className="flex flex-col items-center gap-2 text-center">
-        <CloudIcon className="size-10 text-blue" />
+        <CloudIcon className="size-10 text-blue-500" />
         <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-5xl">
           More space with suiss Cloud+.
         </h1>
@@ -81,10 +81,10 @@ export function PriceStorage() {
         {plans.map((plan) => (
           <Label
             key={plan.size}
-            className="relative flex cursor-pointer flex-col gap-3 rounded-[1.125rem] bg-surface-secondary p-4.5 transition-[translate,box-shadow] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] has-data-checked:-translate-y-0.75 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-accent)] has-focus-visible:focus-ring motion-reduce:transition-none font-normal items-stretch"
+            className="relative flex cursor-pointer flex-col gap-3 rounded-[1.125rem] bg-muted p-4.5 transition-[translate,box-shadow] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] has-data-checked:-translate-y-0.75 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring motion-reduce:transition-none font-normal items-stretch"
           >
             {plan.popular && (
-              <span className="absolute -top-2.25 start-4.5 rounded-full bg-accent px-2.25 py-0.5 text-2xs font-semibold text-on-accent">
+              <span className="absolute -top-2.25 start-4.5 rounded-full bg-primary px-2.25 py-0.5 text-2xs font-semibold text-primary-foreground">
                 Most popular
               </span>
             )}
@@ -100,7 +100,7 @@ export function PriceStorage() {
               <span className="text-2xl font-semibold tabular-nums">
                 {money(yearly ? plan.price * 10 : plan.price)}
               </span>
-              <span className="text-sm text-label-secondary">
+              <span className="text-sm text-muted-foreground">
                 {yearly ? " /yr" : " /mo"}
               </span>
             </span>
@@ -112,7 +112,7 @@ export function PriceStorage() {
                 >
                   <CheckIcon
                     weight="bold"
-                    className="mt-0.5 size-3.25 shrink-0 text-[color-mix(in_oklab,var(--green),var(--label)_30%)] dark:text-green"
+                    className="mt-0.5 size-3.25 shrink-0 text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_30%)] dark:text-green-500"
                   />
                   {feature}
                 </li>

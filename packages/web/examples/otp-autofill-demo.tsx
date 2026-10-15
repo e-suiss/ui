@@ -24,7 +24,7 @@ function Status() {
   return (
     <p
       role="status"
-      className="min-h-5 text-sm text-label-secondary data-[state=invalid]:text-danger data-[state=verified]:text-success"
+      className="min-h-5 text-sm text-muted-foreground data-[state=invalid]:text-destructive data-[state=verified]:text-green-600 dark:data-[state=verified]:text-green-400"
       data-state={state}
     >
       {state === "verifying" && "Verifying…"}
@@ -53,7 +53,7 @@ function VerificationExample({ incoming }: { incoming: string }) {
   return (
     <div className="mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col items-center gap-2 text-center">
       <h2 className="text-2xl font-bold tracking-tight">Enter the code</h2>
-      <p className="text-sm text-label-secondary">
+      <p className="text-sm text-muted-foreground">
         We sent a 6-digit code to +1 555 0100.
       </p>
       <OtpAutofill

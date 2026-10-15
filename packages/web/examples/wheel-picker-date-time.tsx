@@ -84,7 +84,7 @@ function DateTimeExample(props: React.ComponentProps<typeof WheelPicker>) {
           ))}
         </WheelPickerColumn>
       </WheelPicker>
-      <p className="text-center text-sm text-label-secondary tabular-nums">
+      <p className="text-center text-sm text-muted-foreground tabular-nums">
         {day} {hour}:{minute}
       </p>
     </div>
@@ -93,7 +93,7 @@ function DateTimeExample(props: React.ComponentProps<typeof WheelPicker>) {
 
 export default function WheelPickerDateTime() {
   return (
-    <div className="w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10">
+    <div className="w-80 rounded-2xl bg-card p-4 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10">
       <DateTimeExample />
     </div>
   )

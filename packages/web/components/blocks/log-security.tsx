@@ -129,18 +129,18 @@ const severity: Record<
   { tint: string; text: string; weight: number }
 > = {
   High: {
-    tint: "bg-red",
-    text: "text-[color-mix(in_oklab,var(--red),var(--label)_25%)] dark:text-red",
+    tint: "bg-red-500",
+    text: "text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] dark:text-red-500",
     weight: 18,
   },
   Medium: {
-    tint: "bg-orange",
-    text: "text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:text-orange",
+    tint: "bg-orange-500",
+    text: "text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500",
     weight: 8,
   },
   Low: {
-    tint: "bg-yellow",
-    text: "text-[color-mix(in_oklab,var(--yellow),var(--label)_55%)] dark:text-yellow",
+    tint: "bg-yellow-500",
+    text: "text-[color-mix(in_oklab,var(--color-yellow-500),var(--foreground)_55%)] dark:text-yellow-500",
     weight: 3,
   },
 }
@@ -178,9 +178,9 @@ const initialAlerts: {
 ]
 
 function scoreTone(score: number) {
-  if (score > 85) return "text-green"
-  if (score > 65) return "text-orange"
-  return "text-red"
+  if (score > 85) return "text-green-500"
+  if (score > 65) return "text-orange-500"
+  return "text-red-500"
 }
 
 export function LogSecurity() {
@@ -229,12 +229,12 @@ export function LogSecurity() {
               <h1 className="text-3xl font-semibold tracking-tight">
                 Security
               </h1>
-              <p className="text-sm text-label-secondary" aria-live="polite">
+              <p className="text-sm text-muted-foreground" aria-live="polite">
                 {open.length ? `${open.length} open alerts` : "No open alerts"}
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-4 rounded-xl bg-surface-secondary px-4 py-3.5">
+          <div className="flex flex-wrap items-center gap-4 rounded-xl bg-muted px-4 py-3.5">
             <svg
               aria-hidden
               viewBox="0 0 54 54"
@@ -246,7 +246,7 @@ export function LogSecurity() {
                 r="22"
                 fill="none"
                 strokeWidth="6"
-                className="stroke-control"
+                className="stroke-secondary"
               />
               <circle
                 cx="27"
@@ -261,7 +261,7 @@ export function LogSecurity() {
               />
             </svg>
             <div className="flex flex-1 flex-col">
-              <span className="text-sm text-label-secondary">
+              <span className="text-sm text-muted-foreground">
                 Security score
               </span>
               <span className="text-3xl font-bold tabular-nums">{score}</span>
@@ -269,9 +269,9 @@ export function LogSecurity() {
             <dl className="flex gap-4.5">
               {(Object.keys(severity) as Severity[]).map((level) => (
                 <div key={level} className="flex flex-col items-center">
-                  <dt className="text-xs text-label-secondary">{level}</dt>
+                  <dt className="text-xs text-muted-foreground">{level}</dt>
                   <dd
-                    className={`text-xl font-semibold tabular-nums ${count(level) ? severity[level].text : "text-label-tertiary"}`}
+                    className={`text-xl font-semibold tabular-nums ${count(level) ? severity[level].text : "text-muted-foreground"}`}
                   >
                     {count(level)}
                   </dd>
@@ -300,14 +300,14 @@ export function LogSecurity() {
           </ToggleGroup>
           <div key={filter}>
             {list.length > 0 ? (
-              <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
+              <ul className="overflow-hidden rounded-2xl bg-muted">
                 {list.map((alert) => (
                   <li
                     key={alert.title}
-                    className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
+                    className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-border"
                   >
                     <span
-                      className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--green),var(--label)_20%)] dark:bg-green" : severity[alert.severity].tint}`}
+                      className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_20%)] dark:bg-green-500" : severity[alert.severity].tint}`}
                     >
                       {alert.resolved ? (
                         <CheckIcon weight="bold" className="size-4" />
@@ -319,7 +319,7 @@ export function LogSecurity() {
                       <span className="truncate text-sm font-semibold">
                         {alert.title}
                       </span>
-                      <span className="truncate text-xs text-label-secondary">
+                      <span className="truncate text-xs text-muted-foreground">
                         {alert.resolved
                           ? "Resolved"
                           : `${alert.severity} severity`}{" "}
@@ -346,7 +346,7 @@ export function LogSecurity() {
                 ))}
               </ul>
             ) : (
-              <p className="p-7.5 text-center text-sm text-label-secondary">
+              <p className="p-7.5 text-center text-sm text-muted-foreground">
                 {filter === "Open"
                   ? "No open alerts. All good."
                   : "Nothing here yet."}

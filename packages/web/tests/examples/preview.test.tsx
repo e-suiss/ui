@@ -23,7 +23,7 @@ function ProfileCard() {
         <p className="text-sm">
           The React framework, created and maintained by @vercel.
         </p>
-        <div className="mt-1 flex items-center gap-1.5 text-xs text-label-secondary">
+        <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
           <CalendarBlankIcon />
           Joined December 2021
         </div>

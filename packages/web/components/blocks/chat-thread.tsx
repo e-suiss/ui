@@ -68,15 +68,15 @@ export function ChatThread() {
   }
 
   return (
-    <section className="flex min-h-170 flex-col items-center justify-center gap-12 bg-surface-secondary sm:p-5 md:flex-row">
-      <div className="relative flex h-170 w-full flex-col overflow-hidden bg-surface sm:h-160 sm:w-82.5 sm:shrink-0 sm:rounded-[3rem] sm:border-10 sm:border-black sm:shadow-[0_0_0_1.5px_var(--color-label-tertiary),0_30px_60px_-20px_rgb(0_0_0/0.45)]">
+    <section className="flex min-h-170 flex-col items-center justify-center gap-12 bg-muted sm:p-5 md:flex-row">
+      <div className="relative flex h-170 w-full flex-col overflow-hidden bg-background sm:h-160 sm:w-82.5 sm:shrink-0 sm:rounded-[3rem] sm:border-10 sm:border-black sm:shadow-[0_0_0_1.5px_var(--color-muted-foreground),0_30px_60px_-20px_rgb(0_0_0/0.45)]">
         <span
           aria-hidden
           className="absolute top-2.5 left-1/2 z-10 hidden h-7 w-24 -translate-x-1/2 rounded-full bg-black sm:block"
         />
         <a
           href="#contact"
-          className="flex shrink-0 flex-col items-center gap-1 border-b border-separator bg-surface/85 pt-6 pb-2.5 outline-none backdrop-blur-xl focus-visible:focus-ring sm:pt-12.5"
+          className="flex shrink-0 flex-col items-center gap-1 border-b border-border bg-background/85 pt-6 pb-2.5 outline-none backdrop-blur-xl focus-visible:focus-ring sm:pt-12.5"
         >
           <Avatar className="size-12">
             <AvatarFallback className="bg-linear-to-br from-[oklch(0.78_0.1_150)] to-[oklch(0.6_0.14_180)] text-lg text-white dark:from-[oklch(0.78_0.1_150)] dark:to-[oklch(0.6_0.14_180)]">
@@ -92,7 +92,7 @@ export function ChatThread() {
           <MessageScroller className="flex-1">
             <MessageScrollerViewport aria-label="Conversation with Riley">
               <MessageScrollerContent className="gap-1 px-3 py-3">
-                <p className="mt-1 mb-2.5 text-center text-2xs text-label-secondary">
+                <p className="mt-1 mb-2.5 text-center text-2xs text-muted-foreground">
                   Today 9:30 AM
                 </p>
                 {lines.map((line) => (
@@ -122,7 +122,7 @@ export function ChatThread() {
                             <BubbleReactions
                               side="top"
                               align={line.from === "me" ? "start" : "end"}
-                              className="size-6.5 bg-accent p-0 text-on-accent ring-2 ring-surface transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0 dark:bg-accent"
+                              className="size-6.5 bg-primary p-0 text-primary-foreground ring-2 ring-background transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0 dark:bg-primary"
                             >
                               <HeartIcon weight="fill" className="size-3.25" />
                             </BubbleReactions>
@@ -142,7 +142,7 @@ export function ChatThread() {
                               <span
                                 key={dot}
                                 style={{ animationDelay: `${dot * 180}ms` }}
-                                className="size-2 animate-[pulse_1.1s_ease-in-out_infinite] rounded-full bg-label-tertiary"
+                                className="size-2 animate-[pulse_1.1s_ease-in-out_infinite] rounded-full bg-muted-foreground"
                               />
                             ))}
                           </BubbleContent>
@@ -169,11 +169,11 @@ export function ChatThread() {
             variant="secondary"
             size="icon-sm"
             aria-label="Add attachment"
-            className="text-label-secondary"
+            className="text-muted-foreground"
           >
             <PlusIcon weight="bold" className="size-4.5" />
           </Button>
-          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-separator-strong ps-3.5 pe-0.75 has-focus-visible:focus-ring">
+          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:focus-ring">
             <Input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
@@ -195,9 +195,9 @@ export function ChatThread() {
         </form>
       </div>
       <div className="flex max-w-75 flex-col gap-2 px-6 pb-10 max-md:text-center md:px-0 md:pb-0">
-        <p className="text-sm font-semibold text-label-secondary">Phone</p>
+        <p className="text-sm font-semibold text-muted-foreground">Phone</p>
         <h2 className="text-4xl font-semibold tracking-tight">Messages.</h2>
-        <p className="text-lg text-label-secondary">
+        <p className="text-lg text-muted-foreground">
           Double-click a bubble to add a heart. Send a message and you'll get a
           reply.
         </p>

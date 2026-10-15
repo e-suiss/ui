@@ -33,7 +33,7 @@ const RELOAD = /^Reload/
 function ContextMenuOpenByDefault() {
   return (
     <ContextMenu defaultOpen>
-      <ContextMenuTrigger className="text-label-secondary flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
+      <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
         Right click here
       </ContextMenuTrigger>
       <ContextMenuContent>

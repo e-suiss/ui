@@ -25,11 +25,11 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-  "group/tabs-list inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-xl p-1 text-label-secondary group-data-horizontal/tabs:h-9 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none data-[variant=line]:p-0.5 group-data-horizontal/tabs:data-[variant=line]:h-9 group-data-horizontal/tabs:data-[variant=line]:pb-1.75",
+  "group/tabs-list inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-xl p-1 text-muted-foreground group-data-horizontal/tabs:h-9 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none data-[variant=line]:p-0.5 group-data-horizontal/tabs:data-[variant=line]:h-9 group-data-horizontal/tabs:data-[variant=line]:pb-1.75",
   {
     variants: {
       variant: {
-        default: "bg-control",
+        default: "bg-secondary",
         line: "gap-1 bg-transparent",
       },
     },
@@ -134,7 +134,7 @@ function TabsList({
         data-slot="tabs-indicator"
         data-variant={variant}
         renderBeforeHydration
-        className="pointer-events-none absolute top-(--active-tab-top) left-(--active-tab-left) h-(--active-tab-height) w-(--active-tab-width) rounded-md bg-surface-raised shadow-sm transition-[left,top,width,height] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-[variant=line]:rounded-none data-[variant=line]:bg-label data-[variant=line]:shadow-none group-data-horizontal/tabs:data-[variant=line]:top-[calc(var(--active-tab-top)+var(--active-tab-height)+(--spacing(0.75)))] group-data-horizontal/tabs:data-[variant=line]:h-0.5 group-data-vertical/tabs:data-[variant=line]:left-[calc(var(--active-tab-left)+var(--active-tab-width)+(--spacing(0.5)))] group-data-vertical/tabs:data-[variant=line]:w-0.5 motion-reduce:transition-none dark:bg-label-quaternary dark:data-[variant=line]:bg-label"
+        className="pointer-events-none absolute top-(--active-tab-top) left-(--active-tab-left) h-(--active-tab-height) w-(--active-tab-width) rounded-md bg-card shadow-sm transition-[left,top,width,height] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-[variant=line]:rounded-none data-[variant=line]:bg-foreground data-[variant=line]:shadow-none group-data-horizontal/tabs:data-[variant=line]:top-[calc(var(--active-tab-top)+var(--active-tab-height)+(--spacing(0.75)))] group-data-horizontal/tabs:data-[variant=line]:h-0.5 group-data-vertical/tabs:data-[variant=line]:left-[calc(var(--active-tab-left)+var(--active-tab-width)+(--spacing(0.5)))] group-data-vertical/tabs:data-[variant=line]:w-0.5 motion-reduce:transition-none dark:bg-border dark:data-[variant=line]:bg-foreground"
       />
       <div
         data-slot="tabs-list-content"
@@ -152,8 +152,8 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "relative inline-flex flex-1 group-data-horizontal/tabs:h-full group-data-[variant=line]/tabs-list:h-[calc(100%-1px)] items-center justify-center gap-2 rounded-md border border-transparent! px-3 py-1 text-sm whitespace-nowrap text-label-secondary transition-colors group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start group-data-vertical/tabs:h-9 group-data-vertical/tabs:flex-none group-data-vertical/tabs:px-3 hover:text-label focus-visible:focus-ring disabled:pointer-events-none disabled:text-label-quaternary has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2 aria-disabled:pointer-events-none aria-disabled:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "data-active:text-label",
+        "relative inline-flex flex-1 group-data-horizontal/tabs:h-full group-data-[variant=line]/tabs-list:h-[calc(100%-1px)] items-center justify-center gap-2 rounded-md border border-transparent! px-3 py-1 text-sm whitespace-nowrap text-muted-foreground transition-colors group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start group-data-vertical/tabs:h-9 group-data-vertical/tabs:flex-none group-data-vertical/tabs:px-3 hover:text-foreground focus-visible:focus-ring disabled:pointer-events-none has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2 aria-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 aria-disabled:opacity-50 disabled:opacity-50",
+        "data-active:text-foreground",
         className
       )}
       {...props}

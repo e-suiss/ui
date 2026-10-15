@@ -11,7 +11,7 @@ export default function InputGroupInvalid() {
       <InputGroup>
         <InputGroupInput defaultValue="jane@" aria-label="Email" aria-invalid />
         <InputGroupAddon align="inline-end">
-          <InfoIcon className="text-danger" />
+          <InfoIcon className="text-destructive" />
         </InputGroupAddon>
       </InputGroup>
     </div>

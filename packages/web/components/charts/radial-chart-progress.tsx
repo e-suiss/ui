@@ -14,7 +14,7 @@ import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
 const chartData = [{ name: "value", value: 64, fill: "var(--color-value)" }]
 
 const chartConfig = {
-  value: { label: "Reading", color: "var(--orange)" },
+  value: { label: "Reading", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 export function RadialChartProgress() {
@@ -58,7 +58,7 @@ export function RadialChartProgress() {
             <span className="text-3xl font-semibold tracking-tight tabular-nums">
               16 / 25
             </span>
-            <span className="text-xs text-label-secondary">books · 2026</span>
+            <span className="text-xs text-muted-foreground">books · 2026</span>
           </div>
         </div>
       </CardContent>

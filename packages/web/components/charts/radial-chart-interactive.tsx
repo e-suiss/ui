@@ -14,15 +14,27 @@ const RINGS: {
   goal: number
   color: string
 }[] = [
-  { key: "move", label: "Move", unit: "kcal", goal: 600, color: "var(--red)" },
+  {
+    key: "move",
+    label: "Move",
+    unit: "kcal",
+    goal: 600,
+    color: "var(--color-red-500)",
+  },
   {
     key: "exercise",
     label: "Exercise",
     unit: "min",
     goal: 30,
-    color: "var(--green)",
+    color: "var(--color-green-500)",
   },
-  { key: "stand", label: "Stand", unit: "hr", goal: 12, color: "var(--cyan)" },
+  {
+    key: "stand",
+    label: "Stand",
+    unit: "hr",
+    goal: 12,
+    color: "var(--color-cyan-500)",
+  },
 ]
 
 const WEEK = [
@@ -135,7 +147,7 @@ export function RadialChartInteractive() {
     <Card variant="filled" size="sm" className="[--card-spacing:--spacing(5)]">
       <CardHeader className="gap-0.5">
         <p className="text-lg font-semibold">Activity</p>
-        <p className="text-sm text-label-secondary">This week · pick a day</p>
+        <p className="text-sm text-muted-foreground">This week · pick a day</p>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <ToggleGroup
@@ -152,7 +164,7 @@ export function RadialChartInteractive() {
               key={entry.day}
               value={String(index)}
               aria-label={entry.day}
-              className="h-auto flex-col gap-1.5 rounded-xl px-0 py-2 text-xs font-semibold text-label-secondary aria-pressed:bg-surface aria-pressed:text-label aria-pressed:hover:bg-surface aria-pressed:hover:text-label"
+              className="h-auto flex-col gap-1.5 rounded-xl px-0 py-2 text-xs font-semibold text-muted-foreground aria-pressed:bg-background aria-pressed:text-foreground aria-pressed:hover:bg-background aria-pressed:hover:text-foreground"
             >
               {entry.day.slice(0, 3)}
               <Rings
@@ -180,7 +192,7 @@ export function RadialChartInteractive() {
                 <div key={ring.key} className="flex flex-col gap-0.5">
                   <dt className="text-base font-semibold">{ring.label}</dt>
                   <dd
-                    className="flex items-baseline gap-0.5 text-[color-mix(in_oklab,var(--ring),var(--label)_45%)] dark:text-(--ring)"
+                    className="flex items-baseline gap-0.5 text-[color-mix(in_oklab,var(--ring),var(--foreground)_45%)] dark:text-(--ring)"
                     style={{ "--ring": ring.color } as React.CSSProperties}
                   >
                     <span className="text-3xl font-semibold tracking-tight tabular-nums">
@@ -190,7 +202,7 @@ export function RadialChartInteractive() {
                       {ring.unit}
                     </span>
                   </dd>
-                  <dd className="text-xs text-label-secondary">
+                  <dd className="text-xs text-muted-foreground">
                     {percent}%{percent >= 100 ? " · goal met" : ""}
                   </dd>
                 </div>

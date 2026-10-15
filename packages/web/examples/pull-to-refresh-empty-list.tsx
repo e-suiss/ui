@@ -63,7 +63,7 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
           Inbox
         </h2>
         {messages.length === 0 ? (
-          <p className="px-4 py-16 text-center text-sm text-label-secondary">
+          <p className="px-4 py-16 text-center text-sm text-muted-foreground">
             No messages yet.
           </p>
         ) : (
@@ -72,7 +72,7 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
               <li
                 key={message.id}
                 data-fresh={message.fresh ? "" : undefined}
-                className="ms-4 border-separator not-first:border-t starting:opacity-0 data-fresh:transition-opacity data-fresh:duration-500"
+                className="ms-4 border-border not-first:border-t starting:opacity-0 data-fresh:transition-opacity data-fresh:duration-500"
               >
                 <button
                   type="button"
@@ -81,11 +81,11 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
                 >
                   <span className="flex items-center gap-2 font-semibold">
                     {message.fresh && (
-                      <span className="size-2 rounded-full bg-accent" />
+                      <span className="size-2 rounded-full bg-primary" />
                     )}
                     {message.from}
                   </span>
-                  <span className="truncate text-sm text-label-secondary">
+                  <span className="truncate text-sm text-muted-foreground">
                     {message.subject}
                   </span>
                 </button>
@@ -94,7 +94,7 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
           </ul>
         )}
       </PullToRefresh>
-      <p role="status" className="text-sm text-label-secondary">
+      <p role="status" className="text-sm text-muted-foreground">
         {log}
       </p>
     </div>

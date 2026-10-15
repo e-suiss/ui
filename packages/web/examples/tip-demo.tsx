@@ -94,14 +94,14 @@ function NotesPage() {
                 className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px]"
               >
                 <span className="truncate font-semibold">{note.title}</span>
-                <span className="truncate text-sm text-label-secondary">
+                <span className="truncate text-sm text-muted-foreground">
                   {note.preview}
                 </span>
               </button>
             </li>
           ))}
         </ul>
-        <p role="status" className="min-h-5 text-sm text-label-secondary">
+        <p role="status" className="min-h-5 text-sm text-muted-foreground">
           {log}
         </p>
       </div>

@@ -16,7 +16,7 @@ function ItemGroup({
       data-variant={variant}
       className={cn(
         "flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
-        "data-[variant=inset]:gap-0 data-[variant=inset]:overflow-hidden data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-surface-secondary data-[variant=inset]:**:data-[slot=item]:rounded-none data-[variant=inset]:**:data-[slot=item]:focus-visible:outline-offset-[-2px] data-[variant=inset]:**:data-[slot=item]:focus-visible:rounded-2xl data-[variant=inset]:**:data-[slot=item-separator]:my-0 data-[variant=inset]:**:data-[slot=item-separator]:ms-4 data-[variant=inset]:**:data-[slot=item-separator]:w-auto",
+        "data-[variant=inset]:gap-0 data-[variant=inset]:overflow-hidden data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-muted data-[variant=inset]:**:data-[slot=item]:rounded-none data-[variant=inset]:**:data-[slot=item]:focus-visible:outline-offset-[-2px] data-[variant=inset]:**:data-[slot=item]:focus-visible:rounded-2xl data-[variant=inset]:**:data-[slot=item-separator]:my-0 data-[variant=inset]:**:data-[slot=item-separator]:ms-4 data-[variant=inset]:**:data-[slot=item-separator]:w-auto",
         className
       )}
       {...props}
@@ -29,20 +29,20 @@ function ItemSeparator({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-separator"
       role="none"
-      className={cn("my-2 h-px shrink-0 bg-separator", className)}
+      className={cn("my-2 h-px shrink-0 bg-border", className)}
       {...props}
     />
   )
 }
 
 const itemVariants = cva(
-  "group/item flex w-full flex-wrap items-center rounded-xl border text-base transition-colors duration-100 outline-none focus-visible:focus-ring [a]:transition-colors [a]:hover:bg-item-hover",
+  "group/item flex w-full flex-wrap items-center rounded-xl border text-base transition-colors duration-100 outline-none focus-visible:focus-ring [a]:transition-colors [a]:hover:bg-accent [a]:hover:text-accent-foreground",
   {
     variants: {
       variant: {
         default: "border-transparent",
-        outline: "border-separator",
-        muted: "border-transparent bg-surface-secondary/50",
+        outline: "border-border",
+        muted: "border-transparent bg-muted/50",
       },
       size: {
         default: "gap-3.5 px-4 py-3.5",
@@ -144,7 +144,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="item-description"
       className={cn(
-        "line-clamp-2 text-start text-sm font-normal text-label-secondary [&>a]:underline [&>a:hover]:text-link",
+        "line-clamp-2 text-start text-sm font-normal text-muted-foreground [&>a]:underline [&>a:hover]:text-primary",
         className
       )}
       {...props}

@@ -41,7 +41,7 @@ function DrawerOpenByDefault() {
         </DrawerHeader>
         <div className="flex flex-col items-center gap-1 p-4">
           <span className="text-5xl font-semibold tracking-tight">350</span>
-          <span className="text-label-secondary text-xs uppercase">
+          <span className="text-muted-foreground text-xs uppercase">
             Calories per day
           </span>
         </div>

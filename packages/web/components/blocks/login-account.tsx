@@ -24,7 +24,7 @@ function SubmitArrow({ ready, busy }: { ready: boolean; busy: boolean }) {
       size="icon-sm"
       aria-label="Continue"
       disabled={!ready || busy}
-      className="me-2.5 size-7.5 border-[1.5px] border-label-secondary bg-transparent text-label-secondary disabled:border-label-quaternary dark:bg-transparent"
+      className="me-2.5 size-7.5 border-[1.5px] border-muted-foreground bg-transparent text-muted-foreground dark:bg-transparent disabled:opacity-50"
     >
       {busy ? (
         <Spinner />
@@ -75,12 +75,12 @@ export function LoginAccount() {
       <section className="flex min-h-150 items-center justify-center p-6">
         <div className="flex flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <Avatar className="size-20">
-            <AvatarFallback className="bg-none bg-surface-secondary text-3xl text-label">
+            <AvatarFallback className="bg-none bg-muted text-3xl text-foreground">
               {email[0]}
             </AvatarFallback>
           </Avatar>
           <h1 className="text-5xl font-semibold tracking-tight">Hello.</h1>
-          <p className="text-lg text-label-secondary">{email}</p>
+          <p className="text-lg text-muted-foreground">{email}</p>
           <button
             type="button"
             onClick={() => {
@@ -88,7 +88,7 @@ export function LoginAccount() {
               setStep("email")
               setPassword("")
             }}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Sign out ›
           </button>
@@ -110,7 +110,7 @@ export function LoginAccount() {
         <div
           ref={fieldsRef}
           data-invalid={error ? "" : undefined}
-          className="w-full overflow-hidden rounded-xl border border-separator-strong bg-surface text-start transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-danger data-invalid:bg-danger/5 dark:data-invalid:bg-danger/10"
+          className="w-full overflow-hidden rounded-xl border border-input bg-background text-start transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10"
         >
           <div className="flex items-center">
             <Input
@@ -135,7 +135,7 @@ export function LoginAccount() {
             className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-450 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:grid-rows-[1fr] motion-reduce:transition-none"
           >
             <div className="min-h-0 overflow-hidden">
-              <div className="flex items-center border-t border-separator-strong">
+              <div className="flex items-center border-t border-input">
                 <Input
                   ref={passwordRef}
                   type="password"
@@ -160,7 +160,7 @@ export function LoginAccount() {
         <p
           id="login-account-error"
           aria-live="polite"
-          className="mt-2.5 min-h-5.5 text-sm text-danger"
+          className="mt-2.5 min-h-5.5 text-sm text-destructive"
         >
           {error}
         </p>
@@ -169,12 +169,12 @@ export function LoginAccount() {
           Remember me
         </Label>
         <div className="mt-10 flex flex-col items-center gap-2.5 text-sm">
-          <a href="#forgot" className="text-link hover:underline">
+          <a href="#forgot" className="text-primary hover:underline">
             Forgot password? ›
           </a>
-          <p className="flex flex-wrap justify-center gap-x-1 text-label-secondary">
+          <p className="flex flex-wrap justify-center gap-x-1 text-muted-foreground">
             <span>Don't have a suiss Account?</span>
-            <a href="#create" className="text-link hover:underline">
+            <a href="#create" className="text-primary hover:underline">
               Create yours now ›
             </a>
           </p>

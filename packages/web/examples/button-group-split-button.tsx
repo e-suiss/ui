@@ -6,7 +6,7 @@ export default function ButtonGroupSplitButton() {
   return (
     <ButtonGroup orientation="horizontal">
       <Button>Publish</Button>
-      <ButtonGroupSeparator className="bg-on-accent/30" />
+      <ButtonGroupSeparator className="bg-primary-foreground/30" />
       <Button size="icon" aria-label="More options">
         <CaretDownIcon />
       </Button>

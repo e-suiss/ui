@@ -23,7 +23,7 @@ function ControlledExample(props: React.ComponentProps<typeof Picker>) {
       <Picker {...props} value={value} onValueChange={setValue}>
         {fruitItems}
       </Picker>
-      <p className="text-sm text-label-secondary">Selected: {value}</p>
+      <p className="text-sm text-muted-foreground">Selected: {value}</p>
     </div>
   )
 }

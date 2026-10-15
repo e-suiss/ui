@@ -74,7 +74,7 @@ function Orders({
           {rows.map((order) => (
             <TableRow key={order.id}>
               <TableCell className="tabular-nums">#{order.id}</TableCell>
-              <TableCell className="text-label-secondary">
+              <TableCell className="text-muted-foreground">
                 {order.place}
               </TableCell>
               <TableCell className="text-end tabular-nums">
@@ -109,7 +109,7 @@ function CompactExample() {
   return (
     <Orders page={page} perPage={perPage}>
       <Pagination className="justify-between">
-        <div className="flex items-center gap-2 text-sm text-label-secondary">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <label htmlFor="orders-page">Page</label>
           <PaginationInput
             id="orders-page"

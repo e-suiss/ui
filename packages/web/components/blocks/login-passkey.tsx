@@ -23,12 +23,12 @@ function ScanGlyph({ verified }: { verified: boolean }) {
     <div className="relative size-18">
       <ScanSmileyIcon
         data-verified={verified ? "" : undefined}
-        className="absolute inset-0 size-full animate-[pulse_1.2s_ease-in-out_infinite] text-label transition-[opacity,scale] duration-500 data-verified:scale-60 data-verified:animate-none data-verified:opacity-0 motion-reduce:animate-none"
+        className="absolute inset-0 size-full animate-[pulse_1.2s_ease-in-out_infinite] text-foreground transition-[opacity,scale] duration-500 data-verified:scale-60 data-verified:animate-none data-verified:opacity-0 motion-reduce:animate-none"
         weight="light"
       />
       <span
         data-verified={verified ? "" : undefined}
-        className="absolute inset-1.5 flex scale-40 items-center justify-center rounded-full bg-green text-white opacity-0 transition-[opacity,scale] duration-[300ms,550ms] ease-[ease,cubic-bezier(0.3,1.25,0.5,1)] data-verified:scale-100 data-verified:opacity-100"
+        className="absolute inset-1.5 flex scale-40 items-center justify-center rounded-full bg-green-500 text-white opacity-0 transition-[opacity,scale] duration-[300ms,550ms] ease-[ease,cubic-bezier(0.3,1.25,0.5,1)] data-verified:scale-100 data-verified:opacity-100"
       >
         <CheckIcon weight="bold" className="size-8" />
       </span>
@@ -77,13 +77,13 @@ export function LoginPasskey() {
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
             Welcome, Jamie.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             You signed in with a passkey. No password needed.
           </p>
           <button
             type="button"
             onClick={() => setStatus("idle")}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Sign out ›
           </button>
@@ -95,24 +95,24 @@ export function LoginPasskey() {
   return (
     <section className="flex min-h-150 items-center justify-center p-6">
       <div className="flex max-w-140 flex-col items-center text-center">
-        <span className="flex size-18 items-center justify-center rounded-full bg-surface-secondary text-accent">
+        <span className="flex size-18 items-center justify-center rounded-full bg-muted text-primary">
           <KeyIcon weight="bold" className="size-8.5" />
         </span>
         <h1 className="mt-5.5 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
           Sign in without a password.
         </h1>
-        <p className="mt-3 max-w-120 text-xl text-balance text-label-secondary">
+        <p className="mt-3 max-w-120 text-xl text-balance text-muted-foreground">
           With a passkey, your face or fingerprint is all it takes. Nothing to
           remember, nothing to type.
         </p>
-        <div className="mt-7 flex items-center gap-2.5 rounded-full bg-surface-secondary py-2 ps-2 pe-4">
+        <div className="mt-7 flex items-center gap-2.5 rounded-full bg-muted py-2 ps-2 pe-4">
           <Avatar size="sm" className="size-7">
             <AvatarFallback className={`${avatarClass} text-3xs`}>
               JR
             </AvatarFallback>
           </Avatar>
           <span className="text-base">jamie@suiss.com</span>
-          <a href="#change" className="text-sm text-link hover:underline">
+          <a href="#change" className="text-sm text-primary hover:underline">
             Change ›
           </a>
         </div>
@@ -122,11 +122,11 @@ export function LoginPasskey() {
         </Button>
         <a
           href="#password"
-          className="mt-4.5 text-sm text-link hover:underline"
+          className="mt-4.5 text-sm text-primary hover:underline"
         >
           Sign in with password ›
         </a>
-        <p className="mt-10 max-w-105 text-xs leading-normal text-label-secondary">
+        <p className="mt-10 max-w-105 text-xs leading-normal text-muted-foreground">
           Passkeys are end-to-end encrypted and sync across all your devices
           with suiss Keychain.
         </p>
@@ -139,14 +139,14 @@ export function LoginPasskey() {
       >
         <DialogContent
           showCloseButton={false}
-          className="flex w-65 flex-col items-center gap-3.5 rounded-3xl bg-surface-raised/82 px-6 pt-7.5 pb-4.5 text-center backdrop-blur-2xl backdrop-saturate-180 data-open:zoom-in-90 sm:max-w-65"
+          className="flex w-65 flex-col items-center gap-3.5 rounded-3xl bg-popover/82 px-6 pt-7.5 pb-4.5 text-center backdrop-blur-2xl backdrop-saturate-180 data-open:zoom-in-90 sm:max-w-65"
         >
           <ScanGlyph verified={status === "ok"} />
           <div className="flex flex-col gap-0.75">
             <DialogTitle className="text-lg font-semibold">
               {status === "ok" ? "Verified" : "Face scan"}
             </DialogTitle>
-            <DialogDescription className="text-sm text-label-secondary">
+            <DialogDescription className="text-sm text-muted-foreground">
               Passkey for suiss.com
             </DialogDescription>
           </div>

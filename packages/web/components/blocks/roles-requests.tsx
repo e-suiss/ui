@@ -210,14 +210,14 @@ export function RolesRequests() {
               <h1 className="text-3xl font-semibold tracking-tight">
                 Access requests
               </h1>
-              <p className="text-sm text-label-secondary" aria-live="polite">
+              <p className="text-sm text-muted-foreground" aria-live="polite">
                 {open} pending {open === 1 ? "request" : "requests"}
               </p>
             </div>
             <div className="flex items-center gap-2">
               <span
                 id="roles-requests-duration"
-                className="text-sm text-label-secondary"
+                className="text-sm text-muted-foreground"
               >
                 Approval length
               </span>
@@ -243,7 +243,7 @@ export function RolesRequests() {
             </div>
           </div>
           {requests.length > 0 ? (
-            <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
+            <ul className="overflow-hidden rounded-2xl bg-muted">
               {requests.map((request) => (
                 <li
                   key={request.name}
@@ -264,20 +264,20 @@ export function RolesRequests() {
                           .join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex min-w-0 flex-1 flex-col gap-2.5 border-separator py-3 pe-4 sm:flex-row sm:items-start sm:gap-3 [li+li_&]:border-t">
+                    <div className="flex min-w-0 flex-1 flex-col gap-2.5 border-border py-3 pe-4 sm:flex-row sm:items-start sm:gap-3 [li+li_&]:border-t">
                       <div className="flex min-w-0 flex-1 flex-col gap-0.75">
                         <span className="flex items-center gap-2">
                           <span className="text-sm font-semibold">
                             {request.name}
                           </span>
-                          <span className="text-xs text-label-secondary">
+                          <span className="text-xs text-muted-foreground">
                             {request.time}
                           </span>
                         </span>
                         <span className="text-sm">
                           Requests {request.permission}
                         </span>
-                        <span className="text-sm text-label-secondary">
+                        <span className="text-sm text-muted-foreground">
                           {request.reason}
                         </span>
                       </div>
@@ -285,7 +285,7 @@ export function RolesRequests() {
                         <span
                           role="status"
                           data-decision={request.decision}
-                          className="pt-0.5 text-sm font-semibold text-[color-mix(in_oklab,var(--green),var(--label)_45%)] data-[decision=denied]:text-danger dark:text-green dark:data-[decision=denied]:text-danger"
+                          className="pt-0.5 text-sm font-semibold text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] data-[decision=denied]:text-destructive dark:text-green-500 dark:data-[decision=denied]:text-destructive"
                         >
                           {request.decision === "approved"
                             ? "Approved"
@@ -316,7 +316,7 @@ export function RolesRequests() {
           ) : (
             <Empty className="gap-3 p-10 transition-[opacity,translate] duration-800 starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none">
               <EmptyHeader>
-                <EmptyMedia className="mb-0 text-[color-mix(in_oklab,var(--green),var(--label)_35%)] dark:text-green">
+                <EmptyMedia className="mb-0 text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_35%)] dark:text-green-500">
                   <CheckIcon weight="bold" className="size-10" />
                 </EmptyMedia>
                 <EmptyTitle className="text-xl">
@@ -334,7 +334,7 @@ export function RolesRequests() {
                       }))
                     )
                   }
-                  className="rounded-xs text-sm text-link outline-none hover:underline focus-visible:focus-ring"
+                  className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:focus-ring"
                 >
                   Reset the sample ›
                 </button>

@@ -101,7 +101,7 @@ function SearchRevealField({
       data-slot="search-reveal-field"
       className="px-4 pb-2 opacity-(--search-reveal)"
     >
-      <div className="flex h-9 items-center gap-1.5 rounded-lg bg-control px-2 text-label-secondary focus-within:focus-ring">
+      <div className="flex h-9 items-center gap-1.5 rounded-lg bg-secondary px-2 text-muted-foreground focus-within:focus-ring">
         <MagnifyingGlassIcon aria-hidden className="size-4.5 shrink-0" />
         <input
           ref={inputRef}
@@ -118,7 +118,7 @@ function SearchRevealField({
             onFocus?.(event)
           }}
           className={cn(
-            "h-full min-w-0 flex-1 bg-transparent text-base text-label outline-none placeholder:text-label-secondary [&::-webkit-search-cancel-button]:appearance-none",
+            "h-full min-w-0 flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground [&::-webkit-search-cancel-button]:appearance-none",
             className
           )}
           {...props}

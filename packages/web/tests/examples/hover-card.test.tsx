@@ -33,7 +33,7 @@ function HoverCardOpenByDefault() {
             <p className="text-sm">
               The React framework, created and maintained by @vercel.
             </p>
-            <div className="text-label-secondary mt-1 flex items-center gap-1.5 text-xs">
+            <div className="text-muted-foreground mt-1 flex items-center gap-1.5 text-xs">
               <CalendarBlankIcon />
               Joined December 2021
             </div>

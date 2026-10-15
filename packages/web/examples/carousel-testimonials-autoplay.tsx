@@ -21,7 +21,7 @@ const quotes = [
 export default function CarouselTestimonialsAutoplay() {
   return (
     <div className="w-[min(56rem,calc(100vw-2rem))]">
-      <div className="max-w-md rounded-3xl bg-surface-secondary p-8">
+      <div className="max-w-md rounded-3xl bg-muted p-8">
         <Carousel
           orientation="horizontal"
           autoplay={6000}
@@ -34,7 +34,7 @@ export default function CarouselTestimonialsAutoplay() {
                   <p className="text-2xl font-bold tracking-tight">
                     “{item.quote}”
                   </p>
-                  <footer className="text-label-secondary">
+                  <footer className="text-muted-foreground">
                     {item.author}
                   </footer>
                 </blockquote>

@@ -37,7 +37,7 @@ export default function TabsVertical() {
           <TabsContent
             key={tab.value}
             value={tab.value}
-            className="text-label-secondary"
+            className="text-muted-foreground"
           >
             {tab.content}
           </TabsContent>

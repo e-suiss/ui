@@ -33,7 +33,7 @@ const chartData = [
 }))
 
 const chartConfig = {
-  energy: { label: "Active energy", color: "var(--red)" },
+  energy: { label: "Active energy", color: "var(--color-red-500)" },
 } satisfies ChartConfig
 
 const longDate = new Intl.DateTimeFormat("en-US", {

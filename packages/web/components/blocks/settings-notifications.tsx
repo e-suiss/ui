@@ -55,7 +55,7 @@ function MiniScreen({ kind }: { kind: Alert }) {
   return (
     <span
       aria-hidden
-      className="relative block h-23 w-16 overflow-hidden rounded-xl bg-linear-170 from-[oklch(0.75_0.08_250)] to-[oklch(0.6_0.1_290)] ring-2 ring-label ring-inset"
+      className="relative block h-23 w-16 overflow-hidden rounded-xl bg-linear-170 from-[oklch(0.75_0.08_250)] to-[oklch(0.6_0.1_290)] ring-2 ring-foreground ring-inset"
     >
       {kind === "lock" && (
         <span className="absolute inset-x-0 top-3.5 text-center text-sm font-semibold text-white">
@@ -80,7 +80,7 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
         <span className="absolute inset-x-2.5 -bottom-1.5 h-5 rounded-2xl bg-white/55" />
       )}
       <div className="relative flex gap-2.5 rounded-[1.125rem] bg-white/82 px-3 py-2.5 text-black/88 backdrop-blur-xl backdrop-saturate-180">
-        <span className="flex size-7.5 shrink-0 items-center justify-center rounded-[7px] bg-green text-white">
+        <span className="flex size-7.5 shrink-0 items-center justify-center rounded-[7px] bg-green-500 text-white">
           <ChatCircleIcon weight="fill" className="size-4.5" />
         </span>
         <div className="flex min-w-0 flex-1 flex-col gap-px">
@@ -128,15 +128,15 @@ export function SettingsNotifications() {
   const footnote = bannerFootnote(allow, enabled.banner, bannerStyle)
 
   return (
-    <section className="grid min-h-140 grid-cols-1 bg-surface md:grid-cols-[minmax(0,1fr)_18.75rem]">
+    <section className="grid min-h-140 grid-cols-1 bg-background md:grid-cols-[minmax(0,1fr)_18.75rem]">
       <div className="flex flex-col gap-5 px-5 py-6 md:px-8">
         <div className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-[0.625rem] bg-green text-white">
+          <span className="flex size-10 items-center justify-center rounded-[0.625rem] bg-green-500 text-white">
             <ChatCircleIcon weight="fill" className="size-6" />
           </span>
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold tracking-tight">Messages</h1>
-            <p className="text-sm text-label-secondary">Notifications</p>
+            <p className="text-sm text-muted-foreground">Notifications</p>
           </div>
         </div>
         <ItemGroup variant="inset">
@@ -179,11 +179,11 @@ export function SettingsNotifications() {
                     }))
                     replay()
                   }}
-                  className="group/alert h-auto flex-1 flex-col gap-2 rounded-xl pt-3.5 pb-3 hover:bg-transparent aria-pressed:bg-transparent aria-pressed:text-label aria-pressed:hover:bg-transparent aria-pressed:hover:text-label"
+                  className="group/alert h-auto flex-1 flex-col gap-2 rounded-xl pt-3.5 pb-3 hover:bg-transparent aria-pressed:bg-transparent aria-pressed:text-foreground aria-pressed:hover:bg-transparent aria-pressed:hover:text-foreground"
                 >
                   <MiniScreen kind={alert.value} />
                   <span className="text-sm">{alert.label}</span>
-                  <span className="flex size-5.5 items-center justify-center rounded-full border-[1.5px] border-separator-strong text-white transition-[background-color,border-color] duration-250 group-aria-pressed/alert:border-transparent group-aria-pressed/alert:bg-accent">
+                  <span className="flex size-5.5 items-center justify-center rounded-full border-[1.5px] border-input text-white transition-[background-color,border-color] duration-250 group-aria-pressed/alert:border-transparent group-aria-pressed/alert:bg-primary">
                     <CheckIcon
                       weight="bold"
                       className="size-3 scale-0 transition-[scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] group-aria-pressed/alert:scale-100"
@@ -289,7 +289,7 @@ export function SettingsNotifications() {
                       <SelectTrigger
                         size="sm"
                         aria-label={row.label}
-                        className="bg-transparent px-1 text-label-secondary"
+                        className="bg-transparent px-1 text-muted-foreground"
                       >
                         <SelectValue />
                       </SelectTrigger>
@@ -308,8 +308,8 @@ export function SettingsNotifications() {
           </ItemGroup>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-surface-secondary p-5">
-        <div className="h-117.5 w-57.5 rounded-[2.625rem] border-8 border-black shadow-[0_0_0_1.5px_var(--color-label-tertiary),0_20px_50px_-20px_rgb(0_0_0/0.4)]">
+      <div className="flex items-center justify-center bg-muted p-5">
+        <div className="h-117.5 w-57.5 rounded-[2.625rem] border-8 border-black shadow-[0_0_0_1.5px_var(--color-muted-foreground),0_20px_50px_-20px_rgb(0_0_0/0.4)]">
           <div
             role="img"
             aria-label={`Lock screen preview. ${footnote}.`}

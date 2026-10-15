@@ -45,8 +45,8 @@ export function LoginSheet() {
   }
 
   return (
-    <section className="flex min-h-175 items-center justify-center bg-surface-secondary sm:px-6 sm:py-7">
-      <div className="relative flex min-h-175 w-full flex-col overflow-hidden bg-surface sm:h-160 sm:min-h-0 sm:w-85 sm:rounded-[2.75rem] sm:shadow-[0_0_0_10px_var(--color-label),0_0_0_11px_var(--color-label-secondary),0_30px_70px_rgb(0_0_0/0.3)] dark:sm:shadow-[0_0_0_10px_var(--color-surface-tertiary),0_0_0_11px_var(--color-separator-strong),0_30px_70px_rgb(0_0_0/0.5)]">
+    <section className="flex min-h-175 items-center justify-center bg-muted sm:px-6 sm:py-7">
+      <div className="relative flex min-h-175 w-full flex-col overflow-hidden bg-background sm:h-160 sm:min-h-0 sm:w-85 sm:rounded-[2.75rem] sm:shadow-[0_0_0_10px_var(--color-foreground),0_0_0_11px_var(--color-muted-foreground),0_30px_70px_rgb(0_0_0/0.3)] dark:sm:shadow-[0_0_0_10px_var(--color-muted),0_0_0_11px_var(--color-input),0_30px_70px_rgb(0_0_0/0.5)]">
         <span
           aria-hidden
           className="absolute top-2.5 left-1/2 z-10 hidden h-7.5 w-27.5 -translate-x-1/2 rounded-full bg-black sm:block"
@@ -59,7 +59,7 @@ export function LoginSheet() {
           <h1 className="text-3xl font-semibold tracking-tight">
             {done ? "Welcome, Jamie" : "Trail Routes"}
           </h1>
-          <p className="mt-2 text-base text-label-secondary">
+          <p className="mt-2 text-base text-muted-foreground">
             {done
               ? "Your account was created with suiss."
               : "Save your routes and share them with friends."}
@@ -69,7 +69,7 @@ export function LoginSheet() {
             <button
               type="button"
               onClick={() => setDone(false)}
-              className="rounded-xs text-base text-link outline-none hover:underline focus-visible:focus-ring"
+              className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:focus-ring"
             >
               Sign out ›
             </button>
@@ -80,7 +80,7 @@ export function LoginSheet() {
                 size="xl"
                 block
                 onClick={() => setOpen(true)}
-                className="h-12.5 bg-label text-lg font-semibold text-surface hover:bg-label/90 active:bg-label/80"
+                className="h-12.5 bg-foreground text-lg font-semibold text-background hover:bg-foreground/90"
               >
                 Sign in with suiss
               </Button>
@@ -99,7 +99,7 @@ export function LoginSheet() {
           aria-hidden
           data-open={open ? "" : undefined}
           onClick={close}
-          className="pointer-events-none absolute inset-0 bg-scrim/35 opacity-0 transition-opacity duration-300 data-open:pointer-events-auto data-open:opacity-100"
+          className="pointer-events-none absolute inset-0 bg-black/18 opacity-0 transition-opacity duration-300 data-open:pointer-events-auto data-open:opacity-100"
         />
         <div
           role="dialog"
@@ -107,7 +107,7 @@ export function LoginSheet() {
           aria-labelledby={titleId}
           inert={!open}
           data-open={open ? "" : undefined}
-          className="absolute inset-x-0 bottom-0 flex translate-y-[105%] flex-col gap-3.5 rounded-t-3xl bg-surface-raised px-5 pt-3.5 pb-7.5 transition-transform duration-500 ease-[cubic-bezier(0.3,1.15,0.5,1)] data-open:translate-y-0 motion-reduce:transition-none"
+          className="absolute inset-x-0 bottom-0 flex translate-y-[105%] flex-col gap-3.5 rounded-t-3xl bg-popover px-5 pt-3.5 pb-7.5 transition-transform duration-500 ease-[cubic-bezier(0.3,1.15,0.5,1)] data-open:translate-y-0 motion-reduce:transition-none"
         >
           <div className="flex items-center">
             <span className="w-7" />
@@ -120,7 +120,7 @@ export function LoginSheet() {
               size="icon-sm"
               aria-label="Close"
               onClick={close}
-              className="size-7 text-label-secondary"
+              className="size-7 text-muted-foreground"
             >
               <XIcon weight="bold" className="size-3.5" />
             </Button>
@@ -131,15 +131,15 @@ export function LoginSheet() {
           >
             Use your suiss Account with Trail Routes
           </h2>
-          <div className="rounded-xl bg-surface-secondary">
+          <div className="rounded-xl bg-muted">
             <div className="flex items-center gap-3 px-3.5 py-2.5">
-              <UserIcon className="size-5 text-label-secondary" />
+              <UserIcon className="size-5 text-muted-foreground" />
               <div className="flex flex-col text-start">
-                <span className="text-xs text-label-secondary">Name</span>
+                <span className="text-xs text-muted-foreground">Name</span>
                 <span className="text-base">Jamie Rivera</span>
               </div>
             </div>
-            <div className="ms-11.5 h-px bg-separator" />
+            <div className="ms-11.5 h-px bg-border" />
             <RadioGroup
               value={email}
               onValueChange={(value) => setEmail(value as string)}
@@ -160,15 +160,15 @@ export function LoginSheet() {
               ].map((option, index) => (
                 <Label
                   key={option.value}
-                  className="flex cursor-pointer items-center gap-3 py-2.5 pe-3.5 data-[index='0']:ps-3.5 data-[index='1']:ms-11.5 data-[index='1']:border-t data-[index='1']:border-separator"
+                  className="flex cursor-pointer items-center gap-3 py-2.5 pe-3.5 data-[index='0']:ps-3.5 data-[index='1']:ms-11.5 data-[index='1']:border-t data-[index='1']:border-border"
                   data-index={index}
                 >
                   {index === 0 && (
-                    <EnvelopeSimpleIcon className="size-5 text-label-secondary" />
+                    <EnvelopeSimpleIcon className="size-5 text-muted-foreground" />
                   )}
                   <span className="flex flex-1 flex-col text-start">
                     <span className="text-base">{option.label}</span>
-                    <span className="text-xs text-label-secondary">
+                    <span className="text-xs text-muted-foreground">
                       {option.hint}
                     </span>
                   </span>

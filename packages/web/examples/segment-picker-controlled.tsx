@@ -21,7 +21,7 @@ function ControlledExample(props: React.ComponentProps<typeof SegmentPicker>) {
       <SegmentPicker {...props} value={value} onValueChange={setValue}>
         {periods}
       </SegmentPicker>
-      <p className="text-sm text-label-secondary">Selected: {value}</p>
+      <p className="text-sm text-muted-foreground">Selected: {value}</p>
     </div>
   )
 }

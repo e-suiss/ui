@@ -88,7 +88,7 @@ function Orders({
           {rows.map((order) => (
             <TableRow key={order.id}>
               <TableCell className="tabular-nums">#{order.id}</TableCell>
-              <TableCell className="text-label-secondary">
+              <TableCell className="text-muted-foreground">
                 {order.place}
               </TableCell>
               <TableCell className="text-end tabular-nums">

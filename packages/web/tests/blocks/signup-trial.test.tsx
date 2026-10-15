@@ -19,7 +19,7 @@ const start = () => page.getByRole("button", { name: "Start free trial" })
 function bars() {
   return Array.from(
     meter().element().children,
-    (bar) => !bar.className.includes("bg-control")
+    (bar) => !bar.className.includes("bg-secondary")
   ).filter(Boolean).length
 }
 

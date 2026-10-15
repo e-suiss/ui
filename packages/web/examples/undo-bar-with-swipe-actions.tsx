@@ -56,7 +56,7 @@ function SwipeNotesList() {
                 <span className="truncate text-base font-semibold">
                   {note.title}
                 </span>
-                <span className="truncate text-sm text-label-secondary">
+                <span className="truncate text-sm text-muted-foreground">
                   {note.preview}
                 </span>
               </SwipeActionsContent>
@@ -74,7 +74,7 @@ function SwipeNotesList() {
           </li>
         ))}
       </ul>
-      <p role="status" className="text-sm text-label-secondary">
+      <p role="status" className="text-sm text-muted-foreground">
         {log}
       </p>
     </div>

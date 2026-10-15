@@ -486,8 +486,8 @@ describe("SwipeActions", () => {
 
 describe("SwipeAction", () => {
   it.each([
-    ["default", "--accent"],
-    ["destructive", "--danger"],
+    ["default", "--primary"],
+    ["destructive", "--destructive"],
   ] as const)("paints the %s variant", async (variant, token) => {
     await render(
       <SwipeActions>

@@ -66,7 +66,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-md px-4.5 py-2.5 text-sm transition-colors outline-none hover:bg-item-hover focus:bg-item-hover focus-visible:focus-ring disabled:pointer-events-none disabled:text-label-quaternary data-popup-open:bg-item-selected data-popup-open:hover:bg-item-selected group-data-[layout=panel]/navigation-menu:h-11 group-data-[layout=panel]/navigation-menu:rounded-none group-data-[layout=panel]/navigation-menu:bg-transparent group-data-[layout=panel]/navigation-menu:px-2.5 group-data-[layout=panel]/navigation-menu:text-xs group-data-[layout=panel]/navigation-menu:text-label/80 group-data-[layout=panel]/navigation-menu:transition-[color] group-data-[layout=panel]/navigation-menu:duration-300 group-data-[layout=panel]/navigation-menu:hover:bg-transparent group-data-[layout=panel]/navigation-menu:hover:text-label group-data-[layout=panel]/navigation-menu:focus:bg-transparent group-data-[layout=panel]/navigation-menu:data-popup-open:bg-transparent group-data-[layout=panel]/navigation-menu:data-popup-open:text-label group-data-[layout=panel]/navigation-menu:data-popup-open:hover:bg-transparent group-data-[layout=panel]/navigation-menu:focus-visible:bg-transparent"
+  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-md px-4.5 py-2.5 text-sm transition-colors outline-none hover:bg-accent focus:bg-accent focus-visible:focus-ring disabled:pointer-events-none data-popup-open:bg-accent data-popup-open:hover:bg-accent group-data-[layout=panel]/navigation-menu:h-11 group-data-[layout=panel]/navigation-menu:rounded-none group-data-[layout=panel]/navigation-menu:bg-transparent group-data-[layout=panel]/navigation-menu:px-2.5 group-data-[layout=panel]/navigation-menu:text-xs group-data-[layout=panel]/navigation-menu:text-foreground/80 group-data-[layout=panel]/navigation-menu:transition-[color] group-data-[layout=panel]/navigation-menu:duration-300 group-data-[layout=panel]/navigation-menu:hover:bg-transparent group-data-[layout=panel]/navigation-menu:hover:text-accent-foreground group-data-[layout=panel]/navigation-menu:focus:bg-transparent group-data-[layout=panel]/navigation-menu:data-popup-open:bg-transparent group-data-[layout=panel]/navigation-menu:data-popup-open:text-accent-foreground group-data-[layout=panel]/navigation-menu:data-popup-open:hover:bg-transparent group-data-[layout=panel]/navigation-menu:focus-visible:bg-transparent focus:text-accent-foreground disabled:opacity-50"
 )
 
 function NavigationMenuTrigger({
@@ -129,7 +129,7 @@ function NavigationMenuPositioner({
       >
         <NavigationMenuPrimitive.Popup
           data-slot="navigation-menu-popup"
-          className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-2xl bg-surface-raised text-label shadow-lg ring-1 ring-label/5 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0 dark:ring-label/10"
+          className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-2xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0 dark:ring-foreground/10"
         >
           <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
         </NavigationMenuPrimitive.Popup>
@@ -147,7 +147,7 @@ function NavigationMenuPanel({
     <NavigationMenuPrimitive.Portal>
       <NavigationMenuPrimitive.Backdrop
         data-slot="navigation-menu-backdrop"
-        className="fixed inset-0 z-40 bg-scrim/40 backdrop-blur-lg transition-opacity duration-350 ease-[cubic-bezier(0.45,0,0.2,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none"
+        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-lg transition-opacity duration-350 ease-[cubic-bezier(0.45,0,0.2,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none"
       />
       <NavigationMenuPrimitive.Positioner
         anchor={anchor}
@@ -163,7 +163,7 @@ function NavigationMenuPanel({
       >
         <NavigationMenuPrimitive.Popup
           data-slot="navigation-menu-panel"
-          className="relative h-(--popup-height) w-full overflow-hidden bg-surface text-label transition-[height] dark:bg-surface-secondary duration-450 ease-[cubic-bezier(0.45,0,0.2,1)] outline-none data-ending-style:h-0 data-ending-style:duration-300 data-starting-style:h-0 motion-reduce:transition-none"
+          className="relative h-(--popup-height) w-full overflow-hidden bg-background text-foreground transition-[height] dark:bg-muted duration-450 ease-[cubic-bezier(0.45,0,0.2,1)] outline-none data-ending-style:h-0 data-ending-style:duration-300 data-starting-style:h-0 motion-reduce:transition-none"
         >
           <NavigationMenuPrimitive.Viewport className="relative size-full" />
         </NavigationMenuPrimitive.Popup>
@@ -184,8 +184,8 @@ function NavigationMenuLink({
       data-slot="navigation-menu-link"
       data-size={size}
       className={cn(
-        "flex items-center gap-1.5 rounded-md p-3 text-sm transition-colors outline-none hover:bg-item-hover focus:bg-item-hover focus-visible:focus-ring in-data-[slot=navigation-menu-content]:rounded-md data-active:bg-item-selected data-active:hover:bg-item-selected data-active:focus:bg-item-selected data-[size=lg]:text-2xl data-[size=lg]:font-semibold [&_svg:not([class*='size-'])]:size-4",
-        "in-data-[slot=navigation-menu-panel]:w-fit in-data-[slot=navigation-menu-panel]:rounded-sm in-data-[slot=navigation-menu-panel]:bg-transparent in-data-[slot=navigation-menu-panel]:px-0 in-data-[slot=navigation-menu-panel]:py-1 in-data-[slot=navigation-menu-panel]:text-xs in-data-[slot=navigation-menu-panel]:font-semibold in-data-[slot=navigation-menu-panel]:text-label in-data-[slot=navigation-menu-panel]:hover:bg-transparent in-data-[slot=navigation-menu-panel]:hover:text-link in-data-[slot=navigation-menu-panel]:focus:bg-transparent in-data-[slot=navigation-menu-panel]:data-active:bg-transparent in-data-[slot=navigation-menu-panel]:data-[size=lg]:py-0.5 in-data-[slot=navigation-menu-panel]:data-[size=lg]:text-2xl",
+        "flex items-center gap-1.5 rounded-md p-3 text-sm transition-colors outline-none hover:bg-accent focus:bg-accent focus-visible:focus-ring in-data-[slot=navigation-menu-content]:rounded-md data-active:bg-accent data-active:hover:bg-accent data-active:focus:bg-accent data-[size=lg]:text-2xl data-[size=lg]:font-semibold [&_svg:not([class*='size-'])]:size-4 hover:text-accent-foreground focus:text-accent-foreground",
+        "in-data-[slot=navigation-menu-panel]:w-fit in-data-[slot=navigation-menu-panel]:rounded-sm in-data-[slot=navigation-menu-panel]:bg-transparent in-data-[slot=navigation-menu-panel]:px-0 in-data-[slot=navigation-menu-panel]:py-1 in-data-[slot=navigation-menu-panel]:text-xs in-data-[slot=navigation-menu-panel]:font-semibold in-data-[slot=navigation-menu-panel]:text-foreground in-data-[slot=navigation-menu-panel]:hover:bg-transparent in-data-[slot=navigation-menu-panel]:hover:text-primary in-data-[slot=navigation-menu-panel]:focus:bg-transparent in-data-[slot=navigation-menu-panel]:data-active:bg-transparent in-data-[slot=navigation-menu-panel]:data-[size=lg]:py-0.5 in-data-[slot=navigation-menu-panel]:data-[size=lg]:text-2xl",
         className
       )}
       {...props}
@@ -200,7 +200,7 @@ function NavigationMenuLabel({
   return (
     <p
       data-slot="navigation-menu-label"
-      className={cn("pb-2 text-xs text-label-secondary", className)}
+      className={cn("pb-2 text-xs text-muted-foreground", className)}
       {...props}
     />
   )
@@ -219,7 +219,7 @@ function NavigationMenuIndicator({
       )}
       {...props}
     >
-      <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-ss-sm bg-separator shadow-md" />
+      <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-ss-sm bg-border shadow-md" />
     </NavigationMenuPrimitive.Icon>
   )
 }

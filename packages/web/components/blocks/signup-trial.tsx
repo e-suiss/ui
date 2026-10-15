@@ -18,11 +18,11 @@ const image =
   "https://images.unsplash.com/photo-1599669454699-248893623440?w=1200&q=80&auto=format&fit=crop"
 
 const levels = [
-  "bg-red",
-  "bg-orange",
-  "bg-yellow",
-  "bg-green",
-  "bg-green",
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-yellow-500",
+  "bg-green-500",
+  "bg-green-500",
 ] as const
 
 const strength = (value: string) =>
@@ -47,19 +47,19 @@ export function SignupTrial() {
     return (
       <section className="flex min-h-140 items-center justify-center p-6">
         <div className="flex flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
             <CheckIcon weight="bold" className="size-9.5" />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Welcome to suiss Music.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             Your one-month free trial has started.
           </p>
           <button
             type="button"
             onClick={() => setDone(false)}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Start over ›
           </button>
@@ -98,7 +98,7 @@ export function SignupTrial() {
         <h1 className="text-4xl font-semibold tracking-tight text-balance">
           Start your free trial.
         </h1>
-        <div className="overflow-hidden rounded-xl border border-separator-strong bg-surface has-focus-visible:focus-ring *:not-first:border-t *:not-first:border-t-separator-strong">
+        <div className="overflow-hidden rounded-xl border border-input bg-background has-focus-visible:focus-ring *:not-first:border-t *:not-first:border-t-input">
           <Input
             type="email"
             value={email}
@@ -131,12 +131,12 @@ export function SignupTrial() {
             {[0, 1, 2, 3].map((bar) => (
               <span
                 key={bar}
-                className={`h-1 rounded-full transition-colors duration-300 ${bar < Math.max(1, score) ? levels[score] : "bg-control"}`}
+                className={`h-1 rounded-full transition-colors duration-300 ${bar < Math.max(1, score) ? levels[score] : "bg-secondary"}`}
               />
             ))}
           </div>
         )}
-        <Label className="cursor-pointer items-start gap-2.5 text-sm leading-normal text-label-secondary">
+        <Label className="cursor-pointer items-start gap-2.5 text-sm leading-normal text-muted-foreground">
           <Checkbox
             checked={terms}
             onCheckedChange={setTerms}
@@ -148,9 +148,9 @@ export function SignupTrial() {
         <Button type="submit" size="lg" block disabled={!valid}>
           Start free trial
         </Button>
-        <p className="flex flex-wrap justify-center gap-x-1 text-sm text-label-secondary">
+        <p className="flex flex-wrap justify-center gap-x-1 text-sm text-muted-foreground">
           <span>Already have an account?</span>
-          <a href="#sign-in" className="text-link hover:underline">
+          <a href="#sign-in" className="text-primary hover:underline">
             Sign in ›
           </a>
         </p>

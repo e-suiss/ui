@@ -65,11 +65,11 @@ export function BentoCloserLook() {
   }, [auto])
 
   return (
-    <section className="flex flex-col gap-6 bg-surface-secondary p-5 md:p-8">
+    <section className="flex flex-col gap-6 bg-muted p-5 md:p-8">
       <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
         Take a closer look.
       </h2>
-      <div className="grid overflow-hidden rounded-[1.75rem] bg-surface md:min-h-117 md:grid-cols-[minmax(16rem,0.8fr)_1.2fr]">
+      <div className="grid overflow-hidden rounded-[1.75rem] bg-background md:min-h-117 md:grid-cols-[minmax(16rem,0.8fr)_1.2fr]">
         <Accordion
           value={[active]}
           onValueChange={(value: string[]) => {
@@ -82,10 +82,10 @@ export function BentoCloserLook() {
             <AccordionItem
               key={feature.title}
               value={feature.title}
-              className="ms-0 rounded-[1.125rem] px-5 not-first:border-t-0 transition-[background-color,padding] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:bg-surface-secondary data-open:py-2 motion-reduce:transition-none"
+              className="ms-0 rounded-[1.125rem] px-5 not-first:border-t-0 transition-[background-color,padding] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:bg-muted data-open:py-2 motion-reduce:transition-none"
             >
               <AccordionTrigger className="justify-start gap-2.5 pe-0 text-lg font-semibold hover:no-underline **:data-[slot=accordion-trigger-icon]:hidden">
-                <span className="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-control text-label transition-[rotate,background-color,color] duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] group-aria-expanded/accordion-trigger:rotate-45 group-aria-expanded/accordion-trigger:bg-label group-aria-expanded/accordion-trigger:text-surface motion-reduce:transition-none">
+                <span className="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground transition-[rotate,background-color,color] duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] group-aria-expanded/accordion-trigger:rotate-45 group-aria-expanded/accordion-trigger:bg-foreground group-aria-expanded/accordion-trigger:text-background motion-reduce:transition-none">
                   <PlusIcon weight="bold" className="size-3.5" />
                 </span>
                 {feature.title}
@@ -96,7 +96,7 @@ export function BentoCloserLook() {
             </AccordionItem>
           ))}
         </Accordion>
-        <div className="relative order-1 m-4 aspect-4/3 overflow-hidden rounded-[1.25rem] bg-control md:order-2 md:aspect-auto">
+        <div className="relative order-1 m-4 aspect-4/3 overflow-hidden rounded-[1.25rem] bg-secondary md:order-2 md:aspect-auto">
           {features.map((feature) => (
             <img
               key={feature.title}

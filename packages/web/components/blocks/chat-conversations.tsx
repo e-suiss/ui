@@ -123,7 +123,7 @@ function TypingDots() {
               <span
                 key={dot}
                 style={{ animationDelay: `${dot * 180}ms` }}
-                className="size-2 animate-[pulse_1.1s_ease-in-out_infinite] rounded-full bg-label-tertiary"
+                className="size-2 animate-[pulse_1.1s_ease-in-out_infinite] rounded-full bg-muted-foreground"
               />
             ))}
           </BubbleContent>
@@ -158,11 +158,11 @@ function Composer({
         variant="secondary"
         size="icon-sm"
         aria-label="Add attachment"
-        className="text-label-secondary"
+        className="text-muted-foreground"
       >
         <PlusIcon weight="bold" className="size-4.5" />
       </Button>
-      <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-separator-strong ps-3.5 pe-0.75 has-focus-visible:focus-ring">
+      <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:focus-ring">
         <Input
           value={value}
           onChange={(event) => setValue(event.target.value)}
@@ -240,7 +240,7 @@ export function ChatConversations() {
             variant="ghost"
             size="icon"
             aria-label="New message"
-            className="text-label-secondary"
+            className="text-muted-foreground"
           >
             <NotePencilIcon className="size-4.5" />
           </Button>
@@ -252,7 +252,7 @@ export function ChatConversations() {
               key={item.name}
               isActive={index === selected}
               onClick={() => setSelected(index)}
-              className="group/thread flex-row p-2.5 md:data-active:bg-accent md:data-active:text-on-accent"
+              className="group/thread flex-row p-2.5 md:data-active:bg-primary md:data-active:text-primary-foreground"
             >
               <span className="flex items-center gap-2.5">
                 <Initials
@@ -265,11 +265,11 @@ export function ChatConversations() {
                     <span className="flex-1 truncate text-sm font-semibold">
                       {item.name}
                     </span>
-                    <span className="text-xs text-label-secondary md:group-data-active/thread:text-on-accent">
+                    <span className="text-xs text-muted-foreground md:group-data-active/thread:text-primary-foreground">
                       {item.time}
                     </span>
                   </span>
-                  <span className="truncate text-sm text-label-secondary md:group-data-active/thread:text-on-accent">
+                  <span className="truncate text-sm text-muted-foreground md:group-data-active/thread:text-primary-foreground">
                     {last?.text}
                   </span>
                 </span>
@@ -282,11 +282,11 @@ export function ChatConversations() {
         title={thread.name}
         className="h-full p-0 md:p-0 [&>h2]:sr-only"
       >
-        <div className="flex h-14 shrink-0 items-center gap-2.5 border-b border-separator px-4">
+        <div className="flex h-14 shrink-0 items-center gap-2.5 border-b border-border px-4">
           <Initials name={thread.name} hue={thread.hue} className="size-7.5" />
           <div className="flex flex-1 flex-col">
             <span className="text-sm font-semibold">{thread.name}</span>
-            <span className="text-2xs text-label-secondary" aria-live="polite">
+            <span className="text-2xs text-muted-foreground" aria-live="polite">
               {typing ? "typing…" : "Message"}
             </span>
           </div>
@@ -294,7 +294,7 @@ export function ChatConversations() {
             variant="ghost"
             size="icon"
             aria-label="Video call"
-            className="text-accent"
+            className="text-primary"
           >
             <VideoCameraIcon className="size-5" />
           </Button>
@@ -302,7 +302,7 @@ export function ChatConversations() {
             variant="ghost"
             size="icon"
             aria-label="Details"
-            className="text-accent"
+            className="text-primary"
           >
             <InfoIcon className="size-5" />
           </Button>
@@ -313,7 +313,7 @@ export function ChatConversations() {
               aria-label={`Conversation with ${thread.name}`}
             >
               <MessageScrollerContent className="gap-1 px-5 py-4">
-                <p className="mt-1 mb-2.5 text-center text-2xs text-label-secondary">
+                <p className="mt-1 mb-2.5 text-center text-2xs text-muted-foreground">
                   Today 9:30 AM
                 </p>
                 {lines.map((line) => (

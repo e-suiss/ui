@@ -45,13 +45,13 @@ function NoteRows({
               <span className="truncate text-base font-semibold">
                 {note.title}
               </span>
-              <span className="truncate text-sm text-label-secondary">
+              <span className="truncate text-sm text-muted-foreground">
                 {note.preview}
               </span>
             </span>
             <CaretRightIcon
               aria-hidden
-              className="size-4 shrink-0 text-label-tertiary transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0"
+              className="size-4 shrink-0 text-muted-foreground transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0"
             />
           </button>
         </SelectionListItem>
@@ -83,7 +83,7 @@ function DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {
     <Button
       variant="plain"
       size="lg"
-      className="px-4 text-danger disabled:text-label-quaternary"
+      className="px-4 text-destructive disabled:opacity-50"
       disabled={selected.length === 0}
       onClick={() => {
         onDelete(selected)
@@ -128,7 +128,7 @@ function NotesExample() {
         onOpen={(note) => setLog(`Opened ${note.title}`)}
       />
       <div className="flex items-center justify-between gap-3">
-        <p role="status" className="text-sm text-label-secondary">
+        <p role="status" className="text-sm text-muted-foreground">
           {log}
         </p>
         <Button size="sm" variant="secondary" onClick={reset}>

@@ -76,10 +76,10 @@ const views: { value: Status | "All"; icon: React.ElementType }[] = [
 ]
 
 const priorityClass: Record<Priority, string> = {
-  High: "bg-danger/14 text-[color-mix(in_oklab,var(--danger),var(--label)_30%)] dark:text-danger",
+  High: "bg-destructive/14 text-[color-mix(in_oklab,var(--destructive),var(--foreground)_30%)] dark:text-destructive",
   Medium:
-    "bg-orange/14 text-[color-mix(in_oklab,var(--orange),var(--label)_50%)] dark:text-orange",
-  Low: "bg-control text-label-secondary",
+    "bg-orange-500/14 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_50%)] dark:text-orange-500",
+  Low: "bg-secondary text-muted-foreground",
 }
 
 function Requester({
@@ -130,7 +130,7 @@ export function InboxSupport() {
     >
       <SplitViewSidebar
         title="Support"
-        className="min-h-full md:bg-surface-secondary [&>h2]:md:px-3 [&>h2]:md:pt-3 [&>h2]:md:text-lg [&>h2]:md:text-label"
+        className="min-h-full md:bg-muted [&>h2]:md:px-3 [&>h2]:md:pt-3 [&>h2]:md:text-lg [&>h2]:md:text-foreground"
       >
         {views.map((item) => (
           <SplitViewItem
@@ -139,9 +139,9 @@ export function InboxSupport() {
             onClick={() => setView(item.value)}
           >
             <span className="flex items-center gap-2.5">
-              <item.icon className="size-4.5 text-accent" />
+              <item.icon className="size-4.5 text-primary" />
               <span className="flex-1">{item.value}</span>
-              <span className="text-xs text-label-secondary tabular-nums">
+              <span className="text-xs text-muted-foreground tabular-nums">
                 {item.value === "All"
                   ? tickets.length
                   : tickets.filter((ticket) => ticket.status === item.value)
@@ -160,7 +160,7 @@ export function InboxSupport() {
             className="gap-1 py-3"
           >
             <span className="flex items-center gap-2">
-              <span className="flex-1 text-xs text-label-secondary">
+              <span className="flex-1 text-xs text-muted-foreground">
                 {ticket.id} · {ticket.device}
               </span>
               <span
@@ -175,14 +175,14 @@ export function InboxSupport() {
                 ticket={ticket}
                 className="size-4.5 *:text-[0.4375rem]"
               />
-              <span className="text-xs text-label-secondary">
+              <span className="text-xs text-muted-foreground">
                 {ticket.requester}
               </span>
             </span>
           </SplitViewItem>
         ))}
         {list.length === 0 && (
-          <p className="p-6 text-center text-sm text-label-secondary">
+          <p className="p-6 text-center text-sm text-muted-foreground">
             No tickets
           </p>
         )}
@@ -196,7 +196,7 @@ export function InboxSupport() {
             key={current.id}
             className="flex flex-col gap-4 transition-[opacity,translate] duration-800 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
           >
-            <span className="text-sm text-label-secondary">
+            <span className="text-sm text-muted-foreground">
               {current.id} · {current.device}
             </span>
             <ToggleGroup
@@ -222,12 +222,12 @@ export function InboxSupport() {
                 <span className="text-sm font-semibold">
                   {current.requester}
                 </span>
-                <span className="text-xs text-label-secondary">
+                <span className="text-xs text-muted-foreground">
                   Today 8:12 AM
                 </span>
               </div>
             </div>
-            <p className="max-w-130 rounded-2xl rounded-ss-sm bg-surface-secondary px-3.5 py-3 text-base leading-relaxed">
+            <p className="max-w-130 rounded-2xl rounded-ss-sm bg-muted px-3.5 py-3 text-base leading-relaxed">
               Hi, this started right after the latest update. I tried restarting
               but it keeps happening. Can you help?
             </p>

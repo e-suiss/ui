@@ -192,7 +192,7 @@ export function RolesMatrix() {
               <h1 className="text-3xl font-semibold tracking-tight">
                 Permissions
               </h1>
-              <p className="text-sm text-label-secondary">
+              <p className="text-sm text-muted-foreground">
                 Admin permissions can't be changed.
               </p>
             </div>
@@ -214,7 +214,7 @@ export function RolesMatrix() {
                 {roles.map((role) => (
                   <span
                     key={role}
-                    className="text-center text-xs font-semibold text-label-secondary"
+                    className="text-center text-xs font-semibold text-muted-foreground"
                   >
                     {role}
                   </span>
@@ -223,11 +223,11 @@ export function RolesMatrix() {
               {groups.map((group, g) => (
                 <section key={group.name} className="flex flex-col gap-2">
                   <h2 className="px-1 text-sm font-semibold">{group.name}</h2>
-                  <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
+                  <ul className="overflow-hidden rounded-2xl bg-muted">
                     {group.permissions.map((permission, p) => (
                       <li
                         key={permission.name}
-                        className={`${gridClass} min-h-10 px-4 not-first:border-t not-first:border-separator`}
+                        className={`${gridClass} min-h-10 px-4 not-first:border-t not-first:border-border`}
                       >
                         <span className="text-sm">{permission.name}</span>
                         {roles.map((role, r) => (
@@ -237,7 +237,7 @@ export function RolesMatrix() {
                               disabled={r === 0}
                               onCheckedChange={() => toggle(g, p, r)}
                               aria-label={`${group.name} ${permission.name} for ${role}`}
-                              className="size-4.5 data-disabled:data-checked:border-transparent data-disabled:data-checked:bg-label-tertiary data-disabled:data-checked:text-white"
+                              className="size-4.5 data-disabled:data-checked:border-transparent data-disabled:data-checked:text-white data-disabled:opacity-50"
                             />
                           </span>
                         ))}

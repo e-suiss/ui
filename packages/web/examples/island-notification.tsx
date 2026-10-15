@@ -15,7 +15,7 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <ChatCircleIcon weight="fill" className="text-green" />,
+            icon: <ChatCircleIcon weight="fill" className="text-green-500" />,
             title: "Jordan Lee",
             description: "Are we still on for Saturday?",
           })
@@ -27,7 +27,7 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <BellIcon weight="fill" className="text-orange" />,
+            icon: <BellIcon weight="fill" className="text-orange-500" />,
             title: "Design review",
             description: "Starts in 10 minutes",
           })
@@ -44,7 +44,7 @@ export default function IslandNotification() {
     <IslandProvider>
       <div className="flex min-h-[60dvh] flex-col items-center justify-center gap-4 text-center">
         <Island />
-        <p className="max-w-xs text-sm text-label-secondary">
+        <p className="max-w-xs text-sm text-muted-foreground">
           The pill grows to show the notification and shrinks back on its own.
         </p>
         <NotifyButtons />

@@ -62,12 +62,14 @@ function AppSidebar(props: SidebarArgs) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div className="bg-accent text-on-accent flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold">
+              <div className="bg-primary text-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-xl text-sm font-semibold">
                 A
               </div>
               <div className="grid flex-1 text-start leading-tight">
                 <span className="truncate font-medium">Acme Inc.</span>
-                <span className="text-label/70 truncate text-xs">Pro plan</span>
+                <span className="text-foreground/70 truncate text-xs">
+                  Pro plan
+                </span>
               </div>
               <CaretUpDownIcon className="ms-auto" />
             </SidebarMenuButton>
@@ -143,12 +145,12 @@ function AppSidebar(props: SidebarArgs) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div className="bg-surface-secondary flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium">
+              <div className="bg-muted flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium">
                 JL
               </div>
               <div className="grid flex-1 text-start leading-tight">
                 <span className="truncate font-medium">Jordan Lee</span>
-                <span className="text-label/70 truncate text-xs">
+                <span className="text-foreground/70 truncate text-xs">
                   jordan@acme.com
                 </span>
               </div>
@@ -177,8 +179,8 @@ function AppShell({
             orientation="vertical"
             className="me-2 data-vertical:h-4 data-vertical:self-center"
           />
-          <span className="text-label-secondary text-sm">Platform</span>
-          <span className="text-label-secondary text-sm">/</span>
+          <span className="text-muted-foreground text-sm">Platform</span>
+          <span className="text-muted-foreground text-sm">/</span>
           <span className="text-sm font-medium">Home</span>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
@@ -186,13 +188,13 @@ function AppShell({
             {["Revenue", "Active users", "Open issues"].map((label) => (
               <div
                 key={label}
-                className="bg-surface-secondary flex aspect-video flex-col justify-end rounded-2xl p-4"
+                className="bg-muted flex aspect-video flex-col justify-end rounded-2xl p-4"
               >
-                <span className="text-label-secondary text-sm">{label}</span>
+                <span className="text-muted-foreground text-sm">{label}</span>
               </div>
             ))}
           </div>
-          <div className="bg-surface-secondary min-h-64 flex-1 rounded-2xl" />
+          <div className="bg-muted min-h-64 flex-1 rounded-2xl" />
         </div>
       </SidebarInset>
     </SidebarProvider>

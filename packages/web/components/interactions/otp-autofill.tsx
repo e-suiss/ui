@@ -233,7 +233,7 @@ function OtpAutofillInput({
         onBlur?.(event)
       }}
       containerClassName={cn(
-        "[&_[data-slot=input-otp-slot]]:transition-[background-color,border-color,color,opacity] [&_[data-slot=input-otp-slot]]:duration-300 group-data-[state=invalid]/otp-autofill:[&_[data-slot=input-otp-slot]]:border-danger group-data-[state=invalid]/otp-autofill:[&_[data-slot=input-otp-slot]]:text-danger group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:border-success group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:bg-success-surface group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:text-success group-data-[state=verifying]/otp-autofill:[&_[data-slot=input-otp-slot]]:opacity-60",
+        "[&_[data-slot=input-otp-slot]]:transition-[background-color,border-color,color,opacity] [&_[data-slot=input-otp-slot]]:duration-300 group-data-[state=invalid]/otp-autofill:[&_[data-slot=input-otp-slot]]:border-destructive group-data-[state=invalid]/otp-autofill:[&_[data-slot=input-otp-slot]]:text-destructive group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:border-green-500 group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:bg-green-500/10 group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:text-green-600 dark:group-data-[state=verified]/otp-autofill:[&_[data-slot=input-otp-slot]]:text-green-400 group-data-[state=verifying]/otp-autofill:[&_[data-slot=input-otp-slot]]:opacity-60",
         containerClassName
       )}
       {...props}
@@ -285,15 +285,15 @@ function OtpAutofillSuggestion({
       onClick={() => code && fill(code)}
       className={cn(
         "flex items-center outline-none transition-[opacity,translate,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete select-none focus-visible:focus-ring data-closed:invisible data-closed:opacity-0",
-        "data-[placement=inline]:gap-2.5 data-[placement=inline]:rounded-full data-[placement=inline]:bg-surface-raised data-[placement=inline]:py-2 data-[placement=inline]:ps-3 data-[placement=inline]:pe-4 data-[placement=inline]:text-sm data-[placement=inline]:shadow-lg data-[placement=inline]:ring-1 data-[placement=inline]:ring-separator data-[placement=inline]:hover:bg-item-hover motion-safe:data-[placement=inline]:data-closed:-translate-y-1",
-        "data-[placement=keyboard]:fixed data-[placement=keyboard]:inset-x-0 data-[placement=keyboard]:z-50 data-[placement=keyboard]:min-h-11 data-[placement=keyboard]:flex-col data-[placement=keyboard]:justify-center data-[placement=keyboard]:border-t data-[placement=keyboard]:border-separator data-[placement=keyboard]:bg-surface-secondary/85 data-[placement=keyboard]:pt-1.5 data-[placement=keyboard]:pb-[max(0.375rem,env(safe-area-inset-bottom))] data-[placement=keyboard]:backdrop-blur-xl data-[placement=keyboard]:active:bg-item-pressed motion-safe:data-[placement=keyboard]:data-closed:translate-y-2",
+        "data-[placement=inline]:gap-2.5 data-[placement=inline]:rounded-full data-[placement=inline]:bg-popover data-[placement=inline]:py-2 data-[placement=inline]:ps-3 data-[placement=inline]:pe-4 data-[placement=inline]:text-sm data-[placement=inline]:shadow-lg data-[placement=inline]:ring-1 data-[placement=inline]:ring-border data-[placement=inline]:hover:bg-accent motion-safe:data-[placement=inline]:data-closed:-translate-y-1 data-[placement=inline]:hover:text-accent-foreground",
+        "data-[placement=keyboard]:fixed data-[placement=keyboard]:inset-x-0 data-[placement=keyboard]:z-50 data-[placement=keyboard]:min-h-11 data-[placement=keyboard]:flex-col data-[placement=keyboard]:justify-center data-[placement=keyboard]:border-t data-[placement=keyboard]:border-border data-[placement=keyboard]:bg-muted/85 data-[placement=keyboard]:pt-1.5 data-[placement=keyboard]:pb-[max(0.375rem,env(safe-area-inset-bottom))] data-[placement=keyboard]:backdrop-blur-xl motion-safe:data-[placement=keyboard]:data-closed:translate-y-2",
         className
       )}
       {...props}
     >
       {isMobile ? (
         <>
-          <span className="text-xs text-label-secondary">{source}</span>
+          <span className="text-xs text-muted-foreground">{source}</span>
           <span className="text-base font-semibold tracking-wider tabular-nums">
             {code}
           </span>
@@ -303,9 +303,9 @@ function OtpAutofillSuggestion({
           <ChatCircleTextIcon
             aria-hidden
             weight="fill"
-            className="size-5 shrink-0 text-success"
+            className="size-5 shrink-0 text-green-600 dark:text-green-400"
           />
-          <span className="text-label-secondary">{source}</span>
+          <span className="text-muted-foreground">{source}</span>
           <span className="font-semibold tracking-wider tabular-nums">
             {code}
           </span>

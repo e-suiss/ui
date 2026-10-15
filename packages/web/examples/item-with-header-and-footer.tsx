@@ -22,7 +22,7 @@ export default function ItemWithHeaderAndFooter() {
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
-          <span className="text-label-secondary text-xs">Renews on May 1</span>
+          <span className="text-muted-foreground text-xs">Renews on May 1</span>
           <Button variant="outline" size="sm">
             Manage
           </Button>

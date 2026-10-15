@@ -40,7 +40,7 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "pointer-events-auto absolute inset-e-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-xl bg-surface-raised text-label shadow-[0_8px_32px_rgb(0_0_0/0.14)] ring-1 ring-label/5 dark:shadow-lg dark:ring-0 will-change-transform outline-none select-none focus-visible:focus-ring",
+        "pointer-events-auto absolute inset-e-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-xl bg-popover text-popover-foreground shadow-[0_8px_32px_rgb(0_0_0/0.14)] ring-1 ring-foreground/5 dark:shadow-lg dark:ring-0 will-change-transform outline-none select-none focus-visible:focus-ring",
         "[--gap:0.75rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))] [--peek:0.75rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
         "h-(--height) transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--peek))-(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms,filter_500ms] dark:not-data-expanded:brightness-[calc(1-var(--toast-index)*0.18)]",
         "after:absolute after:top-full after:inset-s-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
@@ -92,7 +92,7 @@ function ToastDescription({
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("text-sm text-label-secondary", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -125,7 +125,7 @@ function ToastClose({
       aria-label="Close toast"
       render={render}
       className={cn(
-        "relative shrink-0 text-label-secondary after:absolute after:-inset-2 after:content-[''] hover:text-label",
+        "relative shrink-0 text-muted-foreground after:absolute after:-inset-2 after:content-[''] hover:text-foreground",
         className
       )}
       {...props}
@@ -175,22 +175,22 @@ function ToastIcon({ type }: { type: string | undefined }) {
 
   if (type === "success") {
     icon = <CheckCircleIcon weight="fill" />
-    tint = "text-green"
+    tint = "text-green-500"
   }
 
   if (type === "info") {
     icon = <InfoIcon weight="fill" />
-    tint = "text-accent"
+    tint = "text-primary"
   }
 
   if (type === "warning") {
     icon = <WarningIcon weight="fill" />
-    tint = "text-orange"
+    tint = "text-orange-500"
   }
 
   if (type === "error") {
     icon = <XCircleIcon weight="fill" />
-    tint = "text-danger"
+    tint = "text-destructive"
   }
 
   const badge = icon && (
@@ -226,7 +226,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
           type !== "loading" && "opacity-0 delay-250"
         )}
       >
-        <circle cx="16" cy="16" r="14.5" className="stroke-label/15" />
+        <circle cx="16" cy="16" r="14.5" className="stroke-foreground/15" />
         <circle
           ref={ring}
           cx="16"
@@ -234,7 +234,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
           r="14.5"
           pathLength="100"
           strokeDasharray="0 100"
-          className="stroke-accent"
+          className="stroke-primary"
         />
       </svg>
       {type !== "loading" && badge}

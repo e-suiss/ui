@@ -43,7 +43,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "border-t bg-surface-secondary/50 font-semibold [&>tr]:last:border-b-0",
+        "border-t bg-muted/50 font-semibold [&>tr]:last:border-b-0",
         className
       )}
       {...props}
@@ -56,7 +56,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b transition-colors hover:bg-item-hover has-aria-expanded:bg-item-selected data-selected:bg-item-selected",
+        "border-b transition-colors hover:bg-accent has-aria-expanded:bg-accent data-selected:bg-accent hover:text-accent-foreground",
         className
       )}
       {...props}
@@ -69,7 +69,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-12 px-3 text-start align-middle text-xs font-semibold whitespace-nowrap text-label-secondary has-[[role=checkbox]]:pe-0",
+        "h-12 px-3 text-start align-middle text-xs font-semibold whitespace-nowrap text-muted-foreground has-[[role=checkbox]]:pe-0",
         className
       )}
       {...props}
@@ -97,7 +97,7 @@ function TableCaption({
   return (
     <caption
       data-slot="table-caption"
-      className={cn("mt-4 text-sm text-label-secondary", className)}
+      className={cn("mt-4 text-sm text-muted-foreground", className)}
       {...props}
     />
   )

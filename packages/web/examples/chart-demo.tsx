@@ -16,8 +16,8 @@ const visitors = [
 ]
 
 const visitorsConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
-  mobile: { label: "Mobile", color: "var(--green)" },
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
+  mobile: { label: "Mobile", color: "var(--color-green-500)" },
 } satisfies ChartConfig
 
 const shortMonth = (value: string) => value.slice(0, 3)

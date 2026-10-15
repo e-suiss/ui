@@ -7,11 +7,19 @@ import {
 } from "@/components/ui/carousel"
 
 const popular = [
-  { name: "Breakfast platter", price: "₺620", tint: "from-orange to-red" },
-  { name: "Grilled meatballs", price: "₺280", tint: "from-red to-pink" },
-  { name: "Menemen", price: "₺160", tint: "from-yellow to-orange" },
-  { name: "Lentil soup", price: "₺90", tint: "from-green to-teal" },
-  { name: "Künefe", price: "₺160", tint: "from-purple to-indigo" },
+  {
+    name: "Breakfast platter",
+    price: "₺620",
+    tint: "from-orange-500 to-red-500",
+  },
+  {
+    name: "Grilled meatballs",
+    price: "₺280",
+    tint: "from-red-500 to-pink-500",
+  },
+  { name: "Menemen", price: "₺160", tint: "from-yellow-500 to-orange-500" },
+  { name: "Lentil soup", price: "₺90", tint: "from-green-500 to-teal-500" },
+  { name: "Künefe", price: "₺160", tint: "from-purple-500 to-indigo-500" },
 ]
 
 export default function CarouselShelf() {
@@ -32,7 +40,7 @@ export default function CarouselShelf() {
             </a>
             <div className="flex items-center gap-3">
               <CarouselPlayButton variant="ghost" />
-              <a href="#popular-all" className="text-link">
+              <a href="#popular-all" className="text-primary">
                 See all
               </a>
             </div>
@@ -46,7 +54,7 @@ export default function CarouselShelf() {
                 <p className="mt-2 truncate text-sm font-semibold">
                   {item.name}
                 </p>
-                <p className="text-xs text-label-secondary tabular-nums">
+                <p className="text-xs text-muted-foreground tabular-nums">
                   {item.price}
                 </p>
               </CarouselItem>

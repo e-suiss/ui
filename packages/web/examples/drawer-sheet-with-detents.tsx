@@ -73,7 +73,7 @@ function CalendarExample() {
                   Drag the handle up for the full form.
                 </DrawerDescription>
                 <div className="flex flex-col gap-4 overflow-y-auto p-4">
-                  <div className="flex flex-col overflow-hidden rounded-xl bg-surface-secondary">
+                  <div className="flex flex-col overflow-hidden rounded-xl bg-muted">
                     <Input
                       aria-label="Title"
                       placeholder="Title"
@@ -82,10 +82,10 @@ function CalendarExample() {
                     <Input
                       aria-label="Location"
                       placeholder="Location or Video Call"
-                      className="rounded-none border-0 border-t border-separator bg-transparent"
+                      className="rounded-none border-0 border-t border-border bg-transparent"
                     />
                   </div>
-                  <div className="flex flex-col divide-y divide-separator overflow-hidden rounded-xl bg-surface-secondary">
+                  <div className="flex flex-col divide-y divide-border overflow-hidden rounded-xl bg-muted">
                     <div className="flex min-h-11 items-center justify-between px-3 text-base">
                       <span id="all-day-label">All-day</span>
                       <Switch
@@ -96,13 +96,13 @@ function CalendarExample() {
                     </div>
                     <div className="flex min-h-11 items-center justify-between px-3 text-base">
                       Starts
-                      <span className="text-label-secondary">
+                      <span className="text-muted-foreground">
                         {allDay ? "Oct 14" : "Oct 14, 9:00 AM"}
                       </span>
                     </div>
                     <div className="flex min-h-11 items-center justify-between px-3 text-base">
                       Ends
-                      <span className="text-label-secondary">
+                      <span className="text-muted-foreground">
                         {allDay ? "Oct 14" : "Oct 14, 10:00 AM"}
                       </span>
                     </div>
@@ -111,7 +111,7 @@ function CalendarExample() {
                     aria-label="Notes"
                     placeholder="Notes"
                     rows={6}
-                    className="resize-none rounded-xl bg-surface-secondary p-3 text-base outline-none placeholder:text-label-secondary focus-visible:focus-ring"
+                    className="resize-none rounded-xl bg-muted p-3 text-base outline-none placeholder:text-muted-foreground focus-visible:focus-ring"
                   />
                 </div>
               </DrawerContent>
@@ -122,7 +122,7 @@ function CalendarExample() {
               <abbr
                 key={day}
                 title={day}
-                className="text-xs font-semibold text-label-secondary no-underline"
+                className="text-xs font-semibold text-muted-foreground no-underline"
               >
                 {day[0]}
               </abbr>
@@ -132,7 +132,7 @@ function CalendarExample() {
                 key={day}
                 className={
                   day === 14
-                    ? "mx-auto flex size-9 items-center justify-center rounded-full bg-danger font-semibold text-surface"
+                    ? "mx-auto flex size-9 items-center justify-center rounded-full bg-destructive font-semibold text-background"
                     : "flex h-9 items-center justify-center"
                 }
               >
@@ -140,12 +140,12 @@ function CalendarExample() {
               </span>
             ))}
           </div>
-          <div className="flex flex-col gap-2 rounded-2xl bg-surface-secondary p-4">
+          <div className="flex flex-col gap-2 rounded-2xl bg-muted p-4">
             <span className="text-sm font-semibold">Tuesday, October 14</span>
-            <span className="text-sm text-label-secondary">
+            <span className="text-sm text-muted-foreground">
               9:00 AM · Design review
             </span>
-            <span className="text-sm text-label-secondary">
+            <span className="text-sm text-muted-foreground">
               1:00 PM · Lunch with Sam
             </span>
           </div>

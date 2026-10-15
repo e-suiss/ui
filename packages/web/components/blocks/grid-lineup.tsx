@@ -79,7 +79,7 @@ function LineupModel({ model }: { model: (typeof models)[number] }) {
       <img
         src={model.image}
         alt={model.alt}
-        className="aspect-[0.85] w-full rounded-2xl bg-control object-cover"
+        className="aspect-[0.85] w-full rounded-2xl bg-secondary object-cover"
       />
       <ToggleGroup
         value={[finish]}
@@ -96,11 +96,11 @@ function LineupModel({ model }: { model: (typeof models)[number] }) {
             value={item.label}
             aria-label={item.label}
             style={{ "--swatch": item.color } as React.CSSProperties}
-            className="relative size-3 min-w-0 rounded-full bg-(--swatch) p-0 shadow-[inset_0_0_0_1px_--alpha(var(--color-label)/15%)] transition-shadow duration-200 after:absolute after:-inset-2 after:content-[''] hover:bg-(--swatch) aria-pressed:bg-(--swatch) aria-pressed:ring-[1.5px] aria-pressed:ring-label-secondary aria-pressed:ring-offset-[1.5px] aria-pressed:ring-offset-surface aria-pressed:hover:bg-(--swatch)"
+            className="relative size-3 min-w-0 rounded-full bg-(--swatch) p-0 shadow-[inset_0_0_0_1px_--alpha(var(--color-foreground)/15%)] transition-shadow duration-200 after:absolute after:-inset-2 after:content-[''] hover:bg-(--swatch) aria-pressed:bg-(--swatch) aria-pressed:ring-[1.5px] aria-pressed:ring-muted-foreground aria-pressed:ring-offset-[1.5px] aria-pressed:ring-offset-background aria-pressed:hover:bg-(--swatch)"
           />
         ))}
       </ToggleGroup>
-      <span className="mt-4.5 min-h-4 text-xs font-semibold text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:text-orange">
+      <span className="mt-4.5 min-h-4 text-xs font-semibold text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500">
         {model.kicker}
       </span>
       <h3 className="mt-1 text-2xl font-semibold tracking-tight">
@@ -109,10 +109,10 @@ function LineupModel({ model }: { model: (typeof models)[number] }) {
       <p className="mt-2 min-h-[2lh] text-lg leading-snug text-balance">
         {model.tagline}
       </p>
-      <p className="mt-2 text-sm text-label-secondary">From {model.price}</p>
+      <p className="mt-2 text-sm text-muted-foreground">From {model.price}</p>
       <div className="mt-4.5 flex flex-wrap items-center justify-center gap-x-4.5 gap-y-3">
         <Button size="sm">Buy</Button>
-        <a href="#learn" className="text-sm text-link hover:underline">
+        <a href="#learn" className="text-sm text-primary hover:underline">
           Learn more ›
         </a>
       </div>
@@ -122,7 +122,7 @@ function LineupModel({ model }: { model: (typeof models)[number] }) {
 
 export function GridLineup() {
   return (
-    <section className="bg-surface px-5 py-10 md:px-10">
+    <section className="bg-background px-5 py-10 md:px-10">
       <h2 className="mb-9 text-center text-4xl font-semibold tracking-tight text-balance md:text-5xl">
         Which phone is right for you?
       </h2>

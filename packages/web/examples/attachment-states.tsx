@@ -56,7 +56,7 @@ export default function AttachmentStates() {
           <AttachmentDescription>Processing…</AttachmentDescription>
         </AttachmentContent>
         <AttachmentActions>
-          <Spinner className="size-5 text-label-secondary" />
+          <Spinner className="size-5 text-muted-foreground" />
         </AttachmentActions>
       </Attachment>
       <Attachment orientation="horizontal" state="error" className="w-full">

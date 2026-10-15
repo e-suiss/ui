@@ -112,7 +112,7 @@ function FullscreenMenuContent({
       <DialogPrimitive.Popup
         data-slot="fullscreen-menu-content"
         className={cn(
-          "group/fullscreen-menu no-scrollbar fixed inset-0 z-50 flex flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-surface pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-label outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:duration-350 data-ending-style:[clip-path:inset(0_0_100%_0)] data-starting-style:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none",
+          "group/fullscreen-menu no-scrollbar fixed inset-0 z-50 flex flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-background pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-foreground outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:duration-350 data-ending-style:[clip-path:inset(0_0_100%_0)] data-starting-style:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none",
           className
         )}
         {...props}
@@ -133,7 +133,7 @@ function FullscreenMenuHeader({ closeLabel }: { closeLabel?: string }) {
   return (
     <div
       data-slot="fullscreen-menu-header"
-      className="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-end bg-surface px-4"
+      className="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-end bg-background px-4"
     >
       <DialogPrimitive.Close
         data-slot="fullscreen-menu-close"
@@ -194,7 +194,7 @@ function FullscreenMenuLabel({
     <div
       data-slot="fullscreen-menu-label"
       className={cn(
-        "pb-1 text-sm text-label-secondary transition-[opacity,translate] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] group-data-ending-style/fullscreen-menu:-translate-y-2 group-data-ending-style/fullscreen-menu:opacity-0 group-data-ending-style/fullscreen-menu:delay-0 group-data-ending-style/fullscreen-menu:duration-200 group-data-starting-style/fullscreen-menu:-translate-y-2 group-data-starting-style/fullscreen-menu:opacity-0 motion-reduce:transition-none",
+        "pb-1 text-sm text-muted-foreground transition-[opacity,translate] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] group-data-ending-style/fullscreen-menu:-translate-y-2 group-data-ending-style/fullscreen-menu:opacity-0 group-data-ending-style/fullscreen-menu:delay-0 group-data-ending-style/fullscreen-menu:duration-200 group-data-starting-style/fullscreen-menu:-translate-y-2 group-data-starting-style/fullscreen-menu:opacity-0 motion-reduce:transition-none",
         className
       )}
       {...props}
@@ -220,7 +220,7 @@ function FullscreenMenuLink({
         "aria-current": isActive ? "page" : undefined,
         onClick: () => setOpen(false),
         className: cn(
-          "flex min-h-11 items-center rounded-lg text-2xl font-semibold text-label outline-none transition-[opacity,translate,color] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] select-none [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] hover:text-label-secondary focus-visible:focus-ring data-active:text-link group-data-ending-style/fullscreen-menu:-translate-y-2 group-data-ending-style/fullscreen-menu:opacity-0 group-data-ending-style/fullscreen-menu:delay-0 group-data-ending-style/fullscreen-menu:duration-200 group-data-starting-style/fullscreen-menu:-translate-y-2 group-data-starting-style/fullscreen-menu:opacity-0 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:min-h-10 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:text-lg group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:font-medium motion-reduce:transition-none",
+          "flex min-h-11 items-center rounded-lg text-2xl font-semibold text-foreground outline-none transition-[opacity,translate,color] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] select-none [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] hover:text-muted-foreground focus-visible:focus-ring data-active:text-primary group-data-ending-style/fullscreen-menu:-translate-y-2 group-data-ending-style/fullscreen-menu:opacity-0 group-data-ending-style/fullscreen-menu:delay-0 group-data-ending-style/fullscreen-menu:duration-200 group-data-starting-style/fullscreen-menu:-translate-y-2 group-data-starting-style/fullscreen-menu:opacity-0 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:min-h-10 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:text-lg group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:font-medium motion-reduce:transition-none",
           className
         ),
       },

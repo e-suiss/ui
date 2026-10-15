@@ -31,7 +31,7 @@ export default function AvatarWithBadge() {
         <Avatar key={size} size={size}>
           <AvatarImage src={people[2].src} alt={people[2].name} />
           <AvatarFallback>{people[2].initials}</AvatarFallback>
-          <AvatarBadge className="bg-success">
+          <AvatarBadge className="bg-green-500">
             <CheckIcon weight="bold" />
           </AvatarBadge>
         </Avatar>

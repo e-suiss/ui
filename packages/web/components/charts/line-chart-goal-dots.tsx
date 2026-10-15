@@ -30,7 +30,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  hours: { label: "Sleep", color: "var(--indigo)" },
+  hours: { label: "Sleep", color: "var(--chart-3)" },
 } satisfies ChartConfig
 
 function formatHours(hours: number) {
@@ -42,7 +42,7 @@ export function LineChartGoalDots() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
-        <p className="text-sm font-semibold text-[color-mix(in_oklab,var(--indigo),var(--label)_10%)] dark:text-[color-mix(in_oklab,var(--indigo),var(--label)_35%)]">
+        <p className="text-sm font-semibold text-[color-mix(in_oklab,var(--color-indigo-500),var(--foreground)_10%)] dark:text-[color-mix(in_oklab,var(--color-indigo-500),var(--foreground)_35%)]">
           Sleep
         </p>
         <p className="flex items-baseline gap-1">
@@ -50,7 +50,7 @@ export function LineChartGoalDots() {
             7h 9m
           </span>
         </p>
-        <p className="text-sm text-label-secondary">
+        <p className="text-sm text-muted-foreground">
           Goal 7 hours · green nights met it
         </p>
       </CardHeader>
@@ -84,7 +84,7 @@ export function LineChartGoalDots() {
             />
             <ReferenceLine
               y={GOAL}
-              stroke="var(--green)"
+              stroke="var(--color-green-500)"
               strokeDasharray="3 3"
             />
             <ChartTooltip
@@ -111,9 +111,11 @@ export function LineChartGoalDots() {
                   cy={cy}
                   r={4.5}
                   fill={
-                    payload.hours >= GOAL ? "var(--green)" : "var(--orange)"
+                    payload.hours >= GOAL
+                      ? "var(--color-green-500)"
+                      : "var(--color-orange-500)"
                   }
-                  stroke="var(--surface-secondary)"
+                  stroke="var(--muted)"
                   strokeWidth={2}
                 />
               )}

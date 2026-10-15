@@ -183,7 +183,7 @@ export function UsersInvite() {
                 <h1 className="text-3xl font-semibold tracking-tight">
                   Invite users
                 </h1>
-                <p className="text-sm text-label-secondary">
+                <p className="text-sm text-muted-foreground">
                   Invitees get a link by email.
                 </p>
               </div>
@@ -199,7 +199,7 @@ export function UsersInvite() {
                   {emails.map((email) => (
                     <span
                       key={email}
-                      className="inline-flex h-6.5 items-center gap-1 rounded-md bg-control ps-2.5 pe-0.5 text-sm"
+                      className="inline-flex h-6.5 items-center gap-1 rounded-md bg-secondary ps-2.5 pe-0.5 text-sm"
                     >
                       {email}
                       <Button
@@ -211,7 +211,7 @@ export function UsersInvite() {
                             current.filter((item) => item !== email)
                           )
                         }
-                        className="size-5.5 text-label-secondary"
+                        className="size-5.5 text-muted-foreground"
                       >
                         <XIcon weight="bold" className="size-2.5" />
                       </Button>
@@ -238,7 +238,7 @@ export function UsersInvite() {
                     placeholder={
                       emails.length ? "Add another" : "name@company.com"
                     }
-                    className="min-w-35 flex-1 bg-transparent text-sm outline-none placeholder:text-label-secondary"
+                    className="min-w-35 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
                   />
                 </div>
               </Item>
@@ -289,7 +289,7 @@ export function UsersInvite() {
             </ItemGroup>
             <div className="flex items-center gap-2.5">
               <span
-                className="flex-1 text-sm text-label-secondary"
+                className="flex-1 text-sm text-muted-foreground"
                 aria-live="polite"
               >
                 {emails.length
@@ -334,7 +334,7 @@ export function UsersInvite() {
                       role="listitem"
                       className="transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
                     >
-                      <ItemMedia className="size-7 rounded-[7px] bg-gray text-white">
+                      <ItemMedia className="size-7 rounded-[7px] bg-zinc-500 text-white">
                         <EnvelopeSimpleIcon weight="bold" className="size-4" />
                       </ItemMedia>
                       <ItemContent className="gap-0">
@@ -361,7 +361,7 @@ export function UsersInvite() {
                         <Button
                           size="sm"
                           variant="destructive"
-                          className="text-[color-mix(in_oklab,var(--danger),var(--label)_20%)] dark:text-[color-mix(in_oklab,var(--danger),white_20%)]"
+                          className="text-[color-mix(in_oklab,var(--destructive),var(--foreground)_20%)] dark:text-[color-mix(in_oklab,var(--destructive),white_20%)]"
                           onClick={() =>
                             setPending((current) =>
                               current.filter(
@@ -378,7 +378,7 @@ export function UsersInvite() {
                 ))}
               </ItemGroup>
             ) : (
-              <p className="px-1 text-sm text-label-secondary">
+              <p className="px-1 text-sm text-muted-foreground">
                 No pending invitations.
               </p>
             )}

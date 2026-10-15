@@ -43,7 +43,7 @@ export default function AttachmentGroupExample() {
             <AttachmentDescription>Processing…</AttachmentDescription>
           </AttachmentContent>
           <AttachmentActions>
-            <Spinner className="size-5 text-label-secondary" />
+            <Spinner className="size-5 text-muted-foreground" />
           </AttachmentActions>
         </Attachment>
         <Attachment orientation="horizontal" state="done">
@@ -58,7 +58,7 @@ export default function AttachmentGroupExample() {
             <CheckCircleIcon
               weight="fill"
               aria-label="Uploaded"
-              className="size-6 text-success"
+              className="size-6 text-green-600 dark:text-green-400"
             />
           </AttachmentActions>
         </Attachment>

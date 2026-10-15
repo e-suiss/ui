@@ -98,9 +98,9 @@ const slug = (text: string) =>
 
 export function FooterDirectory() {
   return (
-    <footer className="bg-surface-secondary text-xs text-label-secondary">
+    <footer className="bg-muted text-xs text-muted-foreground">
       <div className="mx-auto flex max-w-245 flex-col gap-4 px-5.5 pt-6 pb-5.5">
-        <div className="flex flex-col gap-2 border-b border-separator pb-4">
+        <div className="flex flex-col gap-2 border-b border-border pb-4">
           <p>
             1. Payment plans are subject to credit approval. Installment options
             vary by bank.
@@ -111,16 +111,19 @@ export function FooterDirectory() {
           </p>
           <p>Some features may not be available in all regions or languages.</p>
         </div>
-        <Breadcrumb className="border-b border-separator pb-3">
+        <Breadcrumb className="border-b border-border pb-3">
           <BreadcrumbList className="gap-2 text-xs">
             <BreadcrumbItem>
-              <BreadcrumbLink href="#home" className="font-semibold text-label">
+              <BreadcrumbLink
+                href="#home"
+                className="font-semibold text-foreground"
+              >
                 suiss
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="#phone" className="text-label">
+              <BreadcrumbLink href="#phone" className="text-foreground">
                 Phone
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -141,7 +144,7 @@ export function FooterDirectory() {
                 if (!section) return null
                 return (
                   <div key={section.title} className="flex flex-col gap-2">
-                    <h3 className="font-semibold text-label">
+                    <h3 className="font-semibold text-foreground">
                       {section.title}
                     </h3>
                     <ul className="flex flex-col gap-2">
@@ -164,16 +167,16 @@ export function FooterDirectory() {
             <AccordionItem
               key={section.title}
               value={section.title}
-              className="ms-0 border-b border-separator not-first:border-t-0"
+              className="ms-0 border-b border-border not-first:border-t-0"
             >
-              <AccordionTrigger className="pe-0 text-sm text-label hover:no-underline">
+              <AccordionTrigger className="pe-0 text-sm text-foreground hover:no-underline">
                 {section.title}
               </AccordionTrigger>
               <AccordionContent className="pe-0 pb-3.5 [&_a]:no-underline [&_a]:hover:underline">
                 <ul className="flex flex-col gap-2.5 ps-3">
                   {section.links.map((link) => (
                     <li key={link}>
-                      <a href={slug(link)} className="text-sm text-label">
+                      <a href={slug(link)} className="text-sm text-foreground">
                         {link}
                       </a>
                     </li>
@@ -185,18 +188,18 @@ export function FooterDirectory() {
         </Accordion>
         <p className="mt-2">
           More ways to shop:{" "}
-          <a href="#stores" className="text-link underline">
+          <a href="#stores" className="text-primary underline">
             Find a suiss Store near you
           </a>{" "}
           or call <span className="whitespace-nowrap">1-800-555-0199</span>.
         </p>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-separator pt-2.5">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-border pt-2.5">
           <span>Copyright © 2026 suiss Inc. All rights reserved.</span>
           <ul className="flex flex-wrap leading-6">
             {legal.map((link) => (
               <li
                 key={link}
-                className="border-separator-strong px-2 text-label not-first:border-s first:ps-0"
+                className="border-input px-2 text-foreground not-first:border-s first:ps-0"
               >
                 <a href={slug(link)} className="hover:underline">
                   {link}
@@ -204,7 +207,10 @@ export function FooterDirectory() {
               </li>
             ))}
           </ul>
-          <a href="#region" className="text-label hover:underline md:ms-auto">
+          <a
+            href="#region"
+            className="text-foreground hover:underline md:ms-auto"
+          >
             United States
           </a>
         </div>

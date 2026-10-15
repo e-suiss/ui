@@ -5,9 +5,9 @@ const image =
 
 export function HeroProduct() {
   return (
-    <section className="flex flex-col items-center overflow-hidden bg-surface-secondary pt-13 text-center">
+    <section className="flex flex-col items-center overflow-hidden bg-muted pt-13 text-center">
       <div className="flex flex-col items-center gap-1.5 px-6 transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.45,0,0.2,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-        <p className="text-lg font-semibold tracking-tight text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:text-orange">
+        <p className="text-lg font-semibold tracking-tight text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500">
           New
         </p>
         <h1 className="text-5xl font-semibold tracking-tight text-balance md:text-6xl">
@@ -22,7 +22,7 @@ export function HeroProduct() {
         <Button
           size="lg"
           variant="outline"
-          className="border-accent bg-transparent text-link hover:bg-accent-surface hover:text-link dark:bg-transparent"
+          className="border-primary bg-transparent text-primary hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-primary dark:bg-transparent"
         >
           Buy
         </Button>
@@ -30,9 +30,9 @@ export function HeroProduct() {
       <img
         src={image}
         alt="A phone resting on a soft beige surface"
-        className="mt-7 aspect-[2] w-full max-w-245 bg-control object-cover transition-[opacity,translate] delay-220 duration-1000 ease-[cubic-bezier(0.45,0,0.2,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none"
+        className="mt-7 aspect-[2] w-full max-w-245 bg-secondary object-cover transition-[opacity,translate] delay-220 duration-1000 ease-[cubic-bezier(0.45,0,0.2,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none"
       />
-      <p className="px-6 pt-2.5 pb-4.5 text-xs text-label-secondary">
+      <p className="px-6 pt-2.5 pb-4.5 text-xs text-muted-foreground">
         From $999 or $41.62/mo. for 24 mo.
       </p>
     </section>

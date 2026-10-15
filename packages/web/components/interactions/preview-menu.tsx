@@ -206,7 +206,7 @@ function PreviewMenuContent({
     <ContextMenuPrimitive.Portal>
       <ContextMenuPrimitive.Backdrop
         data-slot="preview-menu-backdrop"
-        className="fixed inset-0 z-50 bg-scrim/40 backdrop-blur-xl transition-opacity duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none"
+        className="fixed inset-0 z-50 bg-black/20 backdrop-blur-xl transition-opacity duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none"
       />
       {frame && (
         <div
@@ -259,7 +259,7 @@ function PreviewMenuContent({
         <ContextMenuPrimitive.Popup
           data-slot="preview-menu-content"
           className={cn(
-            "max-h-(--available-height) min-w-60 origin-(--transform-origin) overflow-y-auto rounded-2xl bg-surface-raised text-label shadow-xl ring-1 ring-label/5 transition-[opacity,scale] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-300 data-starting-style:scale-90 data-starting-style:opacity-0 motion-reduce:transition-none dark:ring-label/10",
+            "max-h-(--available-height) min-w-60 origin-(--transform-origin) overflow-y-auto rounded-2xl bg-popover text-popover-foreground shadow-xl ring-1 ring-foreground/5 transition-[opacity,scale] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-300 data-starting-style:scale-90 data-starting-style:opacity-0 motion-reduce:transition-none dark:ring-foreground/10",
             className
           )}
           {...props}
@@ -283,7 +283,7 @@ function PreviewMenuItem({
       data-slot="preview-menu-item"
       data-variant={variant}
       className={cn(
-        "flex min-h-11 cursor-default items-center justify-between gap-6 px-4 py-2.75 text-base outline-none select-none not-first:border-t not-first:border-separator data-disabled:pointer-events-none data-disabled:text-label-quaternary data-highlighted:bg-item-hover data-[variant=destructive]:text-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
+        "flex min-h-11 cursor-default items-center justify-between gap-6 px-4 py-2.75 text-base outline-none select-none not-first:border-t not-first:border-border data-disabled:pointer-events-none data-highlighted:bg-accent data-[variant=destructive]:text-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 data-highlighted:text-accent-foreground data-disabled:opacity-50",
         className
       )}
       {...props}
@@ -298,7 +298,7 @@ function PreviewMenuSeparator({
   return (
     <ContextMenuPrimitive.Separator
       data-slot="preview-menu-separator"
-      className={cn("h-2 bg-separator/40", className)}
+      className={cn("h-2 bg-border/40", className)}
       {...props}
     />
   )

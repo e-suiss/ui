@@ -14,7 +14,7 @@ import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
 const chartData = [{ name: "value", value: 38, fill: "var(--color-value)" }]
 
 const chartConfig = {
-  value: { label: "Air quality", color: "var(--green)" },
+  value: { label: "Air quality", color: "var(--color-green-500)" },
 } satisfies ChartConfig
 
 export function RadialChartGauge() {
@@ -58,7 +58,7 @@ export function RadialChartGauge() {
             <span className="text-3xl font-semibold tracking-tight tabular-nums">
               38
             </span>
-            <span className="text-xs text-label-secondary">Good</span>
+            <span className="text-xs text-muted-foreground">Good</span>
           </div>
         </div>
       </CardContent>

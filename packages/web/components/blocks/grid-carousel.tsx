@@ -61,10 +61,10 @@ const products = [
 
 export function GridCarousel() {
   return (
-    <section className="flex flex-col gap-5.5 bg-surface-secondary pt-10 pb-5">
+    <section className="flex flex-col gap-5.5 bg-muted pt-10 pb-5">
       <h2 className="px-6 text-3xl font-semibold tracking-tight text-balance md:px-12">
         The latest.{" "}
-        <span className="text-label-secondary">
+        <span className="text-muted-foreground">
           Fresh favorites of the season.
         </span>
       </h2>
@@ -78,11 +78,11 @@ export function GridCarousel() {
             <CarouselItem key={product.name} className="basis-auto ps-0">
               <a
                 href={`#${product.name.toLowerCase().replaceAll(" ", "-")}`}
-                className="flex h-110 w-[min(22.5rem,calc(100vw-4rem))] flex-col overflow-hidden rounded-[1.125rem] bg-surface shadow-[2px_4px_12px_rgb(0_0_0/0.08)] transition-[scale,box-shadow] duration-300 ease-[cubic-bezier(0,0,0.5,1)] outline-none hover:scale-101 hover:shadow-[2px_4px_16px_rgb(0_0_0/0.16)] focus-visible:focus-ring motion-reduce:transition-none"
+                className="flex h-110 w-[min(22.5rem,calc(100vw-4rem))] flex-col overflow-hidden rounded-[1.125rem] bg-background shadow-[2px_4px_12px_rgb(0_0_0/0.08)] transition-[scale,box-shadow] duration-300 ease-[cubic-bezier(0,0,0.5,1)] outline-none hover:scale-101 hover:shadow-[2px_4px_16px_rgb(0_0_0/0.16)] focus-visible:focus-ring motion-reduce:transition-none"
               >
                 <div className="flex flex-col gap-1 px-7 pt-7">
                   {product.kicker && (
-                    <span className="text-xs font-semibold tracking-wide text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] uppercase dark:text-orange">
+                    <span className="text-xs font-semibold tracking-wide text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] uppercase dark:text-orange-500">
                       {product.kicker}
                     </span>
                   )}
@@ -90,14 +90,14 @@ export function GridCarousel() {
                     {product.name}
                   </span>
                   <span className="text-lg">{product.tagline}</span>
-                  <span className="mt-1.5 text-sm text-label-secondary">
+                  <span className="mt-1.5 text-sm text-muted-foreground">
                     From {product.price}
                   </span>
                 </div>
                 <img
                   src={product.image}
                   alt={product.alt}
-                  className="m-5 min-h-0 flex-1 rounded-xl bg-control object-cover"
+                  className="m-5 min-h-0 flex-1 rounded-xl bg-secondary object-cover"
                 />
               </a>
             </CarouselItem>

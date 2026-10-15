@@ -24,14 +24,14 @@ export default function CollapsibleDemo() {
             <CaretUpDownIcon />
           </CollapsibleTrigger>
         </div>
-        <div className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm">
+        <div className="bg-muted rounded-2xl px-4 py-2 text-sm">
           {repositories[0]}
         </div>
         <CollapsibleContent className="flex flex-col gap-2">
           {repositories.slice(1).map((repository) => (
             <div
               key={repository}
-              className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm"
+              className="bg-muted rounded-2xl px-4 py-2 text-sm"
             >
               {repository}
             </div>

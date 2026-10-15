@@ -108,21 +108,21 @@ const initialMail: Mail[] = [
 
 const categories: { value: Category; icon: React.ElementType; tint: string }[] =
   [
-    { value: "Primary", icon: UsersIcon, tint: "aria-pressed:bg-accent" },
+    { value: "Primary", icon: UsersIcon, tint: "aria-pressed:bg-primary" },
     {
       value: "Transactions",
       icon: CreditCardIcon,
-      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--green),var(--label)_40%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--green),black_40%)]",
+      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-green-500),black_40%)]",
     },
     {
       value: "Updates",
       icon: BellIcon,
-      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--purple),var(--label)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--purple),black_30%)]",
+      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-purple-500),black_30%)]",
     },
     {
       value: "Promotions",
       icon: TagIcon,
-      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--pink),var(--label)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--pink),black_25%)]",
+      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-pink-500),var(--foreground)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-pink-500),black_25%)]",
     },
   ]
 
@@ -137,7 +137,7 @@ function SenderAvatar({ mail, className }: { mail: Mail; className?: string }) {
               }
             : undefined
         }
-        className="bg-none bg-label text-white normal-case dark:bg-none dark:bg-label dark:text-surface"
+        className="bg-none bg-foreground text-white normal-case dark:bg-none dark:bg-foreground dark:text-background"
       >
         {mail.hue
           ? mail.from
@@ -180,7 +180,7 @@ function Reader({
 
   return (
     <div key={mail.id} className="flex min-h-0 flex-1 flex-col">
-      <div className="flex h-12.5 shrink-0 items-center justify-end gap-0.5 border-b border-separator max-md:-mx-4 max-md:px-2 md:-mx-8 md:-mt-8 md:px-3">
+      <div className="flex h-12.5 shrink-0 items-center justify-end gap-0.5 border-b border-border max-md:-mx-4 max-md:px-2 md:-mx-8 md:-mt-8 md:px-3">
         {actions.map((action) => (
           <Button
             key={action.label}
@@ -190,7 +190,7 @@ function Reader({
             aria-pressed={action.active}
             onClick={action.onClick}
             data-active={action.active ? "" : undefined}
-            className="text-label-secondary data-active:text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:data-active:text-orange"
+            className="text-muted-foreground data-active:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-active:text-orange-500"
           >
             <action.icon
               weight={action.active ? "fill" : "regular"}
@@ -204,11 +204,11 @@ function Reader({
           <SenderAvatar mail={mail} className="size-10" />
           <div className="flex flex-1 flex-col">
             <span className="text-base font-semibold">{mail.from}</span>
-            <span className="text-xs text-label-secondary">
+            <span className="text-xs text-muted-foreground">
               To: Jamie Rivera
             </span>
           </div>
-          <span className="text-xs text-label-secondary">{mail.time}</span>
+          <span className="text-xs text-muted-foreground">{mail.time}</span>
         </div>
         <h3 className="text-2xl font-semibold tracking-tight">
           {mail.subject}
@@ -222,7 +222,7 @@ function Reader({
             setReplying(false)
             setReply("")
           }}
-          className="mt-5.5 flex flex-col gap-2.5 border-t border-separator pt-4.5 transition-[opacity,translate] duration-800 starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
+          className="mt-5.5 flex flex-col gap-2.5 border-t border-border pt-4.5 transition-[opacity,translate] duration-800 starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
         >
           <Textarea
             autoFocus
@@ -300,12 +300,12 @@ export function InboxCategories() {
                 key={item.value}
                 value={item.value}
                 aria-label={item.value}
-                className={`relative h-8.5 gap-1.5 bg-control px-2.75 font-semibold text-label-secondary transition-[padding,background-color,color] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] hover:bg-control-hover aria-pressed:px-3.5 aria-pressed:text-white aria-pressed:hover:text-white ${item.tint}`}
+                className={`relative h-8.5 gap-1.5 bg-secondary px-2.75 font-semibold text-muted-foreground transition-[padding,background-color,color] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] hover:bg-secondary/80 aria-pressed:px-3.5 aria-pressed:text-white aria-pressed:hover:text-white ${item.tint}`}
               >
                 <item.icon weight="bold" className="size-4" />
                 {pressed && <span aria-hidden>{item.value}</span>}
                 {!pressed && unread && (
-                  <span className="absolute end-0.5 top-0.5 size-2 rounded-full bg-accent ring-2 ring-surface">
+                  <span className="absolute end-0.5 top-0.5 size-2 rounded-full bg-primary ring-2 ring-background">
                     <span className="sr-only">Unread</span>
                   </span>
                 )}
@@ -324,10 +324,10 @@ export function InboxCategories() {
                   update(item.id, { unread: false })
                 }}
                 style={{ transitionDelay: `${index * 40}ms` }}
-                className="group/mail relative py-2.5 ps-6 transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none md:data-active:bg-accent md:data-active:text-on-accent"
+                className="group/mail relative py-2.5 ps-6 transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none md:data-active:bg-primary md:data-active:text-primary-foreground"
               >
                 {item.unread && (
-                  <span className="absolute start-2.5 top-4.25 size-2 rounded-full bg-accent md:group-data-active/mail:bg-on-accent">
+                  <span className="absolute start-2.5 top-4.25 size-2 rounded-full bg-primary md:group-data-active/mail:bg-primary-foreground">
                     <span className="sr-only">Unread</span>
                   </span>
                 )}
@@ -339,21 +339,21 @@ export function InboxCategories() {
                     <StarIcon
                       weight="fill"
                       aria-label="Starred"
-                      className="size-3 text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] md:group-data-active/mail:text-on-accent dark:text-orange"
+                      className="size-3 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] md:group-data-active/mail:text-primary-foreground dark:text-orange-500"
                     />
                   )}
-                  <span className="text-xs text-label-secondary md:group-data-active/mail:text-on-accent">
+                  <span className="text-xs text-muted-foreground md:group-data-active/mail:text-primary-foreground">
                     {item.time}
                   </span>
                 </span>
                 <span className="truncate text-sm">{item.subject}</span>
-                <span className="line-clamp-2 text-xs leading-snug text-label-secondary md:group-data-active/mail:text-on-accent">
+                <span className="line-clamp-2 text-xs leading-snug text-muted-foreground md:group-data-active/mail:text-primary-foreground">
                   {item.body}
                 </span>
               </SplitViewItem>
             ))
           ) : (
-            <p className="p-7.5 text-center text-sm text-label-secondary">
+            <p className="p-7.5 text-center text-sm text-muted-foreground">
               No messages in {category}.
             </p>
           )}
@@ -367,7 +367,7 @@ export function InboxCategories() {
             onRemove={() => remove(current.id)}
           />
         ) : (
-          <p className="m-auto text-label-secondary">No Message Selected</p>
+          <p className="m-auto text-muted-foreground">No Message Selected</p>
         )}
       </SplitViewDetail>
     </SplitView>

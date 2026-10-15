@@ -50,7 +50,7 @@ function ControlledExample(
   return (
     <div className="flex flex-col gap-2">
       <PagedList {...props} page={page} onPageChange={setPage} />
-      <p className="text-center text-sm text-label-secondary">Page {page}</p>
+      <p className="text-center text-sm text-muted-foreground">Page {page}</p>
     </div>
   )
 }

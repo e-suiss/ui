@@ -71,7 +71,7 @@ const manyItems: AppShellItem[] = [
 function Page({ title }: { title: string }) {
   return (
     <>
-      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-separator px-4">
+      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-4">
         <AppShellTrigger className="-ms-1" />
         <h1 className="text-base font-semibold">{title}</h1>
       </header>
@@ -80,13 +80,13 @@ function Page({ title }: { title: string }) {
           {["Revenue", "Active users", "Open issues"].map((label) => (
             <div
               key={label}
-              className="flex h-20 flex-col justify-end rounded-2xl bg-surface-secondary p-3 md:aspect-video md:h-auto md:p-4"
+              className="flex h-20 flex-col justify-end rounded-2xl bg-muted p-3 md:aspect-video md:h-auto md:p-4"
             >
-              <span className="text-sm text-label-secondary">{label}</span>
+              <span className="text-sm text-muted-foreground">{label}</span>
             </div>
           ))}
         </div>
-        <div className="min-h-64 flex-1 rounded-2xl bg-surface-secondary" />
+        <div className="min-h-64 flex-1 rounded-2xl bg-muted" />
       </div>
     </>
   )

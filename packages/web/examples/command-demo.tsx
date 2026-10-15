@@ -60,7 +60,7 @@ function CommandItems() {
 export default function CommandDemo() {
   return (
     <div className="w-140">
-      <Command className="ring-label/5 shadow-md ring-1">
+      <Command className="ring-foreground/5 shadow-md ring-1">
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandItems />

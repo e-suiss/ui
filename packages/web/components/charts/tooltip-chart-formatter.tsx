@@ -34,7 +34,7 @@ const chartData = [
   }))
 
 const chartConfig = {
-  energy: { label: "Active energy", color: "var(--red)" },
+  energy: { label: "Active energy", color: "var(--color-red-500)" },
 } satisfies ChartConfig
 
 const weekday = new Intl.DateTimeFormat("en-US", { weekday: "short" })
@@ -74,13 +74,13 @@ export function TooltipChartFormatter() {
                   hideLabel
                   formatter={(value) => (
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-label-secondary">
+                      <span className="text-muted-foreground">
                         Active energy
                       </span>
-                      <span className="font-semibold text-label tabular-nums">
+                      <span className="font-semibold text-foreground tabular-nums">
                         {Number(value).toLocaleString("en-US")}
                       </span>
-                      <span className="text-2xs text-label-secondary">
+                      <span className="text-2xs text-muted-foreground">
                         kcal
                       </span>
                     </div>

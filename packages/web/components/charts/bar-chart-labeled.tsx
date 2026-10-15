@@ -26,7 +26,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
 } satisfies ChartConfig
 
 export function BarChartLabeled() {
@@ -67,7 +67,7 @@ export function BarChartLabeled() {
               <LabelList
                 position="top"
                 offset={8}
-                className="fill-label font-semibold"
+                className="fill-foreground font-semibold"
                 fontSize={12}
               />
             </Bar>

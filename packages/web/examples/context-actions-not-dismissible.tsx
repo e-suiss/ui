@@ -11,7 +11,7 @@ export default function ContextActionsNotDismissible() {
   return (
     <div className="flex min-h-svh items-center justify-center p-4">
       <ContextActions dismissible={false}>
-        <ContextActionsTrigger className="flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm text-label-secondary">
+        <ContextActionsTrigger className="flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm text-muted-foreground">
           Right click or long press
         </ContextActionsTrigger>
         <ContextActionsContent>

@@ -7,7 +7,7 @@ function ControlledExample(props: React.ComponentProps<typeof DatePicker>) {
   return (
     <div className="flex flex-col items-start gap-2">
       <DatePicker {...props} value={value} onValueChange={setValue} />
-      <p className="text-sm text-label-secondary">
+      <p className="text-sm text-muted-foreground">
         Selected: {value ? value.toDateString() : "none"}
       </p>
     </div>

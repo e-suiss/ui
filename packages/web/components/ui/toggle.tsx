@@ -5,12 +5,13 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-1 rounded-lg text-sm whitespace-nowrap transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] outline-none active:scale-96 motion-reduce:active:scale-100 hover:bg-item-hover hover:text-label focus-visible:focus-ring disabled:pointer-events-none disabled:text-label-quaternary aria-invalid:border-danger aria-pressed:bg-item-hover aria-pressed:text-link aria-pressed:hover:bg-item-hover aria-pressed:hover:text-link aria-pressed:active:bg-item-pressed disabled:aria-pressed:bg-control-disabled disabled:aria-pressed:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex items-center justify-center gap-1 rounded-lg text-sm whitespace-nowrap transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] outline-none active:scale-96 motion-reduce:active:scale-100 hover:bg-accent hover:text-accent-foreground focus-visible:focus-ring disabled:pointer-events-none aria-invalid:border-destructive aria-pressed:bg-accent aria-pressed:text-primary aria-pressed:hover:bg-accent aria-pressed:hover:text-primary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border border-separator bg-transparent hover:bg-item-hover",
+        outline:
+          "border border-border bg-transparent hover:bg-accent hover:text-accent-foreground",
       },
       size: {
         default:

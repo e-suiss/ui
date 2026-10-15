@@ -178,7 +178,7 @@ function PullToRefresh({
     >
       <div
         data-slot="pull-to-refresh-indicator"
-        className="pointer-events-none absolute inset-x-0 top-0 flex h-(--pull) items-center justify-center overflow-hidden text-label-secondary transition-[height] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-[phase=pulling]/pull-to-refresh:transition-none motion-reduce:transition-none"
+        className="pointer-events-none absolute inset-x-0 top-0 flex h-(--pull) items-center justify-center overflow-hidden text-muted-foreground transition-[height] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-[phase=pulling]/pull-to-refresh:transition-none motion-reduce:transition-none"
       >
         {spinning ? (
           <Spinner

@@ -16,12 +16,20 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 const services = [
-  { name: "suiss Music", icon: MusicNoteIcon, tint: "bg-red text-white" },
-  { name: "suiss TV", icon: TelevisionIcon, tint: "bg-label text-surface" },
-  { name: "suiss Arcade", icon: GameControllerIcon, tint: "bg-red text-white" },
-  { name: "suiss Cloud+", icon: CloudIcon, tint: "bg-blue text-white" },
-  { name: "Fitness+", icon: FlameIcon, tint: "bg-green text-white" },
-  { name: "News+", icon: NewspaperIcon, tint: "bg-pink text-white" },
+  { name: "suiss Music", icon: MusicNoteIcon, tint: "bg-red-500 text-white" },
+  {
+    name: "suiss TV",
+    icon: TelevisionIcon,
+    tint: "bg-foreground text-background",
+  },
+  {
+    name: "suiss Arcade",
+    icon: GameControllerIcon,
+    tint: "bg-red-500 text-white",
+  },
+  { name: "suiss Cloud+", icon: CloudIcon, tint: "bg-blue-500 text-white" },
+  { name: "Fitness+", icon: FlameIcon, tint: "bg-green-500 text-white" },
+  { name: "News+", icon: NewspaperIcon, tint: "bg-pink-500 text-white" },
 ]
 
 const plans = [
@@ -56,12 +64,12 @@ export function PriceBundle() {
   const plan = plans.find((item) => item.name === selected) ?? plans[1]
 
   return (
-    <section className="dark flex flex-col items-center gap-5.5 bg-surface px-5 py-8.5 text-label md:px-9">
+    <section className="dark flex flex-col items-center gap-5.5 bg-background px-5 py-8.5 text-foreground md:px-9">
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-4xl font-semibold tracking-tight">
           <span className="font-bold">suiss</span> One
         </h1>
-        <p className="text-2xl text-balance text-label-secondary">
+        <p className="text-2xl text-balance text-muted-foreground">
           Bundle it all in one subscription.
         </p>
       </div>
@@ -74,11 +82,11 @@ export function PriceBundle() {
         {plans.map((item) => (
           <Label
             key={item.name}
-            className="flex cursor-pointer flex-col gap-3.5 rounded-[1.25rem] bg-surface-secondary/60 p-5 shadow-[inset_0_0_0_1px_var(--color-separator-strong)] transition-[background-color,box-shadow] duration-300 has-data-checked:bg-surface-secondary has-data-checked:shadow-[inset_0_0_0_2px_var(--color-accent)] has-focus-visible:focus-ring font-normal items-stretch"
+            className="flex cursor-pointer flex-col gap-3.5 rounded-[1.25rem] bg-muted/60 p-5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-[background-color,box-shadow] duration-300 has-data-checked:bg-muted has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring font-normal items-stretch"
           >
             <span className="flex items-center gap-2">
               <span className="flex-1 text-2xl font-semibold">{item.name}</span>
-              <span className="text-xs text-label-secondary">
+              <span className="text-xs text-muted-foreground">
                 {item.people}
               </span>
               <RadioGroupItem
@@ -91,7 +99,7 @@ export function PriceBundle() {
               <span className="text-2xl font-semibold tabular-nums">
                 ${item.price}
               </span>
-              <span className="text-sm text-label-secondary"> /mo</span>
+              <span className="text-sm text-muted-foreground"> /mo</span>
             </span>
             <ul className="flex flex-col gap-2">
               {services.map((service, index) => {
@@ -100,11 +108,11 @@ export function PriceBundle() {
                   <li
                     key={service.name}
                     data-included={included ? "" : undefined}
-                    className="group/service flex items-center gap-2 text-sm text-label-tertiary line-through data-included:text-label data-included:no-underline"
+                    className="group/service flex items-center gap-2 text-sm text-muted-foreground line-through data-included:text-foreground data-included:no-underline"
                   >
                     <span
                       className={cn(
-                        "flex size-5.5 items-center justify-center rounded-md bg-surface-tertiary text-label-tertiary transition-colors duration-300",
+                        "flex size-5.5 items-center justify-center rounded-md bg-secondary text-muted-foreground transition-colors duration-300",
                         included && service.tint
                       )}
                     >
@@ -124,7 +132,7 @@ export function PriceBundle() {
       </RadioGroup>
       <div className="flex flex-wrap items-center justify-center gap-x-4.5 gap-y-3">
         <Button size="lg">Try it free</Button>
-        <a href="#compare" className="text-lg text-link hover:underline">
+        <a href="#compare" className="text-lg text-primary hover:underline">
           Save ${plan.saving} compared to buying separately ›
         </a>
       </div>

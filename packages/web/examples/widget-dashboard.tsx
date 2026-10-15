@@ -48,8 +48,8 @@ export default function WidgetDashboard() {
         <WidgetDescription>5 tickets</WidgetDescription>
       </Widget>
       <Widget className="col-span-2">
-        <WidgetHeader className="gap-1.5 text-warning">
-          <WidgetIcon size="sm" className="text-warning">
+        <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
+          <WidgetIcon size="sm" className="text-amber-600 dark:text-amber-400">
             <CashRegisterIcon weight="fill" />
           </WidgetIcon>
           <WidgetTitle>Hestia</WidgetTitle>
@@ -58,8 +58,8 @@ export default function WidgetDashboard() {
         <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>
       </Widget>
       <Widget className="col-span-2 row-span-2">
-        <WidgetHeader className="gap-1.5 text-link">
-          <WidgetIcon size="sm" className="text-link">
+        <WidgetHeader className="gap-1.5 text-primary">
+          <WidgetIcon size="sm" className="text-primary">
             <CalendarBlankIcon weight="fill" />
           </WidgetIcon>
           <WidgetTitle>Reservations</WidgetTitle>
@@ -67,7 +67,7 @@ export default function WidgetDashboard() {
         <WidgetContent className="gap-2">
           {tickets.slice(0, 5).map((ticket, index) => (
             <div key={ticket.id} className="flex items-baseline gap-3 text-sm">
-              <span className="w-11 shrink-0 text-label-secondary tabular-nums">
+              <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
                 {`${18 + index}:00`}
               </span>
               <span className="truncate">{ticket.place}</span>

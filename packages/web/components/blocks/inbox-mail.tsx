@@ -121,7 +121,7 @@ function SenderAvatar({ mail, className }: { mail: Mail; className?: string }) {
               }
             : undefined
         }
-        className="bg-none bg-label text-white normal-case dark:bg-none dark:bg-label dark:text-surface"
+        className="bg-none bg-foreground text-white normal-case dark:bg-none dark:bg-foreground dark:text-background"
       >
         {mail.hue
           ? mail.from
@@ -164,7 +164,7 @@ function Reader({
 
   return (
     <div key={mail.id} className="flex min-h-0 flex-1 flex-col">
-      <div className="flex h-12.5 shrink-0 items-center justify-end gap-0.5 border-b border-separator max-md:-mx-4 max-md:px-2 md:-mx-8 md:-mt-8 md:px-3">
+      <div className="flex h-12.5 shrink-0 items-center justify-end gap-0.5 border-b border-border max-md:-mx-4 max-md:px-2 md:-mx-8 md:-mt-8 md:px-3">
         {actions.map((action) => (
           <Button
             key={action.label}
@@ -174,7 +174,7 @@ function Reader({
             aria-pressed={action.active}
             onClick={action.onClick}
             data-active={action.active ? "" : undefined}
-            className="text-label-secondary data-active:text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:data-active:text-orange"
+            className="text-muted-foreground data-active:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-active:text-orange-500"
           >
             <action.icon
               weight={action.active ? "fill" : "regular"}
@@ -188,11 +188,11 @@ function Reader({
           <SenderAvatar mail={mail} className="size-10" />
           <div className="flex flex-1 flex-col">
             <span className="text-base font-semibold">{mail.from}</span>
-            <span className="text-xs text-label-secondary">
+            <span className="text-xs text-muted-foreground">
               To: Jamie Rivera
             </span>
           </div>
-          <span className="text-xs text-label-secondary">{mail.time}</span>
+          <span className="text-xs text-muted-foreground">{mail.time}</span>
         </div>
         <h3 className="text-2xl font-semibold tracking-tight">
           {mail.subject}
@@ -206,7 +206,7 @@ function Reader({
             setReplying(false)
             setReply("")
           }}
-          className="mt-5.5 flex flex-col gap-2.5 border-t border-separator pt-4.5 transition-[opacity,translate] duration-800 starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
+          className="mt-5.5 flex flex-col gap-2.5 border-t border-border pt-4.5 transition-[opacity,translate] duration-800 starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
         >
           <Textarea
             autoFocus
@@ -269,10 +269,7 @@ export function InboxMail() {
       defaultColumn="list"
       className="h-155 rounded-none border-0 max-md:h-auto max-md:min-h-155 max-md:p-4"
     >
-      <SplitViewSidebar
-        title="Mailboxes"
-        className="min-h-full md:bg-surface-secondary"
-      >
+      <SplitViewSidebar title="Mailboxes" className="min-h-full md:bg-muted">
         {mailboxes.map((box) => (
           <SplitViewItem
             key={box.value}
@@ -280,9 +277,9 @@ export function InboxMail() {
             onClick={() => setMailbox(box.value)}
           >
             <span className="flex items-center gap-2.5">
-              <box.icon className="size-4.5 text-accent" />
+              <box.icon className="size-4.5 text-primary" />
               <span className="flex-1">{box.value}</span>
-              <span className="text-xs text-label-secondary tabular-nums">
+              <span className="text-xs text-muted-foreground tabular-nums">
                 {counts[box.value] || ""}
               </span>
             </span>
@@ -293,7 +290,7 @@ export function InboxMail() {
         <div className="flex items-center gap-2 md:px-1">
           <div className="flex flex-1 flex-col max-md:hidden">
             <span className="text-lg font-semibold">{mailbox}</span>
-            <span className="text-2xs text-label-secondary">
+            <span className="text-2xs text-muted-foreground">
               {unread ? `${unread} unread` : "All read"}
             </span>
           </div>
@@ -301,7 +298,7 @@ export function InboxMail() {
             variant="ghost"
             size="icon"
             aria-label="New message"
-            className="text-label-secondary max-md:ms-auto max-md:-mt-12"
+            className="text-muted-foreground max-md:ms-auto max-md:-mt-12"
           >
             <NotePencilIcon className="size-4.5" />
           </Button>
@@ -329,10 +326,10 @@ export function InboxMail() {
                   setSelected(item.id)
                   update(item.id, { unread: false })
                 }}
-                className="group/mail relative py-2.5 ps-6 md:data-active:bg-accent md:data-active:text-on-accent"
+                className="group/mail relative py-2.5 ps-6 md:data-active:bg-primary md:data-active:text-primary-foreground"
               >
                 {item.unread && (
-                  <span className="absolute inset-s-2.5 top-4.25 size-2 rounded-full bg-accent md:group-data-active/mail:bg-on-accent">
+                  <span className="absolute inset-s-2.5 top-4.25 size-2 rounded-full bg-primary md:group-data-active/mail:bg-primary-foreground">
                     <span className="sr-only">Unread</span>
                   </span>
                 )}
@@ -344,21 +341,21 @@ export function InboxMail() {
                     <StarIcon
                       weight="fill"
                       aria-label="Starred"
-                      className="size-3 text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] md:group-data-active/mail:text-on-accent dark:text-orange"
+                      className="size-3 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] md:group-data-active/mail:text-primary-foreground dark:text-orange-500"
                     />
                   )}
-                  <span className="text-xs text-label-secondary md:group-data-active/mail:text-on-accent">
+                  <span className="text-xs text-muted-foreground md:group-data-active/mail:text-primary-foreground">
                     {item.time}
                   </span>
                 </span>
                 <span className="truncate text-sm">{item.subject}</span>
-                <span className="line-clamp-2 text-xs leading-snug text-label-secondary md:group-data-active/mail:text-on-accent">
+                <span className="line-clamp-2 text-xs leading-snug text-muted-foreground md:group-data-active/mail:text-primary-foreground">
                   {item.body}
                 </span>
               </SplitViewItem>
             ))
           ) : (
-            <p className="p-6 text-center text-sm text-label-secondary">
+            <p className="p-6 text-center text-sm text-muted-foreground">
               No Results
             </p>
           )}
@@ -372,7 +369,7 @@ export function InboxMail() {
             onRemove={() => remove(current.id)}
           />
         ) : (
-          <p className="m-auto text-label-secondary">No Message Selected</p>
+          <p className="m-auto text-muted-foreground">No Message Selected</p>
         )}
       </SplitViewDetail>
     </SplitView>

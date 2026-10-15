@@ -20,8 +20,8 @@ const stocks = [
 ]
 
 const chartConfig = {
-  up: { label: "Rising", color: "var(--success)" },
-  down: { label: "Falling", color: "var(--danger)" },
+  up: { label: "Rising", color: "var(--color-green-500)" },
+  down: { label: "Falling", color: "var(--destructive)" },
 } satisfies ChartConfig
 
 const priceFormat = new Intl.NumberFormat("en-US", {
@@ -104,13 +104,13 @@ export function AreaChartSparkline() {
             return (
               <li
                 key={stock.symbol}
-                className="flex items-center gap-3 border-separator py-2.25 not-first:border-t"
+                className="flex items-center gap-3 border-border py-2.25 not-first:border-t"
               >
                 <span className="flex min-w-0 flex-1 flex-col">
                   <span className="text-base font-semibold">
                     {stock.symbol}
                   </span>
-                  <span className="truncate text-xs text-label-secondary">
+                  <span className="truncate text-xs text-muted-foreground">
                     {stock.name}
                   </span>
                 </span>
@@ -121,7 +121,7 @@ export function AreaChartSparkline() {
                   </span>
                   <span
                     data-trend={rising ? "up" : "down"}
-                    className="min-w-13 rounded-md px-1.5 py-0.5 text-end text-xs font-semibold text-on-accent tabular-nums data-[trend=down]:bg-danger data-[trend=up]:bg-success dark:text-surface"
+                    className="min-w-13 rounded-md px-1.5 py-0.5 text-end text-xs font-semibold text-primary-foreground tabular-nums data-[trend=down]:bg-destructive data-[trend=up]:bg-green-500 dark:text-background"
                   >
                     {changeFormat.format(stock.change)}%
                   </span>

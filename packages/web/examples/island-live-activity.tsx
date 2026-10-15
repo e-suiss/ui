@@ -27,7 +27,7 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <ChatCircleIcon weight="fill" className="text-green" />,
+            icon: <ChatCircleIcon weight="fill" className="text-green-500" />,
             title: "Jordan Lee",
             description: "Are we still on for Saturday?",
           })
@@ -39,7 +39,7 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <BellIcon weight="fill" className="text-orange" />,
+            icon: <BellIcon weight="fill" className="text-orange-500" />,
             title: "Design review",
             description: "Starts in 10 minutes",
           })
@@ -69,7 +69,7 @@ function useDownload() {
     const timer = window.setTimeout(() => {
       setProgress(null)
       notify({
-        icon: <CheckCircleIcon weight="fill" className="text-green" />,
+        icon: <CheckCircleIcon weight="fill" className="text-green-500" />,
         title: "Download complete",
         description: "Design-Kit.zip",
       })
@@ -97,23 +97,23 @@ function DownloadActivity({
   return (
     <>
       <IslandCompact aria-label={`Downloading Design-Kit.zip, ${percent}%`}>
-        <DownloadSimpleIcon weight="bold" className="text-accent" />
+        <DownloadSimpleIcon weight="bold" className="text-primary" />
         {done ? (
-          <CheckCircleIcon weight="fill" className="text-green" />
+          <CheckCircleIcon weight="fill" className="text-green-500" />
         ) : (
           <IslandRing value={progress} data-visual-mask />
         )}
       </IslandCompact>
       <IslandExpanded aria-label="Download">
         <div className="flex items-center gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface/15 dark:bg-label/15">
-            <FileZipIcon weight="fill" className="size-6 text-accent" />
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-background/15 dark:bg-foreground/15">
+            <FileZipIcon weight="fill" className="size-6 text-primary" />
           </span>
           <span className="flex min-w-0 flex-1 flex-col">
             <span className="truncate text-sm font-semibold">
               Design-Kit.zip
             </span>
-            <span className="text-sm text-surface/70 tabular-nums dark:text-label-secondary">
+            <span className="text-sm text-background/70 tabular-nums dark:text-muted-foreground">
               {done
                 ? "Downloaded"
                 : `${Math.round(progress * SIZE)} MB of ${SIZE} MB`}
@@ -129,10 +129,10 @@ function DownloadActivity({
           aria-valuenow={percent}
           aria-valuemin={0}
           aria-valuemax={100}
-          className="h-1.5 overflow-hidden rounded-full bg-surface/20 dark:bg-label/20"
+          className="h-1.5 overflow-hidden rounded-full bg-background/20 dark:bg-foreground/20"
         >
           <div
-            className="h-full origin-left rounded-full bg-accent transition-[scale] duration-300"
+            className="h-full origin-left rounded-full bg-primary transition-[scale] duration-300"
             style={{ scale: `${progress} 1` }}
           />
         </div>
@@ -140,7 +140,7 @@ function DownloadActivity({
           type="button"
           onClick={onCancel}
           disabled={done}
-          className="h-11 rounded-full bg-surface/15 text-sm font-semibold outline-none focus-visible:focus-ring disabled:opacity-50 dark:bg-label/15"
+          className="h-11 rounded-full bg-background/15 text-sm font-semibold outline-none focus-visible:focus-ring disabled:opacity-50 dark:bg-foreground/15"
         >
           Cancel download
         </button>
@@ -163,7 +163,7 @@ function DownloadsExample({
           <DownloadActivity progress={progress} onCancel={cancel} />
         )}
       </Island>
-      <p className="max-w-xs text-sm text-label-secondary">
+      <p className="max-w-xs text-sm text-muted-foreground">
         Start a download, then tap the pill at the top to see the details.
       </p>
       <Button onClick={start} disabled={progress !== null}>

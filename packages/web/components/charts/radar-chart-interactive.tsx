@@ -36,10 +36,10 @@ const MAX_SELECTED = 3
 const GROW_DURATION = 600
 
 const chartConfig = {
-  pro: { label: "Phone Pro", color: "var(--orange)" },
-  standard: { label: "Phone", color: "var(--blue)" },
-  air: { label: "Phone Air", color: "var(--cyan)" },
-  lite: { label: "Phone Lite", color: "var(--purple)" },
+  pro: { label: "Phone Pro", color: "var(--chart-4)" },
+  standard: { label: "Phone", color: "var(--chart-1)" },
+  air: { label: "Phone Air", color: "var(--color-cyan-500)" },
+  lite: { label: "Phone Lite", color: "var(--color-purple-500)" },
 } satisfies ChartConfig
 
 const average = (model: Model) =>
@@ -123,7 +123,7 @@ export function RadarChartInteractive() {
     <Card variant="filled" size="sm" className="[--card-spacing:--spacing(5)]">
       <CardHeader className="gap-0.5">
         <p className="text-lg font-semibold">Compare phone models</p>
-        <p className="text-sm text-label-secondary">
+        <p className="text-sm text-muted-foreground">
           Up to three models · scores out of 100, sample data
         </p>
       </CardHeader>
@@ -138,11 +138,11 @@ export function RadarChartInteractive() {
               style={
                 { "--chip": chartConfig[model].color } as React.CSSProperties
               }
-              className="gap-1.5 bg-control font-semibold text-label aria-pressed:bg-[color-mix(in_oklab,var(--chip)_16%,transparent)] aria-pressed:text-label aria-pressed:hover:bg-[color-mix(in_oklab,var(--chip)_22%,transparent)] aria-pressed:hover:text-label aria-pressed:active:bg-[color-mix(in_oklab,var(--chip)_28%,transparent)]"
+              className="gap-1.5 bg-secondary font-semibold text-secondary-foreground aria-pressed:bg-[color-mix(in_oklab,var(--chip)_16%,transparent)] aria-pressed:text-foreground aria-pressed:hover:bg-[color-mix(in_oklab,var(--chip)_22%,transparent)] aria-pressed:hover:text-foreground aria-pressed:active:bg-[color-mix(in_oklab,var(--chip)_28%,transparent)]"
             >
               <span
                 aria-hidden
-                className="size-2 rounded-full bg-label-quaternary transition-colors in-aria-pressed:bg-(--chip)"
+                className="size-2 rounded-full bg-border transition-colors in-aria-pressed:bg-(--chip)"
               />
               {chartConfig[model].label}
             </Toggle>
@@ -159,7 +159,7 @@ export function RadarChartInteractive() {
               outerRadius="74%"
               margin={{ top: 8, right: 56, bottom: 8, left: 56 }}
             >
-              <PolarGrid stroke="var(--separator)" />
+              <PolarGrid stroke="var(--border)" />
               <PolarAngleAxis
                 dataKey="axis"
                 tick={({ x, y, textAnchor, payload }) => (
@@ -169,7 +169,7 @@ export function RadarChartInteractive() {
                     textAnchor={textAnchor}
                     dominantBaseline="central"
                     data-active={payload.value === axis ? "" : undefined}
-                    className="fill-label-secondary text-sm data-active:fill-label data-active:font-semibold"
+                    className="fill-muted-foreground text-sm data-active:fill-foreground data-active:font-semibold"
                   >
                     {payload.value}
                   </text>
@@ -200,7 +200,7 @@ export function RadarChartInteractive() {
                             } as React.CSSProperties
                           }
                         />
-                        <span className="flex-1 text-label-secondary">
+                        <span className="flex-1 text-muted-foreground">
                           {chartConfig[name as Model].label}
                         </span>
                         <span className="font-semibold tabular-nums">
@@ -249,7 +249,7 @@ export function RadarChartInteractive() {
                   className="grid scale-96 grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity,scale] duration-500 ease-[cubic-bezier(0.45,0,0.2,1)] data-shown:scale-100 data-shown:grid-rows-[1fr] data-shown:opacity-100"
                 >
                   <div className="min-h-0 overflow-hidden">
-                    <div className="mb-2.5 flex items-center gap-3 rounded-xl bg-surface px-3.5 py-3">
+                    <div className="mb-2.5 flex items-center gap-3 rounded-xl bg-background px-3.5 py-3">
                       <span
                         className="size-2.5 shrink-0 rounded-full bg-(--swatch)"
                         style={
@@ -262,7 +262,7 @@ export function RadarChartInteractive() {
                         <span className="text-base font-semibold">
                           {chartConfig[model].label}
                         </span>
-                        <span className="text-xs text-label-secondary">
+                        <span className="text-xs text-muted-foreground">
                           {axisIndex >= 0 ? axis : "Overall score"}
                         </span>
                       </span>

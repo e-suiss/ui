@@ -20,21 +20,21 @@ const finishes: [Finish, ...Finish[]] = [
   {
     id: "orange",
     label: "Cosmic Orange",
-    color: "var(--orange)",
+    color: "var(--color-orange-500)",
     image: photo("1714972384975-fbd4f19b1bb3"),
     alt: "An orange phone on a warm gradient",
   },
   {
     id: "graphite",
     label: "Deep Graphite",
-    color: "var(--gray)",
+    color: "var(--color-zinc-500)",
     image: photo("1760978631841-f3754859ca59"),
     alt: "A dark textured surface with soft light",
   },
   {
     id: "silver",
     label: "Silver",
-    color: "var(--label)",
+    color: "var(--foreground)",
     image: photo("1664883410931-2edffc8be5e6"),
     alt: "A silver phone on a light grey background",
   },
@@ -47,17 +47,17 @@ export function HeroCinematic() {
   return (
     <section
       style={{ "--finish": finish.color } as React.CSSProperties}
-      className="dark relative flex flex-col items-center overflow-hidden bg-surface text-center text-label"
+      className="dark relative flex flex-col items-center overflow-hidden bg-background text-center text-foreground"
     >
       <div
         aria-hidden
         className="pointer-events-none absolute bottom-[-30%] left-1/2 h-[80%] w-[120%] -translate-x-1/2 bg-[radial-gradient(closest-side,var(--finish),transparent)] opacity-45 transition-[background-image] duration-1000"
       />
       <div className="relative flex flex-col items-center gap-2.5 px-6 pt-13 transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.45,0,0.2,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-        <h1 className="bg-linear-to-r from-label from-20% to-(--finish) bg-clip-text text-6xl font-semibold tracking-tight text-transparent md:text-7xl">
+        <h1 className="bg-linear-to-r from-foreground from-20% to-(--finish) bg-clip-text text-6xl font-semibold tracking-tight text-transparent md:text-7xl">
           Pro.
         </h1>
-        <p className="max-w-140 text-2xl text-balance text-label-secondary md:text-3xl">
+        <p className="max-w-140 text-2xl text-balance text-muted-foreground md:text-3xl">
           Titanium design. S19 Pro chip. The most advanced camera system yet.
         </p>
       </div>
@@ -69,12 +69,12 @@ export function HeroCinematic() {
             alt={item.alt}
             aria-hidden={item.id !== finish.id}
             data-active={item.id === finish.id ? "" : undefined}
-            className="absolute inset-0 size-full scale-97 bg-control object-cover opacity-0 transition-[opacity,scale] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] data-active:scale-100 data-active:opacity-100 motion-reduce:transition-none"
+            className="absolute inset-0 size-full scale-97 bg-secondary object-cover opacity-0 transition-[opacity,scale] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] data-active:scale-100 data-active:opacity-100 motion-reduce:transition-none"
           />
         ))}
       </div>
       <div className="relative flex flex-col items-center gap-3.5 pb-7">
-        <p className="min-h-5 text-sm text-label-secondary" aria-live="polite">
+        <p className="min-h-5 text-sm text-muted-foreground" aria-live="polite">
           {finish.label}
         </p>
         <ToggleGroup
@@ -91,13 +91,13 @@ export function HeroCinematic() {
               value={item.id}
               aria-label={item.label}
               style={{ "--swatch": item.color } as React.CSSProperties}
-              className="size-5.5 min-w-0 rounded-full bg-(--swatch) p-0 ring-1 ring-label/20 transition-shadow duration-250 hover:bg-(--swatch) aria-pressed:bg-(--swatch) aria-pressed:ring-2 aria-pressed:ring-label aria-pressed:ring-offset-2 aria-pressed:ring-offset-surface aria-pressed:hover:bg-(--swatch)"
+              className="size-5.5 min-w-0 rounded-full bg-(--swatch) p-0 ring-1 ring-foreground/20 transition-shadow duration-250 hover:bg-(--swatch) aria-pressed:bg-(--swatch) aria-pressed:ring-2 aria-pressed:ring-foreground aria-pressed:ring-offset-2 aria-pressed:ring-offset-background aria-pressed:hover:bg-(--swatch)"
             />
           ))}
         </ToggleGroup>
         <div className="mt-1.5 flex items-center gap-5.5">
           <Button>Buy</Button>
-          <a href="#film" className="text-lg text-link hover:underline">
+          <a href="#film" className="text-lg text-primary hover:underline">
             Watch the film ›
           </a>
         </div>

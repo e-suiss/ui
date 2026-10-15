@@ -19,7 +19,7 @@ function ControlledExample(props: React.ComponentProps<typeof SearchPicker>) {
   return (
     <div className="flex flex-col items-start gap-2">
       <SearchPicker {...props} value={value} onValueChange={setValue} />
-      <p className="text-sm text-label-secondary">
+      <p className="text-sm text-muted-foreground">
         Selected: {value ?? "none"}
       </p>
     </div>

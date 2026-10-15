@@ -123,7 +123,7 @@ function AppShellLayout({
     return (
       <div
         data-slot="app-shell"
-        className="flex min-h-svh w-full flex-col bg-surface"
+        className="flex min-h-svh w-full flex-col bg-background"
       >
         <main
           data-slot="app-shell-content"

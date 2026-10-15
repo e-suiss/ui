@@ -55,9 +55,9 @@ export function BarChartRange() {
           >
             <defs>
               <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="var(--teal)" />
-                <stop offset="55%" stopColor="var(--yellow)" />
-                <stop offset="100%" stopColor="var(--orange)" />
+                <stop offset="0%" stopColor="var(--color-teal-500)" />
+                <stop offset="55%" stopColor="var(--color-yellow-500)" />
+                <stop offset="100%" stopColor="var(--color-orange-500)" />
               </linearGradient>
             </defs>
             <YAxis
@@ -66,7 +66,7 @@ export function BarChartRange() {
               tickLine={false}
               axisLine={false}
               width="auto"
-              tick={{ className: "fill-label font-semibold" }}
+              tick={{ className: "fill-foreground font-semibold" }}
             />
             <YAxis
               yAxisId="high"
@@ -76,7 +76,7 @@ export function BarChartRange() {
               tickLine={false}
               axisLine={false}
               width="auto"
-              tick={{ className: "fill-label font-semibold" }}
+              tick={{ className: "fill-foreground font-semibold" }}
               tickFormatter={(value: number) => `${value}°`}
             />
             <XAxis type="number" hide domain={[8, 27]} />
@@ -99,7 +99,7 @@ export function BarChartRange() {
               dataKey="range"
               fill={`url(#${id})`}
               radius={99}
-              background={{ fill: "var(--control)", radius: 99 }}
+              background={{ fill: "var(--secondary)", radius: 99 }}
             />
           </BarChart>
         </ChartContainer>

@@ -64,11 +64,11 @@ const shortMonth = new Intl.DateTimeFormat("en-US", { month: "short" })
 const longMonth = new Intl.DateTimeFormat("en-US", { month: "long" })
 
 const chartConfig = {
-  istanbul: { label: "Istanbul", color: "var(--blue)" },
-  ankara: { label: "Ankara", color: "var(--purple)" },
-  izmir: { label: "Izmir", color: "var(--teal)" },
-  antalya: { label: "Antalya", color: "var(--orange)" },
-  erzurum: { label: "Erzurum", color: "var(--indigo)" },
+  istanbul: { label: "Istanbul", color: "var(--chart-1)" },
+  ankara: { label: "Ankara", color: "var(--color-purple-500)" },
+  izmir: { label: "Izmir", color: "var(--chart-2)" },
+  antalya: { label: "Antalya", color: "var(--chart-4)" },
+  erzurum: { label: "Erzurum", color: "var(--chart-3)" },
 } satisfies ChartConfig
 
 const TRANSITION = 650
@@ -133,7 +133,7 @@ export function LineChartInteractive() {
       <CardHeader className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex min-w-44 flex-1 flex-col gap-0.5">
           <p className="text-lg font-semibold">Monthly temperature</p>
-          <p className="text-sm text-label-secondary">
+          <p className="text-sm text-muted-foreground">
             {MODES[mode]} · °C · long-term
           </p>
         </div>
@@ -163,11 +163,11 @@ export function LineChartInteractive() {
               style={
                 { "--chip": chartConfig[city].color } as React.CSSProperties
               }
-              className="gap-1.5 bg-control font-semibold text-label aria-pressed:bg-[color-mix(in_oklab,var(--chip)_16%,transparent)] aria-pressed:text-label aria-pressed:hover:bg-[color-mix(in_oklab,var(--chip)_22%,transparent)] aria-pressed:hover:text-label aria-pressed:active:bg-[color-mix(in_oklab,var(--chip)_28%,transparent)]"
+              className="gap-1.5 bg-secondary font-semibold text-secondary-foreground aria-pressed:bg-[color-mix(in_oklab,var(--chip)_16%,transparent)] aria-pressed:text-foreground aria-pressed:hover:bg-[color-mix(in_oklab,var(--chip)_22%,transparent)] aria-pressed:hover:text-foreground aria-pressed:active:bg-[color-mix(in_oklab,var(--chip)_28%,transparent)]"
             >
               <span
                 aria-hidden
-                className="size-2 rounded-full bg-label-quaternary transition-colors in-aria-pressed:bg-(--chip)"
+                className="size-2 rounded-full bg-border transition-colors in-aria-pressed:bg-(--chip)"
               />
               {chartConfig[city].label}
             </Toggle>
@@ -201,7 +201,7 @@ export function LineChartInteractive() {
               allowDataOverflow
               tickFormatter={(value: number) => `${value}°`}
             />
-            <ReferenceLine y={0} stroke="var(--separator-strong)" />
+            <ReferenceLine y={0} stroke="var(--input)" />
             <ChartTooltip
               content={({ active, label, payload }) => (
                 <ChartTooltipContent
@@ -222,7 +222,7 @@ export function LineChartInteractive() {
                           } as React.CSSProperties
                         }
                       />
-                      <span className="flex-1 text-label-secondary">
+                      <span className="flex-1 text-muted-foreground">
                         {chartConfig[name as City].label}
                       </span>
                       <span className="font-semibold tabular-nums">
@@ -244,7 +244,7 @@ export function LineChartInteractive() {
                 activeDot={{
                   r: 5,
                   strokeWidth: 2,
-                  stroke: "var(--surface-secondary)",
+                  stroke: "var(--muted)",
                 }}
                 animationDuration={TRANSITION}
                 animationEasing="ease-in-out"
@@ -261,7 +261,7 @@ export function LineChartInteractive() {
             const highlighted = month === null ? undefined : temperatures[month]
             return (
               <div key={city} className="flex flex-col gap-0.5">
-                <dt className="flex items-center gap-1.5 text-sm text-label-secondary">
+                <dt className="flex items-center gap-1.5 text-sm text-muted-foreground">
                   <span
                     className="size-2 shrink-0 rounded-full bg-(--swatch)"
                     style={

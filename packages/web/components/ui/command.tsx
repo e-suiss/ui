@@ -21,7 +21,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "flex size-full flex-col overflow-hidden rounded-2xl bg-surface-raised text-label in-data-[slot=dialog-content]:rounded-none in-data-[slot=dialog-content]:bg-transparent",
+        "flex size-full flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground in-data-[slot=dialog-content]:rounded-none in-data-[slot=dialog-content]:bg-transparent",
         className
       )}
       {...props}
@@ -51,7 +51,7 @@ function CommandDialog({
       </DialogHeader>
       <DialogContent
         className={cn(
-          "top-[18vh] translate-y-0 gap-0 overflow-hidden rounded-3xl! bg-surface-raised/92 p-0 shadow-2xl ring-label/10 backdrop-blur-2xl backdrop-saturate-150 sm:max-w-160 dark:bg-surface-raised/85",
+          "top-[18vh] translate-y-0 gap-0 overflow-hidden rounded-3xl! bg-popover/92 p-0 shadow-2xl ring-foreground/10 backdrop-blur-2xl backdrop-saturate-150 sm:max-w-160 dark:bg-popover/85",
           className
         )}
         showCloseButton={showCloseButton}
@@ -69,16 +69,16 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="flex h-14 shrink-0 items-center gap-3 border-b border-separator px-4"
+      className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-4"
     >
       <MagnifyingGlassIcon
         aria-hidden="true"
-        className="size-5.5 shrink-0 text-label-secondary"
+        className="size-5.5 shrink-0 text-muted-foreground"
       />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          "h-full w-full min-w-0 bg-transparent text-xl caret-accent outline-hidden placeholder:text-label-tertiary disabled:cursor-not-allowed disabled:text-label-quaternary",
+          "h-full w-full min-w-0 bg-transparent text-xl caret-primary outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         {...props}
@@ -111,7 +111,7 @@ function CommandEmpty({
     <CommandPrimitive.Empty
       data-slot="command-empty"
       className={cn(
-        "py-10 text-center text-base text-label-secondary",
+        "py-10 text-center text-base text-muted-foreground",
         className
       )}
       {...props}
@@ -127,7 +127,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "overflow-hidden text-label not-first:pt-2 **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-1 **:[[cmdk-group-heading]]:pb-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:text-label-secondary",
+        "overflow-hidden text-foreground not-first:pt-2 **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-1 **:[[cmdk-group-heading]]:pb-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:text-muted-foreground",
         className
       )}
       {...props}
@@ -142,7 +142,7 @@ function CommandSeparator({
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
-      className={cn("mx-3 my-2 h-px bg-separator", className)}
+      className={cn("mx-3 my-2 h-px bg-border", className)}
       {...props}
     />
   )
@@ -157,7 +157,7 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "group/command-item relative flex h-10 cursor-default items-center gap-3 rounded-lg px-3 text-base outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:text-label-quaternary data-selected:bg-accent data-selected:text-on-accent [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 [&_svg]:text-label-secondary data-selected:[&_svg]:text-on-accent",
+        "group/command-item relative flex h-10 cursor-default items-center gap-3 rounded-lg px-3 text-base outline-hidden select-none data-[disabled=true]:pointer-events-none data-selected:bg-primary data-selected:text-primary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 [&_svg]:text-muted-foreground data-selected:[&_svg]:text-primary-foreground data-[disabled=true]:opacity-50",
         className
       )}
       {...props}
@@ -180,7 +180,7 @@ function CommandShortcut({
     <span
       data-slot="command-shortcut"
       className={cn(
-        "max-md:hidden ms-auto text-sm tracking-widest text-label-secondary group-data-selected/command-item:text-on-accent",
+        "max-md:hidden ms-auto text-sm tracking-widest text-muted-foreground group-data-selected/command-item:text-primary-foreground",
         className
       )}
       {...props}

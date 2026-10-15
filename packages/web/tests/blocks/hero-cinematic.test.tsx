@@ -8,17 +8,17 @@ const finishes = [
   {
     label: "Cosmic Orange",
     alt: "An orange phone on a warm gradient",
-    color: "var(--orange)",
+    color: "var(--color-orange-500)",
   },
   {
     label: "Deep Graphite",
     alt: "A dark textured surface with soft light",
-    color: "var(--gray)",
+    color: "var(--color-zinc-500)",
   },
   {
     label: "Silver",
     alt: "A silver phone on a light grey background",
-    color: "var(--label)",
+    color: "var(--foreground)",
   },
 ]
 
@@ -54,7 +54,9 @@ describe("HeroCinematic", () => {
     await expect
       .element(page.getByRole("img", { name: finishes[0]?.alt }))
       .toBeInTheDocument()
-    expect(section().style.getPropertyValue("--finish")).toBe("var(--orange)")
+    expect(section().style.getPropertyValue("--finish")).toBe(
+      "var(--color-orange-500)"
+    )
   })
 
   it.each(finishes)("switches the product to $label", async (finish) => {

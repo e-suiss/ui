@@ -46,26 +46,26 @@ const categories: [CategoryStyle, ...CategoryStyle[]] = [
   {
     value: "Activity",
     icon: FlameIcon,
-    tint: "bg-orange",
-    text: "text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:text-orange",
+    tint: "bg-orange-500",
+    text: "text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500",
   },
   {
     value: "Heart",
     icon: HeartIcon,
-    tint: "bg-red",
-    text: "text-[color-mix(in_oklab,var(--red),var(--label)_25%)] dark:text-red",
+    tint: "bg-red-500",
+    text: "text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] dark:text-red-500",
   },
   {
     value: "Sleep",
     icon: MoonIcon,
-    tint: "bg-cyan",
-    text: "text-[color-mix(in_oklab,var(--cyan),var(--label)_50%)] dark:text-cyan",
+    tint: "bg-cyan-500",
+    text: "text-[color-mix(in_oklab,var(--color-cyan-500),var(--foreground)_50%)] dark:text-cyan-500",
   },
   {
     value: "Mobility",
     icon: ChartBarIcon,
-    tint: "bg-green",
-    text: "text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green",
+    tint: "bg-green-500",
+    text: "text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500",
   },
 ]
 
@@ -83,7 +83,7 @@ const metrics: {
     label: "Move",
     value: "486",
     unit: "kcal",
-    color: "var(--red)",
+    color: "var(--color-red-500)",
     data: [40, 62, 38, 70, 55, 81, 65],
     bars: true,
   },
@@ -92,7 +92,7 @@ const metrics: {
     label: "Steps",
     value: "8,412",
     unit: "steps",
-    color: "var(--orange)",
+    color: "var(--color-orange-500)",
     data: [60, 80, 45, 90, 70, 95, 52],
     bars: true,
   },
@@ -101,14 +101,14 @@ const metrics: {
     label: "Resting Heart Rate",
     value: "58",
     unit: "bpm",
-    color: "var(--red)",
+    color: "var(--color-red-500)",
     data: [61, 60, 59, 58, 60, 57, 58],
   },
   {
     category: "Sleep",
     label: "Sleep",
     value: "7 hr 12 min",
-    color: "var(--cyan)",
+    color: "var(--color-cyan-500)",
     data: [68, 74, 59, 79, 64, 86, 72],
     bars: true,
   },
@@ -117,7 +117,7 @@ const metrics: {
     label: "Cardio Fitness",
     value: "42.1",
     unit: "VO₂ max",
-    color: "var(--red)",
+    color: "var(--color-red-500)",
     data: [40, 40, 41, 41, 42, 42, 42],
   },
   {
@@ -125,7 +125,7 @@ const metrics: {
     label: "Walking Speed",
     value: "5.1",
     unit: "km/h",
-    color: "var(--green)",
+    color: "var(--color-green-500)",
     data: [48, 50, 49, 51, 50, 52, 51],
   },
 ]
@@ -217,12 +217,12 @@ const items: NavItem[] = [
   {
     value: "Summary",
     label: "Summary",
-    icon: <Tile icon={HeartIcon} tint="bg-pink" />,
+    icon: <Tile icon={HeartIcon} tint="bg-pink-500" />,
   },
   {
     value: "Sharing",
     label: "Sharing",
-    icon: <Tile icon={UsersIcon} tint="bg-blue" />,
+    icon: <Tile icon={UsersIcon} tint="bg-blue-500" />,
   },
   ...categories.map((category) => ({
     value: category.value,
@@ -316,7 +316,7 @@ export function DashHealth() {
           <p className="px-2 pt-1 text-2xl font-bold tracking-tight">Health</p>
         }
       />
-      <SidebarInset className="bg-surface-secondary dark:bg-surface">
+      <SidebarInset className="bg-muted dark:bg-background">
         <div key={section} className="flex flex-col gap-2.5 px-5 py-6 md:px-7">
           <div className="flex items-center gap-2.5">
             <SidebarTrigger className="-ms-2" />
@@ -373,7 +373,7 @@ export function DashHealth() {
                           )
                         }
                         data-pinned={isPinned ? "" : undefined}
-                        className="relative bg-[color-mix(in_oklab,var(--green),var(--label)_35%)] text-white after:absolute after:-inset-2.5 after:content-[''] hover:bg-[color-mix(in_oklab,var(--green),var(--label)_45%)] data-pinned:bg-danger data-pinned:hover:bg-danger/90"
+                        className="relative bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_35%)] text-white after:absolute after:-inset-2.5 after:content-[''] hover:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] data-pinned:bg-destructive data-pinned:hover:bg-destructive/90"
                       >
                         {isPinned ? (
                           <MinusIcon weight="bold" />
@@ -385,19 +385,19 @@ export function DashHealth() {
                     <a
                       href={`#${metric.label.toLowerCase().replaceAll(" ", "-")}`}
                       data-dimmed={editing && !isPinned ? "" : undefined}
-                      className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl bg-surface px-4 py-3 outline-none transition-opacity duration-200 focus-visible:focus-ring data-dimmed:opacity-55 dark:bg-surface-secondary"
+                      className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl bg-background px-4 py-3 outline-none transition-opacity duration-200 focus-visible:focus-ring data-dimmed:opacity-55 dark:bg-muted"
                     >
                       <span
                         className={`flex items-center gap-1.5 text-base font-semibold ${category.text}`}
                       >
                         <Icon weight="fill" className="size-4" />
                         <span className="flex-1">{metric.label}</span>
-                        <span className="text-sm font-normal text-label-secondary">
+                        <span className="text-sm font-normal text-muted-foreground">
                           9:41
                         </span>
                         <CaretRightIcon
                           weight="bold"
-                          className="size-3 text-label-tertiary rtl:rotate-180"
+                          className="size-3 text-muted-foreground rtl:rotate-180"
                         />
                       </span>
                       <span className="flex items-end gap-4">
@@ -406,7 +406,7 @@ export function DashHealth() {
                             {metric.value}
                           </span>
                           {metric.unit && (
-                            <span className="ms-1 text-base font-semibold text-label-secondary">
+                            <span className="ms-1 text-base font-semibold text-muted-foreground">
                               {metric.unit}
                             </span>
                           )}
@@ -423,7 +423,7 @@ export function DashHealth() {
               })}
             </ul>
           ) : (
-            <p className="py-7.5 text-center text-base text-label-secondary">
+            <p className="py-7.5 text-center text-base text-muted-foreground">
               No pinned items. Use Edit to add some.
             </p>
           )}

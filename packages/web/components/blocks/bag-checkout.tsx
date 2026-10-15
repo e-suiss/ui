@@ -35,7 +35,7 @@ const money = (value: number) =>
   value.toLocaleString("en-US", { style: "currency", currency: "USD" })
 
 const choiceClass =
-  "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-separator-strong)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-accent)] has-focus-visible:focus-ring"
+  "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring"
 
 function stepState(index: number, current: number) {
   if (current > index) return "done"
@@ -64,18 +64,18 @@ function Step({
   return (
     <section
       aria-current={open ? "step" : undefined}
-      className="border-b border-separator py-4.5"
+      className="border-b border-border py-4.5"
     >
       <div className="flex items-center gap-2.5">
         <span
           data-state={stepState(index, current)}
-          className="flex size-6.5 items-center justify-center rounded-full bg-control text-sm font-semibold text-label-secondary data-[state=done]:bg-[color-mix(in_oklab,var(--green),var(--label)_35%)] data-[state=done]:text-white data-[state=open]:bg-label data-[state=open]:text-surface dark:data-[state=done]:bg-[color-mix(in_oklab,var(--green),black_35%)]"
+          className="flex size-6.5 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-muted-foreground data-[state=done]:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_35%)] data-[state=done]:text-white data-[state=open]:bg-foreground data-[state=open]:text-background dark:data-[state=done]:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]"
         >
           {done ? <CheckIcon weight="bold" className="size-3.25" /> : index + 1}
         </span>
         <h2
           data-idle={!open && !done ? "" : undefined}
-          className="flex-1 text-2xl font-semibold data-idle:text-label-secondary"
+          className="flex-1 text-2xl font-semibold data-idle:text-muted-foreground"
         >
           {title}
         </h2>
@@ -84,14 +84,14 @@ function Step({
             type="button"
             onClick={onEdit}
             aria-label={`Edit ${title.toLowerCase()}`}
-            className="rounded-xs text-sm text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Edit ›
           </button>
         )}
       </div>
       {done && summary && (
-        <p className="ps-9 pt-1.5 text-sm text-label-secondary">{summary}</p>
+        <p className="ps-9 pt-1.5 text-sm text-muted-foreground">{summary}</p>
       )}
       <div
         data-open={open ? "" : undefined}
@@ -119,13 +119,13 @@ export function BagCheckout() {
     return (
       <section className="flex min-h-160 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
             <CheckIcon weight="bold" className="size-9.5" />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Thank you. Your order is in.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             Your order number is W1049. We sent a confirmation email.
           </p>
           <button
@@ -134,7 +134,7 @@ export function BagCheckout() {
               setPlaced(false)
               setStep(0)
             }}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Start over ›
           </button>
@@ -144,7 +144,7 @@ export function BagCheckout() {
   }
 
   return (
-    <section className="grid min-h-160 bg-surface md:grid-cols-[minmax(0,1.4fr)_minmax(16.25rem,1fr)]">
+    <section className="grid min-h-160 bg-background md:grid-cols-[minmax(0,1.4fr)_minmax(16.25rem,1fr)]">
       <div className="px-5 py-6 md:px-9">
         <h1 className="mb-2 text-3xl font-semibold tracking-tight">Checkout</h1>
         <Step
@@ -220,7 +220,7 @@ export function BagCheckout() {
           </Button>
         </Step>
         <Step index={2} current={step} title="Review" onEdit={() => setStep(2)}>
-          <p className="text-sm leading-normal text-label-secondary">
+          <p className="text-sm leading-normal text-muted-foreground">
             By placing your order, you agree to the Sales Policy.
           </p>
           <Button className="self-start" onClick={() => setPlaced(true)}>
@@ -230,7 +230,7 @@ export function BagCheckout() {
       </div>
       <aside
         aria-label="Order summary"
-        className="flex flex-col gap-3.5 bg-surface-secondary px-6.5 py-7"
+        className="flex flex-col gap-3.5 bg-muted px-6.5 py-7"
       >
         <h2 className="text-lg font-semibold">Order summary</h2>
         <ul className="flex flex-col gap-3.5">
@@ -239,11 +239,11 @@ export function BagCheckout() {
               <img
                 src={item.image}
                 alt=""
-                className="size-12 shrink-0 rounded-[0.625rem] bg-control object-cover"
+                className="size-12 shrink-0 rounded-[0.625rem] bg-secondary object-cover"
               />
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="text-sm font-semibold">{item.name}</span>
-                <span className="text-xs text-label-secondary">
+                <span className="text-xs text-muted-foreground">
                   {item.variant}
                 </span>
               </span>
@@ -251,7 +251,7 @@ export function BagCheckout() {
             </li>
           ))}
         </ul>
-        <div className="flex items-center border-t border-separator pt-3">
+        <div className="flex items-center border-t border-border pt-3">
           <span className="flex-1 text-base font-semibold">Total</span>
           <span
             className="text-lg font-semibold tabular-nums"

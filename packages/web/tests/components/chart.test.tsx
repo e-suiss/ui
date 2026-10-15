@@ -122,12 +122,12 @@ describe("ChartStyle", () => {
           broken: { color: "red; } body { display: none" },
           html: { color: "<script>" },
           escaped: { color: "\\61" },
-          fine: { color: "var(--green)" },
+          fine: { color: "var(--color-green-500)" },
         }}
       />
     )
     const css = styleText()
-    expect(css).toContain("--color-fine: var(--green);")
+    expect(css).toContain("--color-fine: var(--color-green-500);")
     expect(css).not.toContain("display")
     expect(css).not.toContain("script")
     expect(css).not.toContain("\\61")

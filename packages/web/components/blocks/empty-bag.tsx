@@ -45,7 +45,7 @@ export function EmptyBag() {
           <EmptyMedia className="relative mb-1">
             <HandbagIcon weight="light" className="size-11.5" />
             {count > 0 && (
-              <span className="absolute -end-1.5 -bottom-0.5 flex size-5 items-center justify-center rounded-full bg-label text-2xs font-semibold text-surface tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
+              <span className="absolute -end-1.5 -bottom-0.5 flex size-5 items-center justify-center rounded-full bg-foreground text-2xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
                 {count}
               </span>
             )}
@@ -78,12 +78,12 @@ export function EmptyBag() {
                 <img
                   src={item.image}
                   alt=""
-                  className="aspect-[1.2] w-full rounded-2xl bg-control object-cover"
+                  className="aspect-[1.2] w-full rounded-2xl bg-secondary object-cover"
                 />
                 <div className="flex items-center gap-2">
                   <div className="flex flex-1 flex-col">
                     <span className="text-base font-semibold">{item.name}</span>
-                    <span className="text-sm text-label-secondary">
+                    <span className="text-sm text-muted-foreground">
                       {item.price}
                     </span>
                   </div>
@@ -103,7 +103,7 @@ export function EmptyBag() {
                       )
                     }
                     data-in-bag={inBag ? "" : undefined}
-                    className="relative size-7.5 transition-colors duration-250 after:absolute after:-inset-1.75 after:content-[''] data-in-bag:bg-[color-mix(in_oklab,var(--green),var(--label)_40%)] dark:data-in-bag:bg-[color-mix(in_oklab,var(--green),black_45%)]"
+                    className="relative size-7.5 transition-colors duration-250 after:absolute after:-inset-1.75 after:content-[''] data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] dark:data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),black_45%)]"
                   >
                     {inBag ? (
                       <CheckIcon weight="bold" className="size-3.75" />

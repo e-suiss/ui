@@ -14,7 +14,7 @@ import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
 const chartData = [{ name: "value", value: 72, fill: "var(--color-value)" }]
 
 const chartConfig = {
-  value: { label: "Used", color: "var(--blue)" },
+  value: { label: "Used", color: "var(--chart-1)" },
 } satisfies ChartConfig
 
 export function RadialChartText() {
@@ -58,7 +58,7 @@ export function RadialChartText() {
             <span className="text-3xl font-semibold tracking-tight tabular-nums">
               72%
             </span>
-            <span className="text-xs text-label-secondary">
+            <span className="text-xs text-muted-foreground">
               cloud storage used
             </span>
           </div>

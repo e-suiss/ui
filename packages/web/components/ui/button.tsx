@@ -3,25 +3,25 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:focus-ring [--focus-ring-offset:3px] disabled:pointer-events-none aria-invalid:border-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:focus-ring [--focus-ring-offset:3px] disabled:pointer-events-none aria-invalid:border-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-pressed disabled:bg-accent-disabled",
+          "bg-primary text-primary-foreground hover:bg-primary/80 disabled:opacity-50",
         outline:
-          "border-separator bg-surface hover:bg-item-hover hover:text-label active:bg-item-pressed aria-expanded:bg-item-selected aria-expanded:text-label dark:bg-transparent dark:hover:bg-item-hover dark:active:bg-item-pressed dark:aria-expanded:bg-item-selected disabled:text-label-quaternary",
+          "border-border bg-background hover:bg-accent hover:text-accent-foreground aria-expanded:bg-accent aria-expanded:text-accent-foreground dark:bg-transparent dark:hover:bg-accent dark:aria-expanded:bg-accent dark:hover:text-accent-foreground disabled:opacity-50",
         secondary:
-          "bg-control text-label hover:bg-control-hover active:bg-control-pressed disabled:bg-control-disabled disabled:text-label-quaternary",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:opacity-50",
         tinted:
-          "bg-accent-surface text-link hover:bg-accent-surface-hover active:bg-accent-surface-pressed disabled:bg-accent-surface disabled:text-link/40",
+          "bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30 disabled:opacity-50",
         ghost:
-          "hover:bg-item-hover hover:text-label aria-expanded:bg-item-selected aria-expanded:text-label disabled:text-label-quaternary",
+          "hover:bg-accent hover:text-accent-foreground aria-expanded:bg-accent aria-expanded:text-accent-foreground disabled:opacity-50",
         plain:
-          "text-link hover:bg-item-hover active:bg-item-pressed aria-expanded:bg-item-selected disabled:text-link/40",
+          "text-primary hover:bg-accent aria-expanded:bg-accent disabled:opacity-50",
         destructive:
-          "bg-danger-surface text-danger hover:bg-danger-surface-hover hover:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] active:bg-danger-surface-pressed [--focus-ring-color:var(--color-danger)] dark:hover:text-danger disabled:bg-danger-surface disabled:text-danger/40",
-        link: "text-link hover:underline disabled:text-label-quaternary",
+          "bg-destructive/10 dark:bg-destructive/20 text-destructive hover:bg-destructive/20 dark:hover:bg-destructive/30 hover:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] [--focus-ring-color:var(--color-destructive)] dark:hover:text-destructive disabled:opacity-50",
+        link: "text-primary hover:underline disabled:opacity-50",
       },
       size: {
         default:

@@ -252,7 +252,7 @@ export function UsersTable() {
             <SidebarTrigger className="-ms-2 mt-0.5" />
             <div className="flex flex-1 flex-col">
               <h1 className="text-3xl font-semibold tracking-tight">Users</h1>
-              <p className="text-sm text-label-secondary">
+              <p className="text-sm text-muted-foreground">
                 {users.length} people
               </p>
             </div>
@@ -298,20 +298,20 @@ export function UsersTable() {
               </ToggleGroupItem>
             ))}
           </ToggleGroup>
-          <div className="overflow-hidden rounded-xl bg-surface-secondary">
+          <div className="overflow-hidden rounded-xl bg-muted">
             <Table>
               <TableHeader>
-                <TableRow className="border-separator hover:bg-transparent">
-                  <TableHead className="ps-4 text-xs font-normal text-label-secondary">
+                <TableRow className="border-border hover:bg-transparent">
+                  <TableHead className="ps-4 text-xs font-normal text-muted-foreground">
                     Name
                   </TableHead>
-                  <TableHead className="hidden text-xs font-normal text-label-secondary sm:table-cell">
+                  <TableHead className="hidden text-xs font-normal text-muted-foreground sm:table-cell">
                     Role
                   </TableHead>
-                  <TableHead className="text-xs font-normal text-label-secondary">
+                  <TableHead className="text-xs font-normal text-muted-foreground">
                     Status
                   </TableHead>
-                  <TableHead className="hidden pe-4 text-end text-xs font-normal text-label-secondary md:table-cell">
+                  <TableHead className="hidden pe-4 text-end text-xs font-normal text-muted-foreground md:table-cell">
                     Last sign-in
                   </TableHead>
                 </TableRow>
@@ -324,7 +324,7 @@ export function UsersTable() {
                       key={user.email}
                       data-selected={isSelected ? "true" : undefined}
                       onClick={() => toggle(user.email)}
-                      className="group/row cursor-default border-0 select-none not-data-selected:even:bg-surface/60 not-data-selected:hover:bg-label/5 has-focus-visible:focus-ring data-selected:bg-accent data-selected:text-on-accent"
+                      className="group/row cursor-default border-0 select-none not-data-selected:even:bg-background/60 not-data-selected:hover:bg-foreground/5 has-focus-visible:focus-ring data-selected:bg-primary data-selected:text-primary-foreground"
                     >
                       <TableCell className="ps-4">
                         <span className="flex items-center gap-2.5">
@@ -349,7 +349,7 @@ export function UsersTable() {
                             <span className="text-sm font-semibold">
                               {user.name}
                             </span>
-                            <span className="truncate text-xs text-label-secondary group-data-selected/row:text-on-accent">
+                            <span className="truncate text-xs text-muted-foreground group-data-selected/row:text-primary-foreground">
                               {user.email}
                             </span>
                           </span>
@@ -360,11 +360,11 @@ export function UsersTable() {
                       </TableCell>
                       <TableCell
                         data-status={isSelected ? undefined : user.status}
-                        className="text-sm data-[status=Invited]:text-label-secondary data-[status=Suspended]:text-danger group-data-selected/row:text-on-accent"
+                        className="text-sm data-[status=Invited]:text-muted-foreground data-[status=Suspended]:text-destructive group-data-selected/row:text-primary-foreground"
                       >
                         {user.status}
                       </TableCell>
-                      <TableCell className="hidden pe-4 text-end text-sm text-label-secondary group-data-selected/row:text-on-accent md:table-cell">
+                      <TableCell className="hidden pe-4 text-end text-sm text-muted-foreground group-data-selected/row:text-primary-foreground md:table-cell">
                         {user.seen}
                       </TableCell>
                     </TableRow>
@@ -373,13 +373,13 @@ export function UsersTable() {
               </TableBody>
             </Table>
             {list.length === 0 && (
-              <p className="p-6 text-center text-sm text-label-secondary">
+              <p className="p-6 text-center text-sm text-muted-foreground">
                 No matching users.
               </p>
             )}
-            <div className="flex min-h-12 flex-wrap items-center gap-2 border-t border-separator py-2 ps-4 pe-3">
+            <div className="flex min-h-12 flex-wrap items-center gap-2 border-t border-border py-2 ps-4 pe-3">
               <span
-                className="flex-1 text-xs text-label-secondary"
+                className="flex-1 text-xs text-muted-foreground"
                 aria-live="polite"
               >
                 {selected.length

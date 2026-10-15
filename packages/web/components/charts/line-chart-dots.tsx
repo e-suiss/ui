@@ -20,25 +20,25 @@ const chartData = [
 }))
 
 const chartConfig = {
-  weight: { label: "Weight", color: "var(--purple)" },
+  weight: { label: "Weight", color: "var(--color-purple-500)" },
 } satisfies ChartConfig
 
 export function LineChartDots() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
-        <p className="text-sm font-semibold text-[color-mix(in_oklab,var(--purple),var(--label)_15%)] dark:text-purple">
+        <p className="text-sm font-semibold text-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_15%)] dark:text-purple-500">
           Weight
         </p>
         <p className="flex items-baseline gap-1">
           <span className="text-3xl font-semibold tracking-tight tabular-nums">
             77.9
           </span>
-          <span className="text-base font-semibold text-label-secondary">
+          <span className="text-base font-semibold text-muted-foreground">
             kg
           </span>
         </p>
-        <p className="text-sm text-label-secondary">
+        <p className="text-sm text-muted-foreground">
           Down 4.5 kg since January
         </p>
       </CardHeader>

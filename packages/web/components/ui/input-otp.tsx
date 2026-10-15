@@ -63,7 +63,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-control text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 in-[.cn-input-otp:has(input[aria-invalid=true])]:border-danger in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-danger/5 dark:in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-danger/10 in-[.cn-input-otp:has(input:disabled)]:bg-control-disabled in-[.cn-input-otp:has(input:disabled)]:text-label-quaternary data-[active=true]:z-10 data-[active=true]:border-accent",
+        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-secondary text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 in-[.cn-input-otp:has(input[aria-invalid=true])]:border-destructive in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-destructive/5 dark:in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-destructive/10 data-[active=true]:z-10 data-[active=true]:border-primary in-[.cn-input-otp:has(input:disabled)]:opacity-50",
         className
       )}
       {...props}
@@ -71,7 +71,7 @@ function InputOTPSlot({
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-6 w-0.5 animate-caret-blink rounded-full bg-accent duration-1000" />
+          <div className="h-6 w-0.5 animate-caret-blink rounded-full bg-primary duration-1000" />
         </div>
       )}
     </div>
@@ -82,7 +82,7 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="input-otp-separator"
-      className="flex items-center in-[.cn-input-otp:has(input:disabled)]:text-label-quaternary [&_svg:not([class*='size-'])]:size-4"
+      className="flex items-center [&_svg:not([class*='size-'])]:size-4 in-[.cn-input-otp:has(input:disabled)]:opacity-50"
       role="separator"
       {...props}
     >

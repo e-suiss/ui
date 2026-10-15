@@ -56,7 +56,7 @@ export function NavLocal() {
   }, [])
 
   return (
-    <div className="dark bg-surface text-label">
+    <div className="dark bg-background text-foreground">
       <div
         ref={topRef}
         aria-hidden
@@ -79,36 +79,35 @@ export function NavLocal() {
             Buy
           </Button>
         }
-        className="sticky top-0 z-10 h-13 border-b border-label/18 transition-[background-color,border-color] duration-300 data-scrolled:border-label/12 data-scrolled:bg-surface-secondary/80 data-scrolled:backdrop-blur-xl data-scrolled:backdrop-saturate-180 md:px-[max(--spacing(5),calc((100%-62.5rem)/2))] [&_[data-slot=navigation-menu]]:me-0 [&_[data-slot=navigation-menu]]:ms-auto [&_[data-slot=navigation-menu-link]]:relative [&_[data-slot=navigation-menu-link]]:h-13 [&_[data-slot=navigation-menu-link]]:rounded-none [&_[data-slot=navigation-menu-link]]:px-3 [&_[data-slot=navigation-menu-link]]:text-xs [&_[data-slot=navigation-menu-link]]:text-label-secondary [&_[data-slot=navigation-menu-link]]:hover:bg-transparent [&_[data-slot=navigation-menu-link]]:hover:text-label [&_[data-slot=navigation-menu-link]]:data-active:bg-transparent [&_[data-slot=navigation-menu-link]]:data-active:text-label [&_[data-slot=navigation-menu-link]]:data-active:after:absolute [&_[data-slot=navigation-menu-link]]:data-active:after:inset-x-3 [&_[data-slot=navigation-menu-link]]:data-active:after:-bottom-px [&_[data-slot=navigation-menu-link]]:data-active:after:h-px [&_[data-slot=navigation-menu-link]]:data-active:after:bg-label"
+        className="sticky top-0 z-10 h-13 border-b border-foreground/18 transition-[background-color,border-color] duration-300 data-scrolled:border-foreground/12 data-scrolled:bg-muted/80 data-scrolled:backdrop-blur-xl data-scrolled:backdrop-saturate-180 md:px-[max(--spacing(5),calc((100%-62.5rem)/2))] [&_[data-slot=navigation-menu]]:me-0 [&_[data-slot=navigation-menu]]:ms-auto [&_[data-slot=navigation-menu-link]]:relative [&_[data-slot=navigation-menu-link]]:h-13 [&_[data-slot=navigation-menu-link]]:rounded-none [&_[data-slot=navigation-menu-link]]:px-3 [&_[data-slot=navigation-menu-link]]:text-xs [&_[data-slot=navigation-menu-link]]:text-muted-foreground [&_[data-slot=navigation-menu-link]]:hover:bg-transparent [&_[data-slot=navigation-menu-link]]:hover:text-foreground [&_[data-slot=navigation-menu-link]]:data-active:bg-transparent [&_[data-slot=navigation-menu-link]]:data-active:text-foreground [&_[data-slot=navigation-menu-link]]:data-active:after:absolute [&_[data-slot=navigation-menu-link]]:data-active:after:inset-x-3 [&_[data-slot=navigation-menu-link]]:data-active:after:-bottom-px [&_[data-slot=navigation-menu-link]]:data-active:after:h-px [&_[data-slot=navigation-menu-link]]:data-active:after:bg-foreground"
       />
       <section
         id="overview"
         className="flex flex-col items-center px-6 pt-14 pb-6 text-center"
       >
-        <p className="mb-2 text-sm text-label-secondary">New</p>
+        <p className="mb-2 text-sm text-muted-foreground">New</p>
         <h1 className="text-5xl font-semibold tracking-tight text-balance md:text-6xl">
           Pro power.
         </h1>
-        <p className="mt-2 text-2xl text-balance text-label-secondary">
+        <p className="mt-2 text-2xl text-balance text-muted-foreground">
           The most advanced phone yet.
         </p>
       </section>
       <img
         src={images.hero}
         alt="An orange phone on a gradient background"
-        className="mx-auto h-90 w-[calc(100%-2.5rem)] max-w-5xl rounded-[1.375rem] bg-control object-cover md:w-[calc(100%-5rem)]"
+        className="mx-auto h-90 w-[calc(100%-2.5rem)] max-w-5xl rounded-[1.375rem] bg-secondary object-cover md:w-[calc(100%-5rem)]"
       />
       <section
         id="why"
         className="mx-auto grid max-w-5xl gap-3.5 px-5 py-10 sm:grid-cols-3 md:px-10"
       >
         {highlights.map((item) => (
-          <div
-            key={item.value}
-            className="rounded-[1.125rem] bg-surface-secondary p-5.5"
-          >
+          <div key={item.value} className="rounded-[1.125rem] bg-muted p-5.5">
             <p className="text-3xl font-semibold tabular-nums">{item.value}</p>
-            <p className="mt-1.5 text-base text-label-secondary">{item.text}</p>
+            <p className="mt-1.5 text-base text-muted-foreground">
+              {item.text}
+            </p>
           </div>
         ))}
       </section>
@@ -116,7 +115,7 @@ export function NavLocal() {
         <img
           src={images.detail}
           alt="A close look at a camera lens"
-          className="mx-auto h-80 w-full max-w-5xl rounded-[1.375rem] bg-control object-cover"
+          className="mx-auto h-80 w-full max-w-5xl rounded-[1.375rem] bg-secondary object-cover"
         />
       </section>
     </div>

@@ -222,7 +222,7 @@ export function LogLive() {
               <h1 className="text-3xl font-semibold tracking-tight">
                 Live activity
               </h1>
-              <p className="text-sm text-label-secondary">
+              <p className="text-sm text-muted-foreground">
                 {running ? "Events appear as they happen" : "Paused"}
               </p>
             </div>
@@ -240,13 +240,13 @@ export function LogLive() {
               {running ? "Pause" : "Resume"}
             </Button>
           </div>
-          <dl className="grid grid-cols-3 overflow-hidden rounded-xl bg-surface-secondary">
+          <dl className="grid grid-cols-3 overflow-hidden rounded-xl bg-muted">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="flex min-w-0 flex-col px-3 py-3 not-first:border-s not-first:border-separator md:px-4"
+                className="flex min-w-0 flex-col px-3 py-3 not-first:border-s not-first:border-border md:px-4"
               >
-                <dt className="truncate text-xs text-label-secondary">
+                <dt className="truncate text-xs text-muted-foreground">
                   {stat.label}
                 </dt>
                 <dd className="text-xl font-semibold tabular-nums md:text-2xl">
@@ -258,8 +258,8 @@ export function LogLive() {
           <div className="-mb-2.5 flex items-center gap-2 px-1">
             <h2 className="flex-1 text-sm font-semibold">Recent events</h2>
             {running && (
-              <span className="flex items-center gap-1.5 text-xs text-label-secondary">
-                <span className="size-1.75 animate-pulse rounded-full bg-green" />
+              <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="size-1.75 animate-pulse rounded-full bg-green-500" />
                 Live
               </span>
             )}
@@ -267,12 +267,12 @@ export function LogLive() {
           <ul
             aria-live="polite"
             aria-relevant="additions"
-            className="overflow-hidden rounded-2xl bg-surface-secondary"
+            className="overflow-hidden rounded-2xl bg-muted"
           >
             {entries.map(({ id, time, event }) => (
               <li
                 key={id}
-                className="relative flex min-h-11 items-center gap-3 px-4 py-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator starting:-translate-y-2.5 starting:opacity-0 motion-reduce:transition-none"
+                className="relative flex min-h-11 items-center gap-3 px-4 py-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-border starting:-translate-y-2.5 starting:opacity-0 motion-reduce:transition-none"
               >
                 {event.hue ? (
                   <Avatar className="size-7">
@@ -291,7 +291,7 @@ export function LogLive() {
                 ) : (
                   <span
                     data-warning={event.warning ? "" : undefined}
-                    className="flex size-7 shrink-0 items-center justify-center rounded-[7px] bg-gray text-white data-warning:bg-orange"
+                    className="flex size-7 shrink-0 items-center justify-center rounded-[7px] bg-zinc-500 text-white data-warning:bg-orange-500"
                   >
                     {event.icon && (
                       <event.icon weight="bold" className="size-4" />
@@ -303,11 +303,11 @@ export function LogLive() {
                     <strong className="font-semibold">{event.actor}</strong>{" "}
                     {event.action}
                   </span>
-                  <span className="truncate text-xs text-label-secondary">
+                  <span className="truncate text-xs text-muted-foreground">
                     {event.detail}
                   </span>
                 </span>
-                <span className="text-sm text-label-secondary tabular-nums">
+                <span className="text-sm text-muted-foreground tabular-nums">
                   {time}
                 </span>
               </li>

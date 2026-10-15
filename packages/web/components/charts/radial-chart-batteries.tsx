@@ -22,7 +22,10 @@ const LOW = 20
 
 function Battery({ name, level }: { name: string; level: number }) {
   const chartConfig = {
-    level: { label: name, color: level <= LOW ? "var(--red)" : "var(--green)" },
+    level: {
+      label: name,
+      color: level <= LOW ? "var(--color-red-500)" : "var(--color-green-500)",
+    },
   } satisfies ChartConfig
 
   return (
@@ -55,13 +58,13 @@ function Battery({ name, level }: { name: string; level: number }) {
         </ChartContainer>
         <span
           aria-hidden
-          className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-label-secondary"
+          className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-muted-foreground"
         >
           {name[0]}
         </span>
       </div>
       <span className="text-base font-semibold tabular-nums">{level}%</span>
-      <span className="text-xs text-label-secondary">{name}</span>
+      <span className="text-xs text-muted-foreground">{name}</span>
     </div>
   )
 }

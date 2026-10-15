@@ -37,7 +37,7 @@ const copy = {
 }
 
 const slotClass =
-  "h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-separator-strong bg-transparent text-3xl data-[active=true]:border-accent data-[active=true]:ring-3 data-[active=true]:ring-accent/25 group-data-[status=error]/code:border-danger"
+  "h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive"
 
 function AlertAction({
   children,
@@ -53,7 +53,7 @@ function AlertAction({
       type="button"
       onClick={onClick}
       data-primary={primary ? "" : undefined}
-      className="h-11 w-full border-t border-separator-strong text-lg text-link outline-none hover:bg-item-hover focus-visible:bg-item-hover data-primary:font-semibold"
+      className="h-11 w-full border-t border-input text-lg text-primary outline-none hover:bg-accent focus-visible:bg-accent data-primary:font-semibold"
     >
       {children}
     </button>
@@ -69,13 +69,13 @@ export function VerifyDevice() {
     return (
       <section className="flex min-h-150 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
             <CheckIcon weight="bold" className="size-9.5" />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Sign-in approved.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             This browser was added to your suiss Account.
           </p>
           <button
@@ -84,7 +84,7 @@ export function VerifyDevice() {
               setCode("")
               setPhase("ask")
             }}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Start over ›
           </button>
@@ -94,9 +94,9 @@ export function VerifyDevice() {
   }
 
   return (
-    <section className="grid min-h-150 bg-surface md:grid-cols-2">
+    <section className="grid min-h-150 bg-background md:grid-cols-2">
       <div className="flex flex-col justify-center gap-3.5 px-6 py-12 md:px-12">
-        <span className="flex size-14 items-center justify-center rounded-full bg-surface-secondary text-accent">
+        <span className="flex size-14 items-center justify-center rounded-full bg-muted text-primary">
           {phase === "code" ? (
             <LockSimpleIcon weight="bold" className="size-6.5" />
           ) : (
@@ -106,7 +106,7 @@ export function VerifyDevice() {
         <h1 className="text-4xl font-semibold tracking-tight text-balance">
           {copy[phase].title}
         </h1>
-        <p className="max-w-95 text-lg text-label-secondary">
+        <p className="max-w-95 text-lg text-muted-foreground">
           {copy[phase].body}
         </p>
         <div className="mt-2.5 min-h-16" aria-live="polite">
@@ -141,12 +141,14 @@ export function VerifyDevice() {
                 </InputOTPGroup>
               </InputOTP>
               {error && (
-                <p className="mt-2.5 text-sm text-danger">Incorrect code.</p>
+                <p className="mt-2.5 text-sm text-destructive">
+                  Incorrect code.
+                </p>
               )}
             </div>
           )}
           {phase === "ask" && (
-            <p className="flex items-center gap-2.5 text-sm text-label-secondary">
+            <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
               <Spinner />
               Waiting for approval…
             </p>
@@ -155,7 +157,7 @@ export function VerifyDevice() {
             <button
               type="button"
               onClick={() => setPhase("ask")}
-              className="rounded-xs text-base text-link outline-none hover:underline focus-visible:focus-ring"
+              className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:focus-ring"
             >
               Try again ›
             </button>
@@ -173,7 +175,7 @@ export function VerifyDevice() {
           key={phase}
           role="alertdialog"
           aria-label="Trusted device"
-          className="relative w-67.5 overflow-hidden rounded-[0.875rem] bg-surface-raised/86 text-center text-label shadow-[0_20px_60px_rgb(0_0_0/0.3)] backdrop-blur-2xl backdrop-saturate-180 transition-[opacity,translate] duration-800 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
+          className="relative w-67.5 overflow-hidden rounded-[0.875rem] bg-popover/86 text-center text-popover-foreground shadow-[0_20px_60px_rgb(0_0_0/0.3)] backdrop-blur-2xl backdrop-saturate-180 transition-[opacity,translate] duration-800 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
         >
           {phase === "code" && (
             <>
@@ -184,7 +186,7 @@ export function VerifyDevice() {
                 <p className="mt-2.5 mb-1 text-4xl font-semibold tracking-widest tabular-nums">
                   482 913
                 </p>
-                <p className="text-sm leading-snug text-label-secondary">
+                <p className="text-sm leading-snug text-muted-foreground">
                   Enter this code in the browser you're signing in to.
                 </p>
               </div>
@@ -195,7 +197,7 @@ export function VerifyDevice() {
             <>
               <div className="px-4 pt-5 pb-4.5">
                 <p className="text-lg font-semibold">Sign-in blocked</p>
-                <p className="mt-1 text-sm text-label-secondary">
+                <p className="mt-1 text-sm text-muted-foreground">
                   If this wasn't you, change your password.
                 </p>
               </div>
@@ -210,13 +212,13 @@ export function VerifyDevice() {
                 <p className="text-lg font-semibold">
                   suiss Account Sign-in Requested
                 </p>
-                <p className="mt-1 text-sm leading-snug text-label-secondary">
+                <p className="mt-1 text-sm leading-snug text-muted-foreground">
                   Your suiss Account is being used to sign in to a browser near
                   San Francisco.
                 </p>
                 <div
                   aria-hidden
-                  className="mt-3.5 h-24 rounded-[0.625rem] bg-[radial-gradient(circle_at_50%_52%,var(--color-accent)_0_5px,color-mix(in_oklab,var(--color-accent)_25%,transparent)_6px_24px,transparent_25px),linear-gradient(135deg,oklch(0.9_0.03_140),oklch(0.88_0.03_230))]"
+                  className="mt-3.5 h-24 rounded-[0.625rem] bg-[radial-gradient(circle_at_50%_52%,var(--color-primary)_0_5px,color-mix(in_oklab,var(--color-primary)_25%,transparent)_6px_24px,transparent_25px),linear-gradient(135deg,oklch(0.9_0.03_140),oklch(0.88_0.03_230))]"
                 />
               </div>
               <AlertAction primary onClick={() => setPhase("code")}>

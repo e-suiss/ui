@@ -43,9 +43,9 @@ const columns: TableListColumn<Order>[] = [
     cell: (order) => (
       <span
         className={cn(
-          "font-semibold text-label-secondary",
-          order.status === "shipped" && "text-link",
-          order.status === "returned" && "text-danger"
+          "font-semibold text-muted-foreground",
+          order.status === "shipped" && "text-primary",
+          order.status === "returned" && "text-destructive"
         )}
       >
         {statusLabel[order.status]}

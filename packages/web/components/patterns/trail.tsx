@@ -140,7 +140,7 @@ function Trail({
         onPointerLeave: cancelPress,
       }),
       className:
-        "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-link outline-none select-none [-webkit-touch-callout:none] focus-visible:focus-ring",
+        "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-primary outline-none select-none [-webkit-touch-callout:none] focus-visible:focus-ring",
       children: (
         <>
           <CaretLeftIcon
@@ -182,7 +182,7 @@ function Trail({
               >
                 <MenuPrimitive.Popup
                   data-slot="trail-history"
-                  className="min-w-60 origin-(--transform-origin) overflow-hidden rounded-2xl bg-surface-raised text-label shadow-xl ring-1 ring-label/5 transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 motion-reduce:transition-none dark:ring-label/10"
+                  className="min-w-60 origin-(--transform-origin) overflow-hidden rounded-2xl bg-popover text-popover-foreground shadow-xl ring-1 ring-foreground/5 transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 motion-reduce:transition-none dark:ring-foreground/10"
                 >
                   {ancestors.map((item) => (
                     <MenuPrimitive.LinkItem
@@ -191,7 +191,7 @@ function Trail({
                       closeOnClick
                       href={item.href}
                       render={render}
-                      className="flex min-h-11 items-center justify-between gap-6 px-4 py-2.75 text-base outline-none select-none not-first:border-t not-first:border-separator data-highlighted:bg-item-hover [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5"
+                      className="flex min-h-11 items-center justify-between gap-6 px-4 py-2.75 text-base outline-none select-none not-first:border-t not-first:border-border data-highlighted:bg-accent [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 data-highlighted:text-accent-foreground"
                     >
                       <span className="truncate">{item.label}</span>
                       <ArrowBendUpLeftIcon className="rtl:-scale-x-100" />

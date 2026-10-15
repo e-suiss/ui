@@ -55,15 +55,15 @@ const STORAGE: Record<
 }
 
 const chartConfig = {
-  apps: { label: "Apps", color: "var(--red)" },
-  photos: { label: "Photos", color: "var(--orange)" },
-  system: { label: "System", color: "var(--gray)" },
-  backups: { label: "Backups", color: "var(--purple)" },
-  drive: { label: "Drive", color: "var(--blue)" },
-  messages: { label: "Messages", color: "var(--green)" },
-  mail: { label: "Mail", color: "var(--cyan)" },
-  other: { label: "Other", color: "var(--yellow)" },
-  free: { label: "Free", color: "var(--control)" },
+  apps: { label: "Apps", color: "var(--color-red-500)" },
+  photos: { label: "Photos", color: "var(--chart-4)" },
+  system: { label: "System", color: "var(--chart-5)" },
+  backups: { label: "Backups", color: "var(--color-purple-500)" },
+  drive: { label: "Drive", color: "var(--chart-1)" },
+  messages: { label: "Messages", color: "var(--color-green-500)" },
+  mail: { label: "Mail", color: "var(--color-cyan-500)" },
+  other: { label: "Other", color: "var(--color-yellow-500)" },
+  free: { label: "Free", color: "var(--secondary)" },
 } satisfies ChartConfig
 
 const MORPH_DURATION = 700
@@ -157,7 +157,7 @@ export function PieChartInteractive() {
           <p className="text-lg font-semibold">
             {STORAGE[device].label} storage
           </p>
-          <p className="text-sm text-label-secondary tabular-nums">
+          <p className="text-sm text-muted-foreground tabular-nums">
             {sizeFormat.format(used)} GB of {STORAGE[device].total} GB used
           </p>
         </div>
@@ -181,7 +181,7 @@ export function PieChartInteractive() {
       <CardContent className="flex flex-col gap-5">
         <div
           aria-hidden
-          className="flex h-2.5 overflow-hidden rounded-full bg-control"
+          className="flex h-2.5 overflow-hidden rounded-full bg-secondary"
         >
           {KINDS.filter((kind) => kind !== "free").map((kind) => {
             const share = (Math.max(0, sizeOf(kind)) / total) * 100
@@ -218,7 +218,7 @@ export function PieChartInteractive() {
                   outerRadius="88%"
                   startAngle={90}
                   endAngle={-270}
-                  stroke="var(--surface-secondary)"
+                  stroke="var(--muted)"
                   strokeWidth={3}
                   cornerRadius={4}
                   isAnimationActive={false}
@@ -248,13 +248,13 @@ export function PieChartInteractive() {
               aria-live="polite"
               className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center"
             >
-              <span className="text-sm text-label-secondary">
+              <span className="text-sm text-muted-foreground">
                 {active ? chartConfig[active].label : "Used"}
               </span>
               <span className="text-3xl font-semibold tracking-tight tabular-nums">
                 {sizeFormat.format(activeValue)} GB
               </span>
-              <span className="text-sm text-label-secondary tabular-nums">
+              <span className="text-sm text-muted-foreground tabular-nums">
                 {Math.round((activeValue / total) * 100)}%
               </span>
             </div>
@@ -274,10 +274,10 @@ export function PieChartInteractive() {
                       onPointerEnter={() => point(kind)}
                       onPointerLeave={release}
                       data-active={active === kind ? "" : undefined}
-                      className="flex items-center gap-2.5 rounded-lg px-2 py-2.25 transition-colors duration-150 data-active:bg-control"
+                      className="flex items-center gap-2.5 rounded-lg px-2 py-2.25 transition-colors duration-150 data-active:bg-secondary"
                     >
                       <span
-                        className="size-2.5 shrink-0 rounded-full bg-(--swatch) data-[kind=free]:ring-1 data-[kind=free]:ring-separator-strong data-[kind=free]:ring-inset"
+                        className="size-2.5 shrink-0 rounded-full bg-(--swatch) data-[kind=free]:ring-1 data-[kind=free]:ring-input data-[kind=free]:ring-inset"
                         data-kind={kind}
                         style={
                           {
@@ -288,7 +288,7 @@ export function PieChartInteractive() {
                       <span className="flex-1 text-base">
                         {chartConfig[kind].label}
                       </span>
-                      <span className="text-base text-label-secondary tabular-nums">
+                      <span className="text-base text-muted-foreground tabular-nums">
                         {sizeFormat.format(Math.max(0, sizeOf(kind)))} GB
                       </span>
                     </div>

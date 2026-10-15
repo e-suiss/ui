@@ -28,8 +28,8 @@ const chartData = Array.from({ length: 12 }, (_, index) => ({
 }))
 
 const chartConfig = {
-  actual: { label: "Actual", color: "var(--blue)" },
-  forecast: { label: "Forecast", color: "var(--blue)" },
+  actual: { label: "Actual", color: "var(--chart-1)" },
+  forecast: { label: "Forecast", color: "var(--chart-1)" },
 } satisfies ChartConfig
 
 export function LineChartForecast() {
@@ -61,7 +61,7 @@ export function LineChartForecast() {
             <ReferenceArea
               x1="Sep"
               x2="Dec"
-              fill="var(--control)"
+              fill="var(--secondary)"
               fillOpacity={0.6}
             />
             <Line

@@ -61,7 +61,7 @@ function PaginationLink({
       data-active={isActive}
       className={cn(
         buttonVariants({ variant: isActive ? "secondary" : "ghost", size }),
-        "text-sm tabular-nums aria-disabled:pointer-events-none aria-disabled:text-label-quaternary data-active:font-semibold",
+        "text-sm tabular-nums aria-disabled:pointer-events-none data-active:font-semibold aria-disabled:opacity-50",
         className
       )}
       {...props}
@@ -134,7 +134,7 @@ function PaginationEllipsis({
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
-        "flex size-8 items-center justify-center text-label-secondary [&_svg:not([class*='size-'])]:size-4",
+        "flex size-8 items-center justify-center text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -150,7 +150,7 @@ function PaginationSummary({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="pagination-summary"
       className={cn(
-        "text-sm whitespace-nowrap text-label-secondary tabular-nums",
+        "text-sm whitespace-nowrap text-muted-foreground tabular-nums",
         className
       )}
       {...props}
@@ -164,7 +164,7 @@ function PaginationGroup({ className, ...props }: React.ComponentProps<"div">) {
       role="group"
       data-slot="pagination-group"
       className={cn(
-        "flex items-center gap-px overflow-hidden rounded-lg *:w-10 *:rounded-none *:border-0 *:bg-control *:hover:bg-control-hover *:active:bg-control-pressed *:[--focus-ring-offset:-3px] *:focus-visible:relative *:focus-visible:z-10",
+        "flex items-center gap-px overflow-hidden rounded-lg *:w-10 *:rounded-none *:border-0 *:bg-secondary *:hover:bg-secondary/80 *:[--focus-ring-offset:-3px] *:focus-visible:relative *:focus-visible:z-10",
         className
       )}
       {...props}
@@ -182,7 +182,7 @@ function PaginationInput({
       inputMode="numeric"
       data-slot="pagination-input"
       className={cn(
-        "h-8 w-12 rounded-md bg-control text-center text-sm font-semibold text-label tabular-nums caret-accent outline-none focus-visible:focus-ring",
+        "h-8 w-12 rounded-md bg-secondary text-center text-sm font-semibold text-secondary-foreground tabular-nums caret-primary outline-none focus-visible:focus-ring",
         className
       )}
       {...props}

@@ -25,10 +25,10 @@ const chartData = [
 
 const chartConfig = {
   share: { label: "Share" },
-  phone: { label: "Phone", color: "var(--blue)" },
-  laptop: { label: "Laptop", color: "var(--teal)" },
-  tablet: { label: "Tablet", color: "var(--indigo)" },
-  watch: { label: "Watch", color: "var(--orange)" },
+  phone: { label: "Phone", color: "var(--chart-1)" },
+  laptop: { label: "Laptop", color: "var(--chart-2)" },
+  tablet: { label: "Tablet", color: "var(--chart-3)" },
+  watch: { label: "Watch", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 export function PieChartHalf() {
@@ -81,7 +81,7 @@ export function PieChartHalf() {
             <span className="text-2xl font-semibold tracking-tight tabular-nums">
               100%
             </span>
-            <span className="text-xs text-label-secondary">last 24 hours</span>
+            <span className="text-xs text-muted-foreground">last 24 hours</span>
           </div>
         </div>
       </CardContent>

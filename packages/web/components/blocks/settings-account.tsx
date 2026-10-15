@@ -159,12 +159,12 @@ function EditableCard({
   }, [editing, value])
 
   return (
-    <div className="rounded-[1.125rem] bg-surface-secondary px-5 py-4.5">
+    <div className="rounded-[1.125rem] bg-muted px-5 py-4.5">
       <div className="flex items-center gap-3">
         <div className="flex flex-1 flex-col gap-0.75">
           <h2 className="text-lg font-semibold">{title}</h2>
           {!editing && (
-            <p className="text-base text-label-secondary">{value}</p>
+            <p className="text-base text-muted-foreground">{value}</p>
           )}
         </div>
         {!editing && (
@@ -172,7 +172,7 @@ function EditableCard({
             type="button"
             onClick={onEdit}
             aria-label={`Edit ${title.toLowerCase()}`}
-            className="rounded-xs text-base text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-base text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Edit ›
           </button>
@@ -197,7 +197,7 @@ function EditableCard({
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               aria-label={title}
-              className="h-12 rounded-xl border-separator-strong bg-surface text-lg"
+              className="h-12 rounded-xl border-input bg-background text-lg"
             />
             <div className="flex gap-2.5">
               <Button type="submit" size="sm">
@@ -257,7 +257,7 @@ function Security() {
           }}
         />
       ))}
-      <div className="flex items-center gap-3 rounded-[1.125rem] bg-surface-secondary px-5 py-4.5">
+      <div className="flex items-center gap-3 rounded-[1.125rem] bg-muted px-5 py-4.5">
         <div className="flex flex-1 flex-col gap-0.75">
           <label
             htmlFor="settings-account-passkeys"
@@ -265,7 +265,7 @@ function Security() {
           >
             Passkeys
           </label>
-          <p className="text-base text-label-secondary">
+          <p className="text-base text-muted-foreground">
             {passkeys ? "On for 3 devices" : "Off"}
           </p>
         </div>
@@ -275,14 +275,14 @@ function Security() {
           onCheckedChange={setPasskeys}
         />
       </div>
-      <div className="flex items-center gap-3 rounded-[1.125rem] bg-surface-secondary px-5 py-4.5">
+      <div className="flex items-center gap-3 rounded-[1.125rem] bg-muted px-5 py-4.5">
         <div className="flex flex-1 flex-col gap-0.75">
           <h2 className="text-lg font-semibold">Two-factor authentication</h2>
-          <p className="text-base text-label-secondary">
+          <p className="text-base text-muted-foreground">
             Codes are sent to your trusted devices.
           </p>
         </div>
-        <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green">
+        <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500">
           On
         </span>
       </div>
@@ -291,7 +291,7 @@ function Security() {
           <span className="flex items-center gap-1.5 transition-[opacity,translate] duration-800 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none">
             <CheckIcon
               weight="bold"
-              className="size-4 text-[color-mix(in_oklab,var(--green),var(--label)_30%)] dark:text-green"
+              className="size-4 text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_30%)] dark:text-green-500"
             />
             {saved} saved.
           </span>
@@ -322,7 +322,7 @@ export function SettingsAccount() {
             <p className="text-2xl font-semibold tracking-tight">
               Jamie Rivera
             </p>
-            <p className="text-sm text-label-secondary">jamie@suiss.com</p>
+            <p className="text-sm text-muted-foreground">jamie@suiss.com</p>
           </div>
         }
       />
@@ -341,7 +341,7 @@ export function SettingsAccount() {
             {section === "security" ? (
               <Security />
             ) : (
-              <p className="text-lg text-label-secondary">
+              <p className="text-lg text-muted-foreground">
                 This section isn't part of the sample. Choose Sign-In &
                 Security.
               </p>

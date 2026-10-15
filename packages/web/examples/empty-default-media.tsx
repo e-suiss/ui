@@ -13,7 +13,7 @@ export default function EmptyDefaultMedia() {
       <Empty>
         <EmptyHeader>
           <EmptyMedia>
-            <FolderSimpleIcon className="text-label-secondary size-12" />
+            <FolderSimpleIcon className="text-muted-foreground size-12" />
           </EmptyMedia>
           <EmptyTitle>This folder is empty</EmptyTitle>
           <EmptyDescription>Drag files here to add them.</EmptyDescription>

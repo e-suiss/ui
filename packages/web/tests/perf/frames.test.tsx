@@ -92,7 +92,7 @@ const scenarios: Record<string, () => Promise<FrameStats>> = {
         <CarouselContent>
           {[1, 2, 3, 4, 5].map((slide) => (
             <CarouselItem key={slide}>
-              <div className="flex aspect-square items-center justify-center rounded-xl bg-control">
+              <div className="flex aspect-square items-center justify-center rounded-xl bg-secondary">
                 {slide}
               </div>
             </CarouselItem>

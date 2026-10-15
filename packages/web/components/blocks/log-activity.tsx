@@ -135,11 +135,11 @@ const nav: NavItem[] = [
 ]
 
 const kinds = {
-  Price: { icon: TagIcon, tint: "bg-orange" },
-  Content: { icon: NotePencilIcon, tint: "bg-blue" },
-  Security: { icon: ShieldIcon, tint: "bg-red" },
-  Order: { icon: HandbagIcon, tint: "bg-green" },
-  User: { icon: UserIcon, tint: "bg-purple" },
+  Price: { icon: TagIcon, tint: "bg-orange-500" },
+  Content: { icon: NotePencilIcon, tint: "bg-blue-500" },
+  Security: { icon: ShieldIcon, tint: "bg-red-500" },
+  Order: { icon: HandbagIcon, tint: "bg-green-500" },
+  User: { icon: UserIcon, tint: "bg-purple-500" },
 }
 
 type Kind = keyof typeof kinds
@@ -219,11 +219,11 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
           <strong className="font-semibold">{event.actor}</strong>{" "}
           {event.action}
         </span>
-        <span className="truncate text-xs text-label-secondary">
+        <span className="truncate text-xs text-muted-foreground">
           {event.target}
         </span>
       </span>
-      <span className="text-sm text-label-secondary tabular-nums">
+      <span className="text-sm text-muted-foreground tabular-nums">
         {event.time}
       </span>
     </>
@@ -239,23 +239,23 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
 
   return (
     <Collapsible>
-      <CollapsibleTrigger className="group/event flex min-h-11 w-full items-center gap-3 py-2 ps-4 pe-4 text-start outline-none hover:bg-item-hover focus-visible:focus-ring">
+      <CollapsibleTrigger className="group/event flex min-h-11 w-full items-center gap-3 py-2 ps-4 pe-4 text-start outline-none hover:bg-accent focus-visible:focus-ring hover:text-accent-foreground">
         {body}
         <CaretRightIcon
           weight="bold"
-          className="size-3 text-label-tertiary transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] rtl:rotate-180 group-data-panel-open/event:rotate-90"
+          className="size-3 text-muted-foreground transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] rtl:rotate-180 group-data-panel-open/event:rotate-90"
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none">
         <dl className="flex flex-wrap items-center gap-x-4 gap-y-1 ps-14 pe-4 pb-3 text-sm">
           <div className="flex items-center gap-2">
-            <dt className="text-xs text-label-secondary">Before</dt>
-            <dd className="text-label-secondary line-through">
+            <dt className="text-xs text-muted-foreground">Before</dt>
+            <dd className="text-muted-foreground line-through">
               {event.diff[0]}
             </dd>
           </div>
           <div className="flex items-center gap-2">
-            <dt className="text-xs text-label-secondary">After</dt>
+            <dt className="text-xs text-muted-foreground">After</dt>
             <dd className="font-semibold">{event.diff[1]}</dd>
           </div>
         </dl>
@@ -317,13 +317,13 @@ export function LogActivity() {
             {days.map((day) => (
               <section key={day} className="flex flex-col gap-2">
                 <h2 className="px-1 text-sm font-semibold">{day}</h2>
-                <ul className="overflow-hidden rounded-2xl bg-surface-secondary">
+                <ul className="overflow-hidden rounded-2xl bg-muted">
                   {list
                     .filter((event) => event.day === day)
                     .map((event) => (
                       <li
                         key={`${event.time}-${event.actor}`}
-                        className="relative not-first:before:absolute not-first:before:inset-e-0 not-first:before:start-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-separator"
+                        className="relative not-first:before:absolute not-first:before:inset-e-0 not-first:before:start-14 not-first:before:top-0 not-first:before:h-px not-first:before:bg-border"
                       >
                         <EventRow event={event} />
                       </li>

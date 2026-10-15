@@ -166,12 +166,12 @@ function UndoBarProvider({
               if (!event.currentTarget.contains(event.relatedTarget))
                 setFocused(false)
             }}
-            className="pointer-events-auto flex h-13 w-full items-center gap-3 rounded-full bg-surface-raised/80 ps-4 pe-1 text-label shadow-xl ring-1 ring-separator backdrop-blur-3xl backdrop-saturate-180 transition-[translate,opacity,scale,visibility] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete starting:opacity-0 data-closed:invisible data-closed:opacity-0 data-closed:duration-300 motion-safe:starting:translate-y-[calc(100%+1rem)] motion-safe:starting:scale-95 motion-safe:data-closed:translate-y-[calc(100%+1rem)] motion-safe:data-closed:scale-95 dark:bg-surface-secondary/75"
+            className="pointer-events-auto flex h-13 w-full items-center gap-3 rounded-full bg-popover/80 ps-4 pe-1 text-popover-foreground shadow-xl ring-1 ring-border backdrop-blur-3xl backdrop-saturate-180 transition-[translate,opacity,scale,visibility] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete starting:opacity-0 data-closed:invisible data-closed:opacity-0 data-closed:duration-300 motion-safe:starting:translate-y-[calc(100%+1rem)] motion-safe:starting:scale-95 motion-safe:data-closed:translate-y-[calc(100%+1rem)] motion-safe:data-closed:scale-95 dark:bg-muted/75"
           >
             <svg
               viewBox="0 0 20 20"
               aria-hidden
-              className="size-5 shrink-0 -rotate-90 text-label-secondary rtl:scale-x-[-1]"
+              className="size-5 shrink-0 -rotate-90 text-muted-foreground rtl:scale-x-[-1]"
             >
               <circle
                 cx="10"
@@ -179,7 +179,7 @@ function UndoBarProvider({
                 r={RADIUS}
                 fill="none"
                 strokeWidth="2"
-                className="stroke-separator"
+                className="stroke-border"
               />
               <circle
                 ref={ringRef}

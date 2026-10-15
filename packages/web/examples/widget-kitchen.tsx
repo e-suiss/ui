@@ -20,7 +20,7 @@ const tickets = [
 ]
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-label-secondary">{children}</p>
+  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
 }
 
 export default function WidgetKitchen() {
@@ -33,8 +33,11 @@ export default function WidgetKitchen() {
         className="flex-row gap-4"
       >
         <div className="flex w-32 shrink-0 flex-col gap-1 group-data-[size=small]/widget:w-full">
-          <WidgetHeader className="gap-1.5 text-warning">
-            <WidgetIcon size="sm" className="text-warning">
+          <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
+            <WidgetIcon
+              size="sm"
+              className="text-amber-600 dark:text-amber-400"
+            >
               <CookingPotIcon weight="fill" />
             </WidgetIcon>
             <WidgetTitle>Kitchen</WidgetTitle>
@@ -43,7 +46,7 @@ export default function WidgetKitchen() {
           <WidgetDescription className="text-xs">
             pending orders
           </WidgetDescription>
-          <p className="text-xs font-medium text-danger">2 running late</p>
+          <p className="text-xs font-medium text-destructive">2 running late</p>
         </div>
         <ul className="flex min-w-0 flex-1 flex-col group-data-[size=small]/widget:hidden">
           {tickets.map((ticket) => (
@@ -54,14 +57,14 @@ export default function WidgetKitchen() {
               <span
                 aria-hidden="true"
                 data-late={ticket.minutes >= 15}
-                className="size-1.5 shrink-0 rounded-full bg-orange data-[late=true]:bg-red"
+                className="size-1.5 shrink-0 rounded-full bg-orange-500 data-[late=true]:bg-red-500"
               />
               <span className="min-w-0 flex-1 truncate">
                 {ticket.id} · {ticket.place}
               </span>
               <span
                 data-late={ticket.minutes >= 15}
-                className="text-xs text-label-secondary tabular-nums data-[late=true]:font-medium data-[late=true]:text-danger"
+                className="text-xs text-muted-foreground tabular-nums data-[late=true]:font-medium data-[late=true]:text-destructive"
               >
                 {ticket.minutes} min
               </span>

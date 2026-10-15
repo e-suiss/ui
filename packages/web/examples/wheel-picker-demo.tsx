@@ -19,7 +19,7 @@ const fruits = [
 
 export default function WheelPickerDemo() {
   return (
-    <div className="w-80 rounded-2xl bg-surface-raised p-4 shadow-md ring-1 ring-label/5 dark:ring-label/10">
+    <div className="w-80 rounded-2xl bg-card p-4 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10">
       <WheelPicker>
         <WheelPickerColumn aria-label="Fruit" defaultValue="Lemon">
           {fruits.map((fruit) => (

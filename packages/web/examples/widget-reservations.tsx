@@ -10,19 +10,19 @@ import {
 } from "@/components/ui/widget"
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-label-secondary">{children}</p>
+  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
 }
 
 export default function WidgetReservations() {
   return (
     <div>
       <Widget resizable defaultSize="medium" sizes={["small", "medium"]}>
-        <WidgetHeader className="gap-1.5 text-link">
-          <WidgetIcon size="sm" className="text-link">
+        <WidgetHeader className="gap-1.5 text-primary">
+          <WidgetIcon size="sm" className="text-primary">
             <CalendarBlankIcon weight="fill" />
           </WidgetIcon>
           <WidgetTitle>Reservations</WidgetTitle>
-          <WidgetAction className="text-xs text-label-secondary">
+          <WidgetAction className="text-xs text-muted-foreground">
             Up next
           </WidgetAction>
         </WidgetHeader>
@@ -31,14 +31,14 @@ export default function WidgetReservations() {
           <p className="text-sm">Ayşe Y. · 6 guests</p>
         </div>
         <div className="mt-auto flex flex-col gap-1 group-data-[size=small]/widget:hidden">
-          <div className="flex justify-between text-2xs text-label-secondary tabular-nums">
+          <div className="flex justify-between text-2xs text-muted-foreground tabular-nums">
             <span>18:00</span>
             <span>20:00</span>
             <span>22:00</span>
             <span>24:00</span>
           </div>
-          <div className="relative h-2 rounded-full bg-control">
-            <span className="absolute inset-y-0 start-[30%] w-[45%] rounded-full bg-blue" />
+          <div className="relative h-2 rounded-full bg-secondary">
+            <span className="absolute inset-y-0 start-[30%] w-[45%] rounded-full bg-blue-500" />
           </div>
         </div>
       </Widget>

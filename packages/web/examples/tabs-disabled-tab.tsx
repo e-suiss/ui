@@ -33,10 +33,10 @@ export default function TabsDisabledTab() {
             Billing
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="account" className="text-label-secondary">
+        <TabsContent value="account" className="text-muted-foreground">
           {tabs[0].content}
         </TabsContent>
-        <TabsContent value="notifications" className="text-label-secondary">
+        <TabsContent value="notifications" className="text-muted-foreground">
           {tabs[1].content}
         </TabsContent>
       </Tabs>

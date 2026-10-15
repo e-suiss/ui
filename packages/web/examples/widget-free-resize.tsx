@@ -22,7 +22,7 @@ const menu = [
 ]
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-label-secondary">{children}</p>
+  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
 }
 
 function FreeResizeExample() {
@@ -59,7 +59,7 @@ function FreeResizeExample() {
       >
         <div className="flex items-baseline justify-between px-4 pt-4 pb-3">
           <WidgetTitle className="text-xl">Hestia POS</WidgetTitle>
-          <span className="text-sm text-label-secondary tabular-nums">
+          <span className="text-sm text-muted-foreground tabular-nums">
             {box.columns} columns
           </span>
         </div>
@@ -71,17 +71,17 @@ function FreeResizeExample() {
             {menu.map((item) => (
               <div
                 key={item.name}
-                className="flex flex-col gap-2 rounded-2xl bg-surface-raised p-3"
+                className="flex flex-col gap-2 rounded-2xl bg-card p-3"
               >
                 <span
                   aria-hidden="true"
-                  className="text-warning [&_svg]:size-6"
+                  className="text-amber-600 dark:text-amber-400 [&_svg]:size-6"
                 >
                   {item.icon}
                 </span>
                 <div>
                   <p className="text-sm font-semibold">{item.name}</p>
-                  <p className="text-sm text-label-secondary tabular-nums">
+                  <p className="text-sm text-muted-foreground tabular-nums">
                     {item.price}
                   </p>
                 </div>

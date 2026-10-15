@@ -11,15 +11,23 @@ const picks = [
   {
     eyebrow: "Today's pick",
     title: "Weekend breakfast",
-    tint: "from-orange to-red",
+    tint: "from-orange-500 to-red-500",
   },
-  { eyebrow: "New", title: "Grilled meatballs", tint: "from-red to-pink" },
+  {
+    eyebrow: "New",
+    title: "Grilled meatballs",
+    tint: "from-red-500 to-pink-500",
+  },
   {
     eyebrow: "Chef's special",
     title: "Lentil soup",
-    tint: "from-green to-teal",
+    tint: "from-green-500 to-teal-500",
   },
-  { eyebrow: "Dessert", title: "Künefe", tint: "from-purple to-indigo" },
+  {
+    eyebrow: "Dessert",
+    title: "Künefe",
+    tint: "from-purple-500 to-indigo-500",
+  },
 ]
 
 export default function CarouselFeatured() {

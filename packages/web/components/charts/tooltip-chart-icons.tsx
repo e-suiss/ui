@@ -27,8 +27,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)", icon: DesktopIcon },
-  mobile: { label: "Mobile", color: "var(--teal)", icon: DeviceMobileIcon },
+  desktop: { label: "Desktop", color: "var(--chart-1)", icon: DesktopIcon },
+  mobile: { label: "Mobile", color: "var(--chart-2)", icon: DeviceMobileIcon },
 } satisfies ChartConfig
 
 export function TooltipChartIcons() {

@@ -179,7 +179,7 @@ function SelectionListItem({
     "data-value": value,
     "data-checked": checked ? "" : undefined,
     className: cn(
-      "flex items-center outline-none transition-colors duration-200 focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px] data-checked:bg-item-selected",
+      "flex items-center outline-none transition-colors duration-200 focus-visible:focus-ring focus-visible:[--focus-ring-offset:-2px] data-checked:bg-accent",
       editing && "cursor-pointer select-none",
       className
     ),
@@ -191,11 +191,11 @@ function SelectionListItem({
         >
           <span
             data-slot="selection-list-indicator"
-            className="ms-4 flex size-5.5 shrink-0 scale-50 items-center justify-center rounded-full border-[1.5px] border-label-tertiary transition-[scale,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-editing/selection-list:scale-100 in-data-checked:border-accent in-data-checked:bg-accent motion-reduce:transition-none"
+            className="ms-4 flex size-5.5 shrink-0 scale-50 items-center justify-center rounded-full border-[1.5px] border-muted-foreground transition-[scale,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-editing/selection-list:scale-100 in-data-checked:border-primary in-data-checked:bg-primary motion-reduce:transition-none"
           >
             <CheckIcon
               weight="bold"
-              className="size-3.5 scale-0 text-on-accent transition-transform duration-200 in-data-checked:scale-100"
+              className="size-3.5 scale-0 text-primary-foreground transition-transform duration-200 in-data-checked:scale-100"
             />
           </span>
         </span>
@@ -249,7 +249,7 @@ function SelectionListBar({
       data-closed={editing ? undefined : ""}
       inert={!editing}
       className={cn(
-        "fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto flex h-13 max-w-md items-center justify-between gap-2 rounded-full bg-surface-raised/80 px-1.5 text-label shadow-xl ring-1 ring-separator backdrop-blur-3xl backdrop-saturate-180 transition-[translate,opacity,scale,visibility] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete data-closed:invisible data-closed:opacity-0 data-closed:duration-300 motion-safe:data-closed:translate-y-[calc(100%+1rem)] motion-safe:data-closed:scale-95 dark:bg-surface-secondary/75",
+        "fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto flex h-13 max-w-md items-center justify-between gap-2 rounded-full bg-card/80 px-1.5 text-card-foreground shadow-xl ring-1 ring-border backdrop-blur-3xl backdrop-saturate-180 transition-[translate,opacity,scale,visibility] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete data-closed:invisible data-closed:opacity-0 data-closed:duration-300 motion-safe:data-closed:translate-y-[calc(100%+1rem)] motion-safe:data-closed:scale-95 dark:bg-muted/75",
         className
       )}
       {...props}

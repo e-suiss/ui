@@ -70,11 +70,11 @@ export function GridAccessories() {
   )
 
   return (
-    <section className="flex flex-col gap-6 bg-surface px-5 py-9 md:px-10">
+    <section className="flex flex-col gap-6 bg-background px-5 py-9 md:px-10">
       <div className="flex items-start gap-4">
         <div className="flex flex-1 flex-col gap-0.5">
           <h2 className="text-4xl font-semibold tracking-tight">Accessories</h2>
-          <p className="text-base text-label-secondary">
+          <p className="text-base text-muted-foreground">
             Designed for every suiss device.
           </p>
         </div>
@@ -85,7 +85,7 @@ export function GridAccessories() {
         >
           <HandbagIcon className="size-5.5" />
           {bag.length > 0 && (
-            <span className="absolute -end-2 -bottom-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-label px-1 text-2xs font-semibold text-surface tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
+            <span className="absolute -end-2 -bottom-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-2xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
               {bag.length}
             </span>
           )}
@@ -103,7 +103,7 @@ export function GridAccessories() {
           <ToggleGroupItem
             key={item}
             value={item}
-            className="h-8.5 bg-control px-4 transition-[background-color,color] duration-200 hover:bg-control-hover aria-pressed:bg-label aria-pressed:text-surface aria-pressed:hover:bg-label aria-pressed:hover:text-surface"
+            className="h-8.5 bg-secondary px-4 transition-[background-color,color] duration-200 hover:bg-secondary/80 aria-pressed:bg-foreground aria-pressed:text-background aria-pressed:hover:bg-foreground aria-pressed:hover:text-background"
           >
             {item}
           </ToggleGroupItem>
@@ -120,7 +120,7 @@ export function GridAccessories() {
               <img
                 src={item.image}
                 alt=""
-                className="aspect-square w-full rounded-2xl bg-surface-secondary object-cover"
+                className="aspect-square w-full rounded-2xl bg-muted object-cover"
               />
               <span className="mt-3 min-h-10 text-base leading-tight font-semibold">
                 {item.name}
@@ -143,7 +143,7 @@ export function GridAccessories() {
                         : [...current, item.name]
                     )
                   }
-                  className="relative h-7.5 w-7.5 gap-1 overflow-hidden text-xs transition-[width,padding,background-color] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] after:absolute after:-inset-1.75 after:content-[''] data-in-bag:w-21 data-in-bag:bg-[color-mix(in_oklab,var(--green),var(--label)_40%)] data-in-bag:px-3 data-in-bag:hover:bg-[color-mix(in_oklab,var(--green),var(--label)_50%)] motion-reduce:transition-none dark:data-in-bag:bg-[color-mix(in_oklab,var(--green),black_45%)] dark:data-in-bag:hover:bg-[color-mix(in_oklab,var(--green),black_55%)]"
+                  className="relative h-7.5 w-7.5 gap-1 overflow-hidden text-xs transition-[width,padding,background-color] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] after:absolute after:-inset-1.75 after:content-[''] data-in-bag:w-21 data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] data-in-bag:px-3 data-in-bag:hover:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_50%)] motion-reduce:transition-none dark:data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),black_45%)] dark:data-in-bag:hover:bg-[color-mix(in_oklab,var(--color-green-500),black_55%)]"
                 >
                   {inBag ? (
                     <CheckIcon weight="bold" className="size-3.75" />

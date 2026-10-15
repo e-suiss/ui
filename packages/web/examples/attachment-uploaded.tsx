@@ -27,7 +27,7 @@ export default function AttachmentUploaded() {
           <CheckCircleIcon
             weight="fill"
             aria-label="Uploaded"
-            className="size-6 text-success"
+            className="size-6 text-green-600 dark:text-green-400"
           />
         </AttachmentActions>
       </Attachment>
@@ -43,7 +43,7 @@ export default function AttachmentUploaded() {
           <CheckCircleIcon
             weight="fill"
             aria-label="Uploaded"
-            className="size-6 text-success"
+            className="size-6 text-green-600 dark:text-green-400"
           />
         </AttachmentActions>
       </Attachment>

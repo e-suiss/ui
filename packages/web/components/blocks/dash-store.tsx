@@ -155,8 +155,8 @@ const week = [
 ]
 
 const chartConfig = {
-  online: { label: "Online", color: "var(--blue)" },
-  store: { label: "In store", color: "var(--teal)" },
+  online: { label: "Online", color: "var(--chart-1)" },
+  store: { label: "In store", color: "var(--chart-2)" },
 } satisfies ChartConfig
 
 const orders = [
@@ -272,7 +272,7 @@ export function DashStore() {
             </Avatar>
             <div className="flex flex-col">
               <span className="text-sm font-semibold">Jamie Rivera</span>
-              <span className="text-xs text-label-secondary">Admin</span>
+              <span className="text-xs text-muted-foreground">Admin</span>
             </div>
           </div>
         }
@@ -283,7 +283,7 @@ export function DashStore() {
             <SidebarTrigger className="-ms-2 mt-1" />
             <div className="flex flex-1 flex-col">
               <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
-              <p className="text-sm text-label-secondary">All stores</p>
+              <p className="text-sm text-muted-foreground">All stores</p>
             </div>
             <ToggleGroup
               spacing={0}
@@ -300,20 +300,20 @@ export function DashStore() {
               ))}
             </ToggleGroup>
           </div>
-          <dl className="grid grid-cols-2 overflow-hidden rounded-xl bg-surface-secondary">
+          <dl className="grid grid-cols-2 overflow-hidden rounded-xl bg-muted">
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
                 data-index={index}
-                className="flex flex-col gap-0.5 border-separator px-4 py-3.5 data-[index='1']:border-s data-[index='2']:border-t data-[index='3']:border-s data-[index='3']:border-t"
+                className="flex flex-col gap-0.5 border-border px-4 py-3.5 data-[index='1']:border-s data-[index='2']:border-t data-[index='3']:border-s data-[index='3']:border-t"
               >
-                <dt className="text-sm text-label-secondary">{stat.label}</dt>
+                <dt className="text-sm text-muted-foreground">{stat.label}</dt>
                 <dd className="text-2xl font-semibold tracking-tight tabular-nums max-sm:text-xl">
                   {stat.value}
                 </dd>
                 <dd
                   data-up={stat.up ? "" : undefined}
-                  className="text-xs text-[color-mix(in_oklab,var(--red),var(--label)_25%)] data-up:text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-red dark:data-up:text-green"
+                  className="text-xs text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] data-up:text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-red-500 dark:data-up:text-green-500"
                 >
                   {stat.change}
                   <span className="max-sm:sr-only"> vs. previous period</span>
@@ -321,10 +321,10 @@ export function DashStore() {
               </div>
             ))}
           </dl>
-          <div className="rounded-xl bg-surface-secondary px-4 pt-3.5 pb-2">
+          <div className="rounded-xl bg-muted px-4 pt-3.5 pb-2">
             <div className="flex items-start gap-2">
               <div className="flex flex-1 flex-col" aria-live="polite">
-                <span className="text-sm text-label-secondary">
+                <span className="text-sm text-muted-foreground">
                   {activeDay ? activeDay.day : "Weekly sales"}
                 </span>
                 <span className="text-2xl font-semibold tabular-nums">
@@ -333,7 +333,7 @@ export function DashStore() {
                     : money(1284500 * scale)}
                 </span>
               </div>
-              <div className="flex gap-3 text-xs text-label-secondary">
+              <div className="flex gap-3 text-xs text-muted-foreground">
                 {(["online", "store"] as const).map((key) => (
                   <span key={key} className="flex items-center gap-1.25">
                     <span
@@ -441,7 +441,7 @@ export function DashStore() {
                         data-returned={
                           order.status === "Returned" ? "" : undefined
                         }
-                        className="hidden w-24 text-end text-label-secondary data-returned:text-danger sm:block"
+                        className="hidden w-24 text-end text-muted-foreground data-returned:text-destructive sm:block"
                       >
                         {order.status}
                       </span>

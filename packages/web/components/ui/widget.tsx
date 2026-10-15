@@ -70,7 +70,7 @@ function WidgetHandle({
         fill="none"
         strokeWidth="4"
         strokeLinecap="round"
-        className="pointer-events-none size-full overflow-visible stroke-label-quaternary opacity-0 transition-[stroke,opacity] duration-200 group-hover/widget-handle:stroke-accent group-hover/widget-handle:opacity-100 group-data-dragging/widget-handle:stroke-accent group-data-dragging/widget-handle:opacity-100 pointer-coarse:opacity-100"
+        className="pointer-events-none size-full overflow-visible stroke-border opacity-0 transition-[stroke,opacity] duration-200 group-hover/widget-handle:stroke-primary group-hover/widget-handle:opacity-100 group-data-dragging/widget-handle:stroke-primary group-data-dragging/widget-handle:opacity-100 pointer-coarse:opacity-100"
       >
         <path
           d={
@@ -192,7 +192,7 @@ function Widget({
         freeSize ? { ...style, width: freeSize[0], height: freeSize[1] } : style
       }
       className={cn(
-        "group/widget @container/widget flex max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-surface-secondary p-4 text-base text-label transition-[width,height] duration-500 ease-in-out data-[align=center]:items-center data-[align=center]:justify-center data-[align=center]:text-center data-resizing:transition-none data-[resizing=snap]:*:shrink-0 data-[size=auto]:size-full data-[size=extra-large]:h-88 data-[size=extra-large]:w-180 data-[size=large]:size-88 data-[size=medium]:h-42 data-[size=medium]:w-88 data-[size=small]:size-42 motion-reduce:transition-none",
+        "group/widget @container/widget flex max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-muted p-4 text-base text-foreground transition-[width,height] duration-500 ease-in-out data-[align=center]:items-center data-[align=center]:justify-center data-[align=center]:text-center data-resizing:transition-none data-[resizing=snap]:*:shrink-0 data-[size=auto]:size-full data-[size=extra-large]:h-88 data-[size=extra-large]:w-180 data-[size=large]:size-88 data-[size=medium]:h-42 data-[size=medium]:w-88 data-[size=small]:size-42 motion-reduce:transition-none",
         className
       )}
       {...props}
@@ -220,7 +220,7 @@ function Widget({
           <svg
             aria-hidden
             fill="none"
-            className="size-full overflow-visible stroke-label/25"
+            className="size-full overflow-visible stroke-foreground/25"
           >
             <rect
               width="100%"
@@ -269,7 +269,7 @@ function WidgetIcon({
       data-size={size}
       aria-hidden="true"
       className={cn(
-        "flex shrink-0 items-center justify-center text-label data-[size=default]:size-8 data-[size=default]:rounded-lg data-[size=default]:bg-control data-[size=lg]:size-13 data-[size=lg]:rounded-2xl data-[size=lg]:bg-control [&_svg]:pointer-events-none data-[size=default]:[&_svg:not([class*='size-'])]:size-4.5 data-[size=lg]:[&_svg:not([class*='size-'])]:size-6 data-[size=sm]:[&_svg:not([class*='size-'])]:size-3.5",
+        "flex shrink-0 items-center justify-center text-foreground data-[size=default]:size-8 data-[size=default]:rounded-lg data-[size=default]:bg-secondary data-[size=lg]:size-13 data-[size=lg]:rounded-2xl data-[size=lg]:bg-secondary [&_svg]:pointer-events-none data-[size=default]:[&_svg:not([class*='size-'])]:size-4.5 data-[size=lg]:[&_svg:not([class*='size-'])]:size-6 data-[size=sm]:[&_svg:not([class*='size-'])]:size-3.5",
         className
       )}
       {...props}
@@ -307,7 +307,7 @@ function WidgetDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="widget-description"
-      className={cn("text-sm text-label-secondary", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -341,7 +341,7 @@ function WidgetFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="widget-footer"
       className={cn(
-        "mt-auto flex min-w-0 items-center gap-1.5 text-xs text-label-secondary group-data-[align=center]/widget:mt-0 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+        "mt-auto flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground group-data-[align=center]/widget:mt-0 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
         className
       )}
       {...props}

@@ -79,7 +79,7 @@ function TrailExample(props: Partial<React.ComponentProps<typeof Trail>>) {
                 <a
                   href={`#${child}`}
                   {...navigation}
-                  className="text-link outline-none hover:underline focus-visible:focus-ring"
+                  className="text-primary outline-none hover:underline focus-visible:focus-ring"
                 >
                   {pageOf(child).label}
                 </a>
@@ -87,7 +87,7 @@ function TrailExample(props: Partial<React.ComponentProps<typeof Trail>>) {
             ))}
           </ul>
         ) : (
-          <p className="text-label-secondary">
+          <p className="text-muted-foreground">
             Pick an earlier page in the trail to go back up.
           </p>
         )}

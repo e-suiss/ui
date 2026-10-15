@@ -30,7 +30,7 @@ function ResizableExample({
     <div className="flex flex-col gap-2">
       <div className="flex items-baseline justify-between">
         <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>
-        <span className="text-xs text-label-secondary tabular-nums">
+        <span className="text-xs text-muted-foreground tabular-nums">
           {rows} rows
         </span>
       </div>
@@ -43,7 +43,7 @@ function ResizableExample({
       />
       <p
         id={`campaign-${resizable}-hint`}
-        className="text-xs text-label-secondary"
+        className="text-xs text-muted-foreground"
       >
         Drag the bottom corner to resize. Double-click it to reset.
       </p>

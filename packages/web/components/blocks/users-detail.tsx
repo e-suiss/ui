@@ -292,7 +292,7 @@ export function UsersDetail() {
         >
           <SplitViewList
             title="Users"
-            className="gap-0.5 md:px-4 md:pt-5 [&>h2]:md:not-sr-only [&>h2]:md:px-1 [&>h2]:md:pb-2 [&>h2]:md:text-sm [&>h2]:md:font-semibold [&>h2]:md:text-label-secondary"
+            className="gap-0.5 md:px-4 md:pt-5 [&>h2]:md:not-sr-only [&>h2]:md:px-1 [&>h2]:md:pb-2 [&>h2]:md:text-sm [&>h2]:md:font-semibold [&>h2]:md:text-muted-foreground"
           >
             {users.map((item, index) => (
               <SplitViewItem
@@ -302,13 +302,13 @@ export function UsersDetail() {
                   setSelected(index)
                   setTab("Profile")
                 }}
-                className="group/user py-1.5 md:data-active:bg-accent md:data-active:text-on-accent"
+                className="group/user py-1.5 md:data-active:bg-primary md:data-active:text-primary-foreground"
               >
                 <span className="flex items-center gap-2.5">
                   <UserAvatar user={item} className="size-7 *:text-3xs" />
                   <span className="flex flex-col">
                     <span className="text-sm">{item.name}</span>
-                    <span className="text-xs text-label-secondary md:group-data-active/user:text-on-accent">
+                    <span className="text-xs text-muted-foreground md:group-data-active/user:text-primary-foreground">
                       {overrides[index] ?? item.role}
                     </span>
                   </span>
@@ -325,7 +325,7 @@ export function UsersDetail() {
                 <UserAvatar user={user} className="size-16 *:text-2xl" />
                 <div className="flex flex-col gap-0.5">
                   <p className="text-2xl font-bold">{user.name}</p>
-                  <p className="text-sm text-label-secondary">
+                  <p className="text-sm text-muted-foreground">
                     {user.email} · {role}
                   </p>
                 </div>
@@ -368,7 +368,7 @@ export function UsersDetail() {
                               {label}
                             </ItemTitle>
                           </ItemContent>
-                          <ItemActions className="text-label-secondary">
+                          <ItemActions className="text-muted-foreground">
                             {value}
                           </ItemActions>
                         </Item>
@@ -411,7 +411,7 @@ export function UsersDetail() {
                       <ItemContent>
                         <ItemTitle className="font-normal">Status</ItemTitle>
                       </ItemContent>
-                      <ItemActions className="text-label-secondary">
+                      <ItemActions className="text-muted-foreground">
                         {user.status}
                       </ItemActions>
                     </Item>
@@ -427,7 +427,7 @@ export function UsersDetail() {
                         <React.Fragment key={session.device}>
                           {index > 0 && <ItemSeparator />}
                           <Item size="sm" role="listitem">
-                            <ItemMedia className="size-7.5 rounded-[7px] bg-gray text-white">
+                            <ItemMedia className="size-7.5 rounded-[7px] bg-zinc-500 text-white">
                               <session.icon weight="bold" className="size-4" />
                             </ItemMedia>
                             <ItemContent className="gap-0">

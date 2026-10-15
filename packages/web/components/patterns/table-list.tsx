@@ -66,28 +66,28 @@ function TableList<T>({
           </h2>
         )}
         {rows.length === 0 ? (
-          <p className="rounded-2xl bg-surface-secondary px-4 py-3 text-base text-label-secondary">
+          <p className="rounded-2xl bg-muted px-4 py-3 text-base text-muted-foreground">
             {emptyText}
           </p>
         ) : (
           <ul
             data-slot="table-list-items"
-            className="overflow-hidden rounded-2xl bg-surface-secondary"
+            className="overflow-hidden rounded-2xl bg-muted"
           >
             {rows.map((row, index) => (
               <li
                 key={getKey(row, index)}
                 data-slot="table-list-item"
-                className="ms-4 flex min-h-11 items-center gap-4 py-2.75 pe-4 not-first:border-t not-first:border-separator"
+                className="ms-4 flex min-h-11 items-center gap-4 py-2.75 pe-4 not-first:border-t not-first:border-border"
               >
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                   {titleColumn && (
-                    <span className="truncate text-base text-label">
+                    <span className="truncate text-base text-foreground">
                       {mobileCell(titleColumn, row)}
                     </span>
                   )}
                   {description.length > 0 && (
-                    <span className="truncate text-sm text-label-secondary">
+                    <span className="truncate text-sm text-muted-foreground">
                       {description.map((column, position) => (
                         <React.Fragment key={column.key}>
                           {position > 0 && " · "}
@@ -100,7 +100,7 @@ function TableList<T>({
                 {trailing.map((column) => (
                   <span
                     key={column.key}
-                    className="shrink-0 text-base text-label-secondary tabular-nums"
+                    className="shrink-0 text-base text-muted-foreground tabular-nums"
                   >
                     {mobileCell(column, row)}
                   </span>
@@ -148,7 +148,7 @@ function TableList<T>({
               <TableRow className="hover:bg-transparent">
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-label-secondary"
+                  className="h-24 text-center text-muted-foreground"
                 >
                   {emptyText}
                 </TableCell>

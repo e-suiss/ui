@@ -71,19 +71,19 @@ function MailExample({
           >
             <span className="flex items-baseline justify-between gap-2">
               <span className="truncate font-semibold">{item.from}</span>
-              <span className="shrink-0 text-sm text-label-secondary">
+              <span className="shrink-0 text-sm text-muted-foreground">
                 {item.time}
               </span>
             </span>
             <span className="truncate">{item.subject}</span>
-            <span className="truncate text-sm text-label-secondary">
+            <span className="truncate text-sm text-muted-foreground">
               {item.body}
             </span>
           </SplitViewItem>
         ))}
       </SplitViewList>
       <SplitViewDetail title={message.subject}>
-        <p className="text-sm text-label-secondary">
+        <p className="text-sm text-muted-foreground">
           {message.from} · {message.time}
         </p>
         <p className="mt-6 text-base">{message.body}</p>

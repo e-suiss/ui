@@ -19,15 +19,15 @@ const topItems = [
 ]
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-label-secondary">{children}</p>
+  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
 }
 
 export default function WidgetSales() {
   return (
     <div>
       <Widget resizable defaultSize="large">
-        <WidgetHeader className="gap-1.5 text-warning">
-          <WidgetIcon size="sm" className="text-warning">
+        <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
+          <WidgetIcon size="sm" className="text-amber-600 dark:text-amber-400">
             <CashRegisterIcon weight="fill" />
           </WidgetIcon>
           <WidgetTitle>Hestia</WidgetTitle>
@@ -47,7 +47,7 @@ export default function WidgetSales() {
               <span
                 key={index}
                 data-now={value === 100}
-                className="flex-1 rounded-sm bg-control data-[now=true]:bg-orange"
+                className="flex-1 rounded-sm bg-secondary data-[now=true]:bg-orange-500"
                 style={{ height: `${value}%` }}
               />
             ))}
@@ -60,7 +60,7 @@ export default function WidgetSales() {
               className="flex items-center justify-between border-t py-1.5 text-sm"
             >
               {item.name}
-              <span className="text-label-secondary tabular-nums">
+              <span className="text-muted-foreground tabular-nums">
                 {item.count}
               </span>
             </li>

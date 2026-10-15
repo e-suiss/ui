@@ -53,7 +53,7 @@ function TextareaHandle({ placement }: { placement: "inside" | "outside" }) {
         fill="none"
         strokeWidth="3"
         strokeLinecap="round"
-        className="pointer-events-none size-full overflow-visible stroke-label-quaternary transition-[stroke] duration-200 group-hover/textarea-handle:stroke-accent group-data-dragging/textarea-handle:stroke-accent"
+        className="pointer-events-none size-full overflow-visible stroke-border transition-[stroke] duration-200 group-hover/textarea-handle:stroke-primary group-data-dragging/textarea-handle:stroke-primary"
       >
         <path
           d={
@@ -79,7 +79,7 @@ function Textarea({
       data-slot="textarea"
       data-resizable={resizable}
       className={cn(
-        "peer flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-transparent bg-control px-3 py-3 text-base transition-[color,box-shadow,background-color] caret-accent outline-none placeholder:text-label-secondary focus-visible:focus-ring disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary disabled:placeholder:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 data-resizable:field-sizing-fixed data-resizable:min-h-24 dark:aria-invalid:bg-danger/10",
+        "peer flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-transparent bg-secondary px-3 py-3 text-base transition-[color,box-shadow,background-color] caret-primary outline-none placeholder:text-muted-foreground focus-visible:focus-ring disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:bg-destructive/5 data-resizable:field-sizing-fixed data-resizable:min-h-24 dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
         className
       )}
       {...props}

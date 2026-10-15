@@ -26,8 +26,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  thisMonth: { label: "This month", color: "var(--green)" },
-  lastMonth: { label: "Last month", color: "var(--gray)" },
+  thisMonth: { label: "This month", color: "var(--color-green-500)" },
+  lastMonth: { label: "Last month", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 export function RadarChartLinesOnly() {
@@ -47,7 +47,7 @@ export function RadarChartLinesOnly() {
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <PolarGrid stroke="var(--separator)" />
+            <PolarGrid stroke="var(--border)" />
             <PolarAngleAxis dataKey="skill" />
             <Radar
               dataKey="lastMonth"

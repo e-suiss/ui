@@ -157,7 +157,7 @@ function ActionBar({
             <DrawerHeader className="sr-only">
               <DrawerTitle>{moreLabel}</DrawerTitle>
             </DrawerHeader>
-            <div className="m-4 mb-[max(--spacing(4),env(safe-area-inset-bottom))] overflow-hidden rounded-2xl bg-surface-secondary">
+            <div className="m-4 mb-[max(--spacing(4),env(safe-area-inset-bottom))] overflow-hidden rounded-2xl bg-muted">
               {menus("row")}
             </div>
           </DrawerContent>
@@ -244,7 +244,7 @@ function ActionBarTrigger({
         data-slot="action-bar-trigger"
         aria-haspopup="dialog"
         className={cn(
-          "relative flex min-h-11 w-full cursor-pointer items-center justify-between gap-6 py-2.75 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md focus-visible:after:focus-ring disabled:pointer-events-none disabled:text-label-quaternary",
+          "relative flex min-h-11 w-full cursor-pointer items-center justify-between gap-6 py-2.75 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md focus-visible:after:focus-ring disabled:pointer-events-none disabled:opacity-50",
           className
         )}
         {...mergeProps<"button">(props, {
@@ -255,7 +255,7 @@ function ActionBarTrigger({
         })}
       >
         {children}
-        <CaretRightIcon className="pointer-events-none size-4 shrink-0 text-label-secondary rtl:rotate-180" />
+        <CaretRightIcon className="pointer-events-none size-4 shrink-0 text-muted-foreground rtl:rotate-180" />
       </button>
     )
   }

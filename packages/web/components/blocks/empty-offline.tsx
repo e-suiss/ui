@@ -44,7 +44,7 @@ export function EmptyOffline() {
             <button
               type="button"
               onClick={() => setState("offline")}
-              className="rounded-xs text-sm text-link outline-none hover:underline focus-visible:focus-ring"
+              className="rounded-xs text-sm text-primary outline-none hover:underline focus-visible:focus-ring"
             >
               Disconnect ›
             </button>
@@ -55,7 +55,7 @@ export function EmptyOffline() {
                 <img
                   src={album.image}
                   alt=""
-                  className="aspect-square w-full rounded-xl bg-control object-cover"
+                  className="aspect-square w-full rounded-xl bg-secondary object-cover"
                 />
                 <span className="text-sm font-semibold">{album.title}</span>
               </li>
@@ -70,7 +70,7 @@ export function EmptyOffline() {
     <section className="flex min-h-120 items-center justify-center p-6">
       <Empty className="gap-5 p-0">
         <EmptyHeader className="max-w-95 gap-3.5">
-          <EmptyMedia className="mb-0 text-label-tertiary">
+          <EmptyMedia className="mb-0 text-muted-foreground">
             <WifiSlashIcon weight="light" className="size-13" />
           </EmptyMedia>
           <EmptyTitle className="text-3xl tracking-tight">

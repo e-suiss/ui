@@ -38,7 +38,7 @@ export default function TabsWithIcons() {
           <TabsContent
             key={tab.value}
             value={tab.value}
-            className="text-label-secondary"
+            className="text-muted-foreground"
           >
             {tab.content}
           </TabsContent>

@@ -166,7 +166,7 @@ function Island({
         data-view={view}
         style={size}
         className={cn(
-          "fixed inset-x-0 top-[max(--spacing(3),env(safe-area-inset-top))] z-50 mx-auto flex items-start justify-center overflow-hidden rounded-[1.125rem] bg-label text-start text-surface shadow-xl [--island-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] transition-[width,height,border-radius,opacity,scale,visibility] duration-650 ease-(--island-spring) transition-discrete data-[view=expanded]:rounded-[1.75rem] data-[view=hidden]:invisible data-[view=hidden]:scale-75 data-[view=hidden]:opacity-0 data-[view=hidden]:duration-400 data-[view=hidden]:ease-[cubic-bezier(0.32,0.72,0,1)] data-[view=notice]:rounded-[1.75rem] motion-reduce:transition-none dark:bg-surface dark:text-label dark:ring-1 dark:ring-separator",
+          "fixed inset-x-0 top-[max(--spacing(3),env(safe-area-inset-top))] z-50 mx-auto flex items-start justify-center overflow-hidden rounded-[1.125rem] bg-foreground text-start text-background shadow-xl [--island-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] transition-[width,height,border-radius,opacity,scale,visibility] duration-650 ease-(--island-spring) transition-discrete data-[view=expanded]:rounded-[1.75rem] data-[view=hidden]:invisible data-[view=hidden]:scale-75 data-[view=hidden]:opacity-0 data-[view=hidden]:duration-400 data-[view=hidden]:ease-[cubic-bezier(0.32,0.72,0,1)] data-[view=notice]:rounded-[1.75rem] motion-reduce:transition-none dark:bg-background dark:text-foreground dark:ring-1 dark:ring-border",
           className
         )}
         {...props}
@@ -186,7 +186,7 @@ function Island({
           )}
         >
           {notice?.icon && (
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface/15 dark:bg-label/15">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-background/15 dark:bg-foreground/15">
               {notice.icon}
             </span>
           )}
@@ -195,7 +195,7 @@ function Island({
               {notice?.title}
             </span>
             {notice?.description && (
-              <span className="truncate text-sm text-surface/70 dark:text-label-secondary">
+              <span className="truncate text-sm text-background/70 dark:text-muted-foreground">
                 {notice.description}
               </span>
             )}
@@ -286,7 +286,7 @@ function IslandRing({
       data-slot="island-ring"
       viewBox="0 0 20 20"
       aria-hidden
-      className={cn("size-5 -rotate-90 text-accent", className)}
+      className={cn("size-5 -rotate-90 text-primary", className)}
       {...props}
     >
       <circle

@@ -13,7 +13,11 @@ export default function BreadcrumbWithHomeIcon() {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="#" aria-label="Home" className="text-label">
+          <BreadcrumbLink
+            href="#"
+            aria-label="Home"
+            className="text-foreground"
+          >
             <HouseIcon weight="fill" />
           </BreadcrumbLink>
         </BreadcrumbItem>

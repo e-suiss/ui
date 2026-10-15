@@ -194,7 +194,7 @@ const regions = [
 ]
 
 const chartConfig = {
-  value: { label: "Value", color: "var(--accent)" },
+  value: { label: "Value", color: "var(--primary)" },
 } satisfies ChartConfig
 
 function ActiveWeek({
@@ -243,7 +243,7 @@ export function DashAnalytics() {
             <SidebarTrigger className="-ms-2 mt-1" />
             <div className="flex flex-1 flex-col">
               <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
-              <p className="text-sm text-label-secondary">
+              <p className="text-sm text-muted-foreground">
                 Last 12 weeks · All regions
               </p>
             </div>
@@ -263,10 +263,10 @@ export function DashAnalytics() {
               ))}
             </ToggleGroup>
           </div>
-          <div className="rounded-xl bg-surface-secondary px-4 pt-3.5 pb-2.5">
+          <div className="rounded-xl bg-muted px-4 pt-3.5 pb-2.5">
             <div className="flex items-end gap-2.5">
               <div className="flex flex-1 flex-col" aria-live="polite">
-                <span className="text-sm text-label-secondary">
+                <span className="text-sm text-muted-foreground">
                   {current === data.length - 1 ? "This week" : point.week} ·{" "}
                   {metric.label}
                 </span>
@@ -274,7 +274,7 @@ export function DashAnalytics() {
                   {format(point.value)}
                 </span>
               </div>
-              <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green">
+              <span className="text-sm font-semibold text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500">
                 +{12 + metrics.indexOf(metric) * 3}%
               </span>
             </div>
@@ -305,7 +305,7 @@ export function DashAnalytics() {
                 <XAxis dataKey="week" hide />
                 <ChartTooltip
                   content={() => null}
-                  cursor={{ stroke: "var(--color-separator-strong)" }}
+                  cursor={{ stroke: "var(--color-input)" }}
                   defaultIndex={data.length - 1}
                 />
                 <Area
@@ -317,7 +317,7 @@ export function DashAnalytics() {
                   activeDot={{
                     r: 5,
                     fill: "var(--color-value)",
-                    stroke: "var(--color-surface-secondary)",
+                    stroke: "var(--color-muted)",
                     strokeWidth: 2,
                   }}
                   animationDuration={500}
@@ -336,10 +336,10 @@ export function DashAnalytics() {
                     <ItemTitle className="font-normal">{region.name}</ItemTitle>
                   </ItemContent>
                   <ItemActions className="gap-4">
-                    <span className="hidden h-1.5 w-35 overflow-hidden rounded-full bg-control sm:block">
+                    <span className="hidden h-1.5 w-35 overflow-hidden rounded-full bg-secondary sm:block">
                       <span
                         style={{ width: `${(region.share / 0.46) * 100}%` }}
-                        className="block h-full rounded-full bg-accent transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                        className="block h-full rounded-full bg-primary transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
                       />
                     </span>
                     <span className="w-18 text-end tabular-nums">

@@ -5,9 +5,9 @@ export default function AspectRatioPlaceholder() {
     <div className="w-96">
       <AspectRatio
         ratio={4 / 3}
-        className="overflow-hidden rounded-2xl bg-surface-secondary"
+        className="overflow-hidden rounded-2xl bg-muted"
       >
-        <div className="text-label-secondary flex size-full items-center justify-center text-sm">
+        <div className="text-muted-foreground flex size-full items-center justify-center text-sm">
           4:3
         </div>
       </AspectRatio>

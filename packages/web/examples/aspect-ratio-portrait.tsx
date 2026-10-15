@@ -5,7 +5,7 @@ export default function AspectRatioPortrait() {
     <div className="w-96">
       <AspectRatio
         ratio={3 / 4}
-        className="overflow-hidden rounded-2xl bg-surface-secondary"
+        className="overflow-hidden rounded-2xl bg-muted"
       >
         <img
           src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"

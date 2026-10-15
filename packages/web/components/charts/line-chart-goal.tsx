@@ -36,7 +36,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  steps: { label: "Steps", color: "var(--orange)" },
+  steps: { label: "Steps", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 const stepsFormat = new Intl.NumberFormat("en-US")
@@ -76,12 +76,12 @@ export function LineChartGoal() {
             />
             <ReferenceLine
               y={GOAL}
-              stroke="var(--green)"
+              stroke="var(--color-green-500)"
               strokeDasharray="4 4"
               label={{
                 value: "Goal",
                 position: "insideTopLeft",
-                className: "fill-label-secondary text-xs font-semibold",
+                className: "fill-muted-foreground text-xs font-semibold",
               }}
             />
             <ChartTooltip

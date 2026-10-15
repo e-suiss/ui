@@ -27,7 +27,7 @@ function Slides({ autoplay }: { autoplay?: boolean | number }) {
           <CarouselContent>
             {SLIDES.map((slide) => (
               <CarouselItem key={slide} aria-label={slide}>
-                <div className="flex aspect-square items-center justify-center rounded-2xl bg-surface-secondary">
+                <div className="flex aspect-square items-center justify-center rounded-2xl bg-muted">
                   {slide}
                 </div>
               </CarouselItem>

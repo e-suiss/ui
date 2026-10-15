@@ -55,7 +55,7 @@ export default function NavigationMenuOpenByDefault() {
                       <product.icon className="mt-0.5" />
                       <div className="flex flex-col gap-1">
                         <span className="font-medium">{product.title}</span>
-                        <span className="text-label-secondary">
+                        <span className="text-muted-foreground">
                           {product.description}
                         </span>
                       </div>

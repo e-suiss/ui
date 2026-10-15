@@ -14,7 +14,7 @@ const DIGIT = /\d/
 const SYMBOL = /[^A-Za-z0-9]/
 
 const stackClass =
-  "overflow-hidden rounded-xl border border-separator-strong bg-surface transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-danger data-invalid:bg-danger/5 dark:data-invalid:bg-danger/10 *:not-first:border-t *:not-first:border-t-separator-strong"
+  "overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:focus-ring data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input"
 
 const inputClass =
   "h-13 rounded-none bg-transparent px-4 text-lg [--focus-ring-width:0px] aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
@@ -43,9 +43,9 @@ function PasswordRules({ password }: { password: string }) {
           <li
             key={rule.label}
             data-met={met ? "" : undefined}
-            className="group/rule flex items-center gap-2 text-sm text-label-secondary data-met:text-label"
+            className="group/rule flex items-center gap-2 text-sm text-muted-foreground data-met:text-foreground"
           >
-            <span className="flex size-4 items-center justify-center rounded-full border-[1.5px] border-label-quaternary text-white transition-[background-color,border-color] duration-250 group-data-met/rule:border-transparent group-data-met/rule:bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] dark:group-data-met/rule:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+            <span className="flex size-4 items-center justify-center rounded-full border-[1.5px] border-border text-white transition-[background-color,border-color] duration-250 group-data-met/rule:border-transparent group-data-met/rule:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] dark:group-data-met/rule:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
               <CheckIcon
                 weight="bold"
                 className="size-2.5 scale-0 transition-[scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] group-data-met/rule:scale-100 motion-reduce:transition-none"
@@ -91,13 +91,13 @@ export function SignupForm() {
     return (
       <section className="flex min-h-215 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
             <CheckIcon weight="bold" className="size-9.5" />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Your suiss Account is ready.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             We sent a verification code to {form.email}.
           </p>
           <button
@@ -106,7 +106,7 @@ export function SignupForm() {
               setDone(false)
               setTried(false)
             }}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Start over ›
           </button>
@@ -129,11 +129,11 @@ export function SignupForm() {
         <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-5xl">
           Create your suiss Account
         </h1>
-        <p className="mt-2.5 text-lg text-balance text-label-secondary">
+        <p className="mt-2.5 text-lg text-balance text-muted-foreground">
           One suiss Account is all you need to access every suiss service.{" "}
           <a
             href="#learn"
-            className="text-link underline decoration-1 underline-offset-3"
+            className="text-primary underline decoration-1 underline-offset-3"
           >
             Learn more ›
           </a>
@@ -212,7 +212,7 @@ export function SignupForm() {
           </div>
           <p
             id="signup-form-email-hint"
-            className="mt-1.5 text-xs text-label-secondary"
+            className="mt-1.5 text-xs text-muted-foreground"
           >
             This will be your new suiss Account.
           </p>
@@ -251,7 +251,10 @@ export function SignupForm() {
             </div>
           </div>
         </fieldset>
-        <p aria-live="polite" className="mt-3.5 min-h-5 text-sm text-danger">
+        <p
+          aria-live="polite"
+          className="mt-3.5 min-h-5 text-sm text-destructive"
+        >
           {tried && !valid ? "Please fill in every field correctly." : ""}
         </p>
         <Button type="submit" size="lg" className="mt-3 min-w-40 self-center">

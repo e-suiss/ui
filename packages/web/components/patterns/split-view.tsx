@@ -37,7 +37,7 @@ function useSplitView() {
 }
 
 const TITLE_CLASS: Record<SplitViewColumn, string> = {
-  sidebar: "px-3 pt-3 pb-2 text-xs font-semibold text-label-secondary",
+  sidebar: "px-3 pt-3 pb-2 text-xs font-semibold text-muted-foreground",
   list: "sr-only",
   detail: "pb-1 text-2xl font-semibold",
 }
@@ -193,7 +193,7 @@ function SplitViewPane({
           type="button"
           data-slot="split-view-back"
           onClick={() => setColumn(backColumn)}
-          className="-ms-1.5 inline-flex min-h-11 items-center gap-0.5 self-start rounded-md pe-1.5 text-base text-link outline-none focus-visible:focus-ring"
+          className="-ms-1.5 inline-flex min-h-11 items-center gap-0.5 self-start rounded-md pe-1.5 text-base text-primary outline-none focus-visible:focus-ring"
         >
           <CaretLeftIcon
             weight="bold"
@@ -313,8 +313,8 @@ function SplitViewItem({
         className: cn(
           "flex w-full items-center gap-3 text-start text-base outline-none select-none focus-visible:focus-ring",
           isMobile
-            ? "min-h-11 border-separator py-3 [[data-slot=split-view-item]+&]:border-t"
-            : "rounded-lg px-3 py-2 hover:bg-item-hover data-active:bg-surface-secondary",
+            ? "min-h-11 border-border py-3 [[data-slot=split-view-item]+&]:border-t"
+            : "rounded-lg px-3 py-2 hover:bg-accent data-active:bg-muted hover:text-accent-foreground",
           !isMobile && kind === "list" && "rounded-xl py-3",
           className
         ),
@@ -325,7 +325,7 @@ function SplitViewItem({
             </span>
             {isMobile && kind !== "detail" && (
               <CaretRightIcon
-                className="size-4 shrink-0 text-label-tertiary rtl:rotate-180"
+                className="size-4 shrink-0 text-muted-foreground rtl:rotate-180"
                 aria-hidden
               />
             )}

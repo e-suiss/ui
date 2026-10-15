@@ -26,7 +26,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  steps: { label: "Steps", color: "var(--orange)" },
+  steps: { label: "Steps", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 export function TooltipChartCustom() {
@@ -61,19 +61,19 @@ export function TooltipChartCustom() {
                 const entry = payload?.[0]
                 if (!active || !entry) return null
                 return (
-                  <div className="min-w-28 rounded-xl bg-surface-raised px-3 py-2 shadow-lg ring-1 ring-label/5 dark:ring-label/10">
-                    <p className="text-2xs font-semibold tracking-wide text-label-secondary uppercase">
+                  <div className="min-w-28 rounded-xl bg-popover px-3 py-2 shadow-lg ring-1 ring-foreground/5 dark:ring-foreground/10">
+                    <p className="text-2xs font-semibold tracking-wide text-muted-foreground uppercase">
                       Total
                     </p>
                     <p className="flex items-baseline gap-1">
                       <span className="text-2xl font-semibold tabular-nums">
                         {Number(entry.value).toLocaleString("en-US")}
                       </span>
-                      <span className="text-xs font-semibold text-label-secondary">
+                      <span className="text-xs font-semibold text-muted-foreground">
                         steps
                       </span>
                     </p>
-                    <p className="text-xs text-label-secondary">{label}</p>
+                    <p className="text-xs text-muted-foreground">{label}</p>
                   </div>
                 )
               }}

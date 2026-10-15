@@ -68,9 +68,9 @@ const APPS: { name: string; category: Category; share: number }[] = [
 ]
 
 const chartConfig = {
-  social: { label: "Social", color: "var(--blue)" },
-  productivity: { label: "Productivity", color: "var(--cyan)" },
-  entertainment: { label: "Entertainment", color: "var(--orange)" },
+  social: { label: "Social", color: "var(--chart-1)" },
+  productivity: { label: "Productivity", color: "var(--color-cyan-500)" },
+  entertainment: { label: "Entertainment", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 const total = (day: Record<Category, number>) =>
@@ -176,13 +176,13 @@ export function BarChartInteractive() {
           className="flex min-w-52 flex-1 flex-col gap-0.5"
           aria-live="polite"
         >
-          <p className="text-sm font-semibold text-label-secondary">
+          <p className="text-sm font-semibold text-muted-foreground">
             {selected === null ? "Daily average" : DAYS[selected]}
           </p>
           <p className="text-3xl font-semibold tracking-tight tabular-nums">
             {formatMinutes(headline)}
           </p>
-          <p className="text-sm text-label-secondary">{comparison}</p>
+          <p className="text-sm text-muted-foreground">{comparison}</p>
         </div>
         <ToggleGroup
           spacing={0}
@@ -272,7 +272,7 @@ export function BarChartInteractive() {
                           } as React.CSSProperties
                         }
                       />
-                      <span className="flex-1 text-label-secondary">
+                      <span className="flex-1 text-muted-foreground">
                         {chartConfig[name as Category].label}
                       </span>
                       <span className="font-semibold tabular-nums">
@@ -286,7 +286,7 @@ export function BarChartInteractive() {
             {isWeek && (
               <ReferenceLine
                 y={AVERAGE}
-                stroke="var(--green)"
+                stroke="var(--color-green-500)"
                 strokeDasharray="3 3"
               />
             )}
@@ -340,7 +340,7 @@ export function BarChartInteractive() {
         <dl className="grid grid-cols-3 gap-3">
           {CATEGORIES.map((category) => (
             <div key={category} className="flex min-w-0 flex-col gap-0.5">
-              <dt className="flex min-w-0 items-center gap-1.5 text-sm text-label-secondary">
+              <dt className="flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground">
                 <span
                   className="size-2 shrink-0 rounded-full bg-(--swatch)"
                   style={
@@ -358,7 +358,7 @@ export function BarChartInteractive() {
           ))}
         </dl>
         <div className="flex flex-col">
-          <p className="mb-1 text-xs font-semibold text-label-secondary uppercase">
+          <p className="mb-1 text-xs font-semibold text-muted-foreground uppercase">
             Most used
           </p>
           <ul>
@@ -367,10 +367,10 @@ export function BarChartInteractive() {
                 key={app.name}
                 onPointerEnter={() => setHoveredApp(app.name)}
                 onPointerLeave={() => setHoveredApp(null)}
-                className="grid grid-cols-[6rem_1fr_4.5rem] items-center gap-3 border-t border-separator py-2"
+                className="grid grid-cols-[6rem_1fr_4.5rem] items-center gap-3 border-t border-border py-2"
               >
                 <span className="truncate text-base">{app.name}</span>
-                <span className="h-1.5 overflow-hidden rounded-full bg-control">
+                <span className="h-1.5 overflow-hidden rounded-full bg-secondary">
                   <span
                     data-dimmed={
                       hoveredApp !== null && hoveredApp !== app.name
@@ -386,7 +386,7 @@ export function BarChartInteractive() {
                     }
                   />
                 </span>
-                <span className="text-end text-sm text-label-secondary tabular-nums">
+                <span className="text-end text-sm text-muted-foreground tabular-nums">
                   {formatMinutes(app.minutes)}
                 </span>
               </li>

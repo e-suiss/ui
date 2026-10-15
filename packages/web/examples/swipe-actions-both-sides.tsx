@@ -75,12 +75,12 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
               <SwipeActionsContent className="flex flex-col gap-0.5 px-4 py-3">
                 <span className="flex items-center gap-2 font-semibold">
                   {unread.includes(message.id) && (
-                    <span className="size-2 rounded-full bg-accent" />
+                    <span className="size-2 rounded-full bg-primary" />
                   )}
                   {message.from}
                 </span>
                 <span className="text-sm">{message.subject}</span>
-                <span className="truncate text-sm text-label-secondary">
+                <span className="truncate text-sm text-muted-foreground">
                   {message.preview}
                 </span>
               </SwipeActionsContent>
@@ -106,7 +106,7 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
         ))}
       </ul>
       <div className="flex items-center justify-between gap-3">
-        <p role="status" className="text-sm text-label-secondary">
+        <p role="status" className="text-sm text-muted-foreground">
           {log}
         </p>
         <Button

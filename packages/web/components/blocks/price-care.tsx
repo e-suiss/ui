@@ -63,8 +63,8 @@ export function PriceCare() {
   const total = plan.price + (theft ? (plan.theft ?? 0) : 0)
 
   return (
-    <section className="grid min-h-145 bg-surface md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-      <div className="relative flex min-h-80 flex-col justify-end gap-1.5 overflow-hidden bg-surface-secondary p-7">
+    <section className="grid min-h-145 bg-background md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+      <div className="relative flex min-h-80 flex-col justify-end gap-1.5 overflow-hidden bg-muted p-7">
         {devices.map((item) => (
           <img
             key={item.name}
@@ -102,7 +102,7 @@ export function PriceCare() {
             <ToggleGroupItem
               key={item.name}
               value={item.name}
-              className="bg-control px-3.5 hover:bg-control-hover aria-pressed:bg-label aria-pressed:text-surface aria-pressed:hover:bg-label aria-pressed:hover:text-surface"
+              className="bg-secondary px-3.5 hover:bg-secondary/80 aria-pressed:bg-foreground aria-pressed:text-background aria-pressed:hover:bg-foreground aria-pressed:hover:text-background"
             >
               {item.name}
             </ToggleGroupItem>
@@ -118,7 +118,7 @@ export function PriceCare() {
           {current.options.map((item) => (
             <Label
               key={item.label}
-              className="flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3.5 shadow-[inset_0_0_0_1px_var(--color-separator-strong)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-accent)] has-focus-visible:focus-ring font-normal"
+              className="flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3.5 shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring font-normal"
             >
               <RadioGroupItem
                 value={item.label}
@@ -128,7 +128,7 @@ export function PriceCare() {
                 <span className="text-base font-semibold">
                   {item.label} payment
                 </span>
-                <span className="text-sm text-label-secondary">
+                <span className="text-sm text-muted-foreground">
                   Unlimited accidental damage repairs
                 </span>
               </span>
@@ -144,9 +144,9 @@ export function PriceCare() {
             Add theft and loss protection
           </Label>
         )}
-        <div className="flex items-center gap-3 border-t border-separator pt-3.5">
+        <div className="flex items-center gap-3 border-t border-border pt-3.5">
           <div className="flex flex-1 flex-col" aria-live="polite">
-            <span className="text-sm text-label-secondary">Total</span>
+            <span className="text-sm text-muted-foreground">Total</span>
             <span className="text-2xl font-semibold tabular-nums">
               {money(total)}
             </span>

@@ -19,9 +19,9 @@ const week = [
 ]
 
 const channels = [
-  { name: "Dine-in", amount: "₺64,200", tint: "bg-blue" },
-  { name: "Takeaway", amount: "₺38,900", tint: "bg-orange" },
-  { name: "Pickup", amount: "₺18,800", tint: "bg-green" },
+  { name: "Dine-in", amount: "₺64,200", tint: "bg-blue-500" },
+  { name: "Takeaway", amount: "₺38,900", tint: "bg-orange-500" },
+  { name: "Pickup", amount: "₺18,800", tint: "bg-green-500" },
 ]
 
 const bestSellers = [
@@ -34,7 +34,7 @@ const bestSellers = [
 ] as const
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-label-secondary">{children}</p>
+  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
 }
 
 export default function WidgetWeeklyReport() {
@@ -42,8 +42,11 @@ export default function WidgetWeeklyReport() {
     <div>
       <Widget resizable defaultSize="extra-large" className="flex-row gap-6">
         <div className="flex min-w-0 flex-1 flex-col gap-3">
-          <WidgetHeader className="gap-1.5 text-success">
-            <WidgetIcon size="sm" className="text-success">
+          <WidgetHeader className="gap-1.5 text-green-600 dark:text-green-400">
+            <WidgetIcon
+              size="sm"
+              className="text-green-600 dark:text-green-400"
+            >
               <ChartBarIcon weight="fill" />
             </WidgetIcon>
             <WidgetTitle>This week</WidgetTitle>
@@ -51,7 +54,7 @@ export default function WidgetWeeklyReport() {
           <div className="flex min-h-0 flex-col gap-3 group-data-[size=medium]/widget:flex-1 group-data-[size=medium]/widget:flex-row group-data-[size=medium]/widget:items-end">
             <div className="shrink-0">
               <WidgetValue>₺121,900</WidgetValue>
-              <p className="flex items-center gap-1 text-xs font-medium text-success">
+              <p className="flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
                 <TriangleIcon weight="fill" className="size-2.5" />
                 12% more than last week
               </p>
@@ -66,11 +69,11 @@ export default function WidgetWeeklyReport() {
                     <span
                       aria-hidden="true"
                       data-top={day.value === 100}
-                      className="w-full rounded-md bg-control data-[top=true]:bg-green"
+                      className="w-full rounded-md bg-secondary data-[top=true]:bg-green-500"
                       style={{ height: `${day.value}%` }}
                     />
                   </div>
-                  <span className="text-2xs text-label-secondary group-data-[size=medium]/widget:hidden">
+                  <span className="text-2xs text-muted-foreground group-data-[size=medium]/widget:hidden">
                     {day.day}
                   </span>
                 </div>
@@ -88,7 +91,7 @@ export default function WidgetWeeklyReport() {
                   className={`size-2 rounded-full ${channel.tint}`}
                 />
                 <span className="flex-1">{channel.name}</span>
-                <span className="text-label-secondary tabular-nums">
+                <span className="text-muted-foreground tabular-nums">
                   {channel.amount}
                 </span>
               </li>
@@ -96,20 +99,20 @@ export default function WidgetWeeklyReport() {
           </ul>
         </div>
         <div className="hidden w-72 shrink-0 flex-col gap-2 group-data-[size=extra-large]/widget:flex">
-          <p className="text-xs font-semibold text-label-secondary">
+          <p className="text-xs font-semibold text-muted-foreground">
             Best sellers
           </p>
           {bestSellers.map((item) => (
             <div key={item.name} className="flex flex-col gap-1">
               <div className="flex justify-between text-sm">
                 {item.name}
-                <span className="text-label-secondary tabular-nums">
+                <span className="text-muted-foreground tabular-nums">
                   {item.count}
                 </span>
               </div>
-              <div className="h-1 rounded-full bg-control">
+              <div className="h-1 rounded-full bg-secondary">
                 <div
-                  className="h-full rounded-full bg-green"
+                  className="h-full rounded-full bg-green-500"
                   style={{
                     width: `${(item.count / bestSellers[0].count) * 100}%`,
                   }}

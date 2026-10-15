@@ -27,7 +27,7 @@ export default function TabsManyTabsLine() {
         </TabsList>
         {settings.map((tab) => (
           <TabsContent key={tab.value} value={tab.value}>
-            <p className="text-label-secondary">{tab.label} settings</p>
+            <p className="text-muted-foreground">{tab.label} settings</p>
           </TabsContent>
         ))}
       </Tabs>

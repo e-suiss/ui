@@ -24,7 +24,7 @@ const chartData = [
 ].map((item, index) => ({ ...item, index }))
 
 const chartConfig = {
-  steps: { label: "Steps", color: "var(--orange)" },
+  steps: { label: "Steps", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 const stepsFormat = new Intl.NumberFormat("en-US")
@@ -51,18 +51,20 @@ export function BarChartActive() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
-        <p className="text-sm font-semibold text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:text-orange">
+        <p className="text-sm font-semibold text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500">
           Steps
         </p>
         <p className="flex items-baseline gap-1" aria-live="polite">
           <span className="text-3xl font-semibold tracking-tight tabular-nums">
             {stepsFormat.format(day.steps)}
           </span>
-          <span className="text-base font-semibold text-label-secondary">
+          <span className="text-base font-semibold text-muted-foreground">
             steps
           </span>
         </p>
-        <p className="text-sm text-label-secondary">{day.day} · select a bar</p>
+        <p className="text-sm text-muted-foreground">
+          {day.day} · select a bar
+        </p>
       </CardHeader>
       <CardContent>
         <ChartContainer

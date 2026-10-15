@@ -129,12 +129,12 @@ function SearchPicker({
           aria-describedby={ariaDescribedBy}
           data-placeholder={selected ? undefined : ""}
           className={cn(
-            "flex h-11 w-full items-center justify-between gap-1.5 rounded-lg border border-transparent bg-control px-3 text-start text-base outline-none focus-visible:focus-ring disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 data-placeholder:text-label-secondary dark:aria-invalid:bg-danger/10",
+            "flex h-11 w-full items-center justify-between gap-1.5 rounded-lg border border-transparent bg-secondary px-3 text-start text-base outline-none focus-visible:focus-ring disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:bg-destructive/5 data-placeholder:text-muted-foreground dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
             className
           )}
         >
           <span className="truncate">{selected?.label ?? placeholder}</span>
-          <CaretUpDownIcon className="size-4 shrink-0 text-label-secondary" />
+          <CaretUpDownIcon className="size-4 shrink-0 text-muted-foreground" />
         </DrawerTrigger>
         <DrawerContent
           data-slot="search-picker-content"

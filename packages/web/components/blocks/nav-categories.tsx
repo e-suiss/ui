@@ -31,22 +31,22 @@ export function NavCategories() {
   const [selected, setSelected] = React.useState("Phone")
 
   return (
-    <section className="flex flex-col gap-7 bg-surface pt-11 pb-10">
+    <section className="flex flex-col gap-7 bg-background pt-11 pb-10">
       <div className="flex flex-wrap items-end gap-6 px-6 md:px-12">
         <div className="flex min-w-60 flex-1 flex-col gap-1">
           <h1 className="text-5xl font-semibold tracking-tight">Store.</h1>
-          <p className="text-2xl text-balance text-label-secondary">
+          <p className="text-2xl text-balance text-muted-foreground">
             The best way to buy the suiss products you love.
           </p>
         </div>
         <div className="flex flex-col items-start gap-1.5 text-xs">
-          <span className="font-semibold text-label-secondary">
+          <span className="font-semibold text-muted-foreground">
             Need shopping help?
           </span>
-          <a href="#specialist" className="text-link hover:underline">
+          <a href="#specialist" className="text-primary hover:underline">
             Ask a Specialist ›
           </a>
-          <a href="#stores" className="text-link hover:underline">
+          <a href="#stores" className="text-primary hover:underline">
             Visit a suiss Store near you ›
           </a>
         </div>
@@ -69,9 +69,9 @@ export function NavCategories() {
                   <img
                     src={category.image}
                     alt=""
-                    className="h-19.5 w-30 rounded-[0.875rem] bg-control object-cover transition-[translate,box-shadow] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] group-aria-pressed/category:-translate-y-0.5 group-aria-pressed/category:ring-2 group-aria-pressed/category:ring-accent"
+                    className="h-19.5 w-30 rounded-[0.875rem] bg-secondary object-cover transition-[translate,box-shadow] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] group-aria-pressed/category:-translate-y-0.5 group-aria-pressed/category:ring-2 group-aria-pressed/category:ring-primary"
                   />
-                  <span className="text-sm font-semibold text-label group-aria-pressed/category:text-link">
+                  <span className="text-sm font-semibold text-foreground group-aria-pressed/category:text-primary">
                     {category.label}
                   </span>
                 </Toggle>
@@ -92,10 +92,10 @@ export function NavCategories() {
           />
         </div>
       </Carousel>
-      <div className="mx-6 border-t border-separator pt-5.5 md:mx-12">
+      <div className="mx-6 border-t border-border pt-5.5 md:mx-12">
         <p className="text-2xl font-semibold tracking-tight text-balance">
           The latest.{" "}
-          <span className="text-label-secondary">
+          <span className="text-muted-foreground">
             Take a look at what's new in {selected}.
           </span>
         </p>

@@ -197,7 +197,7 @@ export function RolesEditor() {
         >
           <SplitViewList
             title="Roles"
-            className="gap-0.5 md:px-4 md:pt-5 [&>h2]:md:not-sr-only [&>h2]:md:px-1 [&>h2]:md:pb-2 [&>h2]:md:text-sm [&>h2]:md:font-semibold [&>h2]:md:text-label-secondary"
+            className="gap-0.5 md:px-4 md:pt-5 [&>h2]:md:not-sr-only [&>h2]:md:px-1 [&>h2]:md:pb-2 [&>h2]:md:text-sm [&>h2]:md:font-semibold [&>h2]:md:text-muted-foreground"
           >
             {roles.map((name) => (
               <SplitViewItem
@@ -207,7 +207,7 @@ export function RolesEditor() {
                 className="group/role py-1.5"
               >
                 <span className="text-sm">{name}</span>
-                <span className="text-xs text-label-secondary">
+                <span className="text-xs text-muted-foreground">
                   {state[name].filter(Boolean).length} permissions
                 </span>
               </SplitViewItem>
@@ -231,7 +231,7 @@ export function RolesEditor() {
                   <p className="text-3xl font-semibold tracking-tight">
                     {role}
                   </p>
-                  <p className="text-sm text-label-secondary">
+                  <p className="text-sm text-muted-foreground">
                     {members[role]}{" "}
                     {members[role] === 1 ? "user has" : "users have"} this role
                   </p>

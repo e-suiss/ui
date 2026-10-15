@@ -26,8 +26,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
-  mobile: { label: "Mobile", color: "var(--teal)" },
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
+  mobile: { label: "Mobile", color: "var(--chart-2)" },
 } satisfies ChartConfig
 
 export function AreaChartStackedExpand() {

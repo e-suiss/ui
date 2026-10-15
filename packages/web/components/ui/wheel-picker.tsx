@@ -100,7 +100,7 @@ function WheelPicker({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="wheel-picker"
       className={cn(
-        "relative flex items-stretch justify-center [--wheel-picker-item-height:--spacing(8)] before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:h-(--wheel-picker-item-height) before:-translate-y-1/2 before:rounded-lg before:bg-control",
+        "relative flex items-stretch justify-center [--wheel-picker-item-height:--spacing(8)] before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:h-(--wheel-picker-item-height) before:-translate-y-1/2 before:rounded-lg before:bg-secondary",
         className
       )}
       {...props}
@@ -419,7 +419,7 @@ function WheelPickerItem({
       data-selected={selected ? "" : undefined}
       data-disabled={disabled ? "" : undefined}
       className={cn(
-        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-xl whitespace-nowrap text-label tabular-nums select-none data-disabled:text-label-tertiary",
+        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-xl whitespace-nowrap text-foreground tabular-nums select-none data-disabled:opacity-50",
         className
       )}
       {...props}

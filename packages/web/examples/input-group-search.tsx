@@ -25,7 +25,7 @@ function SearchField() {
           <InputGroupButton
             size="icon-xs"
             aria-label="Clear search"
-            className="text-label-secondary"
+            className="text-muted-foreground"
             onClick={() => setQuery("")}
           >
             <XCircleIcon weight="fill" />

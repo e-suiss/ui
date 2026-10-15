@@ -39,7 +39,7 @@ function AlertSheetOverlay({
     <AlertSheetPrimitive.Backdrop
       data-slot="alert-sheet-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-scrim transition-opacity duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0",
+        "fixed inset-0 isolate z-50 bg-black/50 transition-opacity duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0",
         className
       )}
       {...props}
@@ -88,7 +88,7 @@ function AlertSheetGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-sheet-group"
       className={cn(
-        "flex flex-col overflow-hidden rounded-2xl bg-surface-raised text-label *:col-span-full *:not-first:border-t has-[>button>svg]:grid has-[>button>svg]:grid-cols-[1fr_auto_auto_1fr]",
+        "flex flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground *:col-span-full *:not-first:border-t has-[>button>svg]:grid has-[>button>svg]:grid-cols-[1fr_auto_auto_1fr]",
         className
       )}
       {...props}
@@ -117,7 +117,7 @@ function AlertSheetTitle({
     <AlertSheetPrimitive.Title
       data-slot="alert-sheet-title"
       className={cn(
-        "text-sm font-semibold text-label-secondary text-balance",
+        "text-sm font-semibold text-muted-foreground text-balance",
         className
       )}
       {...props}
@@ -132,19 +132,19 @@ function AlertSheetDescription({
   return (
     <AlertSheetPrimitive.Description
       data-slot="alert-sheet-description"
-      className={cn("text-sm text-label-secondary text-balance", className)}
+      className={cn("text-sm text-muted-foreground text-balance", className)}
       {...props}
     />
   )
 }
 
 const alertSheetActionVariants = cva(
-  "flex min-h-14 w-full cursor-pointer items-center justify-center gap-2 px-4 text-lg has-[>svg]:grid has-[>svg]:grid-cols-subgrid has-[>svg]:gap-x-3 has-[>svg]:text-start [&>svg]:col-start-2 [&_svg:not([class*='size-'])]:size-5 outline-none hover:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_5%)] focus-visible:focus-ring active:bg-[color-mix(in_oklab,var(--surface-raised),var(--label)_10%)] disabled:pointer-events-none disabled:text-label-quaternary [--focus-ring-offset:-3px]",
+  "flex min-h-14 w-full cursor-pointer items-center justify-center gap-2 px-4 text-lg has-[>svg]:grid has-[>svg]:grid-cols-subgrid has-[>svg]:gap-x-3 has-[>svg]:text-start [&>svg]:col-start-2 [&_svg:not([class*='size-'])]:size-5 outline-none hover:bg-[color-mix(in_oklab,var(--popover),var(--foreground)_5%)] focus-visible:focus-ring disabled:pointer-events-none [--focus-ring-offset:-3px] disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "text-link",
-        destructive: "text-danger",
+        default: "text-primary",
+        destructive: "text-destructive",
       },
     },
     defaultVariants: {
@@ -177,7 +177,7 @@ function AlertSheetCancel({
       data-slot="alert-sheet-cancel"
       className={cn(
         alertSheetActionVariants(),
-        "rounded-2xl bg-surface-raised font-semibold",
+        "rounded-2xl bg-popover font-semibold",
         className
       )}
       {...props}

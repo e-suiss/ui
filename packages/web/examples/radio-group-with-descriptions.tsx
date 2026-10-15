@@ -27,7 +27,7 @@ export default function RadioGroupWithDescriptions() {
               <span id={`${option.value}-label`}>{option.label}</span>
               <span
                 id={`${option.value}-description`}
-                className="text-label-secondary font-normal"
+                className="text-muted-foreground font-normal"
               >
                 {option.description}
               </span>

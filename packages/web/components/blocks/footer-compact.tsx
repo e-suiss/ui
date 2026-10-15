@@ -54,18 +54,21 @@ const slug = (text: string) =>
 
 export function FooterCompact() {
   return (
-    <footer className="bg-surface-secondary text-xs text-label-secondary">
+    <footer className="bg-muted text-xs text-muted-foreground">
       <div className="mx-auto flex max-w-md flex-col gap-3 px-4 py-5">
-        <Breadcrumb className="border-b border-separator pb-3">
+        <Breadcrumb className="border-b border-border pb-3">
           <BreadcrumbList className="gap-2 text-xs">
             <BreadcrumbItem>
-              <BreadcrumbLink href="#home" className="font-semibold text-label">
+              <BreadcrumbLink
+                href="#home"
+                className="font-semibold text-foreground"
+              >
                 suiss
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="#phone" className="text-label">
+              <BreadcrumbLink href="#phone" className="text-foreground">
                 Phone
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -80,16 +83,16 @@ export function FooterCompact() {
             <AccordionItem
               key={section.title}
               value={section.title}
-              className="ms-0 border-b border-separator not-first:border-t-0"
+              className="ms-0 border-b border-border not-first:border-t-0"
             >
-              <AccordionTrigger className="pe-0 text-sm text-label hover:no-underline">
+              <AccordionTrigger className="pe-0 text-sm text-foreground hover:no-underline">
                 {section.title}
               </AccordionTrigger>
               <AccordionContent className="pe-0 pb-3.5 [&_a]:no-underline [&_a]:hover:underline">
                 <ul className="flex flex-col gap-2.5 ps-3">
                   {section.links.map((link) => (
                     <li key={link}>
-                      <a href={slug(link)} className="text-sm text-label">
+                      <a href={slug(link)} className="text-sm text-foreground">
                         {link}
                       </a>
                     </li>
@@ -101,13 +104,13 @@ export function FooterCompact() {
         </Accordion>
         <p className="mt-2">
           More ways to shop:{" "}
-          <a href="#stores" className="text-link underline">
+          <a href="#stores" className="text-primary underline">
             Find a suiss Store near you
           </a>{" "}
           or call <span className="whitespace-nowrap">1-800-555-0199</span>.
         </p>
         <p>Copyright © 2026 suiss Inc. All rights reserved.</p>
-        <a href="#region" className="w-fit text-label hover:underline">
+        <a href="#region" className="w-fit text-foreground hover:underline">
           United States
         </a>
       </div>

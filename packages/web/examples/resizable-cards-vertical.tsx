@@ -20,12 +20,12 @@ function CardPane({
     <div className="size-full p-2">
       <ScrollArea className="size-full">
         <div className="flex min-h-full flex-col items-center justify-center gap-3 p-3 text-center">
-          <span className="flex size-13 shrink-0 items-center justify-center rounded-2xl bg-control text-label [&_svg]:size-6">
+          <span className="flex size-13 shrink-0 items-center justify-center rounded-2xl bg-secondary text-secondary-foreground [&_svg]:size-6">
             {icon}
           </span>
           <div className="flex flex-col gap-0.5">
             <p className="text-sm font-semibold">{label}</p>
-            <p className="text-sm text-label-secondary tabular-nums">
+            <p className="text-sm text-muted-foreground tabular-nums">
               {size === undefined ? "" : `${Math.round(size)}%`}
             </p>
           </div>

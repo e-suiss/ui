@@ -49,7 +49,7 @@ const storage: [StorageOption, ...StorageOption[]] = [
 ]
 
 const choiceClass =
-  "cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-separator-strong)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-accent)] has-focus-visible:focus-ring"
+  "cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:focus-ring"
 
 const money = (value: number, digits = 2) =>
   value.toLocaleString("en-US", {
@@ -69,8 +69,8 @@ export function BagConfigure() {
     (storage.find((item) => item.size === size)?.extra ?? 0)
 
   return (
-    <section className="grid min-h-160 bg-surface md:grid-cols-[minmax(0,1.3fr)_minmax(18.75rem,1fr)]">
-      <div className="relative m-5 aspect-4/3 overflow-hidden rounded-[1.375rem] bg-surface-secondary md:aspect-auto">
+    <section className="grid min-h-160 bg-background md:grid-cols-[minmax(0,1.3fr)_minmax(18.75rem,1fr)]">
+      <div className="relative m-5 aspect-4/3 overflow-hidden rounded-[1.375rem] bg-muted md:aspect-auto">
         {finishes.map((item) => (
           <img
             key={item.name}
@@ -83,7 +83,7 @@ export function BagConfigure() {
         ))}
       </div>
       <div className="flex flex-col gap-4 px-5 pb-6 md:py-6.5 md:ps-2 md:pe-7">
-        <p className="text-xs font-semibold text-[color-mix(in_oklab,var(--orange),var(--label)_45%)] dark:text-orange">
+        <p className="text-xs font-semibold text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500">
           New
         </p>
         <h1 className="-mt-2.5 text-4xl font-semibold tracking-tight">
@@ -91,7 +91,7 @@ export function BagConfigure() {
         </h1>
         <p className="text-lg font-semibold">
           Model.{" "}
-          <span className="text-label-secondary">
+          <span className="text-muted-foreground">
             Which one is right for you?
           </span>
         </p>
@@ -113,14 +113,14 @@ export function BagConfigure() {
               <span className="flex-1 text-base font-semibold">
                 {item.name}
               </span>
-              <span className="text-sm text-label-secondary">
+              <span className="text-sm text-muted-foreground">
                 From {money(item.price, 0)}
               </span>
             </Label>
           ))}
         </RadioGroup>
         <p className="text-lg font-semibold">
-          Finish. <span className="text-label-secondary">{finish}</span>
+          Finish. <span className="text-muted-foreground">{finish}</span>
         </p>
         <ToggleGroup
           value={[finish]}
@@ -136,7 +136,7 @@ export function BagConfigure() {
               value={item.name}
               aria-label={item.name}
               style={{ "--swatch": item.color } as React.CSSProperties}
-              className="size-7.5 min-w-0 rounded-full bg-(--swatch) p-0 shadow-[inset_0_0_0_1px_--alpha(var(--color-label)/15%)] transition-shadow duration-200 hover:bg-(--swatch) aria-pressed:bg-(--swatch) aria-pressed:ring-2 aria-pressed:ring-accent aria-pressed:ring-offset-2 aria-pressed:ring-offset-surface aria-pressed:hover:bg-(--swatch)"
+              className="size-7.5 min-w-0 rounded-full bg-(--swatch) p-0 shadow-[inset_0_0_0_1px_--alpha(var(--color-foreground)/15%)] transition-shadow duration-200 hover:bg-(--swatch) aria-pressed:bg-(--swatch) aria-pressed:ring-2 aria-pressed:ring-primary aria-pressed:ring-offset-2 aria-pressed:ring-offset-background aria-pressed:hover:bg-(--swatch)"
             />
           ))}
         </ToggleGroup>
@@ -159,18 +159,18 @@ export function BagConfigure() {
               <span className="text-base font-semibold whitespace-nowrap">
                 {item.size}
               </span>
-              <span className="text-2xs whitespace-nowrap text-label-secondary">
+              <span className="text-2xs whitespace-nowrap text-muted-foreground">
                 {item.extra ? `+${money(item.extra, 0)}` : "Included"}
               </span>
             </Label>
           ))}
         </RadioGroup>
-        <div className="sticky bottom-0 mt-auto flex items-center gap-3 border-t border-separator bg-surface pt-3.5">
+        <div className="sticky bottom-0 mt-auto flex items-center gap-3 border-t border-border bg-background pt-3.5">
           <div className="flex flex-1 flex-col" aria-live="polite">
             <span className="text-2xl font-semibold tabular-nums">
               {money(price)}
             </span>
-            <span className="text-xs text-label-secondary">
+            <span className="text-xs text-muted-foreground">
               or {money(price / 12)}/mo. for 12 mo.
             </span>
           </div>

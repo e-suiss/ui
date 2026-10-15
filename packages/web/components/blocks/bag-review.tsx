@@ -66,7 +66,7 @@ export function BagReview() {
             ? `Your bag total is ${money(subtotal)}.`
             : "Your bag is empty."}
         </h1>
-        <p className="mt-2 mb-5 text-center text-base text-label-secondary">
+        <p className="mt-2 mb-5 text-center text-base text-muted-foreground">
           Free delivery and free returns on every order.
         </p>
         {bag.length > 0 ? (
@@ -86,19 +86,19 @@ export function BagReview() {
           {bag.map((item) => (
             <li
               key={item.name}
-              className="grid grid-cols-[5rem_minmax(0,1fr)] gap-x-4 gap-y-3 border-t border-separator py-5.5 transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none md:grid-cols-[7.5rem_minmax(0,1fr)_auto_7.5rem] md:gap-5"
+              className="grid grid-cols-[5rem_minmax(0,1fr)] gap-x-4 gap-y-3 border-t border-border py-5.5 transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none md:grid-cols-[7.5rem_minmax(0,1fr)_auto_7.5rem] md:gap-5"
             >
               <img
                 src={item.image}
                 alt=""
-                className="size-20 rounded-xl bg-control object-cover md:row-span-2 md:size-30"
+                className="size-20 rounded-xl bg-secondary object-cover md:row-span-2 md:size-30"
               />
               <div className="flex flex-col gap-1">
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <p className="text-sm text-label-secondary">{item.variant}</p>
+                <p className="text-sm text-muted-foreground">{item.variant}</p>
                 <a
                   href="#details"
-                  className="mt-1.5 text-sm text-link hover:underline"
+                  className="mt-1.5 text-sm text-primary hover:underline"
                 >
                   Show product details ›
                 </a>
@@ -129,7 +129,7 @@ export function BagReview() {
                   size="sm"
                   onClick={() => setQuantity(item.name, 0)}
                   aria-label={`Remove ${item.name}`}
-                  className="h-auto px-0 text-sm text-link"
+                  className="h-auto px-0 text-sm text-primary"
                 >
                   Remove
                 </Button>
@@ -138,7 +138,7 @@ export function BagReview() {
           ))}
         </ul>
         {bag.length > 0 && (
-          <div className="flex flex-col gap-2.5 border-t border-separator pt-5 md:ps-90">
+          <div className="flex flex-col gap-2.5 border-t border-border pt-5 md:ps-90">
             <div className="flex justify-between text-base">
               <span>Subtotal</span>
               <span className="tabular-nums">{money(subtotal)}</span>
@@ -147,14 +147,14 @@ export function BagReview() {
               <span>Shipping</span>
               <span>FREE</span>
             </div>
-            <div className="flex justify-between border-t border-separator pt-3 text-2xl font-semibold">
+            <div className="flex justify-between border-t border-border pt-3 text-2xl font-semibold">
               <span>Total</span>
               <span className="tabular-nums">{money(subtotal)}</span>
             </div>
             <div className="mt-1 flex flex-wrap justify-end gap-2.5">
               <Button
                 size="lg"
-                className="bg-label text-surface hover:bg-label/90 active:bg-label/80"
+                className="bg-foreground text-background hover:bg-foreground/90"
               >
                 Check Out with <span className="font-bold">suiss</span> Pay
               </Button>

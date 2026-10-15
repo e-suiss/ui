@@ -32,7 +32,7 @@ const TabBarContext = React.createContext<TabBarContextProps | null>(null)
 const TabBarOverflowContext = React.createContext(false)
 
 const tabBarLinkClassName =
-  "relative ms-0.5 flex min-h-9 items-center border-s border-dotted border-separator-strong ps-3.25 text-sm text-label md:text-base outline-none transition-colors select-none hover:text-label-secondary focus-visible:focus-ring data-active:text-link"
+  "relative ms-0.5 flex min-h-9 items-center border-s border-dotted border-input ps-3.25 text-sm text-foreground md:text-base outline-none transition-colors select-none hover:text-muted-foreground focus-visible:focus-ring data-active:text-primary"
 
 function useTabBar() {
   const context = React.useContext(TabBarContext)
@@ -142,7 +142,7 @@ function TabBar({
         data-overflowing={overflow.length > 0 ? "" : undefined}
         data-sections={hasSections ? "" : undefined}
         className={cn(
-          "group/tab-bar fixed inset-x-0 [--tab-bar-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] bottom-[max(--spacing(4),env(safe-area-inset-bottom))] z-20 mx-auto grid max-h-[calc(100%-(--spacing(8)))] w-fit max-w-[calc(100%-(--spacing(8)))] grid-cols-[minmax(0,1fr)_auto] grid-rows-[minmax(0,1fr)_auto] rounded-3xl border border-label/5 bg-surface-raised p-1 shadow-lg data-overflowing:w-full dark:border-label/10",
+          "group/tab-bar fixed inset-x-0 [--tab-bar-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] bottom-[max(--spacing(4),env(safe-area-inset-bottom))] z-20 mx-auto grid max-h-[calc(100%-(--spacing(8)))] w-fit max-w-[calc(100%-(--spacing(8)))] grid-cols-[minmax(0,1fr)_auto] grid-rows-[minmax(0,1fr)_auto] rounded-3xl border border-foreground/5 bg-card p-1 shadow-lg data-overflowing:w-full dark:border-foreground/10",
           className
         )}
         style={
@@ -279,7 +279,7 @@ function TabBarItem({
             ? cn(tabBarLinkClassName, "text-start")
             : cn(
                 buttonVariants({ variant: "ghost" }),
-                "shrink-0 font-medium text-label-secondary transition-[color,background-color] duration-200 active:bg-item-pressed disabled:text-label-quaternary data-active:bg-control data-active:text-link data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1"
+                "shrink-0 font-medium text-muted-foreground transition-[color,background-color] duration-200 data-active:bg-secondary data-active:text-primary data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1 disabled:opacity-50"
               ),
           className
         ),
@@ -316,7 +316,7 @@ function TabBarTrigger({
       aria-controls={contentId}
       variant="secondary"
       className={cn(
-        "col-start-2 row-start-2 w-auto justify-self-end gap-2 data-idle:pointer-events-none data-idle:invisible data-idle:absolute transition-[width,color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-650 group-data-open/tab-bar:ease-(--tab-bar-spring) [interpolate-size:allow-keywords] group-data-open/tab-bar:w-[calc(var(--tab-bar-width,auto)-(--spacing(2)))] max-w-[calc(var(--tab-bar-width,100vw)-(--spacing(2)))] motion-reduce:transition-none text-label-secondary hover:text-label",
+        "col-start-2 row-start-2 w-auto justify-self-end gap-2 data-idle:pointer-events-none data-idle:invisible data-idle:absolute transition-[width,color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-650 group-data-open/tab-bar:ease-(--tab-bar-spring) [interpolate-size:allow-keywords] group-data-open/tab-bar:w-[calc(var(--tab-bar-width,auto)-(--spacing(2)))] max-w-[calc(var(--tab-bar-width,100vw)-(--spacing(2)))] motion-reduce:transition-none text-muted-foreground hover:text-foreground",
         className
       )}
       onClick={(event) => {
@@ -406,7 +406,7 @@ function TabBarSectionTitle({
     <div
       data-slot="tab-bar-section-title"
       className={cn(
-        "relative flex h-7 items-center ps-4 text-sm text-label-secondary before:absolute before:inset-s-0 before:top-1/2 before:size-1.5 before:-translate-y-1/2 before:rounded-full before:bg-label-tertiary",
+        "relative flex h-7 items-center ps-4 text-sm text-muted-foreground before:absolute before:inset-s-0 before:top-1/2 before:size-1.5 before:-translate-y-1/2 before:rounded-full before:bg-muted-foreground",
         className
       )}
       {...props}

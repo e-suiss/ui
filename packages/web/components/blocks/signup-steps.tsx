@@ -79,13 +79,13 @@ export function SignupSteps() {
     return (
       <section className="flex min-h-140 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
-          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+          <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
             <CheckIcon weight="bold" className="size-9.5" />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Welcome, {values.name.split(" ")[0]}.
           </h1>
-          <p className="text-lg text-label-secondary">
+          <p className="text-lg text-muted-foreground">
             Your account is ready. Verify {values.email} to finish.
           </p>
           <button
@@ -94,7 +94,7 @@ export function SignupSteps() {
               setDone(false)
               setIndex(0)
             }}
-            className="rounded-xs text-lg text-link outline-none hover:underline focus-visible:focus-ring"
+            className="rounded-xs text-lg text-primary outline-none hover:underline focus-visible:focus-ring"
           >
             Start over ›
           </button>
@@ -111,7 +111,7 @@ export function SignupSteps() {
             key={item.key}
             aria-current={position === index ? "step" : undefined}
             data-reached={position <= index ? "" : undefined}
-            className="h-1.5 w-1.5 rounded-full bg-control transition-[width,background-color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-reached:bg-accent aria-[current=step]:w-7 motion-reduce:transition-none"
+            className="h-1.5 w-1.5 rounded-full bg-secondary transition-[width,background-color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-reached:bg-primary aria-[current=step]:w-7 motion-reduce:transition-none"
           >
             <span className="sr-only">
               Step {position + 1}
@@ -131,14 +131,14 @@ export function SignupSteps() {
           style={{ "--from": `${direction * 40}px` } as React.CSSProperties}
           className="flex flex-col gap-3.5 text-center transition-[opacity,translate] duration-[450ms,550ms] ease-[ease,cubic-bezier(0.32,0.72,0,1)] starting:translate-x-(--from) starting:opacity-0 motion-reduce:transition-none"
         >
-          <p className="text-sm font-semibold text-label-secondary">
+          <p className="text-sm font-semibold text-muted-foreground">
             Step {index + 1} of {steps.length}
           </p>
           <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-5xl">
             {step.title}
           </h1>
-          <p className="text-lg text-label-secondary">{step.description}</p>
-          <div className="mt-4 overflow-hidden rounded-xl border border-separator-strong bg-surface has-focus-visible:focus-ring">
+          <p className="text-lg text-muted-foreground">{step.description}</p>
+          <div className="mt-4 overflow-hidden rounded-xl border border-input bg-background has-focus-visible:focus-ring">
             <Input
               autoFocus={index > 0}
               type={step.type}
@@ -163,9 +163,9 @@ export function SignupSteps() {
                   <li
                     key={rule.label}
                     data-met={met ? "" : undefined}
-                    className="group/rule flex items-center gap-2 text-sm text-label-secondary data-met:text-label"
+                    className="group/rule flex items-center gap-2 text-sm text-muted-foreground data-met:text-foreground"
                   >
-                    <span className="flex size-4 items-center justify-center rounded-full border-[1.5px] border-label-quaternary text-white transition-[background-color,border-color] duration-250 group-data-met/rule:border-transparent group-data-met/rule:bg-[color-mix(in_oklab,var(--green),var(--label)_25%)] dark:group-data-met/rule:bg-[color-mix(in_oklab,var(--green),black_35%)]">
+                    <span className="flex size-4 items-center justify-center rounded-full border-[1.5px] border-border text-white transition-[background-color,border-color] duration-250 group-data-met/rule:border-transparent group-data-met/rule:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] dark:group-data-met/rule:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
                       <CheckIcon
                         weight="bold"
                         className="size-2.5 scale-0 transition-[scale] duration-250 group-data-met/rule:scale-100 motion-reduce:transition-none"

@@ -37,7 +37,7 @@ function PrintExample() {
 
   return (
     <div className="mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3">
-      <div className="divide-y divide-separator overflow-hidden rounded-2xl border">
+      <div className="divide-y divide-border overflow-hidden rounded-2xl border">
         <StepperRow
           label="Copies"
           value={copies}
@@ -56,7 +56,7 @@ function PrintExample() {
         />
         <StepperRow label="Pages per sheet" defaultValue={1} disabled />
       </div>
-      <p role="status" className="text-sm text-label-secondary">
+      <p role="status" className="text-sm text-muted-foreground">
         {copies} {copies === 1 ? "copy" : "copies"} at {scale}%
       </p>
     </div>

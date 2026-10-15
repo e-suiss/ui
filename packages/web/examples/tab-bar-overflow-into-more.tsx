@@ -33,7 +33,7 @@ function TabBarExample({
   const [value, setValue] = React.useState("Home")
 
   return (
-    <div className="h-full min-h-svh bg-surface">
+    <div className="h-full min-h-svh bg-background">
       <Backdrop />
       <TabBar aria-label="Main" defaultOpen={defaultOpen}>
         <TabBarList>
@@ -78,7 +78,7 @@ function Backdrop() {
         (card) => (
           <div
             key={card}
-            className="flex aspect-[4/3] items-end rounded-2xl bg-accent/15 p-4 text-sm font-semibold text-link odd:bg-surface-tertiary odd:text-label"
+            className="flex aspect-[4/3] items-end rounded-2xl bg-primary/15 p-4 text-sm font-semibold text-primary odd:bg-secondary odd:text-foreground"
           >
             {card}
           </div>

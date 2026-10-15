@@ -76,9 +76,9 @@ export function ChatSupport() {
   }
 
   return (
-    <section className="relative min-h-155 overflow-hidden bg-surface-secondary">
+    <section className="relative min-h-155 overflow-hidden bg-muted">
       <div className="max-w-130 px-6 py-10 md:px-12">
-        <p className="text-lg font-semibold text-label-secondary">
+        <p className="text-lg font-semibold text-muted-foreground">
           suiss Support
         </p>
         <h1 className="mt-1.5 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
@@ -87,7 +87,7 @@ export function ChatSupport() {
         <img
           src={image}
           alt="A phone resting on a soft beige surface"
-          className="mt-6 h-55 w-full rounded-[1.125rem] bg-control object-cover"
+          className="mt-6 h-55 w-full rounded-[1.125rem] bg-secondary object-cover"
         />
       </div>
       <div
@@ -95,15 +95,15 @@ export function ChatSupport() {
         aria-label="suiss Support chat"
         inert={!open}
         data-open={open ? "" : undefined}
-        className="absolute inset-x-3 bottom-3 flex h-[min(32.5rem,calc(100%-1.5rem))] origin-bottom-right scale-20 flex-col overflow-hidden rounded-[1.375rem] bg-surface opacity-0 shadow-[0_0_0_0.5px_var(--color-separator),0_24px_60px_rgb(0_0_0/0.2)] transition-[scale,opacity] duration-[500ms,250ms] ease-[cubic-bezier(0.3,1.15,0.5,1),ease] data-open:scale-100 data-open:opacity-100 motion-reduce:transition-none sm:inset-x-auto sm:end-6 sm:bottom-6 sm:w-90"
+        className="absolute inset-x-3 bottom-3 flex h-[min(32.5rem,calc(100%-1.5rem))] origin-bottom-right scale-20 flex-col overflow-hidden rounded-[1.375rem] bg-background opacity-0 shadow-[0_0_0_0.5px_var(--color-border),0_24px_60px_rgb(0_0_0/0.2)] transition-[scale,opacity] duration-[500ms,250ms] ease-[cubic-bezier(0.3,1.15,0.5,1),ease] data-open:scale-100 data-open:opacity-100 motion-reduce:transition-none sm:inset-x-auto sm:end-6 sm:bottom-6 sm:w-90"
       >
-        <div className="flex shrink-0 items-center gap-2.5 border-b border-separator px-3.5 py-3">
-          <span className="flex size-8.5 items-center justify-center rounded-full bg-label text-base font-bold text-surface">
+        <div className="flex shrink-0 items-center gap-2.5 border-b border-border px-3.5 py-3">
+          <span className="flex size-8.5 items-center justify-center rounded-full bg-foreground text-base font-bold text-background">
             s
           </span>
           <div className="flex flex-1 flex-col">
             <span className="text-sm font-semibold">suiss Support</span>
-            <span className="flex items-center gap-1 text-2xs text-[color-mix(in_oklab,var(--green),var(--label)_45%)] dark:text-green">
+            <span className="flex items-center gap-1 text-2xs text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500">
               <span className="size-1.5 rounded-full bg-current" />
               Online
             </span>
@@ -113,7 +113,7 @@ export function ChatSupport() {
             size="icon-sm"
             aria-label="Close chat"
             onClick={() => setOpen(false)}
-            className="size-7 text-label-secondary"
+            className="size-7 text-muted-foreground"
           >
             <XIcon weight="bold" className="size-3.25" />
           </Button>
@@ -152,7 +152,7 @@ export function ChatSupport() {
                               <span
                                 key={dot}
                                 style={{ animationDelay: `${dot * 180}ms` }}
-                                className="size-2 animate-[pulse_1.1s_ease-in-out_infinite] rounded-full bg-label-tertiary"
+                                className="size-2 animate-[pulse_1.1s_ease-in-out_infinite] rounded-full bg-muted-foreground"
                               />
                             ))}
                           </BubbleContent>
@@ -174,7 +174,7 @@ export function ChatSupport() {
                 variant="outline"
                 size="sm"
                 onClick={() => ask(question)}
-                className="border-accent text-link hover:text-link"
+                className="border-primary text-primary hover:text-primary"
               >
                 {question}
               </Button>
@@ -194,11 +194,11 @@ export function ChatSupport() {
             variant="secondary"
             size="icon-sm"
             aria-label="Add attachment"
-            className="text-label-secondary"
+            className="text-muted-foreground"
           >
             <PlusIcon weight="bold" className="size-4.5" />
           </Button>
-          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-separator-strong ps-3.5 pe-0.75 has-focus-visible:focus-ring">
+          <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:focus-ring">
             <Input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
@@ -227,7 +227,7 @@ export function ChatSupport() {
         inert={open}
         onClick={() => setOpen(true)}
         data-open={open ? "" : undefined}
-        className="absolute end-6 bottom-6 shadow-[0_10px_30px_color-mix(in_oklab,var(--color-accent)_40%,transparent)] transition-[scale] duration-400 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-open:scale-0 motion-reduce:transition-none"
+        className="absolute end-6 bottom-6 shadow-[0_10px_30px_color-mix(in_oklab,var(--color-primary)_40%,transparent)] transition-[scale] duration-400 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-open:scale-0 motion-reduce:transition-none"
       >
         <ChatCircleIcon weight="fill" className="size-6" />
       </Button>

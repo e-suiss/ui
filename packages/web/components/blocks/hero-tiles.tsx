@@ -24,13 +24,13 @@ const tiles = [
 
 export function HeroTiles() {
   return (
-    <section className="grid gap-3 bg-surface p-3 md:grid-cols-2">
+    <section className="grid gap-3 bg-background p-3 md:grid-cols-2">
       {tiles.map((tile) => (
         <article
           key={tile.title}
           className={cn(
-            "flex min-w-0 flex-col items-center overflow-hidden bg-surface-secondary pt-11 text-center text-label",
-            tile.dark && "dark bg-surface"
+            "flex min-w-0 flex-col items-center overflow-hidden bg-muted pt-11 text-center text-foreground",
+            tile.dark && "dark bg-background"
           )}
         >
           <div className="flex flex-col items-center gap-1 px-6">
@@ -44,7 +44,7 @@ export function HeroTiles() {
             <Button>Learn more</Button>
             <Button
               variant="outline"
-              className="border-accent bg-transparent text-link hover:bg-accent-surface hover:text-link dark:bg-transparent"
+              className="border-primary bg-transparent text-primary hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-primary dark:bg-transparent"
             >
               Buy
             </Button>
@@ -52,7 +52,7 @@ export function HeroTiles() {
           <img
             src={tile.image}
             alt={tile.alt}
-            className="mt-4.5 aspect-[1.4] w-full bg-control object-cover"
+            className="mt-4.5 aspect-[1.4] w-full bg-secondary object-cover"
           />
         </article>
       ))}

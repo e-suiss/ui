@@ -177,10 +177,10 @@ describe("Toast basics", () => {
   })
 
   it.each([
-    ["success", "text-green"],
-    ["info", "text-accent"],
-    ["warning", "text-orange"],
-    ["error", "text-danger"],
+    ["success", "text-green-500"],
+    ["info", "text-primary"],
+    ["warning", "text-orange-500"],
+    ["error", "text-destructive"],
   ])("shows a %s icon", async (type, tint) => {
     await renderToaster()
     manager.add({ type, title: type })
@@ -348,7 +348,7 @@ describe("Toast actions and updates", () => {
     expect(toasts()).toHaveLength(1)
     await expect
       .poll(() => icon("Uploaded")?.querySelector("span")?.className ?? "")
-      .toContain("text-green")
+      .toContain("text-green-500")
   })
 
   it("follows a promise from loading to success", async () => {

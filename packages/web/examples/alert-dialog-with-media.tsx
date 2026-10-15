@@ -21,7 +21,7 @@ export default function AlertDialogWithMedia() {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogMedia className="bg-danger/10 text-danger">
+          <AlertDialogMedia className="bg-destructive/10 text-destructive">
             <TrashIcon />
           </AlertDialogMedia>
           <AlertDialogTitle>Delete this project?</AlertDialogTitle>

@@ -65,7 +65,7 @@ function SectionIndexHeader({
     <h3
       data-slot="section-index-header"
       className={cn(
-        "sticky top-0 bg-surface/85 px-4 py-1.5 text-sm font-semibold text-label-secondary backdrop-blur-xl",
+        "sticky top-0 bg-background/85 px-4 py-1.5 text-sm font-semibold text-muted-foreground backdrop-blur-xl",
         className
       )}
       {...props}
@@ -189,7 +189,7 @@ function SectionIndexBar({
       onPointerCancel={() => setDrag(null)}
       onKeyDown={onKeyDown}
       className={cn(
-        "absolute end-3 top-1/2 z-20 flex max-h-[calc(100%-1rem)] -translate-y-1/2 cursor-pointer touch-none flex-col items-center rounded-full px-1.5 text-2xs leading-4 font-semibold text-link outline-none select-none before:absolute before:inset-y-0 before:-inset-s-3 before:inset-e-0 before:content-[''] focus-visible:focus-ring",
+        "absolute end-3 top-1/2 z-20 flex max-h-[calc(100%-1rem)] -translate-y-1/2 cursor-pointer touch-none flex-col items-center rounded-full px-1.5 text-2xs leading-4 font-semibold text-primary outline-none select-none before:absolute before:inset-y-0 before:-inset-s-3 before:inset-e-0 before:content-[''] focus-visible:focus-ring",
         className
       )}
       {...props}
@@ -208,7 +208,7 @@ function SectionIndexBar({
           aria-hidden
           data-slot="section-index-bubble"
           style={{ top: drag.y }}
-          className="pointer-events-none absolute end-full me-4 flex size-14 -translate-y-1/2 items-center justify-center rounded-full bg-surface-raised text-3xl font-semibold text-label shadow-xl ring-1 ring-separator transition-[scale,opacity] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] starting:scale-50 starting:opacity-0"
+          className="pointer-events-none absolute end-full me-4 flex size-14 -translate-y-1/2 items-center justify-center rounded-full bg-popover text-3xl font-semibold text-popover-foreground shadow-xl ring-1 ring-border transition-[scale,opacity] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] starting:scale-50 starting:opacity-0"
         >
           {letters[drag.index]}
         </span>

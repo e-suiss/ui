@@ -84,7 +84,7 @@ function ContactsExample({ className }: { className: string }) {
                 {group.map((name) => (
                   <li
                     key={name}
-                    className="ms-4 me-10 border-separator not-first:border-t"
+                    className="ms-4 me-10 border-border not-first:border-t"
                   >
                     <button
                       type="button"
@@ -103,7 +103,7 @@ function ContactsExample({ className }: { className: string }) {
           onValueChange={(letter) => setLog(`Jumped to ${letter}`)}
         />
       </SectionIndex>
-      <p role="status" className="text-sm text-label-secondary">
+      <p role="status" className="text-sm text-muted-foreground">
         {log}
       </p>
     </div>

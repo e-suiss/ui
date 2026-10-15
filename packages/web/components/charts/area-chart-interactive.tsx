@@ -291,7 +291,7 @@ export function AreaChartInteractive() {
   const chartConfig = {
     price: {
       label: "Price",
-      color: rising ? "var(--success)" : "var(--danger)",
+      color: rising ? "var(--color-green-500)" : "var(--destructive)",
     },
   } satisfies ChartConfig
 
@@ -308,7 +308,7 @@ export function AreaChartInteractive() {
         <div className="flex min-w-56 flex-1 flex-col gap-0.5">
           <p className="flex items-baseline gap-2">
             <span className="text-2xl font-semibold tracking-tight">ACME</span>
-            <span className="text-base text-label-secondary">Acme Corp.</span>
+            <span className="text-base text-muted-foreground">Acme Corp.</span>
           </p>
           <p className="flex flex-wrap items-baseline gap-2.5">
             <span className="text-3xl font-semibold tracking-tight tabular-nums">
@@ -316,13 +316,13 @@ export function AreaChartInteractive() {
             </span>
             <span
               data-trend={rising ? "up" : "down"}
-              className="text-base font-semibold tabular-nums data-[trend=down]:text-danger data-[trend=up]:text-success"
+              className="text-base font-semibold tabular-nums data-[trend=down]:text-destructive data-[trend=up]:text-green-600 dark:data-[trend=up]:text-green-400"
             >
               {changeFormat.format(change)} (
               {priceFormat.format(Math.abs((change / first) * 100))}%)
             </span>
           </p>
-          <p className="min-h-5 text-sm text-label-secondary">
+          <p className="min-h-5 text-sm text-muted-foreground">
             {active === null ? RANGES[range].caption : current.label}
           </p>
         </div>
@@ -398,7 +398,7 @@ export function AreaChartInteractive() {
             />
             <ReferenceLine
               y={baseline.price}
-              stroke="var(--label-tertiary)"
+              stroke="var(--muted-foreground)"
               strokeDasharray="2 3"
             />
             <ChartTooltip
@@ -406,7 +406,7 @@ export function AreaChartInteractive() {
               cursor={
                 released
                   ? false
-                  : { stroke: "var(--label-tertiary)", strokeWidth: 1 }
+                  : { stroke: "var(--muted-foreground)", strokeWidth: 1 }
               }
               content={() => null}
             />
@@ -423,7 +423,7 @@ export function AreaChartInteractive() {
                   : {
                       r: 5,
                       fill: "var(--color-price)",
-                      stroke: "var(--surface-secondary)",
+                      stroke: "var(--muted)",
                       strokeWidth: 2,
                     }
               }
@@ -435,9 +435,9 @@ export function AreaChartInteractive() {
           {stats.map(([term, value]) => (
             <div
               key={term}
-              className="flex items-center gap-2 border-b border-separator py-1.75 text-sm"
+              className="flex items-center gap-2 border-b border-border py-1.75 text-sm"
             >
-              <dt className="flex-1 text-label-secondary">{term}</dt>
+              <dt className="flex-1 text-muted-foreground">{term}</dt>
               <dd className="font-semibold tabular-nums">{value}</dd>
             </div>
           ))}

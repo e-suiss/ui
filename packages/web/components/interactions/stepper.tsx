@@ -107,7 +107,7 @@ function StepperInput({
     <NumberFieldPrimitive.Input
       data-slot="stepper-input"
       className={cn(
-        "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 text-end text-base tabular-nums outline-none focus-visible:focus-ring data-disabled:text-label-quaternary",
+        "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 text-end text-base tabular-nums outline-none focus-visible:focus-ring data-disabled:opacity-50",
         className
       )}
       {...props}
@@ -121,7 +121,7 @@ function StepperGroup({ className, ...props }: React.ComponentProps<"div">) {
       role="group"
       data-slot="stepper-group"
       className={cn(
-        "inline-flex h-8 shrink-0 items-center gap-[3px] rounded-lg bg-control p-[3px]",
+        "inline-flex h-8 shrink-0 items-center gap-[3px] rounded-lg bg-secondary p-[3px]",
         className
       )}
       {...props}
@@ -174,7 +174,7 @@ function StepperButton({
       }}
       onContextMenu={(event) => event.preventDefault()}
       className={cn(
-        "relative flex h-full w-9 touch-manipulation items-center justify-center rounded-md bg-surface-raised text-label shadow-sm outline-none select-none after:absolute after:inset-x-0 after:-inset-y-2.25 after:content-[''] focus-visible:focus-ring active:bg-control-pressed active:shadow-none disabled:bg-control-disabled disabled:text-label-quaternary disabled:shadow-none dark:bg-label-quaternary dark:shadow-none dark:active:bg-control-pressed dark:disabled:bg-control-disabled [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "relative flex h-full w-9 touch-manipulation items-center justify-center rounded-md bg-card text-card-foreground shadow-sm outline-none select-none after:absolute after:inset-x-0 after:-inset-y-2.25 after:content-[''] focus-visible:focus-ring active:shadow-none disabled:shadow-none dark:bg-border dark:shadow-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 disabled:opacity-50",
         className
       )}
       {...props}
@@ -214,7 +214,7 @@ function StepperSeparator({
     <span
       aria-hidden
       data-slot="stepper-separator"
-      className={cn("h-4.5 w-px shrink-0 bg-separator", className)}
+      className={cn("h-4.5 w-px shrink-0 bg-border", className)}
       {...props}
     />
   )
