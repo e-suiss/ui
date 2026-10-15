@@ -17,7 +17,7 @@ npx shadcn@latest add @esuiss/button
 npx shadcn@latest add @esuiss/date-picker @esuiss/area-chart-default
 ```
 
-Files land in the same folders as below, and icons follow the icon library in `components.json`. Until the namespace is listed in the public registry directory, register it once as shown in [Installation](/docs/installation#register-the-namespace).
+Files land in the same folders as below, icons follow the icon library in `components.json`, and the `style` there picks the primitive base. See [Installation](/docs/installation#choose-the-primitive-base). Until the namespace is listed in the public registry directory, register it once as shown in [Installation](/docs/installation#register-the-namespace).
 
 ## init
 
@@ -30,6 +30,7 @@ npx @esuiss/ui@latest init [options]
 | Option | Description |
 | --- | --- |
 | `-y, --yes` | Skip confirmation prompts |
+| `-b, --base <base\|radix>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
@@ -56,6 +57,7 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 | `--diff` | Show how your local files differ from the registry |
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
 | `-y, --yes` | Skip confirmation prompts |
+| `-b, --base <base\|radix>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
@@ -119,6 +121,17 @@ npx @esuiss/ui add blocks --all
 <Callout type="note">
 Patterns, interactions, charts and blocks are optional extras. Neither `init` nor `add --all` adds them; add them by name, or all at once with `--all`.
 </Callout>
+
+## Primitive base
+
+React components come with two primitive bases. `init` and `add` use the default base, `base`, unless the `style` in `components.json` is `radix-*`, `new-york` or `default`; then they use `radix`. `--base` overrides both, so pass it to every `add` in a project without a `components.json`:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --base radix
+npx @esuiss/ui@latest add sidebar --base radix
+```
+
+The files, folders and names are the same for both. See [Installation](/docs/installation#choose-the-primitive-base).
 
 ## Where files are written
 

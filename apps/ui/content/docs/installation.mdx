@@ -23,10 +23,32 @@ npx shadcn@latest add @esuiss/button @esuiss/dialog @esuiss/sidebar
 
 Each item comes with the components, hooks and npm packages it depends on, and its icons are written for the icon library set in `components.json`. Patterns go to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and blocks to `components/blocks/`.
 
-The components are built on Base UI, and every style gets the same Base UI source. To start a new project for them:
+### Choose the primitive base
+
+Every item is published for two primitive bases under the same name. The registry picks one from the `style` in your `components.json`, so `@esuiss/dialog` installs the alternative primitive base in a project whose style is `radix-nova`, and the default base everywhere else:
+
+| `style` in `components.json` | Primitive base |
+| --- | --- |
+| `base-nova`, `base-vega` and every other style | The default base |
+| `radix-nova`, `radix-vega` and any other `radix-*` style, `new-york`, `default` | The alternative primitive base |
+
+Both bases install the same files into the same folders, with the same component names and styles. They differ in how a part takes a custom element: the default base passes it to `render`, the alternative primitive base wraps it with `asChild`.
+
+```tsx
+<DialogTrigger render={<Button variant="outline" />}>Open</DialogTrigger>
+
+<DialogTrigger asChild>
+  <Button variant="outline">Open</Button>
+</DialogTrigger>
+```
+
+Combobox, drawer, toast and stepper use the default base's primitives in both. The code on this site shows the default base.
+
+To start a new project, pick the base when you set it up:
 
 ```bash title="Terminal"
 npx shadcn@latest init --base base
+npx shadcn@latest init --base radix
 ```
 
 ### Register the namespace
@@ -41,7 +63,7 @@ Once `@esuiss` is listed in the public registry directory, the namespace works w
 }
 ```
 
-The full catalog is at [ui.suiss.app/r/registry.json](https://ui.suiss.app/r/registry.json).
+The full catalog is at [ui.suiss.app/r/registry.json](https://ui.suiss.app/r/registry.json), and the alternative primitive base's at [ui.suiss.app/r/radix/registry.json](https://ui.suiss.app/r/radix/registry.json).
 
 ### Use the suiss/ui theme
 
@@ -84,6 +106,13 @@ npx @esuiss/ui@latest add
 ```
 
 Components are written to `components/ui/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager: npm, pnpm, yarn or bun.
+
+The suiss/ui CLI uses the default base. In a project whose `components.json` has a `radix-*`, `new-york` or `default` style, it adds the alternative primitive base instead. Pass `--base` to choose for yourself:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --base radix
+npx @esuiss/ui@latest add dialog --base radix
+```
 
 Then import and use them:
 
