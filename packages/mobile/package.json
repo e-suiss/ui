@@ -1,10 +1,10 @@
 {
   "name": "@esuiss/mobile",
-  "version": "0.6.0",
+  "version": "0.0.0",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "main": "index.ts",
-  "packageManager": "pnpm@11.24.0",
   "scripts": {
     "start": "expo start",
     "ios": "expo run:ios",
@@ -39,7 +39,6 @@
     "uniwind": "^1.12.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.14",
     "@expo/metro-runtime": "57.0.16",
     "@gorhom/bottom-sheet": "^5.2.14",
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -51,13 +50,11 @@
     "@types/node": "^26.6.3",
     "@types/react": "^19.2.18",
     "expo-haptics": "~57.0.3",
-    "knip": "6.38.0",
     "nativewind": "4.2.7",
     "react-dom": "19.2.3",
     "react-native-view-shot": "5.1.0",
     "react-native-web": "^0.21.3",
     "storybook": "10.6.0",
     "typescript": "~6.0.3"
-  },
-  "type": "module"
+  }
 }

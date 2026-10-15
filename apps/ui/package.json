@@ -1,6 +1,6 @@
 {
-  "name": "ui",
-  "version": "0.1.0",
+  "name": "@esuiss/site",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
@@ -11,11 +11,13 @@
     "demos": "node scripts/generate-registry-docs.mjs",
     "predev": "pnpm demos",
     "prebuild": "pnpm demos",
-    "pretypecheck": "pnpm demos"
+    "pretypecheck": "pnpm demos",
+    "registry:check": "node scripts/generate-registry-docs.mjs && node scripts/generate-mobile-docs.mjs && node scripts/compose-docs.mjs --check"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
     "@esuiss/tailwind": "workspace:*",
+    "@esuiss/web": "workspace:*",
     "@fontsource/inter": "^5.3.0",
     "@phosphor-icons/react": "catalog:",
     "@react-three/fiber": "^9.8.1",

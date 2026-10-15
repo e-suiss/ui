@@ -18,6 +18,16 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "@esuiss/site#registry": {
+      "cache": false,
+      "dependsOn": ["@esuiss/web#registry", "@esuiss/mobile#registry"]
+    },
+    "@esuiss/site#registry:check": {
+      "dependsOn": [
+        "@esuiss/web#registry:check",
+        "@esuiss/mobile#registry:check"
+      ]
     }
   },
   "globalPassThroughEnv": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ZONE_ID"]

@@ -1054,7 +1054,7 @@ function generate(target) {
     writeFileSync(path.join(target, file), content)
   }
   execFileSync(
-    path.join(ROOT, "node_modules/.bin/biome"),
+    path.join(ROOT, "../../node_modules/.bin/biome"),
     ["check", "--write", ...FORMATTED],
     { cwd: target, stdio: "ignore" }
   )

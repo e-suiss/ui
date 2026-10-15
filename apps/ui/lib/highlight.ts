@@ -18,7 +18,7 @@ const palettes: Record<string, { prefix: string; base: string; colors: string[] 
 
 type Span = { properties: Record<string, unknown> };
 
-export const tokenClasses = {
+const tokenClasses = {
   name: "token-classes",
   span(node: Span) {
     const style = node.properties.style;

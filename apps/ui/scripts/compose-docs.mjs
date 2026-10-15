@@ -1,13 +1,25 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
+import { capitalize, MARKER } from "./lib/docs.mjs";
+
 const root = path.resolve(import.meta.dirname, "..");
 const generated = path.join(root, ".generated");
 const contentRoot = path.join(root, "content/docs");
-const MARKER = "generated: true";
 const ORDER = ["web", "rn", "swift", "kotlin"];
+const check = process.argv.includes("--check");
+const stale = [];
 
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+function write(file, content) {
+  if (!check) return writeFileSync(file, content);
+  if (!existsSync(file) || readFileSync(file, "utf8") !== content) stale.push(path.relative(root, file));
+}
+
+function remove(file) {
+  if (check) stale.push(path.relative(root, file));
+  else rmSync(file);
+}
+
 
 const sections = [
   { folder: "components", title: "Components", eyebrow: "Component" },
@@ -17,7 +29,7 @@ const sections = [
   { folder: "blocks", title: "Blocks", eyebrow: "Block", group: (name) => capitalize(name.split("-")[0]) },
 ];
 
-const webItems = JSON.parse(readFileSync(path.join(root, "demos/items.json"), "utf8"));
+const webItems = JSON.parse(readFileSync(path.join(generated, "web/items.json"), "utf8"));
 const mobileItems = JSON.parse(readFileSync(path.join(generated, "mobile/items.json"), "utf8"));
 
 function fragment(platform, folder, name) {
@@ -43,8 +55,8 @@ for (const section of sections) {
   for (const entry of readdirSync(folder)) {
     const name = entry.replace(/\.mdx$/, "");
     if (!entry.endsWith(".mdx") || name === "index" || names.includes(name)) continue;
-    const stale = path.join(folder, entry);
-    if (/^generated: true$/m.test(readFileSync(stale, "utf8"))) rmSync(stale);
+    const page = path.join(folder, entry);
+    if (/^generated: true$/m.test(readFileSync(page, "utf8"))) remove(page);
   }
 
   index[section.folder] = [];
@@ -62,7 +74,7 @@ for (const section of sections) {
     const blocks = [];
     if (webPage) blocks.push('<Only platform="web">', "", webPage.body, "", "</Only>", "");
     if (mobilePage) blocks.push(`<Only platform="${mobilePlatforms.join(" ")}">`, "", mobilePage.body, "", "</Only>", "");
-    writeFileSync(
+    write(
       file,
       [
         "---",
@@ -82,7 +94,7 @@ for (const section of sections) {
     index[section.folder].push({ name, title: item.title, group: section.group?.(name) ?? null, platforms });
   }
 
-  writeFileSync(
+  write(
     path.join(folder, "index.mdx"),
     [
       "---",
@@ -105,8 +117,13 @@ for (const section of sections) {
     group = next;
     order.push(name);
   }
-  writeFileSync(path.join(folder, "meta.json"), `${JSON.stringify({ title: section.title, pages: order }, null, 2)}\n`);
+  write(path.join(folder, "meta.json"), `${JSON.stringify({ title: section.title, pages: order }, null, 2)}\n`);
 }
 
-writeFileSync(path.join(root, "content/items.json"), `${JSON.stringify(index, null, 2)}\n`);
-console.log(`Composed ${pages} pages.`);
+write(path.join(root, "content/items.json"), `${JSON.stringify(index, null, 2)}\n`);
+
+if (check && stale.length) {
+  console.error(`Docs pages are out of date. Run pnpm registry:\n${stale.map((file) => `  ${file}`).join("\n")}`);
+  process.exit(1);
+}
+console.log(check ? `Docs pages are up to date: ${pages} pages.` : `Composed ${pages} pages.`);

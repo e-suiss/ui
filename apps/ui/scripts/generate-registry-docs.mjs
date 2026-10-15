@@ -3,19 +3,18 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import path from "node:path";
 
 import { componentApi, storyExamples } from "./lib/extract.mjs";
+import { capitalize, fence, groupOf, MARKER, mdx, pascal, propsTable } from "./lib/docs.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
-const uiRepo = path.resolve(root, process.argv[2] ?? "../../packages/web");
-const registry = JSON.parse(readFileSync(path.join(uiRepo, "registry.json"), "utf8"));
-
-const MARKER = "generated: true";
+const webDir = path.resolve(root, "../../packages/web");
+const registry = JSON.parse(readFileSync(path.join(webDir, "registry.json"), "utf8"));
 
 const categories = {
-  ui: { folder: "components", add: "", title: "Components", eyebrow: "React Component" },
-  pattern: { folder: "patterns", add: "patterns ", title: "Patterns", eyebrow: "Pattern" },
-  interaction: { folder: "interactions", add: "interactions ", title: "Interactions", eyebrow: "Interaction" },
-  chart: { folder: "charts", add: "charts ", title: "Charts", eyebrow: "Chart" },
-  block: { folder: "blocks", add: "blocks ", title: "Blocks", eyebrow: "Block" },
+  ui: { folder: "components", add: "", title: "Components" },
+  pattern: { folder: "patterns", add: "patterns ", title: "Patterns" },
+  interaction: { folder: "interactions", add: "interactions ", title: "Interactions" },
+  chart: { folder: "charts", add: "charts ", title: "Charts" },
+  block: { folder: "blocks", add: "blocks ", title: "Blocks" },
 };
 
 const items = registry.items.filter((item) => item.type in categories && item.name !== "theme");
@@ -27,25 +26,16 @@ const overlays = new Set([
   "hover-card", "menubar", "modal", "popover", "preview", "select", "sheet", "tooltip",
 ]);
 
-const pascal = (name) => name.replace(/(^|-)([a-z0-9])/g, (_, __, letter) => letter.toUpperCase());
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
-
-function groupOf(item) {
-  if (item.type === "chart") return capitalize(item.name.replace(/-chart-.*/, ""));
-  if (item.type === "block") return capitalize(item.name.split("-")[0]);
-  return undefined;
-}
-
 const demos = path.join(root, "demos");
 rmSync(path.join(demos, "stories"), { recursive: true, force: true });
 mkdirSync(path.join(demos, "stories"), { recursive: true });
 
 const storyFiles = new Set(
-  readdirSync(path.join(uiRepo, "stories")).filter((file) => file.endsWith(".stories.tsx")),
+  readdirSync(path.join(webDir, "stories")).filter((file) => file.endsWith(".stories.tsx")),
 );
-for (const file of readdirSync(path.join(uiRepo, "stories"))) {
+for (const file of readdirSync(path.join(webDir, "stories"))) {
   if (file.endsWith(".ts") && !file.endsWith(".stories.ts")) {
-    const source = readFileSync(path.join(uiRepo, "stories", file), "utf8");
+    const source = readFileSync(path.join(webDir, "stories", file), "utf8");
     writeFileSync(path.join(demos, "stories", file), `// @ts-nocheck\n${source}`);
   }
 }
@@ -62,7 +52,7 @@ for (const item of items) {
   }
   const story = `${item.name}.stories.tsx`;
   if (!storyFiles.has(story)) continue;
-  let source = readFileSync(path.join(uiRepo, "stories", story), "utf8");
+  let source = readFileSync(path.join(webDir, "stories", story), "utf8");
   if (overlays.has(item.name)) source = source.replace(/\sdefaultOpen(?:=\{true\})?(?=[\s>/])/g, "");
   writeFileSync(path.join(demos, "stories", story), `// @ts-nocheck\n${source}`);
   storyLoaders.push(`  "${item.name}": () => import("./stories/${item.name}.stories"),`);
@@ -90,7 +80,6 @@ const index = Object.fromEntries(
       .map((item) => ({ name: item.name, title: item.title, group: groupOf(item) ?? null })),
   ]),
 );
-writeFileSync(path.join(demos, "items.json"), `${JSON.stringify(index, null, 2)}\n`);
 
 const contentRoot = path.join(root, ".generated/web");
 
@@ -104,19 +93,8 @@ function requiresLinks(item) {
     .join(", ");
 }
 
-function mdx(text = "") {
-  return text
-    .split(/(`[^`]*`)/)
-    .map((part) => (part.startsWith("`") ? part : part.replace(/[{}<>]/g, (char) => `\\${char}`)))
-    .join("");
-}
-
-const fence = (code, lang = "tsx", title) =>
-  `<Code lang="${lang}"${title ? ` title="${title}"` : ""} code={${JSON.stringify(code.trimEnd())}} />`;
-
 function readSource(file) {
-  const local = path.join(root, file);
-  return existsSync(local) ? readFileSync(local, "utf8") : readFileSync(path.join(uiRepo, file), "utf8");
+  return readFileSync(path.join(webDir, file), "utf8");
 }
 
 function prose(item) {
@@ -125,7 +103,7 @@ function prose(item) {
 }
 
 function examplesOf(item) {
-  const story = path.join(uiRepo, "stories", `${item.name}.stories.tsx`);
+  const story = path.join(webDir, "stories", `${item.name}.stories.tsx`);
   if (!existsSync(story)) return [];
   const all = storyExamples(story, readFileSync(story, "utf8"), { itemName: item.name, overlay: overlays.has(item.name) });
   const seen = new Set();
@@ -191,21 +169,6 @@ function slug(text) {
   return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
 }
 
-function propsTable(part, text) {
-  const props = part.props.map((prop) => ({
-    name: prop.name,
-    type: prop.type,
-    ...(prop.default ? { default: prop.default } : {}),
-    ...(prop.required ? { required: true } : {}),
-    ...(text?.[prop.name] ? { description: text[prop.name] } : {}),
-  }));
-  const attrs = [
-    part.extends.length ? ` extends={${JSON.stringify(part.extends)}}` : "",
-    props.length ? ` props={${JSON.stringify(props)}}` : "",
-  ].join("");
-  return `<PropsTable${attrs} />`;
-}
-
 function page(item) {
   const category = categories[item.type];
   const text = prose(item);
@@ -214,7 +177,6 @@ function page(item) {
     "---",
     `title: ${item.title}`,
     ...(text.description ? [`description: ${JSON.stringify(text.description)}`] : []),
-    `eyebrow: ${category.eyebrow}`,
     MARKER,
     "---",
     "",
@@ -288,45 +250,10 @@ function page(item) {
   return lines.join("\n");
 }
 
-for (const [type, category] of Object.entries(categories)) {
-  const folder = path.join(contentRoot, category.folder);
-  mkdirSync(folder, { recursive: true });
-  const members = items.filter((item) => item.type === type);
-
-  for (const item of members) {
-    const file = path.join(folder, `${item.name}.mdx`);
-    if (existsSync(file) && !/^generated: true$/m.test(readFileSync(file, "utf8"))) continue;
-    writeFileSync(file, page(item));
-  }
-
-  writeFileSync(
-    path.join(folder, "index.mdx"),
-    [
-      "---",
-      `title: ${category.title}`,
-      `description: ${members.length} ${category.title.toLowerCase()}, each copied into your project with the CLI.`,
-      "eyebrow: suiss/ui",
-      MARKER,
-      "---",
-      "",
-      `<RegistryIndex category="${category.folder}" />`,
-      "",
-    ].join("\n"),
-  );
-
-  const pages = ["index"];
-  let group;
-  for (const item of members) {
-    const next = groupOf(item);
-    if (next && next !== group) pages.push(`---${next}---`);
-    group = next;
-    pages.push(item.name);
-  }
-  writeFileSync(
-    path.join(folder, "meta.json"),
-    `${JSON.stringify({ title: category.title, pages }, null, 2)}\n`,
-  );
-}
+rmSync(contentRoot, { recursive: true, force: true });
+for (const category of Object.values(categories)) mkdirSync(path.join(contentRoot, category.folder), { recursive: true });
+for (const item of items) writeFileSync(path.join(contentRoot, categories[item.type].folder, `${item.name}.mdx`), page(item));
+writeFileSync(path.join(contentRoot, "items.json"), `${JSON.stringify(index, null, 2)}\n`);
 
 console.log(
   `Generated ${items.length} pages, ${storyLoaders.length} story previews and ${componentLoaders.length} component previews.`,

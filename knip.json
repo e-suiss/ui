@@ -52,7 +52,6 @@
         "stylesheet/**/*.{ts,tsx}",
         "components/primitives/*.{ts,tsx}"
       ],
-      "ignoreDependencies": ["expo-updates"],
       "paths": {
         "@/components/primitives/*": ["./components/primitives/*"],
         "@/components/*": [

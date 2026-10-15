@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-const STORYBOOK = new Set(["storybook/test", "@storybook/react-vite"]);
+const STORYBOOK = new Set(["storybook/test", "@storybook/react-vite", "@storybook/react-native"]);
 const OPEN_ARGS = new Set(["defaultOpen", "open"]);
 
 function parse(file, source) {
@@ -209,7 +209,8 @@ export function storyExamples(file, source, { itemName, overlay }) {
     let body = `${helper}\n${jsx}`;
     const uses = (text, identifier) => new RegExp(`\\b${identifier}\\b`).test(text);
     const picked = new Set();
-    for (let pass = 0; pass < 4; pass++) {
+    for (let size = -1; size !== picked.size; ) {
+      size = picked.size;
       for (const [name] of declarations) if (uses(body, name)) picked.add(name);
       body = [helper, jsx, ...[...declarations].filter(([name]) => picked.has(name)).map(([, s]) => s.getText(tree))].join("\n");
     }

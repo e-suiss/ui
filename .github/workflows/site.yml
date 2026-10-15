@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "apps/**"
+      - "packages/web/**"
+      - "packages/mobile/**"
+      - "packages/tailwind/**"
       - "package.json"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"

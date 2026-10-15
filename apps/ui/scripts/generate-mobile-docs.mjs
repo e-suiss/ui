@@ -2,24 +2,23 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import { componentApi, storyExamples } from "./lib/extract-mobile.mjs";
+import { componentApi, storyExamples } from "./lib/extract.mjs";
 import { nativeStories } from "./lib/native.mjs";
+import { capitalize, fence, groupOf, MARKER, mdx, pascal, propsTable } from "./lib/docs.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
-const uimRepo = path.resolve(root, process.argv[2] ?? "../../packages/mobile");
-const only = process.argv[3] ? new Set(process.argv[3].split(",")) : null;
-const registry = JSON.parse(readFileSync(path.join(uimRepo, "registry.json"), "utf8"));
+const mobileDir = path.resolve(root, "../../packages/mobile");
+const registry = JSON.parse(readFileSync(path.join(mobileDir, "registry.json"), "utf8"));
 const previews = JSON.parse(readFileSync(path.join(root, "content/previews.json"), "utf8"));
 
-const MARKER = "generated: true";
-const native = nativeStories(uimRepo);
+const native = nativeStories(mobileDir);
 
 const categories = {
-  ui: { folder: "components", title: "Components", eyebrow: "React Native Component", story: "components" },
-  pattern: { folder: "patterns", title: "Patterns", eyebrow: "Pattern", story: "patterns" },
-  interaction: { folder: "interactions", title: "Interactions", eyebrow: "Interaction", story: "interactions" },
-  chart: { folder: "charts", title: "Charts", eyebrow: "Chart", story: "charts" },
-  block: { folder: "blocks", title: "Blocks", eyebrow: "Block", story: "blocks" },
+  ui: { folder: "components", title: "Components", story: "components" },
+  pattern: { folder: "patterns", title: "Patterns", story: "patterns" },
+  interaction: { folder: "interactions", title: "Interactions", story: "interactions" },
+  chart: { folder: "charts", title: "Charts", story: "charts" },
+  block: { folder: "blocks", title: "Blocks", story: "blocks" },
 };
 
 const hidden = new Set(["theme", "haptics-expo", "animated-view"]);
@@ -32,25 +31,17 @@ const platforms = {
 };
 const stylings = { uniwind: "Uniwind", nativewind: "NativeWind", stylesheet: "StyleSheet" };
 
-const pascal = (name) => name.replace(/(^|-)([a-z0-9])/g, (_, __, letter) => letter.toUpperCase());
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 const kebab = (key) =>
   key
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
     .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
     .toLowerCase();
 
-function groupOf(item) {
-  if (item.type === "chart") return capitalize(item.name.replace(/-chart-.*/, ""));
-  if (item.type === "block") return capitalize(item.name.split("-")[0]);
-  return undefined;
-}
-
 const realPaths = new Map();
 
 function sourceOf(from, to) {
-  if (!existsSync(path.join(uimRepo, from))) return undefined;
-  realPaths.set(to, path.join(uimRepo, from));
+  if (!existsSync(path.join(mobileDir, from))) return undefined;
+  realPaths.set(to, path.join(mobileDir, from));
   return to;
 }
 
@@ -76,16 +67,6 @@ function requiresLinks(item) {
     .join(", ");
 }
 
-function mdx(text = "") {
-  return text
-    .split(/(`[^`]*`)/)
-    .map((part) => (part.startsWith("`") ? part : part.replace(/[{}<>]/g, (char) => `\\${char}`)))
-    .join("");
-}
-
-const fence = (code, lang = "tsx", title) =>
-  `<Code lang="${lang}"${title ? ` title="${title}"` : ""} code={${JSON.stringify(code.trimEnd())}} />`;
-
 function prose(item) {
   const file = path.join(root, "content/registry-mobile", categories[item.type].folder, `${item.name}.json`);
   return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : {};
@@ -97,7 +78,7 @@ function storyFileOf(item) {
 }
 
 function examplesOf(item) {
-  const file = path.join(uimRepo, "stories", storyFileOf(item));
+  const file = path.join(mobileDir, "stories", storyFileOf(item));
   if (!existsSync(file)) return [];
   const source = readFileSync(file, "utf8");
   const title = source.slice(source.indexOf("const meta")).match(/title:\s*"([^"]+)"/)[1];
@@ -155,25 +136,10 @@ function nativeExample(id) {
   return Object.fromEntries(Object.keys(switcher).filter((platform) => code[platform]).map((platform) => [platform, fence(code[platform], platforms[platform].lang)]));
 }
 
-function propsTable(part, text) {
-  const props = part.props.map((prop) => ({
-    name: prop.name,
-    type: prop.type,
-    ...(prop.default ? { default: prop.default } : {}),
-    ...(prop.required ? { required: true } : {}),
-    ...(text?.[prop.name] ? { description: text[prop.name] } : {}),
-  }));
-  const attrs = [
-    part.extends.length ? ` extends={${JSON.stringify(part.extends)}}` : "",
-    props.length ? ` props={${JSON.stringify(props)}}` : "",
-  ].join("");
-  return `<PropsTable${attrs} />`;
-}
-
 function nativeManual(item, platform) {
   const { requirements, base, directory } = registry.platforms[platform];
   const files = item[platform];
-  const sources = files.map((name) => readFileSync(path.join(uimRepo, directory, name), "utf8")).join("\n");
+  const sources = files.map((name) => readFileSync(path.join(mobileDir, directory, name), "utf8")).join("\n");
   const lines = [];
   let step = 1;
   if (platform === "swift") {
@@ -222,7 +188,6 @@ function page(item) {
     "---",
     `title: ${item.title}`,
     ...(text.description ? [`description: ${JSON.stringify(text.description)}`] : []),
-    `eyebrow: ${category.eyebrow}`,
     MARKER,
     "---",
     "",
@@ -308,58 +273,19 @@ function page(item) {
   return lines.join("\n");
 }
 
+rmSync(contentRoot, { recursive: true, force: true });
 const index = {};
 for (const [type, category] of Object.entries(categories)) {
   const folder = path.join(contentRoot, category.folder);
   mkdirSync(folder, { recursive: true });
-  const members = items.filter((item) => item.type === type && (!only || only.has(item.name)));
+  const members = items.filter((item) => item.type === type);
   index[category.folder] = members.map((item) => ({
     name: item.name,
     title: item.title,
     group: groupOf(item) ?? null,
     platforms: ["rn", ...Object.keys(platforms).filter((platform) => item[platform]?.length)],
   }));
-
-  if (!only) {
-    const names = new Set(members.map((item) => item.name));
-    for (const entry of readdirSync(folder)) {
-      const name = entry.replace(/\.mdx$/, "");
-      if (!entry.endsWith(".mdx") || name === "index" || names.has(name)) continue;
-      const stale = path.join(folder, entry);
-      if (/^generated: true$/m.test(readFileSync(stale, "utf8"))) rmSync(stale);
-    }
-  }
-
-  for (const item of members) {
-    const file = path.join(folder, `${item.name}.mdx`);
-    if (existsSync(file) && !/^generated: true$/m.test(readFileSync(file, "utf8"))) continue;
-    writeFileSync(file, page(item));
-  }
-
-  writeFileSync(
-    path.join(folder, "index.mdx"),
-    [
-      "---",
-      `title: ${category.title}`,
-      `description: ${members.length} ${category.title.toLowerCase()}, each copied into your project with the CLI.`,
-      "eyebrow: suiss/uim",
-      MARKER,
-      "---",
-      "",
-      `<RegistryIndex category="${category.folder}" />`,
-      "",
-    ].join("\n"),
-  );
-
-  const pages = ["index"];
-  let group;
-  for (const item of members) {
-    const next = groupOf(item);
-    if (next && next !== group) pages.push(`---${next}---`);
-    group = next;
-    pages.push(item.name);
-  }
-  writeFileSync(path.join(folder, "meta.json"), `${JSON.stringify({ title: category.title, pages }, null, 2)}\n`);
+  for (const item of members) writeFileSync(path.join(folder, `${item.name}.mdx`), page(item));
 }
 writeFileSync(path.join(contentRoot, "items.json"), `${JSON.stringify(index, null, 2)}\n`);
 

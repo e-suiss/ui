@@ -379,7 +379,7 @@ async function generate(target) {
   await writeFile(path.join(target, OUTPUT_CONFIG), buildConfig(theme, tokens))
 
   execFileSync(
-    path.join(ROOT, "node_modules/.bin/biome"),
+    path.join(ROOT, "../../node_modules/.bin/biome"),
     ["check", "--write", OUTPUT_ROOT, OUTPUT_STYLESHEET, OUTPUT_CONFIG],
     { cwd: target, stdio: "ignore" }
   )
