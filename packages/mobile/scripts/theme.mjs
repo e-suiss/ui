@@ -1,6 +1,11 @@
 import { readFileSync } from "node:fs"
 import path from "node:path"
 
+const HEX_COLOR = /^#([\da-f]{6})$/i
+const RGB_COLOR = /^rgb\(\s*(\d+)\s+(\d+)\s+(\d+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
+const OKLCH_COLOR =
+  /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
+
 const TOKENS = path.join(import.meta.dirname, "../../tokens/tokens.json")
 const ROOT_FONT_SIZE = 16
 
@@ -33,22 +38,18 @@ function oklchToRgb(lightness, chroma, hue) {
 }
 
 function parseColor(value) {
-  const hex = value.match(/^#([\da-f]{6})$/i)
+  const hex = value.match(HEX_COLOR)
   if (hex) {
     const channels = hex[1]
       .match(/../g)
       .map((part) => Number.parseInt(part, 16))
     return { channels, alpha: 1 }
   }
-  const rgb = value.match(
-    /^rgb\(\s*(\d+)\s+(\d+)\s+(\d+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
-  )
+  const rgb = value.match(RGB_COLOR)
   if (rgb) {
     return { channels: rgb.slice(1, 4).map(Number), alpha: parseAlpha(rgb[4]) }
   }
-  const oklch = value.match(
-    /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
-  )
+  const oklch = value.match(OKLCH_COLOR)
   if (oklch) {
     return {
       channels: oklchToRgb(
@@ -129,4 +130,23 @@ function toRgba(value) {
   return { channels, alpha: round(alpha) }
 }
 
-export { convertColors, loadTokens, toRgb, toRgba }
+const PACKAGE_PREFIX = "packages/mobile/"
+
+function scopedBiome(config) {
+  const overrides = (config.overrides ?? [])
+    .map((override) => ({
+      ...override,
+      includes: override.includes
+        .filter((glob) => glob.startsWith(PACKAGE_PREFIX))
+        .map((glob) => glob.slice(PACKAGE_PREFIX.length)),
+    }))
+    .filter((override) => override.includes.length > 0)
+  return {
+    ...config,
+    vcs: { enabled: false },
+    files: { ...config.files, includes: ["**"] },
+    overrides,
+  }
+}
+
+export { convertColors, loadTokens, scopedBiome, toRgb, toRgba }

@@ -93,13 +93,12 @@ Run `pnpm install` once at the repository root, then run these in `packages/mobi
 pnpm ios             # build the Storybook app and open it in the iOS simulator
 pnpm android         # same for Android
 pnpm typecheck
-pnpm check           # lint and format check with Biome
-pnpm format          # apply Biome fixes and formatting
-pnpm knip            # find unused files, exports, and dependencies
 pnpm nativewind      # regenerate the NativeWind components and stylesheet
 pnpm registry        # regenerate registry.json after changing components
 pnpm registry:check  # fail if registry.json is out of date
 ```
+
+Biome runs from the repository root for the whole workspace: `pnpm check` lints and checks formatting, `pnpm format` applies fixes and formatting.
 
 The git hooks live at the repository root and run these checks for the mobile library too: on commit, Biome fixes the staged files and the tokens, NativeWind files and `registry.json` are regenerated when components, the Uniwind stylesheet or the tokens change; on push, Biome, typecheck, Knip and the registry, NativeWind and token checks run.
 
@@ -114,4 +113,4 @@ The git hooks live at the repository root and run these checks for the mobile li
 
 ## Release
 
-Component and stylesheet changes reach users as soon as they are pushed to `main`, because the `@esuiss/ui` CLI always reads `packages/mobile/registry.json` from the `main` branch. The SwiftUI and Compose repositories get a new tag with every release of the repository; see the root README.
+Component and stylesheet changes reach users as soon as they are pushed to `main`, because the `@esuiss/ui` CLI always reads `packages/mobile/registry.json` from the `main` branch. The SwiftUI and Compose repositories get a new tag with every release of the repository; see `CONTRIBUTING.md` at the repository root.

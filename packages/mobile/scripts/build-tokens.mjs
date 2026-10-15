@@ -9,9 +9,21 @@ import {
 import { tmpdir } from "node:os"
 import path from "node:path"
 
-import { convertColors, loadTokens, toRgb, toRgba } from "./theme.mjs"
+import {
+  convertColors,
+  loadTokens,
+  scopedBiome,
+  toRgb,
+  toRgba,
+} from "./theme.mjs"
 
-const ROOT = process.cwd()
+const IDENTIFIER = /^[a-z]\w*$/i
+const NUMBERED_NAME = /^(\d+)(\w+)$/
+const COLOR_VALUE = /(?:oklch|rgb)\([^)]*\)|#[\da-f]{6}\b/i
+const WHITESPACE = /\s+/
+
+const ROOT = path.resolve(import.meta.dirname, "..")
+const REPO = path.join(ROOT, "../..")
 const CSS = "styles/uniwind.css"
 const THEME = "stylesheet/components/ui/theme.ts"
 const SWIFT = "swiftui/Sources/EsuissUI/Theme/Tokens.swift"
@@ -44,11 +56,11 @@ function camelCase(name) {
 }
 
 function key(name) {
-  return /^[a-z]\w*$/i.test(name) ? name : `"${name}"`
+  return IDENTIFIER.test(name) ? name : `"${name}"`
 }
 
 function nativeName(name) {
-  return name.replace(/^(\d+)(\w+)$/, "$2$1")
+  return name.replace(NUMBERED_NAME, "$2$1")
 }
 
 function hex(channels) {
@@ -63,14 +75,14 @@ function double(value) {
 }
 
 function parseShadow(value) {
-  const color = value.match(/(?:oklch|rgb)\([^)]*\)|#[\da-f]{6}\b/i)
+  const color = value.match(COLOR_VALUE)
   if (!color || value.includes(",")) {
     throw new Error(`Unsupported shadow value "${value}"`)
   }
   const [x = 0, y = 0, blur = 0] = value
     .replace(color[0], "")
     .trim()
-    .split(/\s+/)
+    .split(WHITESPACE)
     .map((part) => Number.parseFloat(part))
   return { x, y, blur, ...toRgba(color[0]) }
 }
@@ -498,31 +510,27 @@ function ThemeRevealOverlay({
     }
   }, [started, duration, blurred, progress, blur, ready, done])
 
-  const shape =
-    geometry?.kind === "soft"
-      ? jsx(ThemeRevealSoft, {
-          geometry,
-          progress,
-          blur,
-          width: size?.width ?? 0,
-          height: size?.height ?? 0,
-        })
-      : geometry
-        ? jsxs(React.Fragment, {
-            children: [
-              blurred
-                ? FEATHER.map((spread) =>
-                    jsx(
-                      ThemeRevealEdge,
-                      { geometry, progress, blur, spread },
-                      spread
-                    )
-                  )
-                : null,
-              jsx(ThemeRevealEdge, { geometry, progress, blur, spread: 0 }),
-            ],
-          })
-        : null
+  let shape: React.ReactNode = null
+  if (geometry?.kind === "soft") {
+    shape = jsx(ThemeRevealSoft, {
+      geometry,
+      progress,
+      blur,
+      width: size?.width ?? 0,
+      height: size?.height ?? 0,
+    })
+  } else if (geometry) {
+    shape = jsxs(React.Fragment, {
+      children: [
+        blurred
+          ? FEATHER.map((spread) =>
+              jsx(ThemeRevealEdge, { geometry, progress, blur, spread }, spread)
+            )
+          : null,
+        jsx(ThemeRevealEdge, { geometry, progress, blur, spread: 0 }),
+      ],
+    })
+  }
 
   return jsx(View, {
     pointerEvents: "none",
@@ -668,8 +676,9 @@ function setTheme(theme: Theme, transition?: ThemeTransition) {
   const request = ++store.request
   const current: ResolvedTheme =
     Appearance.getColorScheme() === "dark" ? "dark" : "light"
-  const known =
-    theme !== "system" ? theme : store.theme === "system" ? current : null
+  let known: ResolvedTheme | null = null
+  if (theme !== "system") known = theme
+  else if (store.theme === "system") known = current
   const snapshot = store.snapshot
   if (!transition || !snapshot || known === current) {
     commitTheme(request, theme)
@@ -781,8 +790,8 @@ function ThemeProvider({
 function useTheme() {
   const scheme = useColorScheme()
   const theme = React.useSyncExternalStore(subscribe, getTheme)
-  const resolvedTheme: ResolvedTheme =
-    theme === "system" ? (scheme === "dark" ? "dark" : "light") : theme
+  const systemTheme: ResolvedTheme = scheme === "dark" ? "dark" : "light"
+  const resolvedTheme: ResolvedTheme = theme === "system" ? systemTheme : theme
   const isDark = resolvedTheme === "dark"
   return {
     colors: isDark ? dark : light,
@@ -831,6 +840,9 @@ function ThemeToggle({
     ],
     children: THEMES.map((value) => {
       const selected = theme === value
+      let labelColor = colors.labelSecondary
+      if (disabled) labelColor = colors.labelQuaternary
+      else if (selected) labelColor = colors.label
       return jsx(
         Pressable,
         {
@@ -863,11 +875,7 @@ function ThemeToggle({
           children: jsx(Text, {
             style: {
               ...fontSize.sm,
-              color: disabled
-                ? colors.labelQuaternary
-                : selected
-                  ? colors.label
-                  : colors.labelSecondary,
+              color: labelColor,
             },
             children: labels?.[value] ?? LABELS[value],
           }),
@@ -1071,9 +1079,10 @@ function read(base, file) {
 if (process.argv.includes("--check")) {
   const temp = mkdtempSync(path.join(tmpdir(), "esuiss-tokens-"))
   try {
-    const biome = JSON.parse(read(ROOT, "biome.json"))
-    biome.vcs = { enabled: false }
-    writeFileSync(path.join(temp, "biome.json"), JSON.stringify(biome))
+    writeFileSync(
+      path.join(temp, "biome.json"),
+      JSON.stringify(scopedBiome(JSON.parse(read(REPO, "biome.json"))))
+    )
     generate(temp)
     const stale = OUTPUTS.filter(
       (file) => read(temp, file) !== read(ROOT, file)

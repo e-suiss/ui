@@ -59,6 +59,7 @@
           "./stylesheet/components/*"
         ]
       },
+      "ignoreDependencies": ["expo-updates"],
       "metro": false
     }
   },

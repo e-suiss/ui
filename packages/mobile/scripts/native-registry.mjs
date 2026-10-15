@@ -1,6 +1,18 @@
 import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 
+const LEADING_IDENTIFIER = /^[A-Za-z_]\w*/
+const CHAR_LITERAL = /^'(?:\\.|[^'\\])+'/
+const PRIVATE_SWIFT = /\b(?:private|fileprivate)\b/
+const STATIC_KEYWORD = /\bstatic\b/
+const PRIVATE_KEYWORD = /\bprivate\b/
+const PACKAGE_DECLARATION = /^package\s+([\w.]+)/m
+const EXPRESSION_END = /[\w)\]?!>]/
+const IOS_PLATFORM = /\.iOS\(\.v(\d+)\)/
+const ANDROID_TEST = /^\s*androidTest/m
+const MIN_SDK = /minSdk\s*=\s*(\d+)/
+const GRADLE_PLATFORM = /platform\("([^"]+)"\)/
+
 const IDENTIFIER = /[A-Za-z_]\w*/g
 
 export const PLATFORMS = {
@@ -95,7 +107,7 @@ function blankLiterals(code, { characters, template }) {
         skipCode("}")
         keep(index + 1)
       } else if (template === "kotlin" && char === "$") {
-        const name = code.slice(index + 1).match(/^[A-Za-z_]\w*/)
+        const name = code.slice(index + 1).match(LEADING_IDENTIFIER)
         keep(index + 1 + (name ? name[0].length : 0))
       } else if (char === "\\") {
         blank(index + 2)
@@ -118,7 +130,7 @@ function blankLiterals(code, { characters, template }) {
       )
     else if (code.startsWith("/*", index)) blank(code.indexOf("*/", index) + 2)
     else if (characters && char === "'") {
-      const literal = code.slice(index).match(/^'(?:\\.|[^'\\])+'/)
+      const literal = code.slice(index).match(CHAR_LITERAL)
       if (literal) blank(index + literal[0].length)
       else keep(index + 1)
     } else keep(index + 1)
@@ -142,10 +154,10 @@ const SWIFT_DECLARATION =
 
 function swiftNames(text) {
   return [...text.matchAll(SWIFT_DECLARATION)]
-    .filter((match) => !/\b(?:private|fileprivate)\b/.test(match[1]))
+    .filter((match) => !PRIVATE_SWIFT.test(match[1]))
     .map((match) => ({
       name: match[2],
-      isStatic: /\bstatic\b/.test(match[1]),
+      isStatic: STATIC_KEYWORD.test(match[1]),
     }))
 }
 
@@ -189,7 +201,7 @@ const KOTLIN_DECLARATION =
 function kotlinDeclarations(code) {
   const declared = new Set()
   for (const match of atDepth(code, 0).matchAll(KOTLIN_DECLARATION)) {
-    if (/\bprivate\b/.test(match[1])) continue
+    if (PRIVATE_KEYWORD.test(match[1])) continue
     declared.add(match[2])
   }
   return { declared, members: [] }
@@ -227,7 +239,7 @@ async function readSources(root, platform) {
     sources.push({
       file,
       code: code.replace(/^(?:package|import)\s.*$/gm, ""),
-      package: raw.match(/^package\s+([\w.]+)/m)?.[1] ?? "",
+      package: raw.match(PACKAGE_DECLARATION)?.[1] ?? "",
       imports: imports.map((match) => ({
         package: `com.esuiss.ui.${match[1]}`,
         name: match[2],
@@ -256,7 +268,7 @@ function referencedFiles(source, sources) {
   const implicit = new Set()
   for (const match of source.code.matchAll(/(.)\.\s*([A-Za-z_]\w*)/gs)) {
     members.add(match[2])
-    if (!/[\w)\]?!>]/.test(match[1])) implicit.add(match[2])
+    if (!EXPRESSION_END.test(match[1])) implicit.add(match[2])
   }
   const usesMember = ({ type, name, isStatic }) => {
     if (!isStatic) return members.has(name)
@@ -336,7 +348,7 @@ export async function nativeRequirements(root, platform) {
   )
   if (platform === "swift") {
     return {
-      ios: Number(manifest.match(/\.iOS\(\.v(\d+)\)/)?.[1]),
+      ios: Number(manifest.match(IOS_PLATFORM)?.[1]),
       packages: [
         ...manifest.matchAll(
           /\.package\(url:\s*"([^"]+)",\s*from:\s*"([^"]+)"\)/g
@@ -357,10 +369,10 @@ export async function nativeRequirements(root, platform) {
       })),
     }
   }
-  const main = manifest.slice(0, manifest.search(/^\s*androidTest/m))
+  const main = manifest.slice(0, manifest.search(ANDROID_TEST))
   return {
-    minSdk: Number(manifest.match(/minSdk\s*=\s*(\d+)/)?.[1]),
-    bom: main.match(/platform\("([^"]+)"\)/)?.[1],
+    minSdk: Number(manifest.match(MIN_SDK)?.[1]),
+    bom: main.match(GRADLE_PLATFORM)?.[1],
     dependencies: [...main.matchAll(/implementation\("([^"]+)"\)/g)].map(
       (match) => match[1]
     ),

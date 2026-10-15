@@ -14,7 +14,7 @@ pnpm dev             # the ui.suiss.app site on :3000
 pnpm build           # build the site
 pnpm typecheck       # every package and site
 pnpm test            # web component tests and CLI tests
-pnpm check           # Biome on the web library, the CLI and the mobile library
+pnpm check           # Biome on the whole repository: libraries, CLI and site
 pnpm format          # apply Biome fixes and formatting
 pnpm knip            # unused files, exports, and dependencies in every package
 pnpm registry        # regenerate the web and mobile registries and the site pages

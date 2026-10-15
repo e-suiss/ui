@@ -12,8 +12,8 @@
     "test": "turbo run test",
     "registry": "turbo run registry",
     "registry:check": "turbo run registry:check",
-    "check": "biome check --error-on-warnings . && pnpm --filter @esuiss/mobile check",
-    "format": "biome check --write . && pnpm --filter @esuiss/mobile format",
+    "check": "biome check --error-on-warnings .",
+    "format": "biome check --write .",
     "knip": "knip",
     "release": "node scripts/release.mjs",
     "indexnow": "node scripts/indexnow.mjs",
@@ -31,7 +31,6 @@
     "turbo": "^2.11.7"
   },
   "lint-staged": {
-    "*.{js,mjs,ts,tsx,json,jsonc,css}": "biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true",
-    "packages/mobile/**/*.{js,mjs,ts,tsx,json,jsonc,css}": "pnpm --filter @esuiss/mobile exec biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true"
+    "*.{js,mjs,ts,tsx,json,jsonc,css}": "biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true"
   }
 }

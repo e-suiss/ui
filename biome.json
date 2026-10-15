@@ -10,8 +10,13 @@
       "**",
       "!**/registry.json",
       "!pnpm-lock.yaml",
-      "!packages/mobile",
-      "!apps"
+      "!apps/ui/public/live",
+      "!apps/ui/demos",
+      "!apps/ui/.generated",
+      "!apps/ui/content/items.json",
+      "!packages/mobile/ios",
+      "!packages/mobile/android",
+      "!packages/mobile/uniwind-types.d.ts"
     ]
   },
   "formatter": {
@@ -95,8 +100,20 @@
         "packages/cli/**",
         "scripts/**",
         "packages/web/scripts/**",
+        "packages/mobile/scripts/**",
+        "apps/ui/scripts/**",
         "packages/web/tests/**/*.mjs"
       ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/ui/components/site/shader-gradient.tsx"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -198,6 +215,26 @@
         "rules": {
           "security": {
             "noDangerouslySetInnerHtml": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/mobile/styles/uniwind.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDuplicateCustomProperties": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/mobile/styles/nativewind.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
           }
         }
       }

@@ -4,9 +4,23 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 
-import { loadTokens, toRgb } from "./theme.mjs"
+import { loadTokens, scopedBiome, toRgb } from "./theme.mjs"
 
-const ROOT = process.cwd()
+const STYLED_ICON =
+  /const StyledIcon = withUniwind\(IconImpl, \{[\s\S]*?\n\}\)\n/
+const REACT_NATIVE_IMPORT = /^import \{([^}]*)\} from "react-native"\n/m
+const IMPORT_ANCHOR =
+  /^(import \* as React from "react"\n|import \{ cn \} from "cn"\n)/m
+const TYPE_PREFIX = /^type /
+const FIRST_DECLARATION = /\n(?:function |const [A-Za-z]|type |interface )/
+const TEXT_INPUT_COLOR_PROP =
+  /(?:placeholderTextColor|cursorColor|selectionColor)ClassName=/
+const ACTIVITY_INDICATOR_COLOR_PROP = /<ActivityIndicator[^>]*colorClassName=/
+const SPINNER_COLOR_PROP = /<Spinner[^>]*colorClassName=/
+const CN_IMPORT = /^import \{ cn \} from "cn"\n/m
+
+const ROOT = path.resolve(import.meta.dirname, "..")
+const REPO = path.join(ROOT, "../..")
 const SOURCE_ROOT = "uniwind/components"
 const OUTPUT_ROOT = "nativewind/components"
 const COMPONENT_DIRS = ["ui", "patterns", "interactions", "blocks", "charts"]
@@ -102,7 +116,7 @@ const FILE_TRANSFORMS = {
         'import { cssInterop } from "nativewind"'
       )
       .replace(
-        /const StyledIcon = withUniwind\(IconImpl, \{[\s\S]*?\n\}\)\n/,
+        STYLED_ICON,
         `const StyledIcon = cssInterop(IconImpl, {
   className: {
     target: "style",
@@ -142,10 +156,10 @@ const FILE_TRANSFORMS = {
 }
 
 function addReactNativeImport(code, name) {
-  const block = code.match(/^import \{([^}]*)\} from "react-native"\n/m)
+  const block = code.match(REACT_NATIVE_IMPORT)
   if (!block) {
     return code.replace(
-      /^(import \* as React from "react"\n|import \{ cn \} from "cn"\n)/m,
+      IMPORT_ANCHOR,
       `$1import { ${name} } from "react-native"\n`
     )
   }
@@ -153,12 +167,12 @@ function addReactNativeImport(code, name) {
     .split(",")
     .map((part) => part.trim())
     .filter(Boolean)
-  if (specifiers.some((part) => part.replace(/^type /, "") === name)) {
+  if (specifiers.some((part) => part.replace(TYPE_PREFIX, "") === name)) {
     return code
   }
   specifiers.push(name)
   specifiers.sort((a, b) =>
-    a.replace(/^type /, "").localeCompare(b.replace(/^type /, ""), "en")
+    a.replace(TYPE_PREFIX, "").localeCompare(b.replace(TYPE_PREFIX, ""), "en")
   )
   const single = `import { ${specifiers.join(", ")} } from "react-native"\n`
   const replacement =
@@ -169,15 +183,14 @@ function addReactNativeImport(code, name) {
 }
 
 function insertBeforeFirstDeclaration(code, block) {
-  const index = code.search(/\n(?:function |const [A-Za-z]|type |interface )/)
+  const index = code.search(FIRST_DECLARATION)
   return `${code.slice(0, index + 1)}${block}${code.slice(index + 1)}`
 }
 
 function applyColorClassProps(code) {
-  const textInput =
-    /(?:placeholderTextColor|cursorColor|selectionColor)ClassName=/.test(code)
-  const activityIndicator = /<ActivityIndicator[^>]*colorClassName=/.test(code)
-  const spinner = /<Spinner[^>]*colorClassName=/.test(code)
+  const textInput = TEXT_INPUT_COLOR_PROP.test(code)
+  const activityIndicator = ACTIVITY_INDICATOR_COLOR_PROP.test(code)
+  const spinner = SPINNER_COLOR_PROP.test(code)
   if (!textInput && !activityIndicator && !spinner) return code
   if (!textInput && !activityIndicator) {
     return code.replace(/"accent-([\w-]+)"/g, '"text-$1"')
@@ -196,7 +209,7 @@ function applyColorClassProps(code) {
     )
   }
   return output.replace(
-    /^import \{ cn \} from "cn"\n/m,
+    CN_IMPORT,
     'import { cn } from "cn"\nimport { cssInterop } from "nativewind"\n'
   )
 }
@@ -412,11 +425,14 @@ async function snapshot(base) {
 if (process.argv.includes("--check")) {
   const temp = mkdtempSync(path.join(tmpdir(), "esuiss-nativewind-"))
   try {
-    const biome = JSON.parse(
-      await readFile(path.join(ROOT, "biome.json"), "utf8")
+    await writeFile(
+      path.join(temp, "biome.json"),
+      JSON.stringify(
+        scopedBiome(
+          JSON.parse(await readFile(path.join(REPO, "biome.json"), "utf8"))
+        )
+      )
     )
-    biome.vcs = { enabled: false }
-    await writeFile(path.join(temp, "biome.json"), JSON.stringify(biome))
     const { files } = await generate(temp)
     if ((await snapshot(temp)) !== (await snapshot(ROOT))) {
       console.error(
