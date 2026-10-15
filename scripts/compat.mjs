@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process"
 import {
+  cpSync,
   createReadStream,
   existsSync,
   mkdtempSync,
@@ -17,6 +18,7 @@ const REGISTRY_CLI = "shadcn@4.21.4"
 const ROOT = path.resolve(import.meta.dirname, "..")
 const WEB = path.join(ROOT, "packages/web")
 const CLI = path.join(ROOT, "packages/cli/index.mjs")
+const REGISTRY_BIN = path.join(WEB, "node_modules/shadcn/dist/index.js")
 
 const COMPONENTS = [
   "button",
@@ -28,13 +30,35 @@ const COMPONENTS = [
   "sidebar",
   "theme",
 ]
+const PATTERNS = ["date-picker"]
 const CHARTS = ["area-chart-default"]
 const BLOCKS = ["login-account"]
+const THEME = "theme-suiss"
+const ICON_PACKAGES = {
+  lucide: "lucide-react",
+  tabler: "@tabler/icons-react",
+  hugeicons: "@hugeicons/react",
+  phosphor: "@phosphor-icons/react",
+  remixicon: "@remixicon/react",
+}
+const ICON_LIBRARY =
+  process.argv.find((arg) => arg.startsWith("--icons="))?.slice(8) ?? "lucide"
+if (!(ICON_LIBRARY in ICON_PACKAGES)) {
+  throw new Error(`Unknown icon library: ${ICON_LIBRARY}`)
+}
+const REGISTRY_ITEMS = [
+  ...COMPONENTS,
+  ...PATTERNS,
+  ...CHARTS,
+  ...BLOCKS,
+  THEME,
+].map((name) => `@esuiss/${name}`)
 
 const PAGE = `"use client"
 
 import { AreaChartDefault } from "@/components/charts/area-chart-default"
 import { LoginAccount } from "@/components/blocks/login-account"
+import { DatePicker } from "@/components/patterns/date-picker"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -100,6 +124,7 @@ export default function Page() {
               <SelectItem value="apple">Apple</SelectItem>
             </SelectContent>
           </Select>
+          <DatePicker aria-label="Date" />
           <Checkbox />
           <Switch />
           <Tabs defaultValue="one">
@@ -124,12 +149,14 @@ const CONTENT_TYPES = {
   ".css": "text/css",
 }
 
+const STYLED_ITEM = /^\/r\/[^/]+\/([^/]+)$/
+
 function serve(dir) {
   const server = createServer((request, response) => {
-    const file = path.join(
-      dir,
-      decodeURIComponent(new URL(request.url, "http://localhost").pathname)
-    )
+    const pathname = decodeURIComponent(
+      new URL(request.url, "http://localhost").pathname
+    ).replace(STYLED_ITEM, "/r/$1")
+    const file = path.join(dir, pathname)
     if (
       !file.startsWith(dir + path.sep) ||
       !existsSync(file) ||
@@ -169,8 +196,33 @@ function run(label, command, args, options = {}) {
   })
 }
 
+function expectStyles(app, expected) {
+  const css = readFileSync(path.join(app, "app/globals.css"), "utf8")
+  for (const text of expected) {
+    if (!css.includes(text)) {
+      throw new Error(`app/globals.css is missing ${text}`)
+    }
+  }
+}
+
+async function check(label, app) {
+  writeFileSync(path.join(app, "app/page.tsx"), PAGE)
+  if (
+    !readFileSync(path.join(app, "next.config.ts"), "utf8").includes(
+      "cacheComponents: true"
+    )
+  ) {
+    throw new Error("The new app does not enable cacheComponents")
+  }
+  await run(`Type-check (${label})`, "npx", ["tsc", "--noEmit"], { cwd: app })
+  await run(`Build (${label})`, "npx", ["next", "build"], { cwd: app })
+}
+
 const workspace = mkdtempSync(path.join(tmpdir(), "esuiss-compat-"))
-const app = path.join(workspace, "app")
+const base = path.join(workspace, "base")
+const cliApp = path.join(workspace, "cli")
+const registryApp = path.join(workspace, "registry")
+const output = path.join(workspace, "public")
 const cleanup = () => rmSync(workspace, { recursive: true, force: true })
 for (const signal of ["SIGINT", "SIGTERM"]) {
   process.on(signal, () => {
@@ -179,12 +231,18 @@ for (const signal of ["SIGINT", "SIGTERM"]) {
   })
 }
 
-let server
+const servers = []
+async function serveDirectory(dir) {
+  const server = await serve(dir)
+  servers.push(server)
+  return `http://127.0.0.1:${server.address().port}`
+}
+
 try {
   await run("Create a Next.js app", "npx", [
     "--yes",
     NEXT_APP,
-    app,
+    base,
     "--ts",
     "--tailwind",
     "--app",
@@ -212,46 +270,86 @@ try {
       "--yes",
       "--no-monorepo",
     ],
-    { cwd: app }
+    { cwd: base }
   )
+  cpSync(base, cliApp, { recursive: true, verbatimSymlinks: true })
+  cpSync(base, registryApp, { recursive: true, verbatimSymlinks: true })
+  rmSync(base, { recursive: true, force: true })
 
-  server = await serve(WEB)
-  const registry = `http://127.0.0.1:${server.address().port}`
-  const env = { ESUISS_REGISTRY: registry }
+  const env = { ESUISS_REGISTRY: await serveDirectory(WEB) }
   await run(
-    "Add components",
+    "Add components with the suiss/ui CLI",
     "node",
-    [CLI, "add", ...COMPONENTS, "--yes", "--overwrite", "--cwd", app],
+    [CLI, "add", ...COMPONENTS, "--yes", "--overwrite", "--cwd", cliApp],
     { env }
   )
-  await run(
-    "Add charts",
-    "node",
-    [CLI, "add", "charts", ...CHARTS, "--yes", "--cwd", app],
-    { env }
-  )
-  await run(
-    "Add blocks",
-    "node",
-    [CLI, "add", "blocks", ...BLOCKS, "--yes", "--cwd", app],
-    { env }
-  )
-  server.close()
-  server = undefined
-
-  const css = readFileSync(path.join(app, "app/globals.css"), "utf8")
-  if (!css.includes("@keyframes theme-reveal")) {
-    throw new Error("The theme styles were not added to app/globals.css")
+  for (const [scope, names] of [
+    ["patterns", PATTERNS],
+    ["charts", CHARTS],
+    ["blocks", BLOCKS],
+  ]) {
+    await run(
+      `Add ${scope} with the suiss/ui CLI`,
+      "node",
+      [CLI, "add", scope, ...names, "--yes", "--cwd", cliApp],
+      { env }
+    )
   }
+  expectStyles(cliApp, ["@keyframes theme-reveal"])
+  await check("suiss/ui CLI", cliApp)
 
-  writeFileSync(path.join(app, "app/page.tsx"), PAGE)
-  await run("Type-check", "npx", ["tsc", "--noEmit"], { cwd: app })
-  await run("Build", "npx", ["next", "build"], { cwd: app })
-  console.log("\nCompatible: the components install, type-check and build.")
+  await run(
+    "Build the registry",
+    "node",
+    [
+      REGISTRY_BIN,
+      "build",
+      "registry/registry.json",
+      "--output",
+      path.join(output, "r"),
+    ],
+    { cwd: WEB }
+  )
+  const origin = await serveDirectory(output)
+  const config = path.join(registryApp, "components.json")
+  writeFileSync(
+    config,
+    `${JSON.stringify(
+      {
+        ...JSON.parse(readFileSync(config, "utf8")),
+        iconLibrary: ICON_LIBRARY,
+        registries: { "@esuiss": `${origin}/r/{style}/{name}.json` },
+      },
+      null,
+      2
+    )}\n`
+  )
+  await run(
+    `Install ${ICON_PACKAGES[ICON_LIBRARY]}`,
+    "npm",
+    ["install", ICON_PACKAGES[ICON_LIBRARY]],
+    { cwd: registryApp }
+  )
+  await run(
+    `Add items with the registry CLI (${ICON_LIBRARY} icons)`,
+    "npx",
+    ["--yes", REGISTRY_CLI, "add", ...REGISTRY_ITEMS, "--yes", "--overwrite"],
+    { cwd: registryApp }
+  )
+  expectStyles(registryApp, [
+    "@keyframes theme-reveal",
+    "oklch(0.5629 0.1933 256.16)",
+    "@fontsource-variable/inter",
+  ])
+  await check("registry CLI", registryApp)
+
+  console.log(
+    "\nCompatible: the items install through both CLIs, type-check and build."
+  )
 } catch (error) {
   console.error(`\n${error.message}`)
   process.exitCode = 1
 } finally {
-  server?.close()
+  for (const server of servers) server.close()
   cleanup()
 }
