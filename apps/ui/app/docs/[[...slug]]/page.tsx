@@ -7,10 +7,12 @@ import * as React from "react"
 import { getMDXComponents } from "@/components/mdx"
 import { Anchor } from "@/components/site/anchor"
 import { JsonLd } from "@/components/site/json-ld"
+import { InstallDependencies } from "@/components/site/package-command"
 import { PageActions } from "@/components/site/page-actions"
 import { PlatformScope, PlatformSwitcher } from "@/components/site/platform"
 import { Toc } from "@/components/site/toc"
 import { contentDates } from "@/lib/dates"
+import { baseDependencies } from "@/lib/dependencies"
 import { markdownUrl } from "@/lib/llms"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
@@ -93,6 +95,8 @@ async function DocPage(props: {
   const kind = eyebrow && eyebrow !== strings.brand ? eyebrow : undefined
   const { body: MDX, toc } = await page.data.load()
   const wide = WIDE_PAGE.test(page.url)
+  const item = page.slugs.at(-1)
+  const dependencies = item ? await baseDependencies(item) : undefined
   const { previous, next } = findNeighbour(source.getPageTree(), page.url, {
     separateRoot: true,
   })
@@ -187,7 +191,9 @@ async function DocPage(props: {
           )}
         </header>
         <div className="prose">
-          <MDX components={getMDXComponents()} />
+          <InstallDependencies value={dependencies}>
+            <MDX components={getMDXComponents()} />
+          </InstallDependencies>
         </div>
         {(previous || next) && (
           <nav

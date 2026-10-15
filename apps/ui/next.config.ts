@@ -28,6 +28,7 @@ const nextConfig: NextConfig = {
       "../../packages/web/lib/**/*",
       "../../packages/web/examples/**/*",
       "../../packages/web/bases/**/*",
+      "../../packages/web/registry/**/*.json",
       "../../packages/mobile/components/**/*",
       "../../packages/mobile/uniwind/components/**/*",
       "../../packages/mobile/nativewind/components/**/*",
