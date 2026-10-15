@@ -7,7 +7,7 @@
     "build": "pnpm build:registry && next build",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
-    "build:registry": "shadcn build ../../packages/web/registry/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/base && shadcn build ../../packages/web/registry/radix/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/radix"
+    "build:registry": "shadcn build ../../packages/web/registry/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/base && shadcn build ../../packages/web/registry/radix/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/radix && shadcn build ../../packages/mobile/registry/uniwind/registry.json --cwd ../../packages/mobile --output ../../apps/ui/public/r/rn-uniwind && shadcn build ../../packages/mobile/registry/nativewind/registry.json --cwd ../../packages/mobile --output ../../apps/ui/public/r/rn-nativewind && shadcn build ../../packages/mobile/registry/stylesheet/registry.json --cwd ../../packages/mobile --output ../../apps/ui/public/r/rn-stylesheet"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",

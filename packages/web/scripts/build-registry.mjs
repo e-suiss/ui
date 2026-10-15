@@ -6,14 +6,17 @@ import postcss from "postcss"
 
 import {
   collectImports,
+  normalize,
   packageName,
+  SCHEMA_URL,
+  toCssObject,
   toTitle,
+  schemaProblems as validateSchema,
 } from "../../../scripts/lib/registry.mjs"
 
 const ROOT = path.resolve(import.meta.dirname, "..")
 const DOCS = path.resolve(ROOT, "../../apps/ui/content/docs")
 const SITE = "https://ui.suiss.app"
-const SCHEMA_URL = "https://ui.shadcn.com/schema"
 const LEGACY_OUTPUT = path.join(ROOT, "registry.json")
 const OUTPUT = path.join(ROOT, "registry/registry.json")
 const BASES = path.join(ROOT, "bases")
@@ -29,8 +32,6 @@ const LOCAL_IMPORT =
 const SOURCE_FILE = /\.(tsx?|jsx?)$/
 const FRONTMATTER = /^---\n([\s\S]*?)\n---/
 const DESCRIPTION = /^description:\s*(.+)$/m
-const WHITESPACE = /\s+/g
-const PAREN_SPACE = /\(\s+|\s+\)/g
 
 const THEME = {
   name: "theme-suiss",
@@ -176,28 +177,6 @@ function toLegacy(entry) {
   }
 }
 
-function normalize(text) {
-  return text
-    .replace(WHITESPACE, " ")
-    .replace(PAREN_SPACE, (match) => match.trim())
-}
-
-function toCssObject(nodes) {
-  const object = {}
-  for (const node of nodes) {
-    if (node.type === "decl") {
-      object[node.prop] = normalize(node.value)
-    } else if (node.type === "rule") {
-      object[normalize(node.selector)] = toCssObject(node.nodes)
-    } else if (node.type === "atrule") {
-      object[`@${node.name} ${normalize(node.params)}`] = toCssObject(
-        node.nodes ?? []
-      )
-    }
-  }
-  return object
-}
-
 async function readCss(file) {
   const source = path.join(ROOT, file)
   return postcss.parse(existsSync(source) ? await readFile(source, "utf8") : "")
@@ -303,30 +282,6 @@ function validate(entries, registry) {
   return problems
 }
 
-async function fetchSchema(name) {
-  const response = await fetch(`${SCHEMA_URL}/${name}`)
-  if (!response.ok) {
-    throw new Error(
-      `Could not download ${SCHEMA_URL}/${name}: ${response.status}`
-    )
-  }
-  const { $schema: _draft, ...schema } = await response.json()
-  return schema
-}
-
-async function schemaProblems(registry) {
-  const ajv = new Ajv({ allErrors: true, strict: false })
-  ajv.addSchema(
-    await fetchSchema("registry-item.json"),
-    `${SCHEMA_URL}/registry-item.json`
-  )
-  const check = ajv.compile(await fetchSchema("registry.json"))
-  if (check(registry)) return []
-  return check.errors.map(
-    (error) => `schema: ${error.instancePath || "/"} ${error.message}`
-  )
-}
-
 async function collectAll(base) {
   const entries = []
   for (const source of sources) {
@@ -372,12 +327,12 @@ const checking = process.argv.includes("--check")
 const schema = process.argv.includes("--schema")
 const problems = [
   ...validate(entries, registry),
-  ...(schema ? await schemaProblems(registry) : []),
+  ...(schema ? await validateSchema(Ajv, registry) : []),
 ]
 for (const variant of variants) {
   const found = [
     ...validate(variant.entries, variant.registry),
-    ...(schema ? await schemaProblems(variant.registry) : []),
+    ...(schema ? await validateSchema(Ajv, variant.registry) : []),
   ]
   problems.push(...found.map((problem) => `${variant.name}: ${problem}`))
 }

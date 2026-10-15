@@ -222,7 +222,10 @@
       }
     },
     {
-      "includes": ["packages/mobile/styles/uniwind.css"],
+      "includes": [
+        "packages/mobile/styles/uniwind.css",
+        "packages/mobile/registry/uniwind/theme-suiss.css"
+      ],
       "linter": {
         "rules": {
           "suspicious": {
