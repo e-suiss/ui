@@ -96,7 +96,7 @@ function GridCarousel({
         >
           <Text role="heading" className="text-3xl font-semibold">
             The latest.{" "}
-            <Text className="text-3xl font-semibold text-label-secondary">
+            <Text className="text-3xl font-semibold text-muted-foreground">
               Fresh favorites of the season.
             </Text>
           </Text>
@@ -116,11 +116,11 @@ function GridCarousel({
                   role="link"
                   accessibilityLabel={`${product.kicker ? `${product.kicker}, ` : ""}${product.name}. ${product.tagline} From ${product.price}`}
                   onPress={() => onSelectProduct?.(product.name)}
-                  className="h-[27.5rem] rounded-[1.125rem] bg-surface shadow-md active:opacity-80"
+                  className="h-[27.5rem] rounded-[1.125rem] bg-background shadow-md active:opacity-80"
                 >
                   <View className="gap-1 px-7 pt-7">
                     {product.kicker ? (
-                      <Text className="text-xs font-semibold text-orange uppercase">
+                      <Text className="text-xs font-semibold text-orange-500 uppercase">
                         {product.kicker}
                       </Text>
                     ) : null}
@@ -128,7 +128,7 @@ function GridCarousel({
                       {product.name}
                     </Text>
                     <Text className="text-lg">{product.tagline}</Text>
-                    <Text className="mt-1.5 text-sm text-label-secondary">
+                    <Text className="mt-1.5 text-sm text-muted-foreground">
                       From {product.price}
                     </Text>
                   </View>
@@ -137,7 +137,7 @@ function GridCarousel({
                     resizeMode="cover"
                     accessibilityIgnoresInvertColors
                     accessibilityLabel={product.alt}
-                    className="m-5 min-h-0 flex-1 rounded-xl bg-control"
+                    className="m-5 min-h-0 flex-1 rounded-xl bg-secondary"
                   />
                 </Pressable>
               </CarouselItem>

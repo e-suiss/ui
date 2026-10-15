@@ -86,13 +86,13 @@ const week = [
 ]
 
 const chartConfig = {
-  online: { label: "Online", color: "blue" },
-  store: { label: "In store", color: "teal" },
+  online: { label: "Online", color: "chart-1" },
+  store: { label: "In store", color: "chart-2" },
 } satisfies ChartConfig
 
 const SERIES = [
-  { key: "online", swatch: "bg-blue" },
-  { key: "store", swatch: "bg-teal" },
+  { key: "online", swatch: "bg-chart-1" },
+  { key: "store", swatch: "bg-chart-2" },
 ] as const
 
 const orders = [
@@ -102,7 +102,7 @@ const orders = [
     product: "Phone Pro",
     status: "Shipped",
     total: 999,
-    tint: "bg-blue dark:bg-blue",
+    tint: "bg-blue-500",
   },
   {
     id: "W1047",
@@ -110,7 +110,7 @@ const orders = [
     product: "Book Air",
     status: "Processing",
     total: 1099,
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
   },
   {
     id: "W1046",
@@ -118,7 +118,7 @@ const orders = [
     product: "Watch Series 11",
     status: "Delivered",
     total: 399,
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
   },
   {
     id: "W1045",
@@ -126,7 +126,7 @@ const orders = [
     product: "Pods Studio",
     status: "Returned",
     total: 549,
-    tint: "bg-pink dark:bg-pink",
+    tint: "bg-pink-500",
   },
   {
     id: "W1044",
@@ -134,7 +134,7 @@ const orders = [
     product: "Pad Air",
     status: "Delivered",
     total: 599,
-    tint: "bg-cyan dark:bg-cyan",
+    tint: "bg-cyan-500",
   },
 ]
 
@@ -209,7 +209,7 @@ function OtherSection({ value }: { value: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         This section isn't part of the sample. Choose Overview.
       </Text>
     </View>
@@ -300,18 +300,18 @@ function DashStore({
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
-              <View className="flex-row flex-wrap overflow-hidden rounded-xl bg-surface-secondary">
+              <View className="flex-row flex-wrap overflow-hidden rounded-xl bg-muted">
                 {stats.map((stat, index) => (
                   <View
                     key={stat.label}
                     accessible
                     className={cn(
-                      "w-1/2 gap-0.5 border-separator px-4 py-3.5",
+                      "w-1/2 gap-0.5 border-border px-4 py-3.5",
                       index % 2 === 1 && "border-s",
                       index > 1 && "border-t"
                     )}
                   >
-                    <Text className="text-sm text-label-secondary">
+                    <Text className="text-sm text-muted-foreground">
                       {stat.label}
                     </Text>
                     <Text
@@ -324,7 +324,7 @@ function DashStore({
                     <Text
                       className={cn(
                         "text-xs",
-                        stat.up ? "text-green" : "text-red"
+                        stat.up ? "text-green-500" : "text-red-500"
                       )}
                     >
                       {`${stat.change} vs. previous period`}
@@ -332,13 +332,13 @@ function DashStore({
                   </View>
                 ))}
               </View>
-              <View className="rounded-xl bg-surface-secondary px-4 pt-3.5 pb-2">
+              <View className="rounded-xl bg-muted px-4 pt-3.5 pb-2">
                 <View className="flex-row items-start gap-2">
                   <View
                     accessibilityLiveRegion="polite"
                     className="min-w-0 flex-1"
                   >
-                    <Text className="text-sm text-label-secondary">
+                    <Text className="text-sm text-muted-foreground">
                       {activeDay ? activeDay.day : "Weekly sales"}
                     </Text>
                     <Text className="text-2xl font-semibold tabular-nums">
@@ -356,7 +356,7 @@ function DashStore({
                         <View
                           className={cn("size-2 rounded-full", series.swatch)}
                         />
-                        <Text className="text-xs text-label-secondary">
+                        <Text className="text-xs text-muted-foreground">
                           {chartConfig[series.key].label}
                         </Text>
                       </View>
@@ -453,8 +453,8 @@ function DashStore({
                             className={cn(
                               "text-xs",
                               order.status === "Returned"
-                                ? "text-danger"
-                                : "text-label-secondary"
+                                ? "text-destructive"
+                                : "text-muted-foreground"
                             )}
                           >
                             {order.status}

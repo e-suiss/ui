@@ -94,25 +94,22 @@ function DatePicker({
         accessibilityLabel={accessibilityLabel}
         accessibilityLabelledBy={accessibilityLabelledBy}
         className={cn(
-          "h-11 flex-row items-center gap-2 self-start rounded-lg border border-transparent bg-control px-3",
-          invalid && "border-danger bg-danger-5 dark:bg-danger-10",
-          disabled && "bg-control-disabled",
+          "h-11 flex-row items-center gap-2 self-start rounded-lg border border-transparent bg-secondary px-3",
+          invalid &&
+            "border-destructive bg-destructive-5 dark:bg-destructive-10",
+          disabled && "opacity-50",
           className
         )}
       >
         <Icon
           as={CalendarBlankIcon}
-          className={cn(
-            "size-4 shrink-0 text-label-secondary",
-            disabled && "text-label-quaternary"
-          )}
+          className="size-4 shrink-0 text-muted-foreground"
         />
         <Text
           numberOfLines={1}
           className={cn(
-            "shrink text-base text-label",
-            !value && "text-label-secondary",
-            disabled && "text-label-quaternary"
+            "shrink text-base text-foreground",
+            !value && "text-muted-foreground"
           )}
         >
           {label}

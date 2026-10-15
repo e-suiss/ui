@@ -37,7 +37,7 @@ function PreviewTrigger({
   ...props
 }: React.ComponentProps<typeof DrawerTrigger>) {
   return (
-    <TextClassContext.Provider value="text-link">
+    <TextClassContext.Provider value="text-primary">
       <DrawerTrigger
         className={(state) =>
           cn("self-start active:opacity-60", resolveClassName(className, state))

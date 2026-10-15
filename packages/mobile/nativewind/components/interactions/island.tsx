@@ -290,8 +290,8 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
         className="w-full flex-row items-center gap-3 p-3.5"
       >
         {notice?.icon ? (
-          <IconClassContext.Provider value="size-6 text-on-media">
-            <View className="size-10 shrink-0 items-center justify-center rounded-xl bg-on-media-15">
+          <IconClassContext.Provider value="size-6 text-white">
+            <View className="size-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
               {notice.icon}
             </View>
           </IconClassContext.Provider>
@@ -299,7 +299,7 @@ function IslandNoticeView({ current }: { current: IslandNotice | null }) {
         <View className="min-w-0 flex-1">
           {wrapText(notice?.title, "text-sm font-semibold", 1)}
           {notice?.description !== undefined
-            ? wrapText(notice.description, "text-sm text-on-media-70", 1)
+            ? wrapText(notice.description, "text-sm text-white/70", 1)
             : null}
         </View>
       </Pressable>
@@ -574,12 +574,12 @@ function Island({
                 onAccessibilityEscape={
                   view === "expanded" ? collapse : undefined
                 }
-                className={cn("overflow-hidden bg-media shadow-xl", className)}
+                className={cn("overflow-hidden bg-black shadow-xl", className)}
                 style={[style, animatedStyle]}
                 {...props}
               >
-                <TextClassContext.Provider value="text-on-media">
-                  <IconClassContext.Provider value="size-5 text-on-media">
+                <TextClassContext.Provider value="text-white">
+                  <IconClassContext.Provider value="size-5 text-white">
                     <IslandStageContext.Provider value={stage}>
                       <IslandStage
                         width={width}
@@ -691,7 +691,7 @@ function IslandRing({
       >
         <Icon
           as={IslandRingShape}
-          className={cn("size-5 text-accent", className)}
+          className={cn("size-5 text-primary", className)}
         />
       </View>
     </IslandRingValueContext.Provider>

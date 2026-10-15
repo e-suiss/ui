@@ -71,7 +71,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Change prices",
     reason: "I need to update the campaign prices.",
     time: "10 min ago",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
     decision: null,
   },
   {
@@ -79,7 +79,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Export customers",
     reason: "I need the customer list for the monthly report.",
     time: "1 hr ago",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
     decision: null,
   },
   {
@@ -87,7 +87,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Issue refunds",
     reason: "So I can refund support tickets myself.",
     time: "Yesterday",
-    tint: "bg-mint dark:bg-mint",
+    tint: "bg-teal-400",
     decision: null,
   },
   {
@@ -95,7 +95,7 @@ const INITIAL_REQUESTS: Request[] = [
     permission: "Publish",
     reason: "I'd like to publish blog posts.",
     time: "2 days ago",
-    tint: "bg-cyan dark:bg-cyan",
+    tint: "bg-cyan-500",
     decision: null,
   },
 ]
@@ -141,7 +141,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -163,7 +163,7 @@ function RequestRow({
       exiting={FadeOut.duration(400).reduceMotion(ReduceMotion.System)}
     >
       <SwipeActions>
-        <SwipeActionsContent className="bg-surface-secondary">
+        <SwipeActionsContent className="bg-muted">
           <View className="flex-row items-start gap-3 ps-4">
             <Avatar className="mt-3 size-[2.125rem]">
               <AvatarFallback className={request.tint}>
@@ -173,20 +173,20 @@ function RequestRow({
             <View
               className={cn(
                 "min-w-0 flex-1 gap-2.5 py-3 pe-4",
-                !first && "border-t border-separator"
+                !first && "border-t border-border"
               )}
             >
               <View className="gap-[0.1875rem]">
                 <View className="flex-row items-center gap-2">
                   <Text className="text-sm font-semibold">{request.name}</Text>
-                  <Text className="text-xs text-label-secondary">
+                  <Text className="text-xs text-muted-foreground">
                     {request.time}
                   </Text>
                 </View>
                 <Text className="text-sm">
                   {`Requests ${request.permission}`}
                 </Text>
-                <Text className="text-sm text-label-secondary">
+                <Text className="text-sm text-muted-foreground">
                   {request.reason}
                 </Text>
               </View>
@@ -196,8 +196,8 @@ function RequestRow({
                   className={cn(
                     "pt-0.5 text-sm font-semibold",
                     request.decision === "approved"
-                      ? "text-success"
-                      : "text-danger"
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-destructive"
                   )}
                 >
                   {request.decision === "approved" ? "Approved" : "Denied"}
@@ -300,7 +300,7 @@ function RolesRequests({
               subtitle={
                 <Text
                   accessibilityLiveRegion="polite"
-                  className="text-sm text-label-secondary"
+                  className="text-sm text-muted-foreground"
                 >
                   {`${open} pending ${open === 1 ? "request" : "requests"}`}
                 </Text>
@@ -312,7 +312,7 @@ function RolesRequests({
               <View className="flex-row items-center gap-2">
                 <Text
                   nativeID="roles-requests-duration"
-                  className="flex-1 text-sm text-label-secondary"
+                  className="flex-1 text-sm text-muted-foreground"
                 >
                   Approval length
                 </Text>
@@ -333,7 +333,7 @@ function RolesRequests({
                 </Picker>
               </View>
               {requests.length > 0 ? (
-                <View className="overflow-hidden rounded-2xl bg-surface-secondary">
+                <View className="overflow-hidden rounded-2xl bg-muted">
                   {requests.map((request, index) => (
                     <RequestRow
                       key={request.name}
@@ -355,7 +355,7 @@ function RolesRequests({
                         <Icon
                           as={CheckIcon}
                           weight="bold"
-                          className="size-10 text-success"
+                          className="size-10 text-green-600 dark:text-green-400"
                         />
                       </EmptyMedia>
                       <EmptyTitle className="text-xl">
@@ -369,7 +369,7 @@ function RolesRequests({
                         onPress={() => setRequests(INITIAL_REQUESTS)}
                         className="active:opacity-60"
                       >
-                        <Text className="text-sm text-link">
+                        <Text className="text-sm text-primary">
                           Reset the sample ›
                         </Text>
                       </Pressable>

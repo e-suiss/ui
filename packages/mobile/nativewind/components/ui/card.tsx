@@ -23,14 +23,14 @@ function Card({
   }) {
   return (
     <CardSizeContext.Provider value={size}>
-      <TextClassContext.Provider value="text-base text-label">
+      <TextClassContext.Provider value="text-base text-foreground">
         <View
           className={cn(
             "flex-col overflow-hidden rounded-2xl",
             size === "sm" ? "gap-4 py-4" : "gap-6 py-6",
             variant === "filled"
-              ? "bg-surface-secondary"
-              : "border border-label-5 bg-surface-raised shadow-md dark:border-label-10",
+              ? "bg-muted"
+              : "border border-foreground-5 bg-card shadow-md dark:border-foreground-10",
             className
           )}
           {...props}
@@ -94,7 +94,7 @@ function CardDescription({
 }: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
   return (
     <Text
-      className={cn("text-sm text-label-secondary", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )

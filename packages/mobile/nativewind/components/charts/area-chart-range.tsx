@@ -48,8 +48,8 @@ const chartData = readings.map(([low, high, average], hour) => ({
 }))
 
 const chartConfig = {
-  range: { label: "Range", color: "red" },
-  average: { label: "Average", color: "red" },
+  range: { label: "Range", color: "red-500" },
+  average: { label: "Average", color: "red-500" },
 } satisfies ChartConfig
 
 const low = Math.min(...chartData.map((point) => point.range[0]))
@@ -59,16 +59,18 @@ export function AreaChartRange() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
-        <Text className="text-sm font-semibold text-danger">Heart rate</Text>
+        <Text className="text-sm font-semibold text-destructive">
+          Heart rate
+        </Text>
         <View className="flex-row items-baseline gap-1">
           <Text className="text-3xl font-semibold tracking-tight tabular-nums">
             {low}–{high}
           </Text>
-          <Text className="text-base font-semibold text-label-secondary">
+          <Text className="text-base font-semibold text-muted-foreground">
             BPM
           </Text>
         </View>
-        <Text className="text-sm text-label-secondary">Today</Text>
+        <Text className="text-sm text-muted-foreground">Today</Text>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -95,7 +97,7 @@ export function AreaChartRange() {
                   indicator="line"
                   formatter={(value, name) => (
                     <View className="w-full flex-row justify-between gap-3">
-                      <Text className="text-label-secondary">
+                      <Text className="text-muted-foreground">
                         {chartConfig[name as keyof typeof chartConfig].label}
                       </Text>
                       <Text className="font-semibold tabular-nums">

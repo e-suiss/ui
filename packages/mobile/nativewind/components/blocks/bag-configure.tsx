@@ -32,19 +32,19 @@ const MODELS: [Model, ...Model[]] = [
 const FINISHES: [Finish, ...Finish[]] = [
   {
     name: "Cosmic Orange",
-    swatch: "bg-orange",
+    swatch: "bg-orange-500",
     image: photo("1714972384975-fbd4f19b1bb3"),
     alt: "An orange phone on a warm gradient",
   },
   {
     name: "Deep Blue",
-    swatch: "bg-indigo",
+    swatch: "bg-indigo-500",
     image: photo("1714578187196-29775454aa39"),
     alt: "A phone floating among blue spheres",
   },
   {
     name: "Silver",
-    swatch: "bg-gray",
+    swatch: "bg-zinc-500",
     image: photo("1664883410931-2edffc8be5e6"),
     alt: "A silver phone on a light grey background",
   },
@@ -74,10 +74,10 @@ function money(value: number, digits = 2) {
   }
 }
 
-const CHOICE_CLASS = "rounded-[0.875rem] active:bg-item-pressed"
+const CHOICE_CLASS = "rounded-[0.875rem] active:opacity-80"
 
 const choiceBorder = (checked: boolean) =>
-  checked ? "border-2 border-accent" : "border border-separator-strong"
+  checked ? "border-2 border-primary" : "border border-input"
 
 function FinishImage({ finish, active }: { finish: Finish; active: boolean }) {
   const progress = useSharedValue(active ? 1 : 0)
@@ -136,7 +136,7 @@ function BagConfigure({
   return (
     <Screen edges={["top", "right", "left"]}>
       <ScrollView contentContainerClassName="gap-4 px-5 pt-5 pb-8">
-        <View className="aspect-[4/3] overflow-hidden rounded-[1.375rem] bg-surface-secondary">
+        <View className="aspect-[4/3] overflow-hidden rounded-[1.375rem] bg-muted">
           {FINISHES.map((item) => (
             <FinishImage
               key={item.name}
@@ -145,13 +145,13 @@ function BagConfigure({
             />
           ))}
         </View>
-        <Text className="mt-1 text-xs font-semibold text-orange">New</Text>
+        <Text className="mt-1 text-xs font-semibold text-orange-500">New</Text>
         <Text role="heading" className="-mt-2.5 text-3xl font-semibold">
           Buy Phone Pro
         </Text>
         <Text className="text-lg font-semibold">
           Model.{" "}
-          <Text className="text-lg font-semibold text-label-secondary">
+          <Text className="text-lg font-semibold text-muted-foreground">
             Which one is right for you?
           </Text>
         </Text>
@@ -181,7 +181,7 @@ function BagConfigure({
                 <Text className="flex-1 text-base font-semibold">
                   {item.name}
                 </Text>
-                <Text className="text-sm text-label-secondary">
+                <Text className="text-sm text-muted-foreground">
                   From {money(item.price, 0)}
                 </Text>
               </Pressable>
@@ -190,7 +190,7 @@ function BagConfigure({
         </View>
         <Text className="text-lg font-semibold">
           Finish.{" "}
-          <Text className="text-lg font-semibold text-label-secondary">
+          <Text className="text-lg font-semibold text-muted-foreground">
             {finish}
           </Text>
         </Text>
@@ -210,13 +210,13 @@ function BagConfigure({
               className={(state) =>
                 cn(
                   "size-10 min-w-0 rounded-full border-2 bg-transparent p-0 active:bg-transparent",
-                  state.pressed ? "border-accent" : "border-transparent"
+                  state.pressed ? "border-primary" : "border-transparent"
                 )
               }
             >
               <View
                 className={cn(
-                  "size-[1.875rem] rounded-full border border-label-15",
+                  "size-[1.875rem] rounded-full border border-foreground-15",
                   item.swatch
                 )}
               />
@@ -252,7 +252,7 @@ function BagConfigure({
                 </Text>
                 <Text
                   numberOfLines={1}
-                  className="text-2xs text-label-secondary"
+                  className="text-2xs text-muted-foreground"
                 >
                   {item.extra ? `+${money(item.extra, 0)}` : "Included"}
                 </Text>
@@ -267,7 +267,7 @@ function BagConfigure({
             <Text className="text-2xl font-semibold tabular-nums">
               {money(price)}
             </Text>
-            <Text className="text-xs text-label-secondary">
+            <Text className="text-xs text-muted-foreground">
               or {money(price / 12)}/mo. for 12 mo.
             </Text>
           </View>

@@ -79,8 +79,8 @@ function PullToRefreshControl({
   const { refreshing, refresh } = useRefresh(onRefresh)
   return (
     <StyledRefreshIndicator
-      colorClassName="text-label-secondary"
-      progressBackgroundColorClassName="text-surface-raised"
+      colorClassName="text-muted-foreground"
+      progressBackgroundColorClassName="text-card"
       accessibilityLabel={refreshing ? "Refreshing" : undefined}
       refreshing={refreshingProp ?? refreshing}
       onRefresh={refresh}
@@ -104,8 +104,8 @@ function PullToRefresh({
       className={cn("flex-1", className)}
       refreshControl={
         <StyledRefreshIndicator
-          colorClassName="text-label-secondary"
-          progressBackgroundColorClassName="text-surface-raised"
+          colorClassName="text-muted-foreground"
+          progressBackgroundColorClassName="text-card"
           refreshing={refreshing}
           onRefresh={refresh}
         />

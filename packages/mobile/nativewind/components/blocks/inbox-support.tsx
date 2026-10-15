@@ -49,7 +49,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Open",
     priority: "High",
     requester: "Jamie Rivera",
-    tint: "bg-orange dark:bg-orange",
+    tint: "bg-orange-500",
   },
   {
     id: "#4820",
@@ -58,7 +58,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Pending",
     priority: "Medium",
     requester: "Morgan Lee",
-    tint: "bg-cyan dark:bg-cyan",
+    tint: "bg-cyan-500",
   },
   {
     id: "#4819",
@@ -67,7 +67,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Open",
     priority: "Low",
     requester: "Avery Brooks",
-    tint: "bg-pink dark:bg-pink",
+    tint: "bg-pink-500",
   },
   {
     id: "#4818",
@@ -76,7 +76,7 @@ const INITIAL_TICKETS: Ticket[] = [
     status: "Solved",
     priority: "Medium",
     requester: "Taylor Kim",
-    tint: "bg-green dark:bg-green",
+    tint: "bg-green-500",
   },
 ]
 
@@ -90,9 +90,15 @@ const VIEWS: { value: Queue; icon: PhosphorIcon }[] = [
 const STATUSES: Status[] = ["Open", "Pending", "Solved"]
 
 const PRIORITY_CLASS: Record<Priority, { box: string; text: string }> = {
-  High: { box: "bg-danger-surface", text: "text-danger" },
-  Medium: { box: "bg-warning-surface", text: "text-warning" },
-  Low: { box: "bg-control", text: "text-label-secondary" },
+  High: {
+    box: "bg-destructive-10 dark:bg-destructive-20",
+    text: "text-destructive",
+  },
+  Medium: {
+    box: "bg-amber-500/10 dark:bg-amber-500/20",
+    text: "text-amber-600 dark:text-amber-400",
+  },
+  Low: { box: "bg-secondary", text: "text-muted-foreground" },
 }
 
 const initials = (name: string) =>
@@ -136,7 +142,7 @@ function TicketDetail({
       entering={FadeInDown.duration(800).reduceMotion(ReduceMotion.System)}
       className="gap-4"
     >
-      <Text className="text-sm text-label-secondary">
+      <Text className="text-sm text-muted-foreground">
         {`${ticket.id} · ${ticket.device}`}
       </Text>
       <ToggleGroup
@@ -161,10 +167,10 @@ function TicketDetail({
         <Requester ticket={ticket} size="default" className="size-[2.125rem]" />
         <View>
           <Text className="text-sm font-semibold">{ticket.requester}</Text>
-          <Text className="text-xs text-label-secondary">Today 8:12 AM</Text>
+          <Text className="text-xs text-muted-foreground">Today 8:12 AM</Text>
         </View>
       </View>
-      <View className="max-w-lg self-start rounded-2xl rounded-ss-sm bg-surface-secondary px-3.5 py-3">
+      <View className="max-w-lg self-start rounded-2xl rounded-ss-sm bg-muted px-3.5 py-3">
         <Text className="text-base">
           Hi, this started right after the latest update. I tried restarting but
           it keeps happening. Can you help?
@@ -240,7 +246,7 @@ function InboxSupport({
       >
         <SplitViewSidebar
           title="Support"
-          className={wide ? "min-h-full bg-surface-secondary" : "px-4 pb-8"}
+          className={wide ? "min-h-full bg-muted" : "px-4 pb-8"}
         >
           {VIEWS.map((item) => (
             <SplitViewItem
@@ -250,12 +256,14 @@ function InboxSupport({
                 setView(item.value)
                 onViewChange?.(item.value)
               }}
-              className={wide && view === item.value ? "bg-control" : undefined}
+              className={
+                wide && view === item.value ? "bg-secondary" : undefined
+              }
             >
               <View className="flex-row items-center gap-2.5">
-                <Icon as={item.icon} className="size-5 text-accent" />
+                <Icon as={item.icon} className="size-5 text-primary" />
                 <Text className="flex-1">{item.value}</Text>
-                <Text className="text-xs text-label-secondary tabular-nums">
+                <Text className="text-xs text-muted-foreground tabular-nums">
                   {String(
                     item.value === "All"
                       ? tickets.length
@@ -281,7 +289,7 @@ function InboxSupport({
                 className="py-3"
               >
                 <View className="flex-row items-center gap-2">
-                  <Text className="flex-1 text-xs text-label-secondary">
+                  <Text className="flex-1 text-xs text-muted-foreground">
                     {`${ticket.id} · ${ticket.device}`}
                   </Text>
                   <View className={cn("rounded-md px-2 py-0.5", priority.box)}>
@@ -295,7 +303,7 @@ function InboxSupport({
                 <Text className="text-base font-semibold">{ticket.title}</Text>
                 <View className="mt-1 flex-row items-center gap-1.5">
                   <Requester ticket={ticket} size="sm" className="size-5" />
-                  <Text className="text-xs text-label-secondary">
+                  <Text className="text-xs text-muted-foreground">
                     {ticket.requester}
                   </Text>
                 </View>
@@ -303,7 +311,7 @@ function InboxSupport({
             )
           })}
           {list.length === 0 ? (
-            <Text className="p-6 text-center text-sm text-label-secondary">
+            <Text className="p-6 text-center text-sm text-muted-foreground">
               No tickets
             </Text>
           ) : null}

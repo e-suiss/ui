@@ -59,13 +59,17 @@ function PermissionPrimer({
     <Screen>
       <ScrollView contentContainerClassName="grow justify-center gap-8 px-6 py-10">
         <View className="items-center gap-3">
-          <View className="mb-3 size-20 items-center justify-center rounded-3xl bg-accent">
-            <Icon as={icon} weight="fill" className="size-10 text-on-accent" />
+          <View className="mb-3 size-20 items-center justify-center rounded-3xl bg-primary">
+            <Icon
+              as={icon}
+              weight="fill"
+              className="size-10 text-primary-foreground"
+            />
           </View>
           <Text role="heading" className="text-center text-3xl font-bold">
             {title}
           </Text>
-          <Text className="text-center text-lg text-label-secondary">
+          <Text className="text-center text-lg text-muted-foreground">
             {description}
           </Text>
         </View>
@@ -76,15 +80,15 @@ function PermissionPrimer({
               role="listitem"
               className="flex-row items-start gap-4"
             >
-              <View className="size-10 items-center justify-center rounded-xl bg-accent-surface">
+              <View className="size-10 items-center justify-center rounded-xl bg-primary-10 dark:bg-primary-20">
                 <Icon
                   as={benefit.icon}
-                  className="size-[1.375rem] text-accent"
+                  className="size-[1.375rem] text-primary"
                 />
               </View>
               <View className="flex-1 gap-0.5">
                 <Text className="text-base font-semibold">{benefit.title}</Text>
-                <Text className="text-sm text-label-secondary">
+                <Text className="text-sm text-muted-foreground">
                   {benefit.description}
                 </Text>
               </View>

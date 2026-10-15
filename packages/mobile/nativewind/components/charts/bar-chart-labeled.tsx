@@ -26,7 +26,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
+  desktop: { label: "Desktop", color: "chart-1" },
 } satisfies ChartConfig
 
 export function BarChartLabeled() {
@@ -56,7 +56,7 @@ export function BarChartLabeled() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="blue" radius={6} maxBarSize={36}>
+            <Bar dataKey="desktop" fill="chart-1" radius={6} maxBarSize={36}>
               <LabelList position="top" offset={8} />
             </Bar>
           </BarChart>

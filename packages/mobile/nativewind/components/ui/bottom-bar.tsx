@@ -48,8 +48,8 @@ function BottomBar({
   return (
     <AnimatedView
       className={cn(
-        "bg-surface",
-        separator && "border-t border-separator",
+        "bg-background",
+        separator && "border-t border-border",
         className
       )}
       style={[animatedStyle, style]}

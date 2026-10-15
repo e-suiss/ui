@@ -134,7 +134,7 @@ function Toast({
           toast={toastItem}
           className={(state) =>
             cn(
-              "w-full rounded-xl border border-label-5 bg-surface-raised shadow-[0_8px_32px_rgba(0,0,0,0.14)] dark:border-transparent dark:shadow-lg",
+              "w-full rounded-xl border border-foreground-5 bg-popover shadow-[0_8px_32px_rgba(0,0,0,0.14)] dark:border-transparent dark:shadow-lg",
               resolveClassName(className, state)
             )
           }
@@ -185,7 +185,7 @@ function ToastTitle({
     <ToastPrimitive.Title
       className={(state) =>
         cn(
-          "text-sm font-semibold text-label",
+          "text-sm font-semibold text-foreground",
           resolveClassName(className, state)
         )
       }
@@ -201,7 +201,7 @@ function ToastDescription({
   return (
     <ToastPrimitive.Description
       className={(state) =>
-        cn("text-sm text-label-secondary", resolveClassName(className, state))
+        cn("text-sm text-muted-foreground", resolveClassName(className, state))
       }
       {...props}
     />
@@ -246,7 +246,7 @@ function ToastClose({
       className={(state) => cn("shrink-0", resolveClassName(className, state))}
       {...props}
     >
-      {children ?? <Icon as={XIcon} className="size-4 text-label-secondary" />}
+      {children ?? <Icon as={XIcon} className="size-4 text-muted-foreground" />}
     </ToastPrimitive.Close>
   )
 }
@@ -258,10 +258,10 @@ function toastIcon(type: string | undefined) {
 }
 
 const TINT: Record<string, string> = {
-  success: "bg-green",
-  info: "bg-accent",
-  warning: "bg-orange",
-  error: "bg-danger",
+  success: "bg-green-500",
+  info: "bg-primary",
+  warning: "bg-orange-500",
+  error: "bg-destructive",
 }
 
 function ToastIcon({ type }: { type: string | undefined }) {
@@ -271,7 +271,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
         accessible={false}
         className="size-8 shrink-0 items-center justify-center"
       >
-        <ActivityIndicator className="text-accent" />
+        <ActivityIndicator className="text-primary" />
       </View>
     )
   }
@@ -291,7 +291,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
         <Icon
           as={IconComponent}
           weight="bold"
-          className="size-4 text-surface"
+          className="size-4 text-background"
         />
       </View>
     </View>

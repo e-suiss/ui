@@ -71,7 +71,7 @@ const THREADS: { name: string; tint: string; time: string; lines: string[] }[] =
   [
     {
       name: "Riley Chen",
-      tint: "bg-green dark:bg-green",
+      tint: "bg-green-500",
       time: "9:41 AM",
       lines: [
         "them:Is the weekend trip to the coast still on?",
@@ -82,7 +82,7 @@ const THREADS: { name: string; tint: string; time: string; lines: string[] }[] =
     },
     {
       name: "Morgan Lee",
-      tint: "bg-orange dark:bg-orange",
+      tint: "bg-orange-500",
       time: "8:12 AM",
       lines: [
         "them:I sent the deck, can you take a look?",
@@ -91,7 +91,7 @@ const THREADS: { name: string; tint: string; time: string; lines: string[] }[] =
     },
     {
       name: "Family",
-      tint: "bg-purple dark:bg-purple",
+      tint: "bg-purple-500",
       time: "Yesterday",
       lines: [
         "them:Is everyone coming for Sunday brunch?",
@@ -101,7 +101,7 @@ const THREADS: { name: string; tint: string; time: string; lines: string[] }[] =
     },
     {
       name: "Taylor Kim",
-      tint: "bg-blue dark:bg-blue",
+      tint: "bg-blue-500",
       time: "Monday",
       lines: ["them:What time does the game start?"],
     },
@@ -162,7 +162,7 @@ function TypingDot({ index }: { index: number }) {
 
   return (
     <AnimatedView
-      className="size-2 rounded-full bg-label-tertiary"
+      className="size-2 rounded-full bg-muted-foreground"
       style={animatedStyle}
     />
   )
@@ -229,7 +229,7 @@ function Composer({
           <Icon
             as={PlusIcon}
             weight="bold"
-            className="size-[1.125rem] text-label-secondary"
+            className="size-[1.125rem] text-muted-foreground"
           />
         </Button>
         <InputGroup className="h-9 flex-1 rounded-full">
@@ -373,7 +373,7 @@ function ChatConversations({
     return (
       <Screen edges={["top", "right", "left"]}>
         <MessageScrollerProvider key={thread.name}>
-          <Header className="h-14 border-b border-separator">
+          <Header className="h-14 border-b border-border">
             <HeaderBack onPress={() => setSelected(null)}>Messages</HeaderBack>
             <HeaderTitle className="flex-row items-center gap-2.5">
               <ThreadAvatar thread={thread} className="size-[1.875rem]" />
@@ -383,7 +383,7 @@ function ChatConversations({
                 </Text>
                 <Text
                   accessibilityLiveRegion="polite"
-                  className="text-2xs text-label-secondary"
+                  className="text-2xs text-muted-foreground"
                 >
                   {typing === thread.name ? "typing…" : "Message"}
                 </Text>
@@ -396,7 +396,7 @@ function ChatConversations({
                 accessibilityLabel="Video call"
                 onPress={() => onVideoCall?.(thread.name)}
               >
-                <Icon as={VideoCameraIcon} className="size-5 text-accent" />
+                <Icon as={VideoCameraIcon} className="size-5 text-primary" />
               </Button>
               <Button
                 variant="ghost"
@@ -404,7 +404,7 @@ function ChatConversations({
                 accessibilityLabel="Details"
                 onPress={() => onDetails?.(thread.name)}
               >
-                <Icon as={InfoIcon} className="size-5 text-accent" />
+                <Icon as={InfoIcon} className="size-5 text-primary" />
               </Button>
             </HeaderActions>
           </Header>
@@ -418,7 +418,7 @@ function ChatConversations({
                 if (item.kind === "stamp") {
                   return (
                     <MessageScrollerItem>
-                      <Text className="mt-1 mb-2.5 text-center text-2xs text-label-secondary">
+                      <Text className="mt-1 mb-2.5 text-center text-2xs text-muted-foreground">
                         Today 9:30 AM
                       </Text>
                     </MessageScrollerItem>
@@ -453,14 +453,14 @@ function ChatConversations({
             accessibilityLabel="New message"
             onPress={onNewMessage}
           >
-            <Icon as={NotePencilIcon} className="size-5 text-accent" />
+            <Icon as={NotePencilIcon} className="size-5 text-primary" />
           </Button>
         </HeaderActions>
       </Header>
       <HeaderScrollView scroll={scroll}>
         <HeaderLargeTitle>Messages</HeaderLargeTitle>
         {threads.length === 0 ? (
-          <Text className="px-4 pt-10 text-center text-base text-label-secondary">
+          <Text className="px-4 pt-10 text-center text-base text-muted-foreground">
             No Messages
           </Text>
         ) : null}
@@ -469,14 +469,14 @@ function ChatConversations({
           return (
             <React.Fragment key={item.name}>
               {index > 0 ? (
-                <View className="ms-[4.5rem] h-px bg-separator" />
+                <View className="ms-[4.5rem] h-px bg-border" />
               ) : null}
               <SwipeActions>
                 <SwipeActionsContent>
                   <Pressable
                     role="button"
                     onPress={() => setSelected(item.name)}
-                    className="flex-row items-center gap-3 px-4 py-2.5 active:bg-item-pressed"
+                    className="flex-row items-center gap-3 px-4 py-2.5 active:opacity-80"
                   >
                     <ThreadAvatar thread={item} className="size-11" />
                     <View className="flex-1 gap-0.5">
@@ -487,13 +487,13 @@ function ChatConversations({
                         >
                           {item.name}
                         </Text>
-                        <Text className="text-sm text-label-secondary">
+                        <Text className="text-sm text-muted-foreground">
                           {item.time}
                         </Text>
                       </View>
                       <Text
                         numberOfLines={1}
-                        className="text-sm text-label-secondary"
+                        className="text-sm text-muted-foreground"
                       >
                         {last?.text}
                       </Text>

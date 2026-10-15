@@ -1,13 +1,43 @@
 import { readFileSync } from "node:fs"
+import { createRequire } from "node:module"
 import path from "node:path"
 
-const HEX_COLOR = /^#([\da-f]{6})$/i
+const HEX_COLOR = /^#([\da-f]{3}|[\da-f]{6})$/i
 const RGB_COLOR = /^rgb\(\s*(\d+)\s+(\d+)\s+(\d+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
 const OKLCH_COLOR =
-  /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
+  /^oklch\(\s*([\d.]+%?)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+%?))?\s*\)$/
+const PALETTE_COLOR = /--color-([a-z]+(?:-\d+)?):\s*([^;]+);/g
 
 const TOKENS = path.join(import.meta.dirname, "../../tokens/tokens.json")
+const TAILWIND_THEME = createRequire(import.meta.url).resolve(
+  "tailwindcss/theme.css"
+)
 const ROOT_FONT_SIZE = 16
+const PALETTE = [
+  "black",
+  "white",
+  "red-500",
+  "orange-500",
+  "amber-400",
+  "amber-500",
+  "amber-600",
+  "yellow-500",
+  "green-400",
+  "green-500",
+  "green-600",
+  "teal-400",
+  "teal-500",
+  "cyan-500",
+  "blue-500",
+  "indigo-500",
+  "purple-500",
+  "pink-500",
+  "zinc-500",
+]
+
+function parseLightness(value) {
+  return value.endsWith("%") ? Number(value.slice(0, -1)) / 100 : Number(value)
+}
 
 function parseAlpha(value) {
   if (value === undefined) return 1
@@ -40,7 +70,8 @@ function oklchToRgb(lightness, chroma, hue) {
 function parseColor(value) {
   const hex = value.match(HEX_COLOR)
   if (hex) {
-    const channels = hex[1]
+    const digits = hex[1].length === 3 ? hex[1].replace(/./g, "$&$&") : hex[1]
+    const channels = digits
       .match(/../g)
       .map((part) => Number.parseInt(part, 16))
     return { channels, alpha: 1 }
@@ -53,7 +84,7 @@ function parseColor(value) {
   if (oklch) {
     return {
       channels: oklchToRgb(
-        Number(oklch[1]),
+        parseLightness(oklch[1]),
         Number(oklch[2]),
         Number(oklch[3])
       ),
@@ -81,6 +112,20 @@ function toPixels(value) {
     return round(Number.parseFloat(value) * ROOT_FONT_SIZE)
   if (value.endsWith("px")) return round(Number.parseFloat(value))
   return round(Number.parseFloat(value))
+}
+
+function loadPalette() {
+  const values = Object.fromEntries(
+    [...readFileSync(TAILWIND_THEME, "utf8").matchAll(PALETTE_COLOR)].map(
+      (match) => [match[1], match[2].trim()]
+    )
+  )
+  return Object.fromEntries(
+    PALETTE.map((name) => {
+      if (!values[name]) throw new Error(`Unknown palette color "${name}"`)
+      return [name, values[name]]
+    })
+  )
 }
 
 function loadTokens() {
@@ -115,6 +160,7 @@ function loadTokens() {
     text,
     radius,
     shadow: { ...tokens.shadow },
+    palette: loadPalette(),
     source: tokens,
   }
 }

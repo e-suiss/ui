@@ -45,7 +45,7 @@ function SwitchThumb({
   return (
     <SwitchPrimitives.Thumb
       className={cn(
-        "rounded-full bg-surface shadow dark:bg-label",
+        "rounded-full bg-background shadow dark:bg-foreground",
         size === "sm" ? "h-4" : "h-5"
       )}
       render={<Animated.View style={animatedStyle} />}
@@ -71,16 +71,11 @@ function Switch({
         cn(
           "shrink-0 flex-row items-center rounded-full border-2",
           size === "sm" ? "h-5 w-11" : "h-6 w-[3.25rem]",
-          state.checked &&
-            state.disabled &&
-            "border-transparent bg-accent-disabled",
-          state.checked && !state.disabled && "border-accent bg-accent",
-          !state.checked &&
-            state.disabled &&
-            "border-transparent bg-control-disabled",
-          !(state.checked || state.disabled) &&
-            "border-transparent bg-label-quaternary",
-          invalid && !state.disabled && "border-danger",
+          state.checked
+            ? "border-primary bg-primary"
+            : "border-transparent bg-input",
+          state.disabled && "opacity-50",
+          invalid && !state.disabled && "border-destructive",
           resolveClassName(className, state)
         )
       }

@@ -59,27 +59,27 @@ const STORAGE: Record<
 }
 
 const chartConfig = {
-  apps: { label: "Apps", color: "red" },
-  photos: { label: "Photos", color: "orange" },
-  system: { label: "System", color: "gray" },
-  backups: { label: "Backups", color: "purple" },
-  drive: { label: "Drive", color: "blue" },
-  messages: { label: "Messages", color: "green" },
-  mail: { label: "Mail", color: "cyan" },
-  other: { label: "Other", color: "yellow" },
-  free: { label: "Free", color: "control" },
+  apps: { label: "Apps", color: "red-500" },
+  photos: { label: "Photos", color: "chart-4" },
+  system: { label: "System", color: "chart-5" },
+  backups: { label: "Backups", color: "purple-500" },
+  drive: { label: "Drive", color: "chart-1" },
+  messages: { label: "Messages", color: "green-500" },
+  mail: { label: "Mail", color: "cyan-500" },
+  other: { label: "Other", color: "yellow-500" },
+  free: { label: "Free", color: "secondary" },
 } satisfies ChartConfig
 
 const SWATCH: Record<Kind, string> = {
-  apps: "bg-red",
-  photos: "bg-orange",
-  system: "bg-gray",
-  backups: "bg-purple",
-  drive: "bg-blue",
-  messages: "bg-green",
-  mail: "bg-cyan",
-  other: "bg-yellow",
-  free: "bg-control border border-separator-strong",
+  apps: "bg-red-500",
+  photos: "bg-orange-500",
+  system: "bg-zinc-500",
+  backups: "bg-purple-500",
+  drive: "bg-blue-500",
+  messages: "bg-green-500",
+  mail: "bg-cyan-500",
+  other: "bg-yellow-500",
+  free: "bg-secondary border border-input",
 }
 
 const LIFT = 7
@@ -123,7 +123,7 @@ export function PieChartInteractive() {
           <Text className="text-lg font-semibold">
             {`${STORAGE[device].label} storage`}
           </Text>
-          <Text className="text-sm text-label-secondary tabular-nums">
+          <Text className="text-sm text-muted-foreground tabular-nums">
             {`${formatSize(used)} GB of ${STORAGE[device].total} GB used`}
           </Text>
         </View>
@@ -148,7 +148,7 @@ export function PieChartInteractive() {
         <View
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
-          className="h-2.5 flex-row overflow-hidden rounded-full bg-control"
+          className="h-2.5 flex-row overflow-hidden rounded-full bg-secondary"
         >
           {KINDS.filter((kind) => kind !== "free").map((kind) => {
             const share = (Math.max(0, sizeOf(kind)) / total) * 100
@@ -175,13 +175,13 @@ export function PieChartInteractive() {
               accessibilityLiveRegion="polite"
               className="absolute inset-0 items-center justify-center"
             >
-              <Text className="text-sm text-label-secondary">
+              <Text className="text-sm text-muted-foreground">
                 {active ? chartConfig[active].label : "Used"}
               </Text>
               <Text className="text-3xl font-semibold tracking-tight tabular-nums">
                 {`${formatSize(activeValue)} GB`}
               </Text>
-              <Text className="text-sm text-label-secondary tabular-nums">
+              <Text className="text-sm text-muted-foreground tabular-nums">
                 {`${Math.round((activeValue / total) * 100)}%`}
               </Text>
             </View>
@@ -205,7 +205,7 @@ export function PieChartInteractive() {
                   outerRadius="88%"
                   startAngle={90}
                   endAngle={-270}
-                  stroke="surface-secondary"
+                  stroke="muted"
                   strokeWidth={3}
                   cornerRadius={4}
                   shape={(sector, index) => ({
@@ -228,7 +228,7 @@ export function PieChartInteractive() {
                 }
                 className={cn(
                   "flex-row items-center gap-2.5 rounded-lg px-2 py-[0.5625rem]",
-                  active === kind && "bg-control"
+                  active === kind && "bg-secondary"
                 )}
               >
                 <View
@@ -237,7 +237,7 @@ export function PieChartInteractive() {
                 <Text className="grow text-base">
                   {chartConfig[kind].label}
                 </Text>
-                <Text className="text-base text-label-secondary tabular-nums">
+                <Text className="text-base text-muted-foreground tabular-nums">
                   {`${formatSize(Math.max(0, sizeOf(kind)))} GB`}
                 </Text>
               </Pressable>

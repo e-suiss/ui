@@ -294,9 +294,20 @@ ${lines({ ...solid(theme.dark), ...tokenValues("dark") })}
 }
 
 function buildConfig(theme, tokens) {
-  const colors = [...Object.keys(theme.light), ...tokens.map(([name]) => name)]
-    .map((name) => `        "${name}": "var(--${name})",`)
-    .join("\n")
+  const hues = new Map()
+  for (const [name, value] of Object.entries(theme.palette)) {
+    const [hue, shade] = name.split("-")
+    if (!shade) continue
+    hues.set(hue, [...(hues.get(hue) ?? []), `${shade}: "${toRgb(value)}"`])
+  }
+  const colors = [
+    ...[...Object.keys(theme.light), ...tokens.map(([name]) => name)].map(
+      (name) => `        "${name}": "var(--${name})",`
+    ),
+    ...[...hues].map(
+      ([hue, shades]) => `        ${hue}: { ${shades.join(", ")} },`
+    ),
+  ].join("\n")
   const radius = Object.entries(theme.radius)
     .map(([name, value]) => `        "${name}": "${value}px",`)
     .join("\n")

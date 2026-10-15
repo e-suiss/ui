@@ -135,17 +135,17 @@ function SignupSteps({
             )}
             className="items-center gap-3.5"
           >
-            <View className="size-[4.75rem] items-center justify-center rounded-full bg-success">
+            <View className="size-[4.75rem] items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-[2.375rem] text-on-accent"
+                className="size-[2.375rem] text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Welcome, {values.name.split(" ")[0]}.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               Your account is ready. Verify {values.email} to finish.
             </Text>
             <Pressable
@@ -157,7 +157,7 @@ function SignupSteps({
               }}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -179,7 +179,7 @@ function SignupSteps({
             className={cn(
               "h-1.5 rounded-full",
               position === index ? "w-7" : "w-1.5",
-              position <= index ? "bg-accent" : "bg-control"
+              position <= index ? "bg-primary" : "bg-secondary"
             )}
           />
         ))}
@@ -190,16 +190,16 @@ function SignupSteps({
           entering={direction > 0 ? FROM_END : FROM_START}
           className="gap-3.5"
         >
-          <Text className="text-center text-sm font-semibold text-label-secondary">
+          <Text className="text-center text-sm font-semibold text-muted-foreground">
             Step {index + 1} of {STEPS.length}
           </Text>
           <Text role="heading" className="text-center text-3xl font-semibold">
             {step.title}
           </Text>
-          <Text className="text-center text-lg text-label-secondary">
+          <Text className="text-center text-lg text-muted-foreground">
             {step.description}
           </Text>
-          <View className="mt-4 overflow-hidden rounded-xl border border-separator-strong bg-surface">
+          <View className="mt-4 overflow-hidden rounded-xl border border-input bg-background">
             <Input
               {...step.input}
               autoFocus={index > 0}
@@ -232,8 +232,8 @@ function SignupSteps({
                       className={cn(
                         "size-4 items-center justify-center rounded-full border-[1.5px]",
                         met
-                          ? "border-transparent bg-success"
-                          : "border-label-quaternary"
+                          ? "border-transparent bg-green-500"
+                          : "border-border"
                       )}
                     >
                       {met ? (
@@ -245,7 +245,7 @@ function SignupSteps({
                           <Icon
                             as={CheckIcon}
                             weight="bold"
-                            className="size-2.5 text-on-accent"
+                            className="size-2.5 text-primary-foreground"
                           />
                         </AnimatedView>
                       ) : null}
@@ -253,7 +253,7 @@ function SignupSteps({
                     <Text
                       className={cn(
                         "text-sm",
-                        met ? "text-label" : "text-label-secondary"
+                        met ? "text-foreground" : "text-muted-foreground"
                       )}
                     >
                       {rule.label}

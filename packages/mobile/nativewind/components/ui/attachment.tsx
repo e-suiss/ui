@@ -138,7 +138,10 @@ function Attachment({
   return (
     <AttachmentContext.Provider value={context}>
       <TextClassContext.Provider
-        value={cn("text-label", size === "default" ? "text-sm" : "text-xs")}
+        value={cn(
+          "text-foreground",
+          size === "default" ? "text-sm" : "text-xs"
+        )}
       >
         <View
           className={cn(
@@ -155,8 +158,8 @@ function Attachment({
                 : hasMedia && SIZE_WITH_MEDIA[size]),
             grouped ? "w-full rounded-none" : "self-start",
             !grouped && state === "idle"
-              ? "border border-dashed border-separator-strong"
-              : "bg-surface-secondary",
+              ? "border border-dashed border-input"
+              : "bg-muted",
             className
           )}
           {...props}
@@ -164,7 +167,7 @@ function Attachment({
           {grouped && groupIndex > 0 ? (
             <View
               className={cn(
-                "absolute end-0 top-0 h-px bg-separator",
+                "absolute end-0 top-0 h-px bg-border",
                 SEPARATOR_START[size][hasMedia ? 1 : 0]
               )}
             />
@@ -189,16 +192,16 @@ function AttachmentMedia({
         vertical && "size-6",
         !vertical && size === "xs" && "size-3.5",
         !vertical && size !== "xs" && "size-4",
-        variant === "icon" && "text-label-secondary"
+        variant === "icon" && "text-muted-foreground"
       )}
     >
       <View
         className={cn(
-          "relative shrink-0 items-center justify-center overflow-hidden rounded-md bg-surface-secondary",
+          "relative shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted",
           MEDIA_SIZE[size],
           vertical && "w-full",
           variant !== "image" &&
-            "rounded-sm border border-separator bg-surface",
+            "rounded-sm border border-border bg-background",
           variant === "document" && "justify-end pb-1.5",
           vertical && variant !== "document" && "aspect-square h-auto",
           className
@@ -211,9 +214,9 @@ function AttachmentMedia({
 
 function AttachmentLabel({ className, children, ...props }: ViewProps) {
   return (
-    <TextClassContext.Provider value="text-[0.5625rem] leading-[0.6875rem] font-semibold uppercase text-on-accent">
+    <TextClassContext.Provider value="text-[0.5625rem] leading-[0.6875rem] font-semibold uppercase text-primary-foreground">
       <View
-        className={cn("rounded-xs bg-accent px-1 py-0.5", className)}
+        className={cn("rounded-xs bg-primary px-1 py-0.5", className)}
         {...props}
       >
         {wrapText(children, LABEL_TEXT)}
@@ -272,9 +275,9 @@ function AttachmentDescription({
     <Text
       numberOfLines={numberOfLines}
       className={cn(
-        "mt-0.5 min-w-0 max-w-full text-label-secondary",
+        "mt-0.5 min-w-0 max-w-full text-muted-foreground",
         size === "default" ? "text-sm" : "text-xs",
-        state === "error" && "text-danger",
+        state === "error" && "text-destructive",
         className
       )}
       {...props}
@@ -293,9 +296,9 @@ function AttachmentProgress({
       }
       {...props}
     >
-      <ProgressValue className="absolute end-0 bottom-full mb-2 text-sm text-label-secondary" />
-      <ProgressTrack className="h-1 rounded-full bg-label-10">
-        <ProgressIndicator className="rounded-full bg-accent" />
+      <ProgressValue className="absolute end-0 bottom-full mb-2 text-sm text-muted-foreground" />
+      <ProgressTrack className="h-1 rounded-full bg-foreground-10">
+        <ProgressIndicator className="rounded-full bg-primary" />
       </ProgressTrack>
     </ProgressPrimitive.Root>
   )
@@ -335,7 +338,6 @@ function AttachmentAction({
   const resolvedSize = size ?? (isText ? "sm" : "icon-xs")
   const [actionSize, slop] = ACTION_SIZE[attachmentSize]
   const vertical = orientation === "vertical"
-  const disabled = Boolean(props.disabled)
   return (
     <Button
       variant={variant}
@@ -343,16 +345,16 @@ function AttachmentAction({
       hitSlop={hitSlop ?? (isText ? undefined : slop)}
       className={cn(
         isText ? "h-auto px-0" : actionSize,
-        !isText && vertical && "bg-scrim active:bg-scrim",
+        !isText && vertical && "bg-black/50",
         className
       )}
       {...props}
     >
       <TextClassContext.Provider
         value={cn(
-          buttonTextVariants({ variant, size: resolvedSize, disabled }),
+          buttonTextVariants({ variant, size: resolvedSize }),
           isText && "text-base",
-          !isText && (vertical ? "text-on-accent" : "text-label-secondary")
+          !isText && (vertical ? "text-white" : "text-muted-foreground")
         )}
       >
         <IconClassContext.Provider
@@ -383,7 +385,7 @@ function AttachmentTrigger({
     props: [
       {
         className: cn(
-          "absolute inset-0 z-10 active:bg-item-pressed",
+          "absolute inset-0 z-10 active:bg-background-20",
           grouped && "rounded-none",
           !grouped && size === "xs" && "rounded-lg",
           !grouped && size !== "xs" && "rounded-2xl",
@@ -411,7 +413,7 @@ function AttachmentGroup({ className, children, ...props }: ViewProps) {
   return (
     <View
       className={cn(
-        "w-full min-w-0 flex-col overflow-hidden rounded-2xl bg-surface-secondary",
+        "w-full min-w-0 flex-col overflow-hidden rounded-2xl bg-muted",
         className
       )}
       {...props}

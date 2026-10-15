@@ -24,11 +24,11 @@ const chartData = [
 
 const chartConfig = {
   users: { label: "Users" },
-  phone: { label: "Phone", color: "blue" },
-  laptop: { label: "Laptop", color: "teal" },
-  tablet: { label: "Tablet", color: "indigo" },
-  watch: { label: "Watch", color: "orange" },
-  other: { label: "Other", color: "gray" },
+  phone: { label: "Phone", color: "chart-1" },
+  laptop: { label: "Laptop", color: "chart-2" },
+  tablet: { label: "Tablet", color: "chart-3" },
+  watch: { label: "Watch", color: "chart-4" },
+  other: { label: "Other", color: "chart-5" },
 } satisfies ChartConfig
 
 export function PieChartLabel() {
@@ -54,9 +54,9 @@ export function PieChartLabel() {
               dataKey="users"
               nameKey="device"
               outerRadius="68%"
-              stroke="surface-secondary"
+              stroke="muted"
               strokeWidth={2}
-              labelLine={{ stroke: "separator-strong" }}
+              labelLine={{ stroke: "input" }}
               label={({ name }) =>
                 chartConfig[name as keyof typeof chartConfig].label
               }

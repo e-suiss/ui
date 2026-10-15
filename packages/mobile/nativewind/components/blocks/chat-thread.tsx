@@ -116,7 +116,7 @@ function TypingDot({ index }: { index: number }) {
 
   return (
     <AnimatedView
-      className="size-2 rounded-full bg-label-tertiary"
+      className="size-2 rounded-full bg-muted-foreground"
       style={animatedStyle}
     />
   )
@@ -232,7 +232,7 @@ function Composer({
             <Icon
               as={PlusIcon}
               weight="bold"
-              className="size-[1.125rem] text-label-secondary"
+              className="size-[1.125rem] text-muted-foreground"
             />
           </Button>
           <InputGroup className="h-9 flex-1 rounded-full">
@@ -313,7 +313,7 @@ function LineRow({
                 <BubbleReactions
                   side="top"
                   align={mine ? "start" : "end"}
-                  className="size-7 bg-accent p-0 dark:bg-accent"
+                  className="size-7 bg-primary p-0 dark:bg-primary"
                 >
                   <AnimatedView
                     entering={ZoomIn.duration(300).reduceMotion(
@@ -323,7 +323,7 @@ function LineRow({
                     <Icon
                       as={HeartIcon}
                       weight="fill"
-                      className="size-[0.8125rem] text-on-accent"
+                      className="size-[0.8125rem] text-primary-foreground"
                     />
                   </AnimatedView>
                 </BubbleReactions>
@@ -425,10 +425,10 @@ function ChatThread({
           accessibilityLabel="Riley"
           accessibilityHint="Shows contact details"
           onPress={onOpenContact}
-          className="items-center gap-1 border-b border-separator bg-surface pt-2 pb-2.5 active:bg-item-pressed"
+          className="items-center gap-1 border-b border-border bg-background pt-2 pb-2.5 active:opacity-80"
         >
           <Avatar size="lg" className="size-12">
-            <AvatarFallback className="bg-green dark:bg-green">
+            <AvatarFallback className="bg-green-500">
               <Text className="text-lg">RC</Text>
             </AvatarFallback>
           </Avatar>
@@ -438,7 +438,7 @@ function ChatThread({
               as={CaretRightIcon}
               weight="bold"
               mirrored={I18nManager.isRTL}
-              className="size-2.5 text-label"
+              className="size-2.5 text-foreground"
             />
           </View>
         </Pressable>
@@ -453,10 +453,10 @@ function ChatThread({
                 return (
                   <MessageScrollerItem>
                     <View className="mt-1 mb-2.5 items-center gap-1 px-6">
-                      <Text className="text-center text-2xs text-label-secondary">
+                      <Text className="text-center text-2xs text-muted-foreground">
                         Today 9:30 AM
                       </Text>
-                      <Text className="text-center text-2xs text-label-secondary">
+                      <Text className="text-center text-2xs text-muted-foreground">
                         Double-tap a bubble to add a heart. Send a message and
                         you'll get a reply.
                       </Text>

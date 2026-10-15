@@ -16,9 +16,15 @@ const rings: {
   goal: number
   color: ChartColor
 }[] = [
-  { key: "move", label: "Move", value: 720, goal: 600, color: "red" },
-  { key: "exercise", label: "Exercise", value: 62, goal: 30, color: "green" },
-  { key: "stand", label: "Stand", value: 12, goal: 12, color: "cyan" },
+  { key: "move", label: "Move", value: 720, goal: 600, color: "red-500" },
+  {
+    key: "exercise",
+    label: "Exercise",
+    value: 62,
+    goal: 30,
+    color: "green-500",
+  },
+  { key: "stand", label: "Stand", value: 12, goal: 12, color: "cyan-500" },
 ]
 
 const SIZE = 200

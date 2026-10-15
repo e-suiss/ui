@@ -27,8 +27,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  thisMonth: { label: "This month", color: "green" },
-  lastMonth: { label: "Last month", color: "gray" },
+  thisMonth: { label: "This month", color: "green-500" },
+  lastMonth: { label: "Last month", color: "chart-5" },
 } satisfies ChartConfig
 
 export function RadarChartRadiusAxis() {
@@ -50,7 +50,7 @@ export function RadarChartRadiusAxis() {
               angle={90}
               domain={[0, 100]}
               tickCount={5}
-              tickClassName="text-2xs text-label-tertiary"
+              tickClassName="text-2xs text-muted-foreground"
             />
             <PolarGrid />
             <PolarAngleAxis dataKey="skill" />

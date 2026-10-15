@@ -46,9 +46,9 @@ const LINE_INSET = 24
 const LINE_HEIGHT = 2
 
 const BRACKET_COLOR: Record<QRScannerState, string> = {
-  idle: "text-on-media",
-  success: "text-success",
-  error: "text-danger",
+  idle: "text-white",
+  success: "text-green-600 dark:text-green-400",
+  error: "text-destructive",
 }
 
 const AnimatedPath = Animated.createAnimatedComponent(Path)
@@ -244,7 +244,7 @@ function QRScanner({
       }
       className={cn(
         "relative overflow-hidden",
-        children == null && "bg-media",
+        children == null && "bg-black",
         className
       )}
       {...props}
@@ -272,7 +272,7 @@ function QRScanner({
                 FRAME_RADIUS
               )}
             >
-              <Icon as={QRScannerSurround} className="text-scrim" />
+              <Icon as={QRScannerSurround} className="text-black/50" />
             </SurroundContext.Provider>
           </View>
           <AnimatedView
@@ -300,7 +300,7 @@ function QRScanner({
             </View>
             {scanning ? (
               <AnimatedView
-                className="absolute h-0.5 rounded-full bg-accent"
+                className="absolute h-0.5 rounded-full bg-primary"
                 style={[
                   { top: LINE_INSET, left: LINE_INSET, right: LINE_INSET },
                   lineStyle,
@@ -314,10 +314,7 @@ function QRScanner({
               className="absolute inset-x-6 items-center"
               style={{ bottom: layout.height - frameTop + 32 }}
             >
-              {wrapText(
-                title,
-                "text-center text-lg font-semibold text-on-media"
-              )}
+              {wrapText(title, "text-center text-lg font-semibold text-white")}
             </View>
           ) : null}
           {description !== undefined ? (
@@ -327,7 +324,7 @@ function QRScanner({
               style={{ top: frameTop + frameSize + 20 }}
             >
               <View pointerEvents="box-none" className="max-w-[280px]">
-                {wrapText(description, "text-center text-sm text-on-media")}
+                {wrapText(description, "text-center text-sm text-white")}
               </View>
             </View>
           ) : null}
@@ -345,16 +342,13 @@ function QRScanner({
                 className={cn(
                   "size-14 items-center justify-center rounded-full",
                   "active:opacity-70",
-                  torch ? "bg-on-media" : "bg-scrim"
+                  torch ? "bg-white" : "bg-black/50"
                 )}
               >
                 <Icon
                   as={FlashlightIcon}
                   weight={torch ? "fill" : "regular"}
-                  className={cn(
-                    "size-6",
-                    torch ? "text-media" : "text-on-media"
-                  )}
+                  className={cn("size-6", torch ? "text-black" : "text-white")}
                 />
               </Pressable>
             </View>

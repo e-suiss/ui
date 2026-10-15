@@ -110,7 +110,7 @@ function SheetOverlay({
       <DrawerPrimitive.Backdrop
         className={(state) =>
           cn(
-            "absolute top-0 right-0 bottom-0 left-0 bg-scrim",
+            "absolute top-0 right-0 bottom-0 left-0 bg-black/50",
             resolveClassName(className, state)
           )
         }
@@ -178,7 +178,7 @@ function SheetContent({
             <DrawerPrimitive.Popup
               className={(state) =>
                 cn(
-                  "flex flex-col rounded-3xl bg-surface-raised shadow-xl",
+                  "flex flex-col rounded-3xl bg-popover shadow-xl",
                   (side === "left" || side === "right") && "flex-1",
                   resolveClassName(className, state)
                 )
@@ -196,7 +196,7 @@ function SheetContent({
                       size={closeLabel ? "sm" : "icon-sm"}
                       className={cn(
                         "absolute top-[19px] right-4",
-                        !closeLabel && "bg-surface-tertiary active:bg-separator"
+                        !closeLabel && "bg-secondary active:opacity-80"
                       )}
                     />
                   }
@@ -206,7 +206,7 @@ function SheetContent({
                   {closeLabel ? (
                     <Text className="text-base">{closeLabel}</Text>
                   ) : (
-                    <Icon as={XIcon} className="size-4 text-label" />
+                    <Icon as={XIcon} className="size-4 text-foreground" />
                   )}
                 </DrawerPrimitive.Close>
               ) : null}
@@ -250,7 +250,7 @@ function SheetTitle({
     <DrawerPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-semibold text-label",
+          "text-base font-semibold text-foreground",
           resolveClassName(className, state)
         )
       }
@@ -266,7 +266,7 @@ function SheetDescription({
   return (
     <DrawerPrimitive.Description
       className={(state) =>
-        cn("text-sm text-label-secondary", resolveClassName(className, state))
+        cn("text-sm text-muted-foreground", resolveClassName(className, state))
       }
       {...props}
     />

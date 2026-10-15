@@ -37,17 +37,17 @@ function VerifyEmail({
             )}
             className="items-center gap-3.5"
           >
-            <View className="size-[4.75rem] items-center justify-center rounded-full bg-success">
+            <View className="size-[4.75rem] items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-[2.375rem] text-on-accent"
+                className="size-[2.375rem] text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Your email is verified.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               {EMAIL} is now your suiss Account.
             </Text>
             <Pressable
@@ -56,7 +56,7 @@ function VerifyEmail({
               onPress={() => setVerified(false)}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -68,15 +68,20 @@ function VerifyEmail({
     <Screen>
       <ScrollView contentContainerClassName="grow items-center justify-center px-6 py-8">
         <View className="h-[4.5rem] w-24">
-          <View className="absolute inset-0 items-center justify-center rounded-[0.875rem] bg-accent shadow-lg">
-            <Icon as={EnvelopeSimpleIcon} className="size-10 text-on-accent" />
+          <View className="absolute inset-0 items-center justify-center rounded-[0.875rem] bg-primary shadow-lg">
+            <Icon
+              as={EnvelopeSimpleIcon}
+              className="size-10 text-primary-foreground"
+            />
           </View>
           <View
             accessible
             accessibilityLabel="1 new message"
-            className="absolute -end-2 -top-2 size-[1.625rem] items-center justify-center rounded-full border-[3px] border-surface bg-red"
+            className="absolute -end-2 -top-2 size-[1.625rem] items-center justify-center rounded-full border-[3px] border-background bg-red-500"
           >
-            <Text className="text-sm font-semibold text-on-accent">1</Text>
+            <Text className="text-sm font-semibold text-primary-foreground">
+              1
+            </Text>
           </View>
         </View>
         <Text
@@ -85,13 +90,13 @@ function VerifyEmail({
         >
           Check your inbox.
         </Text>
-        <Text className="mt-3 text-center text-lg text-label-secondary">
+        <Text className="mt-3 text-center text-lg text-muted-foreground">
           We sent a verification link to{" "}
-          <Text className="text-lg font-semibold text-label">{EMAIL}</Text>. Tap
-          the link to activate your account.
+          <Text className="text-lg font-semibold text-foreground">{EMAIL}</Text>
+          . Tap the link to activate your account.
         </Text>
         <View className="mt-[1.625rem] flex-row flex-wrap justify-center gap-x-1">
-          <Text className="text-sm text-label-secondary">
+          <Text className="text-sm text-muted-foreground">
             Didn't get it? Check your junk folder or
           </Text>
           <Pressable
@@ -100,7 +105,7 @@ function VerifyEmail({
             onPress={onChangeAddress}
             className="active:opacity-60"
           >
-            <Text className="text-sm text-link">change the address ›</Text>
+            <Text className="text-sm text-primary">change the address ›</Text>
           </Pressable>
         </View>
       </ScrollView>

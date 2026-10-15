@@ -22,24 +22,24 @@ const RINGS: {
     label: "Move",
     unit: "kcal",
     goal: 600,
-    color: "red",
-    text: "text-red",
+    color: "red-500",
+    text: "text-red-500",
   },
   {
     key: "exercise",
     label: "Exercise",
     unit: "min",
     goal: 30,
-    color: "green",
-    text: "text-green",
+    color: "green-500",
+    text: "text-green-500",
   },
   {
     key: "stand",
     label: "Stand",
     unit: "hr",
     goal: 12,
-    color: "cyan",
-    text: "text-cyan",
+    color: "cyan-500",
+    text: "text-cyan-500",
   },
 ]
 
@@ -124,7 +124,7 @@ export function RadialChartInteractive() {
     <Card variant="filled" size="sm">
       <CardHeader className="gap-0.5">
         <Text className="text-lg font-semibold">Activity</Text>
-        <Text className="text-sm text-label-secondary">
+        <Text className="text-sm text-muted-foreground">
           This week · pick a day
         </Text>
       </CardHeader>
@@ -146,14 +146,16 @@ export function RadialChartInteractive() {
               className={(state) =>
                 cn(
                   "h-auto min-w-0 flex-1 shrink flex-col gap-1.5 rounded-xl px-0 py-2",
-                  state.pressed && "bg-surface active:bg-surface"
+                  state.pressed && "bg-background active:opacity-80"
                 )
               }
             >
               <Text
                 className={cn(
                   "text-xs font-semibold",
-                  selected === index ? "text-label" : "text-label-secondary"
+                  selected === index
+                    ? "text-foreground"
+                    : "text-muted-foreground"
                 )}
               >
                 {entry.day.slice(0, 3)}
@@ -190,7 +192,7 @@ export function RadialChartInteractive() {
                       {ring.unit}
                     </Text>
                   </View>
-                  <Text className="text-xs text-label-secondary">
+                  <Text className="text-xs text-muted-foreground">
                     {`${percent}%${percent >= 100 ? " · goal met" : ""}`}
                   </Text>
                 </View>

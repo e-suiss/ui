@@ -43,11 +43,11 @@ const SECTIONS: { value: string; label: string; icon: PhosphorIcon }[] = [
 ]
 
 const KINDS = {
-  Price: { icon: TagIcon, tint: "bg-orange" },
-  Content: { icon: NotePencilIcon, tint: "bg-blue" },
-  Security: { icon: ShieldIcon, tint: "bg-red" },
-  Order: { icon: HandbagIcon, tint: "bg-green" },
-  User: { icon: UserIcon, tint: "bg-purple" },
+  Price: { icon: TagIcon, tint: "bg-orange-500" },
+  Content: { icon: NotePencilIcon, tint: "bg-blue-500" },
+  Security: { icon: ShieldIcon, tint: "bg-red-500" },
+  Order: { icon: HandbagIcon, tint: "bg-green-500" },
+  User: { icon: UserIcon, tint: "bg-purple-500" },
 }
 
 type Kind = keyof typeof KINDS
@@ -148,7 +148,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -165,18 +165,22 @@ function EventBody({ event }: { event: Event }) {
           kind.tint
         )}
       >
-        <Icon as={kind.icon} weight="bold" className="size-4 text-on-accent" />
+        <Icon
+          as={kind.icon}
+          weight="bold"
+          className="size-4 text-primary-foreground"
+        />
       </View>
       <View className="min-w-0 flex-1">
         <Text numberOfLines={1} className="text-sm">
           <Text className="text-sm font-semibold">{event.actor}</Text>
           {` ${event.action}`}
         </Text>
-        <Text numberOfLines={1} className="text-xs text-label-secondary">
+        <Text numberOfLines={1} className="text-xs text-muted-foreground">
           {event.target}
         </Text>
       </View>
-      <Text className="text-sm text-label-secondary tabular-nums">
+      <Text className="text-sm text-muted-foreground tabular-nums">
         {event.time}
       </Text>
     </>
@@ -196,13 +200,13 @@ function EventRow({ event }: { event: Event }) {
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger className="min-h-11 flex-row items-center gap-3 px-4 py-2 active:bg-item-pressed">
+      <CollapsibleTrigger className="min-h-11 flex-row items-center gap-3 px-4 py-2 active:opacity-80">
         <EventBody event={event} />
         <Icon
           as={CaretRightIcon}
           weight="bold"
           className={cn(
-            "size-3 text-label-tertiary",
+            "size-3 text-muted-foreground",
             open ? "rotate-90" : I18nManager.isRTL && "rotate-180"
           )}
         />
@@ -213,13 +217,13 @@ function EventRow({ event }: { event: Event }) {
           className="flex-row flex-wrap items-center gap-x-4 gap-y-1 ps-14 pe-4 pb-3"
         >
           <View className="flex-row items-center gap-2">
-            <Text className="text-xs text-label-secondary">Before</Text>
-            <Text className="text-sm text-label-secondary line-through">
+            <Text className="text-xs text-muted-foreground">Before</Text>
+            <Text className="text-sm text-muted-foreground line-through">
               {event.diff[0]}
             </Text>
           </View>
           <View className="flex-row items-center gap-2">
-            <Text className="text-xs text-label-secondary">After</Text>
+            <Text className="text-xs text-muted-foreground">After</Text>
             <Text className="text-sm font-semibold">{event.diff[1]}</Text>
           </View>
         </AnimatedView>
@@ -292,13 +296,13 @@ function LogActivity({
                   <Text role="heading" className="px-1 text-sm font-semibold">
                     {day}
                   </Text>
-                  <View className="overflow-hidden rounded-2xl bg-surface-secondary">
+                  <View className="overflow-hidden rounded-2xl bg-muted">
                     {list
                       .filter((event) => event.day === day)
                       .map((event, index) => (
                         <View key={`${event.time}-${event.actor}`}>
                           {index > 0 ? (
-                            <View className="ms-14 h-px bg-separator" />
+                            <View className="ms-14 h-px bg-border" />
                           ) : null}
                           <EventRow event={event} />
                         </View>

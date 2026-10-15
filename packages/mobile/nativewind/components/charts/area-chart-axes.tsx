@@ -27,7 +27,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
+  desktop: { label: "Desktop", color: "chart-1" },
 } satisfies ChartConfig
 
 export function AreaChartAxes() {

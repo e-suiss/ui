@@ -21,7 +21,7 @@ const accordionVariants = cva("w-full flex-col", {
   variants: {
     variant: {
       default: "",
-      filled: "overflow-hidden rounded-2xl bg-surface-secondary",
+      filled: "overflow-hidden rounded-2xl bg-muted",
     },
   },
   defaultVariants: {
@@ -57,7 +57,7 @@ function AccordionItem({
       className={(state) =>
         cn(
           "ms-4 overflow-hidden",
-          state.index > 0 && "border-t border-separator",
+          state.index > 0 && "border-t border-border",
           resolveClassName(className, state)
         )
       }
@@ -88,7 +88,7 @@ function AccordionTrigger({
     <TextClassContext.Provider
       value={cn(
         "shrink text-left text-base",
-        disabled ? "text-label-quaternary" : "text-label",
+        disabled ? "text-foreground opacity-50" : "text-foreground",
         pressed && !disabled && "underline"
       )}
     >
@@ -114,7 +114,7 @@ function AccordionTrigger({
           <Animated.View style={caretStyle}>
             <Icon
               as={CaretDownIcon}
-              className="size-4 shrink-0 text-label-secondary"
+              className="size-4 shrink-0 text-muted-foreground"
             />
           </Animated.View>
         </AccordionPrimitive.Trigger>
@@ -131,7 +131,7 @@ function AccordionContent({
   className?: string
 }) {
   return (
-    <TextClassContext.Provider value="text-sm text-label-secondary">
+    <TextClassContext.Provider value="text-sm text-muted-foreground">
       <AccordionPrimitive.Panel className="overflow-hidden" {...props}>
         <Animated.View
           exiting={FadeOutUp.duration(200).reduceMotion(ReduceMotion.System)}

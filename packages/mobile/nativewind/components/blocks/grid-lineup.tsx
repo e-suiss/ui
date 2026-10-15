@@ -32,9 +32,9 @@ const MODELS: Model[] = [
     image: photo("1714972384975-fbd4f19b1bb3"),
     alt: "An orange phone on a warm gradient",
     finishes: [
-      { label: "Cosmic Orange", swatch: "bg-orange" },
-      { label: "Deep Blue", swatch: "bg-indigo" },
-      { label: "Silver", swatch: "bg-gray" },
+      { label: "Cosmic Orange", swatch: "bg-orange-500" },
+      { label: "Deep Blue", swatch: "bg-indigo-500" },
+      { label: "Silver", swatch: "bg-zinc-500" },
     ],
   },
   {
@@ -45,9 +45,9 @@ const MODELS: Model[] = [
     image: photo("1664883410931-2edffc8be5e6"),
     alt: "A silver phone on a light grey background",
     finishes: [
-      { label: "Sky Blue", swatch: "bg-cyan" },
-      { label: "Light Gold", swatch: "bg-yellow" },
-      { label: "Space Black", swatch: "bg-media" },
+      { label: "Sky Blue", swatch: "bg-cyan-500" },
+      { label: "Light Gold", swatch: "bg-yellow-500" },
+      { label: "Space Black", swatch: "bg-black" },
     ],
   },
   {
@@ -57,10 +57,10 @@ const MODELS: Model[] = [
     image: photo("1714578187196-29775454aa39"),
     alt: "A phone floating among blue spheres",
     finishes: [
-      { label: "Lavender", swatch: "bg-purple" },
-      { label: "Sage", swatch: "bg-mint" },
-      { label: "Mist Blue", swatch: "bg-teal" },
-      { label: "Black", swatch: "bg-media" },
+      { label: "Lavender", swatch: "bg-purple-500" },
+      { label: "Sage", swatch: "bg-teal-400" },
+      { label: "Mist Blue", swatch: "bg-teal-500" },
+      { label: "Black", swatch: "bg-black" },
     ],
   },
   {
@@ -70,8 +70,8 @@ const MODELS: Model[] = [
     image: photo("1703676311066-34caf2cbee33"),
     alt: "A phone on a pink and purple backdrop",
     finishes: [
-      { label: "Black", swatch: "bg-media" },
-      { label: "White", swatch: "bg-on-media" },
+      { label: "Black", swatch: "bg-black" },
+      { label: "White", swatch: "bg-white" },
     ],
   },
 ]
@@ -94,7 +94,7 @@ function LineupModel({
         resizeMode="cover"
         accessibilityIgnoresInvertColors
         accessibilityLabel={model.alt}
-        className="aspect-[0.85] w-full rounded-2xl bg-control"
+        className="aspect-[0.85] w-full rounded-2xl bg-secondary"
       />
       <ToggleGroup
         value={[finish]}
@@ -114,20 +114,20 @@ function LineupModel({
             className={(state) =>
               cn(
                 "size-5 h-5 min-w-0 rounded-full border-[1.5px] p-0 bg-transparent active:bg-transparent",
-                state.pressed ? "border-label-secondary" : "border-transparent"
+                state.pressed ? "border-muted-foreground" : "border-transparent"
               )
             }
           >
             <View
               className={cn(
-                "size-3 rounded-full border border-separator",
+                "size-3 rounded-full border border-border",
                 item.swatch
               )}
             />
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
-      <Text className="mt-4 min-h-[1.125rem] text-xs font-semibold text-orange">
+      <Text className="mt-4 min-h-[1.125rem] text-xs font-semibold text-orange-500">
         {model.kicker ?? ""}
       </Text>
       <Text role="heading" className="mt-1 text-2xl font-semibold">
@@ -136,7 +136,7 @@ function LineupModel({
       <Text className="mt-2 min-h-[3.125rem] text-center text-lg">
         {model.tagline}
       </Text>
-      <Text className="mt-2 text-sm text-label-secondary">
+      <Text className="mt-2 text-sm text-muted-foreground">
         From {model.price}
       </Text>
       <View className="mt-[1.125rem] flex-row flex-wrap items-center justify-center gap-x-[1.125rem] gap-y-3">
@@ -154,7 +154,7 @@ function LineupModel({
           onPress={() => onLearnMore?.(model.name)}
           className="active:opacity-60"
         >
-          <Text className="text-sm text-link">Learn more ›</Text>
+          <Text className="text-sm text-primary">Learn more ›</Text>
         </Pressable>
       </View>
     </View>

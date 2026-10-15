@@ -31,7 +31,7 @@ const emptyMediaVariants = cva("mb-2 shrink-0 items-center justify-center", {
   variants: {
     variant: {
       default: "bg-transparent",
-      icon: "size-10 rounded-lg bg-surface-secondary",
+      icon: "size-10 rounded-lg bg-muted",
     },
   },
   defaultVariants: {
@@ -46,7 +46,7 @@ function EmptyMedia({
 }: ViewProps & VariantProps<typeof emptyMediaVariants>) {
   return (
     <IconClassContext.Provider
-      value={variant === "icon" ? "size-5 text-label" : undefined}
+      value={variant === "icon" ? "size-5 text-foreground" : undefined}
     >
       <View
         accessible={false}
@@ -65,7 +65,10 @@ function EmptyTitle({
   return (
     <Text
       role="heading"
-      className={cn("text-center text-lg font-semibold text-label", className)}
+      className={cn(
+        "text-center text-lg font-semibold text-foreground",
+        className
+      )}
       {...props}
     />
   )
@@ -77,7 +80,7 @@ function EmptyDescription({
 }: React.ComponentProps<typeof Text>) {
   return (
     <Text
-      className={cn("text-center text-sm text-label-secondary", className)}
+      className={cn("text-center text-sm text-muted-foreground", className)}
       {...props}
     />
   )

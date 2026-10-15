@@ -571,11 +571,11 @@ function QuestionnaireProgress({
       {...props}
     >
       {content === undefined ? (
-        <Text className="text-xs text-label-secondary tabular-nums">
+        <Text className="text-xs text-muted-foreground tabular-nums">
           {text}
         </Text>
       ) : (
-        wrapText(content, "text-xs text-label-secondary tabular-nums")
+        wrapText(content, "text-xs text-muted-foreground tabular-nums")
       )}
     </View>
   )
@@ -700,7 +700,7 @@ function QuestionnaireDescription({
   useQuestionnaireItemContext("QuestionnaireDescription")
   return (
     <Text
-      className={cn("-mt-3.5 text-sm text-label-secondary", className)}
+      className={cn("-mt-3.5 text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -771,18 +771,19 @@ function QuestionnaireChoice({
       disabled={disabled}
       onPress={handlePress}
       className={cn(
-        "relative min-h-11 flex-row items-start gap-2.5 rounded-xl border border-separator px-4 py-3 active:bg-item-pressed",
-        item.invalid && "border-danger bg-danger-5 dark:bg-danger-10",
-        isChecked && "border-2 border-accent px-[0.9375rem] py-[0.6875rem]",
+        "relative min-h-11 flex-row items-start gap-2.5 rounded-xl border border-border px-4 py-3 active:opacity-80",
+        item.invalid &&
+          "border-destructive bg-destructive-5 dark:bg-destructive-10",
+        isChecked && "border-2 border-primary px-[0.9375rem] py-[0.6875rem]",
         className
       )}
       {...props}
     >
       <View
         className={cn(
-          "mt-1 size-4 shrink-0 items-center justify-center bg-label-quaternary",
+          "mt-1 size-4 shrink-0 items-center justify-center bg-border",
           multiple ? "rounded-xs" : "rounded-full",
-          isChecked && "bg-accent"
+          isChecked && "bg-primary"
         )}
       >
         {isChecked &&
@@ -790,16 +791,16 @@ function QuestionnaireChoice({
             <Icon
               as={CheckIcon}
               weight="bold"
-              className="size-3.5 text-on-accent"
+              className="size-3.5 text-primary-foreground"
             />
           ) : (
-            <View className="size-2 rounded-full bg-on-accent dark:size-2.5" />
+            <View className="size-2 rounded-full bg-primary-foreground dark:size-2.5" />
           ))}
       </View>
       <TextClassContext.Provider
         value={cn(
           "text-base",
-          disabled ? "text-label-quaternary" : "text-label"
+          disabled ? "text-foreground opacity-50" : "text-foreground"
         )}
       >
         <View className="min-w-0 flex-1 gap-1">
@@ -814,7 +815,7 @@ function QuestionnaireChoiceDescription({
   className,
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
-  return <Text className={cn("text-label-secondary", className)} {...props} />
+  return <Text className={cn("text-muted-foreground", className)} {...props} />
 }
 
 function inputTypeProps(
@@ -897,7 +898,8 @@ function QuestionnaireInput({
       }
       className={(state) =>
         cn(
-          item.invalid && "border-danger bg-danger-5 dark:bg-danger-10",
+          item.invalid &&
+            "border-destructive bg-destructive-5 dark:bg-destructive-10",
           resolveClassName(className, state)
         )
       }
@@ -918,7 +920,7 @@ function QuestionnaireError({
     <Text
       role="alert"
       accessibilityLiveRegion="polite"
-      className={cn("text-sm text-danger", className)}
+      className={cn("text-sm text-destructive", className)}
       {...props}
     >
       {children ??

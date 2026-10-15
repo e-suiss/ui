@@ -29,13 +29,14 @@ function dotClassName(
   filled: boolean,
   disabled: boolean | undefined
 ) {
-  if (error) return filled ? "border-danger bg-danger" : "border-danger"
+  if (error)
+    return filled ? "border-destructive bg-destructive" : "border-destructive"
   if (filled) {
     return disabled
-      ? "border-label-quaternary bg-label-quaternary"
-      : "border-label bg-label"
+      ? "border-border bg-border"
+      : "border-foreground bg-foreground"
   }
-  return disabled ? "border-label-quaternary" : "border-separator-strong"
+  return disabled ? "border-border" : "border-input"
 }
 
 function PinPad({

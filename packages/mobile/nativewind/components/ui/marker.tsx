@@ -16,7 +16,7 @@ const markerVariants = cva("min-h-4 w-full flex-row items-center gap-2", {
     variant: {
       default: "",
       separator: "",
-      border: "border-b border-separator pb-2",
+      border: "border-b border-border pb-2",
     },
   },
   defaultVariants: {
@@ -29,7 +29,7 @@ function MarkerLine() {
     <View
       accessible={false}
       importantForAccessibility="no"
-      className="h-px min-w-0 flex-1 bg-separator"
+      className="h-px min-w-0 flex-1 bg-border"
     />
   )
 }
@@ -65,8 +65,8 @@ function Marker({
   })
   return (
     <MarkerContext.Provider value={resolved}>
-      <TextClassContext.Provider value="text-start text-sm text-label-secondary">
-        <IconClassContext.Provider value="size-4 text-label-secondary">
+      <TextClassContext.Provider value="text-start text-sm text-muted-foreground">
+        <IconClassContext.Provider value="size-4 text-muted-foreground">
           {element}
         </IconClassContext.Provider>
       </TextClassContext.Provider>

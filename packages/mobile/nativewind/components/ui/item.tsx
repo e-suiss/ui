@@ -30,7 +30,7 @@ function ItemGroup({
         role="list"
         className={cn(
           "w-full flex-col gap-4",
-          inset && "gap-0 overflow-hidden rounded-2xl bg-surface-secondary",
+          inset && "gap-0 overflow-hidden rounded-2xl bg-muted",
           className
         )}
         {...props}
@@ -46,7 +46,7 @@ function ItemSeparator({ className, ...props }: ViewProps) {
       accessible={false}
       importantForAccessibility="no"
       className={cn(
-        "my-2 h-px shrink-0 bg-separator",
+        "my-2 h-px shrink-0 bg-border",
         inset && "my-0 ms-4",
         className
       )}
@@ -61,8 +61,8 @@ const itemVariants = cva(
     variants: {
       variant: {
         default: "border-transparent",
-        outline: "border-separator",
-        muted: "border-transparent bg-surface-secondary-50",
+        outline: "border-border",
+        muted: "border-transparent bg-muted-50",
       },
       size: {
         default: "gap-3.5 px-4 py-3.5",
@@ -104,7 +104,7 @@ function Item({
         className: cn(
           itemVariants({ variant, size }),
           inset && "rounded-none",
-          interactive && "active:bg-item-pressed",
+          interactive && "active:opacity-80",
           props.disabled && "opacity-50",
           className
         ),
@@ -178,7 +178,7 @@ function ItemTitle({
   return (
     <Text
       numberOfLines={numberOfLines}
-      className={cn("text-base font-semibold text-label", className)}
+      className={cn("text-base font-semibold text-foreground", className)}
       {...props}
     />
   )
@@ -192,7 +192,7 @@ function ItemDescription({
   return (
     <Text
       numberOfLines={numberOfLines}
-      className={cn("text-start text-sm text-label-secondary", className)}
+      className={cn("text-start text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -200,7 +200,7 @@ function ItemDescription({
 
 function ItemActions({ className, ...props }: ViewProps) {
   return (
-    <TextClassContext.Provider value="text-base text-label-secondary">
+    <TextClassContext.Provider value="text-base text-muted-foreground">
       <View
         className={cn("flex-row items-center gap-2", className)}
         {...props}

@@ -55,14 +55,14 @@ export function BarChartRange() {
               dataKey="day"
               type="category"
               width="auto"
-              tickClassName="text-label font-semibold"
+              tickClassName="text-foreground font-semibold"
             />
             <YAxis
               dataKey="high"
               type="category"
               orientation="right"
               width="auto"
-              tickClassName="text-label font-semibold"
+              tickClassName="text-foreground font-semibold"
               tickFormatter={(value) => `${value}°`}
             />
             <XAxis type="number" hide domain={[8, 27]} />
@@ -86,13 +86,13 @@ export function BarChartRange() {
               fill={{
                 direction: "horizontal",
                 stops: [
-                  { offset: 0, color: "teal" },
-                  { offset: 0.55, color: "yellow" },
-                  { offset: 1, color: "orange" },
+                  { offset: 0, color: "chart-2" },
+                  { offset: 0.55, color: "yellow-500" },
+                  { offset: 1, color: "chart-4" },
                 ],
               }}
               radius={99}
-              background={{ fill: "control", radius: 99 }}
+              background={{ fill: "secondary", radius: 99 }}
             />
           </BarChart>
         </ChartContainer>

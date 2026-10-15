@@ -95,7 +95,7 @@ function BagReview({
             ? `Your bag total is ${money(subtotal)}.`
             : "Your bag is empty."}
         </Text>
-        <Text className="mt-2 mb-5 text-center text-base text-label-secondary">
+        <Text className="mt-2 mb-5 text-center text-base text-muted-foreground">
           Free delivery and free returns on every order.
         </Text>
         {bag.length === 0 ? (
@@ -120,7 +120,7 @@ function BagReview({
             entering={FadeInDown.duration(700).reduceMotion(
               ReduceMotion.System
             )}
-            className="flex-row gap-3 border-t border-separator py-4"
+            className="flex-row gap-3 border-t border-border py-4"
           >
             <Pressable
               role="link"
@@ -132,7 +132,7 @@ function BagReview({
                 source={{ uri: item.image }}
                 resizeMode="cover"
                 accessibilityIgnoresInvertColors
-                className="size-16 rounded-lg bg-control"
+                className="size-16 rounded-lg bg-secondary"
               />
             </Pressable>
             <View className="min-w-0 flex-1">
@@ -154,7 +154,7 @@ function BagReview({
                 </View>
                 <Text
                   numberOfLines={1}
-                  className="text-sm text-label-secondary"
+                  className="text-sm text-muted-foreground"
                 >
                   {item.variant}
                 </Text>
@@ -190,14 +190,14 @@ function BagReview({
                   }}
                   className="h-auto px-0"
                 >
-                  <Text className="text-sm text-link">Remove</Text>
+                  <Text className="text-sm text-primary">Remove</Text>
                 </Button>
               </View>
             </View>
           </AnimatedView>
         ))}
         {bag.length > 0 ? (
-          <View className="gap-2.5 border-t border-separator pt-5">
+          <View className="gap-2.5 border-t border-border pt-5">
             <View className="flex-row justify-between">
               <Text className="text-base">Subtotal</Text>
               <Text className="text-base tabular-nums">{money(subtotal)}</Text>
@@ -206,7 +206,7 @@ function BagReview({
               <Text className="text-base">Shipping</Text>
               <Text className="text-base">FREE</Text>
             </View>
-            <View className="flex-row justify-between border-t border-separator pt-3">
+            <View className="flex-row justify-between border-t border-border pt-3">
               <Text className="text-2xl font-semibold">Total</Text>
               <Text className="text-2xl font-semibold tabular-nums">
                 {money(subtotal)}
@@ -222,11 +222,11 @@ function BagReview({
               size="lg"
               block
               onPress={() => onCheckout?.("suiss-pay")}
-              className="bg-label active:bg-label-80"
+              className="bg-foreground active:opacity-80"
             >
-              <Text className="text-surface">
+              <Text className="text-background">
                 Check Out with{" "}
-                <Text className="font-bold text-surface">suiss</Text> Pay
+                <Text className="font-bold text-background">suiss</Text> Pay
               </Text>
             </Button>
             <Button size="lg" block onPress={() => onCheckout?.("default")}>

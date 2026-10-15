@@ -150,12 +150,8 @@
         "Components/AlertDialog.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -216,11 +212,7 @@
         "Components/AlertSheet.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -420,10 +412,6 @@
         "Components/Avatar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -503,10 +491,6 @@
         "Components/Badge.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -597,13 +581,9 @@
       ],
       "swift": [
         "Components/Bubble.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Message.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -652,10 +632,6 @@
       "swift": [
         "Components/ButtonGroup.swift",
         "Components/Button.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -693,10 +669,6 @@
       "swift": [
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -845,10 +817,6 @@
         "Components/Carousel.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -1108,10 +1076,8 @@
         "Components/Combobox.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
@@ -1183,10 +1149,8 @@
         "Components/ContextMenu.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
@@ -1257,11 +1221,7 @@
         "Components/Dialog.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -1325,12 +1285,8 @@
         "Components/Drawer.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -1390,9 +1346,7 @@
         "Components/DropdownMenu.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
@@ -1859,9 +1813,7 @@
       ],
       "swift": [
         "Components/InputOTP.swift",
-        "Components/Checkbox.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
@@ -1905,9 +1857,7 @@
         "Components/Input.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
@@ -2206,12 +2156,8 @@
       "swift": [
         "Components/Message.swift",
         "Components/Bubble.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -2263,10 +2209,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Carousel.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -2381,12 +2324,8 @@
         "Components/Popover.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -2558,7 +2497,6 @@
         "Components/Questionnaire.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Separator.swift",
@@ -2718,10 +2656,8 @@
         "Components/Select.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
@@ -2823,12 +2759,8 @@
         "Components/Sheet.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -2879,9 +2811,7 @@
         "Components/SignaturePad.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
@@ -3094,7 +3024,6 @@
         "Components/TabBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
@@ -3152,10 +3081,8 @@
         "Components/Tabs.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
@@ -3231,9 +3158,7 @@
         "Components/Textarea.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Input.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
@@ -3355,10 +3280,6 @@
         "Components/Toast.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -3513,7 +3434,6 @@
         "Components/WheelPicker.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
@@ -3576,14 +3496,11 @@
         "Components/Widget.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
         "Components/Drawer.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Popover.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift",
         "Patterns/Adaptive.swift",
         "Patterns/Preview.swift"
@@ -3635,12 +3552,10 @@
         "Components/AlertSheet.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
         "Components/Drawer.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
@@ -3698,12 +3613,8 @@
         "Components/AlertSheet.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift",
         "Patterns/Adaptive.swift"
       ],
@@ -3743,7 +3654,6 @@
         "Components/AlertSheet.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/ContextMenu.swift",
         "Components/Dialog.swift",
         "Components/DropdownMenu.swift",
@@ -3873,9 +3783,6 @@
         "Patterns/PagedList.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift"
@@ -3912,10 +3819,8 @@
         "Patterns/OptionPicker.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
@@ -3966,14 +3871,10 @@
         "Patterns/Preview.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
         "Components/Drawer.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Popover.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift",
         "Patterns/Adaptive.swift"
       ],
@@ -4026,11 +3927,9 @@
         "Patterns/SearchPicker.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
         "Components/Drawer.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Separator.swift",
         "Components/TextVariant.swift",
@@ -4098,10 +3997,8 @@
         "Patterns/SplitView.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
@@ -4203,8 +4100,6 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Card.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",
@@ -4268,11 +4163,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Carousel.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -4449,11 +4340,8 @@
         "Interactions/PreviewMenu.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -4721,10 +4609,6 @@
         "Interactions/SelectionList.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -4948,10 +4832,6 @@
         "Interactions/TopBanner.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -5004,10 +4884,6 @@
         "Interactions/UndoBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift",
         "Interactions/SelectionList.swift"
       ],
@@ -5143,12 +5019,9 @@
         "Components/BottomBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -5776,13 +5649,9 @@
         "Blocks/EmptyBag.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Empty.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -5840,13 +5709,9 @@
         "Blocks/EmptyOffline.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Empty.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/Spinner.swift",
         "Components/TextVariant.swift"
       ],
@@ -5909,11 +5774,9 @@
         "Blocks/EmptySearch.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Combobox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Overlay.swift",
@@ -6046,13 +5909,10 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Carousel.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/PageIndicator.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -6106,12 +5966,9 @@
         "Blocks/GridLineup.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -6174,7 +6031,6 @@
         "Blocks/InboxCategories.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
@@ -6749,14 +6605,10 @@
         "Components/Avatar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
         "Components/Dialog.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Overlay.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -6960,13 +6812,10 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Carousel.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/PageIndicator.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -7020,12 +6869,8 @@
         "Components/BottomBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -7085,12 +6930,9 @@
         "Components/BottomBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -7822,12 +7664,8 @@
         "Components/BottomBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -8396,12 +8234,8 @@
         "Components/BottomBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
-        "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
         "Components/TextVariant.swift"
       ],
       "kotlin": [
@@ -10247,8 +10081,6 @@
         "Charts/RadarChartGridFilled.swift",
         "Components/Card.swift",
         "Components/Chart.swift",
-        "Components/Checkbox.swift",
-        "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",

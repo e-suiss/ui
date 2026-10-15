@@ -45,7 +45,7 @@ function ProgressTrack({
     <ProgressPrimitive.Track
       className={(state) =>
         cn(
-          "relative h-1 w-full flex-row items-center overflow-hidden rounded-full bg-surface-secondary",
+          "relative h-1 w-full flex-row items-center overflow-hidden rounded-full bg-muted",
           resolveClassName(className, state)
         )
       }
@@ -73,7 +73,7 @@ function ProgressIndicator({
   return (
     <ProgressPrimitive.Indicator
       className={(state) =>
-        cn("h-full bg-accent", resolveClassName(className, state))
+        cn("h-full bg-primary", resolveClassName(className, state))
       }
       render={<Animated.View style={indicator} />}
       {...props}
@@ -88,7 +88,7 @@ function ProgressLabel({
   return (
     <ProgressPrimitive.Label
       className={(state) =>
-        cn("text-sm text-label", resolveClassName(className, state))
+        cn("text-sm text-foreground", resolveClassName(className, state))
       }
       {...props}
     />
@@ -103,7 +103,7 @@ function ProgressValue({
     <ProgressPrimitive.Value
       className={(state) =>
         cn(
-          "ms-auto text-sm text-label-secondary tabular-nums",
+          "ms-auto text-sm text-muted-foreground tabular-nums",
           resolveClassName(className, state)
         )
       }

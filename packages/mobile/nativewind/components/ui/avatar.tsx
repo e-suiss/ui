@@ -71,7 +71,7 @@ function Avatar({
             cn(
               "relative shrink-0 rounded-full",
               ROOT_SIZE[size],
-              grouped && "border-2 border-surface",
+              grouped && "border-2 border-background",
               grouped && groupIndex > 0 && (size === "xl" ? "-ms-4" : "-ms-2"),
               resolveClassName(className, state)
             )
@@ -109,13 +109,16 @@ function AvatarFallback({
   const size = React.useContext(AvatarSizeContext)
   return (
     <TextClassContext.Provider
-      value={cn("font-semibold uppercase text-on-accent", FALLBACK_TEXT[size])}
+      value={cn(
+        "font-semibold uppercase text-primary-foreground",
+        FALLBACK_TEXT[size]
+      )}
     >
       <IconClassContext.Provider value={FALLBACK_ICON[size]}>
         <AvatarPrimitive.Fallback
           className={(state) =>
             cn(
-              "size-full flex-row items-center justify-center rounded-full bg-label-secondary dark:bg-label-secondary-60",
+              "size-full flex-row items-center justify-center rounded-full bg-muted-foreground dark:bg-muted-foreground-60",
               resolveClassName(className, state)
             )
           }
@@ -139,11 +142,11 @@ function AvatarBadge({
 }: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
   const size = React.useContext(AvatarSizeContext)
   return (
-    <TextClassContext.Provider value="text-on-accent">
+    <TextClassContext.Provider value="text-primary-foreground">
       <IconClassContext.Provider value={BADGE_ICON[size]}>
         <View
           className={cn(
-            "absolute -end-0.5 -bottom-0.5 z-10 items-center justify-center rounded-full border-2 border-surface bg-accent",
+            "absolute -end-0.5 -bottom-0.5 z-10 items-center justify-center rounded-full border-2 border-background bg-primary",
             BADGE_SIZE[size],
             className
           )}
@@ -190,12 +193,12 @@ function AvatarGroupCount({
   const groupIndex = React.useContext(AvatarGroupItemContext)
   return (
     <TextClassContext.Provider
-      value={cn("font-semibold text-label", FALLBACK_TEXT[size])}
+      value={cn("font-semibold text-foreground", FALLBACK_TEXT[size])}
     >
       <IconClassContext.Provider value={COUNT_ICON[size]}>
         <View
           className={cn(
-            "relative shrink-0 items-center justify-center rounded-full border-2 border-surface bg-surface-secondary",
+            "relative shrink-0 items-center justify-center rounded-full border-2 border-background bg-muted",
             ROOT_SIZE[size],
             groupIndex !== null &&
               groupIndex > 0 &&

@@ -15,7 +15,7 @@ const toggleVariants = cva(
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border border-separator bg-transparent",
+        outline: "border border-border bg-transparent",
       },
       size: {
         default: "h-9 min-w-9 px-3",
@@ -31,21 +31,14 @@ const toggleVariants = cva(
 )
 
 function toggleStateClassName(state: ToggleState) {
-  if (state.disabled) return state.pressed ? "bg-control-disabled" : undefined
   return cn(
-    "active:scale-[0.96]",
-    state.pressed
-      ? "bg-item-selected active:bg-item-pressed"
-      : "active:bg-item-pressed"
+    state.pressed && "bg-accent",
+    state.disabled ? "opacity-50" : "active:scale-[0.96] active:opacity-80"
   )
 }
 
 function toggleTextClassName(state: ToggleState) {
-  return cn(
-    "text-sm text-label",
-    state.pressed && "text-link",
-    state.disabled && "text-label-quaternary"
-  )
+  return cn("text-sm text-foreground", state.pressed && "text-primary")
 }
 
 function Toggle({

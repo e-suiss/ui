@@ -26,7 +26,7 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
+  desktop: { label: "Desktop", color: "chart-1" },
 } satisfies ChartConfig
 
 export function BarChartDefault() {
@@ -57,7 +57,7 @@ export function BarChartDefault() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="blue" radius={6} maxBarSize={36} />
+            <Bar dataKey="desktop" fill="chart-1" radius={6} maxBarSize={36} />
           </BarChart>
         </ChartContainer>
       </CardContent>

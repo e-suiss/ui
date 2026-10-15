@@ -69,19 +69,19 @@ const MONTHS = [
 ]
 
 const chartConfig = {
-  istanbul: { label: "Istanbul", color: "blue" },
-  ankara: { label: "Ankara", color: "purple" },
-  izmir: { label: "Izmir", color: "teal" },
-  antalya: { label: "Antalya", color: "orange" },
-  erzurum: { label: "Erzurum", color: "indigo" },
+  istanbul: { label: "Istanbul", color: "chart-1" },
+  ankara: { label: "Ankara", color: "purple-500" },
+  izmir: { label: "Izmir", color: "chart-2" },
+  antalya: { label: "Antalya", color: "chart-4" },
+  erzurum: { label: "Erzurum", color: "chart-3" },
 } satisfies ChartConfig
 
 const SWATCH: Record<City, { dot: string; chip: string }> = {
-  istanbul: { dot: "bg-blue", chip: "bg-blue-15 active:bg-blue-25" },
-  ankara: { dot: "bg-purple", chip: "bg-purple-15 active:bg-purple-25" },
-  izmir: { dot: "bg-teal", chip: "bg-teal-15 active:bg-teal-25" },
-  antalya: { dot: "bg-orange", chip: "bg-orange-15 active:bg-orange-25" },
-  erzurum: { dot: "bg-indigo", chip: "bg-indigo-15 active:bg-indigo-25" },
+  istanbul: { dot: "bg-blue-500", chip: "bg-blue-500/15 active:opacity-80" },
+  ankara: { dot: "bg-purple-500", chip: "bg-purple-500/15 active:opacity-80" },
+  izmir: { dot: "bg-teal-500", chip: "bg-teal-500/15 active:opacity-80" },
+  antalya: { dot: "bg-orange-500", chip: "bg-orange-500/15 active:opacity-80" },
+  erzurum: { dot: "bg-indigo-500", chip: "bg-indigo-500/15 active:opacity-80" },
 }
 
 function temperature(city: City, month: number, mode: Mode) {
@@ -131,7 +131,7 @@ export function LineChartInteractive() {
       <CardHeader className="flex-row flex-wrap items-start justify-between gap-4">
         <View className="min-w-44 grow gap-0.5">
           <Text className="text-lg font-semibold">Monthly temperature</Text>
-          <Text className="text-sm text-label-secondary">
+          <Text className="text-sm text-muted-foreground">
             {MODES[mode]} · °C · long-term
           </Text>
         </View>
@@ -167,19 +167,17 @@ export function LineChartInteractive() {
                   "gap-1.5",
                   state.pressed
                     ? SWATCH[city].chip
-                    : "bg-control active:bg-control-pressed"
+                    : "bg-secondary active:opacity-80"
                 )
               }
             >
               <View
                 className={cn(
                   "size-2 rounded-full",
-                  visible.includes(city)
-                    ? SWATCH[city].dot
-                    : "bg-label-quaternary"
+                  visible.includes(city) ? SWATCH[city].dot : "bg-border"
                 )}
               />
-              <Text className="text-sm font-semibold text-label">
+              <Text className="text-sm font-semibold text-foreground">
                 {chartConfig[city].label}
               </Text>
             </Toggle>
@@ -205,7 +203,7 @@ export function LineChartInteractive() {
               ticks={[-20, -10, 0, 10, 20, 30, 40]}
               tickFormatter={(value: number) => `${value}°`}
             />
-            <ReferenceLine y={0} stroke="separator-strong" />
+            <ReferenceLine y={0} stroke="input" />
             <ChartTooltip
               content={
                 <ChartTooltipContent
@@ -221,7 +219,7 @@ export function LineChartInteractive() {
                           SWATCH[name as City].dot
                         )}
                       />
-                      <Text className="grow text-label-secondary">
+                      <Text className="grow text-muted-foreground">
                         {chartConfig[name as City].label}
                       </Text>
                       <Text className="font-semibold tabular-nums">
@@ -243,7 +241,7 @@ export function LineChartInteractive() {
                 activeDot={{
                   r: 5,
                   strokeWidth: 2,
-                  stroke: "surface-secondary",
+                  stroke: "muted",
                 }}
               />
             ))}
@@ -262,7 +260,7 @@ export function LineChartInteractive() {
                       SWATCH[city].dot
                     )}
                   />
-                  <Text className="text-sm text-label-secondary">
+                  <Text className="text-sm text-muted-foreground">
                     {chartConfig[city].label}
                   </Text>
                 </View>

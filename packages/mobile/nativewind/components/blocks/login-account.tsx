@@ -56,7 +56,7 @@ function LinkText({
       onPress={onPress}
       className="active:opacity-60"
     >
-      <Text className={cn("text-link", className)}>{children}</Text>
+      <Text className={cn("text-primary", className)}>{children}</Text>
     </Pressable>
   )
 }
@@ -79,7 +79,7 @@ function SubmitArrow({
       onPress={onPress}
       className={cn(
         "me-2.5 size-[1.875rem] border-[1.5px] bg-transparent dark:bg-transparent",
-        ready && !busy ? "border-label-secondary" : "border-label-quaternary"
+        ready && !busy ? "border-muted-foreground" : "border-border"
       )}
     >
       {busy ? (
@@ -90,7 +90,7 @@ function SubmitArrow({
           weight="bold"
           className={cn(
             "size-3.5",
-            ready ? "text-label-secondary" : "text-label-quaternary",
+            ready ? "text-muted-foreground" : "text-muted-foreground-50",
             I18nManager.isRTL && "rotate-180"
           )}
         />
@@ -163,14 +163,14 @@ function LoginAccount({
             className="items-center gap-3.5"
           >
             <Avatar size="xl" className="size-20">
-              <AvatarFallback className="bg-surface-secondary dark:bg-surface-secondary">
-                <Text className="text-3xl text-label">{email[0]}</Text>
+              <AvatarFallback className="bg-muted dark:bg-muted">
+                <Text className="text-3xl text-foreground">{email[0]}</Text>
               </AvatarFallback>
             </Avatar>
             <Text role="heading" className="text-3xl font-semibold">
               Hello.
             </Text>
-            <Text className="text-lg text-label-secondary">{email}</Text>
+            <Text className="text-lg text-muted-foreground">{email}</Text>
             <LinkText
               className="text-lg"
               onPress={() => {
@@ -200,10 +200,10 @@ function LoginAccount({
           <AnimatedView
             style={shakeStyle}
             className={cn(
-              "w-full overflow-hidden rounded-xl border bg-surface",
+              "w-full overflow-hidden rounded-xl border bg-background",
               error
-                ? "border-danger bg-danger-5 dark:bg-danger-10"
-                : "border-separator-strong"
+                ? "border-destructive bg-destructive-5 dark:bg-destructive-10"
+                : "border-input"
             )}
           >
             <View className="flex-row items-center">
@@ -235,7 +235,7 @@ function LoginAccount({
                 entering={FadeIn.duration(300).reduceMotion(
                   ReduceMotion.System
                 )}
-                className="flex-row items-center border-t border-separator-strong"
+                className="flex-row items-center border-t border-input"
               >
                 <Input
                   ref={passwordRef}
@@ -260,7 +260,7 @@ function LoginAccount({
           </AnimatedView>
           <Text
             accessibilityLiveRegion="polite"
-            className="mt-2.5 min-h-[1.375rem] text-center text-sm text-danger"
+            className="mt-2.5 min-h-[1.375rem] text-center text-sm text-destructive"
           >
             {error}
           </Text>
@@ -283,7 +283,7 @@ function LoginAccount({
               Forgot password? ›
             </LinkText>
             <View className="flex-row flex-wrap justify-center gap-x-1">
-              <Text className="text-sm text-label-secondary">
+              <Text className="text-sm text-muted-foreground">
                 Don't have a suiss Account?
               </Text>
               <LinkText className="text-sm" onPress={onCreateAccount}>

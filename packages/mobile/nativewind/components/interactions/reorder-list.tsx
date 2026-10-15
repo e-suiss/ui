@@ -319,7 +319,7 @@ function ReorderListItem({
           <AnimatedView
             pointerEvents="none"
             className={cn(
-              "absolute inset-0 bg-surface-raised shadow-lg",
+              "absolute inset-0 bg-card shadow-lg",
               inset && "rounded-2xl"
             )}
             style={raisedStyle}
@@ -441,7 +441,7 @@ function ReorderListHandle({
         <Icon
           as={DotsSixVerticalIcon}
           weight="bold"
-          className="size-5 text-label-tertiary"
+          className="size-5 text-muted-foreground"
         />
       </View>
     </GestureDetector>

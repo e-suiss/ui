@@ -26,7 +26,13 @@ const SYMBOL = /[^A-Za-z0-9]/
 const IMAGE =
   "https://images.unsplash.com/photo-1599669454699-248893623440?w=1200&q=80&auto=format&fit=crop"
 
-const LEVELS = ["bg-red", "bg-red", "bg-orange", "bg-yellow", "bg-green"]
+const LEVELS = [
+  "bg-red-500",
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-yellow-500",
+  "bg-green-500",
+]
 
 const STRENGTH_LABEL = ["Weak", "Weak", "Fair", "Good", "Strong"]
 
@@ -65,17 +71,17 @@ function SignupTrial({
             )}
             className="items-center gap-3.5"
           >
-            <View className="size-[4.75rem] items-center justify-center rounded-full bg-success">
+            <View className="size-[4.75rem] items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-[2.375rem] text-on-accent"
+                className="size-[2.375rem] text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Welcome to suiss Music.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               Your one-month free trial has started.
             </Text>
             <Pressable
@@ -84,7 +90,7 @@ function SignupTrial({
               onPress={() => setDone(false)}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -96,28 +102,28 @@ function SignupTrial({
     <Screen>
       <InputAccessoryBar>
         <KeyboardScrollView contentContainerClassName="pb-6">
-          <View className="h-80 justify-end overflow-hidden bg-media">
+          <View className="h-80 justify-end overflow-hidden bg-black">
             <Image
               source={{ uri: IMAGE }}
               resizeMode="cover"
               accessibilityIgnoresInvertColors
               className="absolute inset-0 size-full"
             />
-            <View className="bg-scrim p-6 pt-5">
+            <View className="bg-black/50 p-6 pt-5">
               <View className="flex-row items-center gap-1.5">
                 <Icon
                   as={MusicNotesIcon}
                   weight="fill"
-                  className="size-[1.625rem] text-on-media"
+                  className="size-[1.625rem] text-white"
                 />
-                <Text className="text-2xl font-semibold text-on-media">
+                <Text className="text-2xl font-semibold text-white">
                   suiss Music
                 </Text>
               </View>
-              <Text className="mt-2.5 text-3xl font-semibold text-on-media">
+              <Text className="mt-2.5 text-3xl font-semibold text-white">
                 Over 100 million songs. Ad-free.
               </Text>
-              <Text className="mt-2 text-base text-on-media opacity-80">
+              <Text className="mt-2 text-base text-white opacity-80">
                 1 month free, then $10.99/month.
               </Text>
             </View>
@@ -126,7 +132,7 @@ function SignupTrial({
             <Text role="heading" className="text-3xl font-semibold">
               Start your free trial.
             </Text>
-            <View className="overflow-hidden rounded-xl border border-separator-strong bg-surface">
+            <View className="overflow-hidden rounded-xl border border-input bg-background">
               <InputAccessoryBarInput
                 value={email}
                 onChangeText={setEmail}
@@ -139,7 +145,7 @@ function SignupTrial({
                 autoCorrect={false}
                 className={INPUT_CLASS}
               />
-              <View className="h-px bg-separator-strong" />
+              <View className="h-px bg-input" />
               <InputAccessoryBarInput
                 value={password}
                 onChangeText={setPassword}
@@ -172,7 +178,7 @@ function SignupTrial({
                     key={bar}
                     className={cn(
                       "h-1 flex-1 rounded-full",
-                      bar < Math.max(1, score) ? LEVELS[score] : "bg-control"
+                      bar < Math.max(1, score) ? LEVELS[score] : "bg-secondary"
                     )}
                   />
                 ))}
@@ -189,7 +195,7 @@ function SignupTrial({
                 <Label
                   nativeID="signup-trial-terms"
                   onPress={() => setTerms((current) => !current)}
-                  className="shrink text-sm font-normal text-label-secondary"
+                  className="shrink text-sm font-normal text-muted-foreground"
                 >
                   I have read and agree to the suiss Media Services Terms and
                   Conditions.
@@ -214,7 +220,7 @@ function SignupTrial({
             <Text>Start free trial</Text>
           </Button>
           <View className="flex-row flex-wrap justify-center gap-x-1">
-            <Text className="text-sm text-label-secondary">
+            <Text className="text-sm text-muted-foreground">
               Already have an account?
             </Text>
             <Pressable
@@ -223,7 +229,7 @@ function SignupTrial({
               onPress={onSignIn}
               className="active:opacity-60"
             >
-              <Text className="text-sm text-link">Sign in ›</Text>
+              <Text className="text-sm text-primary">Sign in ›</Text>
             </Pressable>
           </View>
         </BottomBarContent>

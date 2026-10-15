@@ -9,7 +9,7 @@ cssInterop(ActivityIndicator, {
 const NATIVE_SIZE = 20
 
 function Spinner({
-  colorClassName = "text-label-secondary",
+  colorClassName = "text-muted-foreground",
   className,
   size = 16,
   accessibilityLabel = "Loading",

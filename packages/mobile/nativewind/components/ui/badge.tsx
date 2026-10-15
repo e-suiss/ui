@@ -14,7 +14,7 @@ const badgeVariants = cva(
         default: "",
         secondary: "",
         destructive: "",
-        outline: "border-separator px-2",
+        outline: "border-border px-2",
         ghost: "px-2",
         link: "",
       },
@@ -28,12 +28,12 @@ const badgeVariants = cva(
 const badgeTextVariants = cva("text-xs font-semibold", {
   variants: {
     variant: {
-      default: "text-link",
-      secondary: "text-label-secondary",
-      destructive: "text-danger",
-      outline: "text-label",
-      ghost: "text-label",
-      link: "text-link",
+      default: "text-primary",
+      secondary: "text-muted-foreground",
+      destructive: "text-destructive",
+      outline: "text-foreground",
+      ghost: "text-foreground",
+      link: "text-primary",
     },
   },
   defaultVariants: {

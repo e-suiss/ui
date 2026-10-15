@@ -27,6 +27,18 @@ extension Color {
       traits.userInterfaceStyle == .dark ? darkColor : lightColor
     })
   }
+
+  static func fixed(_ color: RGBA) -> Color {
+    Color(uiColor: color.uiColor)
+  }
+
+  public static func adaptive(light: Color, dark: Color) -> Color {
+    let lightColor = UIColor(light)
+    let darkColor = UIColor(dark)
+    return Color(uiColor: UIColor { traits in
+      traits.userInterfaceStyle == .dark ? darkColor : lightColor
+    })
+  }
 }
 
 public struct TextStyle: Sendable, Hashable {

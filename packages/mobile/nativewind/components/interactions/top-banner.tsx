@@ -157,18 +157,18 @@ function TopBannerView({
             height.value = event.nativeEvent.layout.height
           }}
           className={cn(
-            "w-full flex-row items-center gap-3 rounded-2xl border border-separator bg-surface-raised p-3.5 shadow-xl dark:bg-surface-secondary",
+            "w-full flex-row items-center gap-3 rounded-2xl border border-border bg-card p-3.5 shadow-xl dark:bg-muted",
             className
           )}
           style={animatedStyle}
         >
           {entry.icon ? (
-            <Icon as={entry.icon} className="size-6 shrink-0 text-link" />
+            <Icon as={entry.icon} className="size-6 shrink-0 text-primary" />
           ) : null}
           <View className="min-w-0 flex-1 gap-0.5">
             {wrapText(entry.title, "text-sm font-semibold")}
             {entry.description !== undefined
-              ? wrapText(entry.description, "text-sm text-label-secondary")
+              ? wrapText(entry.description, "text-sm text-muted-foreground")
               : null}
           </View>
           {entry.action ? (

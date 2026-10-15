@@ -42,7 +42,7 @@ const RULES = [
 ]
 
 const STACK_CLASS =
-  "overflow-hidden rounded-xl border border-separator-strong bg-surface"
+  "overflow-hidden rounded-xl border border-input bg-background"
 
 const INPUT_CLASS =
   "h-[3.25rem] rounded-none border-transparent bg-transparent px-4 text-lg"
@@ -65,9 +65,7 @@ function PasswordRules({ password }: { password: string }) {
             <View
               className={cn(
                 "size-4 items-center justify-center rounded-full border-[1.5px]",
-                met
-                  ? "border-transparent bg-success"
-                  : "border-label-quaternary"
+                met ? "border-transparent bg-green-500" : "border-border"
               )}
             >
               {met ? (
@@ -79,7 +77,7 @@ function PasswordRules({ password }: { password: string }) {
                   <Icon
                     as={CheckIcon}
                     weight="bold"
-                    className="size-2.5 text-on-accent"
+                    className="size-2.5 text-primary-foreground"
                   />
                 </AnimatedView>
               ) : null}
@@ -87,7 +85,7 @@ function PasswordRules({ password }: { password: string }) {
             <Text
               className={cn(
                 "text-sm",
-                met ? "text-label" : "text-label-secondary"
+                met ? "text-foreground" : "text-muted-foreground"
               )}
             >
               {rule.label}
@@ -171,17 +169,17 @@ function SignupForm({
             )}
             className="items-center gap-3.5"
           >
-            <View className="size-[4.75rem] items-center justify-center rounded-full bg-success">
+            <View className="size-[4.75rem] items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-[2.375rem] text-on-accent"
+                className="size-[2.375rem] text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-center text-3xl font-semibold">
               Your suiss Account is ready.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               We sent a verification code to {form.email}.
             </Text>
             <Pressable
@@ -193,7 +191,7 @@ function SignupForm({
               }}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -208,11 +206,11 @@ function SignupForm({
           <Text role="heading" className="text-center text-3xl font-semibold">
             Create your suiss Account
           </Text>
-          <Text className="mt-2.5 text-center text-lg text-label-secondary">
+          <Text className="mt-2.5 text-center text-lg text-muted-foreground">
             One suiss Account is all you need to access every suiss service.{" "}
             <Text
               role="link"
-              className="text-lg text-link"
+              className="text-lg text-primary"
               onPress={onLearnMore}
             >
               Learn more ›
@@ -260,7 +258,7 @@ function SignupForm({
                   </PickerItem>
                 ))}
               </Picker>
-              <View className="h-px bg-separator-strong" />
+              <View className="h-px bg-input" />
               <InputAccessoryBarInput
                 value={form.birthday}
                 onChangeText={update("birthday")}
@@ -289,7 +287,7 @@ function SignupForm({
                 className={INPUT_CLASS}
               />
             </View>
-            <Text className="mt-1.5 text-xs text-label-secondary">
+            <Text className="mt-1.5 text-xs text-muted-foreground">
               This will be your new suiss Account.
             </Text>
           </View>
@@ -298,7 +296,8 @@ function SignupForm({
             <View
               className={cn(
                 STACK_CLASS,
-                mismatch && "border-danger bg-danger-5 dark:bg-danger-10"
+                mismatch &&
+                  "border-destructive bg-destructive-5 dark:bg-destructive-10"
               )}
             >
               <InputAccessoryBarInput
@@ -312,10 +311,7 @@ function SignupForm({
                 className={INPUT_CLASS}
               />
               <View
-                className={cn(
-                  "h-px",
-                  mismatch ? "bg-danger" : "bg-separator-strong"
-                )}
+                className={cn("h-px", mismatch ? "bg-destructive" : "bg-input")}
               />
               <InputAccessoryBarInput
                 value={form.confirm}
@@ -341,7 +337,7 @@ function SignupForm({
           </View>
           <Text
             accessibilityLiveRegion="polite"
-            className="mt-3.5 min-h-5 text-center text-sm text-danger"
+            className="mt-3.5 min-h-5 text-center text-sm text-destructive"
           >
             {tried && !valid ? "Please fill in every field correctly." : ""}
           </Text>

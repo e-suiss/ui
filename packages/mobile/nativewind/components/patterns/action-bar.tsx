@@ -114,7 +114,7 @@ function ActionBar({
             className={cn(!floating && "rounded-t-none")}
           >
             <ActionBarContext.Provider value={contextValue}>
-              <View className="m-4 overflow-hidden rounded-2xl bg-surface-secondary">
+              <View className="m-4 overflow-hidden rounded-2xl bg-muted">
                 {menus("row")}
               </View>
             </ActionBarContext.Provider>
@@ -156,7 +156,7 @@ function ActionBarMenu({
         value={{ ...menu, onOpen: () => onOpenChange?.(true) }}
       >
         <View
-          className={cn("ms-4", menu.index > 0 && "border-t border-separator")}
+          className={cn("ms-4", menu.index > 0 && "border-t border-border")}
         >
           {children}
         </View>
@@ -194,7 +194,7 @@ function ActionBarTrigger({
 
   return (
     <TextClassContext.Provider
-      value={cn("text-base", disabled && "text-label-quaternary")}
+      value={cn("text-base", disabled && "opacity-50")}
     >
       <Pressable
         role="button"
@@ -219,7 +219,7 @@ function ActionBarTrigger({
         <Icon
           as={CaretRightIcon}
           className={cn(
-            "size-4 shrink-0 text-label-secondary",
+            "size-4 shrink-0 text-muted-foreground",
             I18nManager.isRTL && "rotate-180"
           )}
         />

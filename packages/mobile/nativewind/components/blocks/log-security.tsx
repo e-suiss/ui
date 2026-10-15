@@ -45,9 +45,13 @@ const SEVERITY: Record<
   Severity,
   { tint: string; text: string; weight: number }
 > = {
-  High: { tint: "bg-red", text: "text-danger", weight: 18 },
-  Medium: { tint: "bg-orange", text: "text-warning", weight: 8 },
-  Low: { tint: "bg-yellow", text: "text-label", weight: 3 },
+  High: { tint: "bg-red-500", text: "text-destructive", weight: 18 },
+  Medium: {
+    tint: "bg-orange-500",
+    text: "text-amber-600 dark:text-amber-400",
+    weight: 8,
+  },
+  Low: { tint: "bg-yellow-500", text: "text-foreground", weight: 3 },
 }
 
 const FILTERS = ["Open", "Resolved", "All"]
@@ -92,9 +96,9 @@ const INITIAL_ALERTS: Alert[] = [
 ]
 
 const scoreTone = (score: number) => {
-  if (score > 85) return "text-green"
-  if (score > 65) return "text-orange"
-  return "text-red"
+  if (score > 85) return "text-green-500"
+  if (score > 65) return "text-orange-500"
+  return "text-red-500"
 }
 
 const ScoreContext = React.createContext(0)
@@ -140,7 +144,10 @@ function ScoreRing({ score }: { score: number }) {
       importantForAccessibility="no-hide-descendants"
       className="size-[3.375rem] -rotate-90"
     >
-      <Icon as={ScoreTrack} className="absolute size-[3.375rem] text-control" />
+      <Icon
+        as={ScoreTrack}
+        className="absolute size-[3.375rem] text-secondary"
+      />
       <ScoreContext.Provider value={score}>
         <Icon
           as={ScoreArc}
@@ -182,7 +189,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -238,7 +245,7 @@ function LogSecurity({
               subtitle={
                 <Text
                   accessibilityLiveRegion="polite"
-                  className="text-sm text-label-secondary"
+                  className="text-sm text-muted-foreground"
                 >
                   {summary}
                 </Text>
@@ -247,10 +254,10 @@ function LogSecurity({
               Security
             </HeaderLargeTitle>
             <View className="gap-5 px-4 pt-3 pb-8">
-              <View className="flex-row flex-wrap items-center gap-4 rounded-xl bg-surface-secondary px-4 py-3.5">
+              <View className="flex-row flex-wrap items-center gap-4 rounded-xl bg-muted px-4 py-3.5">
                 <ScoreRing score={score} />
                 <View accessible className="flex-1">
-                  <Text className="text-sm text-label-secondary">
+                  <Text className="text-sm text-muted-foreground">
                     Security score
                   </Text>
                   <Text className="text-3xl font-bold tabular-nums">
@@ -260,7 +267,7 @@ function LogSecurity({
                 <View className="flex-row gap-[1.125rem]">
                   {LEVELS.map((level) => (
                     <View key={level} accessible className="items-center">
-                      <Text className="text-xs text-label-secondary">
+                      <Text className="text-xs text-muted-foreground">
                         {level}
                       </Text>
                       <Text
@@ -268,7 +275,7 @@ function LogSecurity({
                           "text-xl font-semibold tabular-nums",
                           count(level)
                             ? SEVERITY[level].text
-                            : "text-label-tertiary"
+                            : "text-muted-foreground"
                         )}
                       >
                         {String(count(level))}
@@ -299,25 +306,25 @@ function LogSecurity({
                 )}
               >
                 {list.length > 0 ? (
-                  <View className="overflow-hidden rounded-2xl bg-surface-secondary">
+                  <View className="overflow-hidden rounded-2xl bg-muted">
                     {list.map((alert, index) => (
                       <View key={alert.title}>
                         {index > 0 ? (
-                          <View className="ms-[3.625rem] h-px bg-separator" />
+                          <View className="ms-[3.625rem] h-px bg-border" />
                         ) : null}
                         <View className="min-h-[3.25rem] flex-row items-center gap-3 px-4 py-2.5">
                           <View
                             className={cn(
                               "size-[1.875rem] shrink-0 items-center justify-center rounded-[7px]",
                               alert.resolved
-                                ? "bg-green"
+                                ? "bg-green-500"
                                 : SEVERITY[alert.severity].tint
                             )}
                           >
                             <Icon
                               as={alert.resolved ? CheckIcon : alert.icon}
                               weight="bold"
-                              className="size-4 text-on-accent"
+                              className="size-4 text-primary-foreground"
                             />
                           </View>
                           <View className="min-w-0 flex-1">
@@ -329,7 +336,7 @@ function LogSecurity({
                             </Text>
                             <Text
                               numberOfLines={1}
-                              className="text-xs text-label-secondary"
+                              className="text-xs text-muted-foreground"
                             >
                               {`${alert.resolved ? "Resolved" : `${alert.severity} severity`} · ${alert.detail}`}
                             </Text>
@@ -355,7 +362,7 @@ function LogSecurity({
                     ))}
                   </View>
                 ) : (
-                  <Text className="p-[1.875rem] text-center text-sm text-label-secondary">
+                  <Text className="p-[1.875rem] text-center text-sm text-muted-foreground">
                     {filter === "Open"
                       ? "No open alerts. All good."
                       : "Nothing here yet."}

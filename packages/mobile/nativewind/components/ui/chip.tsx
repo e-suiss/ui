@@ -33,14 +33,9 @@ const chipVariants = cva(
 )
 
 function chipStateClassName(state: ToggleState) {
-  if (state.disabled) {
-    return state.pressed ? "bg-control-selected-40" : "bg-control-disabled"
-  }
   return cn(
-    "active:scale-[0.96]",
-    state.pressed
-      ? "bg-control-selected"
-      : "bg-control active:bg-control-pressed"
+    state.pressed ? "bg-foreground" : "bg-secondary",
+    state.disabled ? "opacity-50" : "active:scale-[0.96] active:opacity-80"
   )
 }
 
@@ -48,9 +43,7 @@ function chipTextClassName(size: ChipSize, state: ToggleState) {
   return cn(
     "font-medium",
     size === "sm" ? "text-xs" : "text-sm",
-    state.pressed && "text-on-control-selected",
-    !state.pressed && state.disabled && "text-label-quaternary",
-    !(state.pressed || state.disabled) && "text-label"
+    state.pressed ? "text-background" : "text-foreground"
   )
 }
 
@@ -129,7 +122,7 @@ function Chip({
           disabled={disabled}
           hitSlop={8}
           onPress={onRemove}
-          className="size-5 items-center justify-center rounded-full active:bg-item-pressed"
+          className="size-5 items-center justify-center rounded-full active:opacity-80"
         >
           <Icon as={XIcon} weight="bold" className="size-3" />
         </Pressable>

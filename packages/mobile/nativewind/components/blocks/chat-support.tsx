@@ -93,7 +93,7 @@ function TypingDot({ index }: { index: number }) {
 
   return (
     <AnimatedView
-      className="size-2 rounded-full bg-label-tertiary"
+      className="size-2 rounded-full bg-muted-foreground"
       style={animatedStyle}
     />
   )
@@ -160,7 +160,7 @@ function Composer({
           <Icon
             as={PlusIcon}
             weight="bold"
-            className="size-[1.125rem] text-label-secondary"
+            className="size-[1.125rem] text-muted-foreground"
           />
         </Button>
         <InputGroup className="h-9 flex-1 rounded-full">
@@ -297,7 +297,7 @@ function ChatSupport({
           importantForAccessibility={open ? "no-hide-descendants" : "auto"}
           contentContainerClassName="px-6 py-10"
         >
-          <Text className="text-lg font-semibold text-label-secondary">
+          <Text className="text-lg font-semibold text-muted-foreground">
             suiss Support
           </Text>
           <Text
@@ -312,7 +312,7 @@ function ChatSupport({
             accessible
             accessibilityLabel="A phone resting on a soft beige surface"
             accessibilityIgnoresInvertColors
-            className="mt-6 h-[13.75rem] w-full rounded-[1.125rem] bg-control"
+            className="mt-6 h-[13.75rem] w-full rounded-[1.125rem] bg-secondary"
           />
         </ScrollView>
         {height > 0 ? (
@@ -322,7 +322,7 @@ function ChatSupport({
             accessibilityElementsHidden={!open}
             importantForAccessibility={open ? "auto" : "no-hide-descendants"}
             accessibilityLabel="suiss Support chat"
-            className="absolute inset-x-3 bottom-3 overflow-hidden rounded-[1.375rem] border border-separator bg-surface shadow-lg"
+            className="absolute inset-x-3 bottom-3 overflow-hidden rounded-[1.375rem] border border-border bg-background shadow-lg"
             style={[
               {
                 height: panelHeight,
@@ -334,17 +334,17 @@ function ChatSupport({
             ]}
           >
             <MessageScrollerProvider>
-              <View className="flex-row items-center gap-2.5 border-b border-separator px-3.5 py-3">
-                <View className="size-[2.125rem] items-center justify-center rounded-full bg-label">
-                  <Text className="text-base font-bold text-surface">s</Text>
+              <View className="flex-row items-center gap-2.5 border-b border-border px-3.5 py-3">
+                <View className="size-[2.125rem] items-center justify-center rounded-full bg-foreground">
+                  <Text className="text-base font-bold text-background">s</Text>
                 </View>
                 <View className="flex-1">
                   <Text role="heading" className="text-sm font-semibold">
                     suiss Support
                   </Text>
                   <View className="flex-row items-center gap-1">
-                    <View className="size-1.5 rounded-full bg-green" />
-                    <Text className="text-2xs text-green">Online</Text>
+                    <View className="size-1.5 rounded-full bg-green-500" />
+                    <Text className="text-2xs text-green-500">Online</Text>
                   </View>
                 </View>
                 <Button
@@ -357,7 +357,7 @@ function ChatSupport({
                   <Icon
                     as={XIcon}
                     weight="bold"
-                    className="size-[0.8125rem] text-label-secondary"
+                    className="size-[0.8125rem] text-muted-foreground"
                   />
                 </Button>
               </View>
@@ -411,9 +411,9 @@ function ChatSupport({
                       variant="outline"
                       size="sm"
                       onPress={() => ask(question)}
-                      className="border-accent"
+                      className="border-primary"
                     >
-                      <Text className="text-link">{question}</Text>
+                      <Text className="text-primary">{question}</Text>
                     </Button>
                   ))}
                 </ScrollView>

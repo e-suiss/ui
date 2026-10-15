@@ -101,8 +101,8 @@ function PlanCard({
       <Pressable
         onPress={onPress}
         className={cn(
-          "gap-3 rounded-[1.125rem] border-2 bg-surface-secondary p-[1.125rem]",
-          checked ? "border-accent" : "border-transparent active:opacity-80"
+          "gap-3 rounded-[1.125rem] border-2 bg-muted p-[1.125rem]",
+          checked ? "border-primary" : "border-transparent active:opacity-80"
         )}
       >
         <View className="flex-row items-center gap-2">
@@ -117,7 +117,7 @@ function PlanCard({
           <Text className="text-2xl font-semibold tabular-nums">
             {money(yearly ? plan.price * 10 : plan.price)}
           </Text>
-          <Text className="text-sm text-label-secondary">
+          <Text className="text-sm text-muted-foreground">
             {yearly ? " /yr" : " /mo"}
           </Text>
         </Text>
@@ -127,7 +127,7 @@ function PlanCard({
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="mt-[0.1875rem] size-[0.8125rem] shrink-0 text-success"
+                className="mt-[0.1875rem] size-[0.8125rem] shrink-0 text-green-600 dark:text-green-400"
               />
               <Text className="flex-1 text-sm">{feature}</Text>
             </View>
@@ -137,9 +137,9 @@ function PlanCard({
       {plan.popular ? (
         <View
           pointerEvents="none"
-          className="absolute -top-[0.5625rem] start-[1.125rem] rounded-full bg-accent px-[0.5625rem] py-0.5"
+          className="absolute -top-[0.5625rem] start-[1.125rem] rounded-full bg-primary px-[0.5625rem] py-0.5"
         >
-          <Text className="text-2xs font-semibold text-on-accent">
+          <Text className="text-2xs font-semibold text-primary-foreground">
             Most popular
           </Text>
         </View>
@@ -172,7 +172,7 @@ function PriceStorage({
           entering={FadeInDown.duration(600).reduceMotion(ReduceMotion.System)}
           className="items-center gap-2"
         >
-          <Icon as={CloudIcon} className="size-10 text-blue" />
+          <Icon as={CloudIcon} className="size-10 text-blue-500" />
           <Text role="heading" className="text-center text-3xl font-semibold">
             More space with suiss Cloud+.
           </Text>

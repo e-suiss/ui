@@ -18,7 +18,7 @@ import { Text } from "@/components/ui/text"
 const chartData = [{ name: "value", value: 64 }]
 
 const chartConfig = {
-  value: { label: "Reading", color: "orange" },
+  value: { label: "Reading", color: "chart-4" },
 } satisfies ChartConfig
 
 export function RadialChartProgress() {
@@ -37,7 +37,7 @@ export function RadialChartProgress() {
             <Text className="text-3xl font-semibold tracking-tight tabular-nums">
               16 / 25
             </Text>
-            <Text className="text-xs text-label-secondary">books · 2026</Text>
+            <Text className="text-xs text-muted-foreground">books · 2026</Text>
           </View>
           <ChartContainer
             config={chartConfig}

@@ -24,11 +24,11 @@ function Alert({
   )
   const content = nodes.filter((node) => !actions.includes(node))
   return (
-    <TextClassContext.Provider value="text-base text-label">
+    <TextClassContext.Provider value="text-base text-foreground">
       <View
         role="alert"
         className={cn(
-          "relative w-full flex-row gap-3 rounded-2xl bg-surface-secondary p-5",
+          "relative w-full flex-row gap-3 rounded-2xl bg-muted p-5",
           actions.length > 0 && "pe-24",
           className
         )}
@@ -39,7 +39,7 @@ function Alert({
             as={icon}
             className={cn(
               "mt-px size-5",
-              variant === "destructive" ? "text-danger" : "text-accent",
+              variant === "destructive" ? "text-destructive" : "text-primary",
               iconClassName
             )}
           />
@@ -62,7 +62,7 @@ function AlertDescription({
   className,
   ...props
 }: React.ComponentProps<typeof Text>) {
-  return <Text className={cn("text-label-secondary", className)} {...props} />
+  return <Text className={cn("text-muted-foreground", className)} {...props} />
 }
 
 function AlertAction({

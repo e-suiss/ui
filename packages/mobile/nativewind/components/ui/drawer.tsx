@@ -107,7 +107,7 @@ function DrawerIndentBackground({
     <DrawerPrimitive.IndentBackground
       className={(state) =>
         cn(
-          "absolute top-0 right-0 bottom-0 left-0 -z-10 bg-label dark:bg-surface",
+          "absolute top-0 right-0 bottom-0 left-0 -z-10 bg-foreground dark:bg-background",
           resolveClassName(className, state)
         )
       }
@@ -148,7 +148,7 @@ function DrawerIndent({
       render={<AnimatedView style={[INDENT_ORIGIN, animatedStyle]} />}
       className={(state) =>
         cn(
-          "relative flex-1 overflow-hidden bg-surface",
+          "relative flex-1 overflow-hidden bg-background",
           resolveClassName(className, state)
         )
       }
@@ -231,7 +231,7 @@ function DrawerOverlay({
       <DrawerPrimitive.Backdrop
         className={(state) =>
           cn(
-            "absolute top-0 right-0 bottom-0 left-0 bg-scrim",
+            "absolute top-0 right-0 bottom-0 left-0 bg-black/50",
             resolveClassName(className, state)
           )
         }
@@ -261,7 +261,7 @@ function DrawerSwipeHandle({ className, ...props }: ViewProps) {
     >
       <View
         className={cn(
-          "shrink-0 rounded-full bg-label-quaternary",
+          "shrink-0 rounded-full bg-border",
           horizontal ? "h-9 w-[5px]" : "h-[5px] w-9"
         )}
       />
@@ -363,7 +363,7 @@ function DrawerContent({
               <DrawerPrimitive.Popup
                 className={(state) =>
                   cn(
-                    "flex min-h-0 flex-col rounded-3xl bg-surface-raised shadow-xl",
+                    "flex min-h-0 flex-col rounded-3xl bg-popover shadow-xl",
                     horizontal && "flex-1 flex-row",
                     !floating && DOCKED_RADIUS[swipeDirection],
                     resolveClassName(className, state)
@@ -378,10 +378,7 @@ function DrawerContent({
                 {floating ? null : (
                   <View
                     accessible={false}
-                    className={cn(
-                      "absolute bg-surface-raised",
-                      BLEED[swipeDirection]
-                    )}
+                    className={cn("absolute bg-popover", BLEED[swipeDirection])}
                     style={{ pointerEvents: "none" }}
                   />
                 )}
@@ -406,8 +403,7 @@ function DrawerContent({
                         className={cn(
                           "absolute right-4",
                           showSwipeHandle ? "top-[23px]" : "top-[11px]",
-                          !closeLabel &&
-                            "bg-surface-tertiary active:bg-separator"
+                          !closeLabel && "bg-secondary active:opacity-80"
                         )}
                       />
                     }
@@ -417,7 +413,7 @@ function DrawerContent({
                     {closeLabel ? (
                       <Text className="text-base">{closeLabel}</Text>
                     ) : (
-                      <Icon as={XIcon} className="size-4 text-label" />
+                      <Icon as={XIcon} className="size-4 text-foreground" />
                     )}
                   </DrawerPrimitive.Close>
                 ) : null}
@@ -468,7 +464,7 @@ function DrawerTitle({
     <DrawerPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-semibold text-label",
+          "text-base font-semibold text-foreground",
           vertical && "text-center",
           resolveClassName(className, state)
         )
@@ -488,7 +484,7 @@ function DrawerDescription({
     <DrawerPrimitive.Description
       className={(state) =>
         cn(
-          "text-sm text-label-secondary",
+          "text-sm text-muted-foreground",
           vertical && "text-center",
           resolveClassName(className, state)
         )

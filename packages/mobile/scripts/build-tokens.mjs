@@ -35,22 +35,6 @@ const DEFAULT_SHADOWS = {
   sm: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
   xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 }
-const SWIFT_SYSTEM_COLORS = new Set([
-  "blue",
-  "green",
-  "orange",
-  "red",
-  "yellow",
-  "purple",
-  "pink",
-  "indigo",
-  "teal",
-  "mint",
-  "cyan",
-  "brown",
-  "gray",
-])
-
 function camelCase(name) {
   return name.replace(/-(\w)/g, (_match, letter) => letter.toUpperCase())
 }
@@ -196,6 +180,10 @@ type ThemeColors = typeof light
 
 const dark: ThemeColors = {
 ${colorObject(theme.dark)}
+}
+
+const palette = {
+${colorObject(theme.palette)}
 }
 
 const radius = {
@@ -834,15 +822,13 @@ function ThemeToggle({
         gap: 4,
         padding: 4,
         borderRadius: radius.xl,
-        backgroundColor: colors.control,
+        backgroundColor: colors.secondary,
       },
+      disabled && { opacity: 0.5 },
       style,
     ],
     children: THEMES.map((value) => {
       const selected = theme === value
-      let labelColor = colors.labelSecondary
-      if (disabled) labelColor = colors.labelQuaternary
-      else if (selected) labelColor = colors.label
       return jsx(
         Pressable,
         {
@@ -862,20 +848,15 @@ function ThemeToggle({
               paddingHorizontal: 12,
               borderRadius: radius.md,
             },
-            selected &&
-              (disabled
-                ? { backgroundColor: colors.controlDisabled }
-                : {
-                    backgroundColor: isDark
-                      ? colors.labelQuaternary
-                      : colors.surfaceRaised,
-                    ...shadow.sm,
-                  }),
+            selected && {
+              backgroundColor: isDark ? colors.border : colors.card,
+              ...shadow.sm,
+            },
           ],
           children: jsx(Text, {
             style: {
               ...fontSize.sm,
-              color: labelColor,
+              color: selected ? colors.cardForeground : colors.mutedForeground,
             },
             children: labels?.[value] ?? LABELS[value],
           }),
@@ -899,6 +880,7 @@ export {
   dark,
   fontSize,
   light,
+  palette,
   radius,
   shadow,
   ThemeProvider,
@@ -922,10 +904,15 @@ function swiftShadowColor({ channels, alpha }) {
 
 function buildSwift(theme) {
   const colors = Object.keys(theme.light)
-    .filter((name) => !SWIFT_SYSTEM_COLORS.has(name))
     .map(
       (name) =>
         `  public static let ${camelCase(name)} = Color.adaptive(light: ${swiftColor(theme.light[name])}, dark: ${swiftColor(theme.dark[name])})`
+    )
+    .join("\n")
+  const palette = Object.entries(theme.palette)
+    .map(
+      ([name, value]) =>
+        `  public static let ${camelCase(name)} = Color.fixed(${swiftColor(value)})`
     )
     .join("\n")
   const radius = Object.entries({ ...theme.radius, full: 9999 })
@@ -954,8 +941,12 @@ function buildSwift(theme) {
 
   return `import SwiftUI
 
-extension Color {
+public enum EsuissColor {
 ${colors}
+}
+
+public enum Palette {
+${palette}
 }
 
 public enum Radius {
@@ -1006,6 +997,11 @@ function buildKotlin(theme) {
         `    val ${nativeName(name)} = textStyle(${double(size.fontSize)}, ${double(size.lineHeight)}, ${double(size.tracking)})`
     )
     .join("\n")
+  const palette = Object.entries(theme.palette)
+    .map(
+      ([name, value]) => `    val ${camelCase(name)} = ${kotlinColor(value)}`
+    )
+    .join("\n")
   const shadow = Object.entries(theme.shadow)
     .map(([name, value]) => {
       const parsed = parseShadow(value)
@@ -1032,6 +1028,10 @@ ${kotlinColors(theme.light, false)}
 val DarkColors = Colors(
 ${kotlinColors(theme.dark, true)}
 )
+
+object Palette {
+${palette}
+}
 
 object Radius {
 ${radius}

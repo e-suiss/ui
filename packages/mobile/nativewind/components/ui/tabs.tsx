@@ -43,7 +43,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "rounded-xl bg-control p-1",
+        default: "rounded-xl bg-secondary p-1",
         line: "bg-transparent p-0.5",
       },
     },
@@ -58,8 +58,8 @@ function TabsIndicator({ variant }: { variant: TabsListVariant }) {
     <TabsPrimitive.Indicator
       className={cn(
         variant === "line"
-          ? "bg-label"
-          : "rounded-md bg-surface-raised shadow dark:bg-label-quaternary"
+          ? "bg-foreground"
+          : "rounded-md bg-card shadow dark:bg-border"
       )}
       style={(state) => {
         if (variant !== "line") return undefined
@@ -117,9 +117,9 @@ function TabsTrigger({
     <TextClassContext.Provider
       value={cn(
         "text-sm",
-        disabled && "text-label-quaternary",
-        !disabled && active && "text-label",
-        !(disabled || active) && "text-label-secondary"
+        disabled && "opacity-50",
+        !disabled && active && "text-foreground",
+        !(disabled || active) && "text-muted-foreground"
       )}
     >
       <TabsPrimitive.Tab

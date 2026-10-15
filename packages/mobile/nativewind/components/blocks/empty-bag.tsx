@@ -59,9 +59,9 @@ function EmptyBag() {
                   entering={ZoomIn.duration(300).reduceMotion(
                     ReduceMotion.System
                   )}
-                  className="absolute -end-1.5 -bottom-0.5 size-5 items-center justify-center rounded-full bg-label"
+                  className="absolute -end-1.5 -bottom-0.5 size-5 items-center justify-center rounded-full bg-foreground"
                 >
-                  <Text className="text-2xs font-semibold text-surface tabular-nums">
+                  <Text className="text-2xs font-semibold text-background tabular-nums">
                     {count}
                   </Text>
                 </AnimatedView>
@@ -107,14 +107,14 @@ function EmptyBag() {
                     source={{ uri: item.image }}
                     resizeMode="cover"
                     accessibilityIgnoresInvertColors
-                    className="aspect-[1.2] w-full rounded-2xl bg-control"
+                    className="aspect-[1.2] w-full rounded-2xl bg-secondary"
                   />
                   <View className="flex-row items-center gap-2">
                     <View className="flex-1">
                       <Text className="text-base font-semibold">
                         {item.name}
                       </Text>
-                      <Text className="text-sm text-label-secondary">
+                      <Text className="text-sm text-muted-foreground">
                         {item.price}
                       </Text>
                     </View>
@@ -136,7 +136,7 @@ function EmptyBag() {
                       }
                       className={cn(
                         "size-[1.875rem]",
-                        inBag && "bg-success active:bg-success"
+                        inBag && "bg-green-500 active:opacity-80"
                       )}
                     >
                       <Icon

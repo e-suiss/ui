@@ -121,7 +121,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -165,7 +165,7 @@ function RolesEditor({
             {wide ? (
               <Text
                 role="heading"
-                className="px-1 pb-2 text-sm font-semibold text-label-secondary"
+                className="px-1 pb-2 text-sm font-semibold text-muted-foreground"
               >
                 Roles
               </Text>
@@ -178,7 +178,7 @@ function RolesEditor({
                 className="py-1.5"
               >
                 <Text>{name}</Text>
-                <Text className="text-xs text-label-secondary">
+                <Text className="text-xs text-muted-foreground">
                   {`${state[name].filter(Boolean).length} permissions`}
                 </Text>
               </SplitViewItem>
@@ -206,7 +206,7 @@ function RolesEditor({
                   <Text role="heading" className="text-3xl font-semibold">
                     {role}
                   </Text>
-                  <Text className="text-sm text-label-secondary">
+                  <Text className="text-sm text-muted-foreground">
                     {`${MEMBERS[role]} ${MEMBERS[role] === 1 ? "user has" : "users have"} this role`}
                   </Text>
                 </View>

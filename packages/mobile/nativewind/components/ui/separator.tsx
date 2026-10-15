@@ -10,7 +10,7 @@ function Separator({
     <SeparatorPrimitive
       className={(state) =>
         cn(
-          "shrink-0 bg-separator",
+          "shrink-0 bg-border",
           state.orientation === "horizontal"
             ? "h-px w-full"
             : "w-px self-stretch",

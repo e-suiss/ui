@@ -40,20 +40,19 @@ function Input({
     <InputPrimitive.Root
       className={(state) =>
         cn(
-          "h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-control px-3 py-1 text-base text-label",
+          "h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary px-3 py-1 text-base text-secondary-foreground",
           size === "md" && "h-9 text-sm",
           size === "sm" && "h-8 rounded-md px-2.5 text-sm",
-          state.focused && "border-focus",
-          state.invalid && "border-danger bg-danger-5 dark:bg-danger-10",
-          state.disabled && "bg-control-disabled text-label-quaternary",
+          state.focused && "border-ring",
+          state.invalid &&
+            "border-destructive bg-destructive-5 dark:bg-destructive-10",
+          state.disabled && "opacity-50",
           resolveClassName(className, state)
         )
       }
-      placeholderClassName={
-        props.disabled ? "text-label-quaternary" : "text-label-secondary"
-      }
-      cursorColorClassName="text-accent"
-      selectionColorClassName="text-accent"
+      placeholderClassName="text-muted-foreground"
+      cursorColorClassName="text-primary"
+      selectionColorClassName="text-primary"
       {...props}
     />
   )

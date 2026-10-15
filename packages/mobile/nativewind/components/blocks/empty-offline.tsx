@@ -58,7 +58,7 @@ function EmptyOffline() {
                 onPress={() => setState("offline")}
                 className="active:opacity-60"
               >
-                <Text className="text-sm text-link">Disconnect ›</Text>
+                <Text className="text-sm text-primary">Disconnect ›</Text>
               </Pressable>
             </View>
             <View className="flex-row flex-wrap gap-3.5">
@@ -68,7 +68,7 @@ function EmptyOffline() {
                     source={{ uri: album.image }}
                     resizeMode="cover"
                     accessibilityIgnoresInvertColors
-                    className="aspect-square w-full rounded-xl bg-control"
+                    className="aspect-square w-full rounded-xl bg-secondary"
                   />
                   <Text className="text-sm font-semibold">{album.title}</Text>
                 </View>
@@ -88,7 +88,7 @@ function EmptyOffline() {
             <Icon
               as={WifiSlashIcon}
               weight="light"
-              className="size-[3.25rem] text-label-tertiary"
+              className="size-[3.25rem] text-muted-foreground"
             />
           </EmptyMedia>
           <EmptyTitle className="text-3xl font-semibold">

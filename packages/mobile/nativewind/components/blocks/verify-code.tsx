@@ -43,7 +43,7 @@ function LinkText({
       onPress={onPress}
       className="active:opacity-60"
     >
-      <Text className="text-sm text-link">{children}</Text>
+      <Text className="text-sm text-primary">{children}</Text>
     </Pressable>
   )
 }
@@ -109,17 +109,17 @@ function VerifyCode({
             )}
             className="items-center gap-3.5"
           >
-            <View className="size-[4.75rem] items-center justify-center rounded-full bg-success">
+            <View className="size-[4.75rem] items-center justify-center rounded-full bg-green-500">
               <Icon
                 as={CheckIcon}
                 weight="bold"
-                className="size-[2.375rem] text-on-accent"
+                className="size-[2.375rem] text-primary-foreground"
               />
             </View>
             <Text role="heading" className="text-3xl font-semibold">
               Verified.
             </Text>
-            <Text className="text-center text-lg text-label-secondary">
+            <Text className="text-center text-lg text-muted-foreground">
               This device is now trusted. You won't be asked for a code next
               time.
             </Text>
@@ -132,7 +132,7 @@ function VerifyCode({
               }}
               className="active:opacity-60"
             >
-              <Text className="text-lg text-link">Start over ›</Text>
+              <Text className="text-lg text-primary">Start over ›</Text>
             </Pressable>
           </AnimatedView>
         </View>
@@ -143,11 +143,11 @@ function VerifyCode({
   return (
     <Screen>
       <KeyboardScrollView contentContainerClassName="grow items-center justify-center px-6 py-8">
-        <View className="size-16 items-center justify-center rounded-full bg-surface-secondary">
+        <View className="size-16 items-center justify-center rounded-full bg-muted">
           <Icon
             as={LockSimpleIcon}
             weight="bold"
-            className="size-[1.875rem] text-accent"
+            className="size-[1.875rem] text-primary"
           />
         </View>
         <Text
@@ -156,7 +156,7 @@ function VerifyCode({
         >
           Two-factor authentication
         </Text>
-        <Text className="mt-3 mb-[1.875rem] text-center text-lg text-label-secondary">
+        <Text className="mt-3 mb-[1.875rem] text-center text-lg text-muted-foreground">
           Enter the 6-digit code sent to your trusted devices.
         </Text>
         <AnimatedView style={shakeStyle}>
@@ -184,11 +184,9 @@ function VerifyCode({
                     className={(state) =>
                       cn(
                         "h-14 w-11 rounded-xl border bg-transparent",
-                        status === "error" && "border-danger",
-                        status !== "error" && state.active && "border-accent",
-                        status !== "error" &&
-                          !state.active &&
-                          "border-separator-strong"
+                        status === "error" && "border-destructive",
+                        status !== "error" && state.active && "border-primary",
+                        status !== "error" && !state.active && "border-input"
                       )
                     }
                   />
@@ -201,14 +199,14 @@ function VerifyCode({
           accessibilityLiveRegion="polite"
           className={cn(
             "mt-3.5 min-h-5 text-sm",
-            status === "error" ? "text-danger" : "text-label-secondary"
+            status === "error" ? "text-destructive" : "text-muted-foreground"
           )}
         >
           {status === "error" ? "Incorrect code." : `Demo code: ${DEMO_CODE}`}
         </Text>
         <View className="mt-6 items-center gap-2.5">
           {left > 0 ? (
-            <Text className="text-sm text-label-secondary tabular-nums">
+            <Text className="text-sm text-muted-foreground tabular-nums">
               Resend code · 0:{String(left).padStart(2, "0")}
             </Text>
           ) : (

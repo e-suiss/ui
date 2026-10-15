@@ -26,8 +26,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "blue" },
-  mobile: { label: "Mobile", color: "teal" },
+  desktop: { label: "Desktop", color: "chart-1" },
+  mobile: { label: "Mobile", color: "chart-2" },
 } satisfies ChartConfig
 
 export function BarChartMultiple() {
@@ -59,8 +59,8 @@ export function BarChartMultiple() {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="blue" radius={4} />
-            <Bar dataKey="mobile" fill="teal" radius={4} />
+            <Bar dataKey="desktop" fill="chart-1" radius={4} />
+            <Bar dataKey="mobile" fill="chart-2" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

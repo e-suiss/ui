@@ -26,7 +26,7 @@ const LOW = 20
 
 function Battery({ name, level }: { name: string; level: number }) {
   const chartConfig = {
-    level: { label: name, color: level <= LOW ? "red" : "green" },
+    level: { label: name, color: level <= LOW ? "red-500" : "green-500" },
   } satisfies ChartConfig
 
   return (
@@ -40,7 +40,7 @@ function Battery({ name, level }: { name: string; level: number }) {
           pointerEvents="none"
           className="absolute inset-0 items-center justify-center"
         >
-          <Text className="text-xs font-semibold text-label-secondary">
+          <Text className="text-xs font-semibold text-muted-foreground">
             {name[0]}
           </Text>
         </View>
@@ -67,7 +67,7 @@ function Battery({ name, level }: { name: string; level: number }) {
         </ChartContainer>
       </View>
       <Text className="text-base font-semibold tabular-nums">{`${level}%`}</Text>
-      <Text className="text-xs text-label-secondary">{name}</Text>
+      <Text className="text-xs text-muted-foreground">{name}</Text>
     </View>
   )
 }

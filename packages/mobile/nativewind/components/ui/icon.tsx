@@ -34,7 +34,7 @@ function Icon({ as: IconComponent, className, ...props }: IconProps) {
   return (
     <StyledIcon
       as={IconComponent}
-      className={cn("size-5 text-label", textClass, iconClass, className)}
+      className={cn("size-5 text-foreground", textClass, iconClass, className)}
       {...props}
     />
   )

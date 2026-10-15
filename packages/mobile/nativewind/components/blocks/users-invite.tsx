@@ -81,7 +81,7 @@ function OtherSection({ value, home }: { value: string; home: string }) {
       <Text role="heading" className="text-3xl font-bold">
         {label}
       </Text>
-      <Text className="text-lg text-label-secondary">
+      <Text className="text-lg text-muted-foreground">
         {`This section isn't part of the sample. Choose ${home}.`}
       </Text>
     </View>
@@ -223,7 +223,7 @@ function InviteForm({
         <View className="flex-row items-center gap-2.5">
           <Text
             accessibilityLiveRegion="polite"
-            className="flex-1 text-sm text-label-secondary"
+            className="flex-1 text-sm text-muted-foreground"
           >
             {emails.length
               ? `${emails.length} ${emails.length === 1 ? "person" : "people"} will be invited as ${role}.`
@@ -247,11 +247,11 @@ function InviteForm({
               >
                 {index > 0 ? <ItemSeparator className="ms-14" /> : null}
                 <Item size="sm">
-                  <ItemMedia className="size-7 rounded-[7px] bg-gray">
+                  <ItemMedia className="size-7 rounded-[7px] bg-zinc-500">
                     <Icon
                       as={EnvelopeSimpleIcon}
                       weight="bold"
-                      className="size-4 text-on-accent"
+                      className="size-4 text-primary-foreground"
                     />
                   </ItemMedia>
                   <ItemContent className="gap-0">
@@ -294,7 +294,7 @@ function InviteForm({
             ))}
           </ItemGroup>
         ) : (
-          <Text className="px-1 text-sm text-label-secondary">
+          <Text className="px-1 text-sm text-muted-foreground">
             No pending invitations.
           </Text>
         )}

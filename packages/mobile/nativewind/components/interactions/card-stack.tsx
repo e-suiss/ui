@@ -406,12 +406,12 @@ function CardStackEmpty({
   return (
     <View
       className={cn(
-        "absolute inset-0 items-center justify-center gap-2 rounded-2xl border border-separator border-dashed p-6",
+        "absolute inset-0 items-center justify-center gap-2 rounded-2xl border border-border border-dashed p-6",
         className
       )}
       {...props}
     >
-      {wrapText(children, "text-center text-sm text-label-secondary")}
+      {wrapText(children, "text-center text-sm text-muted-foreground")}
     </View>
   )
 }
@@ -458,7 +458,7 @@ function CardStackSwipeButton({
           as={direction === "left" ? XIcon : HeartIcon}
           className={cn(
             "size-6",
-            direction === "left" ? "text-danger" : "text-accent"
+            direction === "left" ? "text-destructive" : "text-primary"
           )}
         />
       )}

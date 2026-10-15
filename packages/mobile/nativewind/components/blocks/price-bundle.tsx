@@ -27,38 +27,38 @@ const SERVICES: {
   {
     name: "suiss Music",
     icon: MusicNoteIcon,
-    tint: "bg-red",
-    iconClass: "text-on-accent",
+    tint: "bg-red-500",
+    iconClass: "text-primary-foreground",
   },
   {
     name: "suiss TV",
     icon: TelevisionIcon,
-    tint: "bg-label",
-    iconClass: "text-surface",
+    tint: "bg-foreground",
+    iconClass: "text-background",
   },
   {
     name: "suiss Arcade",
     icon: GameControllerIcon,
-    tint: "bg-red",
-    iconClass: "text-on-accent",
+    tint: "bg-red-500",
+    iconClass: "text-primary-foreground",
   },
   {
     name: "suiss Cloud+",
     icon: CloudIcon,
-    tint: "bg-blue",
-    iconClass: "text-on-accent",
+    tint: "bg-blue-500",
+    iconClass: "text-primary-foreground",
   },
   {
     name: "Fitness+",
     icon: FlameIcon,
-    tint: "bg-green",
-    iconClass: "text-on-accent",
+    tint: "bg-green-500",
+    iconClass: "text-primary-foreground",
   },
   {
     name: "News+",
     icon: NewspaperIcon,
-    tint: "bg-pink",
-    iconClass: "text-on-accent",
+    tint: "bg-pink-500",
+    iconClass: "text-primary-foreground",
   },
 ]
 
@@ -124,7 +124,7 @@ function PriceBundle({
           <Text role="heading" className="text-center text-3xl font-semibold">
             <Text className="text-3xl font-bold">suiss</Text> One
           </Text>
-          <Text className="text-center text-2xl text-label-secondary">
+          <Text className="text-center text-2xl text-muted-foreground">
             Bundle it all in one subscription.
           </Text>
         </AnimatedView>
@@ -145,15 +145,15 @@ function PriceBundle({
                 className={cn(
                   "gap-3.5 rounded-[1.25rem] border-2 p-5",
                   checked
-                    ? "border-accent bg-surface-secondary"
-                    : "border-separator bg-surface-secondary-60 active:bg-surface-secondary"
+                    ? "border-primary bg-muted"
+                    : "border-border bg-muted-60 active:opacity-80"
                 )}
               >
                 <View className="flex-row items-center gap-2">
                   <Text className="flex-1 text-2xl font-semibold">
                     {item.name}
                   </Text>
-                  <Text className="text-xs text-label-secondary">
+                  <Text className="text-xs text-muted-foreground">
                     {item.people}
                   </Text>
                 </View>
@@ -161,7 +161,7 @@ function PriceBundle({
                   <Text className="text-2xl font-semibold tabular-nums">
                     {money(item.price)}
                   </Text>
-                  <Text className="text-sm text-label-secondary"> /mo</Text>
+                  <Text className="text-sm text-muted-foreground"> /mo</Text>
                 </Text>
                 <View className="gap-2">
                   {SERVICES.map((service, index) => {
@@ -179,7 +179,7 @@ function PriceBundle({
                         <View
                           className={cn(
                             "size-[1.375rem] items-center justify-center rounded-md",
-                            included ? service.tint : "bg-surface-tertiary"
+                            included ? service.tint : "bg-secondary"
                           )}
                         >
                           <Icon
@@ -189,7 +189,7 @@ function PriceBundle({
                               "size-[0.8125rem]",
                               included
                                 ? service.iconClass
-                                : "text-label-tertiary"
+                                : "text-muted-foreground"
                             )}
                           />
                         </View>
@@ -197,8 +197,8 @@ function PriceBundle({
                           className={cn(
                             "text-sm",
                             included
-                              ? "text-label"
-                              : "text-label-tertiary line-through"
+                              ? "text-foreground"
+                              : "text-muted-foreground line-through"
                           )}
                         >
                           {label}
@@ -225,7 +225,7 @@ function PriceBundle({
           >
             <Text
               accessibilityLiveRegion="polite"
-              className="text-center text-base text-link"
+              className="text-center text-base text-primary"
             >
               Save {money(plan.saving, 0)} compared to buying separately ›
             </Text>
