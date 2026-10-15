@@ -21,8 +21,7 @@
     "test:rtl": "rm -rf .vitest/rtl && RTL=1 vitest run --project examples; node scripts/check-rtl.mjs; node scripts/a11y-report.mjs",
     "test:long-text": "rm -rf .vitest/long-text && LONG_TEXT=1 vitest run --project examples; node scripts/a11y-report.mjs",
     "size": "size-limit",
-    "test:perf": "rm -rf .vitest/perf && PERF=1 vitest run --project perf; node scripts/perf-report.mjs",
-    "check": "biome check --error-on-warnings ."
+    "test:perf": "rm -rf .vitest/perf && PERF=1 vitest run --project perf; node scripts/perf-report.mjs"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
