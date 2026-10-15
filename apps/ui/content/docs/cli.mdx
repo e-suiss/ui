@@ -30,7 +30,7 @@ npx @esuiss/ui@latest init [options]
 | Option | Description |
 | --- | --- |
 | `-y, --yes` | Skip confirmation prompts |
-| `-b, --base <base\|radix>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
+| `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
@@ -57,7 +57,7 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 | `--diff` | Show how your local files differ from the registry |
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
 | `-y, --yes` | Skip confirmation prompts |
-| `-b, --base <base\|radix>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
+| `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
@@ -124,14 +124,15 @@ Patterns, interactions, charts and blocks are optional extras. Neither `init` no
 
 ## Primitive base
 
-React components come with two primitive bases. `init` and `add` use the default base, `base`, unless the `style` in `components.json` is `radix-*`, `new-york` or `default`; then they use `radix`. `--base` overrides both, so pass it to every `add` in a project without a `components.json`:
+React components come with three primitive bases. `init` and `add` use the default base, `base`, unless the `style` in `components.json` is `radix-*`, `new-york` or `default`, which uses `radix`, or `aria-*`, which uses `aria`. `--base` overrides both, so pass it to every `add` in a project without a `components.json`:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --base radix
 npx @esuiss/ui@latest add sidebar --base radix
+npx @esuiss/ui@latest init --base aria
 ```
 
-The files, folders and names are the same for both. See [Installation](/docs/installation#choose-the-primitive-base).
+The files, folders and names are the same for all three. See [Installation](/docs/installation#choose-the-primitive-base).
 
 ## Where files are written
 

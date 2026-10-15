@@ -25,14 +25,15 @@ Each item comes with the components, hooks and npm packages it depends on, and i
 
 ### Choose the primitive base
 
-Every item is published for two primitive bases under the same name. The registry picks one from the `style` in your `components.json`, so `@esuiss/dialog` installs the alternative primitive base in a project whose style is `radix-nova`, and the default base everywhere else:
+Every item is published for three primitive bases under the same name. The registry picks one from the `style` in your `components.json`, so `@esuiss/dialog` installs the second base in a project whose style is `radix-nova`, the third in one whose style is `aria-nova`, and the default base everywhere else:
 
 | `style` in `components.json` | Primitive base |
 | --- | --- |
 | `base-nova`, `base-vega` and every other style | The default base |
-| `radix-nova`, `radix-vega` and any other `radix-*` style, `new-york`, `default` | The alternative primitive base |
+| `radix-nova`, `radix-vega` and any other `radix-*` style, `new-york`, `default` | The second base |
+| `aria-nova`, `aria-vega` and any other `aria-*` style | The third base |
 
-Both bases install the same files into the same folders, with the same component names and styles. They differ in how a part takes a custom element: the default base passes it to `render`, the alternative primitive base wraps it with `asChild`.
+All three install the same files into the same folders, with the same component names and styles. They differ in how a part takes a custom element: the default base passes it to `render`, the second base wraps it with `asChild`, and in the third base the pressable element itself is the trigger, with state props such as `isOpen` and `isDisabled`.
 
 ```tsx
 <DialogTrigger render={<Button variant="outline" />}>Open</DialogTrigger>
@@ -40,15 +41,21 @@ Both bases install the same files into the same folders, with the same component
 <DialogTrigger asChild>
   <Button variant="outline">Open</Button>
 </DialogTrigger>
+
+<Dialog>
+  <Button variant="outline">Open</Button>
+  <DialogContent>…</DialogContent>
+</Dialog>
 ```
 
-Combobox, drawer, toast and stepper use the default base's primitives in both. The code on this site shows the default base.
+Combobox, drawer and toast use the default base's primitives in all three. Stepper does too in the second base, and menubar and navigation menu in the third. The code on this site shows the default base.
 
 To start a new project, pick the base when you set it up:
 
 ```bash title="Terminal"
 npx shadcn@latest init --base base
 npx shadcn@latest init --base radix
+npx shadcn@latest init --base aria
 ```
 
 ### Register the namespace
@@ -63,7 +70,7 @@ Once `@esuiss` is listed in the public registry directory, the namespace works w
 }
 ```
 
-The full catalog is at [ui.suiss.app/r/registry.json](https://ui.suiss.app/r/registry.json), and the alternative primitive base's at [ui.suiss.app/r/radix/registry.json](https://ui.suiss.app/r/radix/registry.json).
+The full catalog is at [ui.suiss.app/r/registry.json](https://ui.suiss.app/r/registry.json), the second base's at [ui.suiss.app/r/radix/registry.json](https://ui.suiss.app/r/radix/registry.json) and the third base's at [ui.suiss.app/r/aria/registry.json](https://ui.suiss.app/r/aria/registry.json).
 
 ### Use the suiss/ui theme
 
@@ -107,11 +114,12 @@ npx @esuiss/ui@latest add
 
 Components are written to `components/ui/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager: npm, pnpm, yarn or bun.
 
-The suiss/ui CLI uses the default base. In a project whose `components.json` has a `radix-*`, `new-york` or `default` style, it adds the alternative primitive base instead. Pass `--base` to choose for yourself:
+The suiss/ui CLI uses the default base. In a project whose `components.json` has a `radix-*`, `new-york` or `default` style, it adds the second base instead, and with an `aria-*` style the third. Pass `--base` to choose for yourself:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --base radix
 npx @esuiss/ui@latest add dialog --base radix
+npx @esuiss/ui@latest add dialog --base aria
 ```
 
 Then import and use them:
