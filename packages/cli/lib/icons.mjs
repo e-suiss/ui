@@ -1,12 +1,17 @@
-export const ICON_PACKAGE = "@phosphor-icons/react"
+const ICON_LIBRARIES = {
+  lucide: { package: "lucide-react" },
+  tabler: { package: "@tabler/icons-react" },
+  hugeicons: {
+    package: "@hugeicons/core-free-icons",
+    wrapper: { name: "HugeiconsIcon", package: "@hugeicons/react" },
+  },
+  phosphor: { package: "@phosphor-icons/react" },
+  remixicon: { package: "@remixicon/react" },
+}
 
-const LIBRARIES = new Set([
-  "lucide",
-  "tabler",
-  "hugeicons",
-  "phosphor",
-  "remixicon",
-])
+export const ICON_PACKAGE = ICON_LIBRARIES.phosphor.package
+
+const LIBRARIES = new Set(Object.keys(ICON_LIBRARIES))
 const TAG = "<IconPlaceholder"
 const NAME_CHAR = /[\w:.-]/
 const SPACE = /\s/
@@ -88,7 +93,20 @@ function renderElement(name, attributes, indent, column) {
   return `<${name}${inner}\n${indent}/>`
 }
 
-function replacePlaceholders(code) {
+function iconElement(icon, rest, wrapper) {
+  if (!wrapper) return { name: icon, attributes: rest }
+  const names = new Set(rest.map((attribute) => attribute.name))
+  return {
+    name: wrapper.name,
+    attributes: [
+      { text: `icon={${icon}}` },
+      ...(names.has("strokeWidth") ? [] : [{ text: "strokeWidth={2}" }]),
+      ...rest,
+    ],
+  }
+}
+
+function replacePlaceholders(code, library) {
   const icons = new Set()
   let output = ""
   let index = 0
@@ -99,7 +117,7 @@ function replacePlaceholders(code) {
       ? parseAttributes(code, start + TAG.length)
       : undefined
     const icon = parsed?.attributes.find(
-      (attribute) => attribute.name === "phosphor"
+      (attribute) => attribute.name === library
     )?.value
     if (!(parsed && icon)) {
       output += code.slice(index, start + TAG.length)
@@ -107,13 +125,20 @@ function replacePlaceholders(code) {
       continue
     }
     icons.add(icon)
-    const rest = parsed.attributes
-      .filter((attribute) => !LIBRARIES.has(attribute.name))
-      .map((attribute) => attribute.text)
+    const element = iconElement(
+      icon,
+      parsed.attributes.filter((attribute) => !LIBRARIES.has(attribute.name)),
+      ICON_LIBRARIES[library].wrapper
+    )
     const lineStart = code.lastIndexOf("\n", start - 1) + 1
     output +=
       code.slice(index, start) +
-      renderElement(icon, rest, lineIndent(code, start), start - lineStart)
+      renderElement(
+        element.name,
+        element.attributes.map((attribute) => attribute.text),
+        lineIndent(code, start),
+        start - lineStart
+      )
     index = parsed.end
   }
   return { code: output + code.slice(index), icons: [...icons] }
@@ -137,20 +162,20 @@ function importStatements(lines) {
 const isPackage = (specifier) =>
   !(specifier.startsWith("@/") || specifier.startsWith("."))
 
-function importText(names) {
-  const inline = `import { ${names.join(", ")} } from "${ICON_PACKAGE}"`
+function importText(names, specifier) {
+  const inline = `import { ${names.join(", ")} } from "${specifier}"`
   if (inline.length <= LINE_WIDTH) return [inline]
   return [
     "import {",
     ...names.map((name) => `  ${name},`),
-    `} from "${ICON_PACKAGE}"`,
+    `} from "${specifier}"`,
   ]
 }
 
-function addImport(code, icons) {
+function addImport(code, names, specifier) {
   const lines = code.split("\n")
   const statements = importStatements(lines)
-  const text = importText(icons.sort())
+  const text = importText(names.sort(), specifier)
   const chunk = []
   for (const statement of statements) {
     const previous = chunk.at(-1)
@@ -159,7 +184,8 @@ function addImport(code, icons) {
   }
   if (chunk.length) {
     const before = chunk.find(
-      ({ specifier }) => !isPackage(specifier) || specifier > ICON_PACKAGE
+      (statement) =>
+        !isPackage(statement.specifier) || statement.specifier > specifier
     )
     lines.splice(
       before ? before.start : (chunk.at(-1)?.end ?? 0) + 1,
@@ -189,10 +215,17 @@ export function usesIconPlaceholders(code) {
   return PLACEHOLDER_IMPORT.test(code)
 }
 
+export function toIcons(code, library = "phosphor") {
+  if (!(usesIconPlaceholders(code) && library in ICON_LIBRARIES)) return code
+  const replaced = replacePlaceholders(removePlaceholderImport(code), library)
+  if (!replaced.icons.length) return replaced.code
+  const { package: specifier, wrapper } = ICON_LIBRARIES[library]
+  const withIcons = addImport(replaced.code, replaced.icons, specifier)
+  return wrapper
+    ? addImport(withIcons, [wrapper.name], wrapper.package)
+    : withIcons
+}
+
 export function toPhosphorIcons(code) {
-  if (!usesIconPlaceholders(code)) return code
-  const replaced = replacePlaceholders(removePlaceholderImport(code))
-  return replaced.icons.length
-    ? addImport(replaced.code, replaced.icons)
-    : replaced.code
+  return toIcons(code, "phosphor")
 }

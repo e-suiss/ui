@@ -2,8 +2,16 @@ import { existsSync } from "node:fs"
 import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import { highlightHast } from "fumadocs-core/highlight"
-
-import { toPhosphorIcons } from "../../../packages/cli/lib/icons.mjs"
+import {
+  type CodeOptions,
+  DEFAULT_BASE,
+  DEFAULT_ICONS,
+  PRIMITIVE_BASES,
+} from "@/lib/code-options"
+import {
+  toIcons,
+  usesIconPlaceholders,
+} from "../../../packages/cli/lib/icons.mjs"
 
 const palettes: Record<
   string,
@@ -106,18 +114,46 @@ export function sourcePath(file: string) {
     : undefined
 }
 
-export async function readSource(file: string) {
+function twinPath(file: string, base: string) {
   const resolved = sourcePath(file)
-  return resolved
-    ? toPhosphorIcons(await readFile(resolved, "utf8"))
-    : undefined
+  if (!resolved?.startsWith(`${webRoot}${path.sep}`) || base === DEFAULT_BASE)
+    return undefined
+  const twin = path.join(
+    webRoot,
+    "bases",
+    base,
+    path.relative(webRoot, resolved)
+  )
+  return existsSync(twin) ? twin : undefined
 }
+
+export async function readSource(
+  file: string,
+  { icons = DEFAULT_ICONS, base = DEFAULT_BASE }: Partial<CodeOptions> = {}
+) {
+  const resolved = twinPath(file, base) ?? sourcePath(file)
+  return resolved ? toIcons(await readFile(resolved, "utf8"), icons) : undefined
+}
+
+export type Variants = { icons: boolean; bases: string[] }
+
+export async function sourceVariants(file: string): Promise<Variants> {
+  const resolved = sourcePath(file)
+  if (!resolved) return { icons: false, bases: [] }
+  const bases = PRIMITIVE_BASES.filter((base) => twinPath(file, base))
+  const sources = await Promise.all(
+    [resolved, ...bases.map((base) => twinPath(file, base) ?? "")].map(
+      (source) => readFile(source, "utf8")
+    )
+  )
+  return { icons: sources.some(usesIconPlaceholders), bases }
+}
+
+export const exampleFile = (name: string) => `examples/${name}.tsx`
 
 export async function exampleSource(name: string) {
-  return (await readSource(`examples/${name}.tsx`)) ?? ""
+  return (await readSource(exampleFile(name))) ?? ""
 }
-
-export const sourceUrl = (file: string) => `/source/${file}`
 
 async function files(directory: string): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true })
@@ -149,6 +185,8 @@ export async function sourceFiles() {
       /<ComponentPreview type="(chart|block)" name="([^"]+)"/g
     ))
       found.add(`components/${type}s/${name}.tsx`)
+    for (const [, name] of page.matchAll(/<ComponentPreview name="([^"]+)"/g))
+      found.add(exampleFile(name))
   }
   return [...found]
 }

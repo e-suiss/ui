@@ -2,7 +2,9 @@
 
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { useCodeOptions } from "@/components/site/code-options"
 import { CodeScroll } from "@/components/site/code-scroll"
+import { ICON_PACKAGES, type IconLibrary } from "@/lib/code-options"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
@@ -16,6 +18,16 @@ const CHANGE_EVENT = "package-manager-change"
 const NPX = /^npx\s+(?!expo\s)/
 const NPM_INSTALL = /^npm\s+(?:install|i)(?=\s|$)/
 const SAVE_DEV = /\s--save-dev\b/
+
+function withIcons(line: string, icons: IconLibrary) {
+  if (!NPM_INSTALL.test(line)) return line
+  return line
+    .split(" ")
+    .map((word) =>
+      word === ICON_PACKAGES.phosphor ? ICON_PACKAGES[icons] : word
+    )
+    .join(" ")
+}
 
 function convertLine(line: string, manager: Manager) {
   if (manager === "npm") return line
@@ -129,12 +141,13 @@ function Line({ line }: { line: string }) {
 
 export function PackageCommand({ command }: { command: string }) {
   const [manager, choose] = useManager()
+  const { icons } = useCodeOptions()
   const lines = command
     .trim()
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean)
-    .map((line) => convertLine(line, manager))
+    .map((line) => convertLine(withIcons(line, icons), manager))
 
   return (
     <figure

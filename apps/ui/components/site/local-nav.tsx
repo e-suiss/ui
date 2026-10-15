@@ -3,6 +3,7 @@
 import { ArrowUpRightIcon, SidebarIcon } from "@phosphor-icons/react"
 import { usePathname } from "next/navigation"
 import { Anchor } from "@/components/site/anchor"
+import { CodeOptionsMenu } from "@/components/site/code-options"
 import { Logo } from "@/components/site/logo"
 import { Search } from "@/components/site/search"
 import { useSidebar } from "@/components/ui/sidebar"
@@ -73,6 +74,7 @@ export function LocalNav() {
         </ul>
         <div className="ms-auto flex shrink-0 items-center gap-2">
           <Search className="size-10 rounded-full bg-foreground/5 text-foreground transition-colors duration-300 hover:bg-foreground/10" />
+          <CodeOptionsMenu />
           <Anchor
             href={repository}
             className="hidden h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors hover:bg-foreground/5 focus-visible:ring-3 focus-visible:ring-ring/50 lg:flex"

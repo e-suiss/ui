@@ -2,8 +2,14 @@ import path from "node:path"
 
 import { CodeBlock } from "@/components/site/code-block"
 import { LazySource } from "@/components/site/lazy-source"
-import { SourceCode } from "@/components/site/source-code"
-import { highlightCode, readSource, sourceUrl } from "@/lib/highlight"
+import { sourceUrl } from "@/lib/code-options"
+import {
+  exampleFile,
+  exampleSource,
+  highlightCode,
+  readSource,
+  sourceVariants,
+} from "@/lib/highlight"
 
 const PREVIEW_LINES = 16
 
@@ -52,7 +58,7 @@ async function preview(file: string) {
     file,
     long ? sourceUrl(file) : undefined
   )
-  return { block, long }
+  return { block, long, variants: await sourceVariants(file) }
 }
 
 export async function ComponentSource({
@@ -62,12 +68,35 @@ export async function ComponentSource({
   path: string
   fold?: boolean
 }) {
-  const { block, long } = await preview(file)
-  if (long)
-    return (
-      <LazySource src={sourceUrl(file)} title={file}>
-        {block}
-      </LazySource>
-    )
-  return fold ? <SourceCode>{block}</SourceCode> : block
+  const { block, long, variants } = await preview(file)
+  return (
+    <LazySource
+      file={file}
+      variants={variants}
+      title={file}
+      long={long}
+      fold={fold || long}
+    >
+      {block}
+    </LazySource>
+  )
+}
+
+async function example(name: string) {
+  "use cache"
+  const file = exampleFile(name)
+  return {
+    file,
+    block: await highlighted(await exampleSource(name), "tsx"),
+    variants: await sourceVariants(file),
+  }
+}
+
+export async function ExampleSource({ name }: { name: string }) {
+  const { file, block, variants } = await example(name)
+  return (
+    <LazySource file={file} variants={variants} fold={false}>
+      {block}
+    </LazySource>
+  )
 }

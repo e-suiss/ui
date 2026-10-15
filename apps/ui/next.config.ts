@@ -1,9 +1,24 @@
+import { existsSync, readdirSync } from "node:fs"
 import path from "node:path"
 import { createMDX } from "fumadocs-mdx/next"
 import type { NextConfig } from "next"
 
+const bases = path.join(import.meta.dirname, "../../packages/web/bases")
+const primitiveBases = readdirSync(bases, { withFileTypes: true })
+  .filter(
+    (entry) =>
+      entry.isDirectory() &&
+      existsSync(path.join(bases, entry.name, "files.json"))
+  )
+  .map((entry) => entry.name)
+  .sort(
+    (a, b) =>
+      Number(b === "radix") - Number(a === "radix") || a.localeCompare(b)
+  )
+
 const nextConfig: NextConfig = {
   output: "standalone",
+  env: { PRIMITIVE_BASES: primitiveBases.join(",") },
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   outputFileTracingIncludes: {
     "/**": [
@@ -12,6 +27,7 @@ const nextConfig: NextConfig = {
       "../../packages/web/hooks/**/*",
       "../../packages/web/lib/**/*",
       "../../packages/web/examples/**/*",
+      "../../packages/web/bases/**/*",
       "../../packages/mobile/components/**/*",
       "../../packages/mobile/uniwind/components/**/*",
       "../../packages/mobile/nativewind/components/**/*",

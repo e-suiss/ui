@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { PreviewIconsProvider } from "@/components/site/icon-placeholder"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { loadPreview } from "@/lib/load-preview"
 import type { PreviewLayout, PreviewType } from "@/lib/previews"
@@ -22,7 +23,7 @@ class Boundary extends React.Component<
         </p>
       )
     }
-    return this.props.children
+    return <PreviewIconsProvider>{this.props.children}</PreviewIconsProvider>
   }
 }
 
