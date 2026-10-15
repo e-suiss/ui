@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { CliError, choose, confirm, note, step } from "../output.mjs"
+import { ensureAlias, relative } from "../shared/project.mjs"
 import { installItems } from "./add.mjs"
 import { configureNativewindBabel, ensureBabelPlugin } from "./babel.mjs"
 import {
@@ -53,8 +54,6 @@ const TAILWIND_CONFIGS = [
   "tailwind.config.ts",
 ]
 const MAJOR_VERSION = /\d+/
-const TSCONFIG_PATHS = /"paths"\s*:\s*\{/
-const TSCONFIG_COMPILER_OPTIONS = /"compilerOptions"\s*:\s*\{/
 const METRO_EXPORT = /module\.exports\s*=\s*([\s\S]+?);?\s*$/
 const FIRST_IMPORT = /^import\s/m
 const LAST_JSX_CLOSING = /\n(\s*)<\/(\w[\w.]*)>\n\s*\)/
@@ -65,10 +64,6 @@ const METRO_DEFAULTS = {
 }
 const PORTAL_IMPORT =
   'import { PortalHost } from "@/components/primitives/portal"'
-
-function relative(project, file) {
-  return path.relative(project.cwd, file)
-}
 
 function posix(file) {
   return file.split(path.sep).join("/")
@@ -97,37 +92,6 @@ function assertVersions(project) {
       `esuiss supports NativeWind v4, this project uses ${nativewind}.`
     )
   }
-}
-
-function addAlias(project, target) {
-  const file = path.join(project.cwd, "tsconfig.json")
-  let text = readFileSync(file, "utf8")
-  const alias = `"@/*": ["${target}"]`
-  const paths = text.match(TSCONFIG_PATHS)
-  const options = text.match(TSCONFIG_COMPILER_OPTIONS)
-  if (paths) {
-    text = text.replace(paths[0], `${paths[0]}\n      ${alias},`)
-  } else if (options) {
-    text = text.replace(
-      options[0],
-      `${options[0]}\n    "paths": {\n      ${alias}\n    },`
-    )
-  } else {
-    text = text.replace(
-      "{",
-      `{\n  "compilerOptions": {\n    "paths": {\n      ${alias}\n    }\n  },`
-    )
-  }
-  writeFileSync(file, text)
-}
-
-function ensureAlias(project, sourceRoot) {
-  if (findAliasRoot(project.cwd)) return false
-  addAlias(
-    project,
-    sourceRoot === project.cwd ? "./*" : `./${relative(project, sourceRoot)}/*`
-  )
-  return true
 }
 
 function metroOptions(project, stylesheet, typesFile) {

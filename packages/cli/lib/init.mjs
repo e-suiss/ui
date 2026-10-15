@@ -5,6 +5,7 @@ import { installItems } from "./add.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
 import { detectProject, findAliasRoot, install } from "./project.mjs"
 import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
+import { ensureAlias, relative } from "./shared/project.mjs"
 
 const NEXT_STYLESHEETS = [
   "src/app/globals.css",
@@ -54,8 +55,6 @@ const NEXT_FONT_NOTE =
   'Load the fonts in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" }), and add its .variable value to the <html> className.'
 
 const VERSION_NUMBER = /(\d+)(?:\.(\d+))?/
-const TSCONFIG_PATHS = /"paths"\s*:\s*\{/
-const TSCONFIG_COMPILER_OPTIONS = /"compilerOptions"\s*:\s*\{/
 const VITE_PLUGINS = /plugins\s*:\s*\[/
 const VITE_ALIAS = /["']@["']\s*:/
 const VITE_DEFINE_CONFIG = /defineConfig\(\{/
@@ -71,10 +70,6 @@ const HTML_TAG_START = /<html\b/
 const SEMICOLON_IMPORT = /from\s+["'][^"']+["'];/
 const NEXT_FONT_IMPORT =
   /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
-
-function relative(project, file) {
-  return path.relative(project.cwd, file)
-}
 
 function findStylesheet(project) {
   if (project.framework === "vite")
@@ -129,42 +124,6 @@ function stylesheetPackages(css) {
       const parts = specifier.split("/")
       return specifier.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0]
     })
-}
-
-function addAliasTo(file, target) {
-  let text = readFileSync(file, "utf8")
-  const alias = `"@/*": ["${target}"]`
-  const paths = text.match(TSCONFIG_PATHS)
-  const options = text.match(TSCONFIG_COMPILER_OPTIONS)
-  if (paths) {
-    text = text.replace(paths[0], `${paths[0]}\n      ${alias},`)
-  } else if (options) {
-    text = text.replace(
-      options[0],
-      `${options[0]}\n    "paths": {\n      ${alias}\n    },`
-    )
-  } else {
-    text = text.replace(
-      "{",
-      `{\n  "compilerOptions": {\n    "paths": {\n      ${alias}\n    }\n  },`
-    )
-  }
-  writeFileSync(file, text)
-}
-
-function ensureAlias(project, sourceRoot) {
-  if (findAliasRoot(project.cwd)) return false
-  const target =
-    sourceRoot === project.cwd ? "./*" : `./${relative(project, sourceRoot)}/*`
-  const files =
-    project.framework === "vite"
-      ? ["tsconfig.json", "tsconfig.app.json"]
-      : ["tsconfig.json"]
-  for (const name of files) {
-    const file = path.join(project.cwd, name)
-    if (existsSync(file)) addAliasTo(file, target)
-  }
-  return true
 }
 
 function configureVite(project) {
@@ -315,7 +274,7 @@ export async function init(options) {
     !options.yes
   ) {
     const replace = await confirm(
-      `Replace ${relative(project, stylesheet)} with the esuiss-ui stylesheet?`
+      `Replace ${relative(project, stylesheet)} with the suiss/ui stylesheet?`
     )
     if (!replace) {
       throw new CliError(
@@ -327,7 +286,11 @@ export async function init(options) {
   const registry = await fetchRegistry()
   const css = stylesheetFor(project, await fetchStylesheet(registry))
 
-  if (ensureAlias(project, sourceRoot))
+  const tsconfigs =
+    project.framework === "vite"
+      ? ["tsconfig.json", "tsconfig.app.json"]
+      : ["tsconfig.json"]
+  if (ensureAlias(project, sourceRoot, tsconfigs))
     step("Added the @/* import alias to tsconfig")
 
   install(project, TOOLING[project.framework], { dev: true })

@@ -1,49 +1,23 @@
 import { CliError } from "../output.mjs"
+import {
+  createRegistry,
+  resolveItems as orderItems,
+} from "../shared/registry.mjs"
 
-const DEFAULT_BASE =
-  "https://raw.githubusercontent.com/e-suiss/ui/main/packages/mobile"
-const base = (process.env.ESUISS_MOBILE_REGISTRY ?? DEFAULT_BASE).replace(
-  /\/$/,
-  ""
-)
-
-export async function fetchText(file) {
-  let response
-  try {
-    response = await fetch(`${base}/${file}`)
-  } catch {
-    throw new CliError(`Could not reach the registry to download ${file}.`)
-  }
-  if (!response.ok) {
-    throw new CliError(`Could not download ${file} (HTTP ${response.status}).`)
-  }
-  return response.text()
-}
-
-export async function fetchRegistry() {
-  return JSON.parse(await fetchText("registry.json"))
-}
+export const { fetchText, fetchRegistry } = createRegistry({
+  base: "https://raw.githubusercontent.com/e-suiss/ui/main/packages/mobile",
+  env: "ESUISS_MOBILE_REGISTRY",
+})
 
 export function resolveItems(registry, names) {
-  const byName = new Map(registry.items.map((item) => [item.name, item]))
-  const unknown = names.filter((name) => !byName.has(name))
+  const known = new Set(registry.items.map((item) => item.name))
+  const unknown = names.filter((name) => !known.has(name))
   if (unknown.length) {
     throw new CliError(
-      `Unknown component: ${unknown.join(", ")}.\nAvailable: ${[...byName.keys()].join(", ")}`
+      `Unknown component: ${unknown.join(", ")}.\nAvailable: ${[...known].join(", ")}`
     )
   }
-
-  const ordered = []
-  const seen = new Set()
-  const visit = (name) => {
-    if (seen.has(name)) return
-    seen.add(name)
-    const item = byName.get(name)
-    for (const required of item.requires) visit(required)
-    ordered.push(item)
-  }
-  names.forEach(visit)
-  return ordered
+  return orderItems(registry, names)
 }
 
 export function fetchStylesheet(registry, styling) {

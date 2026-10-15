@@ -113,16 +113,6 @@
       }
     },
     {
-      "includes": ["apps/ui/components/site/shader-gradient.tsx"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noConsole": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": [
         "packages/web/hooks/use-message-scroller.ts",
         "packages/web/hooks/use-questionnaire.ts"
