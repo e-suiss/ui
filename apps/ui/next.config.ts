@@ -72,11 +72,15 @@ const nextConfig: NextConfig = {
           destination: "/r/radix/:file",
         },
         {
-          source: "/r/:style((?!(?:base|radix)/)[^/]+)/:file",
+          source: "/r/:style(aria-[^/]+)/:file",
+          destination: "/r/aria/:file",
+        },
+        {
+          source: "/r/:style((?!(?:base|radix|aria)/)[^/]+)/:file",
           destination: "/r/base/:file",
         },
         {
-          source: "/r/:file((?!(?:base|radix)$)[^/]+)",
+          source: "/r/:file((?!(?:base|radix|aria)$)[^/]+)",
           destination: "/r/base/:file",
         },
       ],
