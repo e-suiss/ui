@@ -24,7 +24,7 @@ import { KeyboardScrollViewContext } from "@/components/ui/keyboard-scroll-view"
 import { Text } from "@/components/ui/text"
 import { useTheme } from "@/components/ui/theme"
 
-type InputRef = React.RefObject<TextInput | null>
+type InputRef = React.RefObject<React.ComponentRef<typeof TextInput> | null>
 
 type FocusEvent = Parameters<NonNullable<TextInputProps["onFocus"]>>[0]
 
@@ -234,7 +234,7 @@ function useInputAccessoryBarInput({
   onBlur,
   onSubmitEditing,
 }: {
-  ref?: React.Ref<TextInput>
+  ref?: React.Ref<React.ComponentRef<typeof TextInput>>
   onFocus?: TextInputProps["onFocus"]
   onBlur?: TextInputProps["onBlur"]
   onSubmitEditing?: TextInputProps["onSubmitEditing"]
@@ -242,7 +242,7 @@ function useInputAccessoryBarInput({
   const { nativeID, inputs, register, setFocused, focusAt, done } =
     useInputAccessoryBarContext()
   const scrollView = React.useContext(KeyboardScrollViewContext)
-  const inputRef = React.useRef<TextInput>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
   const composedRef = useComposedRefs(ref, inputRef)
 
   React.useEffect(() => register(inputRef), [register])
@@ -269,7 +269,9 @@ function useInputAccessoryBarInput({
       else focusAt(index + 1)
       onSubmitEditing?.(event)
     },
-  } satisfies TextInputProps & { ref: React.Ref<TextInput> }
+  } satisfies TextInputProps & {
+    ref: React.Ref<React.ComponentRef<typeof TextInput>>
+  }
 }
 
 function InputAccessoryBarInput({

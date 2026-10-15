@@ -81,7 +81,7 @@ function EmptySearch() {
   const { colors } = useTheme()
   const [query, setQuery] = React.useState("book neo")
   const [focused, setFocused] = React.useState(false)
-  const inputRef = React.useRef<TextInput>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
   const trimmed = query.trim().toLowerCase()
   const matches =
     trimmed.length > 0 && trimmed.startsWith("book")

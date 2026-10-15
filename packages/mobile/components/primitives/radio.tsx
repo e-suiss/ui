@@ -63,7 +63,7 @@ function Root<Value = unknown>({
   const readOnly = group.readOnly || readOnlyProp
   const required = group.required || requiredProp
   const checked = Object.is(group.value, itemValue)
-  const rootRef = React.useRef<View>(null)
+  const rootRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const { setValue } = group
   const haptics = useHaptics()
 

@@ -46,7 +46,7 @@ type OtpAutofillContextProps = {
   value: string
   focused: boolean
   maxLength: number
-  inputRef: React.RefObject<TextInput | null>
+  inputRef: React.RefObject<React.ComponentRef<typeof TextInput> | null>
   fill: (code: string) => void
   type: (value: string) => void
   setFocused: (focused: boolean) => void
@@ -163,7 +163,7 @@ function OtpAutofill({
   const [value, setValue] = React.useState("")
   const [state, setState] = React.useState<OtpAutofillState>("idle")
   const [focused, setFocused] = React.useState(false)
-  const inputRef = React.useRef<TextInput>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
   const runRef = React.useRef(0)
   const onVerifyRef = React.useRef(onVerify)
 

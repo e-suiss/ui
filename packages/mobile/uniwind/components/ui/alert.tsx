@@ -13,7 +13,7 @@ function Alert({
   iconClassName,
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     icon?: PhosphorIcon
     variant?: "default" | "destructive"
     iconClassName?: string
@@ -68,7 +68,8 @@ function AlertDescription({
 function AlertAction({
   className,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   return <View className={cn("absolute end-4 top-4", className)} {...props} />
 }
 

@@ -146,31 +146,21 @@ function attachedStyle(
 ): ViewStyle {
   const vertical = context.orientation === "vertical"
   const edge = vertical ? radius.xl : radius.lg
-  const result: ViewStyle = { borderRadius: 0 }
-  if (vertical) {
-    if (position.first) {
-      result.borderTopLeftRadius = edge
-      result.borderTopRightRadius = edge
-    }
-    if (position.last) {
-      result.borderBottomLeftRadius = edge
-      result.borderBottomRightRadius = edge
-    }
-  } else {
-    if (position.first) {
-      result.borderTopLeftRadius = edge
-      result.borderBottomLeftRadius = edge
-    }
-    if (position.last) {
-      result.borderTopRightRadius = edge
-      result.borderBottomRightRadius = edge
-    }
+  const firstCorners = vertical
+    ? { borderTopLeftRadius: edge, borderTopRightRadius: edge }
+    : { borderTopLeftRadius: edge, borderBottomLeftRadius: edge }
+  const lastCorners = vertical
+    ? { borderBottomLeftRadius: edge, borderBottomRightRadius: edge }
+    : { borderTopRightRadius: edge, borderBottomRightRadius: edge }
+  const collapsedBorder = vertical
+    ? { borderTopWidth: 0 }
+    : { borderLeftWidth: 0 }
+  return {
+    borderRadius: 0,
+    ...(position.first && firstCorners),
+    ...(position.last && lastCorners),
+    ...(context.variant === "outline" && !position.first && collapsedBorder),
   }
-  if (context.variant === "outline" && !position.first) {
-    if (vertical) result.borderTopWidth = 0
-    else result.borderLeftWidth = 0
-  }
-  return result
 }
 
 function itemStyle(

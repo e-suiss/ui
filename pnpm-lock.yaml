@@ -265,12 +265,18 @@ importers:
       '@types/react':
         specifier: ^19.2.18
         version: 19.3.0
+      ajv:
+        specifier: ^8.20.0
+        version: 8.20.0
       expo-haptics:
         specifier: ~57.0.3
         version: 57.0.3(expo@57.0.28)
       nativewind:
         specifier: 4.2.7
         version: 4.2.7(e57aaa7a4bcd6a182a537cb02128d119)
+      postcss:
+        specifier: ^8.5.28
+        version: 8.5.28
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)

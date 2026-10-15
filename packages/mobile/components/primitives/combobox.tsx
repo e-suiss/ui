@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  type TextInputChangeEventData,
+  type TextInputChangeEvent,
   View,
 } from "react-native"
 import { createChangeEventDetails, REASONS } from "./event-details"
@@ -225,10 +225,7 @@ interface ComboboxRootContextValue {
   selectItem: (itemValue: unknown, event?: ChangeEvent) => void
   removeItem: (itemValue: unknown, event?: ChangeEvent) => void
   clear: (event?: ChangeEvent) => void
-  changeInputValue: (
-    text: string,
-    event?: NativeSyntheticEvent<TextInputChangeEventData>
-  ) => void
+  changeInputValue: (text: string, event?: TextInputChangeEvent) => void
   itemToStringLabel: (itemValue: unknown) => string
   registerAnchor: (priority: number, node: HostInstance | null) => void
 }
@@ -422,7 +419,7 @@ function useComboboxRoot({
   const itemCount = countItems(filteredItems)
 
   const changeInputValue = React.useCallback(
-    (text: string, event?: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    (text: string, event?: TextInputChangeEvent) => {
       setInputValue(
         text,
         createChangeEventDetails<ComboboxChangeEventReason>(
@@ -799,7 +796,7 @@ function Input({
   const { readOnly, changeInputValue, openOnInputClick, labelId } = combobox
 
   const onChange = React.useCallback(
-    (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    (event: TextInputChangeEvent) => {
       if (disabled || readOnly) return
       changeInputValue(event.nativeEvent.text, event)
     },

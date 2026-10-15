@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs"
-import { readdir, readFile, writeFile } from "node:fs/promises"
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 import {
   collectImports,
@@ -12,6 +12,13 @@ import {
   nativeRequirements,
   PLATFORMS,
 } from "./native-registry.mjs"
+import {
+  buildStandardRegistries,
+  STANDARD_STYLINGS,
+  standardProblems,
+  UNIWIND_THEME,
+  uniwindTheme,
+} from "./standard-registry.mjs"
 
 const SCRIPT_EXTENSION = /\.(tsx?|jsx?)$/
 
@@ -178,6 +185,13 @@ for (const [platform, config] of Object.entries(PLATFORMS)) {
   }
 }
 
+const standard = await buildStandardRegistries(ROOT, items, STYLES)
+problems.push(
+  ...(await standardProblems(standard, {
+    schema: process.argv.includes("--schema"),
+  }))
+)
+
 if (problems.length) {
   console.error(problems.join("\n"))
   process.exit(1)
@@ -190,16 +204,43 @@ const registry = {
   platforms,
   items,
 }
-const output = `${JSON.stringify(registry, null, 2)}\n`
+const outputs = [
+  [OUTPUT, registry],
+  ...STANDARD_STYLINGS.map((styling) => [
+    path.join(ROOT, "registry", styling, "registry.json"),
+    standard[styling],
+  ]),
+  [
+    path.join(ROOT, UNIWIND_THEME),
+    await uniwindTheme(ROOT, STYLES.uniwind.stylesheet),
+  ],
+]
+const serialize = (content) =>
+  typeof content === "string"
+    ? content
+    : `${JSON.stringify(content, null, 2)}\n`
 
 if (process.argv.includes("--check")) {
-  const current = existsSync(OUTPUT) ? await readFile(OUTPUT, "utf8") : ""
-  if (current !== output) {
-    console.error("registry.json is out of date. Run `pnpm registry`.")
+  const stale = []
+  for (const [file, content] of outputs) {
+    const current = existsSync(file) ? await readFile(file, "utf8") : ""
+    if (current !== serialize(content)) {
+      stale.push(path.relative(ROOT, file))
+    }
+  }
+  if (stale.length) {
+    console.error(`Out of date: ${stale.join(", ")}. Run \`pnpm registry\`.`)
     process.exit(1)
   }
-  console.log(`registry.json is up to date: ${items.length} items`)
+  console.log(
+    `The registries are up to date${process.argv.includes("--schema") ? " and valid" : ""}: ${items.length} items`
+  )
 } else {
-  await writeFile(OUTPUT, output)
-  console.log(`registry.json: ${items.length} items`)
+  for (const [file, content] of outputs) {
+    await mkdir(path.dirname(file), { recursive: true })
+    await writeFile(file, serialize(content))
+  }
+  console.log(
+    `registry.json and the ${STANDARD_STYLINGS.join(", ")} registries: ${items.length} items`
+  )
 }

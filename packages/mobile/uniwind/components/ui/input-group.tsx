@@ -19,7 +19,7 @@ type InputGroupAlign =
 type InputGroupContextProps = {
   block: boolean
   disabled: boolean
-  inputRef: React.RefObject<TextInput | null>
+  inputRef: React.RefObject<React.ComponentRef<typeof TextInput> | null>
   setFocused: (focused: boolean) => void
 }
 
@@ -51,7 +51,9 @@ function InputGroup({
   ...props
 }: ViewProps & { disabled?: boolean; invalid?: boolean }) {
   const field = useFieldRootContext()
-  const inputRef = React.useRef<TextInput | null>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput> | null>(
+    null
+  )
   const [focused, setFocused] = React.useState(false)
   const isDisabled = disabled || field.state.disabled
   const isInvalid = invalid ?? field.state.invalid
@@ -185,7 +187,7 @@ function InputGroupInput({
   return (
     <Input
       {...props}
-      ref={(node: TextInput | null) => {
+      ref={(node: React.ComponentRef<typeof TextInput> | null) => {
         inputRef.current = node
         if (typeof ref === "function") ref(node)
         else if (ref) ref.current = node
@@ -221,7 +223,7 @@ function InputGroupTextarea({
   return (
     <Textarea
       {...props}
-      ref={(node: TextInput | null) => {
+      ref={(node: React.ComponentRef<typeof TextInput> | null) => {
         inputRef.current = node
         if (typeof ref === "function") ref(node)
         else if (ref) ref.current = node

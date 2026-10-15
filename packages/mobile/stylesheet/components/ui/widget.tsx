@@ -259,7 +259,7 @@ function Widget({
   style,
   ...props
 }: ViewProps &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     size?: WidgetSize | "auto"
     defaultSize?: WidgetSize | "auto"
     onSizeChange?: (size: WidgetSize | "auto") => void
@@ -533,7 +533,7 @@ function Widget({
 function WidgetHeader({
   style,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   const { align } = useWidget()
   return (
     <View
@@ -549,7 +549,7 @@ function WidgetIcon({
   size = "default",
   ...props
 }: ViewProps &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     iconColor?: string
     size?: "default" | "sm" | "lg"
   }) {
@@ -584,7 +584,8 @@ function WidgetIcon({
 function WidgetTitle({
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return (
     <Text
       role="heading"
@@ -598,7 +599,7 @@ function WidgetTitle({
 function WidgetAction({
   style,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   const { align } = useWidget()
   if (align === "center") return null
   return <View style={[styles.action, style]} {...props} />
@@ -607,7 +608,8 @@ function WidgetAction({
 function WidgetDescription({
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { colors } = useTheme()
   return (
     <Text
@@ -620,7 +622,8 @@ function WidgetDescription({
 function WidgetValue({
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return <Text style={[styles.value, style]} {...props} />
 }
 
@@ -628,7 +631,7 @@ function WidgetContent({
   style,
   children,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   return (
     <View style={[styles.content, style]} {...props}>
       {wrapText(children)}
@@ -640,7 +643,7 @@ function WidgetFooter({
   style,
   children,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   const { colors } = useTheme()
   const { align } = useWidget()
   const text: StyleProp<TextStyle> = {

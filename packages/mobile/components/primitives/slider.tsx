@@ -566,7 +566,7 @@ function Control({
   ...elementProps
 }: ControlProps) {
   const context = useRootContext()
-  const controlRef = React.useRef<View>(null)
+  const controlRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const rectRef = React.useRef({ x: 0, y: 0, width: 0, height: 0 })
   const latestRef = React.useRef<readonly number[] | null>(null)
   const movedRef = React.useRef(false)

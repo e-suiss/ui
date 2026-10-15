@@ -107,7 +107,7 @@ function Trigger({
   ...elementProps
 }: TriggerProps) {
   const { open, disabled, state, setOpen } = useRootContext()
-  const triggerRef = React.useRef<View>(null)
+  const triggerRef = React.useRef<React.ComponentRef<typeof View>>(null)
 
   const onPress = (event: GestureResponderEvent) => {
     if (disabled) return

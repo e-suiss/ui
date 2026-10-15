@@ -46,7 +46,7 @@ function Text({
   variant = "default",
   ...props
 }: React.ComponentProps<typeof RNText> &
-  React.RefAttributes<typeof RNText> &
+  React.RefAttributes<React.ComponentRef<typeof RNText>> &
   TextVariantProps & {
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
   }) {

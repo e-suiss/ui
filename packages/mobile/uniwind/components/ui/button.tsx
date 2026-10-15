@@ -89,7 +89,7 @@ const ButtonClassContext = React.createContext<
 >(undefined)
 
 type ButtonProps = React.ComponentProps<typeof Pressable> &
-  React.RefAttributes<typeof Pressable> &
+  React.RefAttributes<React.ComponentRef<typeof Pressable>> &
   VariantProps<typeof buttonVariants>
 
 function Button({ className, variant, size, block, ...props }: ButtonProps) {

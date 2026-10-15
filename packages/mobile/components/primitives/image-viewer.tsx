@@ -3,9 +3,8 @@ import {
   type AccessibilityActionEvent,
   type GestureResponderEvent,
   Image,
-  type ImageLoadEventData,
+  type ImageLoadEvent,
   type ImageSourcePropType,
-  type NativeSyntheticEvent,
   Pressable,
   StyleSheet,
   useWindowDimensions,
@@ -446,7 +445,7 @@ function Page({
   })
 
   const onLoad = React.useCallback(
-    (event: NativeSyntheticEvent<ImageLoadEventData>) => {
+    (event: ImageLoadEvent) => {
       const { width: imageWidth, height: imageHeight } =
         event.nativeEvent.source
       if (imageWidth <= 0 || imageHeight <= 0) return

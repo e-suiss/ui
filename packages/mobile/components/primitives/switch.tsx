@@ -71,7 +71,7 @@ function Root({
     defaultValue: defaultChecked,
     onChange: onCheckedChange,
   })
-  const rootRef = React.useRef<View>(null)
+  const rootRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const haptics = useHaptics()
 
   const state = React.useMemo<RootState>(

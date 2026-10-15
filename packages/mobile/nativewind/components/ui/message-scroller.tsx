@@ -7,7 +7,6 @@ import {
   Platform,
   View,
   type ViewProps,
-  type ViewToken,
 } from "react-native"
 import {
   Easing,
@@ -21,6 +20,10 @@ import { AnimatedView } from "@/components/ui/animated-view"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
+
+type ViewableItemsChanged<T> = Parameters<
+  NonNullable<FlatListProps<T>["onViewableItemsChanged"]>
+>[0]
 
 type MessageScrollerScrollDirection = "start" | "end"
 
@@ -348,7 +351,7 @@ function MessageScrollerViewport<T>({
   }, [controller, keys])
 
   const handleViewableItemsChanged = React.useCallback(
-    (info: { viewableItems: ViewToken<T>[]; changed: ViewToken<T>[] }) => {
+    (info: ViewableItemsChanged<T>) => {
       const ids = info.viewableItems
         .filter((token) => token.index !== null)
         .sort((a, b) => (b.index ?? 0) - (a.index ?? 0))

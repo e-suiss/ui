@@ -222,7 +222,7 @@ function BubbleContent({
   onPressOut,
   ...props
 }: React.ComponentProps<typeof Pressable> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
   }) {
   const { variant, align, tail } = React.useContext(BubbleContext)

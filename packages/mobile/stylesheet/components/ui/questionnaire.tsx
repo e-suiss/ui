@@ -573,7 +573,7 @@ function Questionnaire({
   style,
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> &
+  React.RefAttributes<React.ComponentRef<typeof View>> &
   UseQuestionnaireParameters) {
   const questionnaire = useQuestionnaire({
     defaultItem,
@@ -594,7 +594,7 @@ function QuestionnaireProgress({
   children,
   ...props
 }: Omit<React.ComponentProps<typeof View>, "children"> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     children?:
       | React.ReactNode
       | ((state: QuestionnaireState) => React.ReactNode)
@@ -640,7 +640,7 @@ function QuestionnaireItem({
   children,
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     name: string
     required?: boolean
     disabled?: boolean
@@ -729,7 +729,7 @@ function QuestionnaireTitle({
   style,
   ...props
 }: Omit<React.ComponentProps<typeof Text>, "nativeID"> &
-  React.RefAttributes<typeof Text>) {
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { titleId } = useQuestionnaireItemContext("QuestionnaireTitle")
   return (
     <Text
@@ -744,7 +744,8 @@ function QuestionnaireTitle({
 function QuestionnaireDescription({
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { colors } = useTheme()
   useQuestionnaireItemContext("QuestionnaireDescription")
   return (
@@ -758,7 +759,8 @@ function QuestionnaireDescription({
 function QuestionnaireChoices({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   useQuestionnaireItemContext("QuestionnaireChoices")
   return <View style={[styles.choices, style]} {...props} />
 }
@@ -774,7 +776,7 @@ function QuestionnaireChoice({
   onPress,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children" | "style"> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     value: string
     checked?: boolean
     defaultChecked?: boolean
@@ -881,7 +883,8 @@ function QuestionnaireChoice({
 function QuestionnaireChoiceDescription({
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { colors } = useTheme()
   return <Text style={[{ color: colors.mutedForeground }, style]} {...props} />
 }
@@ -981,7 +984,8 @@ function QuestionnaireError({
   style,
   children,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { colors } = useTheme()
   const { invalid, required } =
     useQuestionnaireItemContext("QuestionnaireError")
@@ -1004,7 +1008,8 @@ function QuestionnaireError({
 function QuestionnaireActions({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   return <View style={[styles.actions, style]} {...props} />
 }
 

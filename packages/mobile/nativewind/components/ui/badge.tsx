@@ -42,7 +42,7 @@ const badgeTextVariants = cva("text-xs font-semibold", {
 })
 
 type BadgeProps = React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
   } & VariantProps<typeof badgeVariants>
 

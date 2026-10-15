@@ -23,7 +23,7 @@ type InputGroupAlign =
 type InputGroupContextProps = {
   block: boolean
   disabled: boolean
-  inputRef: React.RefObject<TextInput | null>
+  inputRef: React.RefObject<React.ComponentRef<typeof TextInput> | null>
   setFocused: (focused: boolean) => void
 }
 
@@ -106,7 +106,9 @@ function InputGroup({
 }: ViewProps & { disabled?: boolean; invalid?: boolean }) {
   const { colors, isDark } = useTheme()
   const field = useFieldRootContext()
-  const inputRef = React.useRef<TextInput | null>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput> | null>(
+    null
+  )
   const [focused, setFocused] = React.useState(false)
   const isDisabled = disabled || field.state.disabled
   const isInvalid = invalid ?? field.state.invalid
@@ -226,7 +228,7 @@ type FocusHandler = NonNullable<React.ComponentProps<typeof Input>["onFocus"]>
 type BlurHandler = NonNullable<React.ComponentProps<typeof Input>["onBlur"]>
 
 function useControl(
-  ref: React.Ref<TextInput> | undefined,
+  ref: React.Ref<React.ComponentRef<typeof TextInput>> | undefined,
   onFocus: FocusHandler | undefined,
   onBlur: BlurHandler | undefined
 ) {
@@ -234,7 +236,7 @@ function useControl(
   return {
     block,
     disabled,
-    ref: (node: TextInput | null) => {
+    ref: (node: React.ComponentRef<typeof TextInput> | null) => {
       inputRef.current = node
       if (typeof ref === "function") ref(node)
       else if (ref) ref.current = node

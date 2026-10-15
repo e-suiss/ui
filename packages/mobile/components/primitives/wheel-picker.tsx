@@ -9,7 +9,6 @@ import {
   Pressable,
   type ScrollView,
   View,
-  type ViewStyle,
 } from "react-native"
 import { createChangeEventDetails } from "./event-details"
 import { useHaptics } from "./haptics"
@@ -139,10 +138,12 @@ interface RootContextValue {
   itemHeight: number
 }
 
+type ItemStyle = ReturnType<typeof itemAnimatedStyle>
+
 interface ColumnContextValue {
   value: string | undefined
   itemHeight: number
-  getItemStyle: (index: number) => Animated.WithAnimatedObject<ViewStyle>
+  getItemStyle: (index: number) => ItemStyle
   pressItem: (index: number, event: GestureResponderEvent) => void
 }
 
@@ -313,16 +314,16 @@ function Column({
   const scrollY = React.useRef(
     new Animated.Value(initialIndex * itemHeight)
   ).current
-  const scrollRef = React.useRef<ScrollView | null>(null)
+  const scrollRef = React.useRef<React.ComponentRef<typeof ScrollView> | null>(
+    null
+  )
   const offsetRef = React.useRef(initialIndex * itemHeight)
   const settleRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const interactingRef = React.useRef(false)
   const [height, setHeight] = React.useState(itemHeight * VISIBLE_HEIGHT)
   const padding = Math.max(0, (height - itemHeight) / 2)
 
-  const styleCache = React.useRef(
-    new Map<number, Animated.WithAnimatedObject<ViewStyle>>()
-  )
+  const styleCache = React.useRef(new Map<number, ItemStyle>())
   const cachedHeight = React.useRef(itemHeight)
   if (cachedHeight.current !== itemHeight) {
     cachedHeight.current = itemHeight
