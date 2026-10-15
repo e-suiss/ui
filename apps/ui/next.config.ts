@@ -10,12 +10,16 @@ const nextConfig: NextConfig = {
       "./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff",
       "../../packages/web/components/**/*",
       "../../packages/web/hooks/**/*",
+      "../../packages/web/examples/**/*",
       "../../packages/mobile/components/**/*",
       "../../packages/mobile/uniwind/components/**/*",
       "../../packages/mobile/nativewind/components/**/*",
       "../../packages/mobile/stylesheet/components/**/*",
       "../../packages/mobile/swiftui/Sources/**/*",
       "../../packages/mobile/kotlin/ui/src/main/**/*",
+      "../../packages/mobile/stories/**/*",
+      "../../packages/mobile/swiftui/Catalog/Catalog/Stories/**/*",
+      "../../packages/mobile/kotlin/catalog/src/main/kotlin/com/esuiss/catalog/stories/**/*",
     ],
   },
   reactStrictMode: true,
@@ -78,9 +82,6 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     root: path.join(import.meta.dirname, "../.."),
-    resolveAlias: {
-      "@/tests/story-kit": "./lib/story-kit.ts",
-    },
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],

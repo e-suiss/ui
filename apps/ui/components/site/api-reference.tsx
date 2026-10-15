@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export interface AnatomyNode {
+interface AnatomyNode {
   name: string
   href?: string
   children: AnatomyNode[]
@@ -65,7 +65,53 @@ function Lines({ nodes, depth }: { nodes: AnatomyNode[]; depth: number }) {
   })
 }
 
-export function Anatomy({ tree }: { tree: AnatomyNode[] }) {
+type Element = React.ReactElement<{
+  children?: React.ReactNode
+  href?: string
+}>
+
+const elements = (node: React.ReactNode) =>
+  React.Children.toArray(node).filter((child): child is Element =>
+    React.isValidElement(child)
+  )
+
+function textOf(node: React.ReactNode): string {
+  return React.Children.toArray(node)
+    .map((child) => {
+      if (typeof child === "string" || typeof child === "number")
+        return String(child)
+      if (React.isValidElement<{ children?: React.ReactNode }>(child))
+        return textOf(child.props.children)
+      return ""
+    })
+    .join("")
+}
+
+function treeOf(node: React.ReactNode): AnatomyNode[] {
+  const nodes: AnatomyNode[] = []
+  for (const element of elements(node)) {
+    if (element.type === "ul") {
+      nodes.push(...treeOf(element.props.children))
+      continue
+    }
+    if (element.type !== "li") continue
+    const parts = React.Children.toArray(element.props.children)
+    const link = elements(parts).find((part) => part.props.href)
+    const nested = elements(parts).find((part) => part.type === "ul")
+    nodes.push({
+      name: (link
+        ? textOf(link.props.children)
+        : textOf(parts.filter((part) => part !== nested))
+      ).trim(),
+      href: link?.props.href,
+      children: nested ? treeOf(nested.props.children) : [],
+    })
+  }
+  return nodes
+}
+
+export function Anatomy({ children }: { children: React.ReactNode }) {
+  const tree = treeOf(children)
   return (
     <figure
       data-not-prose
@@ -94,7 +140,7 @@ export function ApiPart({
   children: React.ReactNode
 }) {
   return (
-    <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-label/10 [&>:not([data-slot=props-table])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [&>[data-slot=props-table]]:mt-5 [&>[data-slot=props-table]]:rounded-none [&>[data-slot=props-table]]:border-t [&>[data-slot=props-table]]:border-label/10 [&>[data-slot=props-table]]:ring-0">
+    <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-label/10 [&>:not([data-slot=table])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [&>[data-slot=table]]:mt-5 [&>[data-slot=table]]:rounded-none [&>[data-slot=table]]:border-t [&>[data-slot=table]]:border-label/10 [&>[data-slot=table]]:ring-0 [&>[data-slot=table]_:is(th,td):first-child]:ps-6! [&>[data-slot=table]_:is(th,td):last-child]:pe-6! [&>:last-child:not([data-slot=table])]:mb-6">
       <span
         aria-hidden
         className="absolute top-[1.9rem] right-6 font-mono text-[12px] leading-none text-label-tertiary"

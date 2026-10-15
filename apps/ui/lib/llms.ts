@@ -2,16 +2,17 @@ import { readFile } from "node:fs/promises"
 import path from "node:path"
 import type * as PageTree from "fumadocs-core/page-tree"
 
-import { sourcePath } from "@/lib/highlight"
+import { exampleSource, sourcePath } from "@/lib/highlight"
+import { nativeCode, nativePreview } from "@/lib/native"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
 import { pageSummary } from "@/lib/summary"
 
 const ONLY_OPEN = /^<Only platform="([^"]*)">$/
 const TABS_OPEN = /^<Tabs\b(.*)>$/
-const BLOCK_OPEN = /^<(Example|NativeExample|ApiPart|Callout)\b([^>]*)>$/
+const BLOCK_OPEN = /^<(NativeExample|ApiPart|Callout|Anatomy)\b([^>]*)>$/
 const FIRST_CHAR = /^./
-const BLOCK_CLOSE = /^<\/(Example|NativeExample|ApiPart|Callout)>$/
+const BLOCK_CLOSE = /^<\/(NativeExample|ApiPart|Callout|Anatomy)>$/
 const HEADING_ANCHOR = /^(#{1,6} .*?) \[#[^\]]+\]$/
 
 type Page = NonNullable<ReturnType<typeof source.getPage>>
@@ -24,29 +25,67 @@ const decode = (text: string) =>
     String.fromCodePoint(Number.parseInt(hex, 16))
   )
 
+const COMPONENT_SOURCE = /<ComponentSource path="([^"]+)"[^>]*\/>/g
+const COMPONENT_PREVIEW = /^<ComponentPreview\b([^>]*?)\/>$/gm
+const NATIVE_EXAMPLE = /^<NativeExample id="([^"]+)"[^>]*\/>$/gm
+const NATIVE_OPEN = /^<NativeExample id="([^"]+)"/
+const ANATOMY_ITEM = /^(\s*)[-*] (?:\[([^\]]+)\]\([^)]*\)|(.+))$/
+
+async function fileText(file: string) {
+  const resolved = sourcePath(file)
+  return resolved ? await readFile(resolved, "utf8").catch(() => "") : ""
+}
+
+async function replaceAsync(
+  text: string,
+  pattern: RegExp,
+  replace: (...groups: string[]) => Promise<string>
+) {
+  const parts = await Promise.all(
+    [...text.matchAll(pattern)].map((match) => replace(...match))
+  )
+  let index = 0
+  return text.replace(pattern, () => parts[index++] ?? "")
+}
+
+function previewImage(id: string) {
+  return nativePreview(id)
+    ? `![Preview](${absolute(`/previews/${id}.light.webp`)})`
+    : ""
+}
+
 async function toMarkdown(body: string) {
-  const files = new Map<string, string>()
-  for (const [, file] of body.matchAll(/<SourceFile path="([^"]+)"[^>]*\/>/g)) {
-    const resolved = sourcePath(file)
-    files.set(
-      file,
-      resolved ? await readFile(resolved, "utf8").catch(() => "") : ""
-    )
-  }
-  return body
-    .replace(
-      /<Code lang="(\w+)"(?: title="([^"]*)")? code="([^"]*)" \/>/g,
-      (_match, lang: string, title: string | undefined, code: string) =>
-        fence(JSON.parse(decode(code)), lang, title)
-    )
-    .replace(
-      /<Code lang="(\w+)"(?: title="([^"]*)")? code=\{("(?:[^"\\]|\\.)*")\} \/>/g,
-      (_match, lang: string, title: string | undefined, code: string) =>
-        fence(JSON.parse(code), lang, title)
-    )
-    .replace(/<SourceFile path="([^"]+)"[^>]*\/>/g, (_match, file: string) =>
-      fence(files.get(file) ?? "", path.extname(file).slice(1) || "tsx", file)
-    )
+  let text = await replaceAsync(
+    body,
+    COMPONENT_SOURCE,
+    async (_match, file = "") =>
+      fence(await fileText(file), path.extname(file).slice(1) || "tsx", file)
+  )
+  text = await replaceAsync(
+    text,
+    COMPONENT_PREVIEW,
+    async (_match, tag = "") => {
+      const name = attr(tag, "name") ?? ""
+      const type = attr(tag, "type")
+      if (type) {
+        const file = `components/${type}s/${name}.tsx`
+        return `**Example**\n\n${fence(await fileText(file), "tsx", file)}`
+      }
+      return `**Example: ${name}**\n\n${fence(await exampleSource(name), "tsx")}`
+    }
+  )
+  text = text.replace(NATIVE_EXAMPLE, (_match, id: string) => {
+    const code = nativeCode(id)
+    return [
+      previewImage(id),
+      fence(code.rn ?? "", "tsx"),
+      ...(code.swift ? [fence(code.swift, "swift")] : []),
+      ...(code.kotlin ? [fence(code.kotlin, "kotlin")] : []),
+    ]
+      .filter(Boolean)
+      .join("\n\n")
+  })
+  return text
 }
 
 const platformNames: Record<string, string> = {
@@ -59,49 +98,6 @@ const platformNames: Record<string, string> = {
 const attr = (tag: string, name: string) => {
   const match = tag.match(new RegExp(`${name}="([^"]*)"`))
   return match ? decode(match[1]) : undefined
-}
-
-const cell = (text: string) => text.replace(/\|/g, "\\|").replace(/\n/g, " ")
-
-type Prop = {
-  name: string
-  type?: string
-  default?: string
-  description?: string
-}
-type Part = { name: string; children: Part[] }
-
-function propsTable(tag: string) {
-  const props = JSON.parse(attr(tag, "props") ?? "[]") as Prop[]
-  const extendsFrom = JSON.parse(attr(tag, "extends") ?? "[]") as string[]
-  const lines: string[] = []
-  if (props.length > 0) {
-    lines.push(
-      "| Prop | Type | Default | Description |",
-      "| --- | --- | --- | --- |"
-    )
-    for (const prop of props) {
-      lines.push(
-        `| \`${prop.name}\` | \`${cell(prop.type ?? "")}\` | ${prop.default ? `\`${cell(prop.default)}\`` : "-"} | ${cell(prop.description ?? "")} |`
-      )
-    }
-  }
-  if (extendsFrom.length > 0)
-    lines.push(
-      "",
-      `Also accepts the props of ${extendsFrom.map((name) => `\`${name}\``).join(", ")}.`
-    )
-  return lines.join("\n")
-}
-
-function anatomy(tag: string) {
-  const tree = JSON.parse(attr(tag, "tree") ?? "[]") as Part[]
-  const walk = (parts: Part[], depth: number): string[] =>
-    parts.flatMap((part) => [
-      `${"  ".repeat(depth)}- \`${part.name}\``,
-      ...walk(part.children, depth + 1),
-    ])
-  return walk(tree, 0).join("\n")
 }
 
 function registryIndex(tag: string) {
@@ -121,6 +117,7 @@ function cleanMarkdown(body: string) {
   let fence = false
   let indent = 0
   let labels: string[] = []
+  let anatomy = false
   for (const raw of body.split("\n")) {
     const isFence = raw.trim().startsWith("```")
     const line =
@@ -159,18 +156,9 @@ function cleanMarkdown(body: string) {
     }
     const open = trimmed.match(BLOCK_OPEN)
     if (open) {
-      if (open[1] === "Example")
-        output.push(
-          `**Example${attr(open[2], "story") ? `: ${attr(open[2], "story")}` : ""}**`,
-          ""
-        )
-      if (open[1] === "NativeExample") {
-        const id = attr(open[2], "id")
-        output.push(
-          id ? `![Preview](${absolute(`/previews/${id}.light.webp`)})` : "",
-          ""
-        )
-      }
+      if (open[1] === "NativeExample")
+        output.push(previewImage(trimmed.match(NATIVE_OPEN)?.[1] ?? ""), "")
+      anatomy = open[1] === "Anatomy"
       if (open[1] === "Callout")
         output.push(
           `> **${(attr(open[2], "type") ?? "note").replace(FIRST_CHAR, (c) => c.toUpperCase())}:**`
@@ -180,10 +168,12 @@ function cleanMarkdown(body: string) {
     }
     if (BLOCK_CLOSE.test(trimmed)) {
       indent = Math.max(0, indent - 2)
+      anatomy = false
       continue
     }
-    if (trimmed.startsWith("<PropsTable")) output.push(propsTable(trimmed))
-    else if (trimmed.startsWith("<Anatomy")) output.push(anatomy(trimmed))
+    const item = anatomy ? line.match(ANATOMY_ITEM) : null
+    if (item)
+      output.push(`${item[1]}- \`${(item[2] ?? item[3] ?? "").trim()}\``)
     else if (trimmed.startsWith("<RegistryIndex"))
       output.push(registryIndex(trimmed))
     else output.push(line.replace(HEADING_ANCHOR, "$1"))

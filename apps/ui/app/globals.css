@@ -3,7 +3,7 @@
 
 @source "../../../packages/web/components";
 @source "../../../packages/web/hooks";
-@source "../../../packages/web/stories";
+@source "../../../packages/web/examples";
 
 :root {
   --surface: oklch(1 0 0);

@@ -75,7 +75,7 @@ const stylings = new Set(["uniwind", "nativewind", "stylesheet"])
 function resolveSource(file: string) {
   const [head = "", ...rest] = file.split("/")
   const tail = rest.join("/")
-  if (head === "components" || head === "hooks")
+  if (head === "components" || head === "hooks" || head === "examples")
     return { root: webRoot, resolved: path.join(webRoot, file) }
   if (nativeRoots[head])
     return {
@@ -104,6 +104,10 @@ export function readSource(file: string) {
   return resolved ? readFile(resolved, "utf8") : Promise.resolve(undefined)
 }
 
+export async function exampleSource(name: string) {
+  return (await readSource(`examples/${name}.tsx`)) ?? ""
+}
+
 export const sourceUrl = (file: string) => `/source/${file}`
 
 async function files(directory: string): Promise<string[]> {
@@ -117,15 +121,25 @@ async function files(directory: string): Promise<string[]> {
   return nested.flat()
 }
 
+export async function contentPages() {
+  const pages = await files(path.join(process.cwd(), "content"))
+  return Promise.all(
+    pages
+      .filter((file) => file.endsWith(".mdx"))
+      .map((file) => readFile(file, "utf8"))
+  )
+}
+
 export async function sourceFiles() {
   "use cache"
   const found = new Set<string>()
-  for (const file of await files(path.join(process.cwd(), "content"))) {
-    if (!file.endsWith(".mdx")) continue
-    for (const [, source] of (await readFile(file, "utf8")).matchAll(
-      /<SourceFile path="([^"]+)"/g
-    ))
+  for (const page of await contentPages()) {
+    for (const [, source] of page.matchAll(/<ComponentSource path="([^"]+)"/g))
       found.add(source)
+    for (const [, type, name] of page.matchAll(
+      /<ComponentPreview type="(chart|block)" name="([^"]+)"/g
+    ))
+      found.add(`components/${type}s/${name}.tsx`)
   }
   return [...found]
 }

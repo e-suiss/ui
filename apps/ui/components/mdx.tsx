@@ -1,21 +1,43 @@
 import type { MDXComponents } from "mdx/types"
-import type * as React from "react"
+import * as React from "react"
 
 import { Anchor } from "@/components/site/anchor"
 import { Anatomy, ApiPart } from "@/components/site/api-reference"
 import { Callout } from "@/components/site/callout"
 import { CodeBlock } from "@/components/site/code-block"
-import { Example } from "@/components/site/example"
+import { ComponentPreview } from "@/components/site/component-preview"
+import { ComponentSource } from "@/components/site/component-source"
 import { NativeExample } from "@/components/site/native-example"
 import { Only } from "@/components/site/platform"
-import { PropsTable } from "@/components/site/props-table"
 import { RegistryIndex } from "@/components/site/registry-index"
-import { Code, SourceFile } from "@/components/site/source-file"
 import { Tabs } from "@/components/site/tabs"
+
+function textOf(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node)
+  if (Array.isArray(node)) return node.map(textOf).join("")
+  if (
+    React.isValidElement<{ children?: React.ReactNode; className?: string }>(
+      node
+    )
+  ) {
+    const text = textOf(node.props.children)
+    return node.props.className === "line" ? `${text}\n` : text
+  }
+  return ""
+}
+
+function Pre(props: React.ComponentProps<typeof CodeBlock>) {
+  return (
+    <CodeBlock
+      {...props}
+      raw={props.title === "Terminal" ? textOf(props.children) : undefined}
+    />
+  )
+}
 
 function Table(props: React.ComponentProps<"table">) {
   return (
-    <div className="mt-[1.2em] overflow-x-auto">
+    <div data-slot="table" className="mt-[1.2em] overflow-x-auto">
       <table {...props} />
     </div>
   )
@@ -24,18 +46,16 @@ function Table(props: React.ComponentProps<"table">) {
 export function getMDXComponents(components?: MDXComponents) {
   return {
     a: ({ href, ...props }) => <Anchor href={href} {...props} />,
-    pre: (props) => <CodeBlock {...props} />,
+    pre: Pre,
     table: Table,
     Callout,
-    Example,
+    ComponentPreview,
     NativeExample,
     Only,
     Tabs,
     Anatomy,
     ApiPart,
-    PropsTable,
-    SourceFile,
-    Code,
+    ComponentSource,
     RegistryIndex,
     ...components,
   } satisfies MDXComponents

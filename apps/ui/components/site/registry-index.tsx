@@ -1,16 +1,37 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
 
+import type * as PageTree from "fumadocs-core/page-tree"
+import type * as React from "react"
+
 import { Anchor } from "@/components/site/anchor"
-import items from "@/content/items.json"
+import { source } from "@/lib/source"
 
-type Item = { name: string; title: string; group: string | null }
+type Item = { url: string; title: React.ReactNode }
 
-export function RegistryIndex({ category }: { category: keyof typeof items }) {
-  const list = items[category] as Item[]
+function folderOf(url: string) {
+  return source
+    .getPageTree()
+    .children.find(
+      (node): node is PageTree.Folder =>
+        node.type === "folder" &&
+        (node.index?.url === url ||
+          node.children.some(
+            (child) => child.type === "page" && child.url === url
+          ))
+    )
+}
+
+export function RegistryIndex({ category }: { category: string }) {
   const groups = new Map<string, Item[]>()
-  for (const item of list) {
-    const key = item.group ?? ""
-    groups.set(key, [...(groups.get(key) ?? []), item])
+  const url = `/docs/${category}`
+  let group = ""
+  for (const node of folderOf(url)?.children ?? []) {
+    if (node.type === "separator") group = String(node.name ?? "")
+    if (node.type !== "page" || node.url === url) continue
+    groups.set(group, [
+      ...(groups.get(group) ?? []),
+      { url: node.url, title: node.name },
+    ])
   }
 
   return (
@@ -25,11 +46,11 @@ export function RegistryIndex({ category }: { category: keyof typeof items }) {
           <ul className="grid border-t border-label/12 sm:grid-cols-2">
             {members.map((item) => (
               <li
-                key={item.name}
+                key={item.url}
                 className="border-b border-label/12 sm:odd:border-e sm:odd:pe-6 sm:even:ps-6"
               >
                 <Anchor
-                  href={`/docs/${category}/${item.name}`}
+                  href={item.url}
                   className="group flex items-center justify-between gap-4 py-3.5 text-[17px] tracking-[-0.02em] outline-none focus-visible:focus-ring"
                 >
                   <span className="transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:translate-x-1.5">

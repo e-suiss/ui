@@ -3,32 +3,25 @@
 import { cn } from "cn"
 import * as React from "react"
 
-import { ComponentPreview } from "@/components/site/component-preview"
+import { ExamplePreview } from "@/components/site/example-preview"
 import {
   ResponsivePreview,
   ResponsiveToolbar,
   useResponsivePreview,
 } from "@/components/site/responsive-preview"
 import { SourceCode } from "@/components/site/source-code"
-
-type Kind = React.ComponentProps<typeof ComponentPreview>["kind"]
+import type { Preview } from "@/lib/previews"
 
 export function Example({
-  kind,
-  name,
-  story,
+  preview: { type, name, layout, responsive },
   children,
 }: {
-  kind: Kind
-  name: string
-  story?: string
+  preview: Preview
   children: React.ReactNode
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">("preview")
-  const responsive =
-    kind === "pattern" || kind === "interaction" || kind === "block"
-  const preview = useResponsivePreview()
-  const src = `/preview/${kind}/${name}${story ? `/${story}` : ""}`
+  const state = useResponsivePreview()
+  const src = `/preview/${name}`
 
   return (
     <div data-not-prose className="mt-[1.2em]">
@@ -53,7 +46,7 @@ export function Example({
         {responsive && (
           <ResponsiveToolbar
             src={src}
-            state={preview}
+            state={state}
             onSelect={() => setTab("preview")}
           />
         )}
@@ -62,11 +55,11 @@ export function Example({
         {responsive ? (
           <ResponsivePreview
             src={src}
-            height={kind === "block" ? 800 : 560}
-            state={preview}
+            height={type === "block" ? 800 : 560}
+            state={state}
           />
         ) : (
-          <ComponentPreview kind={kind} name={name} story={story} />
+          <ExamplePreview type={type} name={name} layout={layout} />
         )}
       </div>
       <div hidden={tab !== "code"}>

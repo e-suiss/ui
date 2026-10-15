@@ -55,7 +55,7 @@ async function preview(file: string) {
   return { block, long }
 }
 
-export async function SourceFile({
+export async function ComponentSource({
   path: file,
   fold = true,
 }: {

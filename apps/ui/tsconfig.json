@@ -27,7 +27,7 @@
       "@/components/charts/*": ["../../packages/web/components/charts/*"],
       "@/components/blocks/*": ["../../packages/web/components/blocks/*"],
       "@/hooks/*": ["../../packages/web/hooks/*"],
-      "@/tests/story-kit": ["./lib/story-kit.ts"],
+      "@/examples/*": ["../../packages/web/examples/*"],
       "@/*": ["./*"]
     }
   },
