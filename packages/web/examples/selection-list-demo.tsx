@@ -1,5 +1,5 @@
-import { CaretRightIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SelectionList,
   SelectionListBar,
@@ -49,7 +49,12 @@ function NoteRows({
                 {note.preview}
               </span>
             </span>
-            <CaretRightIcon
+            <IconPlaceholder
+              lucide="ChevronRightIcon"
+              tabler="IconChevronRight"
+              hugeicons="ArrowRight01Icon"
+              phosphor="CaretRightIcon"
+              remixicon="RiArrowRightSLine"
               aria-hidden
               className="size-4 shrink-0 text-muted-foreground transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0"
             />

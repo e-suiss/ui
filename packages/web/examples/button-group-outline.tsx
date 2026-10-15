@@ -1,13 +1,4 @@
-import {
-  ArchiveIcon,
-  ArrowLeftIcon,
-  CalendarPlusIcon,
-  ClockIcon,
-  DotsThreeIcon,
-  ListPlusIcon,
-  TagIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import {
@@ -24,7 +15,13 @@ export default function ButtonGroupOutline() {
     <ButtonGroup orientation="horizontal">
       <ButtonGroup>
         <Button variant="outline" size="icon" aria-label="Go back">
-          <ArrowLeftIcon />
+          <IconPlaceholder
+            lucide="ArrowLeftIcon"
+            tabler="IconArrowLeft"
+            hugeicons="ArrowLeft02Icon"
+            phosphor="ArrowLeftIcon"
+            remixicon="RiArrowLeftLine"
+          />
         </Button>
       </ButtonGroup>
       <ButtonGroup>
@@ -39,38 +36,80 @@ export default function ButtonGroupOutline() {
               <Button variant="outline" size="icon" aria-label="More options" />
             }
           >
-            <DotsThreeIcon />
+            <IconPlaceholder
+              lucide="EllipsisIcon"
+              tabler="IconDots"
+              hugeicons="MoreHorizontalIcon"
+              phosphor="DotsThreeIcon"
+              remixicon="RiMoreLine"
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <ListPlusIcon />
+                <IconPlaceholder
+                  lucide="ListPlusIcon"
+                  tabler="IconPlaylistAdd"
+                  hugeicons="ListPlusIcon"
+                  phosphor="ListPlusIcon"
+                  remixicon="RiPlayListAddLine"
+                />
                 Mark as read
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <ArchiveIcon />
+                <IconPlaceholder
+                  lucide="ArchiveIcon"
+                  tabler="IconArchive"
+                  hugeicons="Archive02Icon"
+                  phosphor="ArchiveIcon"
+                  remixicon="RiArchiveLine"
+                />
                 Archive
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <ClockIcon />
+                <IconPlaceholder
+                  lucide="ClockIcon"
+                  tabler="IconClock"
+                  hugeicons="Clock01Icon"
+                  phosphor="ClockIcon"
+                  remixicon="RiTimeLine"
+                />
                 Snooze
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CalendarPlusIcon />
+                <IconPlaceholder
+                  lucide="CalendarPlusIcon"
+                  tabler="IconCalendarPlus"
+                  hugeicons="CalendarAdd01Icon"
+                  phosphor="CalendarPlusIcon"
+                  remixicon="RiCalendarEventLine"
+                />
                 Add to calendar
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <TagIcon />
+                <IconPlaceholder
+                  lucide="TagIcon"
+                  tabler="IconTag"
+                  hugeicons="Tag01Icon"
+                  phosphor="TagIcon"
+                  remixicon="RiPriceTag3Line"
+                />
                 Label as
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem variant="destructive">
-                <TrashIcon />
+                <IconPlaceholder
+                  lucide="TrashIcon"
+                  tabler="IconTrash"
+                  hugeicons="Delete02Icon"
+                  phosphor="TrashIcon"
+                  remixicon="RiDeleteBinLine"
+                />
                 Trash
               </DropdownMenuItem>
             </DropdownMenuGroup>

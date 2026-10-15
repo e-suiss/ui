@@ -1,4 +1,4 @@
-import { XIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Attachment,
   AttachmentAction,
@@ -26,7 +26,13 @@ export default function AttachmentFileList() {
         </AttachmentContent>
         <AttachmentActions>
           <AttachmentAction aria-label="Remove">
-            <XIcon />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>
@@ -40,7 +46,13 @@ export default function AttachmentFileList() {
         </AttachmentContent>
         <AttachmentActions>
           <AttachmentAction aria-label="Remove">
-            <XIcon />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>
@@ -54,7 +66,13 @@ export default function AttachmentFileList() {
         </AttachmentContent>
         <AttachmentActions>
           <AttachmentAction aria-label="Remove">
-            <XIcon />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>

@@ -1,5 +1,5 @@
-import { TrashIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { UndoBarProvider, useUndoBar } from "@/components/interactions/undo-bar"
 import { Button } from "@/components/ui/button"
 
@@ -63,7 +63,14 @@ function NotesList() {
               aria-label={`Delete ${note.title}`}
               onClick={() => remove(note)}
             >
-              <TrashIcon className="size-5" />
+              <IconPlaceholder
+                lucide="TrashIcon"
+                tabler="IconTrash"
+                hugeicons="Delete02Icon"
+                phosphor="TrashIcon"
+                remixicon="RiDeleteBinLine"
+                className="size-5"
+              />
             </Button>
           </li>
         ))}

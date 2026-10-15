@@ -1,4 +1,4 @@
-import { CaretUpDownIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -21,7 +21,13 @@ export default function CollapsibleDisabled() {
               <Button variant="ghost" size="icon-sm" aria-label="Toggle list" />
             }
           >
-            <CaretUpDownIcon />
+            <IconPlaceholder
+              lucide="ChevronsUpDownIcon"
+              tabler="IconSelector"
+              hugeicons="UnfoldMoreIcon"
+              phosphor="CaretUpDownIcon"
+              remixicon="RiExpandUpDownLine"
+            />
           </CollapsibleTrigger>
         </div>
         <div className="bg-muted rounded-2xl px-4 py-2 text-sm">

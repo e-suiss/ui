@@ -1,8 +1,8 @@
 "use client"
 
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
-import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 const accordionVariants = cva("flex w-full flex-col", {
@@ -57,11 +57,21 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        <CaretDownIcon
+        <IconPlaceholder
+          lucide="ChevronDownIcon"
+          tabler="IconChevronDown"
+          hugeicons="ArrowDown01Icon"
+          phosphor="CaretDownIcon"
+          remixicon="RiArrowDownSLine"
           data-slot="accordion-trigger-icon"
           className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
         />
-        <CaretUpIcon
+        <IconPlaceholder
+          lucide="ChevronUpIcon"
+          tabler="IconChevronUp"
+          hugeicons="ArrowUp01Icon"
+          phosphor="CaretUpIcon"
+          remixicon="RiArrowUpSLine"
           data-slot="accordion-trigger-icon"
           className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
         />

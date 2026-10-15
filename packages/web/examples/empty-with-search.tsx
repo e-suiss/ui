@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Empty,
   EmptyContent,
@@ -27,7 +27,13 @@ export default function EmptyWithSearch() {
           <InputGroup className="sm:w-3/4">
             <InputGroupInput placeholder="Search pages..." />
             <InputGroupAddon>
-              <MagnifyingGlassIcon />
+              <IconPlaceholder
+                lucide="SearchIcon"
+                tabler="IconSearch"
+                hugeicons="Search01Icon"
+                phosphor="MagnifyingGlassIcon"
+                remixicon="RiSearchLine"
+              />
             </InputGroupAddon>
           </InputGroup>
           <EmptyDescription>

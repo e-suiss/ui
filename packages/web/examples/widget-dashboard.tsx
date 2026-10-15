@@ -1,9 +1,4 @@
-import {
-  CalendarBlankIcon,
-  CashRegisterIcon,
-  CookingPotIcon,
-  SunIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetContent,
@@ -31,7 +26,14 @@ export default function WidgetDashboard() {
       <Widget>
         <WidgetHeader>
           <WidgetIcon>
-            <SunIcon weight="fill" />
+            <IconPlaceholder
+              lucide="SunIcon"
+              tabler="IconSun"
+              hugeicons="Sun03Icon"
+              phosphor="SunIcon"
+              remixicon="RiSunLine"
+              className="fill-current"
+            />
           </WidgetIcon>
           <WidgetTitle>Istanbul</WidgetTitle>
         </WidgetHeader>
@@ -41,7 +43,13 @@ export default function WidgetDashboard() {
       <Widget align="center">
         <WidgetHeader>
           <WidgetIcon size="lg">
-            <CookingPotIcon />
+            <IconPlaceholder
+              lucide="CookingPotIcon"
+              tabler="IconSoup"
+              hugeicons="PotIcon"
+              phosphor="CookingPotIcon"
+              remixicon="RiBowlLine"
+            />
           </WidgetIcon>
           <WidgetTitle>Kitchen display</WidgetTitle>
         </WidgetHeader>
@@ -50,7 +58,13 @@ export default function WidgetDashboard() {
       <Widget className="col-span-2">
         <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
           <WidgetIcon size="sm" className="text-amber-600 dark:text-amber-400">
-            <CashRegisterIcon weight="fill" />
+            <IconPlaceholder
+              lucide="CalculatorIcon"
+              tabler="IconCashRegister"
+              hugeicons="CashierIcon"
+              phosphor="CashRegisterIcon"
+              remixicon="RiCalculatorLine"
+            />
           </WidgetIcon>
           <WidgetTitle>Hestia</WidgetTitle>
         </WidgetHeader>
@@ -60,7 +74,13 @@ export default function WidgetDashboard() {
       <Widget className="col-span-2 row-span-2">
         <WidgetHeader className="gap-1.5 text-primary">
           <WidgetIcon size="sm" className="text-primary">
-            <CalendarBlankIcon weight="fill" />
+            <IconPlaceholder
+              lucide="CalendarIcon"
+              tabler="IconCalendar"
+              hugeicons="Calendar01Icon"
+              phosphor="CalendarBlankIcon"
+              remixicon="RiCalendarLine"
+            />
           </WidgetIcon>
           <WidgetTitle>Reservations</WidgetTitle>
         </WidgetHeader>
@@ -78,7 +98,13 @@ export default function WidgetDashboard() {
       <Widget className="col-span-2 row-span-2" align="center">
         <WidgetHeader>
           <WidgetIcon size="lg">
-            <CashRegisterIcon />
+            <IconPlaceholder
+              lucide="CalculatorIcon"
+              tabler="IconCashRegister"
+              hugeicons="CashierIcon"
+              phosphor="CashRegisterIcon"
+              remixicon="RiCalculatorLine"
+            />
           </WidgetIcon>
           <WidgetTitle>Point of sale</WidgetTitle>
         </WidgetHeader>

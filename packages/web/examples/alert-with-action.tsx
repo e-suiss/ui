@@ -1,4 +1,4 @@
-import { InfoIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Alert,
   AlertAction,
@@ -11,7 +11,13 @@ export default function AlertWithAction() {
   return (
     <div className="w-96">
       <Alert>
-        <InfoIcon weight="fill" />
+        <IconPlaceholder
+          lucide="InfoIcon"
+          tabler="IconInfoCircle"
+          hugeicons="InformationCircleIcon"
+          phosphor="InfoIcon"
+          remixicon="RiInformationLine"
+        />
         <AlertTitle>Storage almost full</AlertTitle>
         <AlertDescription>
           You have used 90% of your storage. Upgrade for more space.

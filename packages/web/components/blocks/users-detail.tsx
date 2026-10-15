@@ -1,16 +1,8 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  DesktopIcon,
-  DeviceMobileIcon,
-  GearIcon,
-  GlobeIcon,
-  ShieldIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SplitView,
   SplitViewDetail,
@@ -140,10 +132,58 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 const roles = ["Admin", "Editor", "Support", "Viewer"]
@@ -198,19 +238,46 @@ const initialSessions = [
     device: "Book Pro · Browser",
     place: "San Francisco, US",
     time: "Now",
-    icon: DesktopIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="MonitorIcon"
+        tabler="IconDeviceDesktop"
+        hugeicons="ComputerIcon"
+        phosphor="DesktopIcon"
+        remixicon="RiComputerLine"
+        className="size-4"
+      />
+    ),
   },
   {
     device: "Phone Pro · App",
     place: "San Francisco, US",
     time: "2 hr ago",
-    icon: DeviceMobileIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="SmartphoneIcon"
+        tabler="IconDeviceMobile"
+        hugeicons="SmartPhone01Icon"
+        phosphor="DeviceMobileIcon"
+        remixicon="RiSmartphoneLine"
+        className="size-4"
+      />
+    ),
   },
   {
     device: "Desktop · Browser",
     place: "Seattle, US",
     time: "3 days ago",
-    icon: GlobeIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="GlobeIcon"
+        tabler="IconWorld"
+        hugeicons="Globe02Icon"
+        phosphor="GlobeIcon"
+        remixicon="RiGlobalLine"
+        className="size-4"
+      />
+    ),
   },
 ]
 
@@ -428,7 +495,7 @@ export function UsersDetail() {
                           {index > 0 && <ItemSeparator />}
                           <Item size="sm" role="listitem">
                             <ItemMedia className="size-7.5 rounded-[7px] bg-zinc-500 text-white">
-                              <session.icon weight="bold" className="size-4" />
+                              {session.icon}
                             </ItemMedia>
                             <ItemContent className="gap-0">
                               <ItemTitle className="font-normal">

@@ -2,9 +2,9 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
-import { SidebarIcon } from "@phosphor-icons/react"
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
 import { Input } from "@/components/ui/input"
@@ -255,7 +255,14 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <SidebarIcon className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="PanelLeftIcon"
+        tabler="IconLayoutSidebar"
+        hugeicons="SidebarLeftIcon"
+        phosphor="SidebarIcon"
+        remixicon="RiSideBarLine"
+        className="rtl:rotate-180"
+      />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

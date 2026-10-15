@@ -1,17 +1,8 @@
 "use client"
 
-import {
-  ArchiveIcon,
-  ArrowBendUpLeftIcon,
-  MagnifyingGlassIcon,
-  NotePencilIcon,
-  PaperPlaneTiltIcon,
-  StarIcon,
-  TrashIcon,
-  TrayIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SplitView,
   SplitViewDetail,
@@ -103,11 +94,71 @@ const initialMail: Mail[] = [
 ]
 
 const mailboxes = [
-  { value: "Inbox", icon: TrayIcon },
-  { value: "Starred", icon: StarIcon },
-  { value: "Sent", icon: PaperPlaneTiltIcon },
-  { value: "Archive", icon: ArchiveIcon },
-  { value: "Trash", icon: TrashIcon },
+  {
+    value: "Inbox",
+    icon: (
+      <IconPlaceholder
+        lucide="InboxIcon"
+        tabler="IconInbox"
+        hugeicons="InboxIcon"
+        phosphor="TrayIcon"
+        remixicon="RiInboxLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "Starred",
+    icon: (
+      <IconPlaceholder
+        lucide="StarIcon"
+        tabler="IconStar"
+        hugeicons="StarIcon"
+        phosphor="StarIcon"
+        remixicon="RiStarLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "Sent",
+    icon: (
+      <IconPlaceholder
+        lucide="SendIcon"
+        tabler="IconSend"
+        hugeicons="SentIcon"
+        phosphor="PaperPlaneTiltIcon"
+        remixicon="RiSendPlaneLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "Archive",
+    icon: (
+      <IconPlaceholder
+        lucide="ArchiveIcon"
+        tabler="IconArchive"
+        hugeicons="Archive02Icon"
+        phosphor="ArchiveIcon"
+        remixicon="RiArchiveLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "Trash",
+    icon: (
+      <IconPlaceholder
+        lucide="TrashIcon"
+        tabler="IconTrash"
+        hugeicons="Delete02Icon"
+        phosphor="TrashIcon"
+        remixicon="RiDeleteBinLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
 ]
 
 function SenderAvatar({ mail, className }: { mail: Mail; className?: string }) {
@@ -149,17 +200,61 @@ function Reader({
   const actions = [
     {
       label: "Reply",
-      icon: ArrowBendUpLeftIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="ReplyIcon"
+          tabler="IconArrowBackUp"
+          hugeicons="ArrowTurnBackwardIcon"
+          phosphor="ArrowBendUpLeftIcon"
+          remixicon="RiReplyLine"
+          className="size-4.5"
+        />
+      ),
       onClick: () => setReplying(true),
     },
     {
       label: mail.starred ? "Unstar" : "Star",
-      icon: StarIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="StarIcon"
+          tabler="IconStar"
+          hugeicons="StarIcon"
+          phosphor="StarIcon"
+          remixicon="RiStarLine"
+          className="size-4.5"
+        />
+      ),
       onClick: onStar,
       active: mail.starred,
     },
-    { label: "Archive", icon: ArchiveIcon, onClick: onRemove },
-    { label: "Delete", icon: TrashIcon, onClick: onRemove },
+    {
+      label: "Archive",
+      icon: (
+        <IconPlaceholder
+          lucide="ArchiveIcon"
+          tabler="IconArchive"
+          hugeicons="Archive02Icon"
+          phosphor="ArchiveIcon"
+          remixicon="RiArchiveLine"
+          className="size-4.5"
+        />
+      ),
+      onClick: onRemove,
+    },
+    {
+      label: "Delete",
+      icon: (
+        <IconPlaceholder
+          lucide="TrashIcon"
+          tabler="IconTrash"
+          hugeicons="Delete02Icon"
+          phosphor="TrashIcon"
+          remixicon="RiDeleteBinLine"
+          className="size-4.5"
+        />
+      ),
+      onClick: onRemove,
+    },
   ]
 
   return (
@@ -174,12 +269,9 @@ function Reader({
             aria-pressed={action.active}
             onClick={action.onClick}
             data-active={action.active ? "" : undefined}
-            className="text-muted-foreground data-active:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-active:text-orange-500"
+            className="text-muted-foreground data-active:[&_svg]:fill-current data-active:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-active:text-orange-500"
           >
-            <action.icon
-              weight={action.active ? "fill" : "regular"}
-              className="size-4.5"
-            />
+            {action.icon}
           </Button>
         ))}
       </div>
@@ -277,7 +369,7 @@ export function InboxMail() {
             onClick={() => setMailbox(box.value)}
           >
             <span className="flex items-center gap-2.5">
-              <box.icon className="size-4.5 text-primary" />
+              {box.icon}
               <span className="flex-1">{box.value}</span>
               <span className="text-xs text-muted-foreground tabular-nums">
                 {counts[box.value] || ""}
@@ -300,12 +392,25 @@ export function InboxMail() {
             aria-label="New message"
             className="text-muted-foreground max-md:ms-auto max-md:-mt-12"
           >
-            <NotePencilIcon className="size-4.5" />
+            <IconPlaceholder
+              lucide="SquarePenIcon"
+              tabler="IconEdit"
+              hugeicons="PencilEdit02Icon"
+              phosphor="NotePencilIcon"
+              remixicon="RiEditBoxLine"
+              className="size-4.5"
+            />
           </Button>
         </div>
         <InputGroup className="h-8 shrink-0 md:mx-1">
           <InputGroupAddon>
-            <MagnifyingGlassIcon />
+            <IconPlaceholder
+              lucide="SearchIcon"
+              tabler="IconSearch"
+              hugeicons="Search01Icon"
+              phosphor="MagnifyingGlassIcon"
+              remixicon="RiSearchLine"
+            />
           </InputGroupAddon>
           <InputGroupInput
             type="search"
@@ -338,10 +443,14 @@ export function InboxMail() {
                     {item.from}
                   </span>
                   {item.starred && (
-                    <StarIcon
-                      weight="fill"
+                    <IconPlaceholder
+                      lucide="StarIcon"
+                      tabler="IconStar"
+                      hugeicons="StarIcon"
+                      phosphor="StarIcon"
+                      remixicon="RiStarLine"
                       aria-label="Starred"
-                      className="size-3 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] md:group-data-active/mail:text-primary-foreground dark:text-orange-500"
+                      className="size-3 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] md:group-data-active/mail:text-primary-foreground dark:text-orange-500 fill-current"
                     />
                   )}
                   <span className="text-xs text-muted-foreground md:group-data-active/mail:text-primary-foreground">

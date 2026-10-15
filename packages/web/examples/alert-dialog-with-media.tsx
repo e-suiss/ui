@@ -1,4 +1,4 @@
-import { TrashIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +22,13 @@ export default function AlertDialogWithMedia() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive">
-            <TrashIcon />
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
           </AlertDialogMedia>
           <AlertDialogTitle>Delete this project?</AlertDialogTitle>
           <AlertDialogDescription>

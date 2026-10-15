@@ -1,4 +1,4 @@
-import { InfoIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputGroup,
   InputGroupAddon,
@@ -11,7 +11,14 @@ export default function InputGroupInvalid() {
       <InputGroup>
         <InputGroupInput defaultValue="jane@" aria-label="Email" aria-invalid />
         <InputGroupAddon align="inline-end">
-          <InfoIcon className="text-destructive" />
+          <IconPlaceholder
+            lucide="InfoIcon"
+            tabler="IconInfoCircle"
+            hugeicons="InformationCircleIcon"
+            phosphor="InfoIcon"
+            remixicon="RiInformationLine"
+            className="text-destructive"
+          />
         </InputGroupAddon>
       </InputGroup>
     </div>

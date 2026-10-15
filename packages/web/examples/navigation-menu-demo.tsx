@@ -1,11 +1,4 @@
-import {
-  BookOpenIcon,
-  ChartLineIcon,
-  CodeIcon,
-  LifebuoyIcon,
-  LightningIcon,
-  ShieldCheckIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,24 +13,84 @@ const products = [
   {
     title: "Analytics",
     description: "Track traffic and conversions in real time.",
-    icon: ChartLineIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="ChartLineIcon"
+        tabler="IconChartLine"
+        hugeicons="ChartLineData01Icon"
+        phosphor="ChartLineIcon"
+        remixicon="RiLineChartLine"
+        className="mt-0.5"
+      />
+    ),
   },
   {
     title: "Automations",
     description: "Run workflows when events happen.",
-    icon: LightningIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="ZapIcon"
+        tabler="IconBolt"
+        hugeicons="ZapIcon"
+        phosphor="LightningIcon"
+        remixicon="RiFlashlightLine"
+        className="mt-0.5"
+      />
+    ),
   },
   {
     title: "Security",
     description: "Single sign-on, audit logs, and roles.",
-    icon: ShieldCheckIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldCheckIcon"
+        tabler="IconShieldCheck"
+        hugeicons="SecurityCheckIcon"
+        phosphor="ShieldCheckIcon"
+        remixicon="RiShieldCheckLine"
+        className="mt-0.5"
+      />
+    ),
   },
 ]
 
 const resources = [
-  { title: "Documentation", icon: BookOpenIcon },
-  { title: "API reference", icon: CodeIcon },
-  { title: "Help center", icon: LifebuoyIcon },
+  {
+    title: "Documentation",
+    icon: (
+      <IconPlaceholder
+        lucide="BookOpenIcon"
+        tabler="IconBook"
+        hugeicons="BookOpen02Icon"
+        phosphor="BookOpenIcon"
+        remixicon="RiBookOpenLine"
+      />
+    ),
+  },
+  {
+    title: "API reference",
+    icon: (
+      <IconPlaceholder
+        lucide="CodeIcon"
+        tabler="IconCode"
+        hugeicons="CodeIcon"
+        phosphor="CodeIcon"
+        remixicon="RiCodeLine"
+      />
+    ),
+  },
+  {
+    title: "Help center",
+    icon: (
+      <IconPlaceholder
+        lucide="LifeBuoyIcon"
+        tabler="IconLifebuoy"
+        hugeicons="LifebuoyIcon"
+        phosphor="LifebuoyIcon"
+        remixicon="RiLifebuoyLine"
+      />
+    ),
+  },
 ]
 
 export default function NavigationMenuDemo() {
@@ -52,7 +105,7 @@ export default function NavigationMenuDemo() {
                 {products.map((product) => (
                   <li key={product.title}>
                     <NavigationMenuLink href="#" className="items-start gap-3">
-                      <product.icon className="mt-0.5" />
+                      {product.icon}
                       <div className="flex flex-col gap-1">
                         <span className="font-medium">{product.title}</span>
                         <span className="text-muted-foreground">
@@ -72,7 +125,7 @@ export default function NavigationMenuDemo() {
                 {resources.map((resource) => (
                   <li key={resource.title}>
                     <NavigationMenuLink href="#">
-                      <resource.icon />
+                      {resource.icon}
                       {resource.title}
                     </NavigationMenuLink>
                   </li>

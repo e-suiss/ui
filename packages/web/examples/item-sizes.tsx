@@ -1,4 +1,4 @@
-import { CaretRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Item,
   ItemActions,
@@ -14,13 +14,26 @@ export default function ItemSizes() {
         {(["default", "sm", "xs"] as const).map((size) => (
           <Item key={size} variant="outline" size={size}>
             <ItemMedia variant="icon">
-              <CheckCircleIcon />
+              <IconPlaceholder
+                lucide="CircleCheckIcon"
+                tabler="IconCircleCheck"
+                hugeicons="CheckmarkCircle02Icon"
+                phosphor="CheckCircleIcon"
+                remixicon="RiCheckboxCircleLine"
+              />
             </ItemMedia>
             <ItemContent>
               <ItemTitle>Your profile has been verified</ItemTitle>
             </ItemContent>
             <ItemActions>
-              <CaretRightIcon className="size-4" />
+              <IconPlaceholder
+                lucide="ChevronRightIcon"
+                tabler="IconChevronRight"
+                hugeicons="ArrowRight01Icon"
+                phosphor="CaretRightIcon"
+                remixicon="RiArrowRightSLine"
+                className="size-4"
+              />
             </ItemActions>
           </Item>
         ))}

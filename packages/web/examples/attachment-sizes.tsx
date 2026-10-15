@@ -1,4 +1,4 @@
-import { FileTextIcon, XIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Attachment,
   AttachmentAction,
@@ -20,7 +20,13 @@ export default function AttachmentSizes() {
           size={size}
         >
           <AttachmentMedia>
-            <FileTextIcon />
+            <IconPlaceholder
+              lucide="FileTextIcon"
+              tabler="IconFileText"
+              hugeicons="File02Icon"
+              phosphor="FileTextIcon"
+              remixicon="RiFileTextLine"
+            />
           </AttachmentMedia>
           <AttachmentContent>
             <AttachmentTitle>Meeting notes.docx</AttachmentTitle>
@@ -28,7 +34,13 @@ export default function AttachmentSizes() {
           </AttachmentContent>
           <AttachmentActions>
             <AttachmentAction aria-label="Remove">
-              <XIcon />
+              <IconPlaceholder
+                lucide="XIcon"
+                tabler="IconX"
+                hugeicons="Cancel01Icon"
+                phosphor="XIcon"
+                remixicon="RiCloseLine"
+              />
             </AttachmentAction>
           </AttachmentActions>
         </Attachment>

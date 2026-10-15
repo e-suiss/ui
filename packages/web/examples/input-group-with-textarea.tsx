@@ -1,4 +1,4 @@
-import { ArrowUpIcon, PaperclipIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputGroup,
   InputGroupAddon,
@@ -14,7 +14,13 @@ export default function InputGroupWithTextarea() {
         <InputGroupTextarea placeholder="Ask, search, or chat..." />
         <InputGroupAddon align="block-end">
           <InputGroupButton size="icon-xs" aria-label="Attach file">
-            <PaperclipIcon />
+            <IconPlaceholder
+              lucide="PaperclipIcon"
+              tabler="IconPaperclip"
+              hugeicons="AttachmentIcon"
+              phosphor="PaperclipIcon"
+              remixicon="RiAttachment2"
+            />
           </InputGroupButton>
           <InputGroupText className="ms-auto">52% used</InputGroupText>
           <InputGroupButton
@@ -23,7 +29,13 @@ export default function InputGroupWithTextarea() {
             className="rounded-full"
             aria-label="Send"
           >
-            <ArrowUpIcon />
+            <IconPlaceholder
+              lucide="ArrowUpIcon"
+              tabler="IconArrowUp"
+              hugeicons="ArrowUp02Icon"
+              phosphor="ArrowUpIcon"
+              remixicon="RiArrowUpLine"
+            />
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>

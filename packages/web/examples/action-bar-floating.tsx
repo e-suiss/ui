@@ -1,9 +1,4 @@
-import {
-  ClipboardTextIcon,
-  CopyIcon,
-  ScissorsIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   ActionBar,
   ActionBarContent,
@@ -45,23 +40,55 @@ function EditMenu({ withIcons = false }: { withIcons?: boolean }) {
       <ActionBarTrigger>Edit</ActionBarTrigger>
       <ActionBarContent>
         <ActionBarItem>
-          {withIcons && <ScissorsIcon />}
+          {withIcons && (
+            <IconPlaceholder
+              lucide="ScissorsIcon"
+              tabler="IconCut"
+              hugeicons="ScissorIcon"
+              phosphor="ScissorsIcon"
+              remixicon="RiScissorsLine"
+            />
+          )}
           Cut
           <ActionBarShortcut mod>X</ActionBarShortcut>
         </ActionBarItem>
         <ActionBarItem>
-          {withIcons && <CopyIcon />}
+          {withIcons && (
+            <IconPlaceholder
+              lucide="CopyIcon"
+              tabler="IconCopy"
+              hugeicons="Copy01Icon"
+              phosphor="CopyIcon"
+              remixicon="RiFileCopyLine"
+            />
+          )}
           Copy
           <ActionBarShortcut mod>C</ActionBarShortcut>
         </ActionBarItem>
         <ActionBarItem>
-          {withIcons && <ClipboardTextIcon />}
+          {withIcons && (
+            <IconPlaceholder
+              lucide="ClipboardListIcon"
+              tabler="IconClipboardText"
+              hugeicons="Task01Icon"
+              phosphor="ClipboardTextIcon"
+              remixicon="RiClipboardLine"
+            />
+          )}
           Paste
           <ActionBarShortcut mod>V</ActionBarShortcut>
         </ActionBarItem>
         <ActionBarSeparator />
         <ActionBarItem variant="destructive">
-          {withIcons && <TrashIcon />}
+          {withIcons && (
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
+          )}
           Delete
         </ActionBarItem>
       </ActionBarContent>

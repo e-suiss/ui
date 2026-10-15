@@ -1,5 +1,5 @@
-import { ChatCircleIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { PagedList } from "@/components/patterns/paged-list"
 import {
   Item,
@@ -32,7 +32,13 @@ function TopicRow({ topic }: { topic: Topic }) {
   return (
     <Item render={<a href={`#topic-${topic.id}`} />}>
       <ItemMedia variant="icon">
-        <ChatCircleIcon />
+        <IconPlaceholder
+          lucide="MessageCircleIcon"
+          tabler="IconMessageCircle"
+          hugeicons="BubbleChatIcon"
+          phosphor="ChatCircleIcon"
+          remixicon="RiChat1Line"
+        />
       </ItemMedia>
       <ItemContent>
         <ItemTitle>{topic.title}</ItemTitle>

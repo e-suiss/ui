@@ -1,6 +1,6 @@
 "use client"
 
-import { BatteryFullIcon, CpuIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
 const photo = (id: string, width: number) =>
   `https://images.unsplash.com/photo-${id}?w=${width}&q=80&auto=format&fit=crop`
@@ -28,7 +28,14 @@ export function BentoFeatures() {
           />
         </div>
         <div className="flex flex-col gap-2.5 rounded-3xl bg-background p-6.5">
-          <CpuIcon className="size-7.5 text-orange-500" />
+          <IconPlaceholder
+            lucide="CpuIcon"
+            tabler="IconCpu"
+            hugeicons="CpuIcon"
+            phosphor="CpuIcon"
+            remixicon="RiCpuLine"
+            className="size-7.5 text-orange-500"
+          />
           <p className="bg-linear-to-r from-orange-500 to-red-500 bg-clip-text text-4xl leading-none font-bold tracking-tighter text-transparent">
             S19 Pro
           </p>
@@ -37,7 +44,14 @@ export function BentoFeatures() {
           </p>
         </div>
         <div className="flex flex-col gap-2.5 rounded-3xl bg-background p-6.5">
-          <BatteryFullIcon className="size-7.5 text-green-500" />
+          <IconPlaceholder
+            lucide="BatteryFullIcon"
+            tabler="IconBattery4"
+            hugeicons="BatteryFullIcon"
+            phosphor="BatteryFullIcon"
+            remixicon="RiBatteryFill"
+            className="size-7.5 text-green-500"
+          />
           <p className="bg-linear-to-r from-green-500 to-teal-500 bg-clip-text text-4xl leading-none font-bold tracking-tighter text-transparent">
             33 hrs
           </p>

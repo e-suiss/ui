@@ -1,5 +1,5 @@
-import { PlusIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -53,7 +53,14 @@ function CalendarExample() {
                   />
                 }
               >
-                <PlusIcon weight="bold" className="size-5.5" />
+                <IconPlaceholder
+                  lucide="PlusIcon"
+                  tabler="IconPlus"
+                  hugeicons="PlusSignIcon"
+                  phosphor="PlusIcon"
+                  remixicon="RiAddLine"
+                  className="size-5.5"
+                />
               </DrawerTrigger>
               <DrawerContent>
                 <div className="flex items-center justify-between px-2 pt-1">

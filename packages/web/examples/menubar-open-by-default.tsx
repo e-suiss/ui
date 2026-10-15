@@ -1,9 +1,4 @@
-import {
-  ClipboardTextIcon,
-  CopyIcon,
-  ScissorsIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -60,24 +55,48 @@ function MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {
         <MenubarContent>
           <MenubarGroup>
             <MenubarItem>
-              <ScissorsIcon />
+              <IconPlaceholder
+                lucide="ScissorsIcon"
+                tabler="IconCut"
+                hugeicons="ScissorIcon"
+                phosphor="ScissorsIcon"
+                remixicon="RiScissorsLine"
+              />
               Cut
               <MenubarShortcut mod>X</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              <CopyIcon />
+              <IconPlaceholder
+                lucide="CopyIcon"
+                tabler="IconCopy"
+                hugeicons="Copy01Icon"
+                phosphor="CopyIcon"
+                remixicon="RiFileCopyLine"
+              />
               Copy
               <MenubarShortcut mod>C</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              <ClipboardTextIcon />
+              <IconPlaceholder
+                lucide="ClipboardListIcon"
+                tabler="IconClipboardText"
+                hugeicons="Task01Icon"
+                phosphor="ClipboardTextIcon"
+                remixicon="RiClipboardLine"
+              />
               Paste
               <MenubarShortcut mod>V</MenubarShortcut>
             </MenubarItem>
           </MenubarGroup>
           <MenubarSeparator />
           <MenubarItem variant="destructive">
-            <TrashIcon />
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
             Delete
           </MenubarItem>
         </MenubarContent>

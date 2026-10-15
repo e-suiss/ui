@@ -1,5 +1,5 @@
-import { CashRegisterIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetDescription,
@@ -28,7 +28,13 @@ export default function WidgetSales() {
       <Widget resizable defaultSize="large">
         <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
           <WidgetIcon size="sm" className="text-amber-600 dark:text-amber-400">
-            <CashRegisterIcon weight="fill" />
+            <IconPlaceholder
+              lucide="CalculatorIcon"
+              tabler="IconCashRegister"
+              hugeicons="CashierIcon"
+              phosphor="CashRegisterIcon"
+              remixicon="RiCalculatorLine"
+            />
           </WidgetIcon>
           <WidgetTitle>Hestia</WidgetTitle>
         </WidgetHeader>

@@ -1,12 +1,5 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  FlameIcon,
-  NotePencilIcon,
-  StarIcon,
-  TagIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 import {
   Area,
@@ -16,6 +9,7 @@ import {
   XAxis,
 } from "recharts"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   type ChartConfig,
   ChartContainer,
@@ -50,9 +44,51 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const apps = [
-  { value: "route", label: "Route", hue: 150, icon: ChartBarIcon },
-  { value: "notebook", label: "Notebook", hue: 50, icon: NotePencilIcon },
-  { value: "fitness", label: "Fitness+", hue: 20, icon: FlameIcon },
+  {
+    value: "route",
+    label: "Route",
+    hue: 150,
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+        className="size-3.5"
+      />
+    ),
+  },
+  {
+    value: "notebook",
+    label: "Notebook",
+    hue: 50,
+    icon: (
+      <IconPlaceholder
+        lucide="SquarePenIcon"
+        tabler="IconEdit"
+        hugeicons="PencilEdit02Icon"
+        phosphor="NotePencilIcon"
+        remixicon="RiEditBoxLine"
+        className="size-3.5"
+      />
+    ),
+  },
+  {
+    value: "fitness",
+    label: "Fitness+",
+    hue: 20,
+    icon: (
+      <IconPlaceholder
+        lucide="FlameIcon"
+        tabler="IconFlame"
+        hugeicons="FireIcon"
+        phosphor="FlameIcon"
+        remixicon="RiFireLine"
+        className="size-3.5"
+      />
+    ),
+  },
 ]
 
 type NavItem = {
@@ -140,23 +176,52 @@ const items: NavItem[] = [
         }}
         className="flex size-6 shrink-0 items-center justify-center rounded-md text-white"
       >
-        <app.icon weight="bold" className="size-3.5" />
+        {app.icon}
       </span>
     ),
   })),
   {
     value: "analytics",
     label: "Analytics",
-    icon: <ChartBarIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
     group: "Reports",
   },
   {
     value: "sales",
     label: "Sales and Trends",
-    icon: <TagIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="TagIcon"
+        tabler="IconTag"
+        hugeicons="Tag01Icon"
+        phosphor="TagIcon"
+        remixicon="RiPriceTag3Line"
+      />
+    ),
     group: "Reports",
   },
-  { value: "ratings", label: "Ratings", icon: <StarIcon />, group: "Reports" },
+  {
+    value: "ratings",
+    label: "Ratings",
+    icon: (
+      <IconPlaceholder
+        lucide="StarIcon"
+        tabler="IconStar"
+        hugeicons="StarIcon"
+        phosphor="StarIcon"
+        remixicon="RiStarLine"
+      />
+    ),
+    group: "Reports",
+  },
 ]
 
 const metrics = [

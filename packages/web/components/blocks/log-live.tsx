@@ -1,20 +1,8 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  ChatCircleIcon,
-  CloudIcon,
-  GearIcon,
-  HandbagIcon,
-  PauseIcon,
-  PlayIcon,
-  ShieldIcon,
-  TagIcon,
-  UsersIcon,
-  WarningIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -119,10 +107,58 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 const feed = [
@@ -136,27 +172,63 @@ const feed = [
     actor: "System",
     action: "finished a backup",
     detail: "12.4 GB · 3 min",
-    icon: CloudIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="CloudIcon"
+        tabler="IconCloud"
+        hugeicons="CloudIcon"
+        phosphor="CloudIcon"
+        remixicon="RiCloudLine"
+        className="size-4"
+      />
+    ),
   },
   {
     actor: "Morgan Lee",
     action: "updated a product",
     detail: "Phone Air · 240 in stock",
     hue: 30,
-    icon: TagIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="TagIcon"
+        tabler="IconTag"
+        hugeicons="Tag01Icon"
+        phosphor="TagIcon"
+        remixicon="RiPriceTag3Line"
+        className="size-4"
+      />
+    ),
   },
   {
     actor: "Riley Chen",
     action: "answered a ticket",
     detail: "#4821 Screen flickers",
     hue: 150,
-    icon: ChatCircleIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="MessageCircleIcon"
+        tabler="IconMessageCircle"
+        hugeicons="BubbleChatIcon"
+        phosphor="ChatCircleIcon"
+        remixicon="RiChat1Line"
+        className="size-4"
+      />
+    ),
   },
   {
     actor: "System",
     action: "raised a warning",
     detail: "API latency 820 ms",
-    icon: WarningIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="TriangleAlertIcon"
+        tabler="IconAlertTriangle"
+        hugeicons="Alert02Icon"
+        phosphor="WarningIcon"
+        remixicon="RiAlertLine"
+        className="size-4"
+      />
+    ),
     warning: true,
   },
   {
@@ -164,7 +236,16 @@ const feed = [
     action: "approved an order",
     detail: "W1052 · $399",
     hue: 100,
-    icon: HandbagIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="HandbagIcon"
+        tabler="IconShoppingBag"
+        hugeicons="ShoppingBag01Icon"
+        phosphor="HandbagIcon"
+        remixicon="RiHandbagLine"
+        className="size-4"
+      />
+    ),
   },
 ]
 
@@ -233,9 +314,23 @@ export function LogLive() {
               className="gap-1.5"
             >
               {running ? (
-                <PauseIcon weight="fill" className="size-3" />
+                <IconPlaceholder
+                  lucide="PauseIcon"
+                  tabler="IconPlayerPause"
+                  hugeicons="PauseIcon"
+                  phosphor="PauseIcon"
+                  remixicon="RiPauseLine"
+                  className="size-3 fill-current"
+                />
               ) : (
-                <PlayIcon weight="fill" className="size-3" />
+                <IconPlaceholder
+                  lucide="PlayIcon"
+                  tabler="IconPlayerPlay"
+                  hugeicons="PlayIcon"
+                  phosphor="PlayIcon"
+                  remixicon="RiPlayLine"
+                  className="size-3 fill-current"
+                />
               )}
               {running ? "Pause" : "Resume"}
             </Button>
@@ -293,9 +388,7 @@ export function LogLive() {
                     data-warning={event.warning ? "" : undefined}
                     className="flex size-7 shrink-0 items-center justify-center rounded-[7px] bg-zinc-500 text-white data-warning:bg-orange-500"
                   >
-                    {event.icon && (
-                      <event.icon weight="bold" className="size-4" />
-                    )}
+                    {event.icon}
                   </span>
                 )}
                 <span className="flex min-w-0 flex-1 flex-col">

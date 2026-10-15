@@ -177,18 +177,17 @@ describe("Toast basics", () => {
   })
 
   it.each([
-    ["success", "text-green-500"],
-    ["info", "text-primary"],
-    ["warning", "text-orange-500"],
-    ["error", "text-destructive"],
-  ])("shows a %s icon", async (type, tint) => {
+    ["success", "fill-green-500"],
+    ["info", "fill-primary"],
+    ["warning", "fill-orange-500"],
+    ["error", "fill-destructive"],
+  ])("shows a %s icon", async (type, fill) => {
     await renderToaster()
     manager.add({ type, title: type })
     await expect.element(card(type)).toBeVisible()
     const badge = icon(type)
     expect(badge?.getAttribute("aria-hidden")).toBe("true")
-    expect(badge?.className).toContain(tint)
-    expect(badge?.querySelector("svg")).not.toBeNull()
+    expect(badge?.querySelector("svg")?.getAttribute("class")).toContain(fill)
     expect(badge?.getBoundingClientRect().width).toBe(24)
   })
 
@@ -347,8 +346,13 @@ describe("Toast actions and updates", () => {
     await expect.element(card("Uploaded")).toBeVisible()
     expect(toasts()).toHaveLength(1)
     await expect
-      .poll(() => icon("Uploaded")?.querySelector("span")?.className ?? "")
-      .toContain("text-green-500")
+      .poll(
+        () =>
+          [...(icon("Uploaded")?.querySelectorAll("svg") ?? [])]
+            .at(-1)
+            ?.getAttribute("class") ?? ""
+      )
+      .toContain("fill-green-500")
   })
 
   it("follows a promise from loading to success", async () => {

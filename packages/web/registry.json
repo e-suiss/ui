@@ -9,7 +9,6 @@
       "title": "Accordion",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
         "class-variance-authority"
       ],
       "requires": [
@@ -17,7 +16,8 @@
       ],
       "files": [
         "components/ui/accordion.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "alert-dialog",
@@ -127,15 +127,15 @@
       "type": "ui",
       "title": "Breadcrumb",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "utils"
       ],
       "files": [
         "components/ui/breadcrumb.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "bubble",
@@ -188,7 +188,6 @@
       "type": "ui",
       "title": "Calendar",
       "dependencies": [
-        "@phosphor-icons/react",
         "react-day-picker"
       ],
       "requires": [
@@ -197,7 +196,8 @@
       ],
       "files": [
         "components/ui/calendar.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "card",
@@ -216,7 +216,6 @@
       "type": "ui",
       "title": "Carousel",
       "dependencies": [
-        "@phosphor-icons/react",
         "embla-carousel-react"
       ],
       "requires": [
@@ -226,7 +225,8 @@
       ],
       "files": [
         "components/ui/carousel.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "chart",
@@ -247,15 +247,15 @@
       "type": "ui",
       "title": "Checkbox",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "utils"
       ],
       "files": [
         "components/ui/checkbox.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "collapsible",
@@ -274,8 +274,7 @@
       "type": "ui",
       "title": "Combobox",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -284,14 +283,14 @@
       ],
       "files": [
         "components/ui/combobox.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "command",
       "type": "ui",
       "title": "Command",
       "dependencies": [
-        "@phosphor-icons/react",
         "cmdk"
       ],
       "requires": [
@@ -301,15 +300,15 @@
       ],
       "files": [
         "components/ui/command.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "context-menu",
       "type": "ui",
       "title": "Context Menu",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "use-platform",
@@ -317,15 +316,15 @@
       ],
       "files": [
         "components/ui/context-menu.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "dialog",
       "type": "ui",
       "title": "Dialog",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -334,7 +333,8 @@
       ],
       "files": [
         "components/ui/dialog.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "direction",
@@ -353,8 +353,7 @@
       "type": "ui",
       "title": "Drawer",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -363,15 +362,15 @@
       ],
       "files": [
         "components/ui/drawer.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "dropdown-menu",
       "type": "ui",
       "title": "Dropdown Menu",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "use-platform",
@@ -379,7 +378,8 @@
       ],
       "files": [
         "components/ui/dropdown-menu.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "empty",
@@ -462,7 +462,6 @@
       "type": "ui",
       "title": "Input Otp",
       "dependencies": [
-        "@phosphor-icons/react",
         "input-otp"
       ],
       "requires": [
@@ -470,7 +469,8 @@
       ],
       "files": [
         "components/ui/input-otp.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "input",
@@ -546,8 +546,7 @@
       "type": "ui",
       "title": "Menubar",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "dropdown-menu",
@@ -555,15 +554,15 @@
       ],
       "files": [
         "components/ui/menubar.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "message-scroller",
       "type": "ui",
       "title": "Message Scroller",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -573,7 +572,8 @@
       ],
       "files": [
         "components/ui/message-scroller.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "message",
@@ -591,15 +591,14 @@
       "name": "native-select",
       "type": "ui",
       "title": "Native Select",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "utils"
       ],
       "files": [
         "components/ui/native-select.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "navigation-menu",
@@ -607,7 +606,6 @@
       "title": "Navigation Menu",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
         "class-variance-authority"
       ],
       "requires": [
@@ -615,14 +613,14 @@
       ],
       "files": [
         "components/ui/navigation-menu.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "pagination",
       "type": "ui",
       "title": "Pagination",
       "dependencies": [
-        "@phosphor-icons/react",
         "class-variance-authority"
       ],
       "requires": [
@@ -631,7 +629,8 @@
       ],
       "files": [
         "components/ui/pagination.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "popover",
@@ -666,8 +665,7 @@
       "type": "ui",
       "title": "Questionnaire",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -676,7 +674,8 @@
       ],
       "files": [
         "components/ui/questionnaire.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "radio-group",
@@ -725,15 +724,15 @@
       "type": "ui",
       "title": "Select",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "utils"
       ],
       "files": [
         "components/ui/select.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "separator",
@@ -754,8 +753,7 @@
       "type": "ui",
       "title": "Sheet",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -764,7 +762,8 @@
       ],
       "files": [
         "components/ui/sheet.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "sidebar",
@@ -772,7 +771,6 @@
       "title": "Sidebar",
       "dependencies": [
         "@base-ui/react",
-        "@phosphor-icons/react",
         "class-variance-authority"
       ],
       "requires": [
@@ -789,7 +787,8 @@
       ],
       "files": [
         "components/ui/sidebar.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "skeleton",
@@ -848,8 +847,7 @@
       "type": "ui",
       "title": "Tab Bar",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -857,7 +855,8 @@
       ],
       "files": [
         "components/ui/tab-bar.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "table",
@@ -918,8 +917,7 @@
       "type": "ui",
       "title": "Toast",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "button",
@@ -927,7 +925,8 @@
       ],
       "files": [
         "components/ui/toast.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "toggle-group",
@@ -1003,8 +1002,7 @@
       "type": "pattern",
       "title": "Action Bar",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "alert-sheet",
@@ -1016,7 +1014,8 @@
       ],
       "files": [
         "components/patterns/action-bar.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "action-menu",
@@ -1098,9 +1097,7 @@
       "name": "date-picker",
       "type": "pattern",
       "title": "Date Picker",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "calendar",
         "drawer",
@@ -1111,7 +1108,8 @@
       ],
       "files": [
         "components/patterns/date-picker.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "flyout",
@@ -1223,9 +1221,7 @@
       "name": "search-picker",
       "type": "pattern",
       "title": "Search Picker",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "combobox",
         "command",
@@ -1235,7 +1231,8 @@
       ],
       "files": [
         "components/patterns/search-picker.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "segment-picker",
@@ -1256,8 +1253,7 @@
       "type": "pattern",
       "title": "Split View",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "resizable",
@@ -1266,7 +1262,8 @@
       ],
       "files": [
         "components/patterns/split-view.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "table-list",
@@ -1287,8 +1284,7 @@
       "type": "pattern",
       "title": "Trail",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "breadcrumb",
@@ -1297,7 +1293,8 @@
       ],
       "files": [
         "components/patterns/trail.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "island",
@@ -1315,9 +1312,7 @@
       "name": "otp-autofill",
       "type": "interaction",
       "title": "Otp Autofill",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "input-otp",
         "use-mobile",
@@ -1325,7 +1320,8 @@
       ],
       "files": [
         "components/interactions/otp-autofill.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "preview-menu",
@@ -1358,15 +1354,14 @@
       "name": "search-reveal",
       "type": "interaction",
       "title": "Search Reveal",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "utils"
       ],
       "files": [
         "components/interactions/search-reveal.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "section-index",
@@ -1384,31 +1379,30 @@
       "name": "selection-list",
       "type": "interaction",
       "title": "Selection List",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "utils"
       ],
       "files": [
         "components/interactions/selection-list.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "stepper",
       "type": "interaction",
       "title": "Stepper",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "utils"
       ],
       "files": [
         "components/interactions/stepper.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "swipe-actions",
@@ -1429,15 +1423,15 @@
       "type": "interaction",
       "title": "Tip",
       "dependencies": [
-        "@base-ui/react",
-        "@phosphor-icons/react"
+        "@base-ui/react"
       ],
       "requires": [
         "utils"
       ],
       "files": [
         "components/interactions/tip.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "undo-bar",
@@ -2418,7 +2412,6 @@
       "type": "chart",
       "title": "Tooltip Chart Icons",
       "dependencies": [
-        "@phosphor-icons/react",
         "recharts"
       ],
       "requires": [
@@ -2427,7 +2420,8 @@
       ],
       "files": [
         "components/charts/tooltip-chart-icons.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "tooltip-chart-interactive",
@@ -2510,9 +2504,7 @@
       "name": "bag-checkout",
       "type": "block",
       "title": "Bag Checkout",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "label",
@@ -2520,7 +2512,8 @@
       ],
       "files": [
         "components/blocks/bag-checkout.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "bag-configure",
@@ -2554,27 +2547,25 @@
       "name": "bento-closer-look",
       "type": "block",
       "title": "Bento Closer Look",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "accordion"
       ],
       "files": [
         "components/blocks/bento-closer-look.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "bento-features",
       "type": "block",
       "title": "Bento Features",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [],
       "files": [
         "components/blocks/bento-features.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "bento-stats",
@@ -2592,9 +2583,7 @@
       "name": "chat-conversations",
       "type": "block",
       "title": "Chat Conversations",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "bubble",
@@ -2606,15 +2595,14 @@
       ],
       "files": [
         "components/blocks/chat-conversations.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "chat-support",
       "type": "block",
       "title": "Chat Support",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "bubble",
         "button",
@@ -2624,15 +2612,14 @@
       ],
       "files": [
         "components/blocks/chat-support.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "chat-thread",
       "type": "block",
       "title": "Chat Thread",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "bubble",
@@ -2643,14 +2630,14 @@
       ],
       "files": [
         "components/blocks/chat-thread.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "dash-analytics",
       "type": "block",
       "title": "Dash Analytics",
       "dependencies": [
-        "@phosphor-icons/react",
         "recharts"
       ],
       "requires": [
@@ -2661,15 +2648,14 @@
       ],
       "files": [
         "components/blocks/dash-analytics.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "dash-health",
       "type": "block",
       "title": "Dash Health",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2677,14 +2663,14 @@
       ],
       "files": [
         "components/blocks/dash-health.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "dash-store",
       "type": "block",
       "title": "Dash Store",
       "dependencies": [
-        "@phosphor-icons/react",
         "recharts"
       ],
       "requires": [
@@ -2696,30 +2682,28 @@
       ],
       "files": [
         "components/blocks/dash-store.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "empty-bag",
       "type": "block",
       "title": "Empty Bag",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "empty"
       ],
       "files": [
         "components/blocks/empty-bag.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "empty-offline",
       "type": "block",
       "title": "Empty Offline",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "empty",
@@ -2727,22 +2711,22 @@
       ],
       "files": [
         "components/blocks/empty-offline.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "empty-search",
       "type": "block",
       "title": "Empty Search",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "empty"
       ],
       "files": [
         "components/blocks/empty-search.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "footer-compact",
@@ -2774,30 +2758,28 @@
       "name": "footer-services",
       "type": "block",
       "title": "Footer Services",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "input-group"
       ],
       "files": [
         "components/blocks/footer-services.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "grid-accessories",
       "type": "block",
       "title": "Grid Accessories",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "toggle-group"
       ],
       "files": [
         "components/blocks/grid-accessories.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "grid-carousel",
@@ -2866,9 +2848,7 @@
       "name": "inbox-categories",
       "type": "block",
       "title": "Inbox Categories",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2878,15 +2858,14 @@
       ],
       "files": [
         "components/blocks/inbox-categories.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "inbox-mail",
       "type": "block",
       "title": "Inbox Mail",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2896,15 +2875,14 @@
       ],
       "files": [
         "components/blocks/inbox-mail.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "inbox-support",
       "type": "block",
       "title": "Inbox Support",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2914,15 +2892,14 @@
       ],
       "files": [
         "components/blocks/inbox-support.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "log-activity",
       "type": "block",
       "title": "Log Activity",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "collapsible",
@@ -2931,15 +2908,14 @@
       ],
       "files": [
         "components/blocks/log-activity.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "log-live",
       "type": "block",
       "title": "Log Live",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2947,15 +2923,14 @@
       ],
       "files": [
         "components/blocks/log-live.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "log-security",
       "type": "block",
       "title": "Log Security",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "sidebar",
@@ -2963,15 +2938,14 @@
       ],
       "files": [
         "components/blocks/log-security.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "login-account",
       "type": "block",
       "title": "Login Account",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2982,15 +2956,14 @@
       ],
       "files": [
         "components/blocks/login-account.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "login-passkey",
       "type": "block",
       "title": "Login Passkey",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -2998,15 +2971,14 @@
       ],
       "files": [
         "components/blocks/login-passkey.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "login-sheet",
       "type": "block",
       "title": "Login Sheet",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "label",
@@ -3015,7 +2987,8 @@
       ],
       "files": [
         "components/blocks/login-sheet.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "nav-categories",
@@ -3034,16 +3007,15 @@
       "name": "nav-global",
       "type": "block",
       "title": "Nav Global",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "navbar"
       ],
       "files": [
         "components/blocks/nav-global.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "nav-local",
@@ -3062,9 +3034,7 @@
       "name": "price-bundle",
       "type": "block",
       "title": "Price Bundle",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "label",
@@ -3073,7 +3043,8 @@
       ],
       "files": [
         "components/blocks/price-bundle.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "price-care",
@@ -3095,9 +3066,7 @@
       "name": "price-storage",
       "type": "block",
       "title": "Price Storage",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "label",
@@ -3106,15 +3075,14 @@
       ],
       "files": [
         "components/blocks/price-storage.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "roles-editor",
       "type": "block",
       "title": "Roles Editor",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "item",
@@ -3124,15 +3092,14 @@
       ],
       "files": [
         "components/blocks/roles-editor.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "roles-matrix",
       "type": "block",
       "title": "Roles Matrix",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "checkbox",
@@ -3140,15 +3107,14 @@
       ],
       "files": [
         "components/blocks/roles-matrix.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "roles-requests",
       "type": "block",
       "title": "Roles Requests",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -3158,15 +3124,14 @@
       ],
       "files": [
         "components/blocks/roles-requests.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "settings-account",
       "type": "block",
       "title": "Settings Account",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -3176,15 +3141,14 @@
       ],
       "files": [
         "components/blocks/settings-account.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "settings-device",
       "type": "block",
       "title": "Settings Device",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "input-group",
@@ -3193,15 +3157,14 @@
       ],
       "files": [
         "components/blocks/settings-device.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "settings-notifications",
       "type": "block",
       "title": "Settings Notifications",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "item",
         "select",
@@ -3211,15 +3174,14 @@
       ],
       "files": [
         "components/blocks/settings-notifications.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "signup-form",
       "type": "block",
       "title": "Signup Form",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "input",
@@ -3227,30 +3189,28 @@
       ],
       "files": [
         "components/blocks/signup-form.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "signup-steps",
       "type": "block",
       "title": "Signup Steps",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "input"
       ],
       "files": [
         "components/blocks/signup-steps.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "signup-trial",
       "type": "block",
       "title": "Signup Trial",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "checkbox",
@@ -3259,15 +3219,14 @@
       ],
       "files": [
         "components/blocks/signup-trial.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "users-detail",
       "type": "block",
       "title": "Users Detail",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -3280,15 +3239,14 @@
       ],
       "files": [
         "components/blocks/users-detail.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "users-invite",
       "type": "block",
       "title": "Users Invite",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button",
         "item",
@@ -3299,15 +3257,14 @@
       ],
       "files": [
         "components/blocks/users-invite.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "users-table",
       "type": "block",
       "title": "Users Table",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "avatar",
         "button",
@@ -3319,50 +3276,48 @@
       ],
       "files": [
         "components/blocks/users-table.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "verify-code",
       "type": "block",
       "title": "Verify Code",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "input-otp"
       ],
       "files": [
         "components/blocks/verify-code.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "verify-device",
       "type": "block",
       "title": "Verify Device",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "input-otp",
         "spinner"
       ],
       "files": [
         "components/blocks/verify-device.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "verify-email",
       "type": "block",
       "title": "Verify Email",
-      "dependencies": [
-        "@phosphor-icons/react"
-      ],
+      "dependencies": [],
       "requires": [
         "button"
       ],
       "files": [
         "components/blocks/verify-email.tsx"
-      ]
+      ],
+      "icons": true
     },
     {
       "name": "use-message-scroller",

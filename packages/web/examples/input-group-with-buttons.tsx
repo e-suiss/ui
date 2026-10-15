@@ -1,4 +1,4 @@
-import { CheckIcon, CopyIcon, InfoIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputGroup,
   InputGroupAddon,
@@ -18,7 +18,13 @@ export default function InputGroupWithButtons() {
           />
           <InputGroupAddon align="inline-end">
             <InputGroupButton size="icon-xs" aria-label="Copy">
-              <CopyIcon />
+              <IconPlaceholder
+                lucide="CopyIcon"
+                tabler="IconCopy"
+                hugeicons="Copy01Icon"
+                phosphor="CopyIcon"
+                remixicon="RiFileCopyLine"
+              />
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
@@ -32,9 +38,22 @@ export default function InputGroupWithButtons() {
           <InputGroupInput placeholder="Username" defaultValue="janedoe" />
           <InputGroupAddon align="inline-end">
             <InputGroupButton size="icon-xs" aria-label="Info">
-              <InfoIcon />
+              <IconPlaceholder
+                lucide="InfoIcon"
+                tabler="IconInfoCircle"
+                hugeicons="InformationCircleIcon"
+                phosphor="InfoIcon"
+                remixicon="RiInformationLine"
+              />
             </InputGroupButton>
-            <CheckIcon className="text-green-600" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="text-green-600"
+            />
           </InputGroupAddon>
         </InputGroup>
       </div>

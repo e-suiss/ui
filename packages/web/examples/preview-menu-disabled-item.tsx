@@ -1,10 +1,5 @@
-import {
-  CopyIcon,
-  HeartIcon,
-  ShareNetworkIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   PreviewMenu,
   PreviewMenuContent,
@@ -54,18 +49,36 @@ function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
               <PreviewMenuContent>
                 <PreviewMenuItem onClick={() => setLog(`Copied ${label}`)}>
                   Copy
-                  <CopyIcon />
+                  <IconPlaceholder
+                    lucide="CopyIcon"
+                    tabler="IconCopy"
+                    hugeicons="Copy01Icon"
+                    phosphor="CopyIcon"
+                    remixicon="RiFileCopyLine"
+                  />
                 </PreviewMenuItem>
                 <PreviewMenuItem onClick={() => setLog(`Shared ${label}`)}>
                   Share
-                  <ShareNetworkIcon />
+                  <IconPlaceholder
+                    lucide="Share2Icon"
+                    tabler="IconShare"
+                    hugeicons="Share08Icon"
+                    phosphor="ShareNetworkIcon"
+                    remixicon="RiShareLine"
+                  />
                 </PreviewMenuItem>
                 <PreviewMenuItem
                   disabled={withDisabled}
                   onClick={() => setLog(`Favorited ${label}`)}
                 >
                   Favorite
-                  <HeartIcon />
+                  <IconPlaceholder
+                    lucide="HeartIcon"
+                    tabler="IconHeart"
+                    hugeicons="FavouriteIcon"
+                    phosphor="HeartIcon"
+                    remixicon="RiHeartLine"
+                  />
                 </PreviewMenuItem>
                 <PreviewMenuSeparator />
                 <PreviewMenuItem
@@ -73,7 +86,13 @@ function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
                   onClick={() => setLog(`Deleted ${label}`)}
                 >
                   Delete
-                  <TrashIcon />
+                  <IconPlaceholder
+                    lucide="TrashIcon"
+                    tabler="IconTrash"
+                    hugeicons="Delete02Icon"
+                    phosphor="TrashIcon"
+                    remixicon="RiDeleteBinLine"
+                  />
                 </PreviewMenuItem>
               </PreviewMenuContent>
             </PreviewMenu>

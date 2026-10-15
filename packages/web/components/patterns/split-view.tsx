@@ -2,8 +2,8 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -194,8 +194,12 @@ function SplitViewPane({
           onClick={() => setColumn(backColumn)}
           className="-ms-1.5 inline-flex min-h-11 items-center gap-0.5 self-start rounded-md pe-1.5 text-base text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          <CaretLeftIcon
-            weight="bold"
+          <IconPlaceholder
+            lucide="ChevronLeftIcon"
+            tabler="IconChevronLeft"
+            hugeicons="ArrowLeft01Icon"
+            phosphor="CaretLeftIcon"
+            remixicon="RiArrowLeftSLine"
             className="size-4.5 shrink-0 rtl:rotate-180"
             aria-hidden
           />
@@ -323,7 +327,12 @@ function SplitViewItem({
               {children}
             </span>
             {isMobile && kind !== "detail" && (
-              <CaretRightIcon
+              <IconPlaceholder
+                lucide="ChevronRightIcon"
+                tabler="IconChevronRight"
+                hugeicons="ArrowRight01Icon"
+                phosphor="CaretRightIcon"
+                remixicon="RiArrowRightSLine"
                 className="size-4 shrink-0 text-muted-foreground rtl:rotate-180"
                 aria-hidden
               />

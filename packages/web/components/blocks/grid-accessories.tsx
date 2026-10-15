@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, HandbagIcon, PlusIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -83,7 +83,14 @@ export function GridAccessories() {
           aria-label={`${bag.length} items in bag`}
           className="relative mt-2 flex"
         >
-          <HandbagIcon className="size-5.5" />
+          <IconPlaceholder
+            lucide="HandbagIcon"
+            tabler="IconShoppingBag"
+            hugeicons="ShoppingBag01Icon"
+            phosphor="HandbagIcon"
+            remixicon="RiHandbagLine"
+            className="size-5.5"
+          />
           {bag.length > 0 && (
             <span className="absolute -end-2 -bottom-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
               {bag.length}
@@ -146,9 +153,23 @@ export function GridAccessories() {
                   className="relative h-7.5 w-7.5 gap-1 overflow-hidden text-xs transition-[width,padding,background-color] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] after:absolute after:-inset-1.75 after:content-[''] data-in-bag:w-21 data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] data-in-bag:px-3 data-in-bag:hover:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_50%)] motion-reduce:transition-none dark:data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),black_45%)] dark:data-in-bag:hover:bg-[color-mix(in_oklab,var(--color-green-500),black_55%)]"
                 >
                   {inBag ? (
-                    <CheckIcon weight="bold" className="size-3.75" />
+                    <IconPlaceholder
+                      lucide="CheckIcon"
+                      tabler="IconCheck"
+                      hugeicons="Tick02Icon"
+                      phosphor="CheckIcon"
+                      remixicon="RiCheckLine"
+                      className="size-3.75"
+                    />
                   ) : (
-                    <PlusIcon weight="bold" className="size-3.75" />
+                    <IconPlaceholder
+                      lucide="PlusIcon"
+                      tabler="IconPlus"
+                      hugeicons="PlusSignIcon"
+                      phosphor="PlusIcon"
+                      remixicon="RiAddLine"
+                      className="size-3.75"
+                    />
                   )}
                   {inBag && <span aria-hidden>In bag</span>}
                 </Button>

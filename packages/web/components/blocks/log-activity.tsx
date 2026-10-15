@@ -1,18 +1,8 @@
 "use client"
 
-import {
-  CaretRightIcon,
-  ChartBarIcon,
-  GearIcon,
-  HandbagIcon,
-  NotePencilIcon,
-  ShieldIcon,
-  TagIcon,
-  UserIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -128,18 +118,126 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 const kinds = {
-  Price: { icon: TagIcon, tint: "bg-orange-500" },
-  Content: { icon: NotePencilIcon, tint: "bg-blue-500" },
-  Security: { icon: ShieldIcon, tint: "bg-red-500" },
-  Order: { icon: HandbagIcon, tint: "bg-green-500" },
-  User: { icon: UserIcon, tint: "bg-purple-500" },
+  Price: {
+    icon: (
+      <IconPlaceholder
+        lucide="TagIcon"
+        tabler="IconTag"
+        hugeicons="Tag01Icon"
+        phosphor="TagIcon"
+        remixicon="RiPriceTag3Line"
+        className="size-4"
+      />
+    ),
+    tint: "bg-orange-500",
+  },
+  Content: {
+    icon: (
+      <IconPlaceholder
+        lucide="SquarePenIcon"
+        tabler="IconEdit"
+        hugeicons="PencilEdit02Icon"
+        phosphor="NotePencilIcon"
+        remixicon="RiEditBoxLine"
+        className="size-4"
+      />
+    ),
+    tint: "bg-blue-500",
+  },
+  Security: {
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+        className="size-4"
+      />
+    ),
+    tint: "bg-red-500",
+  },
+  Order: {
+    icon: (
+      <IconPlaceholder
+        lucide="HandbagIcon"
+        tabler="IconShoppingBag"
+        hugeicons="ShoppingBag01Icon"
+        phosphor="HandbagIcon"
+        remixicon="RiHandbagLine"
+        className="size-4"
+      />
+    ),
+    tint: "bg-green-500",
+  },
+  User: {
+    icon: (
+      <IconPlaceholder
+        lucide="UserIcon"
+        tabler="IconUser"
+        hugeicons="UserIcon"
+        phosphor="UserIcon"
+        remixicon="RiUserLine"
+        className="size-4"
+      />
+    ),
+    tint: "bg-purple-500",
+  },
 }
 
 type Kind = keyof typeof kinds
@@ -212,7 +310,7 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
       <span
         className={`flex size-7 shrink-0 items-center justify-center rounded-[7px] text-white ${kind.tint}`}
       >
-        <kind.icon weight="bold" className="size-4" />
+        {kind.icon}
       </span>
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-sm">
@@ -241,8 +339,12 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
     <Collapsible>
       <CollapsibleTrigger className="group/event flex min-h-11 w-full items-center gap-3 py-2 ps-4 pe-4 text-start outline-none hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50 hover:text-accent-foreground">
         {body}
-        <CaretRightIcon
-          weight="bold"
+        <IconPlaceholder
+          lucide="ChevronRightIcon"
+          tabler="IconChevronRight"
+          hugeicons="ArrowRight01Icon"
+          phosphor="CaretRightIcon"
+          remixicon="RiArrowRightSLine"
           className="size-3 text-muted-foreground transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] rtl:rotate-180 group-data-panel-open/event:rotate-90"
         />
       </CollapsibleTrigger>

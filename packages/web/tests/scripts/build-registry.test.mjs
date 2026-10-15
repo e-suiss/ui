@@ -158,6 +158,22 @@ import { helper } from "./helper"
     ])
   })
 
+  it("marks items that use icon placeholders", () => {
+    const cwd = project({
+      "components/ui/dialog.tsx": `import { Dialog } from "@base-ui/react/dialog"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+`,
+      "components/ui/button.tsx": "export {}",
+    })
+    expect(build(cwd).code).toBe(0)
+    expect(item(cwd, "dialog")).toMatchObject({
+      dependencies: ["@base-ui/react"],
+      requires: [],
+      icons: true,
+    })
+    expect(item(cwd, "button")).not.toHaveProperty("icons")
+  })
+
   it("records the local items an item imports, but not itself", () => {
     const cwd = project({
       "components/ui/button.tsx": "export {}",

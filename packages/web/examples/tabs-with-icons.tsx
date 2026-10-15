@@ -1,23 +1,50 @@
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const tabs = [
   {
     value: "account",
     label: "Account",
-    icon: UserIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="UserIcon"
+        tabler="IconUser"
+        hugeicons="UserIcon"
+        phosphor="UserIcon"
+        remixicon="RiUserLine"
+        data-icon="inline-start"
+      />
+    ),
     content: "Update your name, email address, and profile photo.",
   },
   {
     value: "notifications",
     label: "Notifications",
-    icon: BellIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="BellIcon"
+        tabler="IconBell"
+        hugeicons="Notification03Icon"
+        phosphor="BellIcon"
+        remixicon="RiNotificationLine"
+        data-icon="inline-start"
+      />
+    ),
     content: "Choose which updates you receive by email and push.",
   },
   {
     value: "settings",
     label: "Settings",
-    icon: GearIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+        data-icon="inline-start"
+      />
+    ),
     content: "Manage language, time zone, and privacy preferences.",
   },
 ] as const
@@ -29,7 +56,7 @@ export default function TabsWithIcons() {
         <TabsList variant="default">
           {tabs.map((tab) => (
             <TabsTrigger key={tab.value} value={tab.value}>
-              <tab.icon data-icon="inline-start" />
+              {tab.icon}
               {tab.label}
             </TabsTrigger>
           ))}

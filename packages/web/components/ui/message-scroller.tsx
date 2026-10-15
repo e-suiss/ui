@@ -3,8 +3,8 @@
 import { mergeProps } from "@base-ui/react/merge-props"
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
 import { useRender } from "@base-ui/react/use-render"
-import { ArrowDownIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ScrollBar } from "@/components/ui/scroll-area"
 import {
@@ -257,7 +257,13 @@ function MessageScrollerButton({
         ),
         children: children ?? (
           <>
-            <ArrowDownIcon />
+            <IconPlaceholder
+              lucide="ArrowDownIcon"
+              tabler="IconArrowDown"
+              hugeicons="ArrowDown02Icon"
+              phosphor="ArrowDownIcon"
+              remixicon="RiArrowDownLine"
+            />
             <span className="sr-only">
               {direction === "end" ? "Scroll to end" : "Scroll to start"}
             </span>

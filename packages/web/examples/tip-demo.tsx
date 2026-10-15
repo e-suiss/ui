@@ -1,9 +1,5 @@
-import {
-  NotePencilIcon,
-  PushPinIcon,
-  ShareNetworkIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   resetTips,
   Tip,
@@ -43,7 +39,14 @@ function NotesPage() {
               aria-label="Share folder"
               onClick={() => setLog("Shared the folder")}
             >
-              <ShareNetworkIcon className="size-5.5" />
+              <IconPlaceholder
+                lucide="Share2Icon"
+                tabler="IconShare"
+                hugeicons="Share08Icon"
+                phosphor="ShareNetworkIcon"
+                remixicon="RiShareLine"
+                className="size-5.5"
+              />
             </Button>
             <Tip id="notes-compose" delay={600}>
               <TipAnchor>
@@ -53,12 +56,25 @@ function NotesPage() {
                   aria-label="New note"
                   onClick={() => setLog("Started a new note")}
                 >
-                  <NotePencilIcon className="size-5.5" />
+                  <IconPlaceholder
+                    lucide="SquarePenIcon"
+                    tabler="IconEdit"
+                    hugeicons="PencilEdit02Icon"
+                    phosphor="NotePencilIcon"
+                    remixicon="RiEditBoxLine"
+                    className="size-5.5"
+                  />
                 </Button>
               </TipAnchor>
               <TipPopover side="bottom" align="end">
                 <TipIcon>
-                  <NotePencilIcon weight="duotone" />
+                  <IconPlaceholder
+                    lucide="SquarePenIcon"
+                    tabler="IconEdit"
+                    hugeicons="PencilEdit02Icon"
+                    phosphor="NotePencilIcon"
+                    remixicon="RiEditBoxLine"
+                  />
                 </TipIcon>
                 <TipContent>
                   <TipTitle>Start a note fast</TipTitle>
@@ -74,7 +90,13 @@ function NotesPage() {
         <Tip id="notes-pin">
           <TipCard>
             <TipIcon>
-              <PushPinIcon weight="duotone" />
+              <IconPlaceholder
+                lucide="PinIcon"
+                tabler="IconPin"
+                hugeicons="PinIcon"
+                phosphor="PushPinIcon"
+                remixicon="RiPushpinLine"
+              />
             </TipIcon>
             <TipContent>
               <TipTitle>Pin your favorites</TipTitle>

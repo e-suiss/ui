@@ -2,8 +2,8 @@
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { useRender } from "@base-ui/react/use-render"
-import { ArrowBendUpLeftIcon, CaretLeftIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -142,8 +142,12 @@ function Trail({
         "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-primary outline-none select-none [-webkit-touch-callout:none] focus-visible:ring-3 focus-visible:ring-ring/50",
       children: (
         <>
-          <CaretLeftIcon
-            weight="bold"
+          <IconPlaceholder
+            lucide="ChevronLeftIcon"
+            tabler="IconChevronLeft"
+            hugeicons="ArrowLeft01Icon"
+            phosphor="CaretLeftIcon"
+            remixicon="RiArrowLeftSLine"
             className="size-4.5 shrink-0 rtl:rotate-180"
             aria-hidden
           />
@@ -193,7 +197,14 @@ function Trail({
                       className="flex min-h-11 items-center justify-between gap-6 px-4 py-2.75 text-base outline-none select-none not-first:border-t not-first:border-border data-highlighted:bg-accent [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 data-highlighted:text-accent-foreground"
                     >
                       <span className="truncate">{item.label}</span>
-                      <ArrowBendUpLeftIcon className="rtl:-scale-x-100" />
+                      <IconPlaceholder
+                        lucide="ReplyIcon"
+                        tabler="IconArrowBackUp"
+                        hugeicons="ArrowTurnBackwardIcon"
+                        phosphor="ArrowBendUpLeftIcon"
+                        remixicon="RiReplyLine"
+                        className="rtl:-scale-x-100"
+                      />
                     </MenuPrimitive.LinkItem>
                   ))}
                 </MenuPrimitive.Popup>

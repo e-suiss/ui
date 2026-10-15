@@ -1,10 +1,4 @@
-import {
-  CaretDownIcon,
-  CopyIcon,
-  ShareIcon,
-  UserCircleMinusIcon,
-  WarningCircleIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import {
@@ -26,27 +20,57 @@ export default function ButtonGroupWithDropdownMenu() {
             <Button variant="outline" size="icon" aria-label="More options" />
           }
         >
-          <CaretDownIcon />
+          <IconPlaceholder
+            lucide="ChevronDownIcon"
+            tabler="IconChevronDown"
+            hugeicons="ArrowDown01Icon"
+            phosphor="CaretDownIcon"
+            remixicon="RiArrowDownSLine"
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <WarningCircleIcon />
+              <IconPlaceholder
+                lucide="CircleAlertIcon"
+                tabler="IconAlertCircle"
+                hugeicons="AlertCircleIcon"
+                phosphor="WarningCircleIcon"
+                remixicon="RiErrorWarningLine"
+              />
               Mute conversation
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <CopyIcon />
+              <IconPlaceholder
+                lucide="CopyIcon"
+                tabler="IconCopy"
+                hugeicons="Copy01Icon"
+                phosphor="CopyIcon"
+                remixicon="RiFileCopyLine"
+              />
               Copy link
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <ShareIcon />
+              <IconPlaceholder
+                lucide="ShareIcon"
+                tabler="IconShare2"
+                hugeicons="Share01Icon"
+                phosphor="ShareIcon"
+                remixicon="RiShareForwardBoxLine"
+              />
               Share conversation
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem variant="destructive">
-              <UserCircleMinusIcon />
+              <IconPlaceholder
+                lucide="UserRoundMinusIcon"
+                tabler="IconUserMinus"
+                hugeicons="UserMinus01Icon"
+                phosphor="UserCircleMinusIcon"
+                remixicon="RiUserMinusLine"
+              />
               Unfollow
             </DropdownMenuItem>
           </DropdownMenuGroup>

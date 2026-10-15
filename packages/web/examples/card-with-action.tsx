@@ -1,4 +1,4 @@
-import { DotsThreeIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -18,7 +18,13 @@ export default function CardWithAction() {
           <CardDescription>Updated five minutes ago</CardDescription>
           <CardAction>
             <Button variant="ghost" size="icon-sm" aria-label="More options">
-              <DotsThreeIcon />
+              <IconPlaceholder
+                lucide="EllipsisIcon"
+                tabler="IconDots"
+                hugeicons="MoreHorizontalIcon"
+                phosphor="DotsThreeIcon"
+                remixicon="RiMoreLine"
+              />
             </Button>
           </CardAction>
         </CardHeader>

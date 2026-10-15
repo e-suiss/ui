@@ -1,16 +1,4 @@
-import {
-  CalendarBlankIcon,
-  CaretUpDownIcon,
-  ChartBarIcon,
-  DotsThreeIcon,
-  FolderIcon,
-  GearIcon,
-  HouseIcon,
-  LifebuoyIcon,
-  PlusIcon,
-  TrayIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Separator } from "@/components/ui/separator"
 import {
   Sidebar,
@@ -38,18 +26,97 @@ import {
 } from "@/components/ui/sidebar"
 
 const mainNav = [
-  { title: "Home", icon: HouseIcon, active: true },
-  { title: "Inbox", icon: TrayIcon, badge: "12" },
-  { title: "Calendar", icon: CalendarBlankIcon },
-  { title: "Reports", icon: ChartBarIcon },
+  {
+    title: "Home",
+    icon: (
+      <IconPlaceholder
+        lucide="HouseIcon"
+        tabler="IconHome"
+        hugeicons="Home01Icon"
+        phosphor="HouseIcon"
+        remixicon="RiHomeLine"
+      />
+    ),
+    active: true,
+  },
+  {
+    title: "Inbox",
+    icon: (
+      <IconPlaceholder
+        lucide="InboxIcon"
+        tabler="IconInbox"
+        hugeicons="InboxIcon"
+        phosphor="TrayIcon"
+        remixicon="RiInboxLine"
+      />
+    ),
+    badge: "12",
+  },
+  {
+    title: "Calendar",
+    icon: (
+      <IconPlaceholder
+        lucide="CalendarIcon"
+        tabler="IconCalendar"
+        hugeicons="Calendar01Icon"
+        phosphor="CalendarBlankIcon"
+        remixicon="RiCalendarLine"
+      />
+    ),
+  },
+  {
+    title: "Reports",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
 ]
 
 const projects = ["Website redesign", "Mobile app", "Q3 planning"]
 
 const workspaceNav = [
-  { title: "Team", icon: UsersIcon },
-  { title: "Settings", icon: GearIcon },
-  { title: "Support", icon: LifebuoyIcon },
+  {
+    title: "Team",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    title: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
+  {
+    title: "Support",
+    icon: (
+      <IconPlaceholder
+        lucide="LifeBuoyIcon"
+        tabler="IconLifebuoy"
+        hugeicons="LifebuoyIcon"
+        phosphor="LifebuoyIcon"
+        remixicon="RiLifebuoyLine"
+      />
+    ),
+  },
 ]
 
 type SidebarArgs = React.ComponentProps<typeof Sidebar>
@@ -70,7 +137,14 @@ function AppSidebar(props: SidebarArgs) {
                   Pro plan
                 </span>
               </div>
-              <CaretUpDownIcon className="ms-auto" />
+              <IconPlaceholder
+                lucide="ChevronsUpDownIcon"
+                tabler="IconSelector"
+                hugeicons="UnfoldMoreIcon"
+                phosphor="CaretUpDownIcon"
+                remixicon="RiExpandUpDownLine"
+                className="ms-auto"
+              />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -88,7 +162,7 @@ function AppSidebar(props: SidebarArgs) {
                     tooltip={item.title}
                     render={<a href={`#${item.title.toLowerCase()}`} />}
                   >
-                    <item.icon />
+                    {item.icon}
                     <span>{item.title}</span>
                   </SidebarMenuButton>
                   {item.badge && (
@@ -98,11 +172,23 @@ function AppSidebar(props: SidebarArgs) {
               ))}
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Projects">
-                  <FolderIcon />
+                  <IconPlaceholder
+                    lucide="FolderIcon"
+                    tabler="IconFolder"
+                    hugeicons="Folder01Icon"
+                    phosphor="FolderIcon"
+                    remixicon="RiFolderLine"
+                  />
                   <span>Projects</span>
                 </SidebarMenuButton>
                 <SidebarMenuAction showOnHover aria-label="More options">
-                  <DotsThreeIcon />
+                  <IconPlaceholder
+                    lucide="EllipsisIcon"
+                    tabler="IconDots"
+                    hugeicons="MoreHorizontalIcon"
+                    phosphor="DotsThreeIcon"
+                    remixicon="RiMoreLine"
+                  />
                 </SidebarMenuAction>
                 <SidebarMenuSub>
                   {projects.map((project, index) => (
@@ -121,7 +207,13 @@ function AppSidebar(props: SidebarArgs) {
         <SidebarGroup>
           <SidebarGroupLabel>Workspace</SidebarGroupLabel>
           <SidebarGroupAction aria-label="Add member">
-            <PlusIcon />
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+            />
           </SidebarGroupAction>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -131,7 +223,7 @@ function AppSidebar(props: SidebarArgs) {
                     tooltip={item.title}
                     render={<a href={`#${item.title.toLowerCase()}`} />}
                   >
-                    <item.icon />
+                    {item.icon}
                     <span>{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -153,7 +245,14 @@ function AppSidebar(props: SidebarArgs) {
                   jordan@acme.com
                 </span>
               </div>
-              <CaretUpDownIcon className="ms-auto" />
+              <IconPlaceholder
+                lucide="ChevronsUpDownIcon"
+                tabler="IconSelector"
+                hugeicons="UnfoldMoreIcon"
+                phosphor="CaretUpDownIcon"
+                remixicon="RiExpandUpDownLine"
+                className="ms-auto"
+              />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -1,17 +1,8 @@
 "use client"
 
-import {
-  ArchiveIcon,
-  ArrowBendUpLeftIcon,
-  BellIcon,
-  CreditCardIcon,
-  StarIcon,
-  TagIcon,
-  TrashIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SplitView,
   SplitViewDetail,
@@ -106,25 +97,64 @@ const initialMail: Mail[] = [
   },
 ]
 
-const categories: { value: Category; icon: React.ElementType; tint: string }[] =
-  [
-    { value: "Primary", icon: UsersIcon, tint: "aria-pressed:bg-primary" },
-    {
-      value: "Transactions",
-      icon: CreditCardIcon,
-      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-green-500),black_40%)]",
-    },
-    {
-      value: "Updates",
-      icon: BellIcon,
-      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-purple-500),black_30%)]",
-    },
-    {
-      value: "Promotions",
-      icon: TagIcon,
-      tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-pink-500),var(--foreground)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-pink-500),black_25%)]",
-    },
-  ]
+const categories: { value: Category; icon: React.ReactNode; tint: string }[] = [
+  {
+    value: "Primary",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+        className="size-4"
+      />
+    ),
+    tint: "aria-pressed:bg-primary",
+  },
+  {
+    value: "Transactions",
+    icon: (
+      <IconPlaceholder
+        lucide="CreditCardIcon"
+        tabler="IconCreditCard"
+        hugeicons="CreditCardIcon"
+        phosphor="CreditCardIcon"
+        remixicon="RiBankCardLine"
+        className="size-4"
+      />
+    ),
+    tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-green-500),black_40%)]",
+  },
+  {
+    value: "Updates",
+    icon: (
+      <IconPlaceholder
+        lucide="BellIcon"
+        tabler="IconBell"
+        hugeicons="Notification03Icon"
+        phosphor="BellIcon"
+        remixicon="RiNotificationLine"
+        className="size-4"
+      />
+    ),
+    tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-purple-500),black_30%)]",
+  },
+  {
+    value: "Promotions",
+    icon: (
+      <IconPlaceholder
+        lucide="TagIcon"
+        tabler="IconTag"
+        hugeicons="Tag01Icon"
+        phosphor="TagIcon"
+        remixicon="RiPriceTag3Line"
+        className="size-4"
+      />
+    ),
+    tint: "aria-pressed:bg-[color-mix(in_oklab,var(--color-pink-500),var(--foreground)_20%)] dark:aria-pressed:bg-[color-mix(in_oklab,var(--color-pink-500),black_25%)]",
+  },
+]
 
 function SenderAvatar({ mail, className }: { mail: Mail; className?: string }) {
   return (
@@ -165,17 +195,61 @@ function Reader({
   const actions = [
     {
       label: "Reply",
-      icon: ArrowBendUpLeftIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="ReplyIcon"
+          tabler="IconArrowBackUp"
+          hugeicons="ArrowTurnBackwardIcon"
+          phosphor="ArrowBendUpLeftIcon"
+          remixicon="RiReplyLine"
+          className="size-4.5"
+        />
+      ),
       onClick: () => setReplying(true),
     },
     {
       label: mail.starred ? "Unstar" : "Star",
-      icon: StarIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="StarIcon"
+          tabler="IconStar"
+          hugeicons="StarIcon"
+          phosphor="StarIcon"
+          remixicon="RiStarLine"
+          className="size-4.5"
+        />
+      ),
       onClick: onStar,
       active: mail.starred,
     },
-    { label: "Archive", icon: ArchiveIcon, onClick: onRemove },
-    { label: "Delete", icon: TrashIcon, onClick: onRemove },
+    {
+      label: "Archive",
+      icon: (
+        <IconPlaceholder
+          lucide="ArchiveIcon"
+          tabler="IconArchive"
+          hugeicons="Archive02Icon"
+          phosphor="ArchiveIcon"
+          remixicon="RiArchiveLine"
+          className="size-4.5"
+        />
+      ),
+      onClick: onRemove,
+    },
+    {
+      label: "Delete",
+      icon: (
+        <IconPlaceholder
+          lucide="TrashIcon"
+          tabler="IconTrash"
+          hugeicons="Delete02Icon"
+          phosphor="TrashIcon"
+          remixicon="RiDeleteBinLine"
+          className="size-4.5"
+        />
+      ),
+      onClick: onRemove,
+    },
   ]
 
   return (
@@ -190,12 +264,9 @@ function Reader({
             aria-pressed={action.active}
             onClick={action.onClick}
             data-active={action.active ? "" : undefined}
-            className="text-muted-foreground data-active:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-active:text-orange-500"
+            className="text-muted-foreground data-active:[&_svg]:fill-current data-active:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-active:text-orange-500"
           >
-            <action.icon
-              weight={action.active ? "fill" : "regular"}
-              className="size-4.5"
-            />
+            {action.icon}
           </Button>
         ))}
       </div>
@@ -302,7 +373,7 @@ export function InboxCategories() {
                 aria-label={item.value}
                 className={`relative h-8.5 gap-1.5 bg-secondary px-2.75 font-semibold text-muted-foreground transition-[padding,background-color,color] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] hover:bg-secondary/80 aria-pressed:px-3.5 aria-pressed:text-white aria-pressed:hover:text-white ${item.tint}`}
               >
-                <item.icon weight="bold" className="size-4" />
+                {item.icon}
                 {pressed && <span aria-hidden>{item.value}</span>}
                 {!pressed && unread && (
                   <span className="absolute end-0.5 top-0.5 size-2 rounded-full bg-primary ring-2 ring-background">
@@ -336,10 +407,14 @@ export function InboxCategories() {
                     {item.from}
                   </span>
                   {item.starred && (
-                    <StarIcon
-                      weight="fill"
+                    <IconPlaceholder
+                      lucide="StarIcon"
+                      tabler="IconStar"
+                      hugeicons="StarIcon"
+                      phosphor="StarIcon"
+                      remixicon="RiStarLine"
                       aria-label="Starred"
-                      className="size-3 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] md:group-data-active/mail:text-primary-foreground dark:text-orange-500"
+                      className="size-3 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] md:group-data-active/mail:text-primary-foreground dark:text-orange-500 fill-current"
                     />
                   )}
                   <span className="text-xs text-muted-foreground md:group-data-active/mail:text-primary-foreground">

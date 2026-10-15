@@ -1,4 +1,4 @@
-import { FolderSimpleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Empty,
   EmptyDescription,
@@ -13,7 +13,14 @@ export default function EmptyDefaultMedia() {
       <Empty>
         <EmptyHeader>
           <EmptyMedia>
-            <FolderSimpleIcon className="text-muted-foreground size-12" />
+            <IconPlaceholder
+              lucide="FolderIcon"
+              tabler="IconFolder"
+              hugeicons="Folder01Icon"
+              phosphor="FolderSimpleIcon"
+              remixicon="RiFolderLine"
+              className="text-muted-foreground size-12"
+            />
           </EmptyMedia>
           <EmptyTitle>This folder is empty</EmptyTitle>
           <EmptyDescription>Drag files here to add them.</EmptyDescription>

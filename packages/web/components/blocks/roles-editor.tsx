@@ -1,14 +1,8 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  GearIcon,
-  PlusIcon,
-  ShieldIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SplitView,
   SplitViewDetail,
@@ -128,10 +122,58 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 const groups = [
@@ -217,7 +259,14 @@ export function RolesEditor() {
               variant="secondary"
               className="mt-2.5 gap-1 self-start"
             >
-              <PlusIcon weight="bold" className="size-3.25" />
+              <IconPlaceholder
+                lucide="PlusIcon"
+                tabler="IconPlus"
+                hugeicons="PlusSignIcon"
+                phosphor="PlusIcon"
+                remixicon="RiAddLine"
+                className="size-3.25"
+              />
               New Role
             </Button>
           </SplitViewList>

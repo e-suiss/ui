@@ -1,9 +1,4 @@
-import {
-  ArrowClockwiseIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -30,17 +25,35 @@ export default function ContextMenuDemo() {
       <ContextMenuContent>
         <ContextMenuGroup>
           <ContextMenuItem>
-            <ArrowLeftIcon />
+            <IconPlaceholder
+              lucide="ArrowLeftIcon"
+              tabler="IconArrowLeft"
+              hugeicons="ArrowLeft02Icon"
+              phosphor="ArrowLeftIcon"
+              remixicon="RiArrowLeftLine"
+            />
             Back
             <ContextMenuShortcut mod>[</ContextMenuShortcut>
           </ContextMenuItem>
           <ContextMenuItem disabled>
-            <ArrowRightIcon />
+            <IconPlaceholder
+              lucide="ArrowRightIcon"
+              tabler="IconArrowRight"
+              hugeicons="ArrowRight02Icon"
+              phosphor="ArrowRightIcon"
+              remixicon="RiArrowRightLine"
+            />
             Forward
             <ContextMenuShortcut mod>]</ContextMenuShortcut>
           </ContextMenuItem>
           <ContextMenuItem>
-            <ArrowClockwiseIcon />
+            <IconPlaceholder
+              lucide="RotateCwIcon"
+              tabler="IconRotateClockwise"
+              hugeicons="Rotate01Icon"
+              phosphor="ArrowClockwiseIcon"
+              remixicon="RiResetRightLine"
+            />
             Reload
             <ContextMenuShortcut mod>R</ContextMenuShortcut>
           </ContextMenuItem>
@@ -69,7 +82,13 @@ export default function ContextMenuDemo() {
         </ContextMenuRadioGroup>
         <ContextMenuSeparator />
         <ContextMenuItem variant="destructive">
-          <TrashIcon />
+          <IconPlaceholder
+            lucide="TrashIcon"
+            tabler="IconTrash"
+            hugeicons="Delete02Icon"
+            phosphor="TrashIcon"
+            remixicon="RiDeleteBinLine"
+          />
           Delete
           <ContextMenuShortcut mod>⌫</ContextMenuShortcut>
         </ContextMenuItem>

@@ -1,34 +1,97 @@
 "use client"
 
-import {
-  CloudIcon,
-  FlameIcon,
-  GameControllerIcon,
-  MusicNoteIcon,
-  NewspaperIcon,
-  TelevisionIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { cn } from "@/lib/utils"
 
 const services = [
-  { name: "suiss Music", icon: MusicNoteIcon, tint: "bg-red-500 text-white" },
+  {
+    name: "suiss Music",
+    icon: (
+      <IconPlaceholder
+        lucide="MusicIcon"
+        tabler="IconMusic"
+        hugeicons="MusicNote01Icon"
+        phosphor="MusicNoteIcon"
+        remixicon="RiMusic2Line"
+        className="fill-current size-3.25"
+      />
+    ),
+    tint: "bg-red-500 text-white",
+  },
   {
     name: "suiss TV",
-    icon: TelevisionIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="TvIcon"
+        tabler="IconDeviceTv"
+        hugeicons="Tv01Icon"
+        phosphor="TelevisionIcon"
+        remixicon="RiTvLine"
+        className="size-3.25"
+      />
+    ),
     tint: "bg-foreground text-background",
   },
   {
     name: "suiss Arcade",
-    icon: GameControllerIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="Gamepad2Icon"
+        tabler="IconDeviceGamepad2"
+        hugeicons="GameController03Icon"
+        phosphor="GameControllerIcon"
+        remixicon="RiGamepadLine"
+        className="size-3.25"
+      />
+    ),
     tint: "bg-red-500 text-white",
   },
-  { name: "suiss Cloud+", icon: CloudIcon, tint: "bg-blue-500 text-white" },
-  { name: "Fitness+", icon: FlameIcon, tint: "bg-green-500 text-white" },
-  { name: "News+", icon: NewspaperIcon, tint: "bg-pink-500 text-white" },
+  {
+    name: "suiss Cloud+",
+    icon: (
+      <IconPlaceholder
+        lucide="CloudIcon"
+        tabler="IconCloud"
+        hugeicons="CloudIcon"
+        phosphor="CloudIcon"
+        remixicon="RiCloudLine"
+        className="fill-current size-3.25"
+      />
+    ),
+    tint: "bg-blue-500 text-white",
+  },
+  {
+    name: "Fitness+",
+    icon: (
+      <IconPlaceholder
+        lucide="FlameIcon"
+        tabler="IconFlame"
+        hugeicons="FireIcon"
+        phosphor="FlameIcon"
+        remixicon="RiFireLine"
+        className="fill-current size-3.25"
+      />
+    ),
+    tint: "bg-green-500 text-white",
+  },
+  {
+    name: "News+",
+    icon: (
+      <IconPlaceholder
+        lucide="NewspaperIcon"
+        tabler="IconNews"
+        hugeicons="NewsIcon"
+        phosphor="NewspaperIcon"
+        remixicon="RiNewspaperLine"
+        className="size-3.25"
+      />
+    ),
+    tint: "bg-pink-500 text-white",
+  },
 ]
 
 const plans = [
@@ -115,7 +178,7 @@ export function PriceBundle() {
                         included && service.tint
                       )}
                     >
-                      <service.icon weight="fill" className="size-3.25" />
+                      {service.icon}
                     </span>
                     {service.name}
                     {index === 3 && ` ${item.storage}`}

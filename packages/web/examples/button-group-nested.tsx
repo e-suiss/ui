@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 
@@ -24,10 +24,22 @@ export default function ButtonGroupNested() {
       </ButtonGroup>
       <ButtonGroup>
         <Button variant="outline" size="icon-sm" aria-label="Previous">
-          <ArrowLeftIcon />
+          <IconPlaceholder
+            lucide="ArrowLeftIcon"
+            tabler="IconArrowLeft"
+            hugeicons="ArrowLeft02Icon"
+            phosphor="ArrowLeftIcon"
+            remixicon="RiArrowLeftLine"
+          />
         </Button>
         <Button variant="outline" size="icon-sm" aria-label="Next">
-          <ArrowRightIcon />
+          <IconPlaceholder
+            lucide="ArrowRightIcon"
+            tabler="IconArrowRight"
+            hugeicons="ArrowRight02Icon"
+            phosphor="ArrowRightIcon"
+            remixicon="RiArrowRightLine"
+          />
         </Button>
       </ButtonGroup>
     </ButtonGroup>

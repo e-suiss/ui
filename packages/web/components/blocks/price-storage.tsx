@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, CloudIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -48,7 +48,14 @@ export function PriceStorage() {
   return (
     <section className="flex flex-col items-center gap-6 px-5 py-9 md:px-9">
       <div className="flex flex-col items-center gap-2 text-center">
-        <CloudIcon className="size-10 text-blue-500" />
+        <IconPlaceholder
+          lucide="CloudIcon"
+          tabler="IconCloud"
+          hugeicons="CloudIcon"
+          phosphor="CloudIcon"
+          remixicon="RiCloudLine"
+          className="size-10 text-blue-500"
+        />
         <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-5xl">
           More space with suiss Cloud+.
         </h1>
@@ -110,8 +117,12 @@ export function PriceStorage() {
                   key={feature}
                   className="flex items-start gap-1.5 text-sm leading-snug"
                 >
-                  <CheckIcon
-                    weight="bold"
+                  <IconPlaceholder
+                    lucide="CheckIcon"
+                    tabler="IconCheck"
+                    hugeicons="Tick02Icon"
+                    phosphor="CheckIcon"
+                    remixicon="RiCheckLine"
                     className="mt-0.5 size-3.25 shrink-0 text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_30%)] dark:text-green-500"
                   />
                   {feature}

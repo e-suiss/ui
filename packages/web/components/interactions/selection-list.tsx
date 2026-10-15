@@ -1,7 +1,7 @@
 "use client"
 
-import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -192,8 +192,12 @@ function SelectionListItem({
             data-slot="selection-list-indicator"
             className="ms-4 flex size-5.5 shrink-0 scale-50 items-center justify-center rounded-full border-[1.5px] border-muted-foreground transition-[scale,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-editing/selection-list:scale-100 in-data-checked:border-primary in-data-checked:bg-primary motion-reduce:transition-none"
           >
-            <CheckIcon
-              weight="bold"
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
               className="size-3.5 scale-0 text-primary-foreground transition-transform duration-200 in-data-checked:scale-100"
             />
           </span>

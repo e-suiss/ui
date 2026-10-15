@@ -1,4 +1,4 @@
-import { FilePdfIcon, XIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Attachment,
   AttachmentAction,
@@ -21,13 +21,25 @@ export default function AttachmentVertical() {
         </AttachmentMedia>
         <AttachmentActions>
           <AttachmentAction variant="secondary" aria-label="Remove">
-            <XIcon />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>
       <Attachment orientation="vertical" state="done">
         <AttachmentMedia>
-          <FilePdfIcon />
+          <IconPlaceholder
+            lucide="FileTextIcon"
+            tabler="IconFileTypePdf"
+            hugeicons="Pdf01Icon"
+            phosphor="FilePdfIcon"
+            remixicon="RiFilePdf2Line"
+          />
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Contract.pdf</AttachmentTitle>

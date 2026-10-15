@@ -1,4 +1,4 @@
-import { UserIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 export default function AvatarPlaceholder() {
@@ -7,7 +7,14 @@ export default function AvatarPlaceholder() {
       {(["sm", "default", "lg", "xl"] as const).map((size) => (
         <Avatar key={size} size={size}>
           <AvatarFallback>
-            <UserIcon weight="fill" />
+            <IconPlaceholder
+              lucide="UserIcon"
+              tabler="IconUser"
+              hugeicons="UserIcon"
+              phosphor="UserIcon"
+              remixicon="RiUserLine"
+              className="fill-current"
+            />
           </AvatarFallback>
         </Avatar>
       ))}

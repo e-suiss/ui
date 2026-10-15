@@ -1,4 +1,4 @@
-import { DownloadSimpleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Attachment,
   AttachmentAction,
@@ -24,7 +24,13 @@ export default function AttachmentClickable() {
       </AttachmentContent>
       <AttachmentActions>
         <AttachmentAction aria-label="Download">
-          <DownloadSimpleIcon />
+          <IconPlaceholder
+            lucide="DownloadIcon"
+            tabler="IconDownload"
+            hugeicons="Download01Icon"
+            phosphor="DownloadSimpleIcon"
+            remixicon="RiDownloadLine"
+          />
         </AttachmentAction>
       </AttachmentActions>
     </Attachment>

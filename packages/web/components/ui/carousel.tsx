@@ -1,15 +1,10 @@
 "use client"
 
-import {
-  CaretLeftIcon,
-  CaretRightIcon,
-  PauseIcon,
-  PlayIcon,
-} from "@phosphor-icons/react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
 import { cn } from "@/lib/utils"
@@ -338,7 +333,14 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <CaretLeftIcon className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="ChevronLeftIcon"
+        tabler="IconChevronLeft"
+        hugeicons="ArrowLeft01Icon"
+        phosphor="CaretLeftIcon"
+        remixicon="RiArrowLeftSLine"
+        className="rtl:rotate-180"
+      />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -368,7 +370,14 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <CaretRightIcon className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="ChevronRightIcon"
+        tabler="IconChevronRight"
+        hugeicons="ArrowRight01Icon"
+        phosphor="CaretRightIcon"
+        remixicon="RiArrowRightSLine"
+        className="rtl:rotate-180"
+      />
       <span className="sr-only">Next slide</span>
     </Button>
   )
@@ -491,9 +500,23 @@ function CarouselPlayButton({
       {...props}
     >
       {autoplay.playing ? (
-        <PauseIcon weight="fill" />
+        <IconPlaceholder
+          lucide="PauseIcon"
+          tabler="IconPlayerPause"
+          hugeicons="PauseIcon"
+          phosphor="PauseIcon"
+          remixicon="RiPauseLine"
+          className="fill-current"
+        />
       ) : (
-        <PlayIcon weight="fill" />
+        <IconPlaceholder
+          lucide="PlayIcon"
+          tabler="IconPlayerPlay"
+          hugeicons="PlayIcon"
+          phosphor="PlayIcon"
+          remixicon="RiPlayLine"
+          className="fill-current"
+        />
       )}
     </Button>
   )

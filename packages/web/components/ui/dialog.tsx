@@ -1,8 +1,8 @@
 "use client"
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
-import { XIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
 import { cn } from "@/lib/utils"
@@ -82,7 +82,13 @@ function DialogContent({
           >
             {closeLabel ?? (
               <>
-                <XIcon />
+                <IconPlaceholder
+                  lucide="XIcon"
+                  tabler="IconX"
+                  hugeicons="Cancel01Icon"
+                  phosphor="XIcon"
+                  remixicon="RiCloseLine"
+                />
                 <span className="sr-only">Close</span>
               </>
             )}

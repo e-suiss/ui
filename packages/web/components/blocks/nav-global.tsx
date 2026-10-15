@@ -1,7 +1,6 @@
 "use client"
 
-import { HandbagIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
-
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
 import { Button } from "@/components/ui/button"
 
@@ -128,10 +127,22 @@ export function NavGlobal() {
         actions={
           <>
             <Button variant="ghost" size="icon-sm" aria-label="Search">
-              <MagnifyingGlassIcon />
+              <IconPlaceholder
+                lucide="SearchIcon"
+                tabler="IconSearch"
+                hugeicons="Search01Icon"
+                phosphor="MagnifyingGlassIcon"
+                remixicon="RiSearchLine"
+              />
             </Button>
             <Button variant="ghost" size="icon-sm" aria-label="Shopping bag">
-              <HandbagIcon />
+              <IconPlaceholder
+                lucide="HandbagIcon"
+                tabler="IconShoppingBag"
+                hugeicons="ShoppingBag01Icon"
+                phosphor="HandbagIcon"
+                remixicon="RiHandbagLine"
+              />
             </Button>
           </>
         }

@@ -1,8 +1,8 @@
-import { HouseIcon } from "@phosphor-icons/react"
 import { Bar, BarChart, XAxis } from "recharts"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { render, renderHook } from "vitest-browser-react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   type ChartConfig,
   ChartContainer,
@@ -264,7 +264,19 @@ describe("ChartTooltipContent", () => {
       <Chart
         keys={["desktop"]}
         chartConfig={{
-          desktop: { label: "Desktop", color: "red", icon: HouseIcon },
+          desktop: {
+            label: "Desktop",
+            color: "red",
+            icon: () => (
+              <IconPlaceholder
+                lucide="HouseIcon"
+                tabler="IconHome"
+                hugeicons="Home01Icon"
+                phosphor="HouseIcon"
+                remixicon="RiHomeLine"
+              />
+            ),
+          },
         }}
         tooltip={{}}
       />
@@ -299,7 +311,19 @@ describe("ChartLegendContent", () => {
 
   it("prefers a configured icon unless hideIcon is set", async () => {
     const withIcon = {
-      desktop: { label: "Desktop", color: "red", icon: HouseIcon },
+      desktop: {
+        label: "Desktop",
+        color: "red",
+        icon: () => (
+          <IconPlaceholder
+            lucide="HouseIcon"
+            tabler="IconHome"
+            hugeicons="Home01Icon"
+            phosphor="HouseIcon"
+            remixicon="RiHomeLine"
+          />
+        ),
+      },
     } satisfies ChartConfig
     const { rerender } = await render(
       <Chart chartConfig={withIcon} keys={["desktop"]} legend={{}} />

@@ -1,17 +1,8 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  CheckIcon,
-  GearIcon,
-  GlobeIcon,
-  KeyIcon,
-  LockSimpleIcon,
-  ShieldIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Sidebar,
@@ -116,10 +107,58 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 type Severity = "High" | "Medium" | "Low"
@@ -149,31 +188,67 @@ const initialAlerts: {
   severity: Severity
   title: string
   detail: string
-  icon: React.ElementType
+  icon: React.ReactNode
 }[] = [
   {
     severity: "High",
     title: "Sign-in from an unusual location",
     detail: "morgan@company.com · Lagos, NG · 3:12 AM",
-    icon: GlobeIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="GlobeIcon"
+        tabler="IconWorld"
+        hugeicons="Globe02Icon"
+        phosphor="GlobeIcon"
+        remixicon="RiGlobalLine"
+        className="size-4"
+      />
+    ),
   },
   {
     severity: "Medium",
     title: "5 failed sign-in attempts",
     detail: "85.104.x.x · last 10 minutes",
-    icon: LockSimpleIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="LockIcon"
+        tabler="IconLock"
+        hugeicons="SquareLock02Icon"
+        phosphor="LockSimpleIcon"
+        remixicon="RiLockLine"
+        className="size-4"
+      />
+    ),
   },
   {
     severity: "Medium",
     title: "API key expires in 7 days",
     detail: "Payments integration",
-    icon: KeyIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="KeyIcon"
+        tabler="IconKey"
+        hugeicons="Key01Icon"
+        phosphor="KeyIcon"
+        remixicon="RiKey2Line"
+        className="size-4"
+      />
+    ),
   },
   {
     severity: "Low",
     title: "Two-factor authentication is off",
     detail: "2 users",
-    icon: ShieldIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+        className="size-4"
+      />
+    ),
   },
 ]
 
@@ -310,9 +385,16 @@ export function LogSecurity() {
                       className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_20%)] dark:bg-green-500" : severity[alert.severity].tint}`}
                     >
                       {alert.resolved ? (
-                        <CheckIcon weight="bold" className="size-4" />
+                        <IconPlaceholder
+                          lucide="CheckIcon"
+                          tabler="IconCheck"
+                          hugeicons="Tick02Icon"
+                          phosphor="CheckIcon"
+                          remixicon="RiCheckLine"
+                          className="size-4"
+                        />
                       ) : (
-                        <alert.icon weight="bold" className="size-4" />
+                        alert.icon
                       )}
                     </span>
                     <span className="flex min-w-0 flex-1 flex-col">

@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { Command as CommandPrimitive } from "cmdk"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Dialog,
   DialogContent,
@@ -71,7 +71,12 @@ function CommandInput({
       data-slot="command-input-wrapper"
       className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-4"
     >
-      <MagnifyingGlassIcon
+      <IconPlaceholder
+        lucide="SearchIcon"
+        tabler="IconSearch"
+        hugeicons="Search01Icon"
+        phosphor="MagnifyingGlassIcon"
+        remixicon="RiSearchLine"
         aria-hidden="true"
         className="size-5.5 shrink-0 text-muted-foreground"
       />
@@ -163,7 +168,14 @@ function CommandItem({
       {...props}
     >
       {children}
-      <CheckIcon className="ms-auto opacity-0 group-has-data-[slot=command-shortcut]/command-item:hidden group-data-[checked=true]/command-item:opacity-100" />
+      <IconPlaceholder
+        lucide="CheckIcon"
+        tabler="IconCheck"
+        hugeicons="Tick02Icon"
+        phosphor="CheckIcon"
+        remixicon="RiCheckLine"
+        className="ms-auto opacity-0 group-has-data-[slot=command-shortcut]/command-item:hidden group-data-[checked=true]/command-item:opacity-100"
+      />
     </CommandPrimitive.Item>
   )
 }

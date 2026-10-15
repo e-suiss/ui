@@ -1,4 +1,4 @@
-import { PlusIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import {
@@ -18,7 +18,13 @@ export default function TooltipWithShortcut() {
               <Button variant="outline" size="icon" aria-label="New file" />
             }
           >
-            <PlusIcon />
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+            />
           </TooltipTrigger>
           <TooltipContent side="top">
             New file

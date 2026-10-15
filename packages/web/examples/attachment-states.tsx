@@ -1,4 +1,4 @@
-import { UploadSimpleIcon, XIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Attachment,
   AttachmentAction,
@@ -17,7 +17,13 @@ export default function AttachmentStates() {
     <div className="flex w-96 flex-col gap-3">
       <Attachment orientation="horizontal" state="idle" className="w-full">
         <AttachmentMedia>
-          <UploadSimpleIcon />
+          <IconPlaceholder
+            lucide="UploadIcon"
+            tabler="IconUpload"
+            hugeicons="Upload01Icon"
+            phosphor="UploadSimpleIcon"
+            remixicon="RiUploadLine"
+          />
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Drop a file here</AttachmentTitle>
@@ -39,7 +45,13 @@ export default function AttachmentStates() {
         </AttachmentContent>
         <AttachmentActions>
           <AttachmentAction aria-label="Cancel upload">
-            <XIcon />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>
@@ -69,7 +81,13 @@ export default function AttachmentStates() {
         </AttachmentContent>
         <AttachmentActions>
           <AttachmentAction aria-label="Remove">
-            <XIcon />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
           </AttachmentAction>
         </AttachmentActions>
       </Attachment>

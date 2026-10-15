@@ -1,21 +1,8 @@
 "use client"
 
-import {
-  AirplaneIcon,
-  BellIcon,
-  BluetoothIcon,
-  CaretRightIcon,
-  CellSignalFullIcon,
-  GearIcon,
-  HourglassIcon,
-  MagnifyingGlassIcon,
-  MoonIcon,
-  SpeakerHighIcon,
-  SunIcon,
-  WifiHighIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   InputGroup,
@@ -43,7 +30,7 @@ type Toggles = {
 
 type Row = {
   label: string
-  icon: React.ElementType
+  icon: React.ReactNode
   tint: string
   toggle?: keyof Toggles
   detail?: (toggles: Toggles) => string
@@ -53,38 +40,153 @@ const groups: Row[][] = [
   [
     {
       label: "Airplane Mode",
-      icon: AirplaneIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="PlaneIcon"
+          tabler="IconPlane"
+          hugeicons="AirplaneIcon"
+          phosphor="AirplaneIcon"
+          remixicon="RiPlaneLine"
+          className="size-4.25"
+        />
+      ),
       tint: "bg-orange-500",
       toggle: "airplane",
     },
     {
       label: "Wi-Fi",
-      icon: WifiHighIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="WifiIcon"
+          tabler="IconWifi"
+          hugeicons="Wifi01Icon"
+          phosphor="WifiHighIcon"
+          remixicon="RiWifiLine"
+          className="size-4.25"
+        />
+      ),
       tint: "bg-blue-500",
       detail: (toggles) => (toggles.wifi ? "Home" : "Off"),
     },
     {
       label: "Bluetooth",
-      icon: BluetoothIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="BluetoothIcon"
+          tabler="IconBluetooth"
+          hugeicons="BluetoothIcon"
+          phosphor="BluetoothIcon"
+          remixicon="RiBluetoothLine"
+          className="size-4.25"
+        />
+      ),
       tint: "bg-blue-500",
       detail: (toggles) => (toggles.bluetooth ? "On" : "Off"),
     },
     {
       label: "Cellular",
-      icon: CellSignalFullIcon,
+      icon: (
+        <IconPlaceholder
+          lucide="SignalIcon"
+          tabler="IconAntennaBars5"
+          hugeicons="SignalFull02Icon"
+          phosphor="CellSignalFullIcon"
+          remixicon="RiSignalCellular3Line"
+          className="size-4.25"
+        />
+      ),
       tint: "bg-green-500",
       detail: (toggles) => (toggles.airplane ? "Off" : ""),
     },
   ],
   [
-    { label: "Notifications", icon: BellIcon, tint: "bg-red-500" },
-    { label: "Sounds & Haptics", icon: SpeakerHighIcon, tint: "bg-pink-500" },
-    { label: "Focus", icon: MoonIcon, tint: "bg-indigo-500", toggle: "focus" },
-    { label: "Screen Time", icon: HourglassIcon, tint: "bg-indigo-500" },
+    {
+      label: "Notifications",
+      icon: (
+        <IconPlaceholder
+          lucide="BellIcon"
+          tabler="IconBell"
+          hugeicons="Notification03Icon"
+          phosphor="BellIcon"
+          remixicon="RiNotificationLine"
+          className="size-4.25"
+        />
+      ),
+      tint: "bg-red-500",
+    },
+    {
+      label: "Sounds & Haptics",
+      icon: (
+        <IconPlaceholder
+          lucide="Volume2Icon"
+          tabler="IconVolume"
+          hugeicons="VolumeHighIcon"
+          phosphor="SpeakerHighIcon"
+          remixicon="RiVolumeUpLine"
+          className="size-4.25"
+        />
+      ),
+      tint: "bg-pink-500",
+    },
+    {
+      label: "Focus",
+      icon: (
+        <IconPlaceholder
+          lucide="MoonIcon"
+          tabler="IconMoon"
+          hugeicons="MoonIcon"
+          phosphor="MoonIcon"
+          remixicon="RiMoonLine"
+          className="size-4.25"
+        />
+      ),
+      tint: "bg-indigo-500",
+      toggle: "focus",
+    },
+    {
+      label: "Screen Time",
+      icon: (
+        <IconPlaceholder
+          lucide="HourglassIcon"
+          tabler="IconHourglass"
+          hugeicons="HourglassIcon"
+          phosphor="HourglassIcon"
+          remixicon="RiHourglassLine"
+          className="size-4.25"
+        />
+      ),
+      tint: "bg-indigo-500",
+    },
   ],
   [
-    { label: "General", icon: GearIcon, tint: "bg-zinc-500" },
-    { label: "Display & Brightness", icon: SunIcon, tint: "bg-blue-500" },
+    {
+      label: "General",
+      icon: (
+        <IconPlaceholder
+          lucide="SettingsIcon"
+          tabler="IconSettings"
+          hugeicons="Settings01Icon"
+          phosphor="GearIcon"
+          remixicon="RiSettingsLine"
+          className="size-4.25"
+        />
+      ),
+      tint: "bg-zinc-500",
+    },
+    {
+      label: "Display & Brightness",
+      icon: (
+        <IconPlaceholder
+          lucide="SunIcon"
+          tabler="IconSun"
+          hugeicons="Sun03Icon"
+          phosphor="SunIcon"
+          remixicon="RiSunLine"
+          className="size-4.25"
+        />
+      ),
+      tint: "bg-blue-500",
+    },
   ],
 ]
 
@@ -125,9 +227,23 @@ export function SettingsDevice() {
         >
           <span>9:41</span>
           <span className="flex items-center gap-1.25">
-            <CellSignalFullIcon weight="bold" className="size-3.75" />
+            <IconPlaceholder
+              lucide="SignalIcon"
+              tabler="IconAntennaBars5"
+              hugeicons="SignalFull02Icon"
+              phosphor="CellSignalFullIcon"
+              remixicon="RiSignalCellular3Line"
+              className="size-3.75"
+            />
             {toggles.wifi && (
-              <WifiHighIcon weight="bold" className="size-3.75" />
+              <IconPlaceholder
+                lucide="WifiIcon"
+                tabler="IconWifi"
+                hugeicons="Wifi01Icon"
+                phosphor="WifiHighIcon"
+                remixicon="RiWifiLine"
+                className="size-3.75"
+              />
             )}
             <span className="flex h-2.75 w-6 rounded-[3px] border border-current p-[1.5px]">
               <span className="flex-1 rounded-[1.5px] bg-current" />
@@ -142,7 +258,13 @@ export function SettingsDevice() {
           <h1 className="px-1 text-4xl font-bold tracking-tight">Settings</h1>
           <InputGroup className="-mt-2 h-9 shrink-0 rounded-[0.625rem] dark:bg-muted">
             <InputGroupAddon>
-              <MagnifyingGlassIcon weight="bold" />
+              <IconPlaceholder
+                lucide="SearchIcon"
+                tabler="IconSearch"
+                hugeicons="Search01Icon"
+                phosphor="MagnifyingGlassIcon"
+                remixicon="RiSearchLine"
+              />
             </InputGroupAddon>
             <InputGroupInput
               type="search"
@@ -174,8 +296,12 @@ export function SettingsDevice() {
                       suiss Account, Cloud and more
                     </ItemDescription>
                   </ItemContent>
-                  <CaretRightIcon
-                    weight="bold"
+                  <IconPlaceholder
+                    lucide="ChevronRightIcon"
+                    tabler="IconChevronRight"
+                    hugeicons="ArrowRight01Icon"
+                    phosphor="CaretRightIcon"
+                    remixicon="RiArrowRightSLine"
                     className="size-3.5 text-muted-foreground rtl:rotate-180"
                   />
                 </Item>
@@ -189,7 +315,6 @@ export function SettingsDevice() {
               className={`${groupClass} **:data-[slot=item-separator]:ms-14.25`}
             >
               {rows.map((row, index) => {
-                const Icon = row.icon
                 const detail = row.detail?.(toggles)
                 const switchId = `settings-device-${row.toggle}`
                 return (
@@ -209,7 +334,7 @@ export function SettingsDevice() {
                       <ItemMedia
                         className={`size-7.25 rounded-[7px] text-white ${row.tint}`}
                       >
-                        <Icon weight="bold" className="size-4.25" />
+                        {row.icon}
                       </ItemMedia>
                       <ItemContent>
                         <ItemTitle className="text-base font-normal">
@@ -232,8 +357,12 @@ export function SettingsDevice() {
                         ) : (
                           <>
                             {detail}
-                            <CaretRightIcon
-                              weight="bold"
+                            <IconPlaceholder
+                              lucide="ChevronRightIcon"
+                              tabler="IconChevronRight"
+                              hugeicons="ArrowRight01Icon"
+                              phosphor="CaretRightIcon"
+                              remixicon="RiArrowRightSLine"
                               className="size-3.5 text-muted-foreground rtl:rotate-180"
                             />
                           </>

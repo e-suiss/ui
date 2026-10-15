@@ -1,8 +1,8 @@
 "use client"
 
 import { mergeProps } from "@base-ui/react/merge-props"
-import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   AlertSheet,
   AlertSheetAction,
@@ -147,7 +147,13 @@ function ActionBar({
             aria-label={moreLabel}
             render={<Button variant="ghost" size="icon" />}
           >
-            <DotsThreeIcon weight="bold" />
+            <IconPlaceholder
+              lucide="EllipsisIcon"
+              tabler="IconDots"
+              hugeicons="MoreHorizontalIcon"
+              phosphor="DotsThreeIcon"
+              remixicon="RiMoreLine"
+            />
           </DrawerTrigger>
           <DrawerContent
             data-slot="action-bar-content"
@@ -254,7 +260,14 @@ function ActionBarTrigger({
         })}
       >
         {children}
-        <CaretRightIcon className="pointer-events-none size-4 shrink-0 text-muted-foreground rtl:rotate-180" />
+        <IconPlaceholder
+          lucide="ChevronRightIcon"
+          tabler="IconChevronRight"
+          hugeicons="ArrowRight01Icon"
+          phosphor="CaretRightIcon"
+          remixicon="RiArrowRightSLine"
+          className="pointer-events-none size-4 shrink-0 text-muted-foreground rtl:rotate-180"
+        />
       </button>
     )
   }

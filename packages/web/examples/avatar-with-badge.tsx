@@ -1,4 +1,4 @@
-import { CheckIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Avatar,
   AvatarBadge,
@@ -32,7 +32,13 @@ export default function AvatarWithBadge() {
           <AvatarImage src={people[2].src} alt={people[2].name} />
           <AvatarFallback>{people[2].initials}</AvatarFallback>
           <AvatarBadge className="bg-green-500">
-            <CheckIcon weight="bold" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+            />
           </AvatarBadge>
         </Avatar>
       ))}

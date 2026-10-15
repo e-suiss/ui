@@ -1,14 +1,5 @@
-import {
-  CalendarBlankIcon,
-  ChartBarIcon,
-  FolderIcon,
-  GearIcon,
-  HouseIcon,
-  LifebuoyIcon,
-  TrayIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   AppShell,
   type AppShellItem,
@@ -24,50 +15,114 @@ const manyItems: AppShellItem[] = [
   {
     value: "home",
     label: "Home",
-    icon: <HouseIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="HouseIcon"
+        tabler="IconHome"
+        hugeicons="Home01Icon"
+        phosphor="HouseIcon"
+        remixicon="RiHomeLine"
+      />
+    ),
     group: "Platform",
   },
   {
     value: "inbox",
     label: "Inbox",
-    icon: <TrayIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="InboxIcon"
+        tabler="IconInbox"
+        hugeicons="InboxIcon"
+        phosphor="TrayIcon"
+        remixicon="RiInboxLine"
+      />
+    ),
     badge: 12,
     group: "Platform",
   },
   {
     value: "calendar",
     label: "Calendar",
-    icon: <CalendarBlankIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="CalendarIcon"
+        tabler="IconCalendar"
+        hugeicons="Calendar01Icon"
+        phosphor="CalendarBlankIcon"
+        remixicon="RiCalendarLine"
+      />
+    ),
     group: "Platform",
   },
   {
     value: "reports",
     label: "Reports",
-    icon: <ChartBarIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
     group: "Platform",
   },
   {
     value: "projects",
     label: "Projects",
-    icon: <FolderIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="FolderIcon"
+        tabler="IconFolder"
+        hugeicons="Folder01Icon"
+        phosphor="FolderIcon"
+        remixicon="RiFolderLine"
+      />
+    ),
     group: "Platform",
   },
   {
     value: "team",
     label: "Team",
-    icon: <UsersIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
     group: "Workspace",
   },
   {
     value: "settings",
     label: "Settings",
-    icon: <GearIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
     group: "Workspace",
   },
   {
     value: "support",
     label: "Support",
-    icon: <LifebuoyIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="LifeBuoyIcon"
+        tabler="IconLifebuoy"
+        hugeicons="LifebuoyIcon"
+        phosphor="LifebuoyIcon"
+        remixicon="RiLifebuoyLine"
+      />
+    ),
     group: "Workspace",
     disabled: true,
   },

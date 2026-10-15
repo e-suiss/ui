@@ -1,9 +1,9 @@
-import { HouseIcon, TrayIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { page, userEvent } from "vitest/browser"
 import { render } from "vitest-browser-react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Sidebar,
   SidebarContent,
@@ -97,7 +97,13 @@ function Shell({
                     tooltip="Home"
                     render={<a href="#home" />}
                   >
-                    <HouseIcon />
+                    <IconPlaceholder
+                      lucide="HouseIcon"
+                      tabler="IconHome"
+                      hugeicons="Home01Icon"
+                      phosphor="HouseIcon"
+                      remixicon="RiHomeLine"
+                    />
                     <span>Home</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -106,7 +112,13 @@ function Shell({
                     tooltip="Inbox"
                     render={<a href="#inbox" />}
                   >
-                    <TrayIcon />
+                    <IconPlaceholder
+                      lucide="InboxIcon"
+                      tabler="IconInbox"
+                      hugeicons="InboxIcon"
+                      phosphor="TrayIcon"
+                      remixicon="RiInboxLine"
+                    />
                     <span>Inbox</span>
                   </SidebarMenuButton>
                   <SidebarMenuBadge>12</SidebarMenuBadge>

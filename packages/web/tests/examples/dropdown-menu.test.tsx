@@ -1,16 +1,7 @@
-import {
-  ChatCircleIcon,
-  CreditCardIcon,
-  EnvelopeIcon,
-  GearIcon,
-  SignOutIcon,
-  TrashIcon,
-  UserIcon,
-  UserPlusIcon,
-} from "@phosphor-icons/react"
 import { screen, waitFor, within } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -45,17 +36,35 @@ function DropdownMenuOpenByDefault() {
         <DropdownMenuGroup>
           <DropdownMenuLabel>My account</DropdownMenuLabel>
           <DropdownMenuItem>
-            <UserIcon />
+            <IconPlaceholder
+              lucide="UserIcon"
+              tabler="IconUser"
+              hugeicons="UserIcon"
+              phosphor="UserIcon"
+              remixicon="RiUserLine"
+            />
             Profile
             <DropdownMenuShortcut mod>⇧P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCardIcon />
+            <IconPlaceholder
+              lucide="CreditCardIcon"
+              tabler="IconCreditCard"
+              hugeicons="CreditCardIcon"
+              phosphor="CreditCardIcon"
+              remixicon="RiBankCardLine"
+            />
             Billing
             <DropdownMenuShortcut mod>B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <GearIcon />
+            <IconPlaceholder
+              lucide="SettingsIcon"
+              tabler="IconSettings"
+              hugeicons="Settings01Icon"
+              phosphor="GearIcon"
+              remixicon="RiSettingsLine"
+            />
             Settings
             <DropdownMenuShortcut mod>,</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -63,16 +72,34 @@ function DropdownMenuOpenByDefault() {
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <UserPlusIcon />
+            <IconPlaceholder
+              lucide="UserPlusIcon"
+              tabler="IconUserPlus"
+              hugeicons="UserAdd01Icon"
+              phosphor="UserPlusIcon"
+              remixicon="RiUserAddLine"
+            />
             Invite users
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem>
-              <EnvelopeIcon />
+              <IconPlaceholder
+                lucide="MailIcon"
+                tabler="IconMail"
+                hugeicons="Mail01Icon"
+                phosphor="EnvelopeIcon"
+                remixicon="RiMailLine"
+              />
               Email
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <ChatCircleIcon />
+              <IconPlaceholder
+                lucide="MessageCircleIcon"
+                tabler="IconMessageCircle"
+                hugeicons="BubbleChatIcon"
+                phosphor="ChatCircleIcon"
+                remixicon="RiChat1Line"
+              />
               Message
             </DropdownMenuItem>
           </DropdownMenuSubContent>
@@ -80,11 +107,23 @@ function DropdownMenuOpenByDefault() {
         <DropdownMenuItem disabled>API access</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive">
-          <TrashIcon />
+          <IconPlaceholder
+            lucide="TrashIcon"
+            tabler="IconTrash"
+            hugeicons="Delete02Icon"
+            phosphor="TrashIcon"
+            remixicon="RiDeleteBinLine"
+          />
           Delete account
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <SignOutIcon />
+          <IconPlaceholder
+            lucide="LogOutIcon"
+            tabler="IconLogout"
+            hugeicons="Logout01Icon"
+            phosphor="SignOutIcon"
+            remixicon="RiLogoutBoxLine"
+          />
           Log out
           <DropdownMenuShortcut mod>⇧Q</DropdownMenuShortcut>
         </DropdownMenuItem>

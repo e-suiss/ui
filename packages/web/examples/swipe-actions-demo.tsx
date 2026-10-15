@@ -1,9 +1,5 @@
-import {
-  ArchiveIcon,
-  EnvelopeSimpleIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SwipeAction,
   SwipeActions,
@@ -67,7 +63,13 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
                       setLog(`Toggled unread on message ${message.id}`)
                     }}
                   >
-                    <EnvelopeSimpleIcon weight="fill" />
+                    <IconPlaceholder
+                      lucide="MailIcon"
+                      tabler="IconMail"
+                      hugeicons="Mail01Icon"
+                      phosphor="EnvelopeSimpleIcon"
+                      remixicon="RiMailLine"
+                    />
                     Unread
                   </SwipeAction>
                 </SwipeActionsActions>
@@ -89,7 +91,13 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
                   variant="archive"
                   onClick={() => remove(message.id, "Archived")}
                 >
-                  <ArchiveIcon weight="fill" />
+                  <IconPlaceholder
+                    lucide="ArchiveIcon"
+                    tabler="IconArchive"
+                    hugeicons="Archive02Icon"
+                    phosphor="ArchiveIcon"
+                    remixicon="RiArchiveLine"
+                  />
                   Archive
                 </SwipeAction>
                 <SwipeAction
@@ -97,7 +105,13 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
                   fullSwipe
                   onClick={() => remove(message.id, "Deleted")}
                 >
-                  <TrashIcon weight="fill" />
+                  <IconPlaceholder
+                    lucide="TrashIcon"
+                    tabler="IconTrash"
+                    hugeicons="Delete02Icon"
+                    phosphor="TrashIcon"
+                    remixicon="RiDeleteBinLine"
+                  />
                   Delete
                 </SwipeAction>
               </SwipeActionsActions>

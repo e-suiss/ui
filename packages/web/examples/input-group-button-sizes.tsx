@@ -1,4 +1,4 @@
-import { CopyIcon, PaperclipIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputGroup,
   InputGroupAddon,
@@ -14,10 +14,22 @@ export default function InputGroupButtonSizes() {
         <InputGroupAddon align="inline-end">
           <InputGroupButton size="xs">Extra small</InputGroupButton>
           <InputGroupButton size="icon-xs" aria-label="Copy">
-            <CopyIcon />
+            <IconPlaceholder
+              lucide="CopyIcon"
+              tabler="IconCopy"
+              hugeicons="Copy01Icon"
+              phosphor="CopyIcon"
+              remixicon="RiFileCopyLine"
+            />
           </InputGroupButton>
           <InputGroupButton size="icon-sm" aria-label="Attach">
-            <PaperclipIcon />
+            <IconPlaceholder
+              lucide="PaperclipIcon"
+              tabler="IconPaperclip"
+              hugeicons="AttachmentIcon"
+              phosphor="PaperclipIcon"
+              remixicon="RiAttachment2"
+            />
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>

@@ -1,5 +1,5 @@
-import { ChartBarIcon, TriangleIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetHeader,
@@ -47,7 +47,13 @@ export default function WidgetWeeklyReport() {
               size="sm"
               className="text-green-600 dark:text-green-400"
             >
-              <ChartBarIcon weight="fill" />
+              <IconPlaceholder
+                lucide="ChartColumnIcon"
+                tabler="IconChartBar"
+                hugeicons="ChartColumnIcon"
+                phosphor="ChartBarIcon"
+                remixicon="RiBarChartLine"
+              />
             </WidgetIcon>
             <WidgetTitle>This week</WidgetTitle>
           </WidgetHeader>
@@ -55,7 +61,14 @@ export default function WidgetWeeklyReport() {
             <div className="shrink-0">
               <WidgetValue>₺121,900</WidgetValue>
               <p className="flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
-                <TriangleIcon weight="fill" className="size-2.5" />
+                <IconPlaceholder
+                  lucide="TriangleIcon"
+                  tabler="IconTriangle"
+                  hugeicons="TriangleIcon"
+                  phosphor="TriangleIcon"
+                  remixicon="RiTriangleLine"
+                  className="size-2.5 fill-current"
+                />
                 12% more than last week
               </p>
             </div>

@@ -1,7 +1,7 @@
 "use client"
 
-import { CalendarBlankIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Drawer,
@@ -153,7 +153,14 @@ function DatePicker({
   )
   const triggerContent = (
     <>
-      <CalendarBlankIcon className="size-4 shrink-0 text-muted-foreground" />
+      <IconPlaceholder
+        lucide="CalendarIcon"
+        tabler="IconCalendar"
+        hugeicons="Calendar01Icon"
+        phosphor="CalendarBlankIcon"
+        remixicon="RiCalendarLine"
+        className="size-4 shrink-0 text-muted-foreground"
+      />
       <span className="truncate">{label}</span>
     </>
   )

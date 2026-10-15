@@ -2,9 +2,9 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
-import { ListIcon, XIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { flushSync } from "react-dom"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -328,8 +328,22 @@ function TabBarTrigger({
         aria-hidden
         className="relative size-4 *:absolute *:inset-0 *:size-4 *:transition-[opacity,rotate,scale] *:duration-400 *:ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:*:duration-650 group-data-open/tab-bar:*:ease-(--tab-bar-spring) motion-reduce:*:transition-none"
       >
-        <ListIcon className="group-data-open/tab-bar:scale-50 group-data-open/tab-bar:rotate-90 group-data-open/tab-bar:opacity-0" />
-        <XIcon className="scale-50 -rotate-90 opacity-0 group-data-open/tab-bar:scale-100 group-data-open/tab-bar:rotate-0 group-data-open/tab-bar:opacity-100" />
+        <IconPlaceholder
+          lucide="MenuIcon"
+          tabler="IconMenu2"
+          hugeicons="Menu01Icon"
+          phosphor="ListIcon"
+          remixicon="RiMenuLine"
+          className="group-data-open/tab-bar:scale-50 group-data-open/tab-bar:rotate-90 group-data-open/tab-bar:opacity-0"
+        />
+        <IconPlaceholder
+          lucide="XIcon"
+          tabler="IconX"
+          hugeicons="Cancel01Icon"
+          phosphor="XIcon"
+          remixicon="RiCloseLine"
+          className="scale-50 -rotate-90 opacity-0 group-data-open/tab-bar:scale-100 group-data-open/tab-bar:rotate-0 group-data-open/tab-bar:opacity-100"
+        />
       </span>
       {children}
     </Button>

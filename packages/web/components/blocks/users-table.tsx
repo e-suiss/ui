@@ -1,15 +1,8 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  GearIcon,
-  MagnifyingGlassIcon,
-  PlusIcon,
-  ShieldIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -129,10 +122,58 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 const roles = ["Admin", "Editor", "Support", "Viewer"]
@@ -259,7 +300,13 @@ export function UsersTable() {
             <div className="flex w-full items-center gap-2 sm:w-auto">
               <InputGroup className="h-8 flex-1 sm:w-48">
                 <InputGroupAddon>
-                  <MagnifyingGlassIcon />
+                  <IconPlaceholder
+                    lucide="SearchIcon"
+                    tabler="IconSearch"
+                    hugeicons="Search01Icon"
+                    phosphor="MagnifyingGlassIcon"
+                    remixicon="RiSearchLine"
+                  />
                 </InputGroupAddon>
                 <InputGroupInput
                   type="search"
@@ -271,7 +318,14 @@ export function UsersTable() {
                 />
               </InputGroup>
               <Button size="sm" className="gap-1">
-                <PlusIcon weight="bold" className="size-3.25" />
+                <IconPlaceholder
+                  lucide="PlusIcon"
+                  tabler="IconPlus"
+                  hugeicons="PlusSignIcon"
+                  phosphor="PlusIcon"
+                  remixicon="RiAddLine"
+                  className="size-3.25"
+                />
                 Invite
               </Button>
             </div>

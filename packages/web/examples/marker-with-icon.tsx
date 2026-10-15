@@ -1,4 +1,4 @@
-import { CalendarBlankIcon, InfoIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
 
 export default function MarkerWithIcon() {
@@ -7,13 +7,25 @@ export default function MarkerWithIcon() {
       <div className="flex flex-col gap-6">
         <Marker>
           <MarkerIcon>
-            <InfoIcon />
+            <IconPlaceholder
+              lucide="InfoIcon"
+              tabler="IconInfoCircle"
+              hugeicons="InformationCircleIcon"
+              phosphor="InfoIcon"
+              remixicon="RiInformationLine"
+            />
           </MarkerIcon>
           <MarkerContent>Maya joined the conversation</MarkerContent>
         </Marker>
         <Marker variant="separator">
           <MarkerIcon>
-            <CalendarBlankIcon />
+            <IconPlaceholder
+              lucide="CalendarIcon"
+              tabler="IconCalendar"
+              hugeicons="Calendar01Icon"
+              phosphor="CalendarBlankIcon"
+              remixicon="RiCalendarLine"
+            />
           </MarkerIcon>
           <MarkerContent>March 12</MarkerContent>
         </Marker>

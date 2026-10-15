@@ -1,8 +1,8 @@
 "use client"
 
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
-import { XIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
 import { cn } from "@/lib/utils"
@@ -271,7 +271,13 @@ function DrawerContent({
             >
               {closeLabel ?? (
                 <>
-                  <XIcon />
+                  <IconPlaceholder
+                    lucide="XIcon"
+                    tabler="IconX"
+                    hugeicons="Cancel01Icon"
+                    phosphor="XIcon"
+                    remixicon="RiCloseLine"
+                  />
                   <span className="sr-only">Close</span>
                 </>
               )}

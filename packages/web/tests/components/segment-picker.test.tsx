@@ -1,9 +1,9 @@
-import { ListIcon, SquaresFourIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { page, userEvent } from "vitest/browser"
 import { render } from "vitest-browser-react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SegmentPicker,
   SegmentPickerItem,
@@ -32,14 +32,32 @@ function Views(props: PickerProps) {
   return (
     <SegmentPicker aria-label="View" defaultValue="grid" {...props}>
       <SegmentPickerItem value="list" aria-label="List">
-        <ListIcon />
+        <IconPlaceholder
+          lucide="MenuIcon"
+          tabler="IconMenu2"
+          hugeicons="Menu01Icon"
+          phosphor="ListIcon"
+          remixicon="RiMenuLine"
+        />
       </SegmentPickerItem>
       <SegmentPickerItem value="grid" label="Grid">
-        <SquaresFourIcon />
+        <IconPlaceholder
+          lucide="LayoutGridIcon"
+          tabler="IconLayoutGrid"
+          hugeicons="GridViewIcon"
+          phosphor="SquaresFourIcon"
+          remixicon="RiLayoutGridLine"
+        />
         Grid
       </SegmentPickerItem>
       <SegmentPickerItem value="table">
-        <SquaresFourIcon />
+        <IconPlaceholder
+          lucide="LayoutGridIcon"
+          tabler="IconLayoutGrid"
+          hugeicons="GridViewIcon"
+          phosphor="SquaresFourIcon"
+          remixicon="RiLayoutGridLine"
+        />
       </SegmentPickerItem>
     </SegmentPicker>
   )

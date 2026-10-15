@@ -1,11 +1,4 @@
-import {
-  CalculatorIcon,
-  CalendarBlankIcon,
-  CreditCardIcon,
-  GearIcon,
-  SmileyIcon,
-  UserIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Command,
   CommandEmpty,
@@ -23,32 +16,68 @@ function CommandItems() {
       <CommandEmpty>No results found.</CommandEmpty>
       <CommandGroup heading="Suggestions">
         <CommandItem>
-          <CalendarBlankIcon />
+          <IconPlaceholder
+            lucide="CalendarIcon"
+            tabler="IconCalendar"
+            hugeicons="Calendar01Icon"
+            phosphor="CalendarBlankIcon"
+            remixicon="RiCalendarLine"
+          />
           Calendar
         </CommandItem>
         <CommandItem>
-          <SmileyIcon />
+          <IconPlaceholder
+            lucide="SmileIcon"
+            tabler="IconMoodSmile"
+            hugeicons="SmileIcon"
+            phosphor="SmileyIcon"
+            remixicon="RiEmotionLine"
+          />
           Search emoji
         </CommandItem>
         <CommandItem disabled>
-          <CalculatorIcon />
+          <IconPlaceholder
+            lucide="CalculatorIcon"
+            tabler="IconCalculator"
+            hugeicons="CalculatorIcon"
+            phosphor="CalculatorIcon"
+            remixicon="RiCalculatorLine"
+          />
           Calculator
         </CommandItem>
       </CommandGroup>
       <CommandSeparator />
       <CommandGroup heading="Settings">
         <CommandItem>
-          <UserIcon />
+          <IconPlaceholder
+            lucide="UserIcon"
+            tabler="IconUser"
+            hugeicons="UserIcon"
+            phosphor="UserIcon"
+            remixicon="RiUserLine"
+          />
           Profile
           <CommandShortcut mod>P</CommandShortcut>
         </CommandItem>
         <CommandItem>
-          <CreditCardIcon />
+          <IconPlaceholder
+            lucide="CreditCardIcon"
+            tabler="IconCreditCard"
+            hugeicons="CreditCardIcon"
+            phosphor="CreditCardIcon"
+            remixicon="RiBankCardLine"
+          />
           Billing
           <CommandShortcut mod>B</CommandShortcut>
         </CommandItem>
         <CommandItem>
-          <GearIcon />
+          <IconPlaceholder
+            lucide="SettingsIcon"
+            tabler="IconSettings"
+            hugeicons="Settings01Icon"
+            phosphor="GearIcon"
+            remixicon="RiSettingsLine"
+          />
           Settings
           <CommandShortcut mod>S</CommandShortcut>
         </CommandItem>

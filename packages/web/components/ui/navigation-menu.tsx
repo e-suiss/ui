@@ -1,8 +1,8 @@
 "use client"
 
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
-import { CaretDownIcon } from "@phosphor-icons/react"
 import { cva } from "class-variance-authority"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 function NavigationMenu({
@@ -81,7 +81,12 @@ function NavigationMenuTrigger({
       {...props}
     >
       {children}{" "}
-      <CaretDownIcon
+      <IconPlaceholder
+        lucide="ChevronDownIcon"
+        tabler="IconChevronDown"
+        hugeicons="ArrowDown01Icon"
+        phosphor="CaretDownIcon"
+        remixicon="RiArrowDownSLine"
         className="relative top-px ms-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-[layout=panel]/navigation-menu:hidden"
         aria-hidden="true"
       />

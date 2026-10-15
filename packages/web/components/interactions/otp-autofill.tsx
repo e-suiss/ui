@@ -1,7 +1,7 @@
 "use client"
 
-import { ChatCircleTextIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { InputOTP } from "@/components/ui/input-otp"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -299,9 +299,13 @@ function OtpAutofillSuggestion({
         </>
       ) : (
         <>
-          <ChatCircleTextIcon
+          <IconPlaceholder
+            lucide="MessageCircleMoreIcon"
+            tabler="IconMessageCircle"
+            hugeicons="BubbleChatIcon"
+            phosphor="ChatCircleTextIcon"
+            remixicon="RiChat3Line"
             aria-hidden
-            weight="fill"
             className="size-5 shrink-0 text-green-600 dark:text-green-400"
           />
           <span className="text-muted-foreground">{source}</span>

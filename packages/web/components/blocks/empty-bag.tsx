@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, HandbagIcon, PlusIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -43,7 +43,14 @@ export function EmptyBag() {
       <Empty className="gap-5 p-0">
         <EmptyHeader className="max-w-md gap-2.5">
           <EmptyMedia className="relative mb-1">
-            <HandbagIcon weight="light" className="size-11.5" />
+            <IconPlaceholder
+              lucide="HandbagIcon"
+              tabler="IconShoppingBag"
+              hugeicons="ShoppingBag01Icon"
+              phosphor="HandbagIcon"
+              remixicon="RiHandbagLine"
+              className="size-11.5"
+            />
             {count > 0 && (
               <span className="absolute -end-1.5 -bottom-0.5 flex size-5 items-center justify-center rounded-full bg-foreground text-xs font-semibold text-background tabular-nums transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0">
                 {count}
@@ -106,9 +113,23 @@ export function EmptyBag() {
                     className="relative size-7.5 transition-colors duration-250 after:absolute after:-inset-1.75 after:content-[''] data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] dark:data-in-bag:bg-[color-mix(in_oklab,var(--color-green-500),black_45%)]"
                   >
                     {inBag ? (
-                      <CheckIcon weight="bold" className="size-3.75" />
+                      <IconPlaceholder
+                        lucide="CheckIcon"
+                        tabler="IconCheck"
+                        hugeicons="Tick02Icon"
+                        phosphor="CheckIcon"
+                        remixicon="RiCheckLine"
+                        className="size-3.75"
+                      />
                     ) : (
-                      <PlusIcon weight="bold" className="size-3.75" />
+                      <IconPlaceholder
+                        lucide="PlusIcon"
+                        tabler="IconPlus"
+                        hugeicons="PlusSignIcon"
+                        phosphor="PlusIcon"
+                        remixicon="RiAddLine"
+                        className="size-3.75"
+                      />
                     )}
                   </Button>
                 </div>

@@ -1,4 +1,4 @@
-import { GlobeIcon, MoonIcon, SunIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Select,
   SelectContent,
@@ -8,9 +8,45 @@ import {
 } from "@/components/ui/select"
 
 const themes = [
-  { value: "light", label: "Light", icon: SunIcon },
-  { value: "dark", label: "Dark", icon: MoonIcon },
-  { value: "system", label: "System", icon: GlobeIcon },
+  {
+    value: "light",
+    label: "Light",
+    icon: (
+      <IconPlaceholder
+        lucide="SunIcon"
+        tabler="IconSun"
+        hugeicons="Sun03Icon"
+        phosphor="SunIcon"
+        remixicon="RiSunLine"
+      />
+    ),
+  },
+  {
+    value: "dark",
+    label: "Dark",
+    icon: (
+      <IconPlaceholder
+        lucide="MoonIcon"
+        tabler="IconMoon"
+        hugeicons="MoonIcon"
+        phosphor="MoonIcon"
+        remixicon="RiMoonLine"
+      />
+    ),
+  },
+  {
+    value: "system",
+    label: "System",
+    icon: (
+      <IconPlaceholder
+        lucide="GlobeIcon"
+        tabler="IconWorld"
+        hugeicons="Globe02Icon"
+        phosphor="GlobeIcon"
+        remixicon="RiGlobalLine"
+      />
+    ),
+  },
 ]
 
 export default function SelectWithIcons() {
@@ -23,9 +59,9 @@ export default function SelectWithIcons() {
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>
-        {themes.map(({ value, label, icon: Icon }) => (
+        {themes.map(({ value, label, icon }) => (
           <SelectItem key={value} value={value}>
-            <Icon />
+            {icon}
             {label}
           </SelectItem>
         ))}

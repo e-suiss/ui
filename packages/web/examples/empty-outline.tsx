@@ -1,4 +1,4 @@
-import { CloudIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -15,7 +15,13 @@ export default function EmptyOutline() {
       <Empty className="border">
         <EmptyHeader>
           <EmptyMedia variant="icon">
-            <CloudIcon />
+            <IconPlaceholder
+              lucide="CloudIcon"
+              tabler="IconCloud"
+              hugeicons="CloudIcon"
+              phosphor="CloudIcon"
+              remixicon="RiCloudLine"
+            />
           </EmptyMedia>
           <EmptyTitle>Cloud storage is empty</EmptyTitle>
           <EmptyDescription>

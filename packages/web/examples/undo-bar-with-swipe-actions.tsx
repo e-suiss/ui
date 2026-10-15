@@ -1,5 +1,5 @@
-import { TrashIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SwipeAction,
   SwipeActions,
@@ -66,7 +66,13 @@ function SwipeNotesList() {
                   fullSwipe
                   onClick={() => remove(note)}
                 >
-                  <TrashIcon weight="fill" />
+                  <IconPlaceholder
+                    lucide="TrashIcon"
+                    tabler="IconTrash"
+                    hugeicons="Delete02Icon"
+                    phosphor="TrashIcon"
+                    remixicon="RiDeleteBinLine"
+                  />
                   Delete
                 </SwipeAction>
               </SwipeActionsActions>

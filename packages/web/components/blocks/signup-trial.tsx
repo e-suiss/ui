@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, MusicNotesIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -48,7 +48,14 @@ export function SignupTrial() {
       <section className="flex min-h-140 items-center justify-center p-6">
         <div className="flex flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
-            <CheckIcon weight="bold" className="size-9.5" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="size-9.5"
+            />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Welcome to suiss Music.
@@ -76,7 +83,14 @@ export function SignupTrial() {
       >
         <div className="bg-linear-to-b from-transparent to-black/80 p-6 pt-28 text-white md:p-10 md:pt-40">
           <p className="flex items-center gap-1.5 text-2xl font-semibold">
-            <MusicNotesIcon weight="fill" className="size-6.5" />
+            <IconPlaceholder
+              lucide="Music2Icon"
+              tabler="IconMusic"
+              hugeicons="MusicNote02Icon"
+              phosphor="MusicNotesIcon"
+              remixicon="RiMusicLine"
+              className="size-6.5 fill-current"
+            />
             suiss Music
           </p>
           <p className="mt-2.5 text-3xl leading-tight font-semibold tracking-tight">

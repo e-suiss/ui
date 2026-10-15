@@ -1,4 +1,4 @@
-import { CalendarBlankIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -28,7 +28,13 @@ export default function HoverCardDemo() {
               The React framework, created and maintained by @vercel.
             </p>
             <div className="text-muted-foreground mt-1 flex items-center gap-1.5 text-xs">
-              <CalendarBlankIcon />
+              <IconPlaceholder
+                lucide="CalendarIcon"
+                tabler="IconCalendar"
+                hugeicons="Calendar01Icon"
+                phosphor="CalendarBlankIcon"
+                remixicon="RiCalendarLine"
+              />
               Joined December 2021
             </div>
           </div>

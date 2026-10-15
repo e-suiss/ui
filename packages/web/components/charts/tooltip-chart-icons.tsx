@@ -1,8 +1,8 @@
 "use client"
 
-import { DesktopIcon, DeviceMobileIcon } from "@phosphor-icons/react"
 import { Bar, BarChart, XAxis } from "recharts"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Card,
   CardContent,
@@ -27,8 +27,32 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)", icon: DesktopIcon },
-  mobile: { label: "Mobile", color: "var(--chart-2)", icon: DeviceMobileIcon },
+  desktop: {
+    label: "Desktop",
+    color: "var(--chart-1)",
+    icon: () => (
+      <IconPlaceholder
+        lucide="MonitorIcon"
+        tabler="IconDeviceDesktop"
+        hugeicons="ComputerIcon"
+        phosphor="DesktopIcon"
+        remixicon="RiComputerLine"
+      />
+    ),
+  },
+  mobile: {
+    label: "Mobile",
+    color: "var(--chart-2)",
+    icon: () => (
+      <IconPlaceholder
+        lucide="SmartphoneIcon"
+        tabler="IconDeviceMobile"
+        hugeicons="SmartPhone01Icon"
+        phosphor="DeviceMobileIcon"
+        remixicon="RiSmartphoneLine"
+      />
+    ),
+  },
 } satisfies ChartConfig
 
 export function TooltipChartIcons() {

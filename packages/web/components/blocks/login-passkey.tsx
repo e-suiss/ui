@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, KeyIcon, ScanSmileyIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,16 +21,27 @@ const avatarClass =
 function ScanGlyph({ verified }: { verified: boolean }) {
   return (
     <div className="relative size-18">
-      <ScanSmileyIcon
+      <IconPlaceholder
+        lucide="ScanFaceIcon"
+        tabler="IconFaceId"
+        hugeicons="FaceIdIcon"
+        phosphor="ScanSmileyIcon"
+        remixicon="RiUserSmileLine"
         data-verified={verified ? "" : undefined}
         className="absolute inset-0 size-full animate-[pulse_1.2s_ease-in-out_infinite] text-foreground transition-[opacity,scale] duration-500 data-verified:scale-60 data-verified:animate-none data-verified:opacity-0 motion-reduce:animate-none"
-        weight="light"
       />
       <span
         data-verified={verified ? "" : undefined}
         className="absolute inset-1.5 flex scale-40 items-center justify-center rounded-full bg-green-500 text-white opacity-0 transition-[opacity,scale] duration-[300ms,550ms] ease-[ease,cubic-bezier(0.3,1.25,0.5,1)] data-verified:scale-100 data-verified:opacity-100"
       >
-        <CheckIcon weight="bold" className="size-8" />
+        <IconPlaceholder
+          lucide="CheckIcon"
+          tabler="IconCheck"
+          hugeicons="Tick02Icon"
+          phosphor="CheckIcon"
+          remixicon="RiCheckLine"
+          className="size-8"
+        />
       </span>
     </div>
   )
@@ -96,7 +107,14 @@ export function LoginPasskey() {
     <section className="flex min-h-150 items-center justify-center p-6">
       <div className="flex max-w-140 flex-col items-center text-center">
         <span className="flex size-18 items-center justify-center rounded-full bg-muted text-primary">
-          <KeyIcon weight="bold" className="size-8.5" />
+          <IconPlaceholder
+            lucide="KeyIcon"
+            tabler="IconKey"
+            hugeicons="Key01Icon"
+            phosphor="KeyIcon"
+            remixicon="RiKey2Line"
+            className="size-8.5"
+          />
         </span>
         <h1 className="mt-5.5 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
           Sign in without a password.
@@ -117,7 +135,14 @@ export function LoginPasskey() {
           </a>
         </div>
         <Button size="lg" onClick={start} className="mt-5.5 gap-2">
-          <ScanSmileyIcon className="size-4.5" />
+          <IconPlaceholder
+            lucide="ScanFaceIcon"
+            tabler="IconFaceId"
+            hugeicons="FaceIdIcon"
+            phosphor="ScanSmileyIcon"
+            remixicon="RiUserSmileLine"
+            className="size-4.5"
+          />
           Continue with passkey
         </Button>
         <a

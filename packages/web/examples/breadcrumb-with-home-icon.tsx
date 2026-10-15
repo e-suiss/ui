@@ -1,4 +1,4 @@
-import { HouseIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,7 +18,13 @@ export default function BreadcrumbWithHomeIcon() {
             aria-label="Home"
             className="text-foreground"
           >
-            <HouseIcon weight="fill" />
+            <IconPlaceholder
+              lucide="HouseIcon"
+              tabler="IconHome"
+              hugeicons="Home01Icon"
+              phosphor="HouseIcon"
+              remixicon="RiHomeLine"
+            />
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

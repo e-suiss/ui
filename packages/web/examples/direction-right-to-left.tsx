@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -31,7 +31,15 @@ function DirectionPreview() {
         <Button variant="ghost">Cancel</Button>
         <Button>
           Continue
-          <ArrowRightIcon data-icon="inline-end" className="rtl:rotate-180" />
+          <IconPlaceholder
+            lucide="ArrowRightIcon"
+            tabler="IconArrowRight"
+            hugeicons="ArrowRight02Icon"
+            phosphor="ArrowRightIcon"
+            remixicon="RiArrowRightLine"
+            data-icon="inline-end"
+            className="rtl:rotate-180"
+          />
         </Button>
       </CardFooter>
     </Card>

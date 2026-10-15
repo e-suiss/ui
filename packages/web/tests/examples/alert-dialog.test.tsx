@@ -1,7 +1,7 @@
-import { TrashIcon } from "@phosphor-icons/react"
 import { screen, waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -69,7 +69,13 @@ function AlertDialogWithMediaOpen() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive">
-            <TrashIcon />
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
           </AlertDialogMedia>
           <AlertDialogTitle>Delete this project?</AlertDialogTitle>
           <AlertDialogDescription>

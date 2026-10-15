@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, CreditCardIcon, WalletIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -71,7 +71,18 @@ function Step({
           data-state={stepState(index, current)}
           className="flex size-6.5 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-muted-foreground data-[state=done]:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_35%)] data-[state=done]:text-white data-[state=open]:bg-foreground data-[state=open]:text-background dark:data-[state=done]:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]"
         >
-          {done ? <CheckIcon weight="bold" className="size-3.25" /> : index + 1}
+          {done ? (
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="size-3.25"
+            />
+          ) : (
+            index + 1
+          )}
         </span>
         <h2
           data-idle={!open && !done ? "" : undefined}
@@ -120,7 +131,14 @@ export function BagCheckout() {
       <section className="flex min-h-160 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
-            <CheckIcon weight="bold" className="size-9.5" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="size-9.5"
+            />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Thank you. Your order is in.
@@ -203,7 +221,14 @@ export function BagCheckout() {
                 value="card"
                 className="size-5 focus-visible:ring-0"
               />
-              <CreditCardIcon className="size-4.5" />
+              <IconPlaceholder
+                lucide="CreditCardIcon"
+                tabler="IconCreditCard"
+                hugeicons="CreditCardIcon"
+                phosphor="CreditCardIcon"
+                remixicon="RiBankCardLine"
+                className="size-4.5"
+              />
               <span className="flex-1">Credit card · •••• 4242</span>
             </Label>
             <Label className={choiceClass}>
@@ -211,7 +236,14 @@ export function BagCheckout() {
                 value="pay"
                 className="size-5 focus-visible:ring-0"
               />
-              <WalletIcon className="size-4.5" />
+              <IconPlaceholder
+                lucide="WalletIcon"
+                tabler="IconWallet"
+                hugeicons="Wallet01Icon"
+                phosphor="WalletIcon"
+                remixicon="RiWalletLine"
+                className="size-4.5"
+              />
               <span className="flex-1">suiss Pay</span>
             </Label>
           </RadioGroup>

@@ -1,17 +1,8 @@
 "use client"
 
-import {
-  CheckIcon,
-  CloudIcon,
-  CreditCardIcon,
-  DeviceMobileIcon,
-  KeyIcon,
-  ShieldIcon,
-  UserIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -120,13 +111,97 @@ function NavSidebar({
 }
 
 const items: NavItem[] = [
-  { value: "personal", label: "Personal Information", icon: <UserIcon /> },
-  { value: "security", label: "Sign-In & Security", icon: <KeyIcon /> },
-  { value: "payment", label: "Payment & Shipping", icon: <CreditCardIcon /> },
-  { value: "subscriptions", label: "Subscriptions", icon: <CloudIcon /> },
-  { value: "family", label: "Family Sharing", icon: <UsersIcon /> },
-  { value: "devices", label: "Devices", icon: <DeviceMobileIcon /> },
-  { value: "privacy", label: "Privacy", icon: <ShieldIcon /> },
+  {
+    value: "personal",
+    label: "Personal Information",
+    icon: (
+      <IconPlaceholder
+        lucide="UserIcon"
+        tabler="IconUser"
+        hugeicons="UserIcon"
+        phosphor="UserIcon"
+        remixicon="RiUserLine"
+      />
+    ),
+  },
+  {
+    value: "security",
+    label: "Sign-In & Security",
+    icon: (
+      <IconPlaceholder
+        lucide="KeyIcon"
+        tabler="IconKey"
+        hugeicons="Key01Icon"
+        phosphor="KeyIcon"
+        remixicon="RiKey2Line"
+      />
+    ),
+  },
+  {
+    value: "payment",
+    label: "Payment & Shipping",
+    icon: (
+      <IconPlaceholder
+        lucide="CreditCardIcon"
+        tabler="IconCreditCard"
+        hugeicons="CreditCardIcon"
+        phosphor="CreditCardIcon"
+        remixicon="RiBankCardLine"
+      />
+    ),
+  },
+  {
+    value: "subscriptions",
+    label: "Subscriptions",
+    icon: (
+      <IconPlaceholder
+        lucide="CloudIcon"
+        tabler="IconCloud"
+        hugeicons="CloudIcon"
+        phosphor="CloudIcon"
+        remixicon="RiCloudLine"
+      />
+    ),
+  },
+  {
+    value: "family",
+    label: "Family Sharing",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "devices",
+    label: "Devices",
+    icon: (
+      <IconPlaceholder
+        lucide="SmartphoneIcon"
+        tabler="IconDeviceMobile"
+        hugeicons="SmartPhone01Icon"
+        phosphor="DeviceMobileIcon"
+        remixicon="RiSmartphoneLine"
+      />
+    ),
+  },
+  {
+    value: "privacy",
+    label: "Privacy",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
 ]
 
 type Editable = "email" | "phone"
@@ -289,8 +364,12 @@ function Security() {
       <p role="status" className="flex min-h-6 items-center gap-1.5 text-sm">
         {saved && (
           <span className="flex items-center gap-1.5 transition-[opacity,translate] duration-800 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none">
-            <CheckIcon
-              weight="bold"
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
               className="size-4 text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_30%)] dark:text-green-500"
             />
             {saved} saved.

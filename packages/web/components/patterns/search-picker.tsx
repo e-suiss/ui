@@ -1,7 +1,7 @@
 "use client"
 
-import { CaretUpDownIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Combobox,
   ComboboxCollection,
@@ -133,7 +133,14 @@ function SearchPicker({
           )}
         >
           <span className="truncate">{selected?.label ?? placeholder}</span>
-          <CaretUpDownIcon className="size-4 shrink-0 text-muted-foreground" />
+          <IconPlaceholder
+            lucide="ChevronsUpDownIcon"
+            tabler="IconSelector"
+            hugeicons="UnfoldMoreIcon"
+            phosphor="CaretUpDownIcon"
+            remixicon="RiExpandUpDownLine"
+            className="size-4 shrink-0 text-muted-foreground"
+          />
         </DrawerTrigger>
         <DrawerContent
           data-slot="search-picker-content"

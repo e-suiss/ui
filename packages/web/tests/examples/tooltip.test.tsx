@@ -1,7 +1,7 @@
-import { PlusIcon } from "@phosphor-icons/react"
 import { screen, waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import {
@@ -57,7 +57,13 @@ function TooltipWithShortcutOpen() {
               <Button variant="outline" size="icon" aria-label="New file" />
             }
           >
-            <PlusIcon />
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+            />
           </TooltipTrigger>
           <TooltipContent side="top">
             New file

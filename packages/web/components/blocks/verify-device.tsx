@@ -1,12 +1,8 @@
 "use client"
 
-import {
-  CheckIcon,
-  DeviceMobileIcon,
-  LockSimpleIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputOTP,
   InputOTPGroup,
@@ -70,7 +66,14 @@ export function VerifyDevice() {
       <section className="flex min-h-150 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
-            <CheckIcon weight="bold" className="size-9.5" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="size-9.5"
+            />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Sign-in approved.
@@ -98,9 +101,23 @@ export function VerifyDevice() {
       <div className="flex flex-col justify-center gap-3.5 px-6 py-12 md:px-12">
         <span className="flex size-14 items-center justify-center rounded-full bg-muted text-primary">
           {phase === "code" ? (
-            <LockSimpleIcon weight="bold" className="size-6.5" />
+            <IconPlaceholder
+              lucide="LockIcon"
+              tabler="IconLock"
+              hugeicons="SquareLock02Icon"
+              phosphor="LockSimpleIcon"
+              remixicon="RiLockLine"
+              className="size-6.5"
+            />
           ) : (
-            <DeviceMobileIcon weight="bold" className="size-6.5" />
+            <IconPlaceholder
+              lucide="SmartphoneIcon"
+              tabler="IconDeviceMobile"
+              hugeicons="SmartPhone01Icon"
+              phosphor="DeviceMobileIcon"
+              remixicon="RiSmartphoneLine"
+              className="size-6.5"
+            />
           )}
         </span>
         <h1 className="text-4xl font-semibold tracking-tight text-balance">

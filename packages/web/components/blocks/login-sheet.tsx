@@ -1,8 +1,8 @@
 "use client"
 
-import { EnvelopeSimpleIcon, UserIcon, XIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -122,7 +122,14 @@ export function LoginSheet() {
               onClick={close}
               className="size-7 text-muted-foreground"
             >
-              <XIcon weight="bold" className="size-3.5" />
+              <IconPlaceholder
+                lucide="XIcon"
+                tabler="IconX"
+                hugeicons="Cancel01Icon"
+                phosphor="XIcon"
+                remixicon="RiCloseLine"
+                className="size-3.5"
+              />
             </Button>
           </div>
           <h2
@@ -133,7 +140,14 @@ export function LoginSheet() {
           </h2>
           <div className="rounded-xl bg-muted">
             <div className="flex items-center gap-3 px-3.5 py-2.5">
-              <UserIcon className="size-5 text-muted-foreground" />
+              <IconPlaceholder
+                lucide="UserIcon"
+                tabler="IconUser"
+                hugeicons="UserIcon"
+                phosphor="UserIcon"
+                remixicon="RiUserLine"
+                className="size-5 text-muted-foreground"
+              />
               <div className="flex flex-col text-start">
                 <span className="text-xs text-muted-foreground">Name</span>
                 <span className="text-base">Jamie Rivera</span>
@@ -164,7 +178,14 @@ export function LoginSheet() {
                   data-index={index}
                 >
                   {index === 0 && (
-                    <EnvelopeSimpleIcon className="size-5 text-muted-foreground" />
+                    <IconPlaceholder
+                      lucide="MailIcon"
+                      tabler="IconMail"
+                      hugeicons="Mail01Icon"
+                      phosphor="EnvelopeSimpleIcon"
+                      remixicon="RiMailLine"
+                      className="size-5 text-muted-foreground"
+                    />
                   )}
                   <span className="flex flex-1 flex-col text-start">
                     <span className="text-base">{option.label}</span>

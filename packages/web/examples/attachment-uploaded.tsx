@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Attachment,
   AttachmentActions,
@@ -24,10 +24,14 @@ export default function AttachmentUploaded() {
           <AttachmentDescription>2.4 MB</AttachmentDescription>
         </AttachmentContent>
         <AttachmentActions>
-          <CheckCircleIcon
-            weight="fill"
+          <IconPlaceholder
+            lucide="CircleCheckIcon"
+            tabler="IconCircleCheck"
+            hugeicons="CheckmarkCircle02Icon"
+            phosphor="CheckCircleIcon"
+            remixicon="RiCheckboxCircleLine"
             aria-label="Uploaded"
-            className="size-6 text-green-600 dark:text-green-400"
+            className="size-6 fill-green-600 text-white dark:fill-green-400"
           />
         </AttachmentActions>
       </Attachment>
@@ -40,10 +44,14 @@ export default function AttachmentUploaded() {
           <AttachmentDescription>1.8 MB</AttachmentDescription>
         </AttachmentContent>
         <AttachmentActions>
-          <CheckCircleIcon
-            weight="fill"
+          <IconPlaceholder
+            lucide="CircleCheckIcon"
+            tabler="IconCircleCheck"
+            hugeicons="CheckmarkCircle02Icon"
+            phosphor="CheckCircleIcon"
+            remixicon="RiCheckboxCircleLine"
             aria-label="Uploaded"
-            className="size-6 text-green-600 dark:text-green-400"
+            className="size-6 fill-green-600 text-white dark:fill-green-400"
           />
         </AttachmentActions>
       </Attachment>

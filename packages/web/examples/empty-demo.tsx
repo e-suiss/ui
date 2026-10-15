@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, FolderSimpleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -15,7 +15,13 @@ export default function EmptyDemo() {
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
-            <FolderSimpleIcon />
+            <IconPlaceholder
+              lucide="FolderIcon"
+              tabler="IconFolder"
+              hugeicons="Folder01Icon"
+              phosphor="FolderSimpleIcon"
+              remixicon="RiFolderLine"
+            />
           </EmptyMedia>
           <EmptyTitle>No projects yet</EmptyTitle>
           <EmptyDescription>
@@ -30,7 +36,14 @@ export default function EmptyDemo() {
           </div>
           <Button variant="link" size="sm" className="text-muted-foreground">
             Learn more
-            <ArrowUpRightIcon data-icon="inline-end" />
+            <IconPlaceholder
+              lucide="ArrowUpRightIcon"
+              tabler="IconArrowUpRight"
+              hugeicons="ArrowUpRight01Icon"
+              phosphor="ArrowUpRightIcon"
+              remixicon="RiArrowRightUpLine"
+              data-icon="inline-end"
+            />
           </Button>
         </EmptyContent>
       </Empty>

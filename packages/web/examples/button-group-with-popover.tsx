@@ -1,4 +1,4 @@
-import { CaretDownIcon, SparkleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import {
@@ -15,7 +15,14 @@ export default function ButtonGroupWithPopover() {
   return (
     <ButtonGroup orientation="horizontal">
       <Button variant="outline">
-        <SparkleIcon data-icon="inline-start" />
+        <IconPlaceholder
+          lucide="SparkleIcon"
+          tabler="IconSparkles"
+          hugeicons="SparklesIcon"
+          phosphor="SparkleIcon"
+          remixicon="RiSparklingLine"
+          data-icon="inline-start"
+        />
         Assistant
       </Button>
       <Popover>
@@ -24,7 +31,13 @@ export default function ButtonGroupWithPopover() {
             <Button variant="outline" size="icon" aria-label="Open popover" />
           }
         >
-          <CaretDownIcon />
+          <IconPlaceholder
+            lucide="ChevronDownIcon"
+            tabler="IconChevronDown"
+            hugeicons="ArrowDown01Icon"
+            phosphor="CaretDownIcon"
+            remixicon="RiArrowDownSLine"
+          />
         </PopoverTrigger>
         <PopoverContent align="end" className="w-80">
           <PopoverHeader>

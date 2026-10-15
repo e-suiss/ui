@@ -1,13 +1,8 @@
 "use client"
 
-import {
-  ArrowUpIcon,
-  CaretRightIcon,
-  HeartIcon,
-  PlusIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
 import { Button } from "@/components/ui/button"
@@ -85,7 +80,14 @@ export function ChatThread() {
           </Avatar>
           <span className="flex items-center gap-0.5 text-xs font-semibold">
             Riley
-            <CaretRightIcon weight="bold" className="size-2.5 rtl:rotate-180" />
+            <IconPlaceholder
+              lucide="ChevronRightIcon"
+              tabler="IconChevronRight"
+              hugeicons="ArrowRight01Icon"
+              phosphor="CaretRightIcon"
+              remixicon="RiArrowRightSLine"
+              className="size-2.5 rtl:rotate-180"
+            />
           </span>
         </a>
         <MessageScrollerProvider>
@@ -124,7 +126,14 @@ export function ChatThread() {
                               align={line.from === "me" ? "start" : "end"}
                               className="size-6.5 bg-primary p-0 text-primary-foreground ring-2 ring-background transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] starting:scale-0 dark:bg-primary"
                             >
-                              <HeartIcon weight="fill" className="size-3.25" />
+                              <IconPlaceholder
+                                lucide="HeartIcon"
+                                tabler="IconHeart"
+                                hugeicons="FavouriteIcon"
+                                phosphor="HeartIcon"
+                                remixicon="RiHeartLine"
+                                className="size-3.25 fill-current"
+                              />
                             </BubbleReactions>
                           )}
                         </Bubble>
@@ -171,7 +180,14 @@ export function ChatThread() {
             aria-label="Add attachment"
             className="text-muted-foreground"
           >
-            <PlusIcon weight="bold" className="size-4.5" />
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+              className="size-4.5"
+            />
           </Button>
           <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
             <Input
@@ -189,7 +205,14 @@ export function ChatThread() {
               data-ready={ready ? "" : undefined}
               className="size-6.75 scale-0 transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-ready:scale-100 motion-reduce:transition-none"
             >
-              <ArrowUpIcon weight="bold" className="size-4" />
+              <IconPlaceholder
+                lucide="ArrowUpIcon"
+                tabler="IconArrowUp"
+                hugeicons="ArrowUp02Icon"
+                phosphor="ArrowUpIcon"
+                remixicon="RiArrowUpLine"
+                className="size-4"
+              />
             </Button>
           </div>
         </form>

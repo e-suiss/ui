@@ -1,8 +1,4 @@
-import {
-  TextBIcon,
-  TextItalicIcon,
-  TextUnderlineIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 export default function ToggleGroupAttached() {
@@ -15,13 +11,31 @@ export default function ToggleGroupAttached() {
       defaultValue={["bold"]}
     >
       <ToggleGroupItem value="bold" aria-label="Toggle bold">
-        <TextBIcon />
+        <IconPlaceholder
+          lucide="BoldIcon"
+          tabler="IconBold"
+          hugeicons="TextBoldIcon"
+          phosphor="TextBIcon"
+          remixicon="RiBold"
+        />
       </ToggleGroupItem>
       <ToggleGroupItem value="italic" aria-label="Toggle italic">
-        <TextItalicIcon />
+        <IconPlaceholder
+          lucide="ItalicIcon"
+          tabler="IconItalic"
+          hugeicons="TextItalicIcon"
+          phosphor="TextItalicIcon"
+          remixicon="RiItalic"
+        />
       </ToggleGroupItem>
       <ToggleGroupItem value="underline" aria-label="Toggle underline">
-        <TextUnderlineIcon />
+        <IconPlaceholder
+          lucide="UnderlineIcon"
+          tabler="IconUnderline"
+          hugeicons="TextUnderlineIcon"
+          phosphor="TextUnderlineIcon"
+          remixicon="RiUnderline"
+        />
       </ToggleGroupItem>
     </ToggleGroup>
   )

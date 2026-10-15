@@ -1,5 +1,5 @@
-import { CookingPotIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetDescription,
@@ -38,7 +38,13 @@ export default function WidgetKitchen() {
               size="sm"
               className="text-amber-600 dark:text-amber-400"
             >
-              <CookingPotIcon weight="fill" />
+              <IconPlaceholder
+                lucide="CookingPotIcon"
+                tabler="IconSoup"
+                hugeicons="PotIcon"
+                phosphor="CookingPotIcon"
+                remixicon="RiBowlLine"
+              />
             </WidgetIcon>
             <WidgetTitle>Kitchen</WidgetTitle>
           </WidgetHeader>

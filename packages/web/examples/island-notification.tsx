@@ -1,4 +1,4 @@
-import { BellIcon, ChatCircleIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Island,
   IslandProvider,
@@ -15,7 +15,16 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <ChatCircleIcon weight="fill" className="text-green-500" />,
+            icon: (
+              <IconPlaceholder
+                lucide="MessageCircleIcon"
+                tabler="IconMessageCircle"
+                hugeicons="BubbleChatIcon"
+                phosphor="ChatCircleIcon"
+                remixicon="RiChat1Line"
+                className="text-green-500 fill-current"
+              />
+            ),
             title: "Jordan Lee",
             description: "Are we still on for Saturday?",
           })
@@ -27,7 +36,16 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <BellIcon weight="fill" className="text-orange-500" />,
+            icon: (
+              <IconPlaceholder
+                lucide="BellIcon"
+                tabler="IconBell"
+                hugeicons="Notification03Icon"
+                phosphor="BellIcon"
+                remixicon="RiNotificationLine"
+                className="text-orange-500 fill-current"
+              />
+            ),
             title: "Design review",
             description: "Starts in 10 minutes",
           })

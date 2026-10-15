@@ -1,9 +1,4 @@
-import {
-  ArchiveIcon,
-  BellSlashIcon,
-  FlagIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SwipeAction,
   SwipeActions,
@@ -20,19 +15,44 @@ export default function SwipeActionsVariants() {
         </SwipeActionsContent>
         <SwipeActionsActions>
           <SwipeAction>
-            <FlagIcon weight="fill" />
+            <IconPlaceholder
+              lucide="FlagIcon"
+              tabler="IconFlag"
+              hugeicons="Flag01Icon"
+              phosphor="FlagIcon"
+              remixicon="RiFlagLine"
+              className="fill-current"
+            />
             Flag
           </SwipeAction>
           <SwipeAction variant="neutral">
-            <BellSlashIcon weight="fill" />
+            <IconPlaceholder
+              lucide="BellOffIcon"
+              tabler="IconBellOff"
+              hugeicons="NotificationOff01Icon"
+              phosphor="BellSlashIcon"
+              remixicon="RiNotificationOffLine"
+            />
             Mute
           </SwipeAction>
           <SwipeAction variant="archive">
-            <ArchiveIcon weight="fill" />
+            <IconPlaceholder
+              lucide="ArchiveIcon"
+              tabler="IconArchive"
+              hugeicons="Archive02Icon"
+              phosphor="ArchiveIcon"
+              remixicon="RiArchiveLine"
+            />
             Archive
           </SwipeAction>
           <SwipeAction variant="destructive">
-            <TrashIcon weight="fill" />
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
             Delete
           </SwipeAction>
         </SwipeActionsActions>

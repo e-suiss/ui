@@ -1,8 +1,4 @@
-import {
-  TextAlignCenterIcon,
-  TextAlignLeftIcon,
-  TextAlignRightIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 export default function ToggleGroupSingleSelection() {
@@ -15,13 +11,31 @@ export default function ToggleGroupSingleSelection() {
       defaultValue={["left"]}
     >
       <ToggleGroupItem value="left" aria-label="Align left">
-        <TextAlignLeftIcon />
+        <IconPlaceholder
+          lucide="TextAlignStartIcon"
+          tabler="IconAlignLeft"
+          hugeicons="TextAlignLeftIcon"
+          phosphor="TextAlignLeftIcon"
+          remixicon="RiAlignLeft"
+        />
       </ToggleGroupItem>
       <ToggleGroupItem value="center" aria-label="Align center">
-        <TextAlignCenterIcon />
+        <IconPlaceholder
+          lucide="TextAlignCenterIcon"
+          tabler="IconAlignCenter"
+          hugeicons="TextAlignCenterIcon"
+          phosphor="TextAlignCenterIcon"
+          remixicon="RiAlignCenter"
+        />
       </ToggleGroupItem>
       <ToggleGroupItem value="right" aria-label="Align right">
-        <TextAlignRightIcon />
+        <IconPlaceholder
+          lucide="TextAlignEndIcon"
+          tabler="IconAlignRight"
+          hugeicons="TextAlignRightIcon"
+          phosphor="TextAlignRightIcon"
+          remixicon="RiAlignRight"
+        />
       </ToggleGroupItem>
     </ToggleGroup>
   )

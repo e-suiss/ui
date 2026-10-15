@@ -2,8 +2,8 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
-import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
@@ -87,7 +87,16 @@ function BreadcrumbSeparator({
       className={cn("[&>svg]:size-3", className)}
       {...props}
     >
-      {children ?? <CaretRightIcon weight="bold" className="rtl:rotate-180" />}
+      {children ?? (
+        <IconPlaceholder
+          lucide="ChevronRightIcon"
+          tabler="IconChevronRight"
+          hugeicons="ArrowRight01Icon"
+          phosphor="CaretRightIcon"
+          remixicon="RiArrowRightSLine"
+          className="rtl:rotate-180"
+        />
+      )}
     </li>
   )
 }
@@ -106,7 +115,14 @@ function BreadcrumbEllipsis({
       )}
       {...props}
     >
-      <DotsThreeIcon aria-hidden="true" />
+      <IconPlaceholder
+        lucide="EllipsisIcon"
+        tabler="IconDots"
+        hugeicons="MoreHorizontalIcon"
+        phosphor="DotsThreeIcon"
+        remixicon="RiMoreLine"
+        aria-hidden="true"
+      />
       <span className="sr-only">{children ?? "More"}</span>
     </span>
   )

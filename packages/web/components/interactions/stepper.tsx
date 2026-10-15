@@ -1,8 +1,8 @@
 "use client"
 
 import { NumberField as NumberFieldPrimitive } from "@base-ui/react/number-field"
-import { MinusIcon, PlusIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 type StepperContextProps = {
@@ -190,7 +190,15 @@ function StepperDecrement({
 }: Omit<React.ComponentProps<"button">, "onClick">) {
   return (
     <StepperButton direction={-1} aria-label="Decrease" {...props}>
-      {children ?? <MinusIcon weight="bold" />}
+      {children ?? (
+        <IconPlaceholder
+          lucide="MinusIcon"
+          tabler="IconMinus"
+          hugeicons="MinusSignIcon"
+          phosphor="MinusIcon"
+          remixicon="RiSubtractLine"
+        />
+      )}
     </StepperButton>
   )
 }
@@ -201,7 +209,15 @@ function StepperIncrement({
 }: Omit<React.ComponentProps<"button">, "onClick">) {
   return (
     <StepperButton direction={1} aria-label="Increase" {...props}>
-      {children ?? <PlusIcon weight="bold" />}
+      {children ?? (
+        <IconPlaceholder
+          lucide="PlusIcon"
+          tabler="IconPlus"
+          hugeicons="PlusSignIcon"
+          phosphor="PlusIcon"
+          remixicon="RiAddLine"
+        />
+      )}
     </StepperButton>
   )
 }

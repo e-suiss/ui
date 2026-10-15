@@ -1,7 +1,7 @@
 "use client"
 
-import { MagnifyingGlassIcon, XCircleIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 const SETTLE_DELAY = 140
@@ -102,7 +102,15 @@ function SearchRevealField({
       className="px-4 pb-2 opacity-(--search-reveal)"
     >
       <div className="flex h-9 items-center gap-1.5 rounded-lg bg-secondary px-2 text-muted-foreground focus-within:ring-3 focus-within:ring-ring/50">
-        <MagnifyingGlassIcon aria-hidden className="size-4.5 shrink-0" />
+        <IconPlaceholder
+          lucide="SearchIcon"
+          tabler="IconSearch"
+          hugeicons="Search01Icon"
+          phosphor="MagnifyingGlassIcon"
+          remixicon="RiSearchLine"
+          aria-hidden
+          className="size-4.5 shrink-0"
+        />
         <input
           ref={inputRef}
           type="search"
@@ -133,7 +141,14 @@ function SearchRevealField({
             }}
             className="relative -me-1 flex size-7 shrink-0 items-center justify-center rounded-full outline-none after:absolute after:-inset-2 after:content-[''] focus-visible:ring-3 focus-visible:ring-ring/50"
           >
-            <XCircleIcon weight="fill" className="size-4.5" />
+            <IconPlaceholder
+              lucide="CircleXIcon"
+              tabler="IconCircleX"
+              hugeicons="CancelCircleIcon"
+              phosphor="XCircleIcon"
+              remixicon="RiCloseCircleLine"
+              className="size-4.5 fill-muted-foreground text-background"
+            />
           </button>
         )}
       </div>

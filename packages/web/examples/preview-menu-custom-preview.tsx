@@ -1,4 +1,4 @@
-import { ShareNetworkIcon, TrashIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   PreviewMenu,
   PreviewMenuContent,
@@ -27,11 +27,23 @@ export default function PreviewMenuCustomPreview() {
         >
           <PreviewMenuItem>
             Share album
-            <ShareNetworkIcon />
+            <IconPlaceholder
+              lucide="Share2Icon"
+              tabler="IconShare"
+              hugeicons="Share08Icon"
+              phosphor="ShareNetworkIcon"
+              remixicon="RiShareLine"
+            />
           </PreviewMenuItem>
           <PreviewMenuItem variant="destructive">
             Delete album
-            <TrashIcon />
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
           </PreviewMenuItem>
         </PreviewMenuContent>
       </PreviewMenu>

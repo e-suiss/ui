@@ -25,6 +25,7 @@
         "scripts/**/*.mjs",
         "styles/**/*.css",
         "examples/*.tsx",
+        "app/**/*.tsx",
         "tests/render-example.tsx",
         "tests/examples/*.test.tsx"
       ]

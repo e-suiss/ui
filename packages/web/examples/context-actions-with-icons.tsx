@@ -1,9 +1,4 @@
-import {
-  CopyIcon,
-  PencilSimpleIcon,
-  ShareIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   ContextActions,
   ContextActionsContent,
@@ -21,20 +16,44 @@ export default function ContextActionsWithIcons() {
         </ContextActionsTrigger>
         <ContextActionsContent>
           <ContextActionsItem>
-            <PencilSimpleIcon />
+            <IconPlaceholder
+              lucide="PencilIcon"
+              tabler="IconPencil"
+              hugeicons="PencilEdit01Icon"
+              phosphor="PencilSimpleIcon"
+              remixicon="RiPencilLine"
+            />
             Edit
           </ContextActionsItem>
           <ContextActionsItem>
-            <CopyIcon />
+            <IconPlaceholder
+              lucide="CopyIcon"
+              tabler="IconCopy"
+              hugeicons="Copy01Icon"
+              phosphor="CopyIcon"
+              remixicon="RiFileCopyLine"
+            />
             Duplicate
           </ContextActionsItem>
           <ContextActionsItem>
-            <ShareIcon />
+            <IconPlaceholder
+              lucide="ShareIcon"
+              tabler="IconShare2"
+              hugeicons="Share01Icon"
+              phosphor="ShareIcon"
+              remixicon="RiShareForwardBoxLine"
+            />
             Share
           </ContextActionsItem>
           <ContextActionsSeparator />
           <ContextActionsItem variant="destructive">
-            <TrashIcon />
+            <IconPlaceholder
+              lucide="TrashIcon"
+              tabler="IconTrash"
+              hugeicons="Delete02Icon"
+              phosphor="TrashIcon"
+              remixicon="RiDeleteBinLine"
+            />
             Delete
           </ContextActionsItem>
         </ContextActionsContent>

@@ -1,4 +1,4 @@
-import { ShieldCheckIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Item,
@@ -14,7 +14,13 @@ export default function ItemDemo() {
     <div className="w-96">
       <Item variant="outline">
         <ItemMedia variant="icon">
-          <ShieldCheckIcon />
+          <IconPlaceholder
+            lucide="ShieldCheckIcon"
+            tabler="IconShieldCheck"
+            hugeicons="SecurityCheckIcon"
+            phosphor="ShieldCheckIcon"
+            remixicon="RiShieldCheckLine"
+          />
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Two-factor authentication</ItemTitle>

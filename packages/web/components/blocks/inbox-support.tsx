@@ -1,8 +1,8 @@
 "use client"
 
-import { ChatCircleIcon, CheckIcon, TrayIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SplitView,
   SplitViewDetail,
@@ -68,11 +68,59 @@ const initialTickets: Ticket[] = [
   },
 ]
 
-const views: { value: Status | "All"; icon: React.ElementType }[] = [
-  { value: "Open", icon: ChatCircleIcon },
-  { value: "Pending", icon: ChatCircleIcon },
-  { value: "Solved", icon: CheckIcon },
-  { value: "All", icon: TrayIcon },
+const views: { value: Status | "All"; icon: React.ReactNode }[] = [
+  {
+    value: "Open",
+    icon: (
+      <IconPlaceholder
+        lucide="MessageCircleIcon"
+        tabler="IconMessageCircle"
+        hugeicons="BubbleChatIcon"
+        phosphor="ChatCircleIcon"
+        remixicon="RiChat1Line"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "Pending",
+    icon: (
+      <IconPlaceholder
+        lucide="MessageCircleIcon"
+        tabler="IconMessageCircle"
+        hugeicons="BubbleChatIcon"
+        phosphor="ChatCircleIcon"
+        remixicon="RiChat1Line"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "Solved",
+    icon: (
+      <IconPlaceholder
+        lucide="CheckIcon"
+        tabler="IconCheck"
+        hugeicons="Tick02Icon"
+        phosphor="CheckIcon"
+        remixicon="RiCheckLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
+  {
+    value: "All",
+    icon: (
+      <IconPlaceholder
+        lucide="InboxIcon"
+        tabler="IconInbox"
+        hugeicons="InboxIcon"
+        phosphor="TrayIcon"
+        remixicon="RiInboxLine"
+        className="size-4.5 text-primary"
+      />
+    ),
+  },
 ]
 
 const priorityClass: Record<Priority, string> = {
@@ -139,7 +187,7 @@ export function InboxSupport() {
             onClick={() => setView(item.value)}
           >
             <span className="flex items-center gap-2.5">
-              <item.icon className="size-4.5 text-primary" />
+              {item.icon}
               <span className="flex-1">{item.value}</span>
               <span className="text-xs text-muted-foreground tabular-nums">
                 {item.value === "All"

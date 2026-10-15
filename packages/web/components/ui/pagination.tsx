@@ -1,14 +1,8 @@
 "use client"
 
-import {
-  CaretDoubleLeftIcon,
-  CaretDoubleRightIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-  DotsThreeIcon,
-} from "@phosphor-icons/react"
 import type { VariantProps } from "class-variance-authority"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -81,7 +75,15 @@ function PaginationPrevious({
       className={cn(text && "ps-2!", className)}
       {...props}
     >
-      <CaretLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="ChevronLeftIcon"
+        tabler="IconChevronLeft"
+        hugeicons="ArrowLeft01Icon"
+        phosphor="CaretLeftIcon"
+        remixicon="RiArrowLeftSLine"
+        data-icon="inline-start"
+        className="rtl:rotate-180"
+      />
       {text && <span className="hidden sm:block">{text}</span>}
     </PaginationLink>
   )
@@ -100,7 +102,15 @@ function PaginationNext({
       {...props}
     >
       {text && <span className="hidden sm:block">{text}</span>}
-      <CaretRightIcon data-icon="inline-end" className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="ChevronRightIcon"
+        tabler="IconChevronRight"
+        hugeicons="ArrowRight01Icon"
+        phosphor="CaretRightIcon"
+        remixicon="RiArrowRightSLine"
+        data-icon="inline-end"
+        className="rtl:rotate-180"
+      />
     </PaginationLink>
   )
 }
@@ -110,7 +120,14 @@ function PaginationFirst({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink aria-label="Go to first page" {...props}>
-      <CaretDoubleLeftIcon className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="ChevronsLeftIcon"
+        tabler="IconChevronsLeft"
+        hugeicons="ArrowLeftDoubleIcon"
+        phosphor="CaretDoubleLeftIcon"
+        remixicon="RiArrowLeftDoubleLine"
+        className="rtl:rotate-180"
+      />
     </PaginationLink>
   )
 }
@@ -120,7 +137,14 @@ function PaginationLast({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink aria-label="Go to last page" {...props}>
-      <CaretDoubleRightIcon className="rtl:rotate-180" />
+      <IconPlaceholder
+        lucide="ChevronsRightIcon"
+        tabler="IconChevronsRight"
+        hugeicons="ArrowRightDoubleIcon"
+        phosphor="CaretDoubleRightIcon"
+        remixicon="RiArrowRightDoubleLine"
+        className="rtl:rotate-180"
+      />
     </PaginationLink>
   )
 }
@@ -139,7 +163,13 @@ function PaginationEllipsis({
       )}
       {...props}
     >
-      <DotsThreeIcon />
+      <IconPlaceholder
+        lucide="EllipsisIcon"
+        tabler="IconDots"
+        hugeicons="MoreHorizontalIcon"
+        phosphor="DotsThreeIcon"
+        remixicon="RiMoreLine"
+      />
       <span className="sr-only">More pages</span>
     </span>
   )

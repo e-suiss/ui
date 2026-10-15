@@ -1,10 +1,5 @@
-import {
-  ArchiveIcon,
-  CaretRightIcon,
-  FolderSimpleIcon,
-  TrashIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SelectionList,
   SelectionListBar,
@@ -53,7 +48,12 @@ function NoteRows({
                 {note.preview}
               </span>
             </span>
-            <CaretRightIcon
+            <IconPlaceholder
+              lucide="ChevronRightIcon"
+              tabler="IconChevronRight"
+              hugeicons="ArrowRight01Icon"
+              phosphor="CaretRightIcon"
+              remixicon="RiArrowRightSLine"
               aria-hidden
               className="size-4 shrink-0 text-muted-foreground transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0"
             />
@@ -121,7 +121,14 @@ function MailExample() {
           disabled={selected.length === 0}
           onClick={() => act("Archived")}
         >
-          <ArchiveIcon className="size-5.5" />
+          <IconPlaceholder
+            lucide="ArchiveIcon"
+            tabler="IconArchive"
+            hugeicons="Archive02Icon"
+            phosphor="ArchiveIcon"
+            remixicon="RiArchiveLine"
+            className="size-5.5"
+          />
         </Button>
         <Button
           variant="plain"
@@ -130,7 +137,14 @@ function MailExample() {
           disabled={selected.length === 0}
           onClick={() => act("Moved")}
         >
-          <FolderSimpleIcon className="size-5.5" />
+          <IconPlaceholder
+            lucide="FolderIcon"
+            tabler="IconFolder"
+            hugeicons="Folder01Icon"
+            phosphor="FolderSimpleIcon"
+            remixicon="RiFolderLine"
+            className="size-5.5"
+          />
         </Button>
         <SelectionListCount />
         <Button
@@ -144,7 +158,14 @@ function MailExample() {
             setSelected([])
           }}
         >
-          <TrashIcon className="size-5.5" />
+          <IconPlaceholder
+            lucide="TrashIcon"
+            tabler="IconTrash"
+            hugeicons="Delete02Icon"
+            phosphor="TrashIcon"
+            remixicon="RiDeleteBinLine"
+            className="size-5.5"
+          />
         </Button>
       </SelectionListBar>
     </SelectionList>

@@ -1,4 +1,4 @@
-import { SunIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetContent,
@@ -15,7 +15,14 @@ export default function WidgetDemo() {
     <Widget size="small" align="start">
       <WidgetHeader>
         <WidgetIcon>
-          <SunIcon weight="fill" />
+          <IconPlaceholder
+            lucide="SunIcon"
+            tabler="IconSun"
+            hugeicons="Sun03Icon"
+            phosphor="SunIcon"
+            remixicon="RiSunLine"
+            className="fill-current"
+          />
         </WidgetIcon>
         <WidgetTitle>Istanbul</WidgetTitle>
       </WidgetHeader>

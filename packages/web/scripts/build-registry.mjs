@@ -14,6 +14,7 @@ const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
 const OPT_IN = new Set(["theme"])
 const ITEM_CSS = new Map([["theme", "styles/theme.css"]])
+const ICON_PLACEHOLDER = "@/app/(create)/components/icon-placeholder"
 const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks|lib)\/([\w-]+)$/
 
@@ -36,10 +37,13 @@ async function buildItem(dir, type, file) {
 
   const dependencies = new Set()
   const requires = new Set()
+  let icons = false
 
   for (const specifier of collectImports(code)) {
     const local = specifier.match(LOCAL_IMPORT)
-    if (local) {
+    if (specifier === ICON_PLACEHOLDER) {
+      icons = true
+    } else if (local) {
       if (local[2] !== name) requires.add(local[2])
     } else if (specifier.startsWith("@/")) {
       throw new Error(`${filePath}: unsupported local import "${specifier}"`)
@@ -56,6 +60,7 @@ async function buildItem(dir, type, file) {
     dependencies: [...dependencies].sort(),
     requires: [...requires].sort(),
     files: [filePath],
+    ...(icons && { icons: true }),
     ...(OPT_IN.has(name) && { optIn: true }),
     ...(ITEM_CSS.has(name) && { css: ITEM_CSS.get(name) }),
   }

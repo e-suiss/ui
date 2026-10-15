@@ -1,11 +1,5 @@
-import {
-  BellIcon,
-  ChatCircleIcon,
-  CheckCircleIcon,
-  DownloadSimpleIcon,
-  FileZipIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Island,
   IslandCompact,
@@ -27,7 +21,16 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <ChatCircleIcon weight="fill" className="text-green-500" />,
+            icon: (
+              <IconPlaceholder
+                lucide="MessageCircleIcon"
+                tabler="IconMessageCircle"
+                hugeicons="BubbleChatIcon"
+                phosphor="ChatCircleIcon"
+                remixicon="RiChat1Line"
+                className="text-green-500 fill-current"
+              />
+            ),
             title: "Jordan Lee",
             description: "Are we still on for Saturday?",
           })
@@ -39,7 +42,16 @@ function NotifyButtons() {
         variant="secondary"
         onClick={() =>
           notify({
-            icon: <BellIcon weight="fill" className="text-orange-500" />,
+            icon: (
+              <IconPlaceholder
+                lucide="BellIcon"
+                tabler="IconBell"
+                hugeicons="Notification03Icon"
+                phosphor="BellIcon"
+                remixicon="RiNotificationLine"
+                className="text-orange-500 fill-current"
+              />
+            ),
             title: "Design review",
             description: "Starts in 10 minutes",
           })
@@ -69,7 +81,16 @@ function useDownload() {
     const timer = window.setTimeout(() => {
       setProgress(null)
       notify({
-        icon: <CheckCircleIcon weight="fill" className="text-green-500" />,
+        icon: (
+          <IconPlaceholder
+            lucide="CircleCheckIcon"
+            tabler="IconCircleCheck"
+            hugeicons="CheckmarkCircle02Icon"
+            phosphor="CheckCircleIcon"
+            remixicon="RiCheckboxCircleLine"
+            className="fill-green-500 text-white"
+          />
+        ),
         title: "Download complete",
         description: "Design-Kit.zip",
       })
@@ -97,9 +118,23 @@ function DownloadActivity({
   return (
     <>
       <IslandCompact aria-label={`Downloading Design-Kit.zip, ${percent}%`}>
-        <DownloadSimpleIcon weight="bold" className="text-primary" />
+        <IconPlaceholder
+          lucide="DownloadIcon"
+          tabler="IconDownload"
+          hugeicons="Download01Icon"
+          phosphor="DownloadSimpleIcon"
+          remixicon="RiDownloadLine"
+          className="text-primary"
+        />
         {done ? (
-          <CheckCircleIcon weight="fill" className="text-green-500" />
+          <IconPlaceholder
+            lucide="CircleCheckIcon"
+            tabler="IconCircleCheck"
+            hugeicons="CheckmarkCircle02Icon"
+            phosphor="CheckCircleIcon"
+            remixicon="RiCheckboxCircleLine"
+            className="fill-green-500 text-white"
+          />
         ) : (
           <IslandRing value={progress} data-visual-mask />
         )}
@@ -107,7 +142,14 @@ function DownloadActivity({
       <IslandExpanded aria-label="Download">
         <div className="flex items-center gap-3">
           <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-background/15 dark:bg-foreground/15">
-            <FileZipIcon weight="fill" className="size-6 text-primary" />
+            <IconPlaceholder
+              lucide="FileArchiveIcon"
+              tabler="IconFileZip"
+              hugeicons="FileZipIcon"
+              phosphor="FileZipIcon"
+              remixicon="RiFileZipLine"
+              className="size-6 text-primary"
+            />
           </span>
           <span className="flex min-w-0 flex-1 flex-col">
             <span className="truncate text-sm font-semibold">

@@ -1,14 +1,8 @@
 "use client"
 
-import {
-  ArrowUpIcon,
-  InfoIcon,
-  NotePencilIcon,
-  PlusIcon,
-  VideoCameraIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SplitView,
   SplitViewDetail,
@@ -160,7 +154,14 @@ function Composer({
         aria-label="Add attachment"
         className="text-muted-foreground"
       >
-        <PlusIcon weight="bold" className="size-4.5" />
+        <IconPlaceholder
+          lucide="PlusIcon"
+          tabler="IconPlus"
+          hugeicons="PlusSignIcon"
+          phosphor="PlusIcon"
+          remixicon="RiAddLine"
+          className="size-4.5"
+        />
       </Button>
       <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
         <Input
@@ -178,7 +179,14 @@ function Composer({
           data-ready={ready ? "" : undefined}
           className="size-6.75 scale-0 transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-ready:scale-100 motion-reduce:transition-none"
         >
-          <ArrowUpIcon weight="bold" className="size-4" />
+          <IconPlaceholder
+            lucide="ArrowUpIcon"
+            tabler="IconArrowUp"
+            hugeicons="ArrowUp02Icon"
+            phosphor="ArrowUpIcon"
+            remixicon="RiArrowUpLine"
+            className="size-4"
+          />
         </Button>
       </div>
     </form>
@@ -242,7 +250,14 @@ export function ChatConversations() {
             aria-label="New message"
             className="text-muted-foreground"
           >
-            <NotePencilIcon className="size-4.5" />
+            <IconPlaceholder
+              lucide="SquarePenIcon"
+              tabler="IconEdit"
+              hugeicons="PencilEdit02Icon"
+              phosphor="NotePencilIcon"
+              remixicon="RiEditBoxLine"
+              className="size-4.5"
+            />
           </Button>
         </div>
         {threads.map((item, index) => {
@@ -296,7 +311,14 @@ export function ChatConversations() {
             aria-label="Video call"
             className="text-primary"
           >
-            <VideoCameraIcon className="size-5" />
+            <IconPlaceholder
+              lucide="VideoIcon"
+              tabler="IconVideo"
+              hugeicons="Video01Icon"
+              phosphor="VideoCameraIcon"
+              remixicon="RiVideoOnLine"
+              className="size-5"
+            />
           </Button>
           <Button
             variant="ghost"
@@ -304,7 +326,14 @@ export function ChatConversations() {
             aria-label="Details"
             className="text-primary"
           >
-            <InfoIcon className="size-5" />
+            <IconPlaceholder
+              lucide="InfoIcon"
+              tabler="IconInfoCircle"
+              hugeicons="InformationCircleIcon"
+              phosphor="InfoIcon"
+              remixicon="RiInformationLine"
+              className="size-5"
+            />
           </Button>
         </div>
         <MessageScrollerProvider key={selected}>

@@ -1,4 +1,4 @@
-import { CashRegisterIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetDescription,
@@ -12,7 +12,13 @@ export default function WidgetCentered() {
     <Widget size="small" align="center">
       <WidgetHeader>
         <WidgetIcon size="lg">
-          <CashRegisterIcon />
+          <IconPlaceholder
+            lucide="CalculatorIcon"
+            tabler="IconCashRegister"
+            hugeicons="CashierIcon"
+            phosphor="CashRegisterIcon"
+            remixicon="RiCalculatorLine"
+          />
         </WidgetIcon>
         <WidgetTitle>Point of sale</WidgetTitle>
       </WidgetHeader>

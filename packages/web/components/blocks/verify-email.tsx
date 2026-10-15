@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon, EnvelopeSimpleIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 
 const EMAIL = "jamie@suiss.com"
@@ -22,7 +22,14 @@ export function VerifyEmail() {
       <section className="flex min-h-130 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
-            <CheckIcon weight="bold" className="size-9.5" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="size-9.5"
+            />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Your email is verified.
@@ -47,7 +54,14 @@ export function VerifyEmail() {
       <div className="flex flex-col items-center text-center">
         <div className="relative h-18 w-24">
           <span className="absolute inset-0 flex items-center justify-center rounded-[0.875rem] bg-linear-160 from-cyan-500 to-primary text-white shadow-[0_10px_30px_-8px_color-mix(in_oklab,var(--color-primary)_55%,transparent)]">
-            <EnvelopeSimpleIcon className="size-10" />
+            <IconPlaceholder
+              lucide="MailIcon"
+              tabler="IconMail"
+              hugeicons="Mail01Icon"
+              phosphor="EnvelopeSimpleIcon"
+              remixicon="RiMailLine"
+              className="size-10"
+            />
           </span>
           <span className="absolute -end-2 -top-2 flex size-6.5 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_15%)] text-sm font-semibold text-white ring-3 ring-background dark:bg-red-500">
             1<span className="sr-only">new message</span>

@@ -1,24 +1,113 @@
-import {
-  BowlFoodIcon,
-  CoffeeIcon,
-  HamburgerIcon,
-  IceCreamIcon,
-  OrangeSliceIcon,
-  PizzaIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Widget, WidgetTitle } from "@/components/ui/widget"
 
 const menu = [
-  { name: "Meatballs", price: "₺280", icon: <HamburgerIcon /> },
-  { name: "Pide", price: "₺220", icon: <PizzaIcon /> },
-  { name: "Soup", price: "₺90", icon: <BowlFoodIcon /> },
-  { name: "Coffee", price: "₺75", icon: <CoffeeIcon /> },
-  { name: "Künefe", price: "₺160", icon: <IceCreamIcon /> },
-  { name: "Lemonade", price: "₺70", icon: <OrangeSliceIcon /> },
-  { name: "Ayran", price: "₺40", icon: <CoffeeIcon /> },
-  { name: "Baklava", price: "₺180", icon: <IceCreamIcon /> },
+  {
+    name: "Meatballs",
+    price: "₺280",
+    icon: (
+      <IconPlaceholder
+        lucide="HamburgerIcon"
+        tabler="IconBurger"
+        hugeicons="Hamburger01Icon"
+        phosphor="HamburgerIcon"
+        remixicon="RiRestaurantLine"
+      />
+    ),
+  },
+  {
+    name: "Pide",
+    price: "₺220",
+    icon: (
+      <IconPlaceholder
+        lucide="PizzaIcon"
+        tabler="IconPizza"
+        hugeicons="PizzaIcon"
+        phosphor="PizzaIcon"
+        remixicon="RiRestaurantLine"
+      />
+    ),
+  },
+  {
+    name: "Soup",
+    price: "₺90",
+    icon: (
+      <IconPlaceholder
+        lucide="SoupIcon"
+        tabler="IconBowlChopsticks"
+        hugeicons="RiceBowl01Icon"
+        phosphor="BowlFoodIcon"
+        remixicon="RiBowlLine"
+      />
+    ),
+  },
+  {
+    name: "Coffee",
+    price: "₺75",
+    icon: (
+      <IconPlaceholder
+        lucide="CoffeeIcon"
+        tabler="IconCoffee"
+        hugeicons="CoffeeIcon"
+        phosphor="CoffeeIcon"
+        remixicon="RiCupLine"
+      />
+    ),
+  },
+  {
+    name: "Künefe",
+    price: "₺160",
+    icon: (
+      <IconPlaceholder
+        lucide="IceCreamConeIcon"
+        tabler="IconIceCream"
+        hugeicons="IceCream01Icon"
+        phosphor="IceCreamIcon"
+        remixicon="RiCake3Line"
+      />
+    ),
+  },
+  {
+    name: "Lemonade",
+    price: "₺70",
+    icon: (
+      <IconPlaceholder
+        lucide="CitrusIcon"
+        tabler="IconLemon"
+        hugeicons="OrangeIcon"
+        phosphor="OrangeSliceIcon"
+        remixicon="RiRestaurantLine"
+      />
+    ),
+  },
+  {
+    name: "Ayran",
+    price: "₺40",
+    icon: (
+      <IconPlaceholder
+        lucide="CoffeeIcon"
+        tabler="IconCoffee"
+        hugeicons="CoffeeIcon"
+        phosphor="CoffeeIcon"
+        remixicon="RiCupLine"
+      />
+    ),
+  },
+  {
+    name: "Baklava",
+    price: "₺180",
+    icon: (
+      <IconPlaceholder
+        lucide="IceCreamConeIcon"
+        tabler="IconIceCream"
+        hugeicons="IceCream01Icon"
+        phosphor="IceCreamIcon"
+        remixicon="RiCake3Line"
+      />
+    ),
+  },
 ]
 
 function Hint({ children }: { children: React.ReactNode }) {

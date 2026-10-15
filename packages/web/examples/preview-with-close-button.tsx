@@ -1,4 +1,4 @@
-import { CalendarBlankIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Preview,
   PreviewContent,
@@ -19,7 +19,13 @@ function ProfileCard() {
           The React framework, created and maintained by @vercel.
         </p>
         <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <CalendarBlankIcon />
+          <IconPlaceholder
+            lucide="CalendarIcon"
+            tabler="IconCalendar"
+            hugeicons="Calendar01Icon"
+            phosphor="CalendarBlankIcon"
+            remixicon="RiCalendarLine"
+          />
           Joined December 2021
         </div>
       </div>

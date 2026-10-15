@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
@@ -46,8 +46,12 @@ function PasswordRules({ password }: { password: string }) {
             className="group/rule flex items-center gap-2 text-sm text-muted-foreground data-met:text-foreground"
           >
             <span className="flex size-4 items-center justify-center rounded-full border-[1.5px] border-border text-white transition-[background-color,border-color] duration-250 group-data-met/rule:border-transparent group-data-met/rule:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] dark:group-data-met/rule:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
-              <CheckIcon
-                weight="bold"
+              <IconPlaceholder
+                lucide="CheckIcon"
+                tabler="IconCheck"
+                hugeicons="Tick02Icon"
+                phosphor="CheckIcon"
+                remixicon="RiCheckLine"
                 className="size-2.5 scale-0 transition-[scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] group-data-met/rule:scale-100 motion-reduce:transition-none"
               />
             </span>
@@ -92,7 +96,14 @@ export function SignupForm() {
       <section className="flex min-h-215 items-center justify-center p-6">
         <div className="flex max-w-105 flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <span className="flex size-19 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_25%)] text-white dark:bg-[color-mix(in_oklab,var(--color-green-500),black_35%)]">
-            <CheckIcon weight="bold" className="size-9.5" />
+            <IconPlaceholder
+              lucide="CheckIcon"
+              tabler="IconCheck"
+              hugeicons="Tick02Icon"
+              phosphor="CheckIcon"
+              remixicon="RiCheckLine"
+              className="size-9.5"
+            />
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">
             Your suiss Account is ready.

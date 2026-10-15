@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
@@ -40,7 +40,13 @@ export default function ButtonGroupWithSelect() {
       </ButtonGroup>
       <ButtonGroup>
         <Button variant="outline" size="icon-lg" aria-label="Send">
-          <ArrowRightIcon />
+          <IconPlaceholder
+            lucide="ArrowRightIcon"
+            tabler="IconArrowRight"
+            hugeicons="ArrowRight02Icon"
+            phosphor="ArrowRightIcon"
+            remixicon="RiArrowRightLine"
+          />
         </Button>
       </ButtonGroup>
     </ButtonGroup>

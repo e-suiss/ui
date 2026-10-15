@@ -1,4 +1,4 @@
-import { MicrophoneIcon, PlusIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import {
@@ -18,7 +18,13 @@ export default function ButtonGroupWithInputGroup() {
     <ButtonGroup orientation="horizontal" className="w-96">
       <ButtonGroup>
         <Button variant="outline" size="icon-lg" aria-label="Add">
-          <PlusIcon />
+          <IconPlaceholder
+            lucide="PlusIcon"
+            tabler="IconPlus"
+            hugeicons="PlusSignIcon"
+            phosphor="PlusIcon"
+            remixicon="RiAddLine"
+          />
         </Button>
       </ButtonGroup>
       <ButtonGroup className="flex-1">
@@ -34,7 +40,13 @@ export default function ButtonGroupWithInputGroup() {
                   <InputGroupButton size="icon-xs" aria-label="Voice mode" />
                 }
               >
-                <MicrophoneIcon />
+                <IconPlaceholder
+                  lucide="MicIcon"
+                  tabler="IconMicrophone"
+                  hugeicons="Mic01Icon"
+                  phosphor="MicrophoneIcon"
+                  remixicon="RiMicLine"
+                />
               </TooltipTrigger>
               <TooltipContent>Voice mode</TooltipContent>
             </Tooltip>

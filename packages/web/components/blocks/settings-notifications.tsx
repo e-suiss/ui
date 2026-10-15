@@ -1,8 +1,8 @@
 "use client"
 
-import { ChatCircleIcon, CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Item,
   ItemActions,
@@ -81,7 +81,14 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
       )}
       <div className="relative flex gap-2.5 rounded-[1.125rem] bg-white/82 px-3 py-2.5 text-black/88 backdrop-blur-xl backdrop-saturate-180">
         <span className="flex size-7.5 shrink-0 items-center justify-center rounded-[7px] bg-green-500 text-white">
-          <ChatCircleIcon weight="fill" className="size-4.5" />
+          <IconPlaceholder
+            lucide="MessageCircleIcon"
+            tabler="IconMessageCircle"
+            hugeicons="BubbleChatIcon"
+            phosphor="ChatCircleIcon"
+            remixicon="RiChat1Line"
+            className="size-4.5 fill-current"
+          />
         </span>
         <div className="flex min-w-0 flex-1 flex-col gap-px">
           <div className="flex items-center gap-1.5">
@@ -132,7 +139,14 @@ export function SettingsNotifications() {
       <div className="flex flex-col gap-5 px-5 py-6 md:px-8">
         <div className="flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-[0.625rem] bg-green-500 text-white">
-            <ChatCircleIcon weight="fill" className="size-6" />
+            <IconPlaceholder
+              lucide="MessageCircleIcon"
+              tabler="IconMessageCircle"
+              hugeicons="BubbleChatIcon"
+              phosphor="ChatCircleIcon"
+              remixicon="RiChat1Line"
+              className="size-6 fill-current"
+            />
           </span>
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold tracking-tight">Messages</h1>
@@ -184,8 +198,12 @@ export function SettingsNotifications() {
                   <MiniScreen kind={alert.value} />
                   <span className="text-sm">{alert.label}</span>
                   <span className="flex size-5.5 items-center justify-center rounded-full border-[1.5px] border-input text-white transition-[background-color,border-color] duration-250 group-aria-pressed/alert:border-transparent group-aria-pressed/alert:bg-primary">
-                    <CheckIcon
-                      weight="bold"
+                    <IconPlaceholder
+                      lucide="CheckIcon"
+                      tabler="IconCheck"
+                      hugeicons="Tick02Icon"
+                      phosphor="CheckIcon"
+                      remixicon="RiCheckLine"
                       className="size-3 scale-0 transition-[scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] group-aria-pressed/alert:scale-100"
                     />
                   </span>

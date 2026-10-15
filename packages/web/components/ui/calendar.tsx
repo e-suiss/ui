@@ -1,10 +1,5 @@
 "use client"
 
-import {
-  CaretDownIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 import {
   type ChevronProps,
@@ -16,6 +11,7 @@ import {
   type WeekNumberProps,
 } from "react-day-picker"
 import { enUS } from "react-day-picker/locale"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -163,7 +159,12 @@ function CalendarRoot({ className, rootRef, ...props }: RootProps) {
 function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
   if (orientation === "left") {
     return (
-      <CaretLeftIcon
+      <IconPlaceholder
+        lucide="ChevronLeftIcon"
+        tabler="IconChevronLeft"
+        hugeicons="ArrowLeft01Icon"
+        phosphor="CaretLeftIcon"
+        remixicon="RiArrowLeftSLine"
         className={cn("rtl:rotate-180 size-4", className)}
         {...props}
       />
@@ -172,14 +173,29 @@ function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
 
   if (orientation === "right") {
     return (
-      <CaretRightIcon
+      <IconPlaceholder
+        lucide="ChevronRightIcon"
+        tabler="IconChevronRight"
+        hugeicons="ArrowRight01Icon"
+        phosphor="CaretRightIcon"
+        remixicon="RiArrowRightSLine"
         className={cn("rtl:rotate-180 size-4", className)}
         {...props}
       />
     )
   }
 
-  return <CaretDownIcon className={cn("size-4", className)} {...props} />
+  return (
+    <IconPlaceholder
+      lucide="ChevronDownIcon"
+      tabler="IconChevronDown"
+      hugeicons="ArrowDown01Icon"
+      phosphor="CaretDownIcon"
+      remixicon="RiArrowDownSLine"
+      className={cn("size-4", className)}
+      {...props}
+    />
+  )
 }
 
 function CalendarWeekNumber({ children, week, ...props }: WeekNumberProps) {

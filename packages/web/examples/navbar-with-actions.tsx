@@ -1,11 +1,4 @@
-import {
-  BookOpenIcon,
-  ChartLineIcon,
-  CodeIcon,
-  LifebuoyIcon,
-  LightningIcon,
-  ShieldCheckIcon,
-} from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
 import { Button } from "@/components/ui/button"
 
@@ -17,28 +10,91 @@ const items: NavbarItem[] = [
         label: "Analytics",
         href: "#analytics",
         description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
+        icon: (
+          <IconPlaceholder
+            lucide="ChartLineIcon"
+            tabler="IconChartLine"
+            hugeicons="ChartLineData01Icon"
+            phosphor="ChartLineIcon"
+            remixicon="RiLineChartLine"
+            className="mt-0.5"
+          />
+        ),
       },
       {
         label: "Automations",
         href: "#automations",
         description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
+        icon: (
+          <IconPlaceholder
+            lucide="ZapIcon"
+            tabler="IconBolt"
+            hugeicons="ZapIcon"
+            phosphor="LightningIcon"
+            remixicon="RiFlashlightLine"
+            className="mt-0.5"
+          />
+        ),
       },
       {
         label: "Security",
         href: "#security",
         description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
+        icon: (
+          <IconPlaceholder
+            lucide="ShieldCheckIcon"
+            tabler="IconShieldCheck"
+            hugeicons="SecurityCheckIcon"
+            phosphor="ShieldCheckIcon"
+            remixicon="RiShieldCheckLine"
+            className="mt-0.5"
+          />
+        ),
       },
     ],
   },
   {
     label: "Resources",
     items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
+      {
+        label: "Documentation",
+        href: "#docs",
+        icon: (
+          <IconPlaceholder
+            lucide="BookOpenIcon"
+            tabler="IconBook"
+            hugeicons="BookOpen02Icon"
+            phosphor="BookOpenIcon"
+            remixicon="RiBookOpenLine"
+          />
+        ),
+      },
+      {
+        label: "API reference",
+        href: "#api",
+        icon: (
+          <IconPlaceholder
+            lucide="CodeIcon"
+            tabler="IconCode"
+            hugeicons="CodeIcon"
+            phosphor="CodeIcon"
+            remixicon="RiCodeLine"
+          />
+        ),
+      },
+      {
+        label: "Help center",
+        href: "#help",
+        icon: (
+          <IconPlaceholder
+            lucide="LifeBuoyIcon"
+            tabler="IconLifebuoy"
+            hugeicons="LifebuoyIcon"
+            phosphor="LifebuoyIcon"
+            remixicon="RiLifebuoyLine"
+          />
+        ),
+      },
     ],
   },
   { label: "Pricing", href: "#pricing" },

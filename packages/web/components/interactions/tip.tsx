@@ -1,8 +1,8 @@
 "use client"
 
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
-import { XIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 type TipContextProps = {
@@ -315,7 +315,14 @@ function TipClose({
       )}
       {...props}
     >
-      <XIcon weight="bold" className="size-4" />
+      <IconPlaceholder
+        lucide="XIcon"
+        tabler="IconX"
+        hugeicons="Cancel01Icon"
+        phosphor="XIcon"
+        remixicon="RiCloseLine"
+        className="size-4"
+      />
     </button>
   )
 }

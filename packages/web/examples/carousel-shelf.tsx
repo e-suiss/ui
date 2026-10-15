@@ -1,4 +1,4 @@
-import { CaretRightIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Carousel,
   CarouselContent,
@@ -36,7 +36,14 @@ export default function CarouselShelf() {
               className="flex items-center gap-1 text-xl font-bold tracking-tight"
             >
               Popular
-              <CaretRightIcon weight="bold" className="size-4" />
+              <IconPlaceholder
+                lucide="ChevronRightIcon"
+                tabler="IconChevronRight"
+                hugeicons="ArrowRight01Icon"
+                phosphor="CaretRightIcon"
+                remixicon="RiArrowRightSLine"
+                className="size-4"
+              />
             </a>
             <div className="flex items-center gap-3">
               <CarouselPlayButton variant="ghost" />

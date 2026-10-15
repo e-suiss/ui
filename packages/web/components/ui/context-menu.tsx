@@ -1,8 +1,8 @@
 "use client"
 
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu"
-import { CaretRightIcon, CheckIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { useModifierKey } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
 
@@ -137,7 +137,14 @@ function ContextMenuSubTrigger({
       {...props}
     >
       {children}
-      <CaretRightIcon className="rtl:rotate-180 ms-auto" />
+      <IconPlaceholder
+        lucide="ChevronRightIcon"
+        tabler="IconChevronRight"
+        hugeicons="ArrowRight01Icon"
+        phosphor="CaretRightIcon"
+        remixicon="RiArrowRightSLine"
+        className="rtl:rotate-180 ms-auto"
+      />
     </ContextMenuPrimitive.SubmenuTrigger>
   )
 }
@@ -177,7 +184,13 @@ function ContextMenuCheckboxItem({
     >
       <span className="pointer-events-none absolute inset-e-2">
         <ContextMenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon />
+          <IconPlaceholder
+            lucide="CheckIcon"
+            tabler="IconCheck"
+            hugeicons="Tick02Icon"
+            phosphor="CheckIcon"
+            remixicon="RiCheckLine"
+          />
         </ContextMenuPrimitive.CheckboxItemIndicator>
       </span>
       {children}
@@ -216,7 +229,13 @@ function ContextMenuRadioItem({
     >
       <span className="pointer-events-none absolute inset-e-2">
         <ContextMenuPrimitive.RadioItemIndicator>
-          <CheckIcon />
+          <IconPlaceholder
+            lucide="CheckIcon"
+            tabler="IconCheck"
+            hugeicons="Tick02Icon"
+            phosphor="CheckIcon"
+            remixicon="RiCheckLine"
+          />
         </ContextMenuPrimitive.RadioItemIndicator>
       </span>
       {children}

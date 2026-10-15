@@ -1,15 +1,8 @@
 "use client"
 
-import {
-  ArrowCounterClockwiseIcon,
-  ArrowRightIcon,
-  ChatCircleIcon,
-  CheckIcon,
-  CreditCardIcon,
-  TruckIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputGroup,
   InputGroupAddon,
@@ -21,22 +14,58 @@ const EMAIL = /.+@.+\..+/
 
 const services = [
   {
-    icon: TruckIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="TruckIcon"
+        tabler="IconTruck"
+        hugeicons="DeliveryTruck01Icon"
+        phosphor="TruckIcon"
+        remixicon="RiTruckLine"
+        className="size-8 text-primary"
+      />
+    ),
     title: "Free delivery",
     description: "Fast, free delivery on every order.",
   },
   {
-    icon: ArrowCounterClockwiseIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="RotateCcwIcon"
+        tabler="IconRotate"
+        hugeicons="UndoIcon"
+        phosphor="ArrowCounterClockwiseIcon"
+        remixicon="RiResetLeftLine"
+        className="size-8 text-primary"
+      />
+    ),
     title: "Easy returns",
     description: "Free returns within 14 days.",
   },
   {
-    icon: CreditCardIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="CreditCardIcon"
+        tabler="IconCreditCard"
+        hugeicons="CreditCardIcon"
+        phosphor="CreditCardIcon"
+        remixicon="RiBankCardLine"
+        className="size-8 text-primary"
+      />
+    ),
     title: "Pay monthly",
     description: "Installments for up to 12 months.",
   },
   {
-    icon: ChatCircleIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="MessageCircleIcon"
+        tabler="IconMessageCircle"
+        hugeicons="BubbleChatIcon"
+        phosphor="ChatCircleIcon"
+        remixicon="RiChat1Line"
+        className="size-8 text-primary"
+      />
+    ),
     title: "Expert help",
     description: "Chat online with a Specialist.",
   },
@@ -104,7 +133,7 @@ export function FooterServices() {
               key={service.title}
               className="flex flex-col items-center gap-2 text-center"
             >
-              <service.icon className="size-8 text-primary" />
+              {service.icon}
               <h3 className="text-base font-semibold text-foreground">
                 {service.title}
               </h3>
@@ -134,7 +163,14 @@ export function FooterServices() {
               role="status"
               className="flex h-11 items-center gap-1.5 text-sm text-foreground transition-[opacity,translate] duration-800 ease-out starting:translate-y-1 starting:opacity-0 motion-reduce:transition-none"
             >
-              <CheckIcon weight="bold" className="size-4.5 text-green-500" />
+              <IconPlaceholder
+                lucide="CheckIcon"
+                tabler="IconCheck"
+                hugeicons="Tick02Icon"
+                phosphor="CheckIcon"
+                remixicon="RiCheckLine"
+                className="size-4.5 text-green-500"
+              />
               You're subscribed. Thank you.
             </p>
           ) : (
@@ -169,8 +205,12 @@ export function FooterServices() {
                     aria-label="Subscribe"
                     className="size-7.5 border-[1.5px] border-muted-foreground bg-transparent text-muted-foreground"
                   >
-                    <ArrowRightIcon
-                      weight="bold"
+                    <IconPlaceholder
+                      lucide="ArrowRightIcon"
+                      tabler="IconArrowRight"
+                      hugeicons="ArrowRight02Icon"
+                      phosphor="ArrowRightIcon"
+                      remixicon="RiArrowRightLine"
                       className="size-3.5 rtl:rotate-180"
                     />
                   </InputGroupButton>

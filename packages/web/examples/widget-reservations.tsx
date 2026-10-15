@@ -1,5 +1,5 @@
-import { CalendarBlankIcon } from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
   WidgetAction,
@@ -19,7 +19,13 @@ export default function WidgetReservations() {
       <Widget resizable defaultSize="medium" sizes={["small", "medium"]}>
         <WidgetHeader className="gap-1.5 text-primary">
           <WidgetIcon size="sm" className="text-primary">
-            <CalendarBlankIcon weight="fill" />
+            <IconPlaceholder
+              lucide="CalendarIcon"
+              tabler="IconCalendar"
+              hugeicons="Calendar01Icon"
+              phosphor="CalendarBlankIcon"
+              remixicon="RiCalendarLine"
+            />
           </WidgetIcon>
           <WidgetTitle>Reservations</WidgetTitle>
           <WidgetAction className="text-xs text-muted-foreground">

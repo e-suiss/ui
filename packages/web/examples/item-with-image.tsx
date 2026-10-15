@@ -1,4 +1,4 @@
-import { PlusIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Item,
@@ -46,7 +46,13 @@ export default function ItemWithImage() {
               </ItemContent>
               <ItemActions>
                 <Button variant="ghost" size="icon-sm" aria-label="Invite">
-                  <PlusIcon />
+                  <IconPlaceholder
+                    lucide="PlusIcon"
+                    tabler="IconPlus"
+                    hugeicons="PlusSignIcon"
+                    phosphor="PlusIcon"
+                    remixicon="RiAddLine"
+                  />
                 </Button>
               </ItemActions>
             </Item>

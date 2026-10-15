@@ -1,13 +1,8 @@
 "use client"
 
-import {
-  ArrowUpIcon,
-  ChatCircleIcon,
-  PlusIcon,
-  XIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -115,7 +110,14 @@ export function ChatSupport() {
             onClick={() => setOpen(false)}
             className="size-7 text-muted-foreground"
           >
-            <XIcon weight="bold" className="size-3.25" />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+              className="size-3.25"
+            />
           </Button>
         </div>
         <MessageScrollerProvider>
@@ -196,7 +198,14 @@ export function ChatSupport() {
             aria-label="Add attachment"
             className="text-muted-foreground"
           >
-            <PlusIcon weight="bold" className="size-4.5" />
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+              className="size-4.5"
+            />
           </Button>
           <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
             <Input
@@ -214,7 +223,14 @@ export function ChatSupport() {
               data-ready={ready ? "" : undefined}
               className="size-6.75 scale-0 transition-[scale] duration-300 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-ready:scale-100 motion-reduce:transition-none"
             >
-              <ArrowUpIcon weight="bold" className="size-4" />
+              <IconPlaceholder
+                lucide="ArrowUpIcon"
+                tabler="IconArrowUp"
+                hugeicons="ArrowUp02Icon"
+                phosphor="ArrowUpIcon"
+                remixicon="RiArrowUpLine"
+                className="size-4"
+              />
             </Button>
           </div>
         </form>
@@ -229,7 +245,14 @@ export function ChatSupport() {
         data-open={open ? "" : undefined}
         className="absolute end-6 bottom-6 shadow-[0_10px_30px_color-mix(in_oklab,var(--color-primary)_40%,transparent)] transition-[scale] duration-400 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-open:scale-0 motion-reduce:transition-none"
       >
-        <ChatCircleIcon weight="fill" className="size-6" />
+        <IconPlaceholder
+          lucide="MessageCircleIcon"
+          tabler="IconMessageCircle"
+          hugeicons="BubbleChatIcon"
+          phosphor="ChatCircleIcon"
+          remixicon="RiChat1Line"
+          className="size-6 fill-current"
+        />
       </Button>
     </section>
   )

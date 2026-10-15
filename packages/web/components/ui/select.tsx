@@ -1,13 +1,8 @@
 "use client"
 
 import { Select as SelectPrimitive } from "@base-ui/react/select"
-import {
-  CaretDownIcon,
-  CaretUpDownIcon,
-  CaretUpIcon,
-  CheckIcon,
-} from "@phosphor-icons/react"
 import type * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 const Select = SelectPrimitive.Root
@@ -87,7 +82,14 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <CaretUpDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+          <IconPlaceholder
+            lucide="ChevronsUpDownIcon"
+            tabler="IconSelector"
+            hugeicons="UnfoldMoreIcon"
+            phosphor="CaretUpDownIcon"
+            remixicon="RiExpandUpDownLine"
+            className="pointer-events-none size-4 text-muted-foreground"
+          />
         }
       />
     </SelectPrimitive.Trigger>
@@ -181,7 +183,14 @@ function SelectItem({
           <span className="pointer-events-none absolute inset-e-2 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none text-primary! **:text-primary!" />
+        <IconPlaceholder
+          lucide="CheckIcon"
+          tabler="IconCheck"
+          hugeicons="Tick02Icon"
+          phosphor="CheckIcon"
+          remixicon="RiCheckLine"
+          className="pointer-events-none text-primary! **:text-primary!"
+        />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   )
@@ -216,7 +225,13 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <CaretUpIcon />
+      <IconPlaceholder
+        lucide="ChevronUpIcon"
+        tabler="IconChevronUp"
+        hugeicons="ArrowUp01Icon"
+        phosphor="CaretUpIcon"
+        remixicon="RiArrowUpSLine"
+      />
     </SelectPrimitive.ScrollUpArrow>
   )
 }
@@ -234,7 +249,13 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <CaretDownIcon />
+      <IconPlaceholder
+        lucide="ChevronDownIcon"
+        tabler="IconChevronDown"
+        hugeicons="ArrowDown01Icon"
+        phosphor="CaretDownIcon"
+        remixicon="RiArrowDownSLine"
+      />
     </SelectPrimitive.ScrollDownArrow>
   )
 }

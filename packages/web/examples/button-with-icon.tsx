@@ -1,19 +1,39 @@
-import { ArrowRightIcon, PlusIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 
 export default function ButtonWithIcon() {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Button>
-        <PlusIcon data-icon="inline-start" />
+        <IconPlaceholder
+          lucide="PlusIcon"
+          tabler="IconPlus"
+          hugeicons="PlusSignIcon"
+          phosphor="PlusIcon"
+          remixicon="RiAddLine"
+          data-icon="inline-start"
+        />
         New project
       </Button>
       <Button variant="outline">
         Continue
-        <ArrowRightIcon data-icon="inline-end" />
+        <IconPlaceholder
+          lucide="ArrowRightIcon"
+          tabler="IconArrowRight"
+          hugeicons="ArrowRight02Icon"
+          phosphor="ArrowRightIcon"
+          remixicon="RiArrowRightLine"
+          data-icon="inline-end"
+        />
       </Button>
       <Button size="icon" aria-label="Add">
-        <PlusIcon />
+        <IconPlaceholder
+          lucide="PlusIcon"
+          tabler="IconPlus"
+          hugeicons="PlusSignIcon"
+          phosphor="PlusIcon"
+          remixicon="RiAddLine"
+        />
       </Button>
     </div>
   )

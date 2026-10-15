@@ -1,8 +1,8 @@
 "use client"
 
-import { ArrowRightIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -29,7 +29,14 @@ function SubmitArrow({ ready, busy }: { ready: boolean; busy: boolean }) {
       {busy ? (
         <Spinner />
       ) : (
-        <ArrowRightIcon weight="bold" className="size-3.5 rtl:rotate-180" />
+        <IconPlaceholder
+          lucide="ArrowRightIcon"
+          tabler="IconArrowRight"
+          hugeicons="ArrowRight02Icon"
+          phosphor="ArrowRightIcon"
+          remixicon="RiArrowRightLine"
+          className="size-3.5 rtl:rotate-180"
+        />
       )}
     </Button>
   )

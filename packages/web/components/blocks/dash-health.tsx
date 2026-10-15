@@ -1,17 +1,8 @@
 "use client"
 
-import {
-  CaretRightIcon,
-  ChartBarIcon,
-  FlameIcon,
-  HeartIcon,
-  MinusIcon,
-  MoonIcon,
-  PlusIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -37,7 +28,7 @@ type Category = "Activity" | "Heart" | "Sleep" | "Mobility"
 
 type CategoryStyle = {
   value: Category
-  icon: React.ElementType
+  icon: React.ReactNode
   tint: string
   text: string
 }
@@ -45,25 +36,60 @@ type CategoryStyle = {
 const categories: [CategoryStyle, ...CategoryStyle[]] = [
   {
     value: "Activity",
-    icon: FlameIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="FlameIcon"
+        tabler="IconFlame"
+        hugeicons="FireIcon"
+        phosphor="FlameIcon"
+        remixicon="RiFireLine"
+        className="fill-current"
+      />
+    ),
     tint: "bg-orange-500",
     text: "text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500",
   },
   {
     value: "Heart",
-    icon: HeartIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="HeartIcon"
+        tabler="IconHeart"
+        hugeicons="FavouriteIcon"
+        phosphor="HeartIcon"
+        remixicon="RiHeartLine"
+        className="fill-current"
+      />
+    ),
     tint: "bg-red-500",
     text: "text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] dark:text-red-500",
   },
   {
     value: "Sleep",
-    icon: MoonIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="MoonIcon"
+        tabler="IconMoon"
+        hugeicons="MoonIcon"
+        phosphor="MoonIcon"
+        remixicon="RiMoonLine"
+        className="fill-current"
+      />
+    ),
     tint: "bg-cyan-500",
     text: "text-[color-mix(in_oklab,var(--color-cyan-500),var(--foreground)_50%)] dark:text-cyan-500",
   },
   {
     value: "Mobility",
-    icon: ChartBarIcon,
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
     tint: "bg-green-500",
     text: "text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500",
   },
@@ -130,12 +156,12 @@ const metrics: {
   },
 ]
 
-function Tile({ icon: Icon, tint }: { icon: React.ElementType; tint: string }) {
+function Tile({ icon, tint }: { icon: React.ReactNode; tint: string }) {
   return (
     <span
-      className={`flex size-6 shrink-0 items-center justify-center rounded-md text-white ${tint}`}
+      className={`flex size-6 shrink-0 items-center justify-center rounded-md text-white [&_svg]:size-3.5 ${tint}`}
     >
-      <Icon weight="fill" className="size-3.5" />
+      {icon}
     </span>
   )
 }
@@ -217,12 +243,39 @@ const items: NavItem[] = [
   {
     value: "Summary",
     label: "Summary",
-    icon: <Tile icon={HeartIcon} tint="bg-pink-500" />,
+    icon: (
+      <Tile
+        icon={
+          <IconPlaceholder
+            lucide="HeartIcon"
+            tabler="IconHeart"
+            hugeicons="FavouriteIcon"
+            phosphor="HeartIcon"
+            remixicon="RiHeartLine"
+            className="fill-current"
+          />
+        }
+        tint="bg-pink-500"
+      />
+    ),
   },
   {
     value: "Sharing",
     label: "Sharing",
-    icon: <Tile icon={UsersIcon} tint="bg-blue-500" />,
+    icon: (
+      <Tile
+        icon={
+          <IconPlaceholder
+            lucide="UsersIcon"
+            tabler="IconUsers"
+            hugeicons="UserGroupIcon"
+            phosphor="UsersIcon"
+            remixicon="RiGroupLine"
+          />
+        }
+        tint="bg-blue-500"
+      />
+    ),
   },
   ...categories.map((category) => ({
     value: category.value,
@@ -351,7 +404,6 @@ export function DashHealth() {
                 const category =
                   categories.find((item) => item.value === metric.category) ??
                   categories[0]
-                const Icon = category.icon
                 const isPinned = pinned.includes(metric.label)
                 return (
                   <li
@@ -376,9 +428,21 @@ export function DashHealth() {
                         className="relative bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_35%)] text-white after:absolute after:-inset-2.5 after:content-[''] hover:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] data-pinned:bg-destructive data-pinned:hover:bg-destructive/90"
                       >
                         {isPinned ? (
-                          <MinusIcon weight="bold" />
+                          <IconPlaceholder
+                            lucide="MinusIcon"
+                            tabler="IconMinus"
+                            hugeicons="MinusSignIcon"
+                            phosphor="MinusIcon"
+                            remixicon="RiSubtractLine"
+                          />
                         ) : (
-                          <PlusIcon weight="bold" />
+                          <IconPlaceholder
+                            lucide="PlusIcon"
+                            tabler="IconPlus"
+                            hugeicons="PlusSignIcon"
+                            phosphor="PlusIcon"
+                            remixicon="RiAddLine"
+                          />
                         )}
                       </Button>
                     )}
@@ -388,15 +452,19 @@ export function DashHealth() {
                       className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl bg-background px-4 py-3 outline-none transition-opacity duration-200 focus-visible:ring-3 focus-visible:ring-ring/50 data-dimmed:opacity-55 dark:bg-muted"
                     >
                       <span
-                        className={`flex items-center gap-1.5 text-base font-semibold ${category.text}`}
+                        className={`flex items-center gap-1.5 text-base font-semibold [&_svg:not([class*='size-'])]:size-4 ${category.text}`}
                       >
-                        <Icon weight="fill" className="size-4" />
+                        {category.icon}
                         <span className="flex-1">{metric.label}</span>
                         <span className="text-sm font-normal text-muted-foreground">
                           9:41
                         </span>
-                        <CaretRightIcon
-                          weight="bold"
+                        <IconPlaceholder
+                          lucide="ChevronRightIcon"
+                          tabler="IconChevronRight"
+                          hugeicons="ArrowRight01Icon"
+                          phosphor="CaretRightIcon"
+                          remixicon="RiArrowRightSLine"
                           className="size-3 text-muted-foreground rtl:rotate-180"
                         />
                       </span>

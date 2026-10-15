@@ -1,4 +1,4 @@
-import { PlusIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Avatar,
   AvatarFallback,
@@ -35,7 +35,13 @@ export default function AvatarGroupWithIconCount() {
         </Avatar>
       ))}
       <AvatarGroupCount>
-        <PlusIcon />
+        <IconPlaceholder
+          lucide="PlusIcon"
+          tabler="IconPlus"
+          hugeicons="PlusSignIcon"
+          phosphor="PlusIcon"
+          remixicon="RiAddLine"
+        />
       </AvatarGroupCount>
     </AvatarGroup>
   )

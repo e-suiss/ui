@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon, ShareIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 
@@ -6,15 +6,36 @@ export default function ButtonGroupPlain() {
   return (
     <ButtonGroup orientation="horizontal">
       <Button variant="plain">
-        <ArrowLeftIcon data-icon="inline-start" />
+        <IconPlaceholder
+          lucide="ArrowLeftIcon"
+          tabler="IconArrowLeft"
+          hugeicons="ArrowLeft02Icon"
+          phosphor="ArrowLeftIcon"
+          remixicon="RiArrowLeftLine"
+          data-icon="inline-start"
+        />
         Back
       </Button>
       <Button variant="plain">
         Forward
-        <ArrowRightIcon data-icon="inline-end" />
+        <IconPlaceholder
+          lucide="ArrowRightIcon"
+          tabler="IconArrowRight"
+          hugeicons="ArrowRight02Icon"
+          phosphor="ArrowRightIcon"
+          remixicon="RiArrowRightLine"
+          data-icon="inline-end"
+        />
       </Button>
       <Button variant="plain">
-        <ShareIcon data-icon="inline-start" />
+        <IconPlaceholder
+          lucide="ShareIcon"
+          tabler="IconShare2"
+          hugeicons="Share01Icon"
+          phosphor="ShareIcon"
+          remixicon="RiShareForwardBoxLine"
+          data-icon="inline-start"
+        />
         Share
       </Button>
     </ButtonGroup>

@@ -1,4 +1,4 @@
-import { BellIcon, CaretRightIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Item,
   ItemActions,
@@ -13,7 +13,13 @@ export default function ItemAsLink() {
     <div className="w-96">
       <Item variant="outline" render={<a href="#notifications" />}>
         <ItemMedia variant="icon">
-          <BellIcon />
+          <IconPlaceholder
+            lucide="BellIcon"
+            tabler="IconBell"
+            hugeicons="Notification03Icon"
+            phosphor="BellIcon"
+            remixicon="RiNotificationLine"
+          />
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Notification settings</ItemTitle>
@@ -22,7 +28,14 @@ export default function ItemAsLink() {
           </ItemDescription>
         </ItemContent>
         <ItemActions>
-          <CaretRightIcon className="size-4" />
+          <IconPlaceholder
+            lucide="ChevronRightIcon"
+            tabler="IconChevronRight"
+            hugeicons="ArrowRight01Icon"
+            phosphor="CaretRightIcon"
+            remixicon="RiArrowRightSLine"
+            className="size-4"
+          />
         </ItemActions>
       </Item>
     </div>

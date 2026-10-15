@@ -1,23 +1,19 @@
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const tabs = [
   {
     value: "account",
     label: "Account",
-    icon: UserIcon,
     content: "Update your name, email address, and profile photo.",
   },
   {
     value: "notifications",
     label: "Notifications",
-    icon: BellIcon,
     content: "Choose which updates you receive by email and push.",
   },
   {
     value: "settings",
     label: "Settings",
-    icon: GearIcon,
     content: "Manage language, time zone, and privacy preferences.",
   },
 ] as const

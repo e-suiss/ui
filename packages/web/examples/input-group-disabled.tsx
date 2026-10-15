@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   InputGroup,
   InputGroupAddon,
@@ -11,7 +11,13 @@ export default function InputGroupDisabled() {
       <InputGroup data-disabled="true">
         <InputGroupInput placeholder="Search..." disabled />
         <InputGroupAddon>
-          <MagnifyingGlassIcon />
+          <IconPlaceholder
+            lucide="SearchIcon"
+            tabler="IconSearch"
+            hugeicons="Search01Icon"
+            phosphor="MagnifyingGlassIcon"
+            remixicon="RiSearchLine"
+          />
         </InputGroupAddon>
       </InputGroup>
     </div>

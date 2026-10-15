@@ -1,12 +1,7 @@
-import {
-  CalendarBlankIcon,
-  GearIcon,
-  HouseIcon,
-  TrayIcon,
-} from "@phosphor-icons/react"
 import { waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import type { AppShellItem } from "@/components/patterns/app-shell"
 import AppShellCollapsed from "@/examples/app-shell-collapsed"
 import AppShellDemo from "@/examples/app-shell-demo"
@@ -25,23 +20,55 @@ const items: AppShellItem[] = [
   {
     value: "home",
     label: "Home",
-    icon: <HouseIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="HouseIcon"
+        tabler="IconHome"
+        hugeicons="Home01Icon"
+        phosphor="HouseIcon"
+        remixicon="RiHomeLine"
+      />
+    ),
   },
   {
     value: "inbox",
     label: "Inbox",
-    icon: <TrayIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="InboxIcon"
+        tabler="IconInbox"
+        hugeicons="InboxIcon"
+        phosphor="TrayIcon"
+        remixicon="RiInboxLine"
+      />
+    ),
     badge: 12,
   },
   {
     value: "calendar",
     label: "Calendar",
-    icon: <CalendarBlankIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="CalendarIcon"
+        tabler="IconCalendar"
+        hugeicons="Calendar01Icon"
+        phosphor="CalendarBlankIcon"
+        remixicon="RiCalendarLine"
+      />
+    ),
   },
   {
     value: "settings",
     label: "Settings",
-    icon: <GearIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
   },
 ]
 function sidebarOf(canvasElement: HTMLElement) {

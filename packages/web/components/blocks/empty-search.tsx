@@ -1,8 +1,8 @@
 "use client"
 
-import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -27,7 +27,14 @@ export function EmptySearch() {
     <section className="px-5 py-10 md:px-12">
       <div className="mx-auto flex max-w-170 flex-col gap-6.5">
         <div className="flex h-13 items-center gap-2.5 border-b border-input text-muted-foreground focus-within:border-primary">
-          <MagnifyingGlassIcon className="size-5 shrink-0" />
+          <IconPlaceholder
+            lucide="SearchIcon"
+            tabler="IconSearch"
+            hugeicons="Search01Icon"
+            phosphor="MagnifyingGlassIcon"
+            remixicon="RiSearchLine"
+            className="size-5 shrink-0"
+          />
           <input
             ref={inputRef}
             type="search"
@@ -47,7 +54,14 @@ export function EmptySearch() {
               }}
               className="relative size-5.5 bg-muted-foreground text-background after:absolute after:-inset-2.5 after:content-[''] hover:bg-muted-foreground"
             >
-              <XIcon weight="bold" className="size-2.75" />
+              <IconPlaceholder
+                lucide="XIcon"
+                tabler="IconX"
+                hugeicons="Cancel01Icon"
+                phosphor="XIcon"
+                remixicon="RiCloseLine"
+                className="size-2.75"
+              />
             </Button>
           )}
         </div>
@@ -61,7 +75,14 @@ export function EmptySearch() {
                 onClick={() => setQuery(item)}
                 className="flex items-center gap-2.5 rounded-md py-1.5 text-start text-lg outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
               >
-                <MagnifyingGlassIcon className="size-3.5 text-muted-foreground" />
+                <IconPlaceholder
+                  lucide="SearchIcon"
+                  tabler="IconSearch"
+                  hugeicons="Search01Icon"
+                  phosphor="MagnifyingGlassIcon"
+                  remixicon="RiSearchLine"
+                  className="size-3.5 text-muted-foreground"
+                />
                 {item}
               </button>
             ))}

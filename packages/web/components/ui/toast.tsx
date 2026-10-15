@@ -1,14 +1,8 @@
 "use client"
 
 import { Toast as ToastPrimitive } from "@base-ui/react/toast"
-import {
-  CheckCircleIcon,
-  InfoIcon,
-  WarningIcon,
-  XCircleIcon,
-  XIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -130,7 +124,16 @@ function ToastClose({
       )}
       {...props}
     >
-      {children ?? <XIcon aria-hidden="true" />}
+      {children ?? (
+        <IconPlaceholder
+          lucide="XIcon"
+          tabler="IconX"
+          hugeicons="Cancel01Icon"
+          phosphor="XIcon"
+          remixicon="RiCloseLine"
+          aria-hidden="true"
+        />
+      )}
     </ToastPrimitive.Close>
   )
 }
@@ -171,26 +174,57 @@ function ToastIcon({ type }: { type: string | undefined }) {
   }, [type])
 
   let icon: React.ReactNode = null
-  let tint = ""
 
   if (type === "success") {
-    icon = <CheckCircleIcon weight="fill" />
-    tint = "text-green-500"
+    icon = (
+      <IconPlaceholder
+        lucide="CircleCheckIcon"
+        tabler="IconCircleCheck"
+        hugeicons="CheckmarkCircle02Icon"
+        phosphor="CheckCircleIcon"
+        remixicon="RiCheckboxCircleLine"
+        className="fill-green-500 text-white"
+      />
+    )
   }
 
   if (type === "info") {
-    icon = <InfoIcon weight="fill" />
-    tint = "text-primary"
+    icon = (
+      <IconPlaceholder
+        lucide="InfoIcon"
+        tabler="IconInfoCircle"
+        hugeicons="InformationCircleIcon"
+        phosphor="InfoIcon"
+        remixicon="RiInformationLine"
+        className="fill-primary text-primary-foreground"
+      />
+    )
   }
 
   if (type === "warning") {
-    icon = <WarningIcon weight="fill" />
-    tint = "text-orange-500"
+    icon = (
+      <IconPlaceholder
+        lucide="TriangleAlertIcon"
+        tabler="IconAlertTriangle"
+        hugeicons="Alert02Icon"
+        phosphor="WarningIcon"
+        remixicon="RiAlertLine"
+        className="fill-orange-500 text-white"
+      />
+    )
   }
 
   if (type === "error") {
-    icon = <XCircleIcon weight="fill" />
-    tint = "text-destructive"
+    icon = (
+      <IconPlaceholder
+        lucide="CircleXIcon"
+        tabler="IconCircleX"
+        hugeicons="CancelCircleIcon"
+        phosphor="XCircleIcon"
+        remixicon="RiCloseCircleLine"
+        className="fill-destructive text-white"
+      />
+    )
   }
 
   const badge = icon && (
@@ -200,8 +234,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
       className={cn(
         "flex size-6 shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-6",
         tracked &&
-          "absolute inset-0 animate-in duration-300 delay-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] fill-mode-both fade-in zoom-in-50",
-        tint
+          "absolute inset-0 animate-in duration-300 delay-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] fill-mode-both fade-in zoom-in-50"
       )}
     >
       {icon}

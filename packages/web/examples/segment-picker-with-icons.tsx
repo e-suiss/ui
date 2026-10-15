@@ -1,4 +1,4 @@
-import { ListIcon, SquaresFourIcon, TableIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   SegmentPicker,
   SegmentPickerItem,
@@ -8,13 +8,31 @@ export default function SegmentPickerWithIcons() {
   return (
     <SegmentPicker defaultValue="grid" aria-label="View">
       <SegmentPickerItem value="list" aria-label="List">
-        <ListIcon />
+        <IconPlaceholder
+          lucide="MenuIcon"
+          tabler="IconMenu2"
+          hugeicons="Menu01Icon"
+          phosphor="ListIcon"
+          remixicon="RiMenuLine"
+        />
       </SegmentPickerItem>
       <SegmentPickerItem value="grid" aria-label="Grid">
-        <SquaresFourIcon />
+        <IconPlaceholder
+          lucide="LayoutGridIcon"
+          tabler="IconLayoutGrid"
+          hugeicons="GridViewIcon"
+          phosphor="SquaresFourIcon"
+          remixicon="RiLayoutGridLine"
+        />
       </SegmentPickerItem>
       <SegmentPickerItem value="table" aria-label="Table">
-        <TableIcon />
+        <IconPlaceholder
+          lucide="TableIcon"
+          tabler="IconTable"
+          hugeicons="TableIcon"
+          phosphor="TableIcon"
+          remixicon="RiTableLine"
+        />
       </SegmentPickerItem>
     </SegmentPicker>
   )

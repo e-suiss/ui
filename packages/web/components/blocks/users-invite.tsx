@@ -1,15 +1,8 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  EnvelopeSimpleIcon,
-  GearIcon,
-  ShieldIcon,
-  UsersIcon,
-  XIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Item,
@@ -136,10 +129,58 @@ function NavSidebar({
 }
 
 const nav: NavItem[] = [
-  { value: "users", label: "Users", icon: <UsersIcon /> },
-  { value: "roles", label: "Roles", icon: <ShieldIcon /> },
-  { value: "log", label: "Activity", icon: <ChartBarIcon /> },
-  { value: "settings", label: "Settings", icon: <GearIcon /> },
+  {
+    value: "users",
+    label: "Users",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "roles",
+    label: "Roles",
+    icon: (
+      <IconPlaceholder
+        lucide="ShieldIcon"
+        tabler="IconShield"
+        hugeicons="Shield01Icon"
+        phosphor="ShieldIcon"
+        remixicon="RiShieldLine"
+      />
+    ),
+  },
+  {
+    value: "log",
+    label: "Activity",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: (
+      <IconPlaceholder
+        lucide="SettingsIcon"
+        tabler="IconSettings"
+        hugeicons="Settings01Icon"
+        phosphor="GearIcon"
+        remixicon="RiSettingsLine"
+      />
+    ),
+  },
 ]
 
 const roles = ["Admin", "Editor", "Support", "Viewer"]
@@ -213,7 +254,14 @@ export function UsersInvite() {
                         }
                         className="size-5.5 text-muted-foreground"
                       >
-                        <XIcon weight="bold" className="size-2.5" />
+                        <IconPlaceholder
+                          lucide="XIcon"
+                          tabler="IconX"
+                          hugeicons="Cancel01Icon"
+                          phosphor="XIcon"
+                          remixicon="RiCloseLine"
+                          className="size-2.5"
+                        />
                       </Button>
                     </span>
                   ))}
@@ -335,7 +383,14 @@ export function UsersInvite() {
                       className="transition-[opacity,translate] duration-700 starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none"
                     >
                       <ItemMedia className="size-7 rounded-[7px] bg-zinc-500 text-white">
-                        <EnvelopeSimpleIcon weight="bold" className="size-4" />
+                        <IconPlaceholder
+                          lucide="MailIcon"
+                          tabler="IconMail"
+                          hugeicons="Mail01Icon"
+                          phosphor="EnvelopeSimpleIcon"
+                          remixicon="RiMailLine"
+                          className="size-4"
+                        />
                       </ItemMedia>
                       <ItemContent className="gap-0">
                         <ItemTitle className="font-normal">

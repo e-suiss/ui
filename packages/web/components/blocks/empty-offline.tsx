@@ -1,8 +1,8 @@
 "use client"
 
-import { WifiSlashIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -71,7 +71,14 @@ export function EmptyOffline() {
       <Empty className="gap-5 p-0">
         <EmptyHeader className="max-w-95 gap-3.5">
           <EmptyMedia className="mb-0 text-muted-foreground">
-            <WifiSlashIcon weight="light" className="size-13" />
+            <IconPlaceholder
+              lucide="WifiOffIcon"
+              tabler="IconWifiOff"
+              hugeicons="WifiOffIcon"
+              phosphor="WifiSlashIcon"
+              remixicon="RiWifiOffLine"
+              className="size-13"
+            />
           </EmptyMedia>
           <EmptyTitle className="text-3xl tracking-tight">
             You're not connected to the internet.

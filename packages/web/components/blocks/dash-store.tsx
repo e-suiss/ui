@@ -1,12 +1,5 @@
 "use client"
 
-import {
-  ChartBarIcon,
-  HandbagIcon,
-  HouseIcon,
-  StorefrontIcon,
-  UsersIcon,
-} from "@phosphor-icons/react"
 import * as React from "react"
 import {
   Bar,
@@ -17,6 +10,7 @@ import {
   XAxis,
 } from "recharts"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   type ChartConfig,
@@ -126,14 +120,71 @@ function NavSidebar({
 }
 
 const items: NavItem[] = [
-  { value: "overview", label: "Overview", icon: <HouseIcon /> },
-  { value: "orders", label: "Orders", icon: <HandbagIcon />, badge: 12 },
-  { value: "customers", label: "Customers", icon: <UsersIcon /> },
-  { value: "reports", label: "Reports", icon: <ChartBarIcon /> },
+  {
+    value: "overview",
+    label: "Overview",
+    icon: (
+      <IconPlaceholder
+        lucide="HouseIcon"
+        tabler="IconHome"
+        hugeicons="Home01Icon"
+        phosphor="HouseIcon"
+        remixicon="RiHomeLine"
+      />
+    ),
+  },
+  {
+    value: "orders",
+    label: "Orders",
+    icon: (
+      <IconPlaceholder
+        lucide="HandbagIcon"
+        tabler="IconShoppingBag"
+        hugeicons="ShoppingBag01Icon"
+        phosphor="HandbagIcon"
+        remixicon="RiHandbagLine"
+      />
+    ),
+    badge: 12,
+  },
+  {
+    value: "customers",
+    label: "Customers",
+    icon: (
+      <IconPlaceholder
+        lucide="UsersIcon"
+        tabler="IconUsers"
+        hugeicons="UserGroupIcon"
+        phosphor="UsersIcon"
+        remixicon="RiGroupLine"
+      />
+    ),
+  },
+  {
+    value: "reports",
+    label: "Reports",
+    icon: (
+      <IconPlaceholder
+        lucide="ChartColumnIcon"
+        tabler="IconChartBar"
+        hugeicons="ChartColumnIcon"
+        phosphor="ChartBarIcon"
+        remixicon="RiBarChartLine"
+      />
+    ),
+  },
   ...["Union Square", "Fifth Avenue", "Michigan Avenue"].map((store) => ({
     value: store,
     label: store,
-    icon: <StorefrontIcon />,
+    icon: (
+      <IconPlaceholder
+        lucide="StoreIcon"
+        tabler="IconBuildingStore"
+        hugeicons="Store01Icon"
+        phosphor="StorefrontIcon"
+        remixicon="RiStore2Line"
+      />
+    ),
     group: "Stores",
   })),
 ]

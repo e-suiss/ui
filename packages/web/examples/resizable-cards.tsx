@@ -1,5 +1,5 @@
-import { CashRegisterIcon, CookingPotIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -49,7 +49,15 @@ function CardsExample(props: React.ComponentProps<typeof ResizablePanelGroup>) {
         collapsedThreshold="1%"
       >
         <CardPane
-          icon={<CashRegisterIcon />}
+          icon={
+            <IconPlaceholder
+              lucide="CalculatorIcon"
+              tabler="IconCashRegister"
+              hugeicons="CashierIcon"
+              phosphor="CashRegisterIcon"
+              remixicon="RiCalculatorLine"
+            />
+          }
           label="Point of sale"
           size={layout.pos}
         />
@@ -64,7 +72,15 @@ function CardsExample(props: React.ComponentProps<typeof ResizablePanelGroup>) {
         collapsedThreshold="1%"
       >
         <CardPane
-          icon={<CookingPotIcon />}
+          icon={
+            <IconPlaceholder
+              lucide="CookingPotIcon"
+              tabler="IconSoup"
+              hugeicons="PotIcon"
+              phosphor="CookingPotIcon"
+              remixicon="RiBowlLine"
+            />
+          }
           label="Kitchen display"
           size={layout.kitchen}
         />

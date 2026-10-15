@@ -1,4 +1,4 @@
-import { PlusIcon } from "@phosphor-icons/react"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 
@@ -16,7 +16,13 @@ export default function ButtonGroupSizes() {
           Group
         </Button>
         <Button variant="outline" size="icon-sm" aria-label="Add">
-          <PlusIcon />
+          <IconPlaceholder
+            lucide="PlusIcon"
+            tabler="IconPlus"
+            hugeicons="PlusSignIcon"
+            phosphor="PlusIcon"
+            remixicon="RiAddLine"
+          />
         </Button>
       </ButtonGroup>
       <ButtonGroup orientation="horizontal">
@@ -24,7 +30,13 @@ export default function ButtonGroupSizes() {
         <Button variant="outline">Button</Button>
         <Button variant="outline">Group</Button>
         <Button variant="outline" size="icon" aria-label="Add">
-          <PlusIcon />
+          <IconPlaceholder
+            lucide="PlusIcon"
+            tabler="IconPlus"
+            hugeicons="PlusSignIcon"
+            phosphor="PlusIcon"
+            remixicon="RiAddLine"
+          />
         </Button>
       </ButtonGroup>
       <ButtonGroup orientation="horizontal">
@@ -38,7 +50,13 @@ export default function ButtonGroupSizes() {
           Group
         </Button>
         <Button variant="outline" size="icon-lg" aria-label="Add">
-          <PlusIcon />
+          <IconPlaceholder
+            lucide="PlusIcon"
+            tabler="IconPlus"
+            hugeicons="PlusSignIcon"
+            phosphor="PlusIcon"
+            remixicon="RiAddLine"
+          />
         </Button>
       </ButtonGroup>
     </div>

@@ -1,8 +1,8 @@
 "use client"
 
-import { PlusIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Accordion,
   AccordionContent,
@@ -86,7 +86,14 @@ export function BentoCloserLook() {
             >
               <AccordionTrigger className="justify-start gap-2.5 pe-0 text-lg font-semibold hover:no-underline **:data-[slot=accordion-trigger-icon]:hidden">
                 <span className="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground transition-[rotate,background-color,color] duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] group-aria-expanded/accordion-trigger:rotate-45 group-aria-expanded/accordion-trigger:bg-foreground group-aria-expanded/accordion-trigger:text-background motion-reduce:transition-none">
-                  <PlusIcon weight="bold" className="size-3.5" />
+                  <IconPlaceholder
+                    lucide="PlusIcon"
+                    tabler="IconPlus"
+                    hugeicons="PlusSignIcon"
+                    phosphor="PlusIcon"
+                    remixicon="RiAddLine"
+                    className="size-3.5"
+                  />
                 </span>
                 {feature.title}
               </AccordionTrigger>
