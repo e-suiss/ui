@@ -30,11 +30,11 @@ function manifest(version) {
   return { name: "package", version }
 }
 
-function repository({ cli = "0.9.0", tailwind = "0.9.0" } = {}) {
+function repository({ cli = "0.9.0" } = {}) {
   const cwd = createProject({
     "packages/cli/package.json": manifest(cli),
-    "packages/tailwind/package.json": manifest(tailwind),
     "packages/web/styles/globals.css": "",
+    "packages/web/styles/theme.css": "",
     "packages/web/components/ui/button.tsx": "export {}",
   })
   mkdirSync(path.join(cwd, "scripts"))
@@ -92,14 +92,13 @@ describe("release", () => {
     ["minor", "0.10.0"],
     ["major", "1.0.0"],
     ["0.9.5", "0.9.5"],
-  ])("bumps both packages for %s and pushes the tag", (input, expected) => {
+  ])("bumps the CLI version for %s and pushes the tag", (input, expected) => {
     const { cwd, origin } = repository()
     const result = release(cwd, input)
     expect(result.stderr).toBe("")
     expect(result.code).toBe(0)
     expect(result.stdout).toContain(`Pushed v${expected}.`)
     expect(version(cwd, "packages/cli/package.json")).toBe(expected)
-    expect(version(cwd, "packages/tailwind/package.json")).toBe(expected)
     expect(git(cwd, "log", "-1", "--format=%s")).toBe(
       `chore(release): v${expected}`
     )
@@ -137,17 +136,10 @@ describe("release", () => {
   })
 
   it("compares versions numerically, not as text", () => {
-    const { cwd } = repository({ cli: "0.10.0", tailwind: "0.10.0" })
+    const { cwd } = repository({ cli: "0.10.0" })
     const result = release(cwd, "0.9.9")
     expect(result.code).toBe(1)
     expect(result.stderr).toContain("0.9.9 must be newer than 0.10.0.")
-  })
-
-  it("refuses when the packages are on different versions", () => {
-    const { cwd } = repository({ cli: "0.9.0", tailwind: "0.8.0" })
-    const result = release(cwd, "patch")
-    expect(result.code).toBe(1)
-    expect(result.stderr).toContain("Package versions differ: 0.9.0, 0.8.0.")
   })
 
   it("refuses with uncommitted changes", () => {

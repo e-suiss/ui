@@ -31,7 +31,6 @@
       "entry": ["tests/**/*.test.mjs"],
       "project": ["lib/**/*.mjs", "tests/**/*.mjs"]
     },
-    "packages/tailwind": {},
     "packages/mobile": {
       "entry": [
         "uniwind/components/**/*.tsx",

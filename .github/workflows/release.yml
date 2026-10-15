@@ -25,13 +25,11 @@ jobs:
       - name: Check versions
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          for dir in packages/cli packages/tailwind; do
-            PACKAGE_VERSION=$(node -p "require('./$dir/package.json').version")
-            if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
-              echo "Tag $GITHUB_REF_NAME does not match $dir version $PACKAGE_VERSION." >&2
-              exit 1
-            fi
-          done
+          PACKAGE_VERSION=$(node -p "require('./packages/cli/package.json').version")
+          if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match packages/cli version $PACKAGE_VERSION." >&2
+            exit 1
+          fi
 
       - name: Check registries
         run: |
@@ -41,25 +39,23 @@ jobs:
       - name: Publish to npm
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          for dir in packages/cli packages/tailwind; do
-            NAME=$(node -p "require('./$dir/package.json').name")
-            if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+          NAME=$(node -p "require('./packages/cli/package.json').name")
+          if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+            echo "$NAME@$VERSION is already published."
+            exit 0
+          fi
+          set +e
+          OUTPUT=$(cd packages/cli && npm publish 2>&1)
+          STATUS=$?
+          set -e
+          echo "$OUTPUT"
+          if [ "$STATUS" -ne 0 ]; then
+            if echo "$OUTPUT" | grep -qiE "E409|cannot publish over"; then
               echo "$NAME@$VERSION is already published."
-              continue
+            else
+              exit "$STATUS"
             fi
-            set +e
-            OUTPUT=$(cd "$dir" && npm publish 2>&1)
-            STATUS=$?
-            set -e
-            echo "$OUTPUT"
-            if [ "$STATUS" -ne 0 ]; then
-              if echo "$OUTPUT" | grep -qiE "E409|cannot publish over"; then
-                echo "$NAME@$VERSION is already published."
-              else
-                exit "$STATUS"
-              fi
-            fi
-          done
+          fi
 
       - name: Publish the Swift and Kotlin repositories
         env:

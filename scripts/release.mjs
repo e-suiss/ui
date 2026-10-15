@@ -2,10 +2,7 @@ import { execFileSync } from "node:child_process"
 import { existsSync, readFileSync, writeFileSync } from "node:fs"
 
 const LIBRARIES = ["packages/web", "packages/mobile"]
-const MANIFESTS = [
-  "packages/cli/package.json",
-  "packages/tailwind/package.json",
-]
+const MANIFEST = "packages/cli/package.json"
 const BRANCH = "main"
 const USAGE = "Usage: pnpm release <patch|minor|major|x.y.z>"
 
@@ -45,15 +42,7 @@ function nextVersion(current, input) {
 const input = process.argv[2]
 if (!input) fail(USAGE)
 
-const manifests = MANIFESTS.map((file) => ({
-  file,
-  content: JSON.parse(readFileSync(file, "utf8")),
-}))
-const versions = new Set(manifests.map(({ content }) => content.version))
-if (versions.size !== 1) {
-  fail(`Package versions differ: ${[...versions].join(", ")}.`)
-}
-const [manifest] = manifests.map(({ content }) => content)
+const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"))
 const version = nextVersion(manifest.version, input)
 const tag = `v${version}`
 if (!isNewer(version, manifest.version)) {
@@ -81,11 +70,9 @@ for (const library of LIBRARIES) {
   })
 }
 
-for (const { file, content } of manifests) {
-  content.version = version
-  writeFileSync(file, `${JSON.stringify(content, null, 2)}\n`)
-}
-git("add", ...MANIFESTS)
+manifest.version = version
+writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`)
+git("add", MANIFEST)
 git("commit", "-m", `chore(release): ${tag}`)
 git("tag", "-a", tag, "-m", tag)
 execFileSync("git", ["push", "origin", BRANCH, tag], { stdio: "inherit" })

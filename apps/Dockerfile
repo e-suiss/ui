@@ -18,7 +18,6 @@ COPY apps/ui/package.json apps/ui/
 COPY packages/web/package.json packages/web/
 COPY packages/mobile/package.json packages/mobile/
 COPY packages/cli/package.json packages/cli/
-COPY packages/tailwind/package.json packages/tailwind/
 COPY packages/tokens/package.json packages/tokens/
 RUN corepack install \
  && npm pkg delete scripts.prepare
