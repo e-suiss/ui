@@ -26,15 +26,15 @@ const stylesheet = `@import "tailwindcss";
 `
 
 const files = {
-  "registry.json": {
-    stylesheet: "styles/globals.css",
+  "registry/registry.json": {
+    name: "esuiss",
+    homepage: "https://ui.suiss.app",
     items: [
       {
         name: "button",
-        type: "ui",
-        requires: [],
+        type: "registry:ui",
         dependencies: ["@base-ui/react"],
-        files: ["components/ui/button.tsx"],
+        files: [{ path: "components/ui/button.tsx", type: "registry:ui" }],
       },
     ],
   },

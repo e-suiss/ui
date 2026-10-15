@@ -8,14 +8,14 @@ import { createProject, read } from "./helpers.mjs"
 const entry = new URL("../index.mjs", import.meta.url).pathname
 
 const webRegistry = {
-  stylesheet: "styles/globals.css",
+  name: "esuiss",
+  homepage: "https://ui.suiss.app",
   items: [
     {
       name: "button",
-      type: "ui",
-      requires: [],
+      type: "registry:ui",
       dependencies: ["@base-ui/react"],
-      files: ["components/ui/button.tsx"],
+      files: [{ path: "components/ui/button.tsx", type: "registry:ui" }],
     },
   ],
 }
@@ -60,7 +60,7 @@ const mobileRegistry = {
 }
 
 const files = {
-  "/web/registry.json": JSON.stringify(webRegistry),
+  "/web/registry/registry.json": JSON.stringify(webRegistry),
   "/web/components/ui/button.tsx": "export function WebButton() {}\n",
   "/mobile/registry.json": JSON.stringify(mobileRegistry),
   "/mobile/uniwind/components/ui/button.tsx":

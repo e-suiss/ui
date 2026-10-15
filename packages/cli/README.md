@@ -57,6 +57,25 @@ export function Example() {
 }
 ```
 
+### Registry CLI
+
+The React items are also a registry under the `@esuiss` namespace, so any project with a `components.json` can add them without this CLI:
+
+```bash
+npx shadcn@latest add @esuiss/button @esuiss/dialog
+npx shadcn@latest add @esuiss/theme-suiss
+```
+
+Until the namespace is listed in the public registry directory, register it once in `components.json`:
+
+```json
+{
+  "registries": {
+    "@esuiss": "https://ui.suiss.app/r/{style}/{name}.json"
+  }
+}
+```
+
 ## What `init` does
 
 1. Detects Next.js or Vite and checks for TypeScript and Tailwind CSS 4.2+.

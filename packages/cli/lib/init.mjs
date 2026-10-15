@@ -281,7 +281,7 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
-  const css = stylesheetFor(project, await fetchStylesheet(registry))
+  const css = stylesheetFor(project, await fetchStylesheet())
 
   const tsconfigs =
     project.framework === "vite"

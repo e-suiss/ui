@@ -7,6 +7,7 @@ import {
   fetchText,
   resolveItems,
   scopeOf,
+  toCss,
 } from "../lib/registry.mjs"
 import { serveRegistry } from "./helpers.mjs"
 
@@ -17,13 +18,12 @@ afterEach(() => {
 })
 
 describe("scopeOf", () => {
-  it("returns the item type when it is a known scope", () => {
-    expect(scopeOf({ type: "chart" })).toBe("chart")
-    expect(scopeOf({ type: "block" })).toBe("block")
+  it("returns the scope of a fetched item", () => {
+    expect(scopeOf({ scope: "chart" })).toBe("chart")
+    expect(scopeOf({ scope: "block" })).toBe("block")
   })
 
-  it("falls back to ui for unknown or missing types", () => {
-    expect(scopeOf({ type: "hook" })).toBe("ui")
+  it("falls back to ui for items without a scope", () => {
     expect(scopeOf({})).toBe("ui")
   })
 })
@@ -77,16 +77,71 @@ describe("fetchText", () => {
   })
 })
 
-describe("fetchRegistry and fetchStylesheet", () => {
-  it("parse the registry and download its stylesheet", async () => {
+describe("fetchRegistry", () => {
+  it("reads the items of the standard registry", async () => {
     serveRegistry({
-      "registry.json": { stylesheet: "styles/globals.css", items: [] },
-      "styles/globals.css": "@import 'tailwindcss';",
+      "registry/registry.json": {
+        name: "esuiss",
+        homepage: "https://ui.suiss.app",
+        items: [
+          {
+            name: "area-chart-default",
+            type: "registry:block",
+            dependencies: ["recharts"],
+            registryDependencies: ["@esuiss/chart", "utils"],
+            files: [
+              {
+                path: "components/charts/area-chart-default.tsx",
+                type: "registry:component",
+                target: "@components/charts/area-chart-default.tsx",
+              },
+            ],
+          },
+          {
+            name: "use-mobile",
+            type: "registry:hook",
+            files: [{ path: "hooks/use-mobile.ts", type: "registry:hook" }],
+          },
+          { name: "theme-suiss", type: "registry:theme", cssVars: {} },
+        ],
+      },
     })
-    const registry = await fetchRegistry()
-    expect(registry.items).toEqual([])
-    await expect(fetchStylesheet(registry)).resolves.toBe(
-      "@import 'tailwindcss';"
-    )
+    expect((await fetchRegistry()).items).toEqual([
+      {
+        name: "area-chart-default",
+        scope: "chart",
+        requires: ["chart", "utils"],
+        dependencies: ["recharts"],
+        files: ["components/charts/area-chart-default.tsx"],
+      },
+      {
+        name: "use-mobile",
+        scope: "ui",
+        requires: [],
+        dependencies: [],
+        files: ["hooks/use-mobile.ts"],
+      },
+    ])
+  })
+})
+
+describe("fetchStylesheet", () => {
+  it("downloads the stylesheet", async () => {
+    serveRegistry({ "styles/globals.css": "@import 'tailwindcss';" })
+    await expect(fetchStylesheet()).resolves.toBe("@import 'tailwindcss';")
+  })
+})
+
+describe("toCss", () => {
+  it("writes rules, at-rules and statements", () => {
+    expect(
+      toCss({
+        '@import "tw-animate-css"': {},
+        "@keyframes spin": { to: { rotate: "1turn" } },
+      })
+    ).toEqual([
+      '@import "tw-animate-css";',
+      "@keyframes spin {\n  to {\n    rotate: 1turn;\n  }\n}",
+    ])
   })
 })

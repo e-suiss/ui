@@ -2,7 +2,7 @@ import { CliError } from "../output.mjs"
 
 const TRAILING_SLASH = /\/$/
 
-export function createRegistry({ base, env }) {
+export function createRegistry({ base, env, index = "registry.json" }) {
   const root = (process.env[env] ?? base).replace(TRAILING_SLASH, "")
 
   async function fetchText(file) {
@@ -21,7 +21,7 @@ export function createRegistry({ base, env }) {
   }
 
   async function fetchRegistry() {
-    return JSON.parse(await fetchText("registry.json"))
+    return JSON.parse(await fetchText(index))
   }
 
   return { fetchText, fetchRegistry }

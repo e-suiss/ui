@@ -1,7 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
-import { ICON_PACKAGE, toPhosphorIcons } from "./icons.mjs"
+import {
+  ICON_PACKAGE,
+  toPhosphorIcons,
+  usesIconPlaceholders,
+} from "./icons.mjs"
 import { CliError, note, step } from "./output.mjs"
 import {
   detectProject,
@@ -16,6 +20,7 @@ import {
   resolveItems,
   SCOPES,
   scopeOf,
+  toCss,
 } from "./registry.mjs"
 import { printDiff, reportFiles, writeFiles } from "./shared/files.mjs"
 import { relative } from "./shared/project.mjs"
@@ -38,29 +43,31 @@ function fetchFiles(root, items) {
     item.files.map((file) => ({ file, target: targetFor(root, file) }))
   )
   return Promise.all(
-    files.map(async (entry) => ({
-      ...entry,
-      content: toPhosphorIcons(await fetchText(entry.file)),
-    }))
+    files.map(async (entry) => {
+      const source = await fetchText(entry.file)
+      return {
+        ...entry,
+        content: toPhosphorIcons(source),
+        icons: usesIconPlaceholders(source),
+      }
+    })
   )
 }
 
-async function addStyles(project, items) {
+function addStyles(project, items) {
   const styled = items.filter((item) => item.css)
   if (!styled.length) return
   const names = styled.map((item) => item.name).join(", ")
+  const rules = styled.flatMap((item) => toCss(item.css))
   const file = findStylesheet(project)
   if (!file) {
     note(
-      `Add the styles for ${names} to your stylesheet: ${styled.map((item) => item.css).join(", ")} in the registry.`
+      `Add the styles for ${names} to your stylesheet:\n\n${rules.join("\n\n")}`
     )
     return
   }
-  const rules = await Promise.all(styled.map((item) => fetchText(item.css)))
   const current = readFileSync(file, "utf8")
-  const missing = rules
-    .map((rule) => rule.trim())
-    .filter((rule) => !current.includes(rule))
+  const missing = rules.filter((rule) => !current.includes(rule))
   if (!missing.length) return
   writeFileSync(file, `${current.trimEnd()}\n\n${missing.join("\n\n")}\n`)
   step(`Added the styles for ${names} to ${relative(project, file)}`)
@@ -74,20 +81,14 @@ export async function installItems(
   { overwrite = false } = {}
 ) {
   const items = resolveItems(registry, names)
-  const result = writeFiles(
-    project.cwd,
-    await fetchFiles(root, items),
-    overwrite
-  )
-  const installed = install(
-    project,
-    items.flatMap((item) => [
-      ...item.dependencies,
-      ...(item.icons ? [ICON_PACKAGE] : []),
-    ])
-  )
+  const files = await fetchFiles(root, items)
+  const result = writeFiles(project.cwd, files, overwrite)
+  const installed = install(project, [
+    ...items.flatMap((item) => item.dependencies),
+    ...(files.some((file) => file.icons) ? [ICON_PACKAGE] : []),
+  ])
   reportFiles(result, installed)
-  await addStyles(project, items)
+  addStyles(project, items)
 }
 
 async function showDiff(project, root, registry, names) {

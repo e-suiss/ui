@@ -17,49 +17,65 @@ vi.mock("../lib/prompt.mjs", () => ({
   choose: vi.fn(),
 }))
 
+const ui = (name, extra = {}) => ({
+  name,
+  type: "registry:ui",
+  files: [{ path: `components/ui/${name}.tsx`, type: "registry:ui" }],
+  ...extra,
+})
+
 const registry = {
-  stylesheet: "styles/globals.css",
+  name: "esuiss",
+  homepage: "https://ui.suiss.app",
   items: [
-    {
-      name: "button",
-      type: "ui",
-      requires: [],
+    ui("button", { dependencies: ["@base-ui/react"] }),
+    ui("dialog", {
       dependencies: ["@base-ui/react"],
-      files: ["components/ui/button.tsx"],
-    },
-    {
-      name: "dialog",
-      type: "ui",
-      requires: ["button"],
-      dependencies: ["@base-ui/react"],
-      files: ["components/ui/dialog.tsx"],
-    },
-    {
-      name: "theme",
-      type: "ui",
-      optIn: true,
-      requires: [],
-      dependencies: [],
-      files: ["components/ui/theme.tsx"],
-      css: "styles/theme.css",
-    },
+      registryDependencies: ["@esuiss/button"],
+    }),
+    ui("theme", {
+      css: {
+        "@keyframes theme-reveal": { to: { opacity: "1" } },
+        "html::view-transition-old(root)": { animation: "none" },
+      },
+      meta: { optIn: true },
+    }),
     {
       name: "date-picker",
-      type: "pattern",
-      requires: ["dialog"],
+      type: "registry:component",
       dependencies: ["react-day-picker"],
-      files: ["components/patterns/date-picker.tsx"],
+      registryDependencies: ["@esuiss/dialog"],
+      files: [
+        {
+          path: "components/patterns/date-picker.tsx",
+          type: "registry:component",
+          target: "@components/patterns/date-picker.tsx",
+        },
+      ],
+    },
+    {
+      name: "theme-suiss",
+      type: "registry:theme",
+      cssVars: { light: { primary: "oklch(0.5 0.2 256)" } },
     },
   ],
 }
 
+const themeCss = `@keyframes theme-reveal {
+  to {
+    opacity: 1;
+  }
+}
+
+html::view-transition-old(root) {
+  animation: none;
+}`
+
 const files = {
-  "registry.json": registry,
+  "registry/registry.json": registry,
   "components/ui/button.tsx": "export function Button() {}\n",
   "components/ui/dialog.tsx": "export function Dialog() {}\n",
   "components/ui/theme.tsx": "export function Theme() {}\n",
-  "styles/theme.css":
-    "@keyframes theme-reveal {\n  to {\n    opacity: 1;\n  }\n}\n",
   "components/patterns/date-picker.tsx": "export function DatePicker() {}\n",
 }
 
@@ -104,18 +120,11 @@ describe("add", () => {
   it("installs icon placeholders as Phosphor icons", async () => {
     serveRegistry({
       ...files,
-      "registry.json": {
+      "registry/registry.json": {
         ...registry,
         items: [
           ...registry.items,
-          {
-            name: "accordion",
-            type: "ui",
-            icons: true,
-            requires: [],
-            dependencies: ["@base-ui/react"],
-            files: ["components/ui/accordion.tsx"],
-          },
+          ui("accordion", { dependencies: ["@base-ui/react"] }),
         ],
       },
       "components/ui/accordion.tsx": `import { Accordion } from "@base-ui/react/accordion"
@@ -164,7 +173,7 @@ export const Icon = () => (
     await add(["theme"], { cwd })
     await add(["theme"], { cwd, overwrite: true })
     expect(read(cwd, "src/index.css")).toBe(
-      `@import "tailwindcss";\n\n${files["styles/theme.css"]}`
+      `@import "tailwindcss";\n\n${themeCss}\n`
     )
     expect(output()).toContain("Added the styles for theme to src/index.css")
   })
@@ -183,7 +192,7 @@ export const Icon = () => (
     await add(["theme"], { cwd })
     expect(existsSync(path.join(cwd, "src/index.css"))).toBe(false)
     expect(output()).toContain(
-      "Add the styles for theme to your stylesheet: styles/theme.css in the registry."
+      `Add the styles for theme to your stylesheet:\n\n${themeCss}`
     )
   })
 
@@ -315,15 +324,13 @@ export const Icon = () => (
   it("refuses registry files that point outside the project", async () => {
     const cwd = viteProject()
     serveRegistry({
-      "registry.json": {
+      "registry/registry.json": {
         ...registry,
         items: [
           {
             name: "escape",
-            type: "ui",
-            requires: [],
-            dependencies: [],
-            files: ["../../escape.tsx"],
+            type: "registry:ui",
+            files: [{ path: "../../escape.tsx", type: "registry:ui" }],
           },
         ],
       },
