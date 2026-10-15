@@ -11,7 +11,13 @@ import { RadialChartRings } from "@/components/charts/radial-chart-rings"
 import { RadialChartStacked } from "@/components/charts/radial-chart-stacked"
 import { RadialChartText } from "@/components/charts/radial-chart-text"
 import { RadialChartTinted } from "@/components/charts/radial-chart-tinted"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const DRAWN_PATH = /^M\s?-?\d/
 const BAR = ".recharts-radial-bar-sectors .recharts-sector"
@@ -75,8 +81,8 @@ test("Interactive", async () => {
 
   await step("starts on Sunday with its rings filled", async () => {
     await expect(
-      canvas.getByRole("button", { name: "Sunday" })
-    ).toHaveAttribute("aria-pressed", "true")
+      canvas.getByRole(SINGLE.role, { name: "Sunday" })
+    ).toHaveAttribute(SINGLE.pressed, "true")
     await waitFor(() => {
       expect(canvas.getByText("486/600")).toBeInTheDocument()
       expect(canvas.getByText("24/30")).toBeInTheDocument()
@@ -85,10 +91,10 @@ test("Interactive", async () => {
   })
 
   await step("switches to the picked day", async () => {
-    await userEvent.click(canvas.getByRole("button", { name: "Wednesday" }))
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "Wednesday" }))
     await expect(
-      canvas.getByRole("button", { name: "Wednesday" })
-    ).toHaveAttribute("aria-pressed", "true")
+      canvas.getByRole(SINGLE.role, { name: "Wednesday" })
+    ).toHaveAttribute(SINGLE.pressed, "true")
     await waitFor(
       () => {
         expect(canvas.getByText("380/600")).toBeInTheDocument()

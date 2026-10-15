@@ -9,7 +9,7 @@ import {
   ActionMenuSeparator,
   ActionMenuTrigger,
 } from "@/components/patterns/action-menu"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import ActionMenuDemo from "@/examples/action-menu-demo"
 import ActionMenuNotDismissible from "@/examples/action-menu-not-dismissible"
 import ActionMenuWithIcons from "@/examples/action-menu-with-icons"
@@ -19,7 +19,7 @@ function ActionMenuOpenByDefault() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <ActionMenu defaultOpen>
-        <ActionMenuTrigger render={<Button variant="outline" />}>
+        <ActionMenuTrigger className={buttonVariants({ variant: "outline" })}>
           Order actions
         </ActionMenuTrigger>
         <ActionMenuContent>

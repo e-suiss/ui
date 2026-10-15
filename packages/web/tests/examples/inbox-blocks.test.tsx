@@ -4,7 +4,13 @@ import { expect, test } from "vitest"
 import { InboxCategories } from "@/components/blocks/inbox-categories"
 import { InboxMail } from "@/components/blocks/inbox-mail"
 import { InboxSupport } from "@/components/blocks/inbox-support"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const MEETING_ROW = /Tomorrow's meeting/
 const STORAGE_ROW = /Your storage is almost full/
@@ -44,10 +50,10 @@ test("Categories", async () => {
   const { canvas, step } = await renderExample(<InboxCategories />)
 
   await step("picking a category opens its first message", async () => {
-    const group = canvas.getByRole("group", { name: "Category" })
-    const updates = within(group).getByRole("button", { name: "Updates" })
+    const group = canvas.getByRole(SINGLE.group, { name: "Category" })
+    const updates = within(group).getByRole(SINGLE.role, { name: "Updates" })
     await userEvent.click(updates)
-    await expect(updates).toHaveAttribute("aria-pressed", "true")
+    await expect(updates).toHaveAttribute(SINGLE.pressed, "true")
     await expect(
       await canvas.findByRole("button", { name: STORAGE_ROW })
     ).toHaveAttribute("aria-current", "true")
@@ -63,17 +69,17 @@ test("Support", async () => {
   const { canvas, step } = await renderExample(<InboxSupport />)
 
   await step("marking a ticket solved updates its status", async () => {
-    const group = canvas.getByRole("group", { name: "Status" })
+    const group = canvas.getByRole(SINGLE.group, { name: "Status" })
     await expect(
-      within(group).getByRole("button", { name: "Open" })
-    ).toHaveAttribute("aria-pressed", "true")
+      within(group).getByRole(SINGLE.role, { name: "Open" })
+    ).toHaveAttribute(SINGLE.pressed, "true")
     await userEvent.click(
       canvas.getByRole("button", { name: "Mark as solved" })
     )
     await waitFor(() =>
       expect(
-        within(group).getByRole("button", { name: "Solved" })
-      ).toHaveAttribute("aria-pressed", "true")
+        within(group).getByRole(SINGLE.role, { name: "Solved" })
+      ).toHaveAttribute(SINGLE.pressed, "true")
     )
   })
 

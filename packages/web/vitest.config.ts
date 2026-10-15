@@ -96,7 +96,10 @@ export default defineConfig({
         test: {
           name: "examples",
           include: ["tests/examples/*.test.tsx"],
-          provide: { responsiveWidth: Number(process.env.WIDTH ?? 0) },
+          provide: {
+            responsiveWidth: Number(process.env.WIDTH ?? 0),
+            base: "base",
+          },
           maxWorkers: 4,
           sequence: { groupOrder: 2 },
           setupFiles: [

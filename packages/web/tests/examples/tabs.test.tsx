@@ -8,7 +8,13 @@ import TabsManyTabs from "@/examples/tabs-many-tabs"
 import TabsManyTabsLine from "@/examples/tabs-many-tabs-line"
 import TabsVertical from "@/examples/tabs-vertical"
 import TabsWithIcons from "@/examples/tabs-with-icons"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const DISABLED = byBase({
+  base: { name: "aria-disabled", value: "true" },
+  radix: { name: "disabled", value: "" },
+})
 
 const tabs = [
   {
@@ -122,12 +128,14 @@ test("Disabled Tab", async () => {
   const billing = canvas.getByRole("tab", { name: "Billing" })
 
   await step("cannot select the disabled tab from the keyboard", async () => {
-    await expect(billing).toHaveAttribute("aria-disabled", "true")
+    await expect(billing).toHaveAttribute(DISABLED.name, DISABLED.value)
     await userEvent.click(canvas.getByRole("tab", { name: "Notifications" }))
     await userEvent.keyboard("{ArrowRight}{Enter}")
     await expect(billing).toHaveAttribute("aria-selected", "false")
     await expect(
-      canvas.getByRole("tab", { name: "Notifications" })
+      canvas.getByRole("tab", {
+        name: byBase({ base: "Notifications", radix: "Account" }),
+      })
     ).toHaveAttribute("aria-selected", "true")
   })
 

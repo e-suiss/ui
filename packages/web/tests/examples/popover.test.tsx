@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -22,7 +22,7 @@ const SHARED_LINKS = /^Shared links stay active for 30 days/
 function PopoverOpenByDefault() {
   return (
     <Popover defaultOpen>
-      <PopoverTrigger render={<Button variant="outline" />}>
+      <PopoverTrigger className={buttonVariants({ variant: "outline" })}>
         Open popover
       </PopoverTrigger>
       <PopoverContent>

@@ -11,7 +11,13 @@ import { AreaChartSparkline } from "@/components/charts/area-chart-sparkline"
 import { AreaChartStacked } from "@/components/charts/area-chart-stacked"
 import { AreaChartStackedExpand } from "@/components/charts/area-chart-stacked-expand"
 import { AreaChartStep } from "@/components/charts/area-chart-step"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const DRAWN_PATH = /^M\s?-?\d/
 const february = { month: "February", desktop: 305, mobile: 200 }
@@ -66,9 +72,9 @@ test("Interactive", async () => {
 
   await step("switches the time range", async () => {
     await expect(canvas.getByText("Past month")).toBeInTheDocument()
-    await userEvent.click(canvas.getByRole("button", { name: "1Y" }))
-    await expect(canvas.getByRole("button", { name: "1Y" })).toHaveAttribute(
-      "aria-pressed",
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "1Y" }))
+    await expect(canvas.getByRole(SINGLE.role, { name: "1Y" })).toHaveAttribute(
+      SINGLE.pressed,
       "true"
     )
     await expect(await canvas.findByText("Past year")).toBeInTheDocument()

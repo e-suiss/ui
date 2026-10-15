@@ -5,7 +5,13 @@ import SwitchDemo from "@/examples/switch-demo"
 import SwitchDisabled from "@/examples/switch-disabled"
 import SwitchInvalid from "@/examples/switch-invalid"
 import SwitchWithLabel from "@/examples/switch-with-label"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const DISABLED = byBase({
+  base: { name: "aria-disabled", value: "true" },
+  radix: { name: "disabled", value: "" },
+})
 
 test("Default", async () => {
   const { canvas, step } = await renderExample(<SwitchDemo />)
@@ -51,7 +57,7 @@ test("Disabled", async () => {
   const [off, on] = canvas.getAllByRole("switch") as [HTMLElement, HTMLElement]
 
   await step("ignores clicks while disabled", async () => {
-    await expect(off).toHaveAttribute("aria-disabled", "true")
+    await expect(off).toHaveAttribute(DISABLED.name, DISABLED.value)
     await userEvent.click(off, { pointerEventsCheck: 0 })
     await expect(off).toHaveAttribute("aria-checked", "false")
     await expect(on).toHaveAttribute("aria-checked", "true")

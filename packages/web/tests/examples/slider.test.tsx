@@ -5,6 +5,7 @@ import SliderDisabled from "@/examples/slider-disabled"
 import SliderRange from "@/examples/slider-range"
 import SliderSteps from "@/examples/slider-steps"
 import SliderVertical from "@/examples/slider-vertical"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
 
 test("Default", async () => {
@@ -84,7 +85,10 @@ test("Disabled", async () => {
   const slider = canvas.getByRole("slider", { name: "Volume" })
 
   await step("stays out of the tab order and keeps its value", async () => {
-    await expect(slider).toBeDisabled()
+    await byBase({
+      base: () => expect(slider).toBeDisabled(),
+      radix: () => expect(slider).toHaveAttribute("aria-disabled", "true"),
+    })()
     await userEvent.tab()
     await expect(slider).not.toHaveFocus()
     await expect(slider).toHaveAttribute("aria-valuenow", "50")

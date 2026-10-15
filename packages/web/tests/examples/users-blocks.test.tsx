@@ -4,7 +4,13 @@ import { expect, test } from "vitest"
 import { UsersDetail } from "@/components/blocks/users-detail"
 import { UsersInvite } from "@/components/blocks/users-invite"
 import { UsersTable } from "@/components/blocks/users-table"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const REMOVE_CHIP = /^Remove /
 
@@ -15,10 +21,12 @@ test("List", async () => {
 
   await step("a role filter narrows the people", async () => {
     await expect(rows()).toHaveLength(6)
-    const roles = canvas.getByRole("group", { name: "Role" })
-    await userEvent.click(within(roles).getByRole("button", { name: "Editor" }))
+    const roles = canvas.getByRole(SINGLE.group, { name: "Role" })
+    await userEvent.click(
+      within(roles).getByRole(SINGLE.role, { name: "Editor" })
+    )
     await waitFor(() => expect(rows()).toHaveLength(2))
-    await userEvent.click(within(roles).getByRole("button", { name: "All" }))
+    await userEvent.click(within(roles).getByRole(SINGLE.role, { name: "All" }))
     await waitFor(() => expect(rows()).toHaveLength(6))
   })
 

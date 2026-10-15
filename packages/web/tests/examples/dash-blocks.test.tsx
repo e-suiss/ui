@@ -4,7 +4,13 @@ import { expect, test } from "vitest"
 import { DashAnalytics } from "@/components/blocks/dash-analytics"
 import { DashHealth } from "@/components/blocks/dash-health"
 import { DashStore } from "@/components/blocks/dash-store"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const WALKING_SPEED = /^Walking Speed/
 
@@ -15,18 +21,18 @@ test("Store", async () => {
 
   await step("a longer range scales the revenue", async () => {
     await expect(headline).toHaveTextContent("Weekly sales$1,284,500")
-    const range = canvas.getByRole("button", { name: "30 Days" })
+    const range = canvas.getByRole(SINGLE.role, { name: "30 Days" })
     await userEvent.click(range)
     await waitFor(() =>
       expect(headline).toHaveTextContent("Weekly sales$5,523,350")
     )
-    await expect(range).toHaveAttribute("aria-pressed", "true")
+    await expect(range).toHaveAttribute(SINGLE.pressed, "true")
   })
 
   await step("a status filter narrows the recent orders", async () => {
     const orders = () => canvasElement.querySelectorAll("[role=listitem]")
     await expect(orders()).toHaveLength(5)
-    await userEvent.click(canvas.getByRole("button", { name: "Delivered" }))
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "Delivered" }))
     await waitFor(() => expect(orders()).toHaveLength(2))
   })
 })
@@ -58,16 +64,16 @@ test("Analytics", async () => {
 
   await step("picking a metric switches the totals", async () => {
     await expect(headline).toHaveTextContent("This week · Downloads5.6 K")
-    const revenue = canvas.getByRole("button", { name: "Revenue" })
+    const revenue = canvas.getByRole(SINGLE.role, { name: "Revenue" })
     await userEvent.click(revenue)
     await waitFor(() =>
       expect(headline).toHaveTextContent("This week · Revenue21.0 K $")
     )
-    await expect(revenue).toHaveAttribute("aria-pressed", "true")
+    await expect(revenue).toHaveAttribute(SINGLE.pressed, "true")
   })
 
   await step("picking a section rescales its numbers", async () => {
-    await userEvent.click(canvas.getByRole("button", { name: "Downloads" }))
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "Downloads" }))
     await userEvent.click(canvas.getByRole("button", { name: "Notebook" }))
     await waitFor(() =>
       expect(canvas.getByRole("heading", { level: 1 })).toHaveTextContent(

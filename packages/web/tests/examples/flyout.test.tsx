@@ -10,7 +10,7 @@ import {
   FlyoutTitle,
   FlyoutTrigger,
 } from "@/components/patterns/flyout"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import FlyoutDemo from "@/examples/flyout-demo"
@@ -22,7 +22,7 @@ function FlyoutOpenByDefault() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <Flyout defaultOpen>
-        <FlyoutTrigger render={<Button variant="outline" />}>
+        <FlyoutTrigger className={buttonVariants({ variant: "outline" })}>
           Dimensions
         </FlyoutTrigger>
         <FlyoutContent>

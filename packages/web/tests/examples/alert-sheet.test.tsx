@@ -12,7 +12,7 @@ import {
   AlertSheetTitle,
   AlertSheetTrigger,
 } from "@/components/ui/alert-sheet"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import AlertSheetDemo from "@/examples/alert-sheet-demo"
 import AlertSheetNotDismissible from "@/examples/alert-sheet-not-dismissible"
 import { renderExample } from "@/tests/render-example"
@@ -21,7 +21,7 @@ function AlertSheetOpenByDefault() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <AlertSheet defaultOpen>
-        <AlertSheetTrigger render={<Button variant="outline" />}>
+        <AlertSheetTrigger className={buttonVariants({ variant: "outline" })}>
           Delete order
         </AlertSheetTrigger>
         <AlertSheetContent>
@@ -49,7 +49,7 @@ function AlertSheetWithTitleOpen() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <AlertSheet defaultOpen>
-        <AlertSheetTrigger render={<Button variant="outline" />}>
+        <AlertSheetTrigger className={buttonVariants({ variant: "outline" })}>
           Sign out
         </AlertSheetTrigger>
         <AlertSheetContent>
@@ -72,7 +72,7 @@ function AlertSheetMultipleActionsOpen() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <AlertSheet defaultOpen>
-        <AlertSheetTrigger render={<Button variant="outline" />}>
+        <AlertSheetTrigger className={buttonVariants({ variant: "outline" })}>
           Close draft
         </AlertSheetTrigger>
         <AlertSheetContent>

@@ -14,7 +14,13 @@ import ThemeRectangleSideways from "@/examples/theme-rectangle-sideways"
 import ThemeSizes from "@/examples/theme-sizes"
 import ThemeStatusExample from "@/examples/theme-status"
 import ThemeWithoutTransition from "@/examples/theme-without-transition"
+import { byBase } from "@/tests/base"
 import { type ExampleContext, renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const root = () => document.documentElement
 async function transitionSettled() {
@@ -144,21 +150,21 @@ test("Blurred", async () => {
 test("Light Dark System", async () => {
   const { canvas, step } = await renderExample(<ThemeLightDarkSystem />)
 
-  const light = canvas.getByRole("button", { name: "light" })
-  const dark = canvas.getByRole("button", { name: "dark" })
+  const light = canvas.getByRole(SINGLE.role, { name: "light" })
+  const dark = canvas.getByRole(SINGLE.role, { name: "dark" })
 
   await step("picks dark from the segmented control", async () => {
-    await waitFor(() => expect(light).toHaveAttribute("aria-pressed", "true"))
+    await waitFor(() => expect(light).toHaveAttribute(SINGLE.pressed, "true"))
     await userEvent.click(dark)
     await waitFor(() => expect(root()).toHaveClass("dark"))
-    await expect(dark).toHaveAttribute("aria-pressed", "true")
+    await expect(dark).toHaveAttribute(SINGLE.pressed, "true")
   })
 
   await step("returns to light", async () => {
     await transitionSettled()
     await userEvent.click(light)
     await waitFor(() => expect(root()).not.toHaveClass("dark"))
-    await expect(light).toHaveAttribute("aria-pressed", "true")
+    await expect(light).toHaveAttribute(SINGLE.pressed, "true")
     await transitionSettled()
   })
 })

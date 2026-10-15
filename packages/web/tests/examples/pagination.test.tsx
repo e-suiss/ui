@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/dom"
+import { screen, waitFor, within } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
 import PaginationCompact from "@/examples/pagination-compact"
@@ -77,7 +77,7 @@ test("Rows Per Page", async () => {
     await userEvent.click(
       await screen.findByRole("option", { name: "10 rows" })
     )
-    await expect(canvas.getAllByRole("row")).toHaveLength(11)
+    await waitFor(() => expect(canvas.getAllByRole("row")).toHaveLength(11))
   })
 
   await step("jumps to the last and first pages", async () => {

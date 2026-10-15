@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/context-menu"
 import ContextMenuDemo from "@/examples/context-menu-demo"
 import ContextMenuInset from "@/examples/context-menu-inset"
+import { base, byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
 
 const FORWARD = /^Forward/
@@ -27,7 +28,9 @@ const RELOAD = /^Reload/
 
 function ContextMenuOpenByDefault() {
   return (
-    <ContextMenu defaultOpen>
+    <ContextMenu
+      {...byBase<object>({ base: { defaultOpen: true }, radix: {} })}
+    >
       <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
         Right click here
       </ContextMenuTrigger>
@@ -157,6 +160,11 @@ test("Open By Default", async () => {
   const { step } = await renderExample(<ContextMenuOpenByDefault />)
 
   await step("renders the menu open on mount", async () => {
+    if (base === "radix")
+      await userEvent.pointer({
+        keys: "[MouseRight]",
+        target: screen.getByText("Right click here"),
+      })
     const menu = await screen.findByRole("menu")
     await waitFor(() => expect(menu).toBeVisible())
     await expect(

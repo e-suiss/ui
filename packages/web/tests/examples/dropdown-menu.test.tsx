@@ -2,7 +2,7 @@ import { screen, waitFor, within } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +29,7 @@ const COPY = /^Copy/
 function DropdownMenuOpenByDefault() {
   return (
     <DropdownMenu defaultOpen>
-      <DropdownMenuTrigger render={<Button variant="outline" />}>
+      <DropdownMenuTrigger className={buttonVariants({ variant: "outline" })}>
         Open menu
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -191,7 +191,7 @@ test("Open By Default", async () => {
     const menu = await screen.findByRole("menu")
     await waitFor(() => expect(menu).toBeVisible())
     await expect(
-      canvas.getByRole("button", { name: "Open menu" })
+      canvas.getByRole("button", { name: "Open menu", hidden: true })
     ).toHaveAttribute("aria-expanded", "true")
   })
 

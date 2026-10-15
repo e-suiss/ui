@@ -12,7 +12,7 @@ import {
   ModalTitle,
   ModalTrigger,
 } from "@/components/patterns/modal"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import ModalDemo from "@/examples/modal-demo"
@@ -25,7 +25,7 @@ function ModalOpenByDefault() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <Modal defaultOpen>
-        <ModalTrigger render={<Button variant="outline" />}>
+        <ModalTrigger className={buttonVariants({ variant: "outline" })}>
           Edit profile
         </ModalTrigger>
         <ModalContent>
@@ -46,7 +46,7 @@ function ModalOpenByDefault() {
             </div>
           </ModalBody>
           <ModalFooter>
-            <ModalClose render={<Button variant="secondary" />}>
+            <ModalClose className={buttonVariants({ variant: "secondary" })}>
               Cancel
             </ModalClose>
             <Button>Save changes</Button>

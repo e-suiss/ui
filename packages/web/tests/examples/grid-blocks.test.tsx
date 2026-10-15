@@ -4,7 +4,13 @@ import { expect, test } from "vitest"
 import { GridAccessories } from "@/components/blocks/grid-accessories"
 import { GridCarousel } from "@/components/blocks/grid-carousel"
 import { GridLineup } from "@/components/blocks/grid-lineup"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 test("Carousel", async () => {
   const { canvas, step } = await renderExample(<GridCarousel />)
@@ -23,17 +29,17 @@ test("Lineup", async () => {
   const { canvas, step } = await renderExample(<GridLineup />)
 
   await step("picking a finish selects it for that model only", async () => {
-    const phone = canvas.getByRole("group", { name: "Phone finish" })
-    const sage = within(phone).getByRole("button", { name: "Sage" })
+    const phone = canvas.getByRole(SINGLE.group, { name: "Phone finish" })
+    const sage = within(phone).getByRole(SINGLE.role, { name: "Sage" })
     await userEvent.click(sage)
-    await expect(sage).toHaveAttribute("aria-pressed", "true")
+    await expect(sage).toHaveAttribute(SINGLE.pressed, "true")
     await expect(
-      within(phone).getByRole("button", { name: "Lavender" })
-    ).toHaveAttribute("aria-pressed", "false")
-    const phoneE = canvas.getByRole("group", { name: "Phone e finish" })
+      within(phone).getByRole(SINGLE.role, { name: "Lavender" })
+    ).toHaveAttribute(SINGLE.pressed, "false")
+    const phoneE = canvas.getByRole(SINGLE.group, { name: "Phone e finish" })
     await expect(
-      within(phoneE).getByRole("button", { name: "Black" })
-    ).toHaveAttribute("aria-pressed", "true")
+      within(phoneE).getByRole(SINGLE.role, { name: "Black" })
+    ).toHaveAttribute(SINGLE.pressed, "true")
   })
 })
 test("Accessories", async () => {
@@ -42,9 +48,9 @@ test("Accessories", async () => {
   const status = canvas.getByRole("status")
 
   await step("a category filter narrows the products", async () => {
-    const audio = canvas.getByRole("button", { name: "Audio" })
+    const audio = canvas.getByRole(SINGLE.role, { name: "Audio" })
     await userEvent.click(audio)
-    await expect(audio).toHaveAttribute("aria-pressed", "true")
+    await expect(audio).toHaveAttribute(SINGLE.pressed, "true")
     await waitFor(() =>
       expect(
         canvas.queryByRole("button", { name: "Add Sport Band to bag" })

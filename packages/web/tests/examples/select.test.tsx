@@ -16,6 +16,7 @@ import SelectInvalid from "@/examples/select-invalid"
 import SelectSmall from "@/examples/select-small"
 import SelectWithIcons from "@/examples/select-with-icons"
 import SelectWithValue from "@/examples/select-with-value"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
 
 const fruits = [
@@ -28,7 +29,11 @@ const fruits = [
 
 function SelectOpenOpen() {
   return (
-    <Select items={fruits} defaultOpen defaultValue="banana">
+    <Select
+      {...byBase<object>({ base: { items: fruits }, radix: {} })}
+      defaultOpen
+      defaultValue="banana"
+    >
       <SelectTrigger aria-label="Fruit" className="w-48">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>

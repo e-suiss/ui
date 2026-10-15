@@ -1,7 +1,7 @@
 import { screen, waitFor, within } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -21,7 +21,7 @@ import { renderExample } from "@/tests/render-example"
 function DialogOpenByDefault() {
   return (
     <Dialog defaultOpen>
-      <DialogTrigger render={<Button variant="outline" />}>
+      <DialogTrigger className={buttonVariants({ variant: "outline" })}>
         Edit profile
       </DialogTrigger>
       <DialogContent>
@@ -42,7 +42,7 @@ function DialogOpenByDefault() {
           </div>
         </div>
         <DialogFooter>
-          <DialogClose render={<Button variant="secondary" />}>
+          <DialogClose className={buttonVariants({ variant: "secondary" })}>
             Cancel
           </DialogClose>
           <Button>Save changes</Button>
@@ -54,7 +54,7 @@ function DialogOpenByDefault() {
 function DialogWithoutCloseButtonOpen() {
   return (
     <Dialog defaultOpen>
-      <DialogTrigger render={<Button variant="outline" />}>
+      <DialogTrigger className={buttonVariants({ variant: "outline" })}>
         Show terms
       </DialogTrigger>
       <DialogContent showCloseButton={false}>

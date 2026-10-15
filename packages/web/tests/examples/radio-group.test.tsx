@@ -31,7 +31,7 @@ test("Default", async () => {
 
   await step("moves the selection with arrow keys", async () => {
     await userEvent.click(sms)
-    await userEvent.keyboard("{ArrowDown}")
+    await userEvent.keyboard("{ArrowDown>}{/ArrowDown}")
     const push = canvas.getByRole("radio", { name: "Push notification" })
     await expect(push).toHaveFocus()
     await expect(push).toHaveAttribute("aria-checked", "true")
@@ -76,7 +76,7 @@ test("Disabled Item", async () => {
 
   await step("skips the disabled item", async () => {
     await userEvent.click(canvas.getByRole("radio", { name: "Text message" }))
-    await userEvent.keyboard("{ArrowDown}")
+    await userEvent.keyboard("{ArrowDown>}{/ArrowDown}")
     await expect(push).not.toHaveFocus()
     await expect(push).toHaveAttribute("aria-checked", "false")
   })

@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Drawer,
   DrawerClose,
@@ -31,7 +31,7 @@ function DrawerOpenByDefault() {
       modal
       defaultOpen
     >
-      <DrawerTrigger render={<Button variant="outline" />}>
+      <DrawerTrigger className={buttonVariants({ variant: "outline" })}>
         Open drawer
       </DrawerTrigger>
       <DrawerContent>
@@ -47,7 +47,7 @@ function DrawerOpenByDefault() {
         </div>
         <DrawerFooter>
           <Button>Save goal</Button>
-          <DrawerClose render={<Button variant="outline" />}>
+          <DrawerClose className={buttonVariants({ variant: "outline" })}>
             Cancel
           </DrawerClose>
         </DrawerFooter>

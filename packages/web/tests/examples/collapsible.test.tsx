@@ -40,7 +40,7 @@ test("Disabled", async () => {
   const { canvas } = await renderExample(<CollapsibleDisabled />)
 
   const trigger = canvas.getByRole("button", { name: "Toggle list" })
-  await userEvent.click(trigger)
+  await userEvent.click(trigger, { pointerEventsCheck: 0 })
   await expect(trigger).toHaveAttribute("aria-expanded", "false")
   await expect(canvas.queryByText("esuiss/docs")).toBeNull()
 })

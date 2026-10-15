@@ -113,7 +113,7 @@ test("Open", async () => {
   await step("renders the primary links and sections", async () => {
     const menu = await screen.findByRole("dialog", { name: "Menu" })
     await expect(within(menu).getAllByRole("link")).toHaveLength(11)
-    await expect(within(menu).getByText("Explore")).toBeVisible()
+    await waitFor(() => expect(within(menu).getByText("Explore")).toBeVisible())
   })
 })
 test("Links Only", async () => {

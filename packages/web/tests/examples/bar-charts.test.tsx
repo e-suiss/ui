@@ -11,7 +11,13 @@ import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
 import { BarChartNegative } from "@/components/charts/bar-chart-negative"
 import { BarChartRange } from "@/components/charts/bar-chart-range"
 import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const DRAWN_PATH = /^M\s?-?\d/
 const BAR = ".recharts-bar-rectangle .recharts-rectangle"
@@ -93,11 +99,10 @@ test("Interactive", async () => {
         )
       )
     ).toBeInTheDocument()
-    await userEvent.click(canvas.getByRole("button", { name: "Day" }))
-    await expect(canvas.getByRole("button", { name: "Day" })).toHaveAttribute(
-      "aria-pressed",
-      "true"
-    )
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "Day" }))
+    await expect(
+      canvas.getByRole(SINGLE.role, { name: "Day" })
+    ).toHaveAttribute(SINGLE.pressed, "true")
     await expect(canvas.getByText("Wednesday")).toBeInTheDocument()
     await expect(await canvas.findByText("18:00")).toBeInTheDocument()
   })

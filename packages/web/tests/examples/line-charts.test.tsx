@@ -11,7 +11,13 @@ import { LineChartLabeled } from "@/components/charts/line-chart-labeled"
 import { LineChartLinear } from "@/components/charts/line-chart-linear"
 import { LineChartMultiple } from "@/components/charts/line-chart-multiple"
 import { LineChartStep } from "@/components/charts/line-chart-step"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const DRAWN_PATH = /^M\s?-?\d/
 const LINE = ".recharts-line-curve"
@@ -95,7 +101,7 @@ test("Interactive", async () => {
   })
 
   await step("switches the temperature mode", async () => {
-    await userEvent.click(canvas.getByRole("button", { name: "High" }))
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "High" }))
     await expect(
       await canvas.findByText("High · °C · long-term")
     ).toBeInTheDocument()

@@ -12,15 +12,21 @@ import {
   ConfirmTitle,
   ConfirmTrigger,
 } from "@/components/patterns/confirm"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import ConfirmDemo from "@/examples/confirm-demo"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const openState = byBase<[string, string?]>({
+  base: ["data-open"],
+  radix: ["data-state", "open"],
+})
 
 function ConfirmOpenByDefault() {
   return (
     <div className="flex min-h-svh items-center justify-center">
       <Confirm defaultOpen>
-        <ConfirmTrigger render={<Button variant="outline" />}>
+        <ConfirmTrigger className={buttonVariants({ variant: "outline" })}>
           Delete order
         </ConfirmTrigger>
         <ConfirmContent>
@@ -79,7 +85,7 @@ test("Default", async () => {
     const dialog = await screen.findByRole("alertdialog")
     await waitFor(() => expect(dialog).toBeVisible())
     await userEvent.click(document.body, { pointerEventsCheck: 0 })
-    await expect(dialog).toHaveAttribute("data-open")
+    await expect(dialog).toHaveAttribute(...openState)
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
   })

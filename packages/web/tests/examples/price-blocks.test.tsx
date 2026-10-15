@@ -4,7 +4,13 @@ import { expect, test } from "vitest"
 import { PriceBundle } from "@/components/blocks/price-bundle"
 import { PriceCare } from "@/components/blocks/price-care"
 import { PriceStorage } from "@/components/blocks/price-storage"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const TWO_TB_PLAN = /^2 TB\b/
 const SIX_TB_PLAN = /^6 TB\b/
@@ -17,11 +23,11 @@ test("Storage", async () => {
   const { canvas, step } = await renderExample(<PriceStorage />)
 
   await step("yearly billing changes the prices", async () => {
-    const yearly = canvas.getByRole("button", {
+    const yearly = canvas.getByRole(SINGLE.role, {
       name: "Yearly · 2 months free",
     })
     await userEvent.click(yearly)
-    await expect(yearly).toHaveAttribute("aria-pressed", "true")
+    await expect(yearly).toHaveAttribute(SINGLE.pressed, "true")
     const sixTb = canvas
       .getByRole("radio", { name: SIX_TB_PLAN })
       .closest("label")
@@ -77,10 +83,10 @@ test("Care", async () => {
   })
 
   await step("another device brings its own price", async () => {
-    const devices = canvas.getByRole("group", { name: "Device" })
-    const watch = within(devices).getByRole("button", { name: "Watch" })
+    const devices = canvas.getByRole(SINGLE.group, { name: "Device" })
+    const watch = within(devices).getByRole(SINGLE.role, { name: "Watch" })
     await userEvent.click(watch)
-    await expect(watch).toHaveAttribute("aria-pressed", "true")
+    await expect(watch).toHaveAttribute(SINGLE.pressed, "true")
     await waitFor(() => expect(total).toHaveTextContent("$79.00"))
   })
 })

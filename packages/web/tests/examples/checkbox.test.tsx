@@ -6,7 +6,13 @@ import CheckboxDisabled from "@/examples/checkbox-disabled"
 import CheckboxInvalid from "@/examples/checkbox-invalid"
 import CheckboxWithDescription from "@/examples/checkbox-with-description"
 import CheckboxWithLabel from "@/examples/checkbox-with-label"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const DISABLED = byBase({
+  base: { name: "aria-disabled", value: "true" },
+  radix: { name: "disabled", value: "" },
+})
 
 test("Default", async () => {
   const { canvas, step } = await renderExample(<CheckboxDemo />)
@@ -80,7 +86,7 @@ test("Disabled", async () => {
     name: "Unavailable option",
   })
   const included = canvas.getByRole("checkbox", { name: "Always included" })
-  await expect(unavailable).toHaveAttribute("aria-disabled", "true")
+  await expect(unavailable).toHaveAttribute(DISABLED.name, DISABLED.value)
   await expect(included).toBeChecked()
   await userEvent.click(unavailable)
   await expect(unavailable).not.toBeChecked()

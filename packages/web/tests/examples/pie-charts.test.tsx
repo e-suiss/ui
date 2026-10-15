@@ -11,7 +11,13 @@ import { PieChartLabel } from "@/components/charts/pie-chart-label"
 import { PieChartLegend } from "@/components/charts/pie-chart-legend"
 import { PieChartNested } from "@/components/charts/pie-chart-nested"
 import { PieChartSeparated } from "@/components/charts/pie-chart-separated"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 const DRAWN_PATH = /^M\s?-?\d/
 const SECTOR = ".recharts-pie-sector .recharts-sector"
@@ -106,11 +112,10 @@ test("Interactive", async () => {
   })
 
   await step("switches to the cloud device", async () => {
-    await userEvent.click(canvas.getByRole("button", { name: "Cloud" }))
-    await expect(canvas.getByRole("button", { name: "Cloud" })).toHaveAttribute(
-      "aria-pressed",
-      "true"
-    )
+    await userEvent.click(canvas.getByRole(SINGLE.role, { name: "Cloud" }))
+    await expect(
+      canvas.getByRole(SINGLE.role, { name: "Cloud" })
+    ).toHaveAttribute(SINGLE.pressed, "true")
     await expect(await canvas.findByText("Cloud storage")).toBeInTheDocument()
     await waitFor(
       () =>

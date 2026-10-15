@@ -2,7 +2,7 @@ import { screen, waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import {
   Tooltip,
@@ -11,14 +11,20 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import TooltipDemo from "@/examples/tooltip-demo"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const openState = byBase<[string, string?]>({
+  base: ["data-open"],
+  radix: ["data-state", "instant-open"],
+})
 
 function TooltipOpen() {
   return (
     <TooltipProvider>
       <div className="p-12">
         <Tooltip defaultOpen>
-          <TooltipTrigger render={<Button variant="outline" />}>
+          <TooltipTrigger className={buttonVariants({ variant: "outline" })}>
             Hover me
           </TooltipTrigger>
           <TooltipContent side="top">Add to library</TooltipContent>
@@ -35,7 +41,9 @@ function TooltipSidesOpen() {
           {(["top", "right", "left", "bottom"] as const).map((side) => (
             <TooltipProvider key={side}>
               <Tooltip defaultOpen>
-                <TooltipTrigger render={<Button variant="outline" />}>
+                <TooltipTrigger
+                  className={buttonVariants({ variant: "outline" })}
+                >
                   {side}
                 </TooltipTrigger>
                 <TooltipContent side={side}>Shown on the {side}</TooltipContent>
@@ -53,9 +61,8 @@ function TooltipWithShortcutOpen() {
       <div className="p-12">
         <Tooltip defaultOpen>
           <TooltipTrigger
-            render={
-              <Button variant="outline" size="icon" aria-label="New file" />
-            }
+            className={buttonVariants({ variant: "outline", size: "icon" })}
+            aria-label="New file"
           >
             <IconPlaceholder
               lucide="PlusIcon"
@@ -124,7 +131,7 @@ test("Sides", async () => {
           screen
             .getByText(`Shown on the ${side}`)
             .closest('[data-slot="tooltip-content"]')
-        ).toHaveAttribute("data-open")
+        ).toHaveAttribute(...openState)
       )
     }
   })

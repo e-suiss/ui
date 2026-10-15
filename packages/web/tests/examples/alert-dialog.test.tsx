@@ -14,14 +14,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import AlertDialogDemo from "@/examples/alert-dialog-demo"
 import { renderExample } from "@/tests/render-example"
 
 function AlertDialogOpenByDefault() {
   return (
     <AlertDialog defaultOpen>
-      <AlertDialogTrigger render={<Button variant="outline" />}>
+      <AlertDialogTrigger className={buttonVariants({ variant: "outline" })}>
         Sign out
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -42,7 +42,7 @@ function AlertDialogOpenByDefault() {
 function AlertDialogSmallOpen() {
   return (
     <AlertDialog defaultOpen>
-      <AlertDialogTrigger render={<Button variant="outline" />}>
+      <AlertDialogTrigger className={buttonVariants({ variant: "outline" })}>
         Discard draft
       </AlertDialogTrigger>
       <AlertDialogContent size="sm">
@@ -63,7 +63,9 @@ function AlertDialogSmallOpen() {
 function AlertDialogWithMediaOpen() {
   return (
     <AlertDialog defaultOpen>
-      <AlertDialogTrigger render={<Button variant="destructive" />}>
+      <AlertDialogTrigger
+        className={buttonVariants({ variant: "destructive" })}
+      >
         Delete project
       </AlertDialogTrigger>
       <AlertDialogContent>

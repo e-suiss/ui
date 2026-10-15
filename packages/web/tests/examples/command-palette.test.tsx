@@ -7,7 +7,7 @@ import {
   CommandPaletteContent,
   CommandPaletteTrigger,
 } from "@/components/patterns/command-palette"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   CommandEmpty,
   CommandGroup,
@@ -104,7 +104,7 @@ function PaletteItems() {
 }
 function Trigger() {
   return (
-    <CommandPaletteTrigger render={<Button variant="outline" />}>
+    <CommandPaletteTrigger className={buttonVariants({ variant: "outline" })}>
       Search
       <KbdGroup>
         <Kbd mod />

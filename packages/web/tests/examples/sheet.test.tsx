@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -52,7 +52,9 @@ function ProfileSheet({
       </div>
       <SheetFooter>
         <Button type="submit">Save changes</Button>
-        <SheetClose render={<Button variant="secondary" />}>Cancel</SheetClose>
+        <SheetClose className={buttonVariants({ variant: "secondary" })}>
+          Cancel
+        </SheetClose>
       </SheetFooter>
     </SheetContent>
   )
@@ -61,7 +63,7 @@ function ProfileSheet({
 function SheetOpen() {
   return (
     <Sheet defaultOpen>
-      <SheetTrigger render={<Button variant="outline" />}>
+      <SheetTrigger className={buttonVariants({ variant: "outline" })}>
         Open sheet
       </SheetTrigger>
       <ProfileSheet />
@@ -71,7 +73,7 @@ function SheetOpen() {
 function SheetOpenLeftOpen() {
   return (
     <Sheet defaultOpen>
-      <SheetTrigger render={<Button variant="outline" />}>
+      <SheetTrigger className={buttonVariants({ variant: "outline" })}>
         Open sheet
       </SheetTrigger>
       <ProfileSheet side="left" />
@@ -81,7 +83,7 @@ function SheetOpenLeftOpen() {
 function SheetOpenBottomOpen() {
   return (
     <Sheet defaultOpen>
-      <SheetTrigger render={<Button variant="outline" />}>
+      <SheetTrigger className={buttonVariants({ variant: "outline" })}>
         Open sheet
       </SheetTrigger>
       <ProfileSheet side="bottom" />
@@ -91,7 +93,7 @@ function SheetOpenBottomOpen() {
 function SheetWithoutCloseButtonOpen() {
   return (
     <Sheet defaultOpen>
-      <SheetTrigger render={<Button variant="outline" />}>
+      <SheetTrigger className={buttonVariants({ variant: "outline" })}>
         Open sheet
       </SheetTrigger>
       <ProfileSheet showCloseButton={false} />
@@ -101,7 +103,7 @@ function SheetWithoutCloseButtonOpen() {
 function SheetWithCloseLabelOpen() {
   return (
     <Sheet defaultOpen>
-      <SheetTrigger render={<Button variant="outline" />}>
+      <SheetTrigger className={buttonVariants({ variant: "outline" })}>
         Open sheet
       </SheetTrigger>
       <ProfileSheet closeLabel="Done" />

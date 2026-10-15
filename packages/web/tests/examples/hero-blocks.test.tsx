@@ -4,7 +4,13 @@ import { expect, test } from "vitest"
 import { HeroCinematic } from "@/components/blocks/hero-cinematic"
 import { HeroProduct } from "@/components/blocks/hero-product"
 import { HeroTiles } from "@/components/blocks/hero-tiles"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SINGLE = byBase({
+  base: { group: "group", role: "button", pressed: "aria-pressed" },
+  radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+} as const)
 
 test("Product", async () => {
   const { canvas, step } = await renderExample(<HeroProduct />)
@@ -28,13 +34,13 @@ test("Cinematic", async () => {
   const { canvas, canvasElement, step } = await renderExample(<HeroCinematic />)
 
   await step("picking a finish swaps the caption and photo", async () => {
-    const finish = canvas.getByRole("group", { name: "Finish" })
-    const silver = within(finish).getByRole("button", { name: "Silver" })
+    const finish = canvas.getByRole(SINGLE.group, { name: "Finish" })
+    const silver = within(finish).getByRole(SINGLE.role, { name: "Silver" })
     await userEvent.click(silver)
-    await expect(silver).toHaveAttribute("aria-pressed", "true")
+    await expect(silver).toHaveAttribute(SINGLE.pressed, "true")
     await expect(
-      within(finish).getByRole("button", { name: "Cosmic Orange" })
-    ).toHaveAttribute("aria-pressed", "false")
+      within(finish).getByRole(SINGLE.role, { name: "Cosmic Orange" })
+    ).toHaveAttribute(SINGLE.pressed, "false")
     await waitFor(() =>
       expect(
         canvasElement.querySelector("p[aria-live=polite]")
