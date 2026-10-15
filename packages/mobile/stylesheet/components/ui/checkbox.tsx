@@ -69,10 +69,10 @@ function CheckboxIcon({ iconStyle }: { iconStyle?: StyleProp<TextStyle> }) {
   const { state } = CheckboxPrimitive.useRootContext()
   return (
     <TextStyleContext.Provider
-      value={StyleSheet.flatten([
-        { color: colors.primaryForeground },
-        iconStyle,
-      ])}
+      value={
+        StyleSheet.flatten([{ color: colors.primaryForeground }, iconStyle]) ??
+        undefined
+      }
     >
       <Icon as={state.indeterminate ? MinusIcon : CheckIcon} size={14} />
     </TextStyleContext.Provider>

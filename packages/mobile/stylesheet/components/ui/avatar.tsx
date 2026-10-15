@@ -199,7 +199,8 @@ function AvatarBadge({
   style,
   children,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   const { colors } = useTheme()
   const size = React.useContext(AvatarSizeContext)
   const dimension = BADGE_SIZE[size]
@@ -230,7 +231,8 @@ function AvatarGroup({
   style,
   children,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   let index = 0
   const items = React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) return child
@@ -254,7 +256,7 @@ function AvatarGroupCount({
   size = "default",
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     size?: AvatarSize
   }) {
   const { colors } = useTheme()

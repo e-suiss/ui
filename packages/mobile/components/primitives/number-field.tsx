@@ -2,11 +2,10 @@ import * as React from "react"
 import {
   type AccessibilityActionEvent,
   type GestureResponderEvent,
-  type NativeSyntheticEvent,
   Platform,
   Pressable,
   TextInput,
-  type TextInputFocusEventData,
+  type TextInputFocusEvent,
   View,
 } from "react-native"
 import {
@@ -91,7 +90,7 @@ type RootProps = Omit<
   onValueCommitted?:
     | ((value: number | null, eventDetails: CommitEventDetails) => void)
     | undefined
-  inputRef?: React.Ref<TextInput> | undefined
+  inputRef?: React.Ref<React.ComponentRef<typeof TextInput>> | undefined
 }
 
 type GroupProps = BaseUIComponentProps<typeof View, GroupState>
@@ -128,7 +127,7 @@ interface RootContextValue {
     | "decimal-pad"
     | "numeric"
     | "numbers-and-punctuation"
-  inputRef: React.Ref<TextInput> | undefined
+  inputRef: React.Ref<React.ComponentRef<typeof TextInput>> | undefined
   formatValue: (value: number | null) => string
   setFocused: (focused: boolean) => void
   handleInputChange: (text: string, event?: ChangeEvent) => void
@@ -485,8 +484,7 @@ function Input({ render, className, style, ref, ...elementProps }: InputProps) {
         onAccessibilityAction,
         onChangeText: (text: string) => context.handleInputChange(text),
         onFocus: () => context.setFocused(true),
-        onBlur: (event: NativeSyntheticEvent<TextInputFocusEventData>) =>
-          context.handleInputBlur(event),
+        onBlur: (event: TextInputFocusEvent) => context.handleInputBlur(event),
       },
       elementProps,
     ],

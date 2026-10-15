@@ -373,33 +373,31 @@ function DrawerContent({
   const inset = floating ? 8 : 0
   const handleLast = swipeDirection === "up" || swipeDirection === "left"
 
-  const frameStyle = React.useMemo<ViewStyle>(() => {
-    const style: ViewStyle = {
+  const frameStyle = React.useMemo<ViewStyle>(
+    () => ({
       ...POSITION[swipeDirection],
       pointerEvents: "box-none",
-    }
-    if (horizontal && width >= 640) style.maxWidth = 384
-    if (floating) {
-      if (swipeDirection !== "down") style.top = insets.top
-      if (swipeDirection !== "up") style.bottom = insets.bottom
-      if (swipeDirection !== "right") style.left = insets.left
-      if (swipeDirection !== "left") style.right = insets.right
-    }
-    return style
-  }, [floating, horizontal, swipeDirection, insets, width])
+      ...(horizontal && width >= 640 && { maxWidth: 384 }),
+      ...(floating && swipeDirection !== "down" && { top: insets.top }),
+      ...(floating && swipeDirection !== "up" && { bottom: insets.bottom }),
+      ...(floating && swipeDirection !== "right" && { left: insets.left }),
+      ...(floating && swipeDirection !== "left" && { right: insets.right }),
+    }),
+    [floating, horizontal, swipeDirection, insets, width]
+  )
 
-  const popupStyle = React.useMemo<ViewStyle>(() => {
-    const style: ViewStyle = { margin: inset }
-    if (!horizontal) style.maxHeight = height - Math.max(96, insets.top + 24)
-    if (floating) return style
-    if (swipeDirection === "down") style.paddingBottom = insets.bottom
-    else if (swipeDirection === "up") style.paddingTop = insets.top
-    else {
-      style.paddingTop = insets.top
-      style.paddingBottom = insets.bottom
-    }
-    return style
-  }, [floating, horizontal, swipeDirection, insets, height, inset])
+  const popupStyle = React.useMemo<ViewStyle>(
+    () => ({
+      margin: inset,
+      ...(!horizontal && {
+        maxHeight: height - Math.max(96, insets.top + 24),
+      }),
+      ...(!floating &&
+        swipeDirection !== "up" && { paddingBottom: insets.bottom }),
+      ...(!floating && swipeDirection !== "down" && { paddingTop: insets.top }),
+    }),
+    [floating, horizontal, swipeDirection, insets, height, inset]
+  )
 
   const contentContext = React.useMemo(
     () => ({

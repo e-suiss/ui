@@ -115,7 +115,7 @@ function LoginAccount({
   const [error, setError] = React.useState("")
   const [busy, setBusy] = React.useState(false)
   const [signedIn, setSignedIn] = React.useState(false)
-  const passwordRef = React.useRef<TextInput>(null)
+  const passwordRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
   const { style: shakeStyle, shake } = useShake()
 
   React.useEffect(() => {

@@ -56,7 +56,7 @@ function badgeTextStyle(variant: BadgeVariant, colors: ThemeColors): TextStyle {
 }
 
 type BadgeProps = React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
     variant?: BadgeVariant
   }

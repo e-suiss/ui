@@ -67,7 +67,7 @@ function Toggle({
 
   const pressed = group ? group.value.includes(itemValue) : localPressed
   const disabled = disabledProp || (group?.disabled ?? false)
-  const rootRef = React.useRef<View>(null)
+  const rootRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const haptics = useHaptics()
   const [layout, setLayout] = React.useState<LayoutRectangle | null>(null)
   const setItem = group?.setItem

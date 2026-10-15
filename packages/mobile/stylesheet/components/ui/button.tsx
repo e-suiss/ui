@@ -139,7 +139,7 @@ const ButtonStyleContext = React.createContext<
 >(undefined)
 
 type ButtonProps = Omit<React.ComponentProps<typeof Pressable>, "style"> &
-  React.RefAttributes<typeof Pressable> & {
+  React.RefAttributes<React.ComponentRef<typeof Pressable>> & {
     variant?: ButtonVariant
     size?: ButtonSize
     block?: boolean

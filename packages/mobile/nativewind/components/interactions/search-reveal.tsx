@@ -85,14 +85,18 @@ function SearchReveal({
     positioned.current = true
     if (hasQuery) return
     const frame = requestAnimationFrame(() => {
-      const scroll = scrollRef.current as ScrollView | null
+      const scroll = scrollRef.current as React.ComponentRef<
+        typeof ScrollView
+      > | null
       scroll?.scrollTo({ y: fieldHeight, animated: false })
     })
     return () => cancelAnimationFrame(frame)
   }, [fieldHeight, viewportHeight, hasQuery, scrollRef])
 
   const reveal = React.useCallback(() => {
-    const scroll = scrollRef.current as ScrollView | null
+    const scroll = scrollRef.current as React.ComponentRef<
+      typeof ScrollView
+    > | null
     scroll?.scrollTo({ y: 0, animated: true })
   }, [scrollRef])
 
@@ -145,7 +149,7 @@ function SearchRevealField({
 }) {
   const { offset, fieldHeight, setFieldHeight, setHasQuery, reveal } =
     useSearchReveal("SearchRevealField")
-  const inputRef = React.useRef<TextInput>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
 
   React.useEffect(() => setHasQuery(value.length > 0), [value, setHasQuery])
 

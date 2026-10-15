@@ -685,7 +685,7 @@ function Control({
   ...elementProps
 }: ControlProps) {
   const field = useFieldRootContext()
-  const inputRef = React.useRef<TextInput>(null)
+  const inputRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
   const [value, setValue] = useControllableState<
     string,
     ControlChangeEventDetails

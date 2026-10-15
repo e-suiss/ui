@@ -95,7 +95,7 @@ type RootProps = Omit<
   readOnly?: boolean | undefined
   required?: boolean | undefined
   autoFocus?: boolean | undefined
-  inputRef?: React.Ref<TextInput> | undefined
+  inputRef?: React.Ref<React.ComponentRef<typeof TextInput>> | undefined
   inputProps?: HiddenInputProps | undefined
 }
 
@@ -209,7 +209,8 @@ function Root({
   const valueRef = React.useRef(value)
   valueRef.current = value
   const [focused, setFocused] = React.useState(false)
-  const hiddenInputRef = React.useRef<TextInput>(null)
+  const hiddenInputRef =
+    React.useRef<React.ComponentRef<typeof TextInput>>(null)
 
   const composedInputRef = useComposedRefs(hiddenInputRef, inputRef)
 

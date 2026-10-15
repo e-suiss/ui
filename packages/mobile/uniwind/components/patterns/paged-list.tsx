@@ -60,7 +60,7 @@ function PagedList<T>({
           >
             <Text>{loadMoreLabel}</Text>
           </Button>
-        ) : null
+        ) : undefined
       }
       {...props}
     />

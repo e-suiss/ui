@@ -37,7 +37,7 @@ function Card({
   variant = "default",
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     size?: CardSize
     variant?: CardVariant
   }) {
@@ -76,7 +76,8 @@ function CardHeader({
   style,
   children,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   const size = React.useContext(CardSizeContext)
   const nodes = React.Children.toArray(children)
   const action = nodes.find(
@@ -104,7 +105,8 @@ function CardTitle({
   style,
   ref,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return (
     <Text ref={ref} role="heading" style={[styles.title, style]} {...props} />
   )
@@ -113,7 +115,8 @@ function CardTitle({
 function CardDescription({
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { colors } = useTheme()
   return (
     <Text
@@ -126,14 +129,16 @@ function CardDescription({
 function CardAction({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   return <View style={[styles.action, style]} {...props} />
 }
 
 function CardContent({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   const size = React.useContext(CardSizeContext)
   return (
     <View style={[{ paddingHorizontal: SPACING[size] }, style]} {...props} />
@@ -143,7 +148,8 @@ function CardContent({
 function CardFooter({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   const size = React.useContext(CardSizeContext)
   return (
     <View

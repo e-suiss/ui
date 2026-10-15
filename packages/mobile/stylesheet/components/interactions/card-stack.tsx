@@ -435,7 +435,7 @@ function CardStackEmpty({
   style,
   children,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   const { colors } = useTheme()
   return (
     <View
@@ -453,7 +453,7 @@ function CardStackEmpty({
 function CardStackActions({
   style,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   return <View style={[styles.actions, style]} {...props} />
 }
 

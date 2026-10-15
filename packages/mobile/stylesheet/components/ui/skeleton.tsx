@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
 function Skeleton({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   const { colors } = useTheme()
   const sv = useSharedValue(1)
 

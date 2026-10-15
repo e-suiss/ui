@@ -160,7 +160,7 @@ function Widget({
   style,
   ...props
 }: ViewProps &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     className?: string
     size?: WidgetSize | "auto"
     defaultSize?: WidgetSize | "auto"
@@ -460,7 +460,10 @@ function Widget({
 function WidgetHeader({
   className,
   ...props
-}: ViewProps & React.RefAttributes<View> & { className?: string }) {
+}: ViewProps &
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
+    className?: string
+  }) {
   const { align } = useWidget()
   return (
     <View
@@ -486,7 +489,7 @@ function WidgetIcon({
   size = "default",
   ...props
 }: ViewProps &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     className?: string
     iconClassName?: string
     size?: "default" | "sm" | "lg"
@@ -512,7 +515,8 @@ function WidgetIcon({
 function WidgetTitle({
   className,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return (
     <Text
       role="heading"
@@ -529,7 +533,10 @@ function WidgetTitle({
 function WidgetAction({
   className,
   ...props
-}: ViewProps & React.RefAttributes<View> & { className?: string }) {
+}: ViewProps &
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
+    className?: string
+  }) {
   const { align } = useWidget()
   if (align === "center") return null
   return (
@@ -543,7 +550,8 @@ function WidgetAction({
 function WidgetDescription({
   className,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return (
     <Text
       className={cn("text-sm text-muted-foreground", className)}
@@ -556,7 +564,8 @@ function WidgetValue({
   className,
   style,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return (
     <Text
       className={cn("text-3xl font-semibold tracking-tight", className)}
@@ -570,7 +579,10 @@ function WidgetContent({
   className,
   children,
   ...props
-}: ViewProps & React.RefAttributes<View> & { className?: string }) {
+}: ViewProps &
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
+    className?: string
+  }) {
   return (
     <View
       className={cn(
@@ -588,7 +600,10 @@ function WidgetFooter({
   className,
   children,
   ...props
-}: ViewProps & React.RefAttributes<View> & { className?: string }) {
+}: ViewProps &
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
+    className?: string
+  }) {
   const { align } = useWidget()
   return (
     <TextClassContext.Provider value="text-xs text-muted-foreground">

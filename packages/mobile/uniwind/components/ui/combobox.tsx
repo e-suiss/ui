@@ -418,7 +418,7 @@ function ComboboxChipsInput({
 }
 
 function useComboboxAnchor() {
-  return React.useRef<View | null>(null)
+  return React.useRef<React.ComponentRef<typeof View> | null>(null)
 }
 
 export {

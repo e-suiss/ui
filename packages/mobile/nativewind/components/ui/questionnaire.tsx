@@ -522,7 +522,7 @@ function Questionnaire({
   className,
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> &
+  React.RefAttributes<React.ComponentRef<typeof View>> &
   UseQuestionnaireParameters) {
   const questionnaire = useQuestionnaire({
     defaultItem,
@@ -546,7 +546,7 @@ function QuestionnaireProgress({
   children,
   ...props
 }: Omit<React.ComponentProps<typeof View>, "children"> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     children?:
       | React.ReactNode
       | ((state: QuestionnaireState) => React.ReactNode)
@@ -592,7 +592,7 @@ function QuestionnaireItem({
   children,
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     name: string
     required?: boolean
     disabled?: boolean
@@ -681,7 +681,7 @@ function QuestionnaireTitle({
   className,
   ...props
 }: Omit<React.ComponentProps<typeof Text>, "nativeID"> &
-  React.RefAttributes<typeof Text>) {
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { titleId } = useQuestionnaireItemContext("QuestionnaireTitle")
   return (
     <Text
@@ -696,7 +696,8 @@ function QuestionnaireTitle({
 function QuestionnaireDescription({
   className,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   useQuestionnaireItemContext("QuestionnaireDescription")
   return (
     <Text
@@ -709,7 +710,8 @@ function QuestionnaireDescription({
 function QuestionnaireChoices({
   className,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   useQuestionnaireItemContext("QuestionnaireChoices")
   return <View className={cn("min-w-0 gap-3", className)} {...props} />
 }
@@ -725,7 +727,7 @@ function QuestionnaireChoice({
   onPress,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children"> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     value: string
     checked?: boolean
     defaultChecked?: boolean
@@ -814,7 +816,8 @@ function QuestionnaireChoice({
 function QuestionnaireChoiceDescription({
   className,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   return <Text className={cn("text-muted-foreground", className)} {...props} />
 }
 
@@ -912,7 +915,8 @@ function QuestionnaireError({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof Text> & React.RefAttributes<typeof Text>) {
+}: React.ComponentProps<typeof Text> &
+  React.RefAttributes<React.ComponentRef<typeof Text>>) {
   const { invalid, required } =
     useQuestionnaireItemContext("QuestionnaireError")
   if (!invalid) return null
@@ -934,7 +938,8 @@ function QuestionnaireError({
 function QuestionnaireActions({
   className,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   return (
     <View
       className={cn(

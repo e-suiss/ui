@@ -22,8 +22,8 @@ interface SectionIndexItem {
 
 interface RootContextValue {
   height: number
-  scrollRef: React.RefObject<ScrollView | null>
-  contentRef: React.RefObject<View | null>
+  scrollRef: React.RefObject<React.ComponentRef<typeof ScrollView> | null>
+  contentRef: React.RefObject<React.ComponentRef<typeof View> | null>
   registerSection: (value: string, node: HostInstance | null) => void
   scrollToSection: (letters: string[], index: number) => void
 }
@@ -108,8 +108,8 @@ function Root({
   ...elementProps
 }: RootProps) {
   const [height, setHeight] = React.useState(0)
-  const scrollRef = React.useRef<ScrollView>(null)
-  const contentRef = React.useRef<View>(null)
+  const scrollRef = React.useRef<React.ComponentRef<typeof ScrollView>>(null)
+  const contentRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const sectionsRef = React.useRef(new Map<string, HostInstance>())
 
   const registerSection = React.useCallback(
@@ -193,7 +193,7 @@ function Section({
   ...elementProps
 }: SectionProps) {
   const { registerSection } = useRootContext("SectionIndex.Section")
-  const nodeRef = React.useRef<View>(null)
+  const nodeRef = React.useRef<React.ComponentRef<typeof View>>(null)
 
   React.useEffect(() => {
     registerSection(value, nodeRef.current)
@@ -235,7 +235,7 @@ function Bar({
 }: BarProps) {
   const { height, scrollToSection } = useRootContext("SectionIndex.Bar")
   const haptics = useHaptics()
-  const barRef = React.useRef<View>(null)
+  const barRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const rectRef = React.useRef<BarRect | null>(null)
   const [current, setCurrent] = React.useState(0)
   const currentRef = React.useRef(0)

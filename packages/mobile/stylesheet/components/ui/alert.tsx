@@ -32,7 +32,7 @@ function Alert({
   iconStyle,
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     icon?: PhosphorIcon
     variant?: "default" | "destructive"
     iconStyle?: PhosphorIconProps["style"]
@@ -89,7 +89,8 @@ function AlertDescription({
 function AlertAction({
   style,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   return <View style={[styles.action, style]} {...props} />
 }
 

@@ -495,7 +495,7 @@ function AttachmentTrigger({
   render,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "style"> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     style?: StyleProp<ViewStyle>
     render?: RenderProp<Record<string, unknown>, Record<string, never>>
   }) {

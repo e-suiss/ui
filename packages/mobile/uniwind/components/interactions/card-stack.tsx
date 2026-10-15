@@ -402,7 +402,7 @@ function CardStackEmpty({
   className,
   children,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   return (
     <View
       className={cn(
@@ -419,7 +419,7 @@ function CardStackEmpty({
 function CardStackActions({
   className,
   ...props
-}: ViewProps & React.RefAttributes<View>) {
+}: ViewProps & React.RefAttributes<React.ComponentRef<typeof View>>) {
   return (
     <View
       className={cn("flex-row items-center justify-center gap-4", className)}

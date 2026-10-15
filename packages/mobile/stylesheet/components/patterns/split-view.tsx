@@ -209,7 +209,7 @@ function SplitViewPane({
 }) {
   const { colors } = useTheme()
   const { isCompact, column, setColumn, titles, kinds } = useSplitView()
-  const headingRef = React.useRef<RNText>(null)
+  const headingRef = React.useRef<React.ComponentRef<typeof RNText>>(null)
   const mountedRef = React.useRef(false)
   const visible = !isCompact || column === kind
   const previous = PREVIOUS[kind]
@@ -264,7 +264,7 @@ function SplitViewPane({
       ) : null}
       {title !== undefined && (isCompact || kind !== "list") ? (
         <Text
-          ref={headingRef as unknown as React.Ref<typeof RNText>}
+          ref={headingRef}
           role="heading"
           style={titleStyle(kind, isCompact, colors)}
         >

@@ -30,10 +30,10 @@ function KeyboardScrollView({
   children,
   ...props
 }: ScrollViewProps &
-  React.RefAttributes<ScrollView> & {
+  React.RefAttributes<React.ComponentRef<typeof ScrollView>> & {
     bottomOffset?: number
   }) {
-  const scrollRef = React.useRef<ScrollView>(null)
+  const scrollRef = React.useRef<React.ComponentRef<typeof ScrollView>>(null)
   const composedRef = useComposedRefs(ref, scrollRef)
   const offsetRef = React.useRef(0)
   const keyboard = useKeyboard()

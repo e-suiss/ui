@@ -61,7 +61,7 @@ interface RootContextValue {
   scrollPrev: (jump?: boolean) => void
   scrollNext: (jump?: boolean) => void
   autoplay: CarouselAutoplay
-  scrollRef: React.RefObject<ScrollView | null>
+  scrollRef: React.RefObject<React.ComponentRef<typeof ScrollView> | null>
   setViewportSize: (size: number) => void
   setContentSize: (size: number) => void
   setItemLayout: (index: number, layout: ItemLayout | null) => void
@@ -188,7 +188,7 @@ function Root({
   ref,
   ...elementProps
 }: RootProps) {
-  const scrollRef = React.useRef<ScrollView>(null)
+  const scrollRef = React.useRef<React.ComponentRef<typeof ScrollView>>(null)
   const [viewportSize, setViewportSizeState] = React.useState(0)
   const [contentSize, setContentSizeState] = React.useState(0)
   const [layouts, setLayouts] = React.useState<ReadonlyMap<number, ItemLayout>>(

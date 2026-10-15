@@ -33,7 +33,7 @@ type TipContextProps = {
   titleId: string
   visible: boolean
   dismiss: () => void
-  anchorRef: React.RefObject<View | null>
+  anchorRef: React.RefObject<React.ComponentRef<typeof View> | null>
 }
 
 type TipGroupContextProps = {
@@ -138,7 +138,7 @@ function Tip({
   const [stored, setStored] = React.useState<boolean | null>(null)
   const [ready, setReady] = React.useState(false)
   const [dismissed, setDismissed] = React.useState(false)
-  const anchorRef = React.useRef<View>(null)
+  const anchorRef = React.useRef<React.ComponentRef<typeof View>>(null)
   const titleId = `${React.useId()}-title`
   const register = group?.register
   const resolve = group?.resolve

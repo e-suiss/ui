@@ -96,7 +96,7 @@ interface RootContextValue {
   selectTab: (
     value: string,
     event: GestureResponderEvent | undefined,
-    trigger: View | null
+    trigger: React.ComponentRef<typeof View> | null
   ) => boolean
 }
 
@@ -199,7 +199,7 @@ function Root({
     (
       tabValue: string,
       event: GestureResponderEvent | undefined,
-      trigger: View | null
+      trigger: React.ComponentRef<typeof View> | null
     ) => {
       const activationDirection = getActivationDirection(
         value === undefined ? undefined : tabLayouts.get(value),
@@ -301,7 +301,7 @@ function Tab({
   const root = useRootContext()
   const { setTabLayout, selectTab } = root
   const active = root.value === tabValue
-  const tabRef = React.useRef<View>(null)
+  const tabRef = React.useRef<React.ComponentRef<typeof View>>(null)
 
   React.useEffect(
     () => () => setTabLayout(tabValue, null),

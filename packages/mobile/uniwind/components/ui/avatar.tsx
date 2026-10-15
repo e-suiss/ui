@@ -139,7 +139,8 @@ function AvatarBadge({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   const size = React.useContext(AvatarSizeContext)
   return (
     <TextClassContext.Provider value="text-primary-foreground">
@@ -163,7 +164,8 @@ function AvatarGroup({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof View> & React.RefAttributes<View>) {
+}: React.ComponentProps<typeof View> &
+  React.RefAttributes<React.ComponentRef<typeof View>>) {
   let index = 0
   const items = React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) return child
@@ -187,7 +189,7 @@ function AvatarGroupCount({
   size = "default",
   ...props
 }: React.ComponentProps<typeof View> &
-  React.RefAttributes<View> & {
+  React.RefAttributes<React.ComponentRef<typeof View>> & {
     size?: AvatarSize
   }) {
   const groupIndex = React.useContext(AvatarGroupItemContext)
