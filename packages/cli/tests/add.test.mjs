@@ -8,6 +8,8 @@ import { CliError } from "../lib/output.mjs"
 import { choose, isInteractive } from "../lib/prompt.mjs"
 import { read, serveRegistry, silenceOutput, viteProject } from "./helpers.mjs"
 
+const RADIX_INDEX = /\/registry\/radix\/registry\.json$/
+
 vi.mock("node:child_process", () => ({
   spawnSync: vi.fn(() => ({ status: 0 })),
 }))
@@ -152,6 +154,67 @@ export const Icon = () => (
       ["install", "@base-ui/react", "@phosphor-icons/react"],
       expect.objectContaining({ cwd })
     )
+  })
+
+  describe("with the second primitive base", () => {
+    const radix = {
+      "bases/radix/components/ui/dialog.tsx":
+        'import { Dialog } from "radix-ui"\n',
+      "registry/radix/registry.json": {
+        ...registry,
+        items: registry.items.map((item) =>
+          item.name === "dialog"
+            ? {
+                ...item,
+                dependencies: ["radix-ui"],
+                files: [
+                  {
+                    path: "bases/radix/components/ui/dialog.tsx",
+                    type: "registry:ui",
+                  },
+                ],
+              }
+            : item
+        ),
+      },
+      ...files,
+    }
+
+    it("installs the twin into the usual folder", async () => {
+      serveRegistry(radix)
+      const cwd = viteProject()
+      await add(["dialog"], { cwd, base: "radix" })
+      expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
+        radix["bases/radix/components/ui/dialog.tsx"]
+      )
+      expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+        files["components/ui/button.tsx"]
+      )
+      expect(spawnSync).toHaveBeenCalledWith(
+        "npm",
+        ["install", "@base-ui/react", "radix-ui"],
+        expect.objectContaining({ cwd })
+      )
+    })
+
+    it("follows the style in components.json", async () => {
+      const fetch = serveRegistry(radix)
+      const cwd = viteProject({ "components.json": { style: "radix-nova" } })
+      await add(["dialog"], { cwd })
+      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(RADIX_INDEX))
+      expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
+        radix["bases/radix/components/ui/dialog.tsx"]
+      )
+    })
+
+    it("lets --base override the style in components.json", async () => {
+      serveRegistry(radix)
+      const cwd = viteProject({ "components.json": { style: "radix-nova" } })
+      await add(["dialog"], { cwd, base: "base" })
+      expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
+        files["components/ui/dialog.tsx"]
+      )
+    })
   })
 
   it("keeps local edits unless asked to overwrite", async () => {

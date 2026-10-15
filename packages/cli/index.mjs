@@ -12,6 +12,7 @@ import {
   initNative,
 } from "./lib/mobile/native.mjs"
 import { CliError, choose, color, step } from "./lib/output.mjs"
+import { BASES } from "./lib/registry.mjs"
 
 const { name, version } = JSON.parse(
   readFileSync(new URL("./package.json", import.meta.url), "utf8")
@@ -35,6 +36,9 @@ Options:
                    chart or block after "patterns", "interactions",
                    "charts" or "blocks"; theme is only added by name
   -y, --yes        skip confirmation prompts
+  -b, --base <base|radix>
+                   the primitive base of React components (read from the
+                   style in components.json when omitted, otherwise base)
   -p, --platform <web|rn|swift|kotlin>
                    web, React Native, SwiftUI or Jetpack Compose sources
                    (detected from the project when omitted)
@@ -100,6 +104,15 @@ function parseArgs(args) {
           throw new CliError(`${arg} needs uniwind, nativewind or stylesheet.`)
         }
         options.styling = styling
+        break
+      }
+      case "-b":
+      case "--base": {
+        const base = queue.next().value
+        if (!BASES.includes(base)) {
+          throw new CliError(`${arg} needs ${BASES.join(" or ")}.`)
+        }
+        options.base = base
         break
       }
       case "-p":
@@ -179,6 +192,9 @@ async function resolvePlatform(options) {
   }
   if (options.path && ["web", "rn"].includes(options.platform)) {
     throw new CliError("--path works with --platform swift or kotlin.")
+  }
+  if (options.base && options.platform !== "web") {
+    throw new CliError("--base works with React projects.")
   }
   if (options.styling && options.platform !== "rn") {
     throw new CliError("--styling works with React Native projects.")

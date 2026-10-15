@@ -8,6 +8,7 @@ import {
 } from "./icons.mjs"
 import { CliError, note, step } from "./output.mjs"
 import {
+  detectBase,
   detectProject,
   findAliasRoot,
   findStylesheet,
@@ -40,11 +41,15 @@ function targetFor(root, file) {
 
 function fetchFiles(root, items) {
   const files = items.flatMap((item) =>
-    item.files.map((file) => ({ file, target: targetFor(root, file) }))
+    item.files.map((file, index) => ({
+      file,
+      source: item.sources?.[index] ?? file,
+      target: targetFor(root, file),
+    }))
   )
   return Promise.all(
     files.map(async (entry) => {
-      const source = await fetchText(entry.file)
+      const source = await fetchText(entry.source)
       return {
         ...entry,
         content: toPhosphorIcons(source),
@@ -164,7 +169,7 @@ export async function add(names, options) {
     )
   }
 
-  const registry = await fetchRegistry()
+  const registry = await fetchRegistry(options.base ?? detectBase(project.cwd))
   const picking = !names.length && !options.all && isInteractive()
   const scope = options.scope ?? (picking ? await pickScope(registry) : "ui")
   const chosen = picking ? await pickItems(registry, scope) : names

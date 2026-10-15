@@ -76,6 +76,8 @@ Until the namespace is listed in the public registry directory, register it once
 }
 ```
 
+Every item is published for two primitive bases under the same name. A `radix-*`, `new-york` or `default` style in `components.json` installs the alternative primitive base, and every other style the default base. This CLI follows the same `style`, or `--base`.
+
 ## What `init` does
 
 1. Detects Next.js or Vite and checks for TypeScript and Tailwind CSS 4.2+.
@@ -117,6 +119,7 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | `--diff` | Show how your local files differ from the registry |
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns` / `add interactions` / `add charts` / `add blocks` |
 | `-y, --yes` | Skip confirmation prompts |
+| `-b, --base <base\|radix>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help |
 | `-v, --version` | Show the version |

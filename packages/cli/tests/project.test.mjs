@@ -3,7 +3,12 @@ import path from "node:path"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { install as installMobile } from "../lib/mobile/project.mjs"
 import { CliError } from "../lib/output.mjs"
-import { detectProject, findAliasRoot, install } from "../lib/project.mjs"
+import {
+  detectBase,
+  detectProject,
+  findAliasRoot,
+  install,
+} from "../lib/project.mjs"
 import { createProject } from "./helpers.mjs"
 
 vi.mock("node:child_process", () => ({
@@ -11,6 +16,29 @@ vi.mock("node:child_process", () => ({
 }))
 
 const tsconfig = { compilerOptions: {} }
+
+describe("detectBase", () => {
+  it.each([
+    ["radix-nova", "radix"],
+    ["radix-vega", "radix"],
+    ["new-york", "radix"],
+    ["default", "radix"],
+    ["base-nova", "base"],
+    ["aria-nova", "base"],
+  ])("maps the %s style to the %s base", (style, base) => {
+    expect(detectBase(createProject({ "components.json": { style } }))).toBe(
+      base
+    )
+  })
+
+  it("uses the default base without components.json", () => {
+    expect(detectBase(createProject({}))).toBe("base")
+  })
+
+  it("uses the default base when components.json is unreadable", () => {
+    expect(detectBase(createProject({ "components.json": "{" }))).toBe("base")
+  })
+})
 
 describe("detectProject", () => {
   it("recognises a Next.js project", () => {

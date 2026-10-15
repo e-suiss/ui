@@ -11,6 +11,8 @@ import {
 } from "../lib/registry.mjs"
 import { serveRegistry } from "./helpers.mjs"
 
+const RADIX_INDEX = /\/registry\/radix\/registry\.json$/
+
 const item = (name, requires = []) => ({ name, requires })
 
 afterEach(() => {
@@ -122,6 +124,41 @@ describe("fetchRegistry", () => {
         files: ["hooks/use-mobile.ts"],
       },
     ])
+  })
+})
+
+describe("fetchRegistry for the second base", () => {
+  it("reads its own index and installs twins into the usual folders", async () => {
+    const fetch = serveRegistry({
+      "registry/radix/registry.json": {
+        name: "esuiss",
+        homepage: "https://ui.suiss.app",
+        items: [
+          {
+            name: "dialog",
+            type: "registry:ui",
+            dependencies: ["radix-ui"],
+            files: [
+              {
+                path: "bases/radix/components/ui/dialog.tsx",
+                type: "registry:ui",
+              },
+            ],
+          },
+        ],
+      },
+    })
+    expect((await fetchRegistry("radix")).items).toEqual([
+      {
+        name: "dialog",
+        scope: "ui",
+        requires: [],
+        dependencies: ["radix-ui"],
+        files: ["components/ui/dialog.tsx"],
+        sources: ["bases/radix/components/ui/dialog.tsx"],
+      },
+    ])
+    expect(fetch).toHaveBeenCalledWith(expect.stringMatching(RADIX_INDEX))
   })
 })
 

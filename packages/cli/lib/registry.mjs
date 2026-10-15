@@ -4,11 +4,17 @@ export { resolveItems } from "./shared/registry.mjs"
 
 const NAMESPACE = "@esuiss/"
 const STYLESHEET = "styles/globals.css"
+const BASE_FOLDER = /^bases\/[^/]+\//
+const INDEXES = {
+  base: "registry/registry.json",
+  radix: "registry/radix/registry.json",
+}
+
+export const BASES = Object.keys(INDEXES)
 
 const registry = createRegistry({
   base: "https://raw.githubusercontent.com/e-suiss/ui/main/packages/web",
   env: "ESUISS_REGISTRY",
-  index: "registry/registry.json",
 })
 
 export const { fetchText } = registry
@@ -58,7 +64,8 @@ function scopeOfFile(file = "") {
 }
 
 function toItem(item) {
-  const files = item.files.map((file) => file.path)
+  const sources = item.files.map((file) => file.path)
+  const files = sources.map((source) => source.replace(BASE_FOLDER, ""))
   return {
     name: item.name,
     scope: scopeOfFile(files[0]),
@@ -67,13 +74,16 @@ function toItem(item) {
     ),
     dependencies: item.dependencies ?? [],
     files,
+    ...(sources.some((source, index) => source !== files[index]) && {
+      sources,
+    }),
     ...(item.css && { css: item.css }),
     ...(item.meta?.optIn && { optIn: true }),
   }
 }
 
-export async function fetchRegistry() {
-  const { items } = await registry.fetchRegistry()
+export async function fetchRegistry(base = "base") {
+  const { items } = JSON.parse(await fetchText(INDEXES[base]))
   return { items: items.filter((item) => item.files?.length).map(toItem) }
 }
 

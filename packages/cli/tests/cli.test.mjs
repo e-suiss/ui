@@ -59,6 +59,21 @@ describe("esuiss-ui command", () => {
     expect(result.stderr).toContain("--cwd needs a directory.")
   })
 
+  it("requires a known primitive base after --base", () => {
+    const result = run("add", "button", "--base", "other")
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain("--base needs base or radix.")
+  })
+
+  it("only takes --base for React projects", () => {
+    const cwd = createProject({
+      "package.json": { dependencies: { expo: "54.0.0" } },
+    })
+    const result = run("add", "button", "--base", "radix", "--cwd", cwd)
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain("--base works with React projects.")
+  })
+
   it("reads the project from the directory given to --cwd", () => {
     const cwd = createProject({})
     const result = run("add", "--cwd", cwd, "button")

@@ -16,16 +16,26 @@ const NEXT_STYLESHEETS = [
   "styles/globals.css",
 ]
 export const VITE_STYLESHEET = "src/index.css"
+const RADIX_STYLE = /^(radix-.+|new-york|default)$/
 
-function configuredStylesheet(cwd) {
+function readConfig(cwd) {
   const file = path.join(cwd, "components.json")
   if (!existsSync(file)) return null
   try {
-    const css = JSON.parse(readFileSync(file, "utf8")).tailwind?.css
-    return typeof css === "string" && css ? path.join(cwd, css) : null
+    return JSON.parse(readFileSync(file, "utf8"))
   } catch {
     return null
   }
+}
+
+function configuredStylesheet(cwd) {
+  const css = readConfig(cwd)?.tailwind?.css
+  return typeof css === "string" && css ? path.join(cwd, css) : null
+}
+
+export function detectBase(cwd) {
+  const style = readConfig(cwd)?.style
+  return typeof style === "string" && RADIX_STYLE.test(style) ? "radix" : "base"
 }
 
 export function findStylesheet(project) {

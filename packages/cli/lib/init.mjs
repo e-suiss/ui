@@ -4,6 +4,7 @@ import path from "node:path"
 import { installItems } from "./add.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
 import {
+  detectBase,
   detectProject,
   findAliasRoot,
   findStylesheet,
@@ -280,7 +281,7 @@ export async function init(options) {
     }
   }
 
-  const registry = await fetchRegistry()
+  const registry = await fetchRegistry(options.base ?? detectBase(project.cwd))
   const css = stylesheetFor(project, await fetchStylesheet())
 
   const tsconfigs =
