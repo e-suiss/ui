@@ -45,11 +45,46 @@ Layout:
 
 ## Compatibility check
 
-`pnpm compat` checks that the components work in a project set up with the standard registry CLI. It creates a Next.js app in the system temp folder and, for each primitive base, runs the registry CLI `init` with `--base base` or `--base radix` and its defaults. It adds a set of components, patterns, a chart, blocks and `theme` once with `packages/cli` from the local `packages/web` files and once with the registry CLI from a local build of the registry, then runs `tsc --noEmit` and `next build` for each app. `--base=base` or `--base=radix` runs one base, and `--icons=<library>` picks the icon library for the registry CLI (`lucide` by default). It needs network access to npm, takes several minutes, and deletes the apps when it finishes or fails.
+`pnpm compat` checks that the components install with the standard registry CLI (`npx shadcn add @esuiss/<item>`) in a new project, for each option of `components.json`. It creates an app in the system temp folder, runs the registry CLI `init` for each primitive base (`--base base` or `--base radix`), points the `@esuiss` registry at a local build of `packages/web`, adds a set of items (button, dialog, select, dropdown menu, sidebar, a chart, blocks, the date picker pattern, `theme` and `theme-suiss`), checks the written files, then runs `tsc --noEmit` and `next build` (or `tsc -b && vite build`). With the default options it also adds the same items with `packages/cli`. It needs network access to npm and deletes the apps when it finishes or fails.
+
+Each option changes the project the way a user would, through an `init` flag or an edit of `components.json` after `init`, and checks something specific in the written files:
+
+| Option | Changes | Checks |
+| --- | --- | --- |
+| `--base=base\|radix` | the primitive base (both when omitted) | the components import the base's primitives |
+| `--framework=vite` | a Vite + React + TypeScript app set up with Tailwind CSS and the `@/` alias, instead of Next.js | the build runs `tsc -b` with the template's strict settings |
+| `--icons=lucide\|tabler\|hugeicons\|phosphor\|remixicon` | `iconLibrary`, and installs the library | no icon placeholder is left, and icons come from the chosen library only |
+| `--rtl` | `init --rtl` | no physical side classes (`ml-`, `left-`, `text-right`...) are left |
+| `--prefix=tw` | `tailwind.prefix`, `@import "tailwindcss" prefix(tw)` and the `@apply` rules in the stylesheet | every class is written as `tw:class` |
+| `--css-variables=false` | `init --no-css-variables` | no theme color class (`bg-primary`...) is left |
+| `--tsx=false` | a JavaScript app, so `init` sets `tsx` to false | every file is `.jsx` or `.js` |
+| `--rsc=false` | `rsc` | files lose their `"use client"` directive |
+| `--aliases=custom` | the `components`, `ui`, `lib`, `utils` and `hooks` aliases (`@/kit`, `@/kit/elements`, `@/support`, `@/support/cn`, `@/support/hooks`) | files land in the aliased folders and import through the aliases only |
+| `--menu-color=inverted\|default-translucent\|inverted-translucent` | `menuColor` | the menu markers are replaced with `dark` and the translucent styles |
+
+Run a single combination with:
 
 ```bash
-pnpm compat
+pnpm compat --base=base --icons=tabler
+pnpm compat --base=radix --framework=vite
+pnpm compat --base=base --prefix=tw --keep           # keep the apps to inspect them
+pnpm compat --base=base --rtl --cache=/tmp/compat    # reuse the new app across runs
 ```
+
+Options can be combined. `--cache=<dir>` keeps a copy of the new Next.js or Vite app in that folder and reuses it on the next run, and `--keep` leaves the temp folder in place and prints its path.
+
+Some behaviour of the registry CLI (version pinned in `scripts/compat.mjs`) is not ours to fix, and the check reports it instead of failing:
+
+- With a custom `utils` alias the CLI still writes the helper to `<lib alias>/utils.ts`. The check moves it to the alias, as a user would.
+- With `rsc` false, the CLI removes `"use client"` from every other file only. The check requires that it removed some.
+- With a prefix, the CLI does not prefix the `compoundVariants` classes of `cva()` (the `block` sizes of the button).
+- With `cssVariables` false, the CLI writes the base colors as classes such as `bg-oklch(0.205 0 0)`, which Tailwind CSS v4 does not generate.
+- Tailwind CSS v4 writes a prefix as `prefix(tw)` and `tw:flex`, so `--prefix` takes letters only.
+- Hugeicons needs `@hugeicons/core-free-icons` next to `@hugeicons/react`, which `init` installs for that library.
+
+The prefix and the right-to-left transforms only reach class strings in `className`, `cva()` and `cn()` (and, for right-to-left, the `className` of `mergeProps()`). Keep component classes there, and use a ternary rather than `&&` inside a `classNames` prop.
+
+GitHub Actions runs the matrix in `.github/workflows/compat.yml` on pushes to `main` and pull requests that change `packages/web`, `packages/cli`, `scripts/compat.mjs` or `apps/ui/next.config.ts`. `node scripts/compat.mjs --matrix` prints its jobs: the default options, Vite, right-to-left and the prefix for every base in `PRIMITIVES`, and each other option once on the first base. A new base added to `PRIMITIVES` gets its jobs without changing the workflow.
 
 ## Git hooks
 
