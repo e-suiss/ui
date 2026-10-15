@@ -71,7 +71,7 @@ async function toMarkdown(body: string) {
         const file = `components/${type}s/${name}.tsx`
         return `**Example**\n\n${fence(await fileText(file), "tsx", file)}`
       }
-      return `**Example: ${name}**\n\n${fence(await exampleSource(name), "tsx")}`
+      return `**Example**\n\n${fence(await exampleSource(name), "tsx")}`
     }
   )
   text = text.replace(NATIVE_EXAMPLE, (_match, id: string) => {
