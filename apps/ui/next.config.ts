@@ -67,7 +67,18 @@ const nextConfig: NextConfig = {
           has: markdown,
           destination: "/llms.mdx/docs/:path*",
         },
-        { source: "/r/:style/:file", destination: "/r/:file" },
+        {
+          source: "/r/:style(radix-[^/]+|new-york|default)/:file",
+          destination: "/r/radix/:file",
+        },
+        {
+          source: "/r/:style((?!(?:base|radix)/)[^/]+)/:file",
+          destination: "/r/base/:file",
+        },
+        {
+          source: "/r/:file((?!(?:base|radix)$)[^/]+)",
+          destination: "/r/base/:file",
+        },
       ],
       afterFiles: [],
       fallback: [],
