@@ -3,16 +3,11 @@ title: Button Group
 description: "A container that joins related buttons, inputs and menus into a single connected control."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="button-group" story="Default">
-
-<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function ButtonGroupExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Button variant=\"secondary\" size=\"icon\" aria-label=\"Go back\">\n          <ArrowLeftIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">Archive</Button>\n        <ButtonGroupSeparator />\n        <Button variant=\"secondary\">Report</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">Snooze</Button>\n        <ButtonGroupSeparator />\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            render={\n              <Button\n                variant=\"secondary\"\n                size=\"icon\"\n                aria-label=\"More options\"\n              />\n            }\n          >\n            <DotsThreeIcon />\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align=\"end\" className=\"w-52\">\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ListPlusIcon />\n                Mark as read\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <ArchiveIcon />\n                Archive\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ClockIcon />\n                Snooze\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <CalendarPlusIcon />\n                Add to calendar\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <TagIcon />\n                Label as\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem variant=\"destructive\">\n                <TrashIcon />\n                Trash\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-demo" />
 
 A `ButtonGroup` lays out its children in a row or column and joins them visually: only the outer corners stay rounded, and borders between neighbors collapse. Use `ButtonGroupSeparator` to draw a divider between filled buttons, and `ButtonGroupText` to add a static label or prefix such as `https://`.
 
@@ -22,27 +17,97 @@ Groups can contain buttons, `Input`, `InputGroup`, `Select` triggers, and the tr
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button-group"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add button-group
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Separator](/docs/components/separator).
 
 3. Copy the source into `components/ui/button-group.tsx`:
 
-<SourceFile path="components/ui/button-group.tsx" />
+<ComponentSource path="components/ui/button-group.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from \"@/components/ui/button-group\""} />
+```tsx
+import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from "@/components/ui/button-group"
+```
 
-<Code lang="tsx" code={"<ButtonGroup orientation=\"horizontal\">\n  <ButtonGroup>\n    <Button variant=\"secondary\" size=\"icon\" aria-label=\"Go back\">\n      <ArrowLeftIcon />\n    </Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">Archive</Button>\n    <ButtonGroupSeparator />\n    <Button variant=\"secondary\">Report</Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">Snooze</Button>\n    <ButtonGroupSeparator />\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        render={\n          <Button\n            variant=\"secondary\"\n            size=\"icon\"\n            aria-label=\"More options\"\n          />\n        }\n      >\n        <DotsThreeIcon />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"end\" className=\"w-52\">\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <ListPlusIcon />\n            Mark as read\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <ArchiveIcon />\n            Archive\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <ClockIcon />\n            Snooze\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <CalendarPlusIcon />\n            Add to calendar\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <TagIcon />\n            Label as\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem variant=\"destructive\">\n            <TrashIcon />\n            Trash\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  </ButtonGroup>\n</ButtonGroup>"} />
+```tsx
+<ButtonGroup orientation="horizontal">
+  <ButtonGroup>
+    <Button variant="secondary" size="icon" aria-label="Go back">
+      <ArrowLeftIcon />
+    </Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">Archive</Button>
+    <ButtonGroupSeparator />
+    <Button variant="secondary">Report</Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">Snooze</Button>
+    <ButtonGroupSeparator />
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant="secondary"
+            size="icon"
+            aria-label="More options"
+          />
+        }
+      >
+        <DotsThreeIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-52">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <ListPlusIcon />
+            Mark as read
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <ArchiveIcon />
+            Archive
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <ClockIcon />
+            Snooze
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CalendarPlusIcon />
+            Add to calendar
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <TagIcon />
+            Label as
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem variant="destructive">
+            <TrashIcon />
+            Trash
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </ButtonGroup>
+</ButtonGroup>
+```
 
 Elements are joined only when they expose a `data-slot` attribute, as the library's components do.
 
@@ -58,145 +123,95 @@ Give the group an `aria-label` when its purpose is not clear from its contents, 
 
 The same toolbar built with `outline` buttons and no separators.
 
-<Example kind="ui" name="button-group" story="Outline">
-
-<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function ButtonGroupOutlineExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon\" aria-label=\"Go back\">\n          <ArrowLeftIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">Archive</Button>\n        <Button variant=\"outline\">Report</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">Snooze</Button>\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            render={\n              <Button variant=\"outline\" size=\"icon\" aria-label=\"More options\" />\n            }\n          >\n            <DotsThreeIcon />\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align=\"end\" className=\"w-52\">\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ListPlusIcon />\n                Mark as read\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <ArchiveIcon />\n                Archive\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem>\n                <ClockIcon />\n                Snooze\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <CalendarPlusIcon />\n                Add to calendar\n              </DropdownMenuItem>\n              <DropdownMenuItem>\n                <TagIcon />\n                Label as\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n            <DropdownMenuSeparator />\n            <DropdownMenuGroup>\n              <DropdownMenuItem variant=\"destructive\">\n                <TrashIcon />\n                Trash\n              </DropdownMenuItem>\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-outline" />
 
 ### Orientation
 
 Stacks zoom buttons vertically with `orientation="vertical"`.
 
-<Example kind="ui" name="button-group" story="Orientation">
-
-<Code lang="tsx" code={"import { MinusIcon, PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupOrientationExample() {\n  return (\n    <ButtonGroup orientation=\"vertical\" aria-label=\"Media controls\">\n      <Button variant=\"secondary\" size=\"icon\" aria-label=\"Zoom in\">\n        <PlusIcon />\n      </Button>\n      <ButtonGroupSeparator orientation=\"horizontal\" />\n      <Button variant=\"secondary\" size=\"icon\" aria-label=\"Zoom out\">\n        <MinusIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-orientation" />
 
 ### Sizes
 
 Groups of `sm`, `default` and `lg` buttons.
 
-<Example kind="ui" name="button-group" story="Sizes">
-
-<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-6\">\n      <ButtonGroup orientation=\"horizontal\">\n        <Button variant=\"outline\" size=\"sm\">\n          Small\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          Button\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          Group\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup orientation=\"horizontal\">\n        <Button variant=\"outline\">Default</Button>\n        <Button variant=\"outline\">Button</Button>\n        <Button variant=\"outline\">Group</Button>\n        <Button variant=\"outline\" size=\"icon\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup orientation=\"horizontal\">\n        <Button variant=\"outline\" size=\"lg\">\n          Large\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          Button\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          Group\n        </Button>\n        <Button variant=\"outline\" size=\"icon-lg\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-sizes" />
 
 ### Nested
 
 Nests groups to separate page numbers from previous and next buttons.
 
-<Example kind="ui" name="button-group" story="Nested">
-
-<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupNestedExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"sm\">\n          1\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          2\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          3\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          4\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          5\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-sm\" aria-label=\"Previous\">\n          <ArrowLeftIcon />\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" aria-label=\"Next\">\n          <ArrowRightIcon />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-nested" />
 
 ### With separator
 
 Divides two `secondary` buttons with `ButtonGroupSeparator`.
 
-<Example kind="ui" name="button-group" story="WithSeparator">
-
-<Code lang="tsx" code={"import { CopyIcon, ShareIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupWithSeparatorExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"secondary\">\n        <CopyIcon data-icon=\"inline-start\" />\n        Copy\n      </Button>\n      <ButtonGroupSeparator />\n      <Button variant=\"secondary\">\n        <ShareIcon data-icon=\"inline-start\" />\n        Share\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-separator" />
 
 ### Plain
 
 Groups `plain` buttons with leading and trailing icons.
 
-<Example kind="ui" name="button-group" story="Plain">
-
-<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon, ShareIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupPlainExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"plain\">\n        <ArrowLeftIcon data-icon=\"inline-start\" />\n        Back\n      </Button>\n      <Button variant=\"plain\">\n        Forward\n        <ArrowRightIcon data-icon=\"inline-end\" />\n      </Button>\n      <Button variant=\"plain\">\n        <ShareIcon data-icon=\"inline-start\" />\n        Share\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-plain" />
 
 ### Split button
 
 Pairs a primary action with an icon button for more options.
 
-<Example kind="ui" name="button-group" story="SplitButton">
-
-<Code lang="tsx" code={"import { CaretDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupSplitButtonExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button>Publish</Button>\n      <ButtonGroupSeparator className=\"bg-on-accent/30\" />\n      <Button size=\"icon\" aria-label=\"More options\">\n        <CaretDownIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-split-button" />
 
 ### With input
 
 Attaches a search button to an `Input`.
 
-<Example kind="ui" name="button-group" story="WithInput">
-
-<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ButtonGroupWithInputExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Input aria-label=\"Search\" placeholder=\"Search...\" />\n      <Button variant=\"secondary\" size=\"icon-lg\" aria-label=\"Search\">\n        <MagnifyingGlassIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-input" />
 
 ### With input group
 
 Combines an add button with an `InputGroup` that has an inline voice button.
 
-<Example kind="ui" name="button-group" story="WithInputGroup">
-
-<Code lang="tsx" code={"import { MicrophoneIcon, PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Tooltip, TooltipContent, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function ButtonGroupWithInputGroupExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\" className=\"w-96\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" aria-label=\"Add\">\n          <PlusIcon />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup className=\"flex-1\">\n        <InputGroup>\n          <InputGroupInput\n            aria-label=\"Message\"\n            placeholder=\"Send a message...\"\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <Tooltip>\n              <TooltipTrigger\n                render={\n                  <InputGroupButton size=\"icon-xs\" aria-label=\"Voice mode\" />\n                }\n              >\n                <MicrophoneIcon />\n              </TooltipTrigger>\n              <TooltipContent>Voice mode</TooltipContent>\n            </Tooltip>\n          </InputGroupAddon>\n        </InputGroup>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-input-group" />
 
 ### With text
 
 Prefixes an input with a `ButtonGroupText` label and ends with a save button.
 
-<Example kind="ui" name="button-group" story="WithText">
-
-<Code lang="tsx" code={"import { LinkIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupText } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ButtonGroupWithTextExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroupText>\n        <LinkIcon />\n        https://\n      </ButtonGroupText>\n      <Input aria-label=\"Website\" placeholder=\"example.com\" />\n      <Button variant=\"secondary\" size=\"lg\">\n        Save\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-text" />
 
 ### With dropdown menu
 
 Opens a dropdown menu from the second half of a split button.
 
-<Example kind="ui" name="button-group" story="WithDropdownMenu">
-
-<Code lang="tsx" code={"import { CaretDownIcon, CopyIcon, ShareIcon, UserCircleMinusIcon, WarningCircleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\n\nexport function ButtonGroupWithDropdownMenuExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"outline\">Follow</Button>\n      <DropdownMenu>\n        <DropdownMenuTrigger\n          render={\n            <Button variant=\"outline\" size=\"icon\" aria-label=\"More options\" />\n          }\n        >\n          <CaretDownIcon />\n        </DropdownMenuTrigger>\n        <DropdownMenuContent align=\"end\" className=\"w-56\">\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <WarningCircleIcon />\n              Mute conversation\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <CopyIcon />\n              Copy link\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <ShareIcon />\n              Share conversation\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuGroup>\n            <DropdownMenuItem variant=\"destructive\">\n              <UserCircleMinusIcon />\n              Unfollow\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-dropdown-menu" />
 
 ### With select
 
 Joins a currency `Select` to an amount input.
 
-<Example kind="ui" name="button-group" story="WithSelect">
-
-<Code lang="tsx" code={"import { ArrowRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\nimport { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst currencies = [\n  { value: \"usd\", label: \"$\" },\n  { value: \"eur\", label: \"€\" },\n  { value: \"gbp\", label: \"£\" },\n  { value: \"try\", label: \"₺\" },\n]\n\nexport function ButtonGroupWithSelectExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <ButtonGroup>\n        <Select defaultValue=\"usd\" items={currencies}>\n          <SelectTrigger aria-label=\"Currency\" className=\"font-mono\">\n            <SelectValue />\n          </SelectTrigger>\n          <SelectContent>\n            <SelectGroup>\n              {currencies.map((currency) => (\n                <SelectItem key={currency.value} value={currency.value}>\n                  {currency.label}\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </SelectContent>\n        </Select>\n        <Input aria-label=\"Amount\" placeholder=\"10.00\" inputMode=\"decimal\" />\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" aria-label=\"Send\">\n          <ArrowRightIcon />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-select" />
 
 ### With popover
 
 Opens a popover from the second half of a split button.
 
-<Example kind="ui" name="button-group" story="WithPopover">
-
-<Code lang="tsx" code={"import { CaretDownIcon, SparkleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function ButtonGroupWithPopoverExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\">\n      <Button variant=\"outline\">\n        <SparkleIcon data-icon=\"inline-start\" />\n        Assistant\n      </Button>\n      <Popover>\n        <PopoverTrigger\n          render={\n            <Button variant=\"outline\" size=\"icon\" aria-label=\"Open popover\" />\n          }\n        >\n          <CaretDownIcon />\n        </PopoverTrigger>\n        <PopoverContent align=\"end\" className=\"w-80\">\n          <PopoverHeader>\n            <PopoverTitle>Start a new task</PopoverTitle>\n            <PopoverDescription>\n              Describe your task in natural language.\n            </PopoverDescription>\n          </PopoverHeader>\n          <Textarea\n            aria-label=\"Task description\"\n            placeholder=\"I need to...\"\n            className=\"resize-none\"\n          />\n        </PopoverContent>\n      </Popover>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-with-popover" />
 
 ### Pagination
 
 A labelled group of page buttons that marks the current page with `aria-current`.
 
-<Example kind="ui" name="button-group" story="Pagination">
-
-<Code lang="tsx" code={"import { CaretLeftIcon, CaretRightIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\n\nexport function ButtonGroupPaginationExample() {\n  return (\n    <ButtonGroup orientation=\"horizontal\" aria-label=\"Pagination\">\n      <Button variant=\"outline\" size=\"icon\" aria-label=\"Previous page\">\n        <CaretLeftIcon />\n      </Button>\n      <Button variant=\"outline\">1</Button>\n      <Button variant=\"outline\" aria-current=\"page\">\n        2\n      </Button>\n      <Button variant=\"outline\">3</Button>\n      <Button variant=\"outline\" size=\"icon\" aria-label=\"Next page\">\n        <CaretRightIcon />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="button-group-pagination" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"ButtonGroup","href":"#buttongroup","children":[{"name":"ButtonGroupSeparator","href":"#buttongroupseparator","children":[]},{"name":"ButtonGroupText","href":"#buttongrouptext","children":[]}]}]} />
+<Anatomy>
+
+- [ButtonGroup](#buttongroup)
+  - [ButtonGroupSeparator](#buttongroupseparator)
+  - [ButtonGroupText](#buttongrouptext)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -204,7 +219,11 @@ A labelled group of page buttons that marks the current page with `aria-current`
 
 The container that joins its children and sets the orientation.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -214,7 +233,7 @@ The container that joins its children and sets the orientation.
 
 A static, button-shaped label for text or icons.
 
-<PropsTable extends={["useRender.ComponentProps<\"div\">"]} />
+Also accepts the props of `useRender.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -224,7 +243,7 @@ A static, button-shaped label for text or icons.
 
 A thin divider between adjacent items.
 
-<PropsTable extends={["React.ComponentProps<typeof Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof Separator>`.
 
 </ApiPart>
 
@@ -245,15 +264,7 @@ A thin divider between adjacent items.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-button-group--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction MailMenuContent() {\n  return (\n    <DropdownMenuContent align=\"end\" className=\"w-52\">\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ListPlusIcon} className=\"size-4\" />\n          <Text>Mark as read</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={ArchiveIcon} className=\"size-4\" />\n          <Text>Archive</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ClockIcon} className=\"size-4\" />\n          <Text>Snooze</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={CalendarPlusIcon} className=\"size-4\" />\n          <Text>Add to calendar</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={TagIcon} className=\"size-4\" />\n          <Text>Label as</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem variant=\"destructive\">\n          <Icon as={TrashIcon} className=\"size-4\" />\n          <Text>Trash</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n    </DropdownMenuContent>\n  )\n}\n\nexport function ButtonGroupExample() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Go back\">\n          <Icon as={ArrowLeftIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">\n          <Text>Archive</Text>\n        </Button>\n        <ButtonGroupSeparator />\n        <Button variant=\"secondary\">\n          <Text>Report</Text>\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">\n          <Text>Snooze</Text>\n        </Button>\n        <ButtonGroupSeparator />\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            accessibilityLabel=\"More options\"\n            render={<Button variant=\"secondary\" size=\"icon\" />}\n          >\n            <Icon as={DotsThreeIcon} />\n          </DropdownMenuTrigger>\n          <MailMenuContent />\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupExample: View {\n  var body: some View {\n    ButtonGroup {\n      ButtonGroup {\n        ButtonGroupIconButton(icon: Ph.arrowLeft.regular, label: \"Go back\", variant: .secondary)\n      }\n      ButtonGroup {\n        Button(\"Archive\") {}.buttonStyle(.variant(.secondary))\n        ButtonGroupSeparator()\n        Button(\"Report\") {}.buttonStyle(.variant(.secondary))\n      }\n      ButtonGroup {\n        Button(\"Snooze\") {}.buttonStyle(.variant(.secondary))\n        ButtonGroupSeparator()\n        ButtonGroupMailMenu(variant: .secondary)\n      }\n    }\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct ButtonGroupMailMenu: View {\n  let variant: VariantButtonStyle.Variant\n\n  var body: some View {\n    DropdownMenu(align: .end) {\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Mark as read\", icon: Ph.listPlus.regular) {}\n        DropdownMenuItem(\"Archive\", icon: Ph.archive.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Snooze\", icon: Ph.clock.regular) {}\n        DropdownMenuItem(\"Add to calendar\", icon: Ph.calendarPlus.regular) {}\n        DropdownMenuItem(\"Label as\", icon: Ph.tag.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Trash\", icon: Ph.trash.regular, variant: .destructive) {}\n      }\n    } label: {\n      ButtonGroupIcon(icon: Ph.dotsThree.bold, size: .icon)\n    }\n    .buttonStyle(.variant(variant, size: .icon))\n    .accessibilityLabel(Text(\"More options\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Archive\nimport com.adamglin.phosphoricons.regular.ArrowLeft\nimport com.adamglin.phosphoricons.regular.CalendarPlus\nimport com.adamglin.phosphoricons.regular.Clock\nimport com.adamglin.phosphoricons.regular.DotsThree\nimport com.adamglin.phosphoricons.regular.ListPlus\nimport com.adamglin.phosphoricons.regular.Tag\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonGroupSeparator\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuGroup\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun ButtonGroupExample() {\n    ButtonGroupMail(ButtonVariant.Secondary, separators = true)\n}\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupMailMenu(variant: ButtonVariant) {\n    var open by rememberSaveable { mutableStateOf(false) }\n    DropdownMenu(\n        expanded = open,\n        onExpandedChange = { open = it },\n        trigger = { ButtonGroupIconButton(\"More options\", PhosphorIcons.Regular.DotsThree, variant) { open = true } },\n        align = PopupAlign.End,\n    ) {\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Mark as read\", onClick = {}, icon = PhosphorIcons.Regular.ListPlus)\n            DropdownMenuItem(\"Archive\", onClick = {}, icon = PhosphorIcons.Regular.Archive)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Snooze\", onClick = {}, icon = PhosphorIcons.Regular.Clock)\n            DropdownMenuItem(\"Add to calendar\", onClick = {}, icon = PhosphorIcons.Regular.CalendarPlus)\n            DropdownMenuItem(\"Label as\", onClick = {}, icon = PhosphorIcons.Regular.Tag)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Trash\", onClick = {}, icon = PhosphorIcons.Regular.Trash, variant = MenuItemVariant.Destructive)\n        }\n    }\n}\n\n@Composable\nfun ButtonGroupMail(variant: ButtonVariant, separators: Boolean) {\n    ButtonGroup {\n        ButtonGroup {\n            ButtonGroupIconButton(\"Go back\", PhosphorIcons.Regular.ArrowLeft, variant)\n        }\n        ButtonGroup {\n            Button(\"Archive\", onClick = {}, variant = variant)\n            if (separators) ButtonGroupSeparator()\n            Button(\"Report\", onClick = {}, variant = variant)\n        }\n        ButtonGroup {\n            Button(\"Snooze\", onClick = {}, variant = variant)\n            if (separators) ButtonGroupSeparator()\n            ButtonGroupMailMenu(variant)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--default" />
 
 `ButtonGroup` is a `View` with the `group` role that joins its children: only the outer ends keep their rounded corners and the shared borders collapse. It works with `Button` and with other controls such as inputs, selects and menu triggers. `ghost` and `plain` buttons are left unjoined.
 
@@ -263,19 +274,25 @@ Nest groups to keep separate clusters in one row with a gap between them. `Butto
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button-group"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add button-group
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button-group --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add button-group --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add button-group --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add button-group --platform kotlin
+```
 
 </Only>
 
@@ -291,13 +308,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Separator](/docs/components/separator), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/button-group.tsx`:
 
-<SourceFile path="uniwind/components/ui/button-group.tsx" />
+<ComponentSource path="uniwind/components/ui/button-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -307,13 +326,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Separator](/docs/components/separator), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/button-group.tsx`:
 
-<SourceFile path="nativewind/components/ui/button-group.tsx" />
+<ComponentSource path="nativewind/components/ui/button-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -325,7 +346,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Copy the source into `components/ui/button-group.tsx`:
 
-<SourceFile path="stylesheet/components/ui/button-group.tsx" />
+<ComponentSource path="stylesheet/components/ui/button-group.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -341,29 +362,31 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -373,19 +396,23 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -393,9 +420,43 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from \"@/components/ui/button-group\""} />
+```tsx
+import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from "@/components/ui/button-group"
+```
 
-<Code lang="tsx" code={"<ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Go back\">\n      <Icon as={ArrowLeftIcon} />\n    </Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">\n      <Text>Archive</Text>\n    </Button>\n    <ButtonGroupSeparator />\n    <Button variant=\"secondary\">\n      <Text>Report</Text>\n    </Button>\n  </ButtonGroup>\n  <ButtonGroup>\n    <Button variant=\"secondary\">\n      <Text>Snooze</Text>\n    </Button>\n    <ButtonGroupSeparator />\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        accessibilityLabel=\"More options\"\n        render={<Button variant=\"secondary\" size=\"icon\" />}\n      >\n        <Icon as={DotsThreeIcon} />\n      </DropdownMenuTrigger>\n      <MailMenuContent />\n    </DropdownMenu>\n  </ButtonGroup>\n</ButtonGroup>"} />
+```tsx
+<ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary" size="icon" accessibilityLabel="Go back">
+      <Icon as={ArrowLeftIcon} />
+    </Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">
+      <Text>Archive</Text>
+    </Button>
+    <ButtonGroupSeparator />
+    <Button variant="secondary">
+      <Text>Report</Text>
+    </Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">
+      <Text>Snooze</Text>
+    </Button>
+    <ButtonGroupSeparator />
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        accessibilityLabel="More options"
+        render={<Button variant="secondary" size="icon" />}
+      >
+        <Icon as={DotsThreeIcon} />
+      </DropdownMenuTrigger>
+      <MailMenuContent />
+    </DropdownMenu>
+  </ButtonGroup>
+</ButtonGroup>
+```
 
 Set `orientation="vertical"` to stack the buttons. Use a separator between buttons of the same filled variant, such as in a split button, where there is no border to divide them.
 
@@ -407,197 +468,85 @@ Give icon-only buttons an `accessibilityLabel`, and give the group one when its 
 
 Nested groups of `outline` buttons.
 
-<NativeExample id="components-button-group--outline" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, DotsThreeIcon, ListPlusIcon, TagIcon, TrashIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction MailMenuContent() {\n  return (\n    <DropdownMenuContent align=\"end\" className=\"w-52\">\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ListPlusIcon} className=\"size-4\" />\n          <Text>Mark as read</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={ArchiveIcon} className=\"size-4\" />\n          <Text>Archive</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem>\n          <Icon as={ClockIcon} className=\"size-4\" />\n          <Text>Snooze</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={CalendarPlusIcon} className=\"size-4\" />\n          <Text>Add to calendar</Text>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Icon as={TagIcon} className=\"size-4\" />\n          <Text>Label as</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n      <DropdownMenuSeparator />\n      <DropdownMenuGroup>\n        <DropdownMenuItem variant=\"destructive\">\n          <Icon as={TrashIcon} className=\"size-4\" />\n          <Text>Trash</Text>\n        </DropdownMenuItem>\n      </DropdownMenuGroup>\n    </DropdownMenuContent>\n  )\n}\n\nexport function ButtonGroupOutlineExample() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Go back\">\n          <Icon as={ArrowLeftIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">\n          <Text>Archive</Text>\n        </Button>\n        <Button variant=\"outline\">\n          <Text>Report</Text>\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">\n          <Text>Snooze</Text>\n        </Button>\n        <DropdownMenu>\n          <DropdownMenuTrigger\n            accessibilityLabel=\"More options\"\n            render={<Button variant=\"outline\" size=\"icon\" />}\n          >\n            <Icon as={DotsThreeIcon} />\n          </DropdownMenuTrigger>\n          <MailMenuContent />\n        </DropdownMenu>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupOutlineExample: View {\n  var body: some View {\n    ButtonGroup {\n      ButtonGroup {\n        ButtonGroupIconButton(icon: Ph.arrowLeft.regular, label: \"Go back\", variant: .outline)\n      }\n      ButtonGroup {\n        Button(\"Archive\") {}.buttonStyle(.variant(.outline))\n        Button(\"Report\") {}.buttonStyle(.variant(.outline))\n      }\n      ButtonGroup {\n        Button(\"Snooze\") {}.buttonStyle(.variant(.outline))\n        ButtonGroupMailMenu(variant: .outline)\n      }\n    }\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct ButtonGroupMailMenu: View {\n  let variant: VariantButtonStyle.Variant\n\n  var body: some View {\n    DropdownMenu(align: .end) {\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Mark as read\", icon: Ph.listPlus.regular) {}\n        DropdownMenuItem(\"Archive\", icon: Ph.archive.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Snooze\", icon: Ph.clock.regular) {}\n        DropdownMenuItem(\"Add to calendar\", icon: Ph.calendarPlus.regular) {}\n        DropdownMenuItem(\"Label as\", icon: Ph.tag.regular) {}\n      }\n      DropdownMenuSeparator()\n      DropdownMenuGroup {\n        DropdownMenuItem(\"Trash\", icon: Ph.trash.regular, variant: .destructive) {}\n      }\n    } label: {\n      ButtonGroupIcon(icon: Ph.dotsThree.bold, size: .icon)\n    }\n    .buttonStyle(.variant(variant, size: .icon))\n    .accessibilityLabel(Text(\"More options\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Archive\nimport com.adamglin.phosphoricons.regular.ArrowLeft\nimport com.adamglin.phosphoricons.regular.CalendarPlus\nimport com.adamglin.phosphoricons.regular.Clock\nimport com.adamglin.phosphoricons.regular.DotsThree\nimport com.adamglin.phosphoricons.regular.ListPlus\nimport com.adamglin.phosphoricons.regular.Tag\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonGroupSeparator\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuGroup\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun ButtonGroupOutlineExample() {\n    ButtonGroupMail(ButtonVariant.Outline, separators = false)\n}\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupMailMenu(variant: ButtonVariant) {\n    var open by rememberSaveable { mutableStateOf(false) }\n    DropdownMenu(\n        expanded = open,\n        onExpandedChange = { open = it },\n        trigger = { ButtonGroupIconButton(\"More options\", PhosphorIcons.Regular.DotsThree, variant) { open = true } },\n        align = PopupAlign.End,\n    ) {\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Mark as read\", onClick = {}, icon = PhosphorIcons.Regular.ListPlus)\n            DropdownMenuItem(\"Archive\", onClick = {}, icon = PhosphorIcons.Regular.Archive)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Snooze\", onClick = {}, icon = PhosphorIcons.Regular.Clock)\n            DropdownMenuItem(\"Add to calendar\", onClick = {}, icon = PhosphorIcons.Regular.CalendarPlus)\n            DropdownMenuItem(\"Label as\", onClick = {}, icon = PhosphorIcons.Regular.Tag)\n        }\n        DropdownMenuSeparator()\n        DropdownMenuGroup {\n            DropdownMenuItem(\"Trash\", onClick = {}, icon = PhosphorIcons.Regular.Trash, variant = MenuItemVariant.Destructive)\n        }\n    }\n}\n\n@Composable\nfun ButtonGroupMail(variant: ButtonVariant, separators: Boolean) {\n    ButtonGroup {\n        ButtonGroup {\n            ButtonGroupIconButton(\"Go back\", PhosphorIcons.Regular.ArrowLeft, variant)\n        }\n        ButtonGroup {\n            Button(\"Archive\", onClick = {}, variant = variant)\n            if (separators) ButtonGroupSeparator()\n            Button(\"Report\", onClick = {}, variant = variant)\n        }\n        ButtonGroup {\n            Button(\"Snooze\", onClick = {}, variant = variant)\n            if (separators) ButtonGroupSeparator()\n            ButtonGroupMailMenu(variant)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--outline" />
 
 ### Orientation
 
 A vertical group of zoom buttons with a horizontal separator.
 
-<NativeExample id="components-button-group--orientation" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { MinusIcon, PlusIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function ButtonGroupOrientationExample() {\n  return (\n    <ButtonGroup orientation=\"vertical\" accessibilityLabel=\"Media controls\">\n      <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Zoom in\">\n        <Icon as={PlusIcon} />\n      </Button>\n      <ButtonGroupSeparator orientation=\"horizontal\" />\n      <Button variant=\"secondary\" size=\"icon\" accessibilityLabel=\"Zoom out\">\n        <Icon as={MinusIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupOrientationExample: View {\n  var body: some View {\n    ButtonGroup(orientation: .vertical) {\n      ButtonGroupIconButton(icon: Ph.plus.regular, label: \"Zoom in\", variant: .secondary)\n      ButtonGroupSeparator(.horizontal)\n      ButtonGroupIconButton(icon: Ph.minus.regular, label: \"Zoom out\", variant: .secondary)\n    }\n    .accessibilityLabel(Text(\"Media controls\"))\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Minus\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonGroupOrientation\nimport com.esuiss.ui.components.ButtonGroupSeparator\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupOrientationStory() {\n    ButtonGroup(\n        modifier = Modifier.semantics { contentDescription = \"Media controls\" },\n        orientation = ButtonGroupOrientation.Vertical,\n    ) {\n        ButtonGroupIconButton(\"Zoom in\", PhosphorIcons.Regular.Plus, ButtonVariant.Secondary)\n        ButtonGroupSeparator(orientation = Orientation.Horizontal)\n        ButtonGroupIconButton(\"Zoom out\", PhosphorIcons.Regular.Minus, ButtonVariant.Secondary)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--orientation" />
 
 ### Sizes
 
 Groups at different button sizes.
 
-<NativeExample id="components-button-group--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { PlusIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupSizesExample() {\n  return (\n    <View className=\"items-start gap-6\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"sm\">\n          <Text>Small</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          <Text>Button</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"sm\">\n          <Text>Group</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\">\n          <Text>Default</Text>\n        </Button>\n        <Button variant=\"outline\">\n          <Text>Button</Text>\n        </Button>\n        <Button variant=\"outline\">\n          <Text>Group</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"lg\">\n          <Text>Large</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          <Text>Button</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"lg\">\n          <Text>Group</Text>\n        </Button>\n        <Button variant=\"outline\" size=\"icon-lg\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 24) {\n      ButtonGroupSizeRow(title: \"Small\", size: .sm, iconSize: .iconSm)\n      ButtonGroupSizeRow(title: \"Default\", size: .default, iconSize: .icon)\n      ButtonGroupSizeRow(title: \"Large\", size: .lg, iconSize: .iconLg)\n    }\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct ButtonGroupSizeRow: View {\n  let title: LocalizedStringKey\n  let size: VariantButtonStyle.Size\n  let iconSize: VariantButtonStyle.Size\n\n  var body: some View {\n    ButtonGroup {\n      Button(title) {}.buttonStyle(.variant(.outline, size: size))\n      Button(\"Button\") {}.buttonStyle(.variant(.outline, size: size))\n      Button(\"Group\") {}.buttonStyle(.variant(.outline, size: size))\n      ButtonGroupIconButton(icon: Ph.plus.regular, label: \"Add\", variant: .outline, size: iconSize)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupSizes() {\n    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {\n        listOf(\n            Triple(\"Small\", ButtonSize.Sm, ButtonSize.IconSm),\n            Triple(\"Default\", ButtonSize.Default, ButtonSize.Icon),\n            Triple(\"Large\", ButtonSize.Lg, ButtonSize.IconLg),\n        ).forEach { (label, size, icon) ->\n            ButtonGroup {\n                Button(label, onClick = {}, variant = ButtonVariant.Outline, size = size)\n                Button(\"Button\", onClick = {}, variant = ButtonVariant.Outline, size = size)\n                Button(\"Group\", onClick = {}, variant = ButtonVariant.Outline, size = size)\n                ButtonGroupIconButton(\"Add\", PhosphorIcons.Regular.Plus, ButtonVariant.Outline, icon)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--sizes" />
 
 ### Nested
 
 Groups inside a group, spaced apart.
 
-<NativeExample id="components-button-group--nested" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupNestedExample() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        {[\"1\", \"2\", \"3\", \"4\", \"5\"].map((page) => (\n          <Button key={page} variant=\"outline\" size=\"sm\">\n            <Text>{page}</Text>\n          </Button>\n        ))}\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-sm\" accessibilityLabel=\"Previous\">\n          <Icon as={ArrowLeftIcon} />\n        </Button>\n        <Button variant=\"outline\" size=\"icon-sm\" accessibilityLabel=\"Next\">\n          <Icon as={ArrowRightIcon} />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupNestedExample: View {\n  var body: some View {\n    ButtonGroup {\n      ButtonGroup {\n        ForEach([\"1\", \"2\", \"3\", \"4\", \"5\"], id: \\.self) { page in\n          Button {} label: { Text(verbatim: page) }\n            .buttonStyle(.variant(.outline, size: .sm))\n        }\n      }\n      ButtonGroup {\n        ButtonGroupIconButton(icon: Ph.arrowLeft.regular, label: \"Previous\", variant: .outline, size: .iconSm)\n        ButtonGroupIconButton(icon: Ph.arrowRight.regular, label: \"Next\", variant: .outline, size: .iconSm)\n      }\n    }\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ArrowLeft\nimport com.adamglin.phosphoricons.regular.ArrowRight\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupNested() {\n    ButtonGroup {\n        ButtonGroup {\n            listOf(\"1\", \"2\", \"3\", \"4\", \"5\").forEach { page ->\n                Button(page, onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm)\n            }\n        }\n        ButtonGroup {\n            ButtonGroupIconButton(\"Previous\", PhosphorIcons.Regular.ArrowLeft, ButtonVariant.Outline, ButtonSize.IconSm)\n            ButtonGroupIconButton(\"Next\", PhosphorIcons.Regular.ArrowRight, ButtonVariant.Outline, ButtonSize.IconSm)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--nested" />
 
 ### With separator
 
 Buttons divided by `ButtonGroupSeparator`.
 
-<NativeExample id="components-button-group--with-separator" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CopyIcon, ShareIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupWithSeparatorExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"secondary\">\n        <Icon as={CopyIcon} />\n        <Text>Copy</Text>\n      </Button>\n      <ButtonGroupSeparator />\n      <Button variant=\"secondary\">\n        <Icon as={ShareIcon} />\n        <Text>Share</Text>\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupWithSeparatorExample: View {\n  var body: some View {\n    ButtonGroup {\n      Button {} label: {\n        Label { Text(\"Copy\") } icon: { Ph.copy.regular }\n      }\n      .buttonStyle(.variant(.secondary))\n      ButtonGroupSeparator()\n      Button {} label: {\n        Label { Text(\"Share\") } icon: { Ph.share.regular }\n      }\n      .buttonStyle(.variant(.secondary))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Copy\nimport com.adamglin.phosphoricons.regular.Share\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonGroupSeparator\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun ButtonGroupWithSeparator() {\n    ButtonGroup {\n        Button(onClick = {}, variant = ButtonVariant.Secondary) {\n            Icon(PhosphorIcons.Regular.Copy, contentDescription = null)\n            Text(\"Copy\")\n        }\n        ButtonGroupSeparator()\n        Button(onClick = {}, variant = ButtonVariant.Secondary) {\n            Icon(PhosphorIcons.Regular.Share, contentDescription = null)\n            Text(\"Share\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-separator" />
 
 ### Plain
 
 `plain` buttons, which stay unjoined.
 
-<NativeExample id="components-button-group--plain" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ArrowLeftIcon, ArrowRightIcon, ShareIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupPlainExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"plain\">\n        <Icon as={ArrowLeftIcon} />\n        <Text>Back</Text>\n      </Button>\n      <Button variant=\"plain\">\n        <Text>Forward</Text>\n        <Icon as={ArrowRightIcon} />\n      </Button>\n      <Button variant=\"plain\">\n        <Icon as={ShareIcon} />\n        <Text>Share</Text>\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupPlainExample: View {\n  var body: some View {\n    ButtonGroup {\n      Button {} label: {\n        Label { Text(\"Back\") } icon: { Ph.arrowLeft.regular }\n      }\n      .buttonStyle(.variant(.plain))\n      Button {} label: {\n        HStack(spacing: 6) {\n          Text(\"Forward\")\n          Ph.arrowRight.regular\n            .frame(width: VariantButtonStyle.Size.default.iconSize, height: VariantButtonStyle.Size.default.iconSize)\n        }\n      }\n      .buttonStyle(.variant(.plain))\n      Button {} label: {\n        Label { Text(\"Share\") } icon: { Ph.share.regular }\n      }\n      .buttonStyle(.variant(.plain))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ArrowLeft\nimport com.adamglin.phosphoricons.regular.ArrowRight\nimport com.adamglin.phosphoricons.regular.Share\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun ButtonGroupPlain() {\n    ButtonGroup {\n        Button(onClick = {}, variant = ButtonVariant.Plain) {\n            Icon(PhosphorIcons.Regular.ArrowLeft, contentDescription = null)\n            Text(\"Back\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Plain) {\n            Text(\"Forward\")\n            Icon(PhosphorIcons.Regular.ArrowRight, contentDescription = null)\n        }\n        Button(onClick = {}, variant = ButtonVariant.Plain) {\n            Icon(PhosphorIcons.Regular.Share, contentDescription = null)\n            Text(\"Share\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--plain" />
 
 ### Split button
 
 A main action with a joined icon button for more options.
 
-<NativeExample id="components-button-group--split-button" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CaretDownIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupSplitButtonExample() {\n  return (\n    <ButtonGroup>\n      <Button>\n        <Text>Publish</Text>\n      </Button>\n      <ButtonGroupSeparator className=\"bg-on-accent/30\" />\n      <Button size=\"icon\" accessibilityLabel=\"More options\">\n        <Icon as={CaretDownIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupSplitButtonExample: View {\n  var body: some View {\n    ButtonGroup {\n      Button(\"Publish\") {}.buttonStyle(.variant())\n      ButtonGroupSeparator()\n      ButtonGroupIconButton(icon: Ph.caretDown.regular, label: \"More options\", variant: .default)\n    }\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretDown\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonGroupSeparator\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupSplitButton() {\n    ButtonGroup {\n        Button(\"Publish\", onClick = {})\n        ButtonGroupSeparator(color = EsuissTheme.colors.onAccent.copy(alpha = 0.3f))\n        ButtonGroupIconButton(\"More options\", PhosphorIcons.Regular.CaretDown)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--split-button" />
 
 ### With input
 
 An input joined to a search button.
 
-<NativeExample id="components-button-group--with-input" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ButtonGroupWithInputExample() {\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <Input\n        accessibilityLabel=\"Search\"\n        placeholder=\"Search...\"\n        className=\"w-auto flex-1\"\n      />\n      <Button variant=\"secondary\" size=\"icon-lg\" accessibilityLabel=\"Search\">\n        <Icon as={MagnifyingGlassIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct ButtonGroupWithInputDemo: View {\n  @State private var query = \"\"\n\n  var body: some View {\n    ButtonGroup {\n      TextField(\"Search\", text: $query, prompt: Text(\"Search...\"))\n        .textFieldStyle(.input)\n      ButtonGroupIconButton(icon: Ph.magnifyingGlass.regular, label: \"Search\", variant: .secondary, size: .iconLg)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.MagnifyingGlass\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Input\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupWithInput() {\n    var search by rememberSaveable { mutableStateOf(\"\") }\n    ButtonGroup(Modifier.fillMaxWidth()) {\n        Input(\n            search,\n            { search = it },\n            Modifier.semantics { contentDescription = \"Search\" },\n            placeholder = \"Search...\",\n        )\n        ButtonGroupIconButton(\"Search\", PhosphorIcons.Regular.MagnifyingGlass, ButtonVariant.Secondary, ButtonSize.IconLg)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-input" />
 
 ### With input group
 
 An input group joined with buttons.
 
-<NativeExample id="components-button-group--with-input-group" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { MicrophoneIcon, PlusIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function ButtonGroupWithInputGroupExample() {\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" accessibilityLabel=\"Add\">\n          <Icon as={PlusIcon} />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup className=\"flex-1\">\n        <InputGroup className=\"flex-1\">\n          <InputGroupInput\n            accessibilityLabel=\"Message\"\n            placeholder=\"Send a message...\"\n          />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton size=\"icon-xs\" accessibilityLabel=\"Voice mode\">\n              <Icon as={MicrophoneIcon} />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct ButtonGroupWithInputGroupDemo: View {\n  @State private var message = \"\"\n\n  var body: some View {\n    ButtonGroup {\n      ButtonGroup {\n        ButtonGroupIconButton(icon: Ph.plus.regular, label: \"Add\", variant: .outline, size: .iconLg)\n      }\n      ButtonGroup {\n        InputGroup {\n          InputGroupInput(\"Send a message...\", text: $message)\n            .accessibilityLabel(Text(\"Message\"))\n          InputGroupAddon(align: .inlineEnd) {\n            InputGroupButton(size: .iconXs) {} label: {\n              Ph.microphone.regular.frame(width: 14, height: 14)\n            }\n            .accessibilityLabel(Text(\"Voice mode\"))\n          }\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Microphone\nimport com.adamglin.phosphoricons.regular.Plus\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.InputGroup\nimport com.esuiss.ui.components.InputGroupAddon\nimport com.esuiss.ui.components.InputGroupAddonAlign\nimport com.esuiss.ui.components.InputGroupButton\nimport com.esuiss.ui.components.InputGroupButtonSize\nimport com.esuiss.ui.components.InputGroupInput\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupWithInputGroup() {\n    var message by rememberSaveable { mutableStateOf(\"\") }\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val rest = maxWidth - 8.dp - ButtonSize.IconLg.height\n        ButtonGroup(Modifier.fillMaxWidth()) {\n            ButtonGroup {\n                ButtonGroupIconButton(\"Add\", PhosphorIcons.Regular.Plus, ButtonVariant.Outline, ButtonSize.IconLg)\n            }\n            ButtonGroup(Modifier.width(rest)) {\n                InputGroup(Modifier.width(rest)) {\n                    InputGroupInput(\n                        message,\n                        { message = it },\n                        Modifier.semantics { contentDescription = \"Message\" },\n                        placeholder = \"Send a message...\",\n                    )\n                    InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {\n                        InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs) {\n                            Icon(PhosphorIcons.Regular.Microphone, contentDescription = \"Voice mode\")\n                        }\n                    }\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-input-group" />
 
 ### With text
 
 A `ButtonGroupText` URL prefix joined to an input and a save button.
 
-<NativeExample id="components-button-group--with-text" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { LinkIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupText } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupWithTextExample() {\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <ButtonGroupText>\n        <Icon as={LinkIcon} />\n        <Text>https://</Text>\n      </ButtonGroupText>\n      <Input\n        accessibilityLabel=\"Website\"\n        placeholder=\"example.com\"\n        className=\"w-auto flex-1\"\n      />\n      <Button variant=\"secondary\" size=\"lg\">\n        <Text>Save</Text>\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupWithTextDemo: View {\n  @State private var url = \"\"\n\n  var body: some View {\n    ButtonGroup {\n      ButtonGroupText {\n        Label { Text(verbatim: \"https://\") } icon: { Ph.link.regular }\n      }\n      TextField(\"Website\", text: $url, prompt: Text(verbatim: \"example.com\"))\n        .textFieldStyle(.input)\n        .keyboardType(.URL)\n        .textInputAutocapitalization(.never)\n      Button(\"Save\") {}.buttonStyle(.variant(.secondary, size: .lg))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Link\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonGroupText\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun ButtonGroupWithText() {\n    var website by rememberSaveable { mutableStateOf(\"\") }\n    ButtonGroup(Modifier.fillMaxWidth()) {\n        ButtonGroupText {\n            Icon(PhosphorIcons.Regular.Link, contentDescription = null)\n            Text(\"https://\")\n        }\n        Input(\n            website,\n            { website = it },\n            Modifier.semantics { contentDescription = \"Website\" },\n            placeholder = \"example.com\",\n        )\n        Button(\"Save\", onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Lg)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-text" />
 
 ### With dropdown menu
 
 A button joined to a dropdown menu trigger.
 
-<NativeExample id="components-button-group--with-dropdown-menu" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CaretDownIcon, CopyIcon, ShareIcon, UserCircleMinusIcon, WarningCircleIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupWithDropdownMenuExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"outline\">\n        <Text>Follow</Text>\n      </Button>\n      <DropdownMenu>\n        <DropdownMenuTrigger\n          accessibilityLabel=\"More options\"\n          render={<Button variant=\"outline\" size=\"icon\" />}\n        >\n          <Icon as={CaretDownIcon} />\n        </DropdownMenuTrigger>\n        <DropdownMenuContent align=\"end\" className=\"w-56\">\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <Icon as={WarningCircleIcon} className=\"size-4\" />\n              <Text>Mute conversation</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={CopyIcon} className=\"size-4\" />\n              <Text>Copy link</Text>\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <Icon as={ShareIcon} className=\"size-4\" />\n              <Text>Share conversation</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuGroup>\n            <DropdownMenuItem variant=\"destructive\">\n              <Icon as={UserCircleMinusIcon} className=\"size-4\" />\n              <Text>Unfollow</Text>\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupWithDropdownMenuExample: View {\n  var body: some View {\n    ButtonGroup {\n      Button(\"Follow\") {}.buttonStyle(.variant(.outline))\n      DropdownMenu(align: .end) {\n        DropdownMenuGroup {\n          DropdownMenuItem(\"Mute conversation\", icon: Ph.warningCircle.regular) {}\n          DropdownMenuItem(\"Copy link\", icon: Ph.copy.regular) {}\n          DropdownMenuItem(\"Share conversation\", icon: Ph.share.regular) {}\n        }\n        DropdownMenuSeparator()\n        DropdownMenuGroup {\n          DropdownMenuItem(\"Unfollow\", icon: Ph.userCircleMinus.regular, variant: .destructive) {}\n        }\n      } label: {\n        ButtonGroupIcon(icon: Ph.caretDown.regular, size: .icon)\n      }\n      .buttonStyle(.variant(.outline, size: .icon))\n      .accessibilityLabel(Text(\"More options\"))\n    }\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretDown\nimport com.adamglin.phosphoricons.regular.Copy\nimport com.adamglin.phosphoricons.regular.Share\nimport com.adamglin.phosphoricons.regular.UserCircleMinus\nimport com.adamglin.phosphoricons.regular.WarningCircle\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.DropdownMenu\nimport com.esuiss.ui.components.DropdownMenuGroup\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupWithDropdownMenu() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    ButtonGroup {\n        Button(\"Follow\", onClick = {}, variant = ButtonVariant.Outline)\n        DropdownMenu(\n            expanded = open,\n            onExpandedChange = { open = it },\n            trigger = { ButtonGroupIconButton(\"More options\", PhosphorIcons.Regular.CaretDown, ButtonVariant.Outline) { open = true } },\n            align = PopupAlign.End,\n        ) {\n            DropdownMenuGroup {\n                DropdownMenuItem(\"Mute conversation\", onClick = {}, icon = PhosphorIcons.Regular.WarningCircle)\n                DropdownMenuItem(\"Copy link\", onClick = {}, icon = PhosphorIcons.Regular.Copy)\n                DropdownMenuItem(\"Share conversation\", onClick = {}, icon = PhosphorIcons.Regular.Share)\n            }\n            DropdownMenuSeparator()\n            DropdownMenuGroup {\n                DropdownMenuItem(\n                    \"Unfollow\",\n                    onClick = {},\n                    icon = PhosphorIcons.Regular.UserCircleMinus,\n                    variant = MenuItemVariant.Destructive,\n                )\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-dropdown-menu" />
 
 ### With select
 
 A select joined to an input for a currency amount.
 
-<NativeExample id="components-button-group--with-select" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ArrowRightIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst currencies: Option[] = [\n  { value: \"usd\", label: \"$\" },\n  { value: \"eur\", label: \"€\" },\n  { value: \"gbp\", label: \"£\" },\n  { value: \"try\", label: \"₺\" },\n]\n\nfunction CurrencyExample() {\n  const [value, setValue] = React.useState<string | null>(\"usd\")\n  return (\n    <ButtonGroup className=\"self-stretch\">\n      <ButtonGroup className=\"flex-1\">\n        <Select items={currencies} value={value} onValueChange={setValue}>\n          <SelectTrigger accessibilityLabel=\"Currency\">\n            <SelectValue />\n          </SelectTrigger>\n          <SelectContent>\n            <SelectGroup>\n              {currencies.map((currency) => (\n                <SelectItem\n                  key={currency.value}\n                  value={currency.value}\n                  label={currency.label}\n                />\n              ))}\n            </SelectGroup>\n          </SelectContent>\n        </Select>\n        <Input\n          accessibilityLabel=\"Amount\"\n          placeholder=\"10.00\"\n          inputMode=\"decimal\"\n          className=\"w-auto flex-1\"\n        />\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon-lg\" accessibilityLabel=\"Send\">\n          <Icon as={ArrowRightIcon} />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  )\n}\n\nexport function ButtonGroupWithSelectExample() {\n  return (\n    <CurrencyExample />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}\n\nstruct ButtonGroupCurrencyDemo: View {\n  @State private var currency: String? = \"usd\"\n  @State private var amount = \"\"\n\n  var body: some View {\n    ButtonGroup {\n      ButtonGroup {\n        SelectField(selection: $currency) {\n          SelectGroup {\n            SelectItem(verbatim: \"$\", value: \"usd\")\n            SelectItem(verbatim: \"€\", value: \"eur\")\n            SelectItem(verbatim: \"£\", value: \"gbp\")\n            SelectItem(verbatim: \"₺\", value: \"try\")\n          }\n        }\n        .frame(width: 76)\n        .accessibilityLabel(Text(\"Currency\"))\n        TextField(\"Amount\", text: $amount, prompt: Text(verbatim: \"10.00\"))\n          .textFieldStyle(.input)\n          .keyboardType(.decimalPad)\n      }\n      ButtonGroup {\n        ButtonGroupIconButton(icon: Ph.arrowRight.regular, label: \"Send\", variant: .outline, size: .iconLg)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.BoxWithConstraints\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardType\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ArrowRight\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectOption\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\nval buttonGroupCurrencies = listOf(\n    SelectOption(\"usd\", \"$\"),\n    SelectOption(\"eur\", \"€\"),\n    SelectOption(\"gbp\", \"£\"),\n    SelectOption(\"try\", \"₺\"),\n)\n\n@Composable\nfun ButtonGroupWithSelect() {\n    var currency by rememberSaveable { mutableStateOf<String?>(\"usd\") }\n    var amount by rememberSaveable { mutableStateOf(\"\") }\n    BoxWithConstraints(Modifier.fillMaxWidth()) {\n        val rest = maxWidth - 8.dp - ButtonSize.IconLg.height\n        ButtonGroup(Modifier.fillMaxWidth()) {\n            ButtonGroup(Modifier.width(rest)) {\n                Select(\n                    value = currency,\n                    onValueChange = { currency = it },\n                    options = buttonGroupCurrencies,\n                    modifier = Modifier.semantics { contentDescription = \"Currency\" },\n                )\n                Input(\n                    amount,\n                    { amount = it },\n                    Modifier.semantics { contentDescription = \"Amount\" },\n                    placeholder = \"10.00\",\n                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),\n                )\n            }\n            ButtonGroup {\n                ButtonGroupIconButton(\"Send\", PhosphorIcons.Regular.ArrowRight, ButtonVariant.Outline, ButtonSize.IconLg)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-select" />
 
 ### With popover
 
 A button joined to a popover trigger.
 
-<NativeExample id="components-button-group--with-popover" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CaretDownIcon, SparkleIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function ButtonGroupWithPopoverExample() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"outline\">\n        <Icon as={SparkleIcon} />\n        <Text>Assistant</Text>\n      </Button>\n      <Popover>\n        <PopoverTrigger\n          accessibilityLabel=\"Open popover\"\n          render={<Button variant=\"outline\" size=\"icon\" />}\n        >\n          <Icon as={CaretDownIcon} />\n        </PopoverTrigger>\n        <PopoverContent align=\"end\" className=\"w-80\">\n          <PopoverHeader>\n            <PopoverTitle>Start a new task</PopoverTitle>\n            <PopoverDescription>\n              Describe your task in natural language.\n            </PopoverDescription>\n          </PopoverHeader>\n          <Textarea\n            accessibilityLabel=\"Task description\"\n            placeholder=\"I need to...\"\n          />\n        </PopoverContent>\n      </Popover>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupPopoverDemo: View {\n  @State private var open = false\n  @State private var task = \"\"\n\n  var body: some View {\n    ButtonGroup {\n      Button {} label: {\n        Label { Text(\"Assistant\") } icon: { Ph.sparkle.regular }\n      }\n      .buttonStyle(.variant(.outline))\n      Button { open = true } label: {\n        ButtonGroupIcon(icon: Ph.caretDown.regular, size: .icon)\n      }\n      .buttonStyle(.variant(.outline, size: .icon))\n      .accessibilityLabel(Text(\"Open popover\"))\n      .popover(isPresented: $open) {\n        PopoverContent(width: 320) {\n          PopoverHeader {\n            PopoverTitle(\"Start a new task\")\n            PopoverDescription(\"Describe your task in natural language.\")\n          }\n          TextField(\"Task description\", text: $task, prompt: Text(\"I need to...\"), axis: .vertical)\n            .textFieldStyle(.textarea)\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretDown\nimport com.adamglin.phosphoricons.regular.Sparkle\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Popover\nimport com.esuiss.ui.components.PopoverDescription\nimport com.esuiss.ui.components.PopoverHeader\nimport com.esuiss.ui.components.PopoverTitle\nimport com.esuiss.ui.components.PopupAlign\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Textarea\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupWithPopover() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    var task by rememberSaveable { mutableStateOf(\"\") }\n    ButtonGroup {\n        Button(onClick = {}, variant = ButtonVariant.Outline) {\n            Icon(PhosphorIcons.Regular.Sparkle, contentDescription = null)\n            Text(\"Assistant\")\n        }\n        Popover(\n            open = open,\n            onOpenChange = { open = it },\n            trigger = { ButtonGroupIconButton(\"Open popover\", PhosphorIcons.Regular.CaretDown, ButtonVariant.Outline) { open = true } },\n            modifier = Modifier.width(320.dp),\n            align = PopupAlign.End,\n        ) {\n            PopoverHeader {\n                PopoverTitle(\"Start a new task\")\n                PopoverDescription(\"Describe your task in natural language.\")\n            }\n            Textarea(\n                task,\n                { task = it },\n                Modifier.semantics { contentDescription = \"Task description\" },\n                placeholder = \"I need to...\",\n            )\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--with-popover" />
 
 ### Pagination
 
 Page buttons with previous and next arrows.
 
-<NativeExample id="components-button-group--pagination" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CaretLeftIcon, CaretRightIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { ButtonGroup } from \"@/components/ui/button-group\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ButtonGroupPaginationExample() {\n  return (\n    <ButtonGroup accessibilityLabel=\"Pagination\">\n      <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Previous page\">\n        <Icon as={CaretLeftIcon} />\n      </Button>\n      <Button variant=\"outline\">\n        <Text>1</Text>\n      </Button>\n      <Button variant=\"outline\" accessibilityState={{ selected: true }}>\n        <Text>2</Text>\n      </Button>\n      <Button variant=\"outline\">\n        <Text>3</Text>\n      </Button>\n      <Button variant=\"outline\" size=\"icon\" accessibilityLabel=\"Next page\">\n        <Icon as={CaretRightIcon} />\n      </Button>\n    </ButtonGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ButtonGroupPaginationExample: View {\n  var body: some View {\n    ButtonGroup {\n      ButtonGroupIconButton(icon: Ph.caretLeft.regular, label: \"Previous page\", variant: .outline)\n      Button {} label: { Text(verbatim: \"1\") }.buttonStyle(.variant(.outline))\n      Button {} label: { Text(verbatim: \"2\") }\n        .buttonStyle(.variant(.outline))\n        .accessibilityAddTraits(.isSelected)\n      Button {} label: { Text(verbatim: \"3\") }.buttonStyle(.variant(.outline))\n      ButtonGroupIconButton(icon: Ph.caretRight.regular, label: \"Next page\", variant: .outline)\n    }\n    .accessibilityLabel(Text(\"Pagination\"))\n  }\n}\n\nstruct ButtonGroupIcon: View {\n  let icon: Image\n  let size: VariantButtonStyle.Size\n\n  var body: some View {\n    icon.frame(width: size.iconSize, height: size.iconSize)\n  }\n}\n\nstruct ButtonGroupIconButton: View {\n  let icon: Image\n  let label: LocalizedStringKey\n  let variant: VariantButtonStyle.Variant\n  var size: VariantButtonStyle.Size = .icon\n\n  var body: some View {\n    Button {} label: {\n      ButtonGroupIcon(icon: icon, size: size)\n    }\n    .buttonStyle(.variant(variant, size: size))\n    .accessibilityLabel(Text(label))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.selected\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretLeft\nimport com.adamglin.phosphoricons.regular.CaretRight\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonGroup\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun ButtonGroupIconButton(\n    label: String,\n    icon: androidx.compose.ui.graphics.vector.ImageVector,\n    variant: ButtonVariant = ButtonVariant.Default,\n    size: ButtonSize = ButtonSize.Icon,\n    onClick: () -> Unit = {},\n) {\n    Button(onClick = onClick, variant = variant, size = size) {\n        Icon(icon, contentDescription = label)\n    }\n}\n\n@Composable\nfun ButtonGroupPagination() {\n    ButtonGroup(Modifier.semantics { contentDescription = \"Pagination\" }) {\n        ButtonGroupIconButton(\"Previous page\", PhosphorIcons.Regular.CaretLeft, ButtonVariant.Outline)\n        Button(\"1\", onClick = {}, variant = ButtonVariant.Outline)\n        Button(\"2\", onClick = {}, modifier = Modifier.semantics { selected = true }, variant = ButtonVariant.Outline)\n        Button(\"3\", onClick = {}, variant = ButtonVariant.Outline)\n        ButtonGroupIconButton(\"Next page\", PhosphorIcons.Regular.CaretRight, ButtonVariant.Outline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-button-group--pagination" />
 
 ## API Reference
 
@@ -607,7 +556,11 @@ Page buttons with previous and next arrows.
 
 Container that joins its children.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"`horizontal` or `vertical`. Defaults to `horizontal`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | `horizontal` or `vertical`. Defaults to `horizontal`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -617,7 +570,11 @@ Container that joins its children.
 
 Pill-shaped label or icon slot.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Element to render instead of the default `View`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Element to render instead of the default `View`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -627,7 +584,7 @@ Pill-shaped label or icon slot.
 
 Divider between joined buttons.
 
-<PropsTable extends={["React.ComponentProps<typeof Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof Separator>`.
 
 </ApiPart>
 

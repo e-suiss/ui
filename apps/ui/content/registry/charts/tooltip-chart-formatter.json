@@ -1,6 +1,0 @@
-{
-  "description": "A bar chart of daily active energy whose tooltip shows a name, value and kcal unit through a custom formatter.",
-  "overview": "A week of active-energy bars whose tooltip row is rewritten by a formatter to show a name, value and kcal unit. Use a formatter like this when values need units, thousands separators or extra context.",
-  "usage": "Pass a `formatter` to `ChartTooltipContent`; it receives each row's value and name and returns the markup for that row. Change the label text, number format and unit inside it, and replace `chartData` and `chartConfig` with your series.",
-  "notes": "Dates are parsed at noon so the weekday labels don't shift a day in time zones behind UTC; keep that if you use date strings as categories."
-}

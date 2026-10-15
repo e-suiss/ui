@@ -3,16 +3,11 @@ title: Radar Chart Interactive
 description: "A phone model comparison where toggle chips show up to three models, which grow in and out of the radar."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="radar-chart-interactive">
-
-<SourceFile path="components/charts/radar-chart-interactive.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="radar-chart-interactive" />
 
 A phone comparison where chips select up to three models; their shapes grow into or shrink out of the radar, and side cards show each model's overall score or the score on the hovered axis. Use it as a template for comparing a handful of items across shared criteria.
 
@@ -20,27 +15,35 @@ A phone comparison where chips select up to three models; their shapes grow into
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-interactive"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts radar-chart-interactive
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle](/docs/components/toggle).
 
 3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
 
-<SourceFile path="components/charts/radar-chart-interactive.tsx" />
+<ComponentSource path="components/charts/radar-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadarChartInteractive } from \"@/components/charts/radar-chart-interactive\""} />
+```tsx
+import { RadarChartInteractive } from "@/components/charts/radar-chart-interactive"
+```
 
-<Code lang="tsx" code={"<RadarChartInteractive />"} />
+```tsx
+<RadarChartInteractive />
+```
 
 Replace `AXES` with your criteria and `SCORES` with one array per item in the same order, then add each item's label and color to `chartConfig`. Change `MAX_SELECTED` to allow more or fewer items at once and the initial `selected` state to pick which ones start visible.
 
@@ -52,13 +55,13 @@ The scale is fixed from 0 to 100, so rescale your scores or change the radius ax
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-radar--interactive" width={880} height={1337} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-radar--interactive" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/radar-chart-interactive.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/radar-chart-interactive.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/RadarChartInteractive.swift" fold={false} />
+<ComponentSource path="swift/Charts/RadarChartInteractive.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/RadarChartInteractive.kt" fold={false} />
+<ComponentSource path="kotlin/charts/RadarChartInteractive.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A `Card` with a row of `Toggle` chips, a `RadarChart` and a summary card per mod
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-interactive"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-interactive
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-interactive --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-interactive --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-interactive --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-interactive --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
 
 3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
 
-<SourceFile path="uniwind/components/charts/radar-chart-interactive.tsx" />
+<ComponentSource path="uniwind/components/charts/radar-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
 
 3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
 
-<SourceFile path="nativewind/components/charts/radar-chart-interactive.tsx" />
+<ComponentSource path="nativewind/components/charts/radar-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -130,7 +143,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-interactive.tsx`:
 
-<SourceFile path="stylesheet/components/charts/radar-chart-interactive.tsx" />
+<ComponentSource path="stylesheet/components/charts/radar-chart-interactive.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -146,33 +159,35 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/RadarChartInteractive.swift" />
+<ComponentSource path="swift/Charts/RadarChartInteractive.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -182,29 +197,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/RadarChartInteractive.kt" />
+<ComponentSource path="kotlin/charts/RadarChartInteractive.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -212,9 +231,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadarChartInteractive } from \"@/components/charts/radar-chart-interactive\""} />
+```tsx
+import { RadarChartInteractive } from "@/components/charts/radar-chart-interactive"
+```
 
-<Code lang="tsx" code={"<RadarChartInteractive />"} />
+```tsx
+<RadarChartInteractive />
+```
 
 Replace `AXES` and `SCORES` with your attributes and items, and add a matching entry to `chartConfig` and `SWATCH` for each. Change `MAX_SELECTED` to allow more series. The component takes no props.
 

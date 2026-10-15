@@ -1,6 +1,0 @@
-{
-  "description": "Horizontal bars with category names on the left and a distinct color for each category.",
-  "overview": "Horizontal bars with category names down the left and a different color per category. Choose it over vertical bars when labels are long or when you are ranking items.",
-  "usage": "Give each record a category key, a value and a `fill` that points at its color variable, then add a matching entry with label and color to `chartConfig`. The left axis reads its text from those config labels. Change `barSize` to make the bars thicker or thinner.",
-  "notes": "The label column sizes itself to the longest name. Keyboard users can focus the chart and step through the bars with the arrow keys."
-}

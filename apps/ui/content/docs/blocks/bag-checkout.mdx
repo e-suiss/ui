@@ -3,16 +3,11 @@ title: Bag Checkout
 description: "A three-step checkout with delivery, payment, and review steps beside an order summary."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="bag-checkout">
-
-<SourceFile path="components/blocks/bag-checkout.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="bag-checkout" />
 
 A checkout that walks the shopper through delivery, payment and review one step at a time, with the order summary and running total alongside. Finished steps collapse to a short summary with an Edit button, and placing the order swaps the form for a confirmation. The summary sits beside the steps on desktop and stacks into a single column on mobile. Use it as the base for any multi-step purchase or booking flow.
 
@@ -20,27 +15,35 @@ A checkout that walks the shopper through delivery, payment and review one step 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bag-checkout"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks bag-checkout
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group).
 
 3. Copy the source into `components/blocks/bag-checkout.tsx`:
 
-<SourceFile path="components/blocks/bag-checkout.tsx" />
+<ComponentSource path="components/blocks/bag-checkout.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BagCheckout } from \"@/components/blocks/bag-checkout\""} />
+```tsx
+import { BagCheckout } from "@/components/blocks/bag-checkout"
+```
 
-<Code lang="tsx" code={"<BagCheckout />"} />
+```tsx
+<BagCheckout />
+```
 
 Swap the `items` array for your cart lines, each with a name, variant, price and image. The delivery and payment options and the express surcharge are hard-coded in the component, so drive them from your shipping and payment providers. Wire Place Order to your order API; today it only shows a confirmation with the fixed order number W1049.
 
@@ -52,13 +55,13 @@ Collapsed steps are `inert`, so keyboard users only reach the open step, and the
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-bag-checkout--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-bag-checkout--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/bag-checkout.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/bag-checkout.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/BagCheckout.swift" fold={false} />
+<ComponentSource path="swift/Blocks/BagCheckout.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/BagCheckout.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/BagCheckout.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A checkout built from `Screen`, `Header` with a collapsing large title, `RadioGr
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bag-checkout"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bag-checkout
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bag-checkout --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bag-checkout --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bag-checkout --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bag-checkout --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/bag-checkout.tsx`:
 
-<SourceFile path="uniwind/components/blocks/bag-checkout.tsx" />
+<ComponentSource path="uniwind/components/blocks/bag-checkout.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/bag-checkout.tsx`:
 
-<SourceFile path="nativewind/components/blocks/bag-checkout.tsx" />
+<ComponentSource path="nativewind/components/blocks/bag-checkout.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/bag-checkout.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/bag-checkout.tsx" />
+<ComponentSource path="stylesheet/components/blocks/bag-checkout.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,49 +165,51 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/BagCheckout.swift" />
+<ComponentSource path="swift/Blocks/BagCheckout.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Header.swift" />
+<ComponentSource path="swift/Components/Header.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Label.swift" />
+<ComponentSource path="swift/Components/Label.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/RadioGroup.swift" />
+<ComponentSource path="swift/Components/RadioGroup.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -202,45 +219,50 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/BagCheckout.kt" />
+<ComponentSource path="kotlin/blocks/BagCheckout.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/RadioGroup.kt" />
+<ComponentSource path="kotlin/components/RadioGroup.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -248,9 +270,13 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 ## Usage
 
-<Code lang="tsx" code={"import { BagCheckout } from \"@/components/blocks/bag-checkout\""} />
+```tsx
+import { BagCheckout } from "@/components/blocks/bag-checkout"
+```
 
-<Code lang="tsx" code={"<BagCheckout />"} />
+```tsx
+<BagCheckout />
+```
 
 Replace `ITEMS`, `SHIPPING` and `PAYMENT` with your cart lines and options. Pass `onPlaceOrder` to receive the chosen shipping, payment and total, and `onStartOver` to react when the confirmation is dismissed.
 

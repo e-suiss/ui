@@ -1,6 +1,0 @@
-{
-  "description": "A search page showing live suggestions, a no-results state, and suggested queries.",
-  "overview": "A search page that lists matching suggestions as you type, and shows a no-results message with suggested queries when nothing matches. An empty field shows an idle prompt instead. Use it for site search, command search or any search screen that needs a helpful empty state.",
-  "usage": "Replace the `suggestions` array and the `matches` computation with results from your search API; the demo only matches queries that start with book. The query starts as book neo so the no-results state shows on load, so start it empty in your app.",
-  "notes": "The clear button returns focus to the field, and the empty-state message is announced when it changes."
-}

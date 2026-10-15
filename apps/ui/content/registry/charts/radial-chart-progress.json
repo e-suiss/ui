@@ -1,6 +1,0 @@
-{
-  "description": "A three-quarter arc tracking progress toward a goal, with the count shown in the center.",
-  "overview": "A three-quarter arc tracking progress toward a goal, with the count shown in the center. Use it for goals with a clear finish line, like a reading challenge or a savings target.",
-  "usage": "Set the progress as a percentage in `chartData`, or change the `domain` on `PolarAngleAxis` to your goal and pass the raw count. Update the center text and caption, and set the color in `chartConfig`.",
-  "notes": "The center text is hard-coded and not derived from the value, so update both together. There is no tooltip."
-}

@@ -3,16 +3,11 @@ title: Radar Chart Lines Only
 description: "Two radar outlines with no fill, comparing this month and last month by stroke alone."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="radar-chart-lines-only">
-
-<SourceFile path="components/charts/radar-chart-lines-only.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="radar-chart-lines-only" />
 
 Two radar outlines without fill, comparing this month with last month by stroke alone. Use it when filled shapes would hide each other, especially with more than two series.
 
@@ -20,27 +15,35 @@ Two radar outlines without fill, comparing this month with last month by stroke 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-lines-only"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts radar-chart-lines-only
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/radar-chart-lines-only.tsx`:
 
-<SourceFile path="components/charts/radar-chart-lines-only.tsx" />
+<ComponentSource path="components/charts/radar-chart-lines-only.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadarChartLinesOnly } from \"@/components/charts/radar-chart-lines-only\""} />
+```tsx
+import { RadarChartLinesOnly } from "@/components/charts/radar-chart-lines-only"
+```
 
-<Code lang="tsx" code={"<RadarChartLinesOnly />"} />
+```tsx
+<RadarChartLinesOnly />
+```
 
 Replace `chartData` and rename the series keys in the data, the `Radar` elements and `chartConfig`. Add more `Radar` elements for extra series; give each a distinct color in the config.
 
@@ -52,13 +55,13 @@ Without fill or legend, color is the only cue for which line is which, so add a 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-radar--lines-only" width={880} height={719} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-radar--lines-only" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/radar-chart-lines-only.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/radar-chart-lines-only.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/RadarChartLinesOnly.swift" fold={false} />
+<ComponentSource path="swift/Charts/RadarChartLinesOnly.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/RadarChartLinesOnly.kt" fold={false} />
+<ComponentSource path="kotlin/charts/RadarChartLinesOnly.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A `RadarChart` with two `Radar` series drawn with `fillOpacity={0}`, so only the
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-lines-only"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-lines-only
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-lines-only --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-lines-only --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-lines-only --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-lines-only --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-lines-only.tsx`:
 
-<SourceFile path="uniwind/components/charts/radar-chart-lines-only.tsx" />
+<ComponentSource path="uniwind/components/charts/radar-chart-lines-only.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-lines-only.tsx`:
 
-<SourceFile path="nativewind/components/charts/radar-chart-lines-only.tsx" />
+<ComponentSource path="nativewind/components/charts/radar-chart-lines-only.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-lines-only.tsx`:
 
-<SourceFile path="stylesheet/components/charts/radar-chart-lines-only.tsx" />
+<ComponentSource path="stylesheet/components/charts/radar-chart-lines-only.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/RadarChartLinesOnly.swift" />
+<ComponentSource path="swift/Charts/RadarChartLinesOnly.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/RadarChartLinesOnly.kt" />
+<ComponentSource path="kotlin/charts/RadarChartLinesOnly.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadarChartLinesOnly } from \"@/components/charts/radar-chart-lines-only\""} />
+```tsx
+import { RadarChartLinesOnly } from "@/components/charts/radar-chart-lines-only"
+```
 
-<Code lang="tsx" code={"<RadarChartLinesOnly />"} />
+```tsx
+<RadarChartLinesOnly />
+```
 
 Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
 

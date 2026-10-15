@@ -3,16 +3,11 @@ title: Aspect Ratio
 description: "A container that keeps its content at a fixed width-to-height ratio."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="aspect-ratio" story="Default">
-
-<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={16 / 9} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"size-full object-cover\"\n        />\n      </AspectRatio>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="aspect-ratio-demo" />
 
 `AspectRatio` is a single `div` that sets the CSS `aspect-ratio` property from the `ratio` prop. Its width follows the parent, and its height is derived from the ratio. It is positioned `relative`, so children can be absolutely positioned inside it.
 
@@ -22,25 +17,41 @@ Use it to reserve space for images, video or embeds so the layout does not shift
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add aspect-ratio"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add aspect-ratio
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Copy the source into `components/ui/aspect-ratio.tsx`:
 
-<SourceFile path="components/ui/aspect-ratio.tsx" />
+<ComponentSource path="components/ui/aspect-ratio.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\""} />
+```tsx
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+```
 
-<Code lang="tsx" code={"<div className=\"w-96\">\n  <AspectRatio ratio={16 / 9} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n    <img\n      src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n      alt=\"Mountain lake at sunrise\"\n      className=\"size-full object-cover\"\n    />\n  </AspectRatio>\n</div>"} />
+```tsx
+<div className="w-96">
+  <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-2xl bg-surface-secondary">
+    <img
+      src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
+      alt="Mountain lake at sunrise"
+      className="size-full object-cover"
+    />
+  </AspectRatio>
+</div>
+```
 
 Pass `ratio` as a number, typically written as a division such as `16 / 9`, `4 / 3` or `1`. Give media inside it `className="size-full object-cover"` to fill the frame. Add `overflow-hidden` and a radius class to clip the content to rounded corners.
 
@@ -50,31 +61,19 @@ Pass `ratio` as a number, typically written as a division such as `16 / 9`, `4 /
 
 A `1:1` frame using `ratio={1}`.
 
-<Example kind="ui" name="aspect-ratio" story="Square">
-
-<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioSquareExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={1} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"size-full object-cover\"\n        />\n      </AspectRatio>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="aspect-ratio-square" />
 
 ### Portrait
 
 A taller-than-wide frame using `ratio={3 / 4}`.
 
-<Example kind="ui" name="aspect-ratio" story="Portrait">
-
-<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioPortraitExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={3 / 4} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"size-full object-cover\"\n        />\n      </AspectRatio>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="aspect-ratio-portrait" />
 
 ### Placeholder
 
 A `4:3` frame holding centered placeholder text instead of an image.
 
-<Example kind="ui" name="aspect-ratio" story="Placeholder">
-
-<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioPlaceholderExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={4 / 3} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <div className=\"text-label-secondary flex size-full items-center justify-center text-sm\">\n          4:3\n        </div>\n      </AspectRatio>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="aspect-ratio-placeholder" />
 
 ## API Reference
 
@@ -84,7 +83,11 @@ A `4:3` frame holding centered placeholder text instead of an image.
 
 The ratio-locked container.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"ratio","type":"number","required":true,"description":"Width divided by height, for example `16 / 9`. Required."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `number` | Required | Width divided by height, for example `16 / 9`. Required. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -97,15 +100,7 @@ The ratio-locked container.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-aspect-ratio--default" width={880} height={539} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nconst imageUri =\n\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n\nexport function AspectRatioExample() {\n  return (\n    <View className=\"w-full overflow-hidden rounded-lg\">\n      <AspectRatio ratio={16 / 9}>\n        <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n      </AspectRatio>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AspectRatioExample: View {\n  var body: some View {\n    AspectRatio(ratio: 16 / 9) {\n      AspectRatioPhoto()\n    }\n    .clipShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct AspectRatioPhoto: View {\n  var body: some View {\n    AsyncImage(\n      url: URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\")\n    ) { phase in\n      if let image = phase.image {\n        image.resizable().scaledToFill()\n      } else {\n        Color.surfaceSecondary\n      }\n    }\n    .frame(maxWidth: .infinity, maxHeight: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.Image\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.remember\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.painter.BrushPainter\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.unit.Dp\nimport com.adamglin.phosphoricons.regular.Image\nimport com.esuiss.ui.components.AspectRatio\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun AspectRatioExample() {\n    AspectRatioPhoto(null, 16f / 9f)\n}\n\n@Composable\nfun AspectRatioPhoto(width: Dp?, ratio: Float) {\n    val colors = EsuissTheme.colors\n    val photo = remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }\n    Box(\n        (if (width != null) Modifier.width(width) else Modifier.fillMaxWidth())\n            .clip(RoundedCornerShape(Radius.lg)),\n    ) {\n        AspectRatio(ratio) {\n            Image(photo, contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-aspect-ratio--default" />
 
 `AspectRatio` is a `View` that sets the `aspectRatio` style from its `ratio` prop. Its height follows from the width it is given, so the content keeps its shape at any screen size.
 
@@ -115,19 +110,25 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add aspect-ratio"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add aspect-ratio
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add aspect-ratio --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add aspect-ratio --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add aspect-ratio --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add aspect-ratio --platform kotlin
+```
 
 </Only>
 
@@ -143,7 +144,7 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 2. Copy the source into `components/ui/aspect-ratio.tsx`:
 
-<SourceFile path="uniwind/components/ui/aspect-ratio.tsx" />
+<ComponentSource path="uniwind/components/ui/aspect-ratio.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -155,7 +156,7 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 2. Copy the source into `components/ui/aspect-ratio.tsx`:
 
-<SourceFile path="nativewind/components/ui/aspect-ratio.tsx" />
+<ComponentSource path="nativewind/components/ui/aspect-ratio.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -167,7 +168,7 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 2. Copy the source into `components/ui/aspect-ratio.tsx`:
 
-<SourceFile path="stylesheet/components/ui/aspect-ratio.tsx" />
+<ComponentSource path="stylesheet/components/ui/aspect-ratio.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -183,13 +184,13 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source:
 
-<SourceFile path="swift/Components/AspectRatio.swift" />
+<ComponentSource path="swift/Components/AspectRatio.swift" />
 
 4. Add the files to your app target.
 
@@ -199,17 +200,21 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source:
 
-<SourceFile path="kotlin/components/AspectRatio.kt" />
+<ComponentSource path="kotlin/components/AspectRatio.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -217,7 +222,13 @@ Use it for images, video thumbnails and placeholders that must not stretch.
 
 ## Usage
 
-<Code lang="tsx" code={"<View className=\"w-full overflow-hidden rounded-lg\">\n  <AspectRatio ratio={16 / 9}>\n    <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n  </AspectRatio>\n</View>"} />
+```tsx
+<View className="w-full overflow-hidden rounded-lg">
+  <AspectRatio ratio={16 / 9}>
+    <Image source={{ uri: imageUri }} className="h-full w-full" />
+  </AspectRatio>
+</View>
+```
 
 Pass `ratio` as width divided by height, such as `16 / 9`. It defaults to `1`. Size the content inside with `h-full w-full`, and put rounding or clipping on a parent view.
 
@@ -227,43 +238,19 @@ Pass `ratio` as width divided by height, such as `16 / 9`. It defaults to `1`. S
 
 A square image with `ratio={1}`.
 
-<NativeExample id="components-aspect-ratio--square" width={880} height={463} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nconst imageUri =\n\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n\nexport function AspectRatioSquareExample() {\n  return (\n    <View className=\"w-48 overflow-hidden rounded-lg\">\n      <AspectRatio ratio={1}>\n        <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n      </AspectRatio>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AspectRatioSquareExample: View {\n  var body: some View {\n    AspectRatio(ratio: 1) {\n      AspectRatioPhoto()\n    }\n    .clipShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))\n    .frame(width: 192)\n  }\n}\n\nstruct AspectRatioPhoto: View {\n  var body: some View {\n    AsyncImage(\n      url: URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\")\n    ) { phase in\n      if let image = phase.image {\n        image.resizable().scaledToFill()\n      } else {\n        Color.surfaceSecondary\n      }\n    }\n    .frame(maxWidth: .infinity, maxHeight: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.Image\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.remember\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.painter.BrushPainter\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.phosphoricons.regular.Image\nimport com.esuiss.ui.components.AspectRatio\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun AspectRatioSquareExample() {\n    AspectRatioPhoto(192.dp, 1f)\n}\n\n@Composable\nfun AspectRatioPhoto(width: Dp?, ratio: Float) {\n    val colors = EsuissTheme.colors\n    val photo = remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }\n    Box(\n        (if (width != null) Modifier.width(width) else Modifier.fillMaxWidth())\n            .clip(RoundedCornerShape(Radius.lg)),\n    ) {\n        AspectRatio(ratio) {\n            Image(photo, contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-aspect-ratio--square" />
 
 ### Portrait
 
 A tall image with `ratio={9 / 16}`.
 
-<NativeExample id="components-aspect-ratio--portrait" width={880} height={648} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Image, View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nconst imageUri =\n\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n\nexport function AspectRatioPortraitExample() {\n  return (\n    <View className=\"w-40 overflow-hidden rounded-lg\">\n      <AspectRatio ratio={9 / 16}>\n        <Image source={{ uri: imageUri }} className=\"h-full w-full\" />\n      </AspectRatio>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AspectRatioPortraitExample: View {\n  var body: some View {\n    AspectRatio(ratio: 9 / 16) {\n      AspectRatioPhoto()\n    }\n    .clipShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))\n    .frame(width: 160)\n  }\n}\n\nstruct AspectRatioPhoto: View {\n  var body: some View {\n    AsyncImage(\n      url: URL(string: \"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\")\n    ) { phase in\n      if let image = phase.image {\n        image.resizable().scaledToFill()\n      } else {\n        Color.surfaceSecondary\n      }\n    }\n    .frame(maxWidth: .infinity, maxHeight: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.Image\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.remember\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.painter.BrushPainter\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.phosphoricons.regular.Image\nimport com.esuiss.ui.components.AspectRatio\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun AspectRatioPortraitExample() {\n    AspectRatioPhoto(160.dp, 9f / 16f)\n}\n\n@Composable\nfun AspectRatioPhoto(width: Dp?, ratio: Float) {\n    val colors = EsuissTheme.colors\n    val photo = remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }\n    Box(\n        (if (width != null) Modifier.width(width) else Modifier.fillMaxWidth())\n            .clip(RoundedCornerShape(Radius.lg)),\n    ) {\n        AspectRatio(ratio) {\n            Image(photo, contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-aspect-ratio--portrait" />
 
 ### Placeholder
 
 A placeholder surface with an icon instead of an image.
 
-<NativeExample id="components-aspect-ratio--placeholder" width={880} height={539} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ImageIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { AspectRatio } from \"@/components/ui/aspect-ratio\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AspectRatioPlaceholderExample() {\n  return (\n    <View className=\"w-full\">\n      <AspectRatio ratio={16 / 9}>\n        <View className=\"bg-surface-secondary h-full w-full items-center justify-center gap-2 rounded-lg\">\n          <Icon as={ImageIcon} className=\"text-label-secondary size-8\" />\n          <Text variant=\"muted\">16 / 9</Text>\n        </View>\n      </AspectRatio>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AspectRatioPlaceholderExample: View {\n  var body: some View {\n    AspectRatio(ratio: 16 / 9) {\n      VStack(spacing: 8) {\n        Ph.image.regular\n          .frame(width: 32, height: 32)\n          .foregroundStyle(Color.labelSecondary)\n        Text(\"16 / 9\")\n          .textVariant(.muted)\n      }\n      .frame(maxWidth: .infinity, maxHeight: .infinity)\n      .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.Image\nimport androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Image\nimport com.esuiss.ui.components.AspectRatio\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun AspectRatioPlaceholder() {\n    val colors = EsuissTheme.colors\n    AspectRatio(16f / 9f) {\n        Column(\n            Modifier.fillMaxSize().background(colors.surfaceSecondary, RoundedCornerShape(Radius.lg)),\n            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),\n            horizontalAlignment = Alignment.CenterHorizontally,\n        ) {\n            Icon(PhosphorIcons.Regular.Image, contentDescription = null, size = 32.dp, tint = colors.labelSecondary)\n            Text(\"16 / 9\", variant = TextVariant.Muted)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-aspect-ratio--placeholder" />
 
 ## Accessibility
 

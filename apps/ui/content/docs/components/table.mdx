@@ -3,16 +3,11 @@ title: Table
 description: "Styled native table elements for displaying rows of structured data."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="table" story="Default">
-
-<Code lang="tsx" code={"import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst invoices = [\n  { id: \"INV-001\", status: \"Paid\", method: \"Credit card\", amount: 250 },\n  { id: \"INV-002\", status: \"Pending\", method: \"PayPal\", amount: 150 },\n  { id: \"INV-003\", status: \"Unpaid\", method: \"Bank transfer\", amount: 350 },\n  { id: \"INV-004\", status: \"Paid\", method: \"Credit card\", amount: 450 },\n  { id: \"INV-005\", status: \"Paid\", method: \"PayPal\", amount: 550 },\n]\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst total = invoices.reduce((sum, invoice) => sum + invoice.amount, 0)\n\nexport function TableExample() {\n  return (\n    <div className=\"w-[36rem]\">\n      <Table>\n        <TableCaption>A list of your recent invoices.</TableCaption>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Invoice</TableHead>\n            <TableHead>Status</TableHead>\n            <TableHead>Method</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {invoices.map((invoice) => (\n            <TableRow key={invoice.id}>\n              <TableCell className=\"font-medium\">{invoice.id}</TableCell>\n              <TableCell>{invoice.status}</TableCell>\n              <TableCell>{invoice.method}</TableCell>\n              <TableCell className=\"text-end\">\n                {currency.format(invoice.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n        <TableFooter>\n          <TableRow>\n            <TableCell colSpan={3}>Total</TableCell>\n            <TableCell className=\"text-end\">{currency.format(total)}</TableCell>\n          </TableRow>\n        </TableFooter>\n      </Table>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="table-demo" />
 
 `Table` renders a native `table` inside a container that scrolls horizontally when the table is too wide. Build it from `TableHeader`, `TableBody` and `TableFooter`, each holding `TableRow` elements with `TableHead` or `TableCell` cells. `TableCaption` adds a caption below the table.
 
@@ -22,25 +17,63 @@ The parts add spacing, hairline row dividers, hover and selection backgrounds, a
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add table"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add table
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Copy the source into `components/ui/table.tsx`:
 
-<SourceFile path="components/ui/table.tsx" />
+<ComponentSource path="components/ui/table.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from \"@/components/ui/table\""} />
+```tsx
+import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from "@/components/ui/table"
+```
 
-<Code lang="tsx" code={"<div className=\"w-[36rem]\">\n  <Table>\n    <TableCaption>A list of your recent invoices.</TableCaption>\n    <TableHeader>\n      <TableRow>\n        <TableHead>Invoice</TableHead>\n        <TableHead>Status</TableHead>\n        <TableHead>Method</TableHead>\n        <TableHead className=\"text-end\">Amount</TableHead>\n      </TableRow>\n    </TableHeader>\n    <TableBody>\n      {invoices.map((invoice) => (\n        <TableRow key={invoice.id}>\n          <TableCell className=\"font-medium\">{invoice.id}</TableCell>\n          <TableCell>{invoice.status}</TableCell>\n          <TableCell>{invoice.method}</TableCell>\n          <TableCell className=\"text-end\">\n            {currency.format(invoice.amount)}\n          </TableCell>\n        </TableRow>\n      ))}\n    </TableBody>\n    <TableFooter>\n      <TableRow>\n        <TableCell colSpan={3}>Total</TableCell>\n        <TableCell className=\"text-end\">{currency.format(total)}</TableCell>\n      </TableRow>\n    </TableFooter>\n  </Table>\n</div>"} />
+```tsx
+<div className="w-[36rem]">
+  <Table>
+    <TableCaption>A list of your recent invoices.</TableCaption>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Invoice</TableHead>
+        <TableHead>Status</TableHead>
+        <TableHead>Method</TableHead>
+        <TableHead className="text-end">Amount</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {invoices.map((invoice) => (
+        <TableRow key={invoice.id}>
+          <TableCell className="font-medium">{invoice.id}</TableCell>
+          <TableCell>{invoice.status}</TableCell>
+          <TableCell>{invoice.method}</TableCell>
+          <TableCell className="text-end">
+            {currency.format(invoice.amount)}
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+    <TableFooter>
+      <TableRow>
+        <TableCell colSpan={3}>Total</TableCell>
+        <TableCell className="text-end">{currency.format(total)}</TableCell>
+      </TableRow>
+    </TableFooter>
+  </Table>
+</div>
+```
 
 Every part passes its props to the native element, so use standard attributes such as `colSpan`. Align numeric columns with `text-end` on both the `TableHead` and its cells. To highlight a row, set `data-selected` on `TableRow`.
 
@@ -50,15 +83,25 @@ Every part passes its props to the native element, so use standard attributes su
 
 Highlights one row with the `data-selected` attribute.
 
-<Example kind="ui" name="table" story="SelectedRow">
-
-<Code lang="tsx" code={"import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst invoices = [\n  { id: \"INV-001\", status: \"Paid\", method: \"Credit card\", amount: 250 },\n  { id: \"INV-002\", status: \"Pending\", method: \"PayPal\", amount: 150 },\n  { id: \"INV-003\", status: \"Unpaid\", method: \"Bank transfer\", amount: 350 },\n  { id: \"INV-004\", status: \"Paid\", method: \"Credit card\", amount: 450 },\n  { id: \"INV-005\", status: \"Paid\", method: \"PayPal\", amount: 550 },\n]\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nexport function TableSelectedRowExample() {\n  return (\n    <div className=\"w-[36rem]\">\n      <Table>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Invoice</TableHead>\n            <TableHead>Status</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {invoices.slice(0, 3).map((invoice, index) => (\n            <TableRow key={invoice.id} data-selected={index === 1}>\n              <TableCell className=\"font-medium\">{invoice.id}</TableCell>\n              <TableCell>{invoice.status}</TableCell>\n              <TableCell className=\"text-end\">\n                {currency.format(invoice.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n      </Table>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="table-selected-row" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Table","href":"#table","children":[{"name":"TableCaption","href":"#tablecaption","children":[]},{"name":"TableHeader","href":"#tableheader","children":[{"name":"TableRow","href":"#tablerow","children":[{"name":"TableHead","href":"#tablehead","children":[]}]}]},{"name":"TableBody","href":"#tablebody","children":[{"name":"TableRow","href":"#tablerow","children":[{"name":"TableCell","href":"#tablecell","children":[]}]}]},{"name":"TableFooter","href":"#tablefooter","children":[{"name":"TableRow","href":"#tablerow","children":[{"name":"TableCell","href":"#tablecell","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [Table](#table)
+  - [TableCaption](#tablecaption)
+  - [TableHeader](#tableheader)
+    - [TableRow](#tablerow)
+      - [TableHead](#tablehead)
+  - [TableBody](#tablebody)
+    - [TableRow](#tablerow)
+      - [TableCell](#tablecell)
+  - [TableFooter](#tablefooter)
+    - [TableRow](#tablerow)
+      - [TableCell](#tablecell)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -66,7 +109,7 @@ Highlights one row with the `data-selected` attribute.
 
 The `table` element, wrapped in a horizontally scrolling container.
 
-<PropsTable extends={["React.ComponentProps<\"table\">"]} />
+Also accepts the props of `React.ComponentProps<"table">`.
 
 </ApiPart>
 
@@ -76,7 +119,7 @@ The `table` element, wrapped in a horizontally scrolling container.
 
 The `thead` section for column headings.
 
-<PropsTable extends={["React.ComponentProps<\"thead\">"]} />
+Also accepts the props of `React.ComponentProps<"thead">`.
 
 </ApiPart>
 
@@ -86,7 +129,7 @@ The `thead` section for column headings.
 
 The `tbody` section for data rows.
 
-<PropsTable extends={["React.ComponentProps<\"tbody\">"]} />
+Also accepts the props of `React.ComponentProps<"tbody">`.
 
 </ApiPart>
 
@@ -96,7 +139,7 @@ The `tbody` section for data rows.
 
 The `tfoot` section, shaded and bold, for totals or summaries.
 
-<PropsTable extends={["React.ComponentProps<\"tfoot\">"]} />
+Also accepts the props of `React.ComponentProps<"tfoot">`.
 
 </ApiPart>
 
@@ -106,7 +149,7 @@ The `tfoot` section, shaded and bold, for totals or summaries.
 
 A `tr` row with a bottom divider and hover background.
 
-<PropsTable extends={["React.ComponentProps<\"tr\">"]} />
+Also accepts the props of `React.ComponentProps<"tr">`.
 
 </ApiPart>
 
@@ -116,7 +159,7 @@ A `tr` row with a bottom divider and hover background.
 
 A `th` column heading in small, secondary text.
 
-<PropsTable extends={["React.ComponentProps<\"th\">"]} />
+Also accepts the props of `React.ComponentProps<"th">`.
 
 </ApiPart>
 
@@ -126,7 +169,7 @@ A `th` column heading in small, secondary text.
 
 A `td` data cell with tabular numbers.
 
-<PropsTable extends={["React.ComponentProps<\"td\">"]} />
+Also accepts the props of `React.ComponentProps<"td">`.
 
 </ApiPart>
 
@@ -136,7 +179,7 @@ A `td` data cell with tabular numbers.
 
 A `caption` shown below the table that also names it.
 
-<PropsTable extends={["React.ComponentProps<\"caption\">"]} />
+Also accepts the props of `React.ComponentProps<"caption">`.
 
 </ApiPart>
 

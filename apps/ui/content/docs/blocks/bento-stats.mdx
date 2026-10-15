@@ -3,16 +3,11 @@ title: Bento Stats
 description: "A dark bento grid of headline product stats, with a photo tile and an animated charging bar."
 eyebrow: Block
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="bento-stats">
-
-<SourceFile path="components/blocks/bento-stats.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="bento-stats" />
 
 A dark bento grid of headline numbers: a full-bleed photo tile, two tiles with large gradient figures and a wide charging tile whose `Progress` bar fills when the section loads. Tiles stack on mobile and form a three-column grid on desktop. It always renders dark, whatever the site theme, which suits a dramatic stats or specs band on a product page.
 
@@ -20,7 +15,9 @@ A dark bento grid of headline numbers: a full-bleed photo tile, two tiles with l
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bento-stats"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks bento-stats
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A dark bento grid of headline numbers: a full-bleed photo tile, two tiles with l
 
 2. Copy the source into `components/blocks/bento-stats.tsx`:
 
-<SourceFile path="components/blocks/bento-stats.tsx" />
+<ComponentSource path="components/blocks/bento-stats.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BentoStats } from \"@/components/blocks/bento-stats\""} />
+```tsx
+import { BentoStats } from "@/components/blocks/bento-stats"
+```
 
-<Code lang="tsx" code={"<BentoStats />"} />
+```tsx
+<BentoStats />
+```
 
 Edit the copy and figures inline and swap the photo in the `image` constant. The bar animates from 0 to 50 shortly after mount; change the target to match your claim.
 

@@ -3,16 +3,11 @@ title: Area Chart Gradient
 description: "Two overlapping areas whose fills fade out toward the bottom using SVG linear gradients."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="area-chart-gradient">
-
-<SourceFile path="components/charts/area-chart-gradient.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="area-chart-gradient" />
 
 Two overlapping series whose fills fade to transparent toward the baseline, so the lower series stays visible through the upper one. Reach for it over the flat-filled default when you compare two series that cross each other.
 
@@ -20,27 +15,35 @@ Two overlapping series whose fills fade to transparent toward the baseline, so t
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-gradient"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts area-chart-gradient
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/area-chart-gradient.tsx`:
 
-<SourceFile path="components/charts/area-chart-gradient.tsx" />
+<ComponentSource path="components/charts/area-chart-gradient.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { AreaChartGradient } from \"@/components/charts/area-chart-gradient\""} />
+```tsx
+import { AreaChartGradient } from "@/components/charts/area-chart-gradient"
+```
 
-<Code lang="tsx" code={"<AreaChartGradient />"} />
+```tsx
+<AreaChartGradient />
+```
 
 Replace `chartData` and rename the two series keys consistently across the data, the areas and `chartConfig`. Each series needs its own gradient in the `defs` block, so add or rename one when you add a series. Raise or lower the top stop's `stopOpacity` to make the fill stronger or subtler.
 
@@ -52,13 +55,13 @@ The series are drawn in source order, so the last `Area` sits on top. Focus the 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-area--gradient" width={880} height={655} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-area--gradient" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/area-chart-gradient.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/area-chart-gradient.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/AreaChartGradient.swift" fold={false} />
+<ComponentSource path="swift/Charts/AreaChartGradient.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/AreaChartGradient.kt" fold={false} />
+<ComponentSource path="kotlin/charts/AreaChartGradient.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Two series, desktop and mobile, drawn as natural curves on the same axis. Both u
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-gradient"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add area-chart-gradient
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-gradient --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add area-chart-gradient --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-gradient --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add area-chart-gradient --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/area-chart-gradient.tsx`:
 
-<SourceFile path="uniwind/components/charts/area-chart-gradient.tsx" />
+<ComponentSource path="uniwind/components/charts/area-chart-gradient.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/area-chart-gradient.tsx`:
 
-<SourceFile path="nativewind/components/charts/area-chart-gradient.tsx" />
+<ComponentSource path="nativewind/components/charts/area-chart-gradient.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/area-chart-gradient.tsx`:
 
-<SourceFile path="stylesheet/components/charts/area-chart-gradient.tsx" />
+<ComponentSource path="stylesheet/components/charts/area-chart-gradient.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/AreaChartGradient.swift" />
+<ComponentSource path="swift/Charts/AreaChartGradient.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/AreaChartGradient.kt" />
+<ComponentSource path="kotlin/charts/AreaChartGradient.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { AreaChartGradient } from \"@/components/charts/area-chart-gradient\""} />
+```tsx
+import { AreaChartGradient } from "@/components/charts/area-chart-gradient"
+```
 
-<Code lang="tsx" code={"<AreaChartGradient />"} />
+```tsx
+<AreaChartGradient />
+```
 
 Replace `chartData` with your records and change each `dataKey` to match your fields. Add or rename series in `chartConfig`, and change the `fade` stops to make the gradient stronger or lighter. The component takes no props.
 

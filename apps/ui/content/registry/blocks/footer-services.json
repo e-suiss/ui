@@ -1,6 +1,0 @@
-{
-  "description": "A footer with a band of service highlights, a newsletter signup, a link directory, and legal links.",
-  "overview": "A footer that opens with a band of four service highlights, followed by a newsletter signup, a link directory and a legal row. The services and directory show two columns on mobile and four on desktop, where the signup form also moves beside its heading. Use it when the footer should also promote support, delivery or other services.",
-  "usage": "Edit `services`, `sections` and `legal` for the content, and replace the `slug` helper with your routes. The signup form only validates the address and shows a confirmation, so send the email to your mailing list provider in its submit handler.",
-  "notes": "The form runs its own validation instead of the browser's, marks the field invalid on a bad address and announces the confirmation."
-}

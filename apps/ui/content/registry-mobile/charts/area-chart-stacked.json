@@ -1,5 +1,0 @@
-{
-  "description": "Two stacked areas showing desktop and mobile visitors combined, with a legend.",
-  "overview": "Desktop and mobile areas are stacked on top of each other with the same `stackId`, so the top edge shows the combined total. A legend below the plot names both series, and the tooltip lists each value with a dot indicator.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig`; the legend picks the changes up. The component takes no props."
-}

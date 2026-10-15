@@ -1,6 +1,0 @@
-{
-  "description": "A one-question-at-a-time signup flow for name, email, and password, with a progress indicator.",
-  "overview": "A signup flow that asks one question at a time, name, then email, then password, with progress dots above. Each step slides in from the direction of travel, Continue stays disabled until the answer is valid, and the last step becomes Create account. The finish screen greets the user by first name. Use it for onboarding where a long form would feel heavy.",
-  "usage": "Edit `steps`; each has a key, title, description, placeholder, input type, autocomplete value and a `valid` function. Add matching keys to the `Values` type when you add steps. Replace the final step with a call to your registration API.",
-  "notes": "The progress dots are an ordered list with the current step marked, and each input after the first receives focus automatically."
-}

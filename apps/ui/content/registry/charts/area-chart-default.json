@@ -1,6 +1,0 @@
-{
-  "description": "A single filled area with a smooth curve showing one series across six months.",
-  "overview": "The baseline area chart: one series as a smooth, lightly filled curve with a month axis and a tooltip, and no value axis. Start here when you only need the shape of a trend and want to build up from the simplest version.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your field names. Rename the series entry in `chartConfig` and pick its label and color there. Change the curve shape with the `type` prop on the area, for example to straight lines or steps.",
-  "notes": "Focus the plot and use the arrow keys to move the tooltip between months. Colors come from `chartConfig`, so they follow light and dark mode without extra work."
-}

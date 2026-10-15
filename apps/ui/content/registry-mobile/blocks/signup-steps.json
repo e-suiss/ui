@@ -1,5 +1,0 @@
-{
-  "description": "A three-step sign-up flow that asks for a name, email and password one screen at a time.",
-  "overview": "A progress bar tracks the step, and each step slides in with a title, description and a single `Input`. The email step checks the format and the password step shows a live rule checklist. Back and Continue `Button`s sit in a `BottomBar`, and the last step creates the account and shows a confirmation.",
-  "usage": "Edit the `STEPS` copy and `RULES` to fit your product. `onSubmit` receives the name, email and password when the last step is completed."
-}

@@ -1,6 +1,0 @@
-{
-  "description": "A searchable users table with role filters, row selection, and bulk role and status actions.",
-  "overview": "A users table with search, role filters and row selection; selecting rows reveals bulk actions to make editors, activate or suspend. Role and last sign-in columns appear as the screen widens, and the search and Invite button take the full width on mobile. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for any admin list that needs bulk actions.",
-  "usage": "Replace `initialUsers` with your users, each with a name, email, role, status, last-seen text and avatar hue. Call your API in `bulk`, which applies a change to every selected user. Search and filtering run in the browser, so move them server-side for large lists, and give Invite a handler.",
-  "notes": "Each row has a hidden checkbox labeled with the user's name, so selection works from the keyboard as well as by clicking the row."
-}

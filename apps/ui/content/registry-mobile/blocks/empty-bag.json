@@ -1,5 +1,0 @@
-{
-  "description": "An empty bag state with sign-in and shopping buttons and a horizontal row of recommended products.",
-  "overview": "Composes `Screen`, `Empty`, `Button`, `Icon` and `Text`. Adding a recommended product with its plus button increments a badge on the bag icon and changes the title and primary button to a checkout prompt.",
-  "usage": "Replace `RECOMMENDED` with your products. The component takes no props, so wire the Sign In, Check Out and Continue Shopping buttons to your own navigation."
-}

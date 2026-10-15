@@ -3,16 +3,11 @@ title: Log Security
 description: "A security overview with a computed score ring, alert counts by severity, and resolvable alerts."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="log-security">
-
-<SourceFile path="components/blocks/log-security.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="log-security" />
 
 A security overview with a score ring that drops for each open alert and shifts from green to orange to red, next to open alert counts by severity. Below, alerts can be filtered by Open, Resolved or All and resolved or reopened one by one. It sits in a `Sidebar` with admin navigation that opens as a sheet from the trigger on mobile. Use it for security centers, compliance checklists or system health checks.
 
@@ -20,27 +15,35 @@ A security overview with a score ring that drops for each open alert and shifts 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks log-security"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks log-security
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Sidebar](/docs/components/sidebar), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/log-security.tsx`:
 
-<SourceFile path="components/blocks/log-security.tsx" />
+<ComponentSource path="components/blocks/log-security.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { LogSecurity } from \"@/components/blocks/log-security\""} />
+```tsx
+import { LogSecurity } from "@/components/blocks/log-security"
+```
 
-<Code lang="tsx" code={"<LogSecurity />"} />
+```tsx
+<LogSecurity />
+```
 
 Replace `initialAlerts` with alerts from your security backend; each has a severity, title, detail and icon. `severity` sets each level's colors and how much it lowers the score. Alerts are matched by title when resolving, so switch to an id for real data, and connect Resolve and Reopen to your API.
 
@@ -48,13 +51,13 @@ Replace `initialAlerts` with alerts from your security backend; each has a sever
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-log-security--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-log-security--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/log-security.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/log-security.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/LogSecurity.swift" fold={false} />
+<ComponentSource path="swift/Blocks/LogSecurity.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/LogSecurity.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/LogSecurity.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +67,25 @@ An admin screen with a collapsing `Header`, a ring that shows a security score, 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add log-security"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add log-security
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add log-security --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add log-security --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add log-security --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add log-security --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +101,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/log-security.tsx`:
 
-<SourceFile path="uniwind/components/blocks/log-security.tsx" />
+<ComponentSource path="uniwind/components/blocks/log-security.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +119,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/log-security.tsx`:
 
-<SourceFile path="nativewind/components/blocks/log-security.tsx" />
+<ComponentSource path="nativewind/components/blocks/log-security.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +137,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/log-security.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/log-security.tsx" />
+<ComponentSource path="stylesheet/components/blocks/log-security.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,53 +161,55 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/LogSecurity.swift" />
+<ComponentSource path="swift/Blocks/LogSecurity.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Chip.swift" />
+<ComponentSource path="swift/Components/Chip.swift" />
 
-<SourceFile path="swift/Components/Combobox.swift" />
+<ComponentSource path="swift/Components/Combobox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Empty.swift" />
+<ComponentSource path="swift/Components/Empty.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Header.swift" />
+<ComponentSource path="swift/Components/Header.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TabBar.swift" />
+<ComponentSource path="swift/Components/TabBar.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -202,49 +219,54 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/LogSecurity.kt" />
+<ComponentSource path="kotlin/blocks/LogSecurity.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Chip.kt" />
+<ComponentSource path="kotlin/components/Chip.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Item.kt" />
+<ComponentSource path="kotlin/components/Item.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/TabBar.kt" />
+<ComponentSource path="kotlin/components/TabBar.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -252,9 +274,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { LogSecurity } from \"@/components/blocks/log-security\""} />
+```tsx
+import { LogSecurity } from "@/components/blocks/log-security"
+```
 
-<Code lang="tsx" code={"<LogSecurity />"} />
+```tsx
+<LogSecurity />
+```
 
 Replace `INITIAL_ALERTS` with your alerts and tune the weights in `SEVERITY` to change how the score is computed. Wire `onFilterChange`, `onResolve` and `onNavigate` to your app.
 

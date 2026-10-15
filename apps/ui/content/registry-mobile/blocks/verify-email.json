@@ -1,5 +1,0 @@
-{
-  "description": "A check-your-inbox screen after sign-up, with open mail, resend and change-address actions.",
-  "overview": "The screen shows the address the link was sent to and a link to change it. The `BottomBar` has an Open Mail `Button` and a Resend `Button` that disables itself for a 45-second countdown. Opening mail shows a verified confirmation in this sample.",
-  "usage": "Replace `EMAIL` with the user's address. Use `onOpenMail` to open the mail app and `onChangeAddress` to go back to the email field."
-}

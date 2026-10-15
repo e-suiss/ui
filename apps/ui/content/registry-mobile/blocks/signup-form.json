@@ -1,5 +1,0 @@
-{
-  "description": "A single-page account sign-up form with name, country, birthday, email and password fields.",
-  "overview": "Fields are grouped under short legends inside an `InputAccessoryBar` with a `KeyboardScrollView`, and the country uses a `Picker`. The password fields show a live checklist of password rules, and pressing Continue in the `BottomBar` validates every field, shows an error line if any fail, and swaps the form for a confirmation screen.",
-  "usage": "Replace `COUNTRIES` and `RULES` to match your requirements. `onSubmit` receives the form values (typed as `SignupFormValues`), and `onLearnMore` handles the info link."
-}

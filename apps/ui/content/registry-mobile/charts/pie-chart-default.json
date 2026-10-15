@@ -1,5 +1,0 @@
-{
-  "description": "A basic pie chart showing users by device, with a tooltip for each slice.",
-  "overview": "The simplest `PieChart`: one `Pie` inside a `Card`, with slices separated by a thin stroke in the card color. `chartData` holds one record per device with a `users` count. Pressing a slice shows a tooltip with its name and value.",
-  "usage": "Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props."
-}

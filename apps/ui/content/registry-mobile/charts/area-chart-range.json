@@ -1,5 +1,0 @@
-{
-  "description": "A heart-rate card with a shaded low-to-high band and an average line across 24 hours.",
-  "overview": "A `ComposedChart` that pairs a range `Area`, filled between each hour's low and high reading, with a `Line` for the hourly average. The header shows the day's lowest and highest values in BPM, and the tooltip formats both the range and the average with a custom row built from `Text`.",
-  "usage": "Replace the `readings` array with `[low, high, average]` tuples for each hour; the header range and the chart data are derived from it. Adjust the `YAxis` `domain` and `ticks` to fit your values. The component takes no props."
-}

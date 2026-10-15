@@ -3,16 +3,11 @@ title: Resizable
 description: "Panels separated by draggable handles that let users resize sections of a layout."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="resizable" story="Default">
-
-<Code lang="tsx" code={"import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@/components/ui/resizable\"\n\nfunction Pane({ label }: { label: string }) {\n  return (\n    <div className=\"flex h-full items-center justify-center p-6 text-sm font-medium\">\n      {label}\n    </div>\n  )\n}\n\nexport function ResizableExample() {\n  return (\n    <ResizablePanelGroup orientation=\"horizontal\">\n      <ResizablePanel defaultSize=\"50%\">\n        <Pane label=\"Inbox\" />\n      </ResizablePanel>\n      <ResizableHandle />\n      <ResizablePanel defaultSize=\"50%\">\n        <Pane label=\"Message\" />\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="resizable-demo" />
 
 Resizable wraps react-resizable-panels. `ResizablePanelGroup` lays out its children in a row or column, alternating `ResizablePanel` and `ResizableHandle`. Drag a handle, or focus it and use the keyboard, to change the size of the panels on either side. Groups can be nested to build multi-pane layouts such as an editor with a sidebar and a terminal.
 
@@ -22,25 +17,41 @@ The `cards` variant renders each panel as a rounded card with a pill-shaped grip
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add resizable"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add resizable
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn react-resizable-panels"} />
+```bash title="Terminal"
+npm install cn react-resizable-panels
+```
 
 2. Copy the source into `components/ui/resizable.tsx`:
 
-<SourceFile path="components/ui/resizable.tsx" />
+<ComponentSource path="components/ui/resizable.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from \"@/components/ui/resizable\""} />
+```tsx
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable"
+```
 
-<Code lang="tsx" code={"<ResizablePanelGroup orientation=\"horizontal\">\n  <ResizablePanel defaultSize=\"50%\">\n    <Pane label=\"Inbox\" />\n  </ResizablePanel>\n  <ResizableHandle />\n  <ResizablePanel defaultSize=\"50%\">\n    <Pane label=\"Message\" />\n  </ResizablePanel>\n</ResizablePanelGroup>"} />
+```tsx
+<ResizablePanelGroup orientation="horizontal">
+  <ResizablePanel defaultSize="50%">
+    <Pane label="Inbox" />
+  </ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel defaultSize="50%">
+    <Pane label="Message" />
+  </ResizablePanel>
+</ResizablePanelGroup>
+```
 
 Set `orientation` on the group to `horizontal` (default) or `vertical`. Size panels with `defaultSize`, `minSize` and `maxSize`, for example `"30%"`. Make a panel `collapsible` with a `collapsedSize` to let it collapse when dragged past its minimum.
 
@@ -52,55 +63,41 @@ Use `onLayoutChange` on the group to read the current sizes, keyed by each panel
 
 A sidebar and content split with a visible grip and a minimum sidebar size.
 
-<Example kind="ui" name="resizable" story="WithHandle">
-
-<Code lang="tsx" code={"import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@/components/ui/resizable\"\n\nfunction Pane({ label }: { label: string }) {\n  return (\n    <div className=\"flex h-full items-center justify-center p-6 text-sm font-medium\">\n      {label}\n    </div>\n  )\n}\n\nexport function ResizableWithHandleExample() {\n  return (\n    <ResizablePanelGroup orientation=\"horizontal\">\n      <ResizablePanel defaultSize=\"30%\" minSize=\"20%\">\n        <Pane label=\"Sidebar\" />\n      </ResizablePanel>\n      <ResizableHandle withHandle />\n      <ResizablePanel defaultSize=\"70%\">\n        <Pane label=\"Content\" />\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="resizable-with-handle" />
 
 ### Vertical
 
 Panels stacked vertically and resized with the up and down arrow keys.
 
-<Example kind="ui" name="resizable" story="Vertical">
-
-<Code lang="tsx" code={"import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@/components/ui/resizable\"\n\nfunction Pane({ label }: { label: string }) {\n  return (\n    <div className=\"flex h-full items-center justify-center p-6 text-sm font-medium\">\n      {label}\n    </div>\n  )\n}\n\nexport function ResizableVerticalExample() {\n  return (\n    <ResizablePanelGroup orientation=\"vertical\">\n      <ResizablePanel defaultSize=\"30%\" minSize=\"20%\">\n        <Pane label=\"Sidebar\" />\n      </ResizablePanel>\n      <ResizableHandle withHandle />\n      <ResizablePanel defaultSize=\"70%\">\n        <Pane label=\"Content\" />\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="resizable-vertical" />
 
 ### Nested
 
 A vertical group nested inside a horizontal group to create three panes.
 
-<Example kind="ui" name="resizable" story="Nested">
-
-<Code lang="tsx" code={"import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@/components/ui/resizable\"\n\nfunction Pane({ label }: { label: string }) {\n  return (\n    <div className=\"flex h-full items-center justify-center p-6 text-sm font-medium\">\n      {label}\n    </div>\n  )\n}\n\nexport function ResizableNestedExample() {\n  return (\n    <ResizablePanelGroup orientation=\"horizontal\">\n      <ResizablePanel defaultSize=\"30%\" minSize=\"20%\">\n        <Pane label=\"Files\" />\n      </ResizablePanel>\n      <ResizableHandle withHandle />\n      <ResizablePanel defaultSize=\"70%\">\n        <ResizablePanelGroup orientation=\"vertical\">\n          <ResizablePanel defaultSize=\"65%\">\n            <Pane label=\"Editor\" />\n          </ResizablePanel>\n          <ResizableHandle withHandle />\n          <ResizablePanel defaultSize=\"35%\">\n            <Pane label=\"Terminal\" />\n          </ResizablePanel>\n        </ResizablePanelGroup>\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="resizable-nested" />
 
 ### Cards
 
 The `cards` variant with two collapsible panels that report their share of the space.
 
-<Example kind="ui" name="resizable" story="Cards">
-
-<Code lang="tsx" code={"import { CashRegisterIcon, CookingPotIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@/components/ui/resizable\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\n\nfunction CardPane({\n  icon,\n  label,\n  size,\n}: {\n  icon: React.ReactNode\n  label: string\n  size: number | undefined\n}) {\n  return (\n    <div className=\"size-full p-2\">\n      <ScrollArea className=\"size-full\">\n        <div className=\"flex min-h-full flex-col items-center justify-center gap-3 p-3 text-center\">\n          <span className=\"flex size-13 shrink-0 items-center justify-center rounded-2xl bg-control text-label [&_svg]:size-6\">\n            {icon}\n          </span>\n          <div className=\"flex flex-col gap-0.5\">\n            <p className=\"text-sm font-semibold\">{label}</p>\n            <p className=\"text-sm text-label-secondary tabular-nums\">\n              {size === undefined ? \"\" : `${Math.round(size)}%`}\n            </p>\n          </div>\n        </div>\n      </ScrollArea>\n    </div>\n  )\n}\n\nfunction CardsExample(args: React.ComponentProps<typeof ResizablePanelGroup>) {\n  const [layout, setLayout] = React.useState<Record<string, number>>({})\n\n  return (\n    <ResizablePanelGroup {...args} variant=\"cards\" onLayoutChange={setLayout}>\n      <ResizablePanel\n        id=\"pos\"\n        defaultSize=\"50%\"\n        minSize=\"25%\"\n        collapsible\n        collapsedSize=\"0%\"\n        collapsedThreshold=\"1%\"\n      >\n        <CardPane\n          icon={<CashRegisterIcon />}\n          label=\"Point of sale\"\n          size={layout.pos}\n        />\n      </ResizablePanel>\n      <ResizableHandle />\n      <ResizablePanel\n        id=\"kitchen\"\n        defaultSize=\"50%\"\n        minSize=\"25%\"\n        collapsible\n        collapsedSize=\"0%\"\n        collapsedThreshold=\"1%\"\n      >\n        <CardPane\n          icon={<CookingPotIcon />}\n          label=\"Kitchen display\"\n          size={layout.kitchen}\n        />\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  )\n}\n\nexport function ResizableCardsExample() {\n  return (\n    <CardsExample orientation=\"horizontal\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="resizable-cards" />
 
 ### Cards vertical
 
 The `cards` variant in a vertical orientation.
 
-<Example kind="ui" name="resizable" story="CardsVertical">
-
-<Code lang="tsx" code={"import { CashRegisterIcon, CookingPotIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@/components/ui/resizable\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\n\nfunction CardPane({\n  icon,\n  label,\n  size,\n}: {\n  icon: React.ReactNode\n  label: string\n  size: number | undefined\n}) {\n  return (\n    <div className=\"size-full p-2\">\n      <ScrollArea className=\"size-full\">\n        <div className=\"flex min-h-full flex-col items-center justify-center gap-3 p-3 text-center\">\n          <span className=\"flex size-13 shrink-0 items-center justify-center rounded-2xl bg-control text-label [&_svg]:size-6\">\n            {icon}\n          </span>\n          <div className=\"flex flex-col gap-0.5\">\n            <p className=\"text-sm font-semibold\">{label}</p>\n            <p className=\"text-sm text-label-secondary tabular-nums\">\n              {size === undefined ? \"\" : `${Math.round(size)}%`}\n            </p>\n          </div>\n        </div>\n      </ScrollArea>\n    </div>\n  )\n}\n\nfunction CardsExample(args: React.ComponentProps<typeof ResizablePanelGroup>) {\n  const [layout, setLayout] = React.useState<Record<string, number>>({})\n\n  return (\n    <ResizablePanelGroup {...args} variant=\"cards\" onLayoutChange={setLayout}>\n      <ResizablePanel\n        id=\"pos\"\n        defaultSize=\"50%\"\n        minSize=\"25%\"\n        collapsible\n        collapsedSize=\"0%\"\n        collapsedThreshold=\"1%\"\n      >\n        <CardPane\n          icon={<CashRegisterIcon />}\n          label=\"Point of sale\"\n          size={layout.pos}\n        />\n      </ResizablePanel>\n      <ResizableHandle />\n      <ResizablePanel\n        id=\"kitchen\"\n        defaultSize=\"50%\"\n        minSize=\"25%\"\n        collapsible\n        collapsedSize=\"0%\"\n        collapsedThreshold=\"1%\"\n      >\n        <CardPane\n          icon={<CookingPotIcon />}\n          label=\"Kitchen display\"\n          size={layout.kitchen}\n        />\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  )\n}\n\nexport function ResizableCardsVerticalExample() {\n  return (\n    <CardsExample orientation=\"vertical\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="resizable-cards-vertical" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"ResizablePanelGroup","href":"#resizablepanelgroup","children":[{"name":"ResizablePanel","href":"#resizablepanel","children":[]},{"name":"ResizableHandle","href":"#resizablehandle","children":[]}]}]} />
+<Anatomy>
+
+- [ResizablePanelGroup](#resizablepanelgroup)
+  - [ResizablePanel](#resizablepanel)
+  - [ResizableHandle](#resizablehandle)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -108,7 +105,11 @@ The `cards` variant in a vertical orientation.
 
 The container that arranges panels and handles and tracks the layout.
 
-<PropsTable extends={["ResizablePrimitive.GroupProps"]} props={[{"name":"variant","type":"\"default\" | \"cards\"","default":"\"default\"","description":"Sets the visual style: `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "cards"` | `"default"` | Sets the visual style: `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips. |
+
+Also accepts the props of `ResizablePrimitive.GroupProps`.
 
 </ApiPart>
 
@@ -118,7 +119,7 @@ The container that arranges panels and handles and tracks the layout.
 
 One resizable section of the layout.
 
-<PropsTable extends={["ResizablePrimitive.PanelProps"]} />
+Also accepts the props of `ResizablePrimitive.PanelProps`.
 
 </ApiPart>
 
@@ -128,7 +129,11 @@ One resizable section of the layout.
 
 The draggable divider between two panels.
 
-<PropsTable extends={["ResizablePrimitive.SeparatorProps"]} props={[{"name":"withHandle","type":"boolean","description":"Shows a visible grip on the divider."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `withHandle` | `boolean` | - | Shows a visible grip on the divider. |
+
+Also accepts the props of `ResizablePrimitive.SeparatorProps`.
 
 </ApiPart>
 

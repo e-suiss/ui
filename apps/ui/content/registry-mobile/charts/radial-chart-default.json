@@ -1,5 +1,0 @@
-{
-  "description": "Concentric radial bars showing users by device, each on its own track.",
-  "overview": "A `RadialBarChart` with one bar per record in `chartData` (a `device` and a `users` count). Each bar is colored through a `Cell` that reads `chartConfig`, over a track in the control color. Pressing a bar shows a tooltip.",
-  "usage": "Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props."
-}

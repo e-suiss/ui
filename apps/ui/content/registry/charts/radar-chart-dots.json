@@ -1,5 +1,0 @@
-{
-  "description": "A single radar shape with a solid dot marking the value on every axis.",
-  "overview": "A single radar shape with a solid dot at the value on every axis. The dots make individual scores easier to locate than on the plain filled shape.",
-  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Change the marker size through the `dot` prop on `Radar`, or set it to false to go back to the plain shape."
-}

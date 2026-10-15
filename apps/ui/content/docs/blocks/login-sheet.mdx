@@ -3,16 +3,11 @@ title: Login Sheet
 description: "A mobile app welcome screen with a Sign in with suiss bottom sheet for sharing or hiding an email."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="login-sheet">
-
-<SourceFile path="components/blocks/login-sheet.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="login-sheet" />
 
 A mobile app welcome screen whose Sign in with suiss button slides up a bottom sheet, where users choose to share or hide their email before continuing. Completing the flow greets the user with a Sign out link. From small tablets up the screen sits in a phone frame; on the smallest screens it fills the section. Use it for third-party sign-in or any consent step shown as a bottom sheet.
 
@@ -20,27 +15,35 @@ A mobile app welcome screen whose Sign in with suiss button slides up a bottom s
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks login-sheet"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks login-sheet
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Spinner](/docs/components/spinner).
 
 3. Copy the source into `components/blocks/login-sheet.tsx`:
 
-<SourceFile path="components/blocks/login-sheet.tsx" />
+<ComponentSource path="components/blocks/login-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { LoginSheet } from \"@/components/blocks/login-sheet\""} />
+```tsx
+import { LoginSheet } from "@/components/blocks/login-sheet"
+```
 
-<Code lang="tsx" code={"<LoginSheet />"} />
+```tsx
+<LoginSheet />
+```
 
 Replace `proceed`, which fakes a one-second request, with your identity provider's sign-in, and send the chosen email option along. Update the Trail Routes app name, tagline and account details, and give Continue with email a handler.
 
@@ -52,13 +55,13 @@ The sheet behaves as a modal dialog: focus moves into it, Escape or a click on t
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-login-sheet--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-login-sheet--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/login-sheet.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/login-sheet.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/LoginSheet.swift" fold={false} />
+<ComponentSource path="swift/Blocks/LoginSheet.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/LoginSheet.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/LoginSheet.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ An app welcome screen with two buttons: Sign in with suiss and Continue with ema
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add login-sheet"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add login-sheet
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add login-sheet --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add login-sheet --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add login-sheet --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add login-sheet --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/login-sheet.tsx`:
 
-<SourceFile path="uniwind/components/blocks/login-sheet.tsx" />
+<ComponentSource path="uniwind/components/blocks/login-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/login-sheet.tsx`:
 
-<SourceFile path="nativewind/components/blocks/login-sheet.tsx" />
+<ComponentSource path="nativewind/components/blocks/login-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/login-sheet.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/login-sheet.tsx" />
+<ComponentSource path="stylesheet/components/blocks/login-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,53 +165,55 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/LoginSheet.swift" />
+<ComponentSource path="swift/Blocks/LoginSheet.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Dialog.swift" />
+<ComponentSource path="swift/Components/Dialog.swift" />
 
-<SourceFile path="swift/Components/Drawer.swift" />
+<ComponentSource path="swift/Components/Drawer.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Label.swift" />
+<ComponentSource path="swift/Components/Label.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/RadioGroup.swift" />
+<ComponentSource path="swift/Components/RadioGroup.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/Spinner.swift" />
+<ComponentSource path="swift/Components/Spinner.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -206,49 +223,54 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/LoginSheet.kt" />
+<ComponentSource path="kotlin/blocks/LoginSheet.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Drawer.kt" />
+<ComponentSource path="kotlin/components/Drawer.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/RadioGroup.kt" />
+<ComponentSource path="kotlin/components/RadioGroup.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Spinner.kt" />
+<ComponentSource path="kotlin/components/Spinner.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -256,9 +278,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 ## Usage
 
-<Code lang="tsx" code={"import { LoginSheet } from \"@/components/blocks/login-sheet\""} />
+```tsx
+import { LoginSheet } from "@/components/blocks/login-sheet"
+```
 
-<Code lang="tsx" code={"<LoginSheet />"} />
+```tsx
+<LoginSheet />
+```
 
 Edit `EMAIL_OPTIONS` to change the email choices. Wire `onContinue` (receives `share` or `hide`) to your sign-in flow and `onContinueWithEmail` to your email sign-up screen.
 

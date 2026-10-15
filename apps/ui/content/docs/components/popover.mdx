@@ -3,16 +3,11 @@ title: Popover
 description: "A floating panel anchored to a trigger, for supplementary content and lightweight controls."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="popover" story="Default">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function PopoverExample() {\n  return (\n    <Popover>\n      <PopoverTrigger render={<Button variant=\"outline\" />}>\n        Open popover\n      </PopoverTrigger>\n      <PopoverContent>\n        <PopoverHeader>\n          <PopoverTitle>Dimensions</PopoverTitle>\n          <PopoverDescription>\n            Set the dimensions for the layer.\n          </PopoverDescription>\n        </PopoverHeader>\n        <div className=\"grid gap-3\">\n          <div className=\"grid grid-cols-3 items-center gap-3\">\n            <Label htmlFor=\"popover-width\">Width</Label>\n            <Input\n              id=\"popover-width\"\n              defaultValue=\"100%\"\n              className=\"col-span-2\"\n            />\n          </div>\n          <div className=\"grid grid-cols-3 items-center gap-3\">\n            <Label htmlFor=\"popover-height\">Height</Label>\n            <Input\n              id=\"popover-height\"\n              defaultValue=\"25px\"\n              className=\"col-span-2\"\n            />\n          </div>\n        </div>\n      </PopoverContent>\n    </Popover>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="popover-demo" />
 
 Popover wraps Base UI's Popover. `Popover` is the root that holds the open state, `PopoverTrigger` toggles it, and `PopoverContent` renders the positioned panel in a portal. Inside the content, `PopoverHeader` groups a `PopoverTitle` and `PopoverDescription` above any other content, such as form fields.
 
@@ -22,25 +17,63 @@ Use a popover for interactive content that relates to its trigger. Use Tooltip f
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add popover"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react cn
+```
 
 2. Copy the source into `components/ui/popover.tsx`:
 
-<SourceFile path="components/ui/popover.tsx" />
+<ComponentSource path="components/ui/popover.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from \"@/components/ui/popover\""} />
+```tsx
+import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
+```
 
-<Code lang="tsx" code={"<Popover>\n  <PopoverTrigger render={<Button variant=\"outline\" />}>\n    Open popover\n  </PopoverTrigger>\n  <PopoverContent>\n    <PopoverHeader>\n      <PopoverTitle>Dimensions</PopoverTitle>\n      <PopoverDescription>\n        Set the dimensions for the layer.\n      </PopoverDescription>\n    </PopoverHeader>\n    <div className=\"grid gap-3\">\n      <div className=\"grid grid-cols-3 items-center gap-3\">\n        <Label htmlFor=\"popover-width\">Width</Label>\n        <Input\n          id=\"popover-width\"\n          defaultValue=\"100%\"\n          className=\"col-span-2\"\n        />\n      </div>\n      <div className=\"grid grid-cols-3 items-center gap-3\">\n        <Label htmlFor=\"popover-height\">Height</Label>\n        <Input\n          id=\"popover-height\"\n          defaultValue=\"25px\"\n          className=\"col-span-2\"\n        />\n      </div>\n    </div>\n  </PopoverContent>\n</Popover>"} />
+```tsx
+<Popover>
+  <PopoverTrigger render={<Button variant="outline" />}>
+    Open popover
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>Dimensions</PopoverTitle>
+      <PopoverDescription>
+        Set the dimensions for the layer.
+      </PopoverDescription>
+    </PopoverHeader>
+    <div className="grid gap-3">
+      <div className="grid grid-cols-3 items-center gap-3">
+        <Label htmlFor="popover-width">Width</Label>
+        <Input
+          id="popover-width"
+          defaultValue="100%"
+          className="col-span-2"
+        />
+      </div>
+      <div className="grid grid-cols-3 items-center gap-3">
+        <Label htmlFor="popover-height">Height</Label>
+        <Input
+          id="popover-height"
+          defaultValue="25px"
+          className="col-span-2"
+        />
+      </div>
+    </div>
+  </PopoverContent>
+</Popover>
+```
 
 The popover is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it. `PopoverContent` accepts the positioning props `side`, `sideOffset`, `align` and `alignOffset`, defaulting to `bottom`, `4`, `center` and `0`.
 
@@ -52,25 +85,26 @@ Use the trigger's `render` prop to render it as another component, such as a `Bu
 
 Four popovers that open on the top, right, bottom and left of their triggers.
 
-<Example kind="ui" name="popover" story="Sides">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function PopoverSidesExample() {\n  return (\n    <div className=\"grid grid-cols-2 gap-3\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <Popover key={side}>\n          <PopoverTrigger render={<Button variant=\"outline\" />}>\n            {side.charAt(0).toUpperCase() + side.slice(1)}\n          </PopoverTrigger>\n          <PopoverContent side={side} className=\"w-56\">\n            <PopoverHeader>\n              <PopoverTitle>Heads up</PopoverTitle>\n              <PopoverDescription>\n                This popover opens on the {side} side.\n              </PopoverDescription>\n            </PopoverHeader>\n          </PopoverContent>\n        </Popover>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="popover-sides" />
 
 ### Simple
 
 A plain text popover opened from a ghost button, without a header.
 
-<Example kind="ui" name="popover" story="Simple">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function PopoverSimpleExample() {\n  return (\n    <Popover>\n      <PopoverTrigger render={<Button variant=\"ghost\" />}>\n        What is this?\n      </PopoverTrigger>\n      <PopoverContent className=\"w-64\">\n        <p>\n          Shared links stay active for 30 days and can be revoked at any time\n          from settings.\n        </p>\n      </PopoverContent>\n    </Popover>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="popover-simple" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Popover","href":"#popover","children":[{"name":"PopoverTrigger","href":"#popovertrigger","children":[]},{"name":"PopoverContent","href":"#popovercontent","children":[{"name":"PopoverHeader","href":"#popoverheader","children":[{"name":"PopoverTitle","href":"#popovertitle","children":[]},{"name":"PopoverDescription","href":"#popoverdescription","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [Popover](#popover)
+  - [PopoverTrigger](#popovertrigger)
+  - [PopoverContent](#popovercontent)
+    - [PopoverHeader](#popoverheader)
+      - [PopoverTitle](#popovertitle)
+      - [PopoverDescription](#popoverdescription)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -78,7 +112,7 @@ A plain text popover opened from a ghost button, without a header.
 
 The root that manages the popover's open state.
 
-<PropsTable extends={["PopoverPrimitive.Root.Props"]} />
+Also accepts the props of `PopoverPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -88,7 +122,7 @@ The root that manages the popover's open state.
 
 The button that opens and closes the popover.
 
-<PropsTable extends={["PopoverPrimitive.Trigger.Props"]} />
+Also accepts the props of `PopoverPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -98,7 +132,7 @@ The button that opens and closes the popover.
 
 The positioned panel that renders in a portal.
 
-<PropsTable extends={["PopoverPrimitive.Popup.Props","PopoverPrimitive.Positioner.Props"]} />
+Also accepts the props of `PopoverPrimitive.Popup.Props`, `PopoverPrimitive.Positioner.Props`.
 
 </ApiPart>
 
@@ -108,7 +142,7 @@ The positioned panel that renders in a portal.
 
 Groups the title and description at the top of the panel.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -118,7 +152,7 @@ Groups the title and description at the top of the panel.
 
 The heading that names the popover.
 
-<PropsTable extends={["PopoverPrimitive.Title.Props"]} />
+Also accepts the props of `PopoverPrimitive.Title.Props`.
 
 </ApiPart>
 
@@ -128,7 +162,7 @@ The heading that names the popover.
 
 Secondary text that describes the popover.
 
-<PropsTable extends={["PopoverPrimitive.Description.Props"]} />
+Also accepts the props of `PopoverPrimitive.Description.Props`.
 
 </ApiPart>
 
@@ -150,15 +184,7 @@ Secondary text that describes the popover.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-popover--open-by-default" width={880} height={744} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\n\nconst dimensions = [\n  { id: \"width\", label: \"Width\", value: \"100%\" },\n  { id: \"max-width\", label: \"Max. width\", value: \"300px\" },\n  { id: \"height\", label: \"Height\", value: \"25px\" },\n]\n\nexport function PopoverOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Popover defaultOpen>\n        <PopoverTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open popover</Text>\n        </PopoverTrigger>\n        <PopoverContent align=\"start\" className=\"w-80\">\n          <View className=\"gap-4\">\n            <PopoverHeader>\n              <PopoverTitle>Dimensions</PopoverTitle>\n              <PopoverDescription>\n                Set the dimensions for the layer.\n              </PopoverDescription>\n            </PopoverHeader>\n            <View className=\"gap-2\">\n              {dimensions.map((dimension) => (\n                <View\n                  key={dimension.id}\n                  className=\"flex-row items-center gap-4\"\n                >\n                  <Label nativeID={`popover-${dimension.id}`} className=\"w-24\">\n                    {dimension.label}\n                  </Label>\n                  <Input\n                    accessibilityLabelledBy={`popover-${dimension.id}`}\n                    defaultValue={dimension.value}\n                    className=\"h-8 flex-1\"\n                  />\n                </View>\n              ))}\n            </View>\n          </View>\n        </PopoverContent>\n      </Popover>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PopoverOpenByDefaultExample: View {\n  var body: some View {\n    PopoverDimensions(open: true)\n  }\n}\n\nstruct PopoverDimensions: View {\n  @State private var open: Bool\n\n  init(open: Bool) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Open popover\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .popover(isPresented: $open) {\n        PopoverContent(width: 320) {\n          PopoverHeader {\n            PopoverTitle(\"Dimensions\")\n            PopoverDescription(\"Set the dimensions for the layer.\")\n          }\n          VStack(spacing: 8) {\n            PopoverDimensionRow(label: \"Width\", value: \"100%\")\n            PopoverDimensionRow(label: \"Max. width\", value: \"300px\")\n            PopoverDimensionRow(label: \"Height\", value: \"25px\")\n          }\n        }\n      }\n  }\n}\n\nstruct PopoverDimensionRow: View {\n  let label: String\n\n  @State private var value: String\n\n  init(label: String, value: String) {\n    self.label = label\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    HStack(spacing: 16) {\n      FieldLabel(label)\n        .frame(width: 96, alignment: .leading)\n        .accessibilityHidden(true)\n      TextField(label, text: $value)\n        .textFieldStyle(.input(size: .sm))\n        .accessibilityLabel(Text(label))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Popover\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun PopoverOpenByDefaultExample() {\n    PopoverDimensions(defaultOpen = true)\n}\n\n@Composable\nfun PopoverDimensions(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Popover(\n            open = open,\n            onOpenChange = { open = it },\n            trigger = { Button(\"Open popover\", onClick = { open = true }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(320.dp),\n            align = PopupAlign.Start,\n        ) {\n            PopoverDimensionsContent()\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-popover--open-by-default" />
 
 `Popover` positions a panel next to its `PopoverTrigger`. `PopoverContent` renders in a portal, is placed on any `side` with an `align` and offsets, and animates in with a short fade, scale and slide using Reanimated. On iOS the content is wrapped in a `FullWindowOverlay` from `react-native-screens`, so it draws above native modals.
 
@@ -168,19 +194,25 @@ Use `PopoverHeader`, `PopoverTitle` and `PopoverDescription` to label the panel.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add popover"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add popover --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add popover --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover --platform kotlin
+```
 
 </Only>
 
@@ -196,13 +228,15 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/popover.tsx`:
 
-<SourceFile path="uniwind/components/ui/popover.tsx" />
+<ComponentSource path="uniwind/components/ui/popover.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -212,13 +246,15 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/popover.tsx`:
 
-<SourceFile path="nativewind/components/ui/popover.tsx" />
+<ComponentSource path="nativewind/components/ui/popover.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -228,13 +264,15 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/popover.tsx`:
 
-<SourceFile path="stylesheet/components/ui/popover.tsx" />
+<ComponentSource path="stylesheet/components/ui/popover.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -250,35 +288,37 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Popover.swift" />
+<ComponentSource path="swift/Components/Popover.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Dialog.swift" />
+<ComponentSource path="swift/Components/Dialog.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -288,27 +328,32 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Popover.kt" />
+<ComponentSource path="kotlin/components/Popover.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -316,9 +361,46 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 ## Usage
 
-<Code lang="tsx" code={"import { PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from \"@/components/ui/popover\""} />
+```tsx
+import { PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
+```
 
-<Code lang="tsx" code={"<View className=\"items-start\">\n  <Popover defaultOpen>\n    <PopoverTrigger render={<Button variant=\"outline\" />}>\n      <Text>Open popover</Text>\n    </PopoverTrigger>\n    <PopoverContent align=\"start\" className=\"w-80\">\n      <View className=\"gap-4\">\n        <PopoverHeader>\n          <PopoverTitle>Dimensions</PopoverTitle>\n          <PopoverDescription>\n            Set the dimensions for the layer.\n          </PopoverDescription>\n        </PopoverHeader>\n        <View className=\"gap-2\">\n          {dimensions.map((dimension) => (\n            <View\n              key={dimension.id}\n              className=\"flex-row items-center gap-4\"\n            >\n              <Label nativeID={`popover-${dimension.id}`} className=\"w-24\">\n                {dimension.label}\n              </Label>\n              <Input\n                accessibilityLabelledBy={`popover-${dimension.id}`}\n                defaultValue={dimension.value}\n                className=\"h-8 flex-1\"\n              />\n            </View>\n          ))}\n        </View>\n      </View>\n    </PopoverContent>\n  </Popover>\n</View>"} />
+```tsx
+<View className="items-start">
+  <Popover defaultOpen>
+    <PopoverTrigger render={<Button variant="outline" />}>
+      <Text>Open popover</Text>
+    </PopoverTrigger>
+    <PopoverContent align="start" className="w-80">
+      <View className="gap-4">
+        <PopoverHeader>
+          <PopoverTitle>Dimensions</PopoverTitle>
+          <PopoverDescription>
+            Set the dimensions for the layer.
+          </PopoverDescription>
+        </PopoverHeader>
+        <View className="gap-2">
+          {dimensions.map((dimension) => (
+            <View
+              key={dimension.id}
+              className="flex-row items-center gap-4"
+            >
+              <Label nativeID={`popover-${dimension.id}`} className="w-24">
+                {dimension.label}
+              </Label>
+              <Input
+                accessibilityLabelledBy={`popover-${dimension.id}`}
+                defaultValue={dimension.value}
+                className="h-8 flex-1"
+              />
+            </View>
+          ))}
+        </View>
+      </View>
+    </PopoverContent>
+  </Popover>
+</View>
+```
 
 The popover is uncontrolled by default. Use `defaultOpen` to start open, or `open` with `onOpenChange` to control it. `onOpenChangeComplete` runs after the open or close animation.
 
@@ -332,55 +414,25 @@ Use `portalHost` on `PopoverContent` to render into a named portal host.
 
 ### Default
 
-<NativeExample id="components-popover--default" width={880} height={744} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\n\nconst dimensions = [\n  { id: \"width\", label: \"Width\", value: \"100%\" },\n  { id: \"max-width\", label: \"Max. width\", value: \"300px\" },\n  { id: \"height\", label: \"Height\", value: \"25px\" },\n]\n\nexport function PopoverExample() {\n  return (\n    <View className=\"items-start\">\n      <Popover>\n        <PopoverTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open popover</Text>\n        </PopoverTrigger>\n        <PopoverContent align=\"start\" className=\"w-80\">\n          <View className=\"gap-4\">\n            <PopoverHeader>\n              <PopoverTitle>Dimensions</PopoverTitle>\n              <PopoverDescription>\n                Set the dimensions for the layer.\n              </PopoverDescription>\n            </PopoverHeader>\n            <View className=\"gap-2\">\n              {dimensions.map((dimension) => (\n                <View\n                  key={dimension.id}\n                  className=\"flex-row items-center gap-4\"\n                >\n                  <Label nativeID={`popover-${dimension.id}`} className=\"w-24\">\n                    {dimension.label}\n                  </Label>\n                  <Input\n                    accessibilityLabelledBy={`popover-${dimension.id}`}\n                    defaultValue={dimension.value}\n                    className=\"h-8 flex-1\"\n                  />\n                </View>\n              ))}\n            </View>\n          </View>\n        </PopoverContent>\n      </Popover>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PopoverExample: View {\n  var body: some View {\n    PopoverDimensions(open: false)\n  }\n}\n\nstruct PopoverDimensions: View {\n  @State private var open: Bool\n\n  init(open: Bool) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Open popover\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .popover(isPresented: $open) {\n        PopoverContent(width: 320) {\n          PopoverHeader {\n            PopoverTitle(\"Dimensions\")\n            PopoverDescription(\"Set the dimensions for the layer.\")\n          }\n          VStack(spacing: 8) {\n            PopoverDimensionRow(label: \"Width\", value: \"100%\")\n            PopoverDimensionRow(label: \"Max. width\", value: \"300px\")\n            PopoverDimensionRow(label: \"Height\", value: \"25px\")\n          }\n        }\n      }\n  }\n}\n\nstruct PopoverDimensionRow: View {\n  let label: String\n\n  @State private var value: String\n\n  init(label: String, value: String) {\n    self.label = label\n    _value = State(initialValue: value)\n  }\n\n  var body: some View {\n    HStack(spacing: 16) {\n      FieldLabel(label)\n        .frame(width: 96, alignment: .leading)\n        .accessibilityHidden(true)\n      TextField(label, text: $value)\n        .textFieldStyle(.input(size: .sm))\n        .accessibilityLabel(Text(label))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Popover\nimport com.esuiss.ui.components.PopupAlign\n\n@Composable\nfun PopoverExample() {\n    PopoverDimensions(defaultOpen = false)\n}\n\n@Composable\nfun PopoverDimensions(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Popover(\n            open = open,\n            onOpenChange = { open = it },\n            trigger = { Button(\"Open popover\", onClick = { open = true }, variant = ButtonVariant.Outline) },\n            modifier = Modifier.width(320.dp),\n            align = PopupAlign.Start,\n        ) {\n            PopoverDimensionsContent()\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-popover--default" />
 
 ### Sides
 
 Popovers opened on each of the four sides.
 
-<NativeExample id="components-popover--sides" width={880} height={659} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function PopoverSidesExample() {\n  return (\n    <View className=\"items-center gap-4 py-24\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <Popover key={side}>\n          <PopoverTrigger render={<Button variant=\"outline\" />}>\n            <Text className=\"capitalize\">{side}</Text>\n          </PopoverTrigger>\n          <PopoverContent side={side} className=\"w-56\">\n            <Text className=\"text-sm\">Popover on the {side}.</Text>\n          </PopoverContent>\n        </Popover>\n      ))}\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PopoverSidesExample: View {\n  var body: some View {\n    VStack(spacing: 16) {\n      PopoverSide(title: \"Top\", edge: .top)\n      PopoverSide(title: \"Right\", edge: .trailing)\n      PopoverSide(title: \"Bottom\", edge: .bottom)\n      PopoverSide(title: \"Left\", edge: .leading)\n    }\n    .padding(.vertical, 96)\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct PopoverSide: View {\n  let title: String\n  let edge: Edge\n\n  @State private var open = false\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .popover(isPresented: $open, arrowEdge: edge) {\n        PopoverContent(width: 224) {\n          Text(verbatim: \"Popover on the \\(title.lowercased()).\")\n            .textStyle(.sm)\n        }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.key\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Popover\nimport com.esuiss.ui.components.PopupSide\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PopoverSides() {\n    Column(\n        modifier = Modifier.fillMaxWidth().padding(vertical = 96.dp),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(16.dp),\n    ) {\n        listOf(\n            PopupSide.Top to \"top\",\n            PopupSide.Right to \"right\",\n            PopupSide.Bottom to \"bottom\",\n            PopupSide.Left to \"left\",\n        ).forEach { (side, name) ->\n            key(name) {\n                var open by rememberSaveable { mutableStateOf(false) }\n                Popover(\n                    open = open,\n                    onOpenChange = { open = it },\n                    trigger = {\n                        Button(name.replaceFirstChar { it.uppercaseChar() }, onClick = { open = true }, variant = ButtonVariant.Outline)\n                    },\n                    modifier = Modifier.width(224.dp),\n                    side = side,\n                ) {\n                    Text(\"Popover on the $name.\", style = Typography.sm)\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-popover--sides" />
 
 ### Simple
 
 A short text popover aligned to the start of its trigger.
 
-<NativeExample id="components-popover--simple" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function PopoverSimpleExample() {\n  return (\n    <View className=\"items-start\">\n      <Popover>\n        <PopoverTrigger render={<Button />}>\n          <Text>Info</Text>\n        </PopoverTrigger>\n        <PopoverContent align=\"start\" className=\"w-64\">\n          <Text className=\"text-sm\">\n            Popovers display rich content next to a trigger.\n          </Text>\n        </PopoverContent>\n      </Popover>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PopoverSimple: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Info\") { open = true }\n      .buttonStyle(.variant())\n      .popover(isPresented: $open) {\n        PopoverContent(width: 256) {\n          Text(\"Popovers display rich content next to a trigger.\")\n            .textStyle(.sm)\n        }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.Popover\nimport com.esuiss.ui.components.PopupAlign\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PopoverSimple() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Popover(\n            open = open,\n            onOpenChange = { open = it },\n            trigger = { Button(\"Info\", onClick = { open = true }) },\n            modifier = Modifier.width(256.dp),\n            align = PopupAlign.Start,\n        ) {\n            Text(\"Popovers display rich content next to a trigger.\", style = Typography.sm)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-popover--simple" />
 
 ### Detached triggers
 
 Several triggers sharing one popover through a handle, each passing its own payload.
 
-<NativeExample id="components-popover--detached-triggers" width={880} height={488} platforms={["React Native","SwiftUI"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { createHandle } from \"@/components/primitives/popover\"\nimport { Button } from \"@/components/ui/button\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Text } from \"@/components/ui/text\"\n\nconst members = [\n  { id: \"ada\", name: \"Ada\", role: \"Design lead\" },\n  { id: \"linus\", name: \"Linus\", role: \"Platform engineer\" },\n  { id: \"grace\", name: \"Grace\", role: \"Product manager\" },\n]\n\nconst memberPopover = createHandle<(typeof members)[number]>()\n\nexport function PopoverDetachedTriggersExample() {\n  return (\n    <View className=\"flex-row items-start gap-2\">\n      {members.map((member) => (\n        <PopoverTrigger\n          key={member.id}\n          id={member.id}\n          handle={memberPopover}\n          payload={member}\n          render={<Button variant=\"outline\" />}\n        >\n          <Text>{member.name}</Text>\n        </PopoverTrigger>\n      ))}\n      <Popover handle={memberPopover}>\n        {({ payload }) => (\n          <PopoverContent align=\"start\">\n            <PopoverHeader>\n              <PopoverTitle>{payload?.name}</PopoverTitle>\n              <PopoverDescription>{payload?.role}</PopoverDescription>\n            </PopoverHeader>\n          </PopoverContent>\n        )}\n      </Popover>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PopoverMember: Identifiable {\n  let id: String\n  let name: String\n  let role: String\n}\n\nstruct PopoverDetached: View {\n  private static let members = [\n    PopoverMember(id: \"ada\", name: \"Ada\", role: \"Design lead\"),\n    PopoverMember(id: \"linus\", name: \"Linus\", role: \"Platform engineer\"),\n    PopoverMember(id: \"grace\", name: \"Grace\", role: \"Product manager\"),\n  ]\n\n  @State private var openID: String?\n\n  var body: some View {\n    HStack(alignment: .top, spacing: 8) {\n      ForEach(Self.members) { member in\n        Button(member.name) { openID = member.id }\n          .buttonStyle(.variant(.outline))\n          .popover(isPresented: binding(member.id)) {\n            PopoverContent(width: nil) {\n              PopoverHeader {\n                PopoverTitle(LocalizedStringKey(member.name))\n                PopoverDescription(LocalizedStringKey(member.role))\n              }\n            }\n          }\n      }\n    }\n  }\n\n  func binding(_ id: String) -> Binding<Bool> {\n    Binding {\n      openID == id\n    } set: { open in\n      if !open, openID == id { openID = nil }\n    }\n  }\n}\n\nlet members = [\n  PopoverMember(id: \"ada\", name: \"Ada\", role: \"Design lead\"),\n  PopoverMember(id: \"linus\", name: \"Linus\", role: \"Platform engineer\"),\n  PopoverMember(id: \"grace\", name: \"Grace\", role: \"Product manager\"),\n]"} />
-
-</NativeExample>
+<NativeExample id="components-popover--detached-triggers" />
 
 ## API Reference
 
@@ -390,7 +442,11 @@ Several triggers sharing one popover through a handle, each passing its own payl
 
 Animated panel rendered in a portal and positioned next to the trigger.
 
-<PropsTable extends={["React.ComponentProps<typeof PopoverPrimitive.Popup>","React.ComponentProps<typeof PopoverPrimitive.Positioner>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`, `React.ComponentProps<typeof PopoverPrimitive.Positioner>`.
 
 </ApiPart>
 
@@ -400,7 +456,7 @@ Animated panel rendered in a portal and positioned next to the trigger.
 
 Column for the title and description.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -410,7 +466,7 @@ Column for the title and description.
 
 Heading that labels the panel.
 
-<PropsTable extends={["React.ComponentProps<typeof PopoverPrimitive.Title>"]} />
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Title>`.
 
 </ApiPart>
 
@@ -420,7 +476,7 @@ Heading that labels the panel.
 
 Secondary text under the title.
 
-<PropsTable extends={["React.ComponentProps<typeof PopoverPrimitive.Description>"]} />
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Description>`.
 
 </ApiPart>
 

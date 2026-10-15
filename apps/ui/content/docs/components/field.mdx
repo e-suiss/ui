@@ -3,16 +3,11 @@ title: Field
 description: "Building blocks for form fields that pair controls with labels, descriptions and error messages."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="field" story="Default">
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-username\">Username</FieldLabel>\n        <Input id=\"field-username\" placeholder=\"janedoe\" />\n        <FieldDescription>\n          Choose a unique name for your account.\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-demo" />
 
 A `Field` wraps one control together with its `FieldLabel`, an optional `FieldDescription` and an optional `FieldError`. It automatically adds the ids of its descriptions and errors to the control's `aria-describedby`, so supporting text is announced with the control. Use `FieldContent` to stack a label and description beside a control in a horizontal field, and `FieldTitle` for a non-label heading inside a field.
 
@@ -22,27 +17,43 @@ A `Field` wraps one control together with its `FieldLabel`, an optional `FieldDe
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add field"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add field
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+```bash title="Terminal"
+npm install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Label](/docs/components/label), [Separator](/docs/components/separator).
 
 3. Copy the source into `components/ui/field.tsx`:
 
-<SourceFile path="components/ui/field.tsx" />
+<ComponentSource path="components/ui/field.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from \"@/components/ui/field\""} />
+```tsx
+import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from "@/components/ui/field"
+```
 
-<Code lang="tsx" code={"<div className=\"w-96\">\n  <Field orientation=\"vertical\">\n    <FieldLabel htmlFor=\"field-username\">Username</FieldLabel>\n    <Input id=\"field-username\" placeholder=\"janedoe\" />\n    <FieldDescription>\n      Choose a unique name for your account.\n    </FieldDescription>\n  </Field>\n</div>"} />
+```tsx
+<div className="w-96">
+  <Field orientation="vertical">
+    <FieldLabel htmlFor="field-username">Username</FieldLabel>
+    <Input id="field-username" placeholder="janedoe" />
+    <FieldDescription>
+      Choose a unique name for your account.
+    </FieldDescription>
+  </Field>
+</div>
+```
 
 Connect each `FieldLabel` to its control with `htmlFor` and `id`. Set `orientation="horizontal"` to place the label beside the control, for example for a checkbox or switch, or `responsive` to switch from vertical to horizontal when the surrounding `FieldGroup` is wide enough.
 
@@ -56,105 +67,94 @@ To build selectable cards, place a horizontal `Field` inside a `FieldLabel`; the
 
 A description that contains a link, styled with the link color and an underline.
 
-<Example kind="ui" name="field" story="WithHelpLink">
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldWithHelpLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-serial\">Serial number</FieldLabel>\n        <Input id=\"field-serial\" placeholder=\"C02XL0GTJGH5\" />\n        <FieldDescription>\n          Printed on the back of the device.{\" \"}\n          <a href=\"#serial-help\">Find your serial number</a>\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-with-help-link" />
 
 ### Inset
 
 Horizontal fields in an `inset` field group, forming a rounded settings list with separators.
 
-<Example kind="ui" name="field" story="Inset">
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldInsetExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldSet className=\"w-96\">\n        <FieldLegend>Account</FieldLegend>\n        <FieldGroup variant=\"inset\">\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-name\">Name</FieldLabel>\n            <Input id=\"inset-name\" defaultValue=\"Jordan Lee\" />\n          </Field>\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-email\">Email</FieldLabel>\n            <Input id=\"inset-email\" defaultValue=\"jordan@acme.com\" />\n          </Field>\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-updates\">Product updates</FieldLabel>\n            <Switch id=\"inset-updates\" defaultChecked />\n          </Field>\n        </FieldGroup>\n        <FieldDescription>\n          Your name and email appear on invoices.\n        </FieldDescription>\n      </FieldSet>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-inset" />
 
 ### With textarea
 
 A field that labels and describes a `Textarea`.
 
-<Example kind="ui" name="field" story="WithTextarea">
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldWithTextareaExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-feedback\">Feedback</FieldLabel>\n        <Textarea\n          id=\"field-feedback\"\n          placeholder=\"Tell us what you think...\"\n          rows={4}\n        />\n        <FieldDescription>Your feedback helps us improve.</FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-with-textarea" />
 
 ### Invalid
 
 An invalid field with an error message announced as an alert.
 
-<Example kind="ui" name="field" story="Invalid">
-
-<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldInvalidExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-invalid>\n        <FieldLabel htmlFor=\"field-email\">Email</FieldLabel>\n        <Input id=\"field-email\" type=\"email\" defaultValue=\"jane@\" aria-invalid />\n        <FieldError>Enter a valid email address.</FieldError>\n      </Field>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-invalid" />
 
 ### Multiple errors
 
 A `FieldError` that renders an `errors` array as a bulleted list.
 
-<Example kind="ui" name="field" story="MultipleErrors">
-
-<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldMultipleErrorsExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-invalid>\n        <FieldLabel htmlFor=\"field-password\">Password</FieldLabel>\n        <Input\n          id=\"field-password\"\n          type=\"password\"\n          defaultValue=\"abc\"\n          aria-invalid\n        />\n        <FieldError\n          errors={[\n            { message: \"Password must be at least 8 characters.\" },\n            { message: \"Password must contain a number.\" },\n          ]}\n        />\n      </Field>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-multiple-errors" />
 
 ### Disabled
 
 A disabled field with a dimmed label and a disabled input.
 
-<Example kind="ui" name="field" story="Disabled">
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldDisabledExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-disabled>\n        <FieldLabel htmlFor=\"field-disabled\">Workspace URL</FieldLabel>\n        <Input id=\"field-disabled\" defaultValue=\"acme.example.com\" disabled />\n        <FieldDescription>Contact an admin to change this.</FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-disabled" />
 
 ### Horizontal
 
 Horizontal fields with a checkbox and a switch, one with a description in `FieldContent`.
 
-<Example kind="ui" name="field" story="Horizontal">
-
-<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldHorizontalExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldGroup>\n        <Field orientation=\"horizontal\">\n          <Checkbox id=\"field-terms\" defaultChecked />\n          <FieldLabel htmlFor=\"field-terms\">\n            Accept terms and conditions\n          </FieldLabel>\n        </Field>\n        <Field orientation=\"horizontal\">\n          <FieldContent>\n            <FieldLabel htmlFor=\"field-marketing\">Marketing emails</FieldLabel>\n            <FieldDescription>\n              Receive emails about new products and features.\n            </FieldDescription>\n          </FieldContent>\n          <Switch id=\"field-marketing\" />\n        </Field>\n      </FieldGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-horizontal" />
 
 ### Choice cards
 
 Radio options presented as selectable cards by nesting a `Field` inside a `FieldLabel`.
 
-<Example kind="ui" name="field" story="ChoiceCards">
-
-<Code lang="tsx" code={"import { Field, FieldContent, FieldDescription, FieldLabel, FieldLegend, FieldSet, FieldTitle } from \"@/components/ui/field\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function FieldChoiceCardsExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldSet>\n        <FieldLegend variant=\"label\">Plan</FieldLegend>\n        <FieldDescription>Select the plan that fits your team.</FieldDescription>\n        <RadioGroup defaultValue=\"pro\">\n          <FieldLabel htmlFor=\"plan-starter\">\n            <Field orientation=\"horizontal\">\n              <FieldContent>\n                <FieldTitle>Starter</FieldTitle>\n                <FieldDescription>\n                  For individuals and small projects.\n                </FieldDescription>\n              </FieldContent>\n              <RadioGroupItem value=\"starter\" id=\"plan-starter\" />\n            </Field>\n          </FieldLabel>\n          <FieldLabel htmlFor=\"plan-pro\">\n            <Field orientation=\"horizontal\">\n              <FieldContent>\n                <FieldTitle>Pro</FieldTitle>\n                <FieldDescription>\n                  For growing teams that need more.\n                </FieldDescription>\n              </FieldContent>\n              <RadioGroupItem value=\"pro\" id=\"plan-pro\" />\n            </Field>\n          </FieldLabel>\n        </RadioGroup>\n      </FieldSet>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-choice-cards" />
 
 ### Form
 
 A complete payment form built from field sets, groups, a separator and actions.
 
-<Example kind="ui" name="field" story="Form">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldFormExample() {\n  return (\n    <div className=\"w-96\">\n      <form onSubmit={(event) => event.preventDefault()}>\n        <FieldGroup>\n          <FieldSet>\n            <FieldLegend>Payment method</FieldLegend>\n            <FieldDescription>\n              All transactions are secure and encrypted.\n            </FieldDescription>\n            <FieldGroup>\n              <Field>\n                <FieldLabel htmlFor=\"form-name\">Name on card</FieldLabel>\n                <Input id=\"form-name\" placeholder=\"Jane Doe\" required />\n              </Field>\n              <Field>\n                <FieldLabel htmlFor=\"form-number\">Card number</FieldLabel>\n                <Input\n                  id=\"form-number\"\n                  placeholder=\"1234 5678 9012 3456\"\n                  required\n                />\n                <FieldDescription>Enter your 16-digit number.</FieldDescription>\n              </Field>\n              <div className=\"grid grid-cols-2 gap-4\">\n                <Field>\n                  <FieldLabel htmlFor=\"form-exp\">Expiry</FieldLabel>\n                  <Input id=\"form-exp\" placeholder=\"MM/YY\" />\n                </Field>\n                <Field>\n                  <FieldLabel htmlFor=\"form-cvv\">CVV</FieldLabel>\n                  <Input id=\"form-cvv\" placeholder=\"123\" />\n                </Field>\n              </div>\n            </FieldGroup>\n          </FieldSet>\n          <FieldSeparator />\n          <FieldSet>\n            <FieldLegend>Billing address</FieldLegend>\n            <FieldGroup>\n              <Field orientation=\"horizontal\">\n                <Checkbox id=\"form-same\" defaultChecked />\n                <FieldLabel htmlFor=\"form-same\" className=\"font-normal\">\n                  Same as shipping address\n                </FieldLabel>\n              </Field>\n            </FieldGroup>\n          </FieldSet>\n          <FieldSet>\n            <FieldGroup>\n              <Field>\n                <FieldLabel htmlFor=\"form-notes\">Notes</FieldLabel>\n                <Textarea\n                  id=\"form-notes\"\n                  placeholder=\"Add any additional comments\"\n                />\n              </Field>\n            </FieldGroup>\n          </FieldSet>\n          <Field orientation=\"horizontal\">\n            <Button type=\"submit\">Submit</Button>\n            <Button variant=\"outline\" type=\"button\">\n              Cancel\n            </Button>\n          </Field>\n        </FieldGroup>\n      </form>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-form" />
 
 ### Separator with text
 
 A `FieldSeparator` with text between a sign-in button and an email field.
 
-<Example kind="ui" name="field" story="SeparatorWithText">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Field, FieldGroup, FieldLabel, FieldSeparator } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldSeparatorWithTextExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldGroup>\n        <Field>\n          <Button variant=\"outline\">Continue with Apple</Button>\n        </Field>\n        <FieldSeparator>Or continue with</FieldSeparator>\n        <Field>\n          <FieldLabel htmlFor=\"sep-email\">Email</FieldLabel>\n          <Input id=\"sep-email\" type=\"email\" placeholder=\"jane@example.com\" />\n        </Field>\n      </FieldGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="field-separator-with-text" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]},{"name":"FieldError","href":"#fielderror","children":[]}]},{"name":"FieldSet","href":"#fieldset","children":[{"name":"FieldLegend","href":"#fieldlegend","children":[]},{"name":"FieldGroup","href":"#fieldgroup","children":[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]}]}]},{"name":"FieldDescription","href":"#fielddescription","children":[]},{"name":"FieldLabel","href":"#fieldlabel","children":[{"name":"Field","href":"#field","children":[{"name":"FieldContent","href":"#fieldcontent","children":[{"name":"FieldTitle","href":"#fieldtitle","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]}]}]}]},{"name":"FieldGroup","href":"#fieldgroup","children":[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldContent","href":"#fieldcontent","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldSet","href":"#fieldset","children":[{"name":"FieldLegend","href":"#fieldlegend","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldSeparator","href":"#fieldseparator","children":[]}]}]} />
+<Anatomy>
+
+- [Field](#field)
+  - [FieldLabel](#fieldlabel)
+  - [FieldDescription](#fielddescription)
+  - [FieldError](#fielderror)
+- [FieldSet](#fieldset)
+  - [FieldLegend](#fieldlegend)
+  - [FieldGroup](#fieldgroup)
+    - [Field](#field)
+      - [FieldLabel](#fieldlabel)
+  - [FieldDescription](#fielddescription)
+  - [FieldLabel](#fieldlabel)
+    - [Field](#field)
+      - [FieldContent](#fieldcontent)
+        - [FieldTitle](#fieldtitle)
+        - [FieldDescription](#fielddescription)
+- [FieldGroup](#fieldgroup)
+  - [Field](#field)
+    - [FieldLabel](#fieldlabel)
+    - [FieldContent](#fieldcontent)
+      - [FieldLabel](#fieldlabel)
+      - [FieldDescription](#fielddescription)
+    - [FieldDescription](#fielddescription)
+  - [FieldSet](#fieldset)
+    - [FieldLegend](#fieldlegend)
+    - [FieldDescription](#fielddescription)
+  - [FieldSeparator](#fieldseparator)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -162,7 +162,7 @@ A `FieldSeparator` with text between a sign-in button and an email field.
 
 Groups related fields in a native `fieldset`.
 
-<PropsTable extends={["React.ComponentProps<\"fieldset\">"]} />
+Also accepts the props of `React.ComponentProps<"fieldset">`.
 
 </ApiPart>
 
@@ -172,7 +172,11 @@ Groups related fields in a native `fieldset`.
 
 The caption of a field set.
 
-<PropsTable extends={["React.ComponentProps<\"legend\">"]} props={[{"name":"variant","type":"\"legend\" | \"label\"","default":"\"legend\"","description":"Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"legend" \| "label"` | `"legend"` | Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label. |
+
+Also accepts the props of `React.ComponentProps<"legend">`.
 
 </ApiPart>
 
@@ -182,7 +186,11 @@ The caption of a field set.
 
 Stacks fields with consistent spacing, or groups them into an inset list.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -192,7 +200,11 @@ Stacks fields with consistent spacing, or groups them into an inset list.
 
 Wraps a single control with its label, description and error.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"orientation","type":"\"vertical\" | \"horizontal\" | \"responsive\"","default":"\"vertical\"","description":"`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `"vertical" \| "horizontal" \| "responsive"` | `"vertical"` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -202,7 +214,7 @@ Wraps a single control with its label, description and error.
 
 Stacks a label and description next to a control in a horizontal field.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -212,7 +224,7 @@ Stacks a label and description next to a control in a horizontal field.
 
 The label of a field's control.
 
-<PropsTable extends={["React.ComponentProps<typeof Label>"]} />
+Also accepts the props of `React.ComponentProps<typeof Label>`.
 
 </ApiPart>
 
@@ -222,7 +234,7 @@ The label of a field's control.
 
 A heading inside a field that is not a label, such as the title of a choice card.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -232,7 +244,7 @@ A heading inside a field that is not a label, such as the title of a choice card
 
 Supporting text that describes the control.
 
-<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+Also accepts the props of `React.ComponentProps<"p">`.
 
 </ApiPart>
 
@@ -242,7 +254,11 @@ Supporting text that describes the control.
 
 A divider between sections, with optional centered text.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"children","type":"React.ReactNode","description":"Optional text centered on the separator line."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - | Optional text centered on the separator line. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -252,7 +268,11 @@ A divider between sections, with optional centered text.
 
 An error message for the field.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"errors","type":"Array<{ message?: string } | undefined>","description":"A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `errors` | `Array<{ message?: string } \| undefined>` | - | A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -275,15 +295,7 @@ An error message for the field.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-field--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldExample() {\n  return (\n    <Field>\n      <FieldLabel>Username</FieldLabel>\n      <Input placeholder=\"evilrabbit\" autoCapitalize=\"none\" />\n      <FieldDescription>\n        Choose a unique username for your account.\n      </FieldDescription>\n    </Field>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct FieldDefaultDemo: View {\n  @State private var username = \"\"\n\n  var body: some View {\n    Field {\n      FieldLabel(\"Username\")\n        .accessibilityHidden(true)\n      TextField(\"evilrabbit\", text: $username)\n        .textFieldStyle(.input)\n        .textInputAutocapitalization(.never)\n        .accessibilityLabel(Text(\"Username\"))\n      FieldDescription(\"Choose a unique username for your account.\")\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\n\nval FieldPlainText = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false)\n\n@Composable\nfun FieldDefault() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Field {\n        FieldLabel(\"Username\")\n        Input(\n            value,\n            { value = it },\n            Modifier.semantics { contentDescription = \"Username\" },\n            placeholder = \"evilrabbit\",\n            keyboardOptions = FieldPlainText,\n        )\n        FieldDescription(\"Choose a unique username for your account.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--default" />
 
 `Field` wraps one control, such as an `Input`, `Textarea` or `Switch`, with a `FieldLabel`, an optional `FieldDescription` and a `FieldError`. It shares the field's disabled and invalid state with the control and handles validation: required values, length limits and custom `validate` functions, checked on submit, blur or change.
 
@@ -293,19 +305,25 @@ An error message for the field.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add field"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add field
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add field --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add field --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add field --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add field --platform kotlin
+```
 
 </Only>
 
@@ -321,13 +339,15 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Separator](/docs/components/separator), and the primitives `components/primitives/field.tsx`, `components/primitives/fieldset.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/field.tsx`:
 
-<SourceFile path="uniwind/components/ui/field.tsx" />
+<ComponentSource path="uniwind/components/ui/field.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -337,13 +357,15 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Separator](/docs/components/separator), and the primitives `components/primitives/field.tsx`, `components/primitives/fieldset.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/field.tsx`:
 
-<SourceFile path="nativewind/components/ui/field.tsx" />
+<ComponentSource path="nativewind/components/ui/field.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -355,7 +377,7 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 2. Copy the source into `components/ui/field.tsx`:
 
-<SourceFile path="stylesheet/components/ui/field.tsx" />
+<ComponentSource path="stylesheet/components/ui/field.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -371,17 +393,17 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -391,25 +413,29 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -417,9 +443,19 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 ## Usage
 
-<Code lang="tsx" code={"import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from \"@/components/ui/field\""} />
+```tsx
+import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from "@/components/ui/field"
+```
 
-<Code lang="tsx" code={"<Field>\n  <FieldLabel>Username</FieldLabel>\n  <Input placeholder=\"evilrabbit\" autoCapitalize=\"none\" />\n  <FieldDescription>\n    Choose a unique username for your account.\n  </FieldDescription>\n</Field>"} />
+```tsx
+<Field>
+  <FieldLabel>Username</FieldLabel>
+  <Input placeholder="evilrabbit" autoCapitalize="none" />
+  <FieldDescription>
+    Choose a unique username for your account.
+  </FieldDescription>
+</Field>
+```
 
 Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control is labelled by the label and uses the description and error text as its accessibility hint. Set `invalid` to force the error state, or let validation decide it.
 
@@ -433,99 +469,43 @@ Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control i
 
 A field in the invalid state with an error message.
 
-<NativeExample id="components-field--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldInvalidExample() {\n  return (\n    <Field invalid>\n      <FieldLabel>Email</FieldLabel>\n      <Input\n        defaultValue=\"hello@\"\n        keyboardType=\"email-address\"\n        autoCapitalize=\"none\"\n      />\n      <FieldDescription>\n        We will send a confirmation link here.\n      </FieldDescription>\n      <FieldError>Enter a valid email address.</FieldError>\n    </Field>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct FieldInvalidDemo: View {\n  @State private var email = \"hello@\"\n\n  var body: some View {\n    Field(invalid: true) {\n      FieldLabel(\"Email\")\n        .accessibilityHidden(true)\n      TextField(\"Email\", text: $email)\n        .textFieldStyle(.input)\n        .keyboardType(.emailAddress)\n        .textInputAutocapitalization(.never)\n        .accessibilityLabel(Text(\"Email\"))\n      FieldDescription(\"We will send a confirmation link here.\")\n      FieldError(\"Enter a valid email address.\")\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldError\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\n\nval FieldEmailText = KeyboardOptions(\n    capitalization = KeyboardCapitalization.None,\n    autoCorrectEnabled = false,\n    keyboardType = KeyboardType.Email,\n)\n\n@Composable\nfun FieldInvalid() {\n    var value by rememberSaveable { mutableStateOf(\"hello@\") }\n    Field(invalid = true) {\n        FieldLabel(\"Email\")\n        Input(value, { value = it }, Modifier.semantics { contentDescription = \"Email\" }, keyboardOptions = FieldEmailText)\n        FieldDescription(\"We will send a confirmation link here.\")\n        FieldError(\"Enter a valid email address.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--invalid" />
 
 ### Validation
 
 Required, custom and minimum-length validation on blur and on change.
 
-<NativeExample id="components-field--validation" width={880} height={763} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldValidationExample() {\n  return (\n    <FieldGroup>\n      <Field validationMode=\"onBlur\">\n        <FieldLabel>Name</FieldLabel>\n        <Input placeholder=\"Required\" required />\n        <FieldError />\n      </Field>\n      <Field\n        validationMode=\"onChange\"\n        validate={(value) =>\n          typeof value === \"string\" && value.includes(\"@\")\n            ? null\n            : \"Email must contain @.\"\n        }\n      >\n        <FieldLabel>Email</FieldLabel>\n        <Input\n          placeholder=\"m@example.com\"\n          keyboardType=\"email-address\"\n          autoCapitalize=\"none\"\n        />\n        <FieldDescription>Validated on every change.</FieldDescription>\n        <FieldError />\n      </Field>\n      <Field validationMode=\"onBlur\">\n        <FieldLabel>Bio</FieldLabel>\n        <Textarea placeholder=\"At least 20 characters\" minLength={20} />\n        <FieldError match=\"tooShort\">Tell us a little more.</FieldError>\n      </Field>\n    </FieldGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum FieldMessages {\n  static let required = \"This field is required.\"\n\n  static func tooShort(_ minLength: Int) -> String {\n    \"Use at least \\(minLength) characters.\"\n  }\n}\n\nstruct FieldValidationDemo: View {\n  enum Focus: Hashable {\n    case name, email, bio\n  }\n\n  @State private var name = \"\"\n  @State private var email = \"\"\n  @State private var bio = \"\"\n  @State private var nameError: String?\n  @State private var emailError: String?\n  @State private var bioError: String?\n  @State private var nameTouched = false\n  @State private var bioTouched = false\n  @FocusState private var focus: Focus?\n\n  var body: some View {\n    FieldGroup {\n      Field(invalid: nameError != nil) {\n        FieldLabel(\"Name\")\n          .accessibilityHidden(true)\n        TextField(\"Required\", text: $name)\n          .textFieldStyle(.input)\n          .focused($focus, equals: .name)\n          .accessibilityLabel(Text(\"Name\"))\n        FieldError(errors: [nameError])\n      }\n      Field(invalid: emailError != nil) {\n        FieldLabel(\"Email\")\n          .accessibilityHidden(true)\n        TextField(\"m@example.com\", text: $email)\n          .textFieldStyle(.input)\n          .keyboardType(.emailAddress)\n          .textInputAutocapitalization(.never)\n          .focused($focus, equals: .email)\n          .accessibilityLabel(Text(\"Email\"))\n        FieldDescription(\"Validated on every change.\")\n        FieldError(errors: [emailError])\n      }\n      Field(invalid: bioError != nil) {\n        FieldLabel(\"Bio\")\n          .accessibilityHidden(true)\n        TextField(\"At least 20 characters\", text: $bio, axis: .vertical)\n          .textFieldStyle(.textarea)\n          .focused($focus, equals: .bio)\n          .accessibilityLabel(Text(\"Bio\"))\n        if bioError != nil {\n          FieldError(\"Tell us a little more.\")\n        }\n      }\n    }\n    .onChange(of: focus) { previous, _ in\n      switch previous {\n      case .name:\n        nameTouched = true\n        nameError = validateName()\n      case .bio:\n        bioTouched = true\n        bioError = validateBio()\n      default:\n        break\n      }\n    }\n    .onChange(of: name) {\n      if nameTouched { nameError = validateName() }\n    }\n    .onChange(of: email) {\n      emailError = email.contains(\"@\") ? nil : \"Email must contain @.\"\n    }\n    .onChange(of: bio) {\n      if bioTouched { bioError = validateBio() }\n    }\n  }\n\n  func validateName() -> String? {\n    name.isEmpty ? FieldMessages.required : nil\n  }\n\n  func validateBio() -> String? {\n    !bio.isEmpty && bio.count < 20 ? FieldMessages.tooShort(20) : nil\n  }\n}\n\nlet required = \"This field is required.\"\n\nfunc tooShort(_ minLength: Int) -> String {\n  \"Use at least \\(minLength) characters.\"\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.rememberUpdatedState\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.focus.onFocusChanged\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldError\nimport com.esuiss.ui.components.FieldGroup\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Textarea\n\nval FieldEmailText = KeyboardOptions(\n    capitalization = KeyboardCapitalization.None,\n    autoCorrectEnabled = false,\n    keyboardType = KeyboardType.Email,\n)\n\nclass FieldFocus {\n    var focused = false\n}\n\n@Composable\nfun fieldOnBlur(onBlur: () -> Unit): Modifier {\n    val focus = remember { FieldFocus() }\n    val current by rememberUpdatedState(onBlur)\n    return Modifier.onFocusChanged { state ->\n        if (focus.focused && !state.isFocused) current()\n        focus.focused = state.isFocused\n    }\n}\n\n@Composable\nfun FieldValidation() {\n    var name by rememberSaveable { mutableStateOf(\"\") }\n    var nameError by rememberSaveable { mutableStateOf<String?>(null) }\n    var email by rememberSaveable { mutableStateOf(\"\") }\n    var emailError by rememberSaveable { mutableStateOf<String?>(null) }\n    var bio by rememberSaveable { mutableStateOf(\"\") }\n    var bioShort by rememberSaveable { mutableStateOf(false) }\n    FieldGroup {\n        Field(invalid = nameError != null) {\n            FieldLabel(\"Name\")\n            Input(\n                name,\n                {\n                    name = it\n                    if (nameError != null && it.isNotEmpty()) nameError = null\n                },\n                Modifier\n                    .semantics { contentDescription = \"Name\" }\n                    .then(fieldOnBlur { nameError = if (name.isEmpty()) FieldRequiredMessage else null }),\n                placeholder = \"Required\",\n            )\n            FieldError(nameError)\n        }\n        Field(invalid = emailError != null) {\n            FieldLabel(\"Email\")\n            Input(\n                email,\n                {\n                    email = it\n                    emailError = if (it.contains(\"@\")) null else \"Email must contain @.\"\n                },\n                Modifier.semantics { contentDescription = \"Email\" },\n                placeholder = \"m@example.com\",\n                keyboardOptions = FieldEmailText,\n            )\n            FieldDescription(\"Validated on every change.\")\n            FieldError(emailError)\n        }\n        Field(invalid = bioShort) {\n            FieldLabel(\"Bio\")\n            Textarea(\n                bio,\n                {\n                    bio = it\n                    if (bioShort && (it.isEmpty() || it.length >= 20)) bioShort = false\n                },\n                Modifier\n                    .semantics { contentDescription = \"Bio\" }\n                    .then(fieldOnBlur { bioShort = bio.isNotEmpty() && bio.length < 20 }),\n                placeholder = \"At least 20 characters\",\n            )\n            FieldError(if (bioShort) \"Tell us a little more.\" else null)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--validation" />
 
 ### Disabled
 
 A disabled field.
 
-<NativeExample id="components-field--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldDisabledExample() {\n  return (\n    <Field disabled>\n      <FieldLabel>Workspace</FieldLabel>\n      <Input defaultValue=\"acme\" />\n      <FieldDescription>Contact an admin to change this.</FieldDescription>\n    </Field>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct FieldDisabledDemo: View {\n  @State private var workspace = \"acme\"\n\n  var body: some View {\n    Field {\n      FieldLabel(\"Workspace\")\n        .accessibilityHidden(true)\n      TextField(\"Workspace\", text: $workspace)\n        .textFieldStyle(.input)\n        .accessibilityLabel(Text(\"Workspace\"))\n      FieldDescription(\"Contact an admin to change this.\")\n    }\n    .disabled(true)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\n\n@Composable\nfun FieldDisabled() {\n    var value by rememberSaveable { mutableStateOf(\"acme\") }\n    Field(enabled = false) {\n        FieldLabel(\"Workspace\")\n        Input(value, { value = it }, Modifier.semantics { contentDescription = \"Workspace\" })\n        FieldDescription(\"Contact an admin to change this.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--disabled" />
 
 ### Horizontal
 
 Switch rows with a title and description beside the control.
 
-<NativeExample id="components-field--horizontal" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Field, FieldContent, FieldDescription, FieldGroup, FieldSeparator, FieldTitle } from \"@/components/ui/field\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldHorizontalExample() {\n  return (\n    <FieldGroup>\n      <Field orientation=\"horizontal\">\n        <FieldContent>\n          <FieldTitle>Marketing emails</FieldTitle>\n          <FieldDescription>\n            Receive emails about new products.\n          </FieldDescription>\n        </FieldContent>\n        <Switch />\n      </Field>\n      <FieldSeparator />\n      <Field orientation=\"horizontal\">\n        <FieldContent>\n          <FieldTitle>Security emails</FieldTitle>\n          <FieldDescription>\n            Receive emails about your account.\n          </FieldDescription>\n        </FieldContent>\n        <Switch />\n      </Field>\n    </FieldGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct FieldHorizontalDemo: View {\n  @State private var marketing = false\n  @State private var security = false\n\n  var body: some View {\n    FieldGroup {\n      Field(orientation: .horizontal) {\n        FieldContent {\n          FieldTitle(\"Marketing emails\")\n          FieldDescription(\"Receive emails about new products.\")\n        }\n        Toggle(isOn: $marketing) { EmptyView() }\n          .toggleStyle(.switch(size: .default))\n          .accessibilityLabel(Text(\"Marketing emails\"))\n      }\n      FieldSeparator()\n      Field(orientation: .horizontal) {\n        FieldContent {\n          FieldTitle(\"Security emails\")\n          FieldDescription(\"Receive emails about your account.\")\n        }\n        Toggle(isOn: $security) { EmptyView() }\n          .toggleStyle(.switch(size: .default))\n          .accessibilityLabel(Text(\"Security emails\"))\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldContent\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldGroup\nimport com.esuiss.ui.components.FieldOrientation\nimport com.esuiss.ui.components.FieldSeparator\nimport com.esuiss.ui.components.FieldTitle\nimport com.esuiss.ui.components.Switch\n\n@Composable\nfun FieldHorizontal() {\n    var marketing by rememberSaveable { mutableStateOf(false) }\n    var security by rememberSaveable { mutableStateOf(false) }\n    FieldGroup {\n        Field(orientation = FieldOrientation.Horizontal) {\n            FieldContent {\n                FieldTitle(\"Marketing emails\")\n                FieldDescription(\"Receive emails about new products.\")\n            }\n            Switch(marketing, { marketing = it }, Modifier.semantics { contentDescription = \"Marketing emails\" })\n        }\n        FieldSeparator()\n        Field(orientation = FieldOrientation.Horizontal) {\n            FieldContent {\n                FieldTitle(\"Security emails\")\n                FieldDescription(\"Receive emails about your account.\")\n            }\n            Switch(security, { security = it }, Modifier.semantics { contentDescription = \"Security emails\" })\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--horizontal" />
 
 ### Checkbox group
 
 A fieldset of checkboxes with a legend.
 
-<NativeExample id="components-field--checkbox-group" width={880} height={529} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport * as CheckboxGroupPrimitive from \"@/components/primitives/checkbox-group\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { FieldDescription, FieldLegend, FieldSet } from \"@/components/ui/field\"\nimport { Text } from \"@/components/ui/text\"\n\nconst TOPPINGS = [\"cheese\", \"olives\", \"peppers\"]\n\nfunction ToppingsDemo() {\n  const [value, setValue] = React.useState<string[]>([\"cheese\"])\n  return (\n    <FieldSet>\n      <FieldLegend>Toppings</FieldLegend>\n      <FieldDescription>Choose what goes on your pizza.</FieldDescription>\n      <CheckboxGroupPrimitive.Root\n        value={value}\n        onValueChange={setValue}\n        allValues={TOPPINGS}\n        className=\"gap-3\"\n      >\n        <View className=\"flex-row items-center gap-3\">\n          <Checkbox parent />\n          <Text>All toppings</Text>\n        </View>\n        {TOPPINGS.map((topping) => (\n          <View key={topping} className=\"flex-row items-center gap-3 ps-6\">\n            <Checkbox value={topping} />\n            <Text className=\"capitalize\">{topping}</Text>\n          </View>\n        ))}\n      </CheckboxGroupPrimitive.Root>\n    </FieldSet>\n  )\n}\n\nexport function FieldCheckboxGroupExample() {\n  return (\n    <ToppingsDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct FieldToppingsDemo: View {\n  private static let toppings = [\"cheese\", \"olives\", \"peppers\"]\n\n  @State private var selected: Set<String> = [\"cheese\"]\n\n  var body: some View {\n    FieldSet {\n      FieldLegend(\"Toppings\")\n      FieldDescription(\"Choose what goes on your pizza.\")\n      VStack(alignment: .leading, spacing: 12) {\n        Toggle(sources: Self.toppings.map(binding), isOn: \\.self) {\n          Text(\"All toppings\")\n            .textStyle(.base)\n            .foregroundStyle(Color.label)\n        }\n        .toggleStyle(.checkbox)\n        ForEach(Self.toppings, id: \\.self) { topping in\n          Toggle(isOn: binding(topping)) {\n            Text(verbatim: topping.capitalized)\n              .textStyle(.base)\n              .foregroundStyle(Color.label)\n          }\n          .toggleStyle(.checkbox)\n          .padding(.leading, 24)\n        }\n      }\n    }\n  }\n\n  func binding(_ topping: String) -> Binding<Bool> {\n    Binding(\n      get: { selected.contains(topping) },\n      set: { isOn in\n        if isOn { selected.insert(topping) } else { selected.remove(topping) }\n      }\n    )\n  }\n}\n\nlet toppings = [\"cheese\", \"olives\", \"peppers\"]"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.state.ToggleableState\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Checkbox\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldLegend\nimport com.esuiss.ui.components.FieldSet\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TriStateCheckbox\n\nval FieldToppings = listOf(\"cheese\", \"olives\", \"peppers\")\n\n@Composable\nfun FieldCheckboxGroup() {\n    var value by rememberSaveable { mutableStateOf(listOf(\"cheese\")) }\n    val parent = when (value.size) {\n        0 -> ToggleableState.Off\n        FieldToppings.size -> ToggleableState.On\n        else -> ToggleableState.Indeterminate\n    }\n    FieldSet {\n        FieldLegend(\"Toppings\")\n        FieldDescription(\"Choose what goes on your pizza.\")\n        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n                TriStateCheckbox(\n                    parent,\n                    { value = if (parent == ToggleableState.On) emptyList() else FieldToppings },\n                    Modifier.semantics { contentDescription = \"All toppings\" },\n                )\n                Text(\"All toppings\")\n            }\n            FieldToppings.forEach { topping ->\n                val label = topping.replaceFirstChar { it.uppercaseChar() }\n                Row(\n                    modifier = Modifier.padding(start = 24.dp),\n                    horizontalArrangement = Arrangement.spacedBy(12.dp),\n                    verticalAlignment = Alignment.CenterVertically,\n                ) {\n                    Checkbox(\n                        topping in value,\n                        { checked -> value = if (checked) FieldToppings.filter { it in value || it == topping } else value - topping },\n                        Modifier.semantics { contentDescription = label },\n                    )\n                    Text(label)\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--checkbox-group" />
 
 ### Inset
 
 An `inset` group of rows on a rounded surface.
 
-<NativeExample id="components-field--inset" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldInsetExample() {\n  return (\n    <FieldSet>\n      <FieldLegend>Profile</FieldLegend>\n      <FieldGroup variant=\"inset\">\n        <Field orientation=\"horizontal\">\n          <FieldLabel className=\"flex-1 font-normal\">Name</FieldLabel>\n          <Input\n            className=\"h-8 flex-1 bg-transparent px-0 text-right\"\n            defaultValue=\"Ada Lovelace\"\n          />\n        </Field>\n        <Field orientation=\"horizontal\">\n          <FieldLabel className=\"flex-1 font-normal\">City</FieldLabel>\n          <Input\n            className=\"h-8 flex-1 bg-transparent px-0 text-right\"\n            defaultValue=\"London\"\n          />\n        </Field>\n      </FieldGroup>\n    </FieldSet>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct FieldInsetDemo: View {\n  @State private var name = \"Ada Lovelace\"\n  @State private var city = \"London\"\n\n  var body: some View {\n    FieldSet {\n      FieldLegend(\"Profile\")\n      FieldGroup(.inset) {\n        FieldInsetRow(title: \"Name\", text: $name)\n        FieldInsetRow(title: \"City\", text: $city)\n      }\n    }\n  }\n}\n\nstruct FieldInsetRow: View {\n  let title: LocalizedStringKey\n  @Binding var text: String\n\n  var body: some View {\n    Field(orientation: .horizontal) {\n      FieldLabel(title)\n        .frame(maxWidth: .infinity, alignment: .leading)\n        .accessibilityHidden(true)\n      TextField(title, text: $text)\n        .textFieldStyle(.plain)\n        .multilineTextAlignment(.trailing)\n        .textStyle(.base)\n        .foregroundStyle(Color.label)\n        .frame(maxWidth: .infinity, minHeight: 32)\n        .accessibilityLabel(Text(title))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.text.BasicTextField\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.SolidColor\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldGroup\nimport com.esuiss.ui.components.FieldGroupVariant\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.FieldLegend\nimport com.esuiss.ui.components.FieldOrientation\nimport com.esuiss.ui.components.FieldSet\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun FieldInsetInput(value: String, onValueChange: (String) -> Unit, label: String, modifier: Modifier) {\n    val colors = EsuissTheme.colors\n    BasicTextField(\n        value = value,\n        onValueChange = onValueChange,\n        modifier = modifier\n            .height(32.dp)\n            .semantics { contentDescription = label },\n        textStyle = Typography.base.copy(color = colors.label, textAlign = TextAlign.End),\n        singleLine = true,\n        cursorBrush = SolidColor(colors.accent),\n        decorationBox = { inner ->\n            Row(verticalAlignment = Alignment.CenterVertically) { inner() }\n        },\n    )\n}\n\n@Composable\nfun FieldInset() {\n    var name by rememberSaveable { mutableStateOf(\"Ada Lovelace\") }\n    var city by rememberSaveable { mutableStateOf(\"London\") }\n    FieldSet {\n        FieldLegend(\"Profile\")\n        FieldGroup(variant = FieldGroupVariant.Inset) {\n            Field(orientation = FieldOrientation.Horizontal) {\n                FieldLabel(\"Name\", Modifier.weight(1f))\n                FieldInsetInput(name, { name = it }, \"Name\", Modifier.weight(1f))\n            }\n            Field(orientation = FieldOrientation.Horizontal) {\n                FieldLabel(\"City\", Modifier.weight(1f))\n                FieldInsetInput(city, { city = it }, \"City\", Modifier.weight(1f))\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--inset" />
 
 ### Form
 
 A complete form with validation and a submit button.
 
-<NativeExample id="components-field--form" width={880} height={631} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport * as FormPrimitive from \"@/components/primitives/form\"\nimport { Button } from \"@/components/ui/button\"\nimport { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nconst DIGIT = /\\d/\n\nfunction FormDemo() {\n  const actionsRef = React.useRef<FormPrimitive.Actions | null>(null)\n  const [errors, setErrors] = React.useState<FormPrimitive.Errors>({})\n  const [submitted, setSubmitted] = React.useState<string | null>(null)\n\n  return (\n    <FormPrimitive.Root\n      actionsRef={actionsRef}\n      errors={errors}\n      onFormSubmit={(values) => {\n        if (values.username === \"admin\") {\n          setErrors({ username: \"This username is taken.\" })\n          return\n        }\n        setSubmitted(JSON.stringify(values))\n      }}\n      className=\"gap-6\"\n    >\n      <FieldGroup>\n        <Field name=\"username\">\n          <FieldLabel>Username</FieldLabel>\n          <Input placeholder=\"Try admin\" autoCapitalize=\"none\" required />\n          <FieldDescription>Letters and numbers only.</FieldDescription>\n          <FieldError />\n        </Field>\n        <Field\n          name=\"password\"\n          validate={(value) =>\n            typeof value === \"string\" && DIGIT.test(value)\n              ? null\n              : \"Include at least one number.\"\n          }\n        >\n          <FieldLabel>Password</FieldLabel>\n          <Input secureTextEntry required minLength={8} />\n          <FieldError />\n        </Field>\n      </FieldGroup>\n      <Button onPress={() => actionsRef.current?.submit()}>\n        <Text>Create account</Text>\n      </Button>\n      {submitted ? <Text variant=\"muted\">Submitted: {submitted}</Text> : null}\n    </FormPrimitive.Root>\n  )\n}\n\nexport function FieldFormExample() {\n  return (\n    <FormDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nenum FieldMessages {\n  static let required = \"This field is required.\"\n\n  static func tooShort(_ minLength: Int) -> String {\n    \"Use at least \\(minLength) characters.\"\n  }\n}\n\nstruct FieldFormDemo: View {\n  @State private var username = \"\"\n  @State private var password = \"\"\n  @State private var usernameErrors: [String] = []\n  @State private var passwordErrors: [String] = []\n  @State private var taken = false\n  @State private var submitted: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 24) {\n      FieldGroup {\n        Field(invalid: !usernameErrors.isEmpty || taken) {\n          FieldLabel(\"Username\")\n            .accessibilityHidden(true)\n          TextField(\"Try admin\", text: $username)\n            .textFieldStyle(.input)\n            .textInputAutocapitalization(.never)\n            .autocorrectionDisabled()\n            .accessibilityLabel(Text(\"Username\"))\n          FieldDescription(\"Letters and numbers only.\")\n          FieldError(errors: usernameErrors + (taken ? [\"This username is taken.\"] : []))\n        }\n        Field(invalid: !passwordErrors.isEmpty) {\n          FieldLabel(\"Password\")\n            .accessibilityHidden(true)\n          SecureField(\"Password\", text: $password)\n            .textFieldStyle(.input)\n            .accessibilityLabel(Text(\"Password\"))\n          FieldError(errors: passwordErrors)\n        }\n      }\n      Button {\n        submit()\n      } label: {\n        Text(\"Create account\").frame(maxWidth: .infinity)\n      }\n      .buttonStyle(.variant())\n      if let submitted {\n        Text(verbatim: \"Submitted: \\(submitted)\")\n          .textVariant(.muted)\n      }\n    }\n    .onChange(of: username) { taken = false }\n  }\n\n  func submit() {\n    usernameErrors = username.isEmpty ? [FieldMessages.required] : []\n    var errors: [String] = []\n    if password.isEmpty {\n      errors.append(FieldMessages.required)\n    } else if password.count < 8 {\n      errors.append(FieldMessages.tooShort(8))\n    }\n    if !password.contains(where: \\.isNumber) {\n      errors.append(\"Include at least one number.\")\n    }\n    passwordErrors = errors\n    guard usernameErrors.isEmpty, passwordErrors.isEmpty else { return }\n    if username == \"admin\" {\n      taken = true\n      return\n    }\n    submitted = \"{\\\"username\\\":\\\"\\(username)\\\",\\\"password\\\":\\\"\\(password)\\\"}\"\n  }\n}\n\nlet required = \"This field is required.\"\n\nfunc tooShort(_ minLength: Int) -> String {\n  \"Use at least \\(minLength) characters.\"\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.text.input.KeyboardType\nimport androidx.compose.ui.text.input.PasswordVisualTransformation\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.Field\nimport com.esuiss.ui.components.FieldDescription\nimport com.esuiss.ui.components.FieldError\nimport com.esuiss.ui.components.FieldGroup\nimport com.esuiss.ui.components.FieldLabel\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\nval FieldPlainText = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false)\n\nfun fieldUsernameErrors(username: String, taken: Boolean): List<String> = buildList {\n    if (username.isEmpty()) add(FieldRequiredMessage)\n    if (taken) add(\"This username is taken.\")\n}\n\nfun fieldPasswordErrors(password: String): List<String> = buildList {\n    if (password.isEmpty()) add(FieldRequiredMessage)\n    if (password.isNotEmpty() && password.length < 8) add(\"Use at least 8 characters.\")\n    if (!password.any { it.isDigit() }) add(\"Include at least one number.\")\n}\n\n@Composable\nfun FieldForm() {\n    var username by rememberSaveable { mutableStateOf(\"\") }\n    var password by rememberSaveable { mutableStateOf(\"\") }\n    var taken by rememberSaveable { mutableStateOf(false) }\n    var attempted by rememberSaveable { mutableStateOf(false) }\n    var submitted by rememberSaveable { mutableStateOf<String?>(null) }\n    val usernameErrors = if (attempted) fieldUsernameErrors(username, taken) else emptyList()\n    val passwordErrors = if (attempted) fieldPasswordErrors(password) else emptyList()\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(24.dp)) {\n        FieldGroup {\n            Field(invalid = usernameErrors.isNotEmpty()) {\n                FieldLabel(\"Username\")\n                Input(\n                    username,\n                    {\n                        username = it\n                        taken = false\n                    },\n                    Modifier.semantics { contentDescription = \"Username\" },\n                    placeholder = \"Try admin\",\n                    keyboardOptions = FieldPlainText,\n                )\n                FieldDescription(\"Letters and numbers only.\")\n                FieldError(usernameErrors)\n            }\n            Field(invalid = passwordErrors.isNotEmpty()) {\n                FieldLabel(\"Password\")\n                Input(\n                    password,\n                    { password = it },\n                    Modifier.semantics { contentDescription = \"Password\" },\n                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),\n                    visualTransformation = PasswordVisualTransformation(),\n                )\n                FieldError(passwordErrors)\n            }\n        }\n        Button(\n            \"Create account\",\n            onClick = {\n                attempted = true\n                val invalid = fieldUsernameErrors(username, false).isNotEmpty() || fieldPasswordErrors(password).isNotEmpty()\n                if (invalid) return@Button\n                if (username == \"admin\") {\n                    taken = true\n                    return@Button\n                }\n                submitted = \"{\\\"username\\\":\\\"$username\\\",\\\"password\\\":\\\"$password\\\"}\"\n            },\n            modifier = Modifier.fillMaxWidth(),\n        )\n        submitted?.let { Text(\"Submitted: $it\", variant = TextVariant.Muted) }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-field--form" />
 
 ## API Reference
 
@@ -535,7 +515,7 @@ A complete form with validation and a submit button.
 
 Group of related fields.
 
-<PropsTable extends={["React.ComponentProps<typeof FieldsetPrimitive.Root>"]} />
+Also accepts the props of `React.ComponentProps<typeof FieldsetPrimitive.Root>`.
 
 </ApiPart>
 
@@ -545,7 +525,11 @@ Group of related fields.
 
 Heading for a fieldset.
 
-<PropsTable extends={["React.ComponentProps<typeof FieldsetPrimitive.Legend>"]} props={[{"name":"variant","type":"\"legend\" | \"label\"","default":"\"legend\"","description":"`legend` (heading) or `label`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"legend" \| "label"` | `"legend"` | `legend` (heading) or `label`. |
+
+Also accepts the props of `React.ComponentProps<typeof FieldsetPrimitive.Legend>`.
 
 </ApiPart>
 
@@ -555,7 +539,11 @@ Heading for a fieldset.
 
 Stack of fields, plain or inset.
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"variant","type":"FieldGroupVariant","default":"\"default\"","description":"`default` or `inset`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `FieldGroupVariant` | `"default"` | `default` or `inset`. |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 
@@ -565,7 +553,11 @@ Stack of fields, plain or inset.
 
 One field that shares state with its control.
 
-<PropsTable extends={["React.ComponentProps<typeof FieldPrimitive.Root>"]} props={[{"name":"orientation","type":"FieldOrientation","default":"\"vertical\"","description":"`vertical`, `horizontal` or `responsive`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `FieldOrientation` | `"vertical"` | `vertical`, `horizontal` or `responsive`. |
+
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Root>`.
 
 </ApiPart>
 
@@ -575,7 +567,7 @@ One field that shares state with its control.
 
 Column for a title and description beside a control.
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} />
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 
@@ -585,7 +577,7 @@ Column for a title and description beside a control.
 
 Label linked to the control.
 
-<PropsTable extends={["React.ComponentProps<typeof FieldPrimitive.Label>"]} />
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Label>`.
 
 </ApiPart>
 
@@ -595,7 +587,7 @@ Label linked to the control.
 
 Bold text for a field's title.
 
-<PropsTable extends={["React.ComponentProps<typeof RNText>"]} />
+Also accepts the props of `React.ComponentProps<typeof RNText>`.
 
 </ApiPart>
 
@@ -605,7 +597,7 @@ Bold text for a field's title.
 
 Helper text.
 
-<PropsTable extends={["React.ComponentProps<typeof FieldPrimitive.Description>"]} />
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Description>`.
 
 </ApiPart>
 
@@ -615,7 +607,11 @@ Helper text.
 
 Divider with optional centered text.
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 
@@ -625,7 +621,11 @@ Divider with optional centered text.
 
 Error message shown when validation fails.
 
-<PropsTable extends={["React.ComponentProps<typeof FieldPrimitive.Error>"]} props={[{"name":"errors","type":"Array<{ message?: string } | undefined>","description":"Array of `{ message }` objects to show."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `errors` | `Array<{ message?: string } \| undefined>` | - | Array of `{ message }` objects to show. |
+
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Error>`.
 
 </ApiPart>
 

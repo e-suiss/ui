@@ -3,16 +3,11 @@ title: Bar Chart Negative
 description: "Monthly cash flow bars that turn green above zero and red below it, with a zero baseline."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="bar-chart-negative">
-
-<SourceFile path="components/charts/bar-chart-negative.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="bar-chart-negative" />
 
 Monthly cash flow where bars rise green above a zero line and drop red below it. Use it for any value that can be negative, such as profit, net change or deltas against a target.
 
@@ -20,27 +15,35 @@ Monthly cash flow where bars rise green above a zero line and drop red below it.
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-negative"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts bar-chart-negative
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/bar-chart-negative.tsx`:
 
-<SourceFile path="components/charts/bar-chart-negative.tsx" />
+<ComponentSource path="components/charts/bar-chart-negative.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartNegative } from \"@/components/charts/bar-chart-negative\""} />
+```tsx
+import { BarChartNegative } from "@/components/charts/bar-chart-negative"
+```
 
-<Code lang="tsx" code={"<BarChartNegative />"} />
+```tsx
+<BarChartNegative />
+```
 
 Replace `chartData` with your values and rename `flow` in the data, the bar and `chartConfig`. The color for each bar is chosen per `Cell` based on its sign, so change the two colors there. Set `interval` on the axis to show more or fewer month labels.
 
@@ -52,13 +55,13 @@ Because colors are set per bar instead of in the config, the tooltip has no colo
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-bar--negative" width={880} height={655} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-bar--negative" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/bar-chart-negative.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/bar-chart-negative.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/BarChartNegative.swift" fold={false} />
+<ComponentSource path="swift/Charts/BarChartNegative.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/BarChartNegative.kt" fold={false} />
+<ComponentSource path="kotlin/charts/BarChartNegative.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ One bar per month, colored per value through a `Cell`: green when the flow is po
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-negative"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-negative
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-negative --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-negative --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-negative --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-negative --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-negative.tsx`:
 
-<SourceFile path="uniwind/components/charts/bar-chart-negative.tsx" />
+<ComponentSource path="uniwind/components/charts/bar-chart-negative.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-negative.tsx`:
 
-<SourceFile path="nativewind/components/charts/bar-chart-negative.tsx" />
+<ComponentSource path="nativewind/components/charts/bar-chart-negative.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-negative.tsx`:
 
-<SourceFile path="stylesheet/components/charts/bar-chart-negative.tsx" />
+<ComponentSource path="stylesheet/components/charts/bar-chart-negative.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/BarChartNegative.swift" />
+<ComponentSource path="swift/Charts/BarChartNegative.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/BarChartNegative.kt" />
+<ComponentSource path="kotlin/charts/BarChartNegative.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartNegative } from \"@/components/charts/bar-chart-negative\""} />
+```tsx
+import { BarChartNegative } from "@/components/charts/bar-chart-negative"
+```
 
-<Code lang="tsx" code={"<BarChartNegative />"} />
+```tsx
+<BarChartNegative />
+```
 
 Replace `chartData` with your months and signed `flow` values. Change the colors in the `Cell` `fill` expression. The component takes no props.
 

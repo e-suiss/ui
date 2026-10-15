@@ -1,5 +1,0 @@
-{
-  "description": "A one-to-one chat thread with a contact header, message bubbles, double-tap hearts and a photo attachment.",
-  "overview": "Composes `Screen`, `Avatar`, `Message`, `Bubble` with `BubbleReactions`, `MessageScroller`, `Attachment`, `InputGroup`, `Button` and `BottomBar`. Double-tapping a bubble toggles a heart, the attach button adds a sample photo preview that can be removed before sending, and each sent message gets a sample reply after a typing indicator.",
-  "usage": "Replace `OPENING`, `REPLIES` and `PHOTO` with your messages and attachment source. Wire `onSend`, `onAttach`, `onOpenContact` and `onLikeChange` to your messaging backend."
-}

@@ -1,6 +1,0 @@
-{
-  "description": "A permissions matrix with a checkbox for every permission and role, grouped by area, with a save action.",
-  "overview": "A permissions matrix with a checkbox for every permission and role, grouped by area, and a Save button that enables after a change. The Admin column is fixed. On narrow screens the grid keeps its width and scrolls sideways. Use it when admins need to compare all roles at once rather than edit one at a time.",
-  "usage": "Edit `roles` for the columns and `groups` for the rows; each permission has a name and a `grants` array of 1 or 0 per role, in role order. The first column is always disabled. Replace the Save handler, which only toggles local flags, with your API call.",
-  "notes": "Each checkbox is labeled with its group, permission and role, so cells make sense without the visual header row."
-}

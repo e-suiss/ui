@@ -1,5 +1,0 @@
-{
-  "description": "Activity rings for each day of the week, with a day picker and per-ring totals against goals.",
-  "overview": "A `Card` with a `ToggleGroup` of seven days, each showing small rings, above a large ring view and per-ring totals. The rings are drawn with `Svg` circles colored through `ChartPalette`; `RINGS` sets each label, unit, goal and color, and `WEEK` holds three values per day. Picking a day updates the large rings and the totals, which show the value, goal and percentage, with a note when a goal is met.",
-  "usage": "Replace `WEEK` with your daily values and adjust the goals, units and colors in `RINGS`. The component takes no props."
-}

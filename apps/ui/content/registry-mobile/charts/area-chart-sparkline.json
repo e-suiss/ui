@@ -1,5 +1,0 @@
-{
-  "description": "A stock watchlist where each row has a small area chart next to its price and daily change.",
-  "overview": "Each row shows a symbol and company name, a tiny area chart without axes, the price and a colored badge with the percentage change. The sparkline turns green when the change is positive and red when it is negative, using the `up` and `down` colors in `chartConfig`. The charts are hidden from screen readers because the row text already carries the values. Each sparkline sets `isAnimationActive={false}` and draws without the enter animation.",
-  "usage": "Replace the `stocks` array with your own symbols, prices and changes, and swap the generated `series` data for real price history. The component takes no props."
-}

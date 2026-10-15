@@ -3,16 +3,11 @@ title: Radial Chart Interactive
 description: "A weekly activity view where picking a day animates three large rings and updates each ring's totals."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="radial-chart-interactive">
-
-<SourceFile path="components/charts/radial-chart-interactive.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="radial-chart-interactive" />
 
 An activity summary with a strip of seven day buttons, each showing mini rings, and large Move, Exercise and Stand rings that fill to the selected day's values. Totals and goal progress for each ring update next to it. Use it as a pattern for daily goals that readers browse day by day.
 
@@ -20,7 +15,9 @@ An activity summary with a strip of seven day buttons, each showing mini rings, 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-interactive"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts radial-chart-interactive
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ An activity summary with a strip of seven day buttons, each showing mini rings, 
 
 2. Copy the source into `components/charts/radial-chart-interactive.tsx`:
 
-<SourceFile path="components/charts/radial-chart-interactive.tsx" />
+<ComponentSource path="components/charts/radial-chart-interactive.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadialChartInteractive } from \"@/components/charts/radial-chart-interactive\""} />
+```tsx
+import { RadialChartInteractive } from "@/components/charts/radial-chart-interactive"
+```
 
-<Code lang="tsx" code={"<RadialChartInteractive />"} />
+```tsx
+<RadialChartInteractive />
+```
 
 Replace `WEEK` with your own days and values, one number per ring in the same order as `RINGS`. Edit `RINGS` to change labels, units, goals and colors. Set the initially selected day in the `selected` state.
 
@@ -48,13 +49,13 @@ The rings are plain SVG rather than a Recharts chart, so there is no tooltip. Va
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-radial--interactive" width={880} height={1635} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-radial--interactive" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/radial-chart-interactive.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/radial-chart-interactive.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/RadialChartInteractive.swift" fold={false} />
+<ComponentSource path="swift/Charts/RadialChartInteractive.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/RadialChartInteractive.kt" fold={false} />
+<ComponentSource path="kotlin/charts/RadialChartInteractive.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +65,25 @@ A `Card` with a `ToggleGroup` of seven days, each showing small rings, above a l
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radial-chart-interactive"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radial-chart-interactive
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radial-chart-interactive --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radial-chart-interactive --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radial-chart-interactive --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radial-chart-interactive --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +99,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn react-native-svg
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/charts/radial-chart-interactive.tsx`:
 
-<SourceFile path="uniwind/components/charts/radial-chart-interactive.tsx" />
+<ComponentSource path="uniwind/components/charts/radial-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +117,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn react-native-svg
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/charts/radial-chart-interactive.tsx`:
 
-<SourceFile path="nativewind/components/charts/radial-chart-interactive.tsx" />
+<ComponentSource path="nativewind/components/charts/radial-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +135,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-svg"} />
+```bash title="Terminal"
+npx expo install react-native-svg
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/charts/radial-chart-interactive.tsx`:
 
-<SourceFile path="stylesheet/components/charts/radial-chart-interactive.tsx" />
+<ComponentSource path="stylesheet/components/charts/radial-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,17 +159,17 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/RadialChartInteractive.swift" />
+<ComponentSource path="swift/Charts/RadialChartInteractive.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
 4. Add the files to your app target.
 
@@ -166,27 +179,31 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/RadialChartInteractive.kt" />
+<ComponentSource path="kotlin/charts/RadialChartInteractive.kt" />
 
-<SourceFile path="kotlin/charts/RadialChartRings.kt" />
+<ComponentSource path="kotlin/charts/RadialChartRings.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -194,9 +211,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadialChartInteractive } from \"@/components/charts/radial-chart-interactive\""} />
+```tsx
+import { RadialChartInteractive } from "@/components/charts/radial-chart-interactive"
+```
 
-<Code lang="tsx" code={"<RadialChartInteractive />"} />
+```tsx
+<RadialChartInteractive />
+```
 
 Replace `WEEK` with your daily values and adjust the goals, units and colors in `RINGS`. The component takes no props.
 

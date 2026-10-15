@@ -1,5 +1,0 @@
-{
-  "description": "A live activity feed that adds a new event every few seconds, with session stats and a Pause button.",
-  "overview": "An admin screen with a collapsing `Header`, three stats for the session, and a list of recent events with an `Avatar` or icon for each actor. A timer adds the next sample event every 2.2 seconds and keeps the seven newest, with a pulsing Live dot while it runs. The header button pauses and resumes the feed. A `TabBar` at the bottom switches between admin sections; only Activity has content in the sample.",
-  "usage": "Replace `FEED` with your events and swap the timer for your real-time source. Wire `onRunningChange` and `onNavigate` to your app."
-}

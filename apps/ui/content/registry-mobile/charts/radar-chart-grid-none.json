@@ -1,5 +1,0 @@
-{
-  "description": "A radar chart with no grid, showing only the filled shape and axis labels.",
-  "overview": "A `RadarChart` without a `PolarGrid`, so only the angle axis labels and one filled `Radar` shape remain. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.",
-  "usage": "Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props."
-}

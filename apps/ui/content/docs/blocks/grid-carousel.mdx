@@ -3,16 +3,11 @@ title: Grid Carousel
 description: "A horizontally scrolling carousel of product cards with previous and next controls."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="grid-carousel">
-
-<SourceFile path="components/blocks/grid-carousel.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="grid-carousel" />
 
 A horizontally scrolling row of product cards under a two-tone heading, each with an optional kicker, name, tagline, starting price and image. Previous and next buttons sit below the track, and cards shrink to fit narrow screens. With no state of its own, it is a simple base for latest products, featured items or related content rows.
 
@@ -20,7 +15,9 @@ A horizontally scrolling row of product cards under a two-tone heading, each wit
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks grid-carousel"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks grid-carousel
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A horizontally scrolling row of product cards under a two-tone heading, each wit
 
 2. Copy the source into `components/blocks/grid-carousel.tsx`:
 
-<SourceFile path="components/blocks/grid-carousel.tsx" />
+<ComponentSource path="components/blocks/grid-carousel.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { GridCarousel } from \"@/components/blocks/grid-carousel\""} />
+```tsx
+import { GridCarousel } from "@/components/blocks/grid-carousel"
+```
 
-<Code lang="tsx" code={"<GridCarousel />"} />
+```tsx
+<GridCarousel />
+```
 
 Replace `products`; each has an optional kicker, a name, tagline, formatted price, image and alt text. Card links are hash anchors built from the name, so point them at your product pages.
 
@@ -48,13 +49,13 @@ Images are Unsplash placeholders with descriptive alt text.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-grid-carousel--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-grid-carousel--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/grid-carousel.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/grid-carousel.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/GridCarousel.swift" fold={false} />
+<ComponentSource path="swift/Blocks/GridCarousel.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/GridCarousel.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/GridCarousel.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +65,25 @@ Composes `Screen`, `Carousel` with `CarouselPageIndicator`, `Text` and product p
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add grid-carousel"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add grid-carousel
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add grid-carousel --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add grid-carousel --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add grid-carousel --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add grid-carousel --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +99,15 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/grid-carousel.tsx`:
 
-<SourceFile path="uniwind/components/blocks/grid-carousel.tsx" />
+<ComponentSource path="uniwind/components/blocks/grid-carousel.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +117,15 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/grid-carousel.tsx`:
 
-<SourceFile path="nativewind/components/blocks/grid-carousel.tsx" />
+<ComponentSource path="nativewind/components/blocks/grid-carousel.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +135,15 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/grid-carousel.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/grid-carousel.tsx" />
+<ComponentSource path="stylesheet/components/blocks/grid-carousel.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,39 +159,41 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/GridCarousel.swift" />
+<ComponentSource path="swift/Blocks/GridCarousel.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Carousel.swift" />
+<ComponentSource path="swift/Components/Carousel.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/PageIndicator.swift" />
+<ComponentSource path="swift/Components/PageIndicator.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -188,33 +203,38 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/GridCarousel.kt" />
+<ComponentSource path="kotlin/blocks/GridCarousel.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Carousel.kt" />
+<ComponentSource path="kotlin/components/Carousel.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/PageIndicator.kt" />
+<ComponentSource path="kotlin/components/PageIndicator.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -222,9 +242,13 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 
 ## Usage
 
-<Code lang="tsx" code={"import { GridCarousel } from \"@/components/blocks/grid-carousel\""} />
+```tsx
+import { GridCarousel } from "@/components/blocks/grid-carousel"
+```
 
-<Code lang="tsx" code={"<GridCarousel />"} />
+```tsx
+<GridCarousel />
+```
 
 Replace `PRODUCTS` with your items. Pass `onSelectProduct` to receive the name of the pressed product.
 

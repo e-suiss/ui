@@ -1,5 +1,0 @@
-{
-  "description": "A donut chart with a hollow center and small gaps between slices.",
-  "overview": "A donut with a hollow center and small gaps between slices. It reads lighter than a full pie and leaves the center free for a label if you need one later.",
-  "usage": "Replace `chartData` and add a label and color to `chartConfig` for each category key. Change the ring thickness with `innerRadius` and `outerRadius`, and the gap between slices with `paddingAngle`."
-}

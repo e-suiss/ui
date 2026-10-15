@@ -3,16 +3,11 @@ title: Pie Chart Half
 description: "A semicircular gauge-style pie showing battery share by device, with a caption under the arc."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="pie-chart-half">
-
-<SourceFile path="components/charts/pie-chart-half.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="pie-chart-half" />
 
 A semicircular donut that reads like a gauge, with a figure and caption tucked under the arc. Use it in compact cards where a full circle takes too much height.
 
@@ -20,27 +15,35 @@ A semicircular donut that reads like a gauge, with a figure and caption tucked u
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-half"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts pie-chart-half
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/pie-chart-half.tsx`:
 
-<SourceFile path="components/charts/pie-chart-half.tsx" />
+<ComponentSource path="components/charts/pie-chart-half.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { PieChartHalf } from \"@/components/charts/pie-chart-half\""} />
+```tsx
+import { PieChartHalf } from "@/components/charts/pie-chart-half"
+```
 
-<Code lang="tsx" code={"<PieChartHalf />"} />
+```tsx
+<PieChartHalf />
+```
 
 Replace `chartData` with your categories and their shares, and add each key to `chartConfig`. The tooltip appends a percent sign, so change its formatter if your values aren't percentages. Update the figure and caption under the arc, which are plain text.
 
@@ -52,13 +55,13 @@ The centered figure and caption are hard-coded, not computed from the data. The 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-pie--half" width={880} height={623} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-pie--half" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/pie-chart-half.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/pie-chart-half.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/PieChartHalf.swift" fold={false} />
+<ComponentSource path="swift/Charts/PieChartHalf.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/PieChartHalf.kt" fold={false} />
+<ComponentSource path="kotlin/charts/PieChartHalf.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A `PieChart` drawn from 180 to 0 degrees, with rounded, spaced slices. `chartDat
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-half"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-half
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-half --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-half --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-half --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-half --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-half.tsx`:
 
-<SourceFile path="uniwind/components/charts/pie-chart-half.tsx" />
+<ComponentSource path="uniwind/components/charts/pie-chart-half.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-half.tsx`:
 
-<SourceFile path="nativewind/components/charts/pie-chart-half.tsx" />
+<ComponentSource path="nativewind/components/charts/pie-chart-half.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-half.tsx`:
 
-<SourceFile path="stylesheet/components/charts/pie-chart-half.tsx" />
+<ComponentSource path="stylesheet/components/charts/pie-chart-half.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/PieChartHalf.swift" />
+<ComponentSource path="swift/Charts/PieChartHalf.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/PieChartHalf.kt" />
+<ComponentSource path="kotlin/charts/PieChartHalf.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { PieChartHalf } from \"@/components/charts/pie-chart-half\""} />
+```tsx
+import { PieChartHalf } from "@/components/charts/pie-chart-half"
+```
 
-<Code lang="tsx" code={"<PieChartHalf />"} />
+```tsx
+<PieChartHalf />
+```
 
 Replace `chartData` with your shares and update `chartConfig` and the caption under the arc. The component takes no props.
 

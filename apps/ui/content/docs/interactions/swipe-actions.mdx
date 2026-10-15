@@ -3,16 +3,11 @@ title: Swipe Actions
 description: "A list row that reveals action buttons when swiped sideways, with optional full swipe to run an action."
 eyebrow: Interaction
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="interaction" name="swipe-actions" story="Default">
-
-<Code lang="tsx" code={"import { ArchiveIcon, EnvelopeSimpleIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialMessages = [\n  {\n    id: 1,\n    from: \"Acme Store\",\n    subject: \"Your order has shipped\",\n    preview: \"Order #1042 will be delivered tomorrow.\",\n  },\n  {\n    id: 2,\n    from: \"Jordan Lee\",\n    subject: \"Tomorrow's meeting\",\n    preview: \"Does 10:00 work for you?\",\n  },\n  {\n    id: 3,\n    from: \"Cloud Drive\",\n    subject: \"Your storage is almost full\",\n    preview: \"Upgrade your plan to get more space.\",\n  },\n  {\n    id: 4,\n    from: \"Taylor Kim\",\n    subject: \"Weekend plans\",\n    preview: \"Are we still on for Saturday?\",\n  },\n]\n\nfunction MailExample({ withLeading = false }: { withLeading?: boolean }) {\n  const [messages, setMessages] = React.useState(initialMessages)\n  const [unread, setUnread] = React.useState<number[]>([])\n  const [log, setLog] = React.useState(\"Swipe a message to the left.\")\n\n  const remove = (id: number, action: string) => {\n    setMessages((current) => current.filter((message) => message.id !== id))\n    setLog(`${action} message ${id}`)\n  }\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {messages.map((message) => (\n          <li key={message.id} className=\"not-first:border-t\">\n            <SwipeActions>\n              {withLeading && (\n                <SwipeActionsActions side=\"leading\">\n                  <SwipeAction\n                    onClick={() => {\n                      setUnread((current) =>\n                        current.includes(message.id)\n                          ? current.filter((id) => id !== message.id)\n                          : [...current, message.id]\n                      )\n                      setLog(`Toggled unread on message ${message.id}`)\n                    }}\n                  >\n                    <EnvelopeSimpleIcon weight=\"fill\" />\n                    Unread\n                  </SwipeAction>\n                </SwipeActionsActions>\n              )}\n              <SwipeActionsContent className=\"flex flex-col gap-0.5 px-4 py-3\">\n                <span className=\"flex items-center gap-2 font-semibold\">\n                  {unread.includes(message.id) && (\n                    <span className=\"size-2 rounded-full bg-accent\" />\n                  )}\n                  {message.from}\n                </span>\n                <span className=\"text-sm\">{message.subject}</span>\n                <span className=\"truncate text-sm text-label-secondary\">\n                  {message.preview}\n                </span>\n              </SwipeActionsContent>\n              <SwipeActionsActions>\n                <SwipeAction\n                  variant=\"archive\"\n                  onClick={() => remove(message.id, \"Archived\")}\n                >\n                  <ArchiveIcon weight=\"fill\" />\n                  Archive\n                </SwipeAction>\n                <SwipeAction\n                  variant=\"destructive\"\n                  fullSwipe\n                  onClick={() => remove(message.id, \"Deleted\")}\n                >\n                  <TrashIcon weight=\"fill\" />\n                  Delete\n                </SwipeAction>\n              </SwipeActionsActions>\n            </SwipeActions>\n          </li>\n        ))}\n      </ul>\n      <div className=\"flex items-center justify-between gap-3\">\n        <p role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </p>\n        <Button\n          size=\"sm\"\n          variant=\"secondary\"\n          onClick={() => {\n            setMessages(initialMessages)\n            setUnread([])\n            setLog(\"Swipe a message to the left.\")\n          }}\n        >\n          Reset\n        </Button>\n      </div>\n    </div>\n  )\n}\n\nexport function SwipeActionsExample() {\n  return (\n    <MailExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="swipe-actions-demo" layout="padded" responsive />
 
 `SwipeActions` recreates iOS swipe actions for list rows. Dragging `SwipeActionsContent` sideways reveals the buttons in `SwipeActionsActions` on that side; releasing past half their width snaps the row open, otherwise it springs closed. Dragging past the actions meets increasing resistance, unless an action has `fullSwipe`: then dragging past 60% of the row width expands that action across the row, and releasing collapses the row and runs it.
 
@@ -22,25 +17,33 @@ Only one row stays open at a time. Tapping the content or pressing elsewhere clo
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions swipe-actions"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add interactions swipe-actions
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+```bash title="Terminal"
+npm install class-variance-authority cn
+```
 
 2. Copy the source into `components/interactions/swipe-actions.tsx`:
 
-<SourceFile path="components/interactions/swipe-actions.tsx" />
+<ComponentSource path="components/interactions/swipe-actions.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from \"@/components/interactions/swipe-actions\""} />
+```tsx
+import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from "@/components/interactions/swipe-actions"
+```
 
-<Code lang="tsx" code={"<MailExample />"} />
+```tsx
+<MailExample />
+```
 
 - Place `SwipeActionsContent` inside `SwipeActions`, with a `SwipeActionsActions` for each side that has actions. Rows can have leading actions, trailing actions, or both.
 - Handle each action with `onClick`. A full swipe runs the action by clicking it, so the same handler covers both.
@@ -53,25 +56,24 @@ Only one row stays open at a time. Tapping the content or pressing elsewhere clo
 
 A row with a leading Unread action on one side and trailing Archive and Delete actions on the other.
 
-<Example kind="interaction" name="swipe-actions" story="BothSides">
-
-<Code lang="tsx" code={"import { ArchiveIcon, EnvelopeSimpleIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { Button } from \"@/components/ui/button\"\n\nconst initialMessages = [\n  {\n    id: 1,\n    from: \"Acme Store\",\n    subject: \"Your order has shipped\",\n    preview: \"Order #1042 will be delivered tomorrow.\",\n  },\n  {\n    id: 2,\n    from: \"Jordan Lee\",\n    subject: \"Tomorrow's meeting\",\n    preview: \"Does 10:00 work for you?\",\n  },\n  {\n    id: 3,\n    from: \"Cloud Drive\",\n    subject: \"Your storage is almost full\",\n    preview: \"Upgrade your plan to get more space.\",\n  },\n  {\n    id: 4,\n    from: \"Taylor Kim\",\n    subject: \"Weekend plans\",\n    preview: \"Are we still on for Saturday?\",\n  },\n]\n\nfunction MailExample({ withLeading = false }: { withLeading?: boolean }) {\n  const [messages, setMessages] = React.useState(initialMessages)\n  const [unread, setUnread] = React.useState<number[]>([])\n  const [log, setLog] = React.useState(\"Swipe a message to the left.\")\n\n  const remove = (id: number, action: string) => {\n    setMessages((current) => current.filter((message) => message.id !== id))\n    setLog(`${action} message ${id}`)\n  }\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <ul className=\"overflow-hidden rounded-2xl border\">\n        {messages.map((message) => (\n          <li key={message.id} className=\"not-first:border-t\">\n            <SwipeActions>\n              {withLeading && (\n                <SwipeActionsActions side=\"leading\">\n                  <SwipeAction\n                    onClick={() => {\n                      setUnread((current) =>\n                        current.includes(message.id)\n                          ? current.filter((id) => id !== message.id)\n                          : [...current, message.id]\n                      )\n                      setLog(`Toggled unread on message ${message.id}`)\n                    }}\n                  >\n                    <EnvelopeSimpleIcon weight=\"fill\" />\n                    Unread\n                  </SwipeAction>\n                </SwipeActionsActions>\n              )}\n              <SwipeActionsContent className=\"flex flex-col gap-0.5 px-4 py-3\">\n                <span className=\"flex items-center gap-2 font-semibold\">\n                  {unread.includes(message.id) && (\n                    <span className=\"size-2 rounded-full bg-accent\" />\n                  )}\n                  {message.from}\n                </span>\n                <span className=\"text-sm\">{message.subject}</span>\n                <span className=\"truncate text-sm text-label-secondary\">\n                  {message.preview}\n                </span>\n              </SwipeActionsContent>\n              <SwipeActionsActions>\n                <SwipeAction\n                  variant=\"archive\"\n                  onClick={() => remove(message.id, \"Archived\")}\n                >\n                  <ArchiveIcon weight=\"fill\" />\n                  Archive\n                </SwipeAction>\n                <SwipeAction\n                  variant=\"destructive\"\n                  fullSwipe\n                  onClick={() => remove(message.id, \"Deleted\")}\n                >\n                  <TrashIcon weight=\"fill\" />\n                  Delete\n                </SwipeAction>\n              </SwipeActionsActions>\n            </SwipeActions>\n          </li>\n        ))}\n      </ul>\n      <div className=\"flex items-center justify-between gap-3\">\n        <p role=\"status\" className=\"text-sm text-label-secondary\">\n          {log}\n        </p>\n        <Button\n          size=\"sm\"\n          variant=\"secondary\"\n          onClick={() => {\n            setMessages(initialMessages)\n            setUnread([])\n            setLog(\"Swipe a message to the left.\")\n          }}\n        >\n          Reset\n        </Button>\n      </div>\n    </div>\n  )\n}\n\nexport function SwipeActionsBothSidesExample() {\n  return (\n    <MailExample withLeading />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="swipe-actions-both-sides" layout="padded" responsive />
 
 ### Variants
 
 The `default`, `neutral`, `archive`, and `destructive` action colors side by side.
 
-<Example kind="interaction" name="swipe-actions" story="Variants">
-
-<Code lang="tsx" code={"import { ArchiveIcon, BellSlashIcon, FlagIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\n\nexport function SwipeActionsVariantsExample() {\n  return (\n    <div className=\"mx-auto w-full max-w-md overflow-hidden rounded-2xl border\">\n      <SwipeActions>\n        <SwipeActionsContent className=\"px-4 py-3\">\n          Swipe to see every action style\n        </SwipeActionsContent>\n        <SwipeActionsActions>\n          <SwipeAction>\n            <FlagIcon weight=\"fill\" />\n            Flag\n          </SwipeAction>\n          <SwipeAction variant=\"neutral\">\n            <BellSlashIcon weight=\"fill\" />\n            Mute\n          </SwipeAction>\n          <SwipeAction variant=\"archive\">\n            <ArchiveIcon weight=\"fill\" />\n            Archive\n          </SwipeAction>\n          <SwipeAction variant=\"destructive\">\n            <TrashIcon weight=\"fill\" />\n            Delete\n          </SwipeAction>\n        </SwipeActionsActions>\n      </SwipeActions>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="swipe-actions-variants" layout="padded" responsive />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"SwipeActions","href":"#swipeactions","children":[{"name":"SwipeActionsContent","href":"#swipeactionscontent","children":[]},{"name":"SwipeActionsActions","href":"#swipeactionsactions","children":[{"name":"SwipeAction","href":"#swipeaction","children":[]}]}]}]} />
+<Anatomy>
+
+- [SwipeActions](#swipeactions)
+  - [SwipeActionsContent](#swipeactionscontent)
+  - [SwipeActionsActions](#swipeactionsactions)
+    - [SwipeAction](#swipeaction)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -79,7 +81,7 @@ The `default`, `neutral`, `archive`, and `destructive` action colors side by sid
 
 The row container that tracks the swipe and manages open state.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -89,7 +91,7 @@ The row container that tracks the swipe and manages open state.
 
 The visible row content that moves with the swipe.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -99,7 +101,11 @@ The visible row content that moves with the swipe.
 
 The group of actions revealed on one side of the row.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"side","type":"SwipeActionsSide","default":"\"trailing\"","description":"The edge the actions appear on: `leading` or `trailing`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `SwipeActionsSide` | `"trailing"` | The edge the actions appear on: `leading` or `trailing`. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -109,7 +115,12 @@ The group of actions revealed on one side of the row.
 
 A single action button revealed by the swipe.
 
-<PropsTable extends={["React.ComponentProps<\"button\">"]} props={[{"name":"variant","type":"\"default\" | \"destructive\" | \"archive\" | \"neutral\"","default":"\"default\"","description":"The background color of the action: `default`, `destructive`, `archive`, or `neutral`."},{"name":"fullSwipe","type":"boolean","default":"false","description":"Lets a long swipe expand this action across the row and run it."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive" \| "archive" \| "neutral"` | `"default"` | The background color of the action: `default`, `destructive`, `archive`, or `neutral`. |
+| `fullSwipe` | `boolean` | `false` | Lets a long swipe expand this action across the row and run it. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
 
 </ApiPart>
 
@@ -130,15 +141,7 @@ A single action button revealed by the swipe.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="interactions-swipe-actions--default" width={880} height={539} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ArchiveIcon, BellSlashIcon, EnvelopeOpenIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from \"@/components/interactions/swipe-actions\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nconst MESSAGES = [\n  { id: \"1\", from: \"Olivia Martin\", subject: \"Quarterly report is ready\" },\n  { id: \"2\", from: \"Jackson Lee\", subject: \"Lunch on Friday?\" },\n  { id: \"3\", from: \"Isabella Nguyen\", subject: \"Design review notes\" },\n]\n\nfunction Inbox() {\n  const [messages, setMessages] = React.useState(MESSAGES)\n  const remove = (id: string) =>\n    setMessages((current) => current.filter((message) => message.id !== id))\n  return (\n    <ItemGroup variant=\"inset\">\n      {messages.map((message, index) => (\n        <React.Fragment key={message.id}>\n          {index > 0 ? <ItemSeparator /> : null}\n          <SwipeActions>\n            <SwipeActionsActions side=\"leading\">\n              <SwipeAction>\n                <Icon as={EnvelopeOpenIcon} />\n                <Text>Read</Text>\n              </SwipeAction>\n            </SwipeActionsActions>\n            <SwipeActionsContent className=\"bg-surface-secondary\">\n              <Item onPress={() => undefined}>\n                <ItemContent>\n                  <ItemTitle>{message.from}</ItemTitle>\n                  <ItemDescription>{message.subject}</ItemDescription>\n                </ItemContent>\n              </Item>\n            </SwipeActionsContent>\n            <SwipeActionsActions side=\"trailing\">\n              <SwipeAction variant=\"neutral\">\n                <Icon as={BellSlashIcon} />\n                <Text>Mute</Text>\n              </SwipeAction>\n              <SwipeAction variant=\"archive\">\n                <Icon as={ArchiveIcon} />\n                <Text>Archive</Text>\n              </SwipeAction>\n              <SwipeAction\n                variant=\"destructive\"\n                fullSwipe\n                onPress={() => remove(message.id)}\n              >\n                <Icon as={TrashIcon} />\n                <Text>Delete</Text>\n              </SwipeAction>\n            </SwipeActionsActions>\n          </SwipeActions>\n        </React.Fragment>\n      ))}\n    </ItemGroup>\n  )\n}\n\nexport function SwipeActionsExample() {\n  return (\n    <View>\n      <Inbox />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct SwipeActionsMessage: Identifiable {\n  let id: String\n  let from: String\n  let subject: String\n}\n\nlet swipeActionsMessages = [\n  SwipeActionsMessage(id: \"1\", from: \"Olivia Martin\", subject: \"Quarterly report is ready\"),\n  SwipeActionsMessage(id: \"2\", from: \"Jackson Lee\", subject: \"Lunch on Friday?\"),\n  SwipeActionsMessage(id: \"3\", from: \"Isabella Nguyen\", subject: \"Design review notes\"),\n]\n\nstruct SwipeActionsInbox: View {\n  @State private var messages = swipeActionsMessages\n\n  var body: some View {\n    ItemGroup(.inset) {\n      ForEach(Array(messages.enumerated()), id: \\.element.id) { index, message in\n        if index > 0 {\n          ItemSeparator()\n        }\n        SwipeActions(background: .surfaceSecondary) {\n          Item(action: {}) {\n            ItemContent {\n              ItemTitle(verbatim: message.from)\n              ItemDescription(verbatim: message.subject)\n            }\n          }\n        } leading: {\n          SwipeAction(\"Read\", icon: Ph.envelopeOpen.regular) {}\n        } trailing: {\n          SwipeAction(\"Mute\", icon: Ph.bellSlash.regular, variant: .neutral) {}\n          SwipeAction(\"Archive\", icon: Ph.archive.regular, variant: .archive) {}\n          SwipeAction(\"Delete\", icon: Ph.trash.regular, variant: .destructive, fullSwipe: true) {\n            messages.removeAll { $0.id == message.id }\n          }\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.key\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.setValue\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Archive\nimport com.adamglin.phosphoricons.regular.BellSlash\nimport com.adamglin.phosphoricons.regular.EnvelopeOpen\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemGroup\nimport com.esuiss.ui.components.ItemGroupVariant\nimport com.esuiss.ui.components.ItemSeparator\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.interactions.SwipeAction\nimport com.esuiss.ui.interactions.SwipeActionVariant\nimport com.esuiss.ui.interactions.SwipeActions\nimport com.esuiss.ui.theme.EsuissTheme\n\nclass SwipeActionsMessage(val id: String, val from: String, val subject: String)\n\nval swipeActionsMessages = listOf(\n    SwipeActionsMessage(\"1\", \"Olivia Martin\", \"Quarterly report is ready\"),\n    SwipeActionsMessage(\"2\", \"Jackson Lee\", \"Lunch on Friday?\"),\n    SwipeActionsMessage(\"3\", \"Isabella Nguyen\", \"Design review notes\"),\n)\n\n@Composable\nfun SwipeActionsInbox() {\n    var messages by remember { mutableStateOf(swipeActionsMessages) }\n    ItemGroup(variant = ItemGroupVariant.Inset) {\n        messages.forEachIndexed { index, message ->\n            key(message.id) {\n                if (index > 0) ItemSeparator()\n                SwipeActions(\n                    leading = listOf(SwipeAction(\"Read\", {}, icon = PhosphorIcons.Regular.EnvelopeOpen)),\n                    trailing = listOf(\n                        SwipeAction(\"Mute\", {}, icon = PhosphorIcons.Regular.BellSlash, variant = SwipeActionVariant.Neutral),\n                        SwipeAction(\"Archive\", {}, icon = PhosphorIcons.Regular.Archive, variant = SwipeActionVariant.Archive),\n                        SwipeAction(\n                            \"Delete\",\n                            { messages = messages.filterNot { it.id == message.id } },\n                            icon = PhosphorIcons.Regular.Trash,\n                            variant = SwipeActionVariant.Destructive,\n                            fullSwipe = true,\n                        ),\n                    ),\n                    background = EsuissTheme.colors.surfaceSecondary,\n                ) {\n                    Item(onClick = {}) {\n                        ItemContent {\n                            ItemTitle(message.from)\n                            ItemDescription(message.subject)\n                        }\n                    }\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-swipe-actions--default" />
 
 `SwipeActions` wraps a row so it can be dragged left or right to reveal `SwipeAction` buttons on the leading or trailing side. The buttons stretch to fill the revealed space, and opening one row closes any other open row.
 
@@ -148,19 +151,25 @@ When an action has `fullSwipe`, dragging past 60% of the row width expands that 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add swipe-actions"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add swipe-actions
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add swipe-actions --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add swipe-actions --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add swipe-actions --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add swipe-actions --platform kotlin
+```
 
 </Only>
 
@@ -176,13 +185,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/interactions/swipe-actions.tsx`:
 
-<SourceFile path="uniwind/components/interactions/swipe-actions.tsx" />
+<ComponentSource path="uniwind/components/interactions/swipe-actions.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -192,13 +203,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/interactions/swipe-actions.tsx`:
 
-<SourceFile path="nativewind/components/interactions/swipe-actions.tsx" />
+<ComponentSource path="nativewind/components/interactions/swipe-actions.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -208,13 +221,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/interactions/swipe-actions.tsx`:
 
-<SourceFile path="stylesheet/components/interactions/swipe-actions.tsx" />
+<ComponentSource path="stylesheet/components/interactions/swipe-actions.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -230,15 +245,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Interactions/SwipeActions.swift" />
+<ComponentSource path="swift/Interactions/SwipeActions.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
 4. Add the files to your app target.
 
@@ -248,25 +263,29 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/interactions/SwipeActions.kt" />
+<ComponentSource path="kotlin/interactions/SwipeActions.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -274,9 +293,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from \"@/components/interactions/swipe-actions\""} />
+```tsx
+import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from "@/components/interactions/swipe-actions"
+```
 
-<Code lang="tsx" code={"<View>\n  <Inbox />\n</View>"} />
+```tsx
+<View>
+  <Inbox />
+</View>
+```
 
 Put the row in `SwipeActionsContent`, and the buttons in one `SwipeActionsActions` per side, with `side` set to `leading` or `trailing` (the default). Leading actions are on the left in left-to-right layouts and on the right in right-to-left layouts.
 
@@ -290,7 +315,11 @@ Pressing an action runs `onPress` and closes the row. For a full-swipe action, `
 
 The root that handles the swipe gesture.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"onOpenChange","type":"(side: SwipeActionsSide | null) => void","description":"Called with `leading`, `trailing` or `null` when the row opens or closes."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onOpenChange` | `(side: SwipeActionsSide \| null) => void` | - | Called with `leading`, `trailing` or `null` when the row opens or closes. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -300,7 +329,7 @@ The root that handles the swipe gesture.
 
 The row content that slides.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -310,7 +339,12 @@ The row content that slides.
 
 The group of actions for one side.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"side","type":"SwipeActionsSide","description":"`leading` or `trailing`. Defaults to `trailing`."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `SwipeActionsSide` | - | `leading` or `trailing`. Defaults to `trailing`. |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -320,7 +354,7 @@ The group of actions for one side.
 
 One action button.
 
-<PropsTable extends={["SwipeActionProps"]} />
+Also accepts the props of `SwipeActionProps`.
 
 </ApiPart>
 

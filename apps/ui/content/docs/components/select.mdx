@@ -3,16 +3,11 @@ title: Select
 description: "A button that opens a list of options so people can pick one value."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="select" story="Default">
-
-<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-demo" />
 
 `Select` wraps the Base UI Select primitive. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.
 
@@ -22,25 +17,46 @@ A highlight pill slides between options as the highlighted item changes, and the
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add select"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add select
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Copy the source into `components/ui/select.tsx`:
 
-<SourceFile path="components/ui/select.tsx" />
+<ComponentSource path="components/ui/select.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton } from \"@/components/ui/select\""} />
+```tsx
+import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton } from "@/components/ui/select"
+```
 
-<Code lang="tsx" code={"<Select items={fruits}>\n  <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n    <SelectValue placeholder=\"Select a fruit\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectGroup>\n      {fruits.map((fruit) => (\n        <SelectItem key={fruit.value} value={fruit.value}>\n          {fruit.label}\n        </SelectItem>\n      ))}\n    </SelectGroup>\n  </SelectContent>\n</Select>"} />
+```tsx
+<Select items={fruits}>
+  <SelectTrigger aria-label="Fruit" className="w-48">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      {fruits.map((fruit) => (
+        <SelectItem key={fruit.value} value={fruit.value}>
+          {fruit.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
 
 Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen.
 
@@ -52,75 +68,58 @@ Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show t
 
 Renders the popup open on mount with a value already selected.
 
-<Example kind="ui" name="select" story="Open">
-
-<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectOpenExample() {\n  return (\n    <Select items={fruits} defaultValue=\"banana\">\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-open" />
 
 ### With value
 
 Starts with a default value, so the trigger shows its label.
 
-<Example kind="ui" name="select" story="WithValue">
-
-<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectWithValueExample() {\n  return (\n    <Select items={fruits} defaultValue=\"blueberry\">\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-with-value" />
 
 ### Small
 
 Uses the compact `sm` trigger size.
 
-<Example kind="ui" name="select" story="Small">
-
-<Code lang="tsx" code={"import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectSmallExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" size=\"sm\" className=\"w-40\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        {fruits.map((fruit) => (\n          <SelectItem key={fruit.value} value={fruit.value}>\n            {fruit.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-small" />
 
 ### Grouped
 
 Splits options into labelled groups with a separator between them.
 
-<Example kind="ui" name="select" story="Grouped">
-
-<Code lang="tsx" code={"import { Fragment } from \"react\"\nimport { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst timezones = [\n  {\n    label: \"North America\",\n    items: [\n      { value: \"est\", label: \"Eastern Time\" },\n      { value: \"cst\", label: \"Central Time\" },\n      { value: \"pst\", label: \"Pacific Time\" },\n    ],\n  },\n  {\n    label: \"Europe\",\n    items: [\n      { value: \"gmt\", label: \"Greenwich Mean Time\" },\n      { value: \"cet\", label: \"Central European Time\" },\n      { value: \"eet\", label: \"Eastern European Time\" },\n    ],\n  },\n]\n\nexport function SelectGroupedExample() {\n  return (\n    <Select items={timezones.flatMap((group) => group.items)} defaultValue=\"cet\">\n      <SelectTrigger aria-label=\"Timezone\" className=\"w-60\">\n        <SelectValue placeholder=\"Select a timezone\" />\n      </SelectTrigger>\n      <SelectContent>\n        {timezones.map((group, index) => (\n          <Fragment key={group.label}>\n            {index > 0 && <SelectSeparator />}\n            <SelectGroup>\n              <SelectLabel>{group.label}</SelectLabel>\n              {group.items.map((item) => (\n                <SelectItem key={item.value} value={item.value}>\n                  {item.label}\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </Fragment>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-grouped" />
 
 ### With icons
 
 Places an icon before each option's label.
 
-<Example kind="ui" name="select" story="WithIcons">
-
-<Code lang="tsx" code={"import { GlobeIcon, MoonIcon, SunIcon } from \"@phosphor-icons/react\"\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst themes = [\n  { value: \"light\", label: \"Light\", icon: SunIcon },\n  { value: \"dark\", label: \"Dark\", icon: MoonIcon },\n  { value: \"system\", label: \"System\", icon: GlobeIcon },\n]\n\nexport function SelectWithIconsExample() {\n  return (\n    <Select items={themes.map(({ value, label }) => ({ value, label }))} defaultValue=\"system\">\n      <SelectTrigger aria-label=\"Theme\" className=\"w-40\">\n        <SelectValue placeholder=\"Theme\" />\n      </SelectTrigger>\n      <SelectContent>\n        {themes.map(({ value, label, icon: Icon }) => (\n          <SelectItem key={value} value={value}>\n            <Icon />\n            {label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-with-icons" />
 
 ### Disabled
 
 Disables the select so it can't be opened.
 
-<Example kind="ui" name="select" story="Disabled">
-
-<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectDisabledExample() {\n  return (\n    <Select items={fruits} disabled>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-disabled" />
 
 ### Invalid
 
 Marks the trigger with `aria-invalid` to show an error state.
 
-<Example kind="ui" name="select" story="Invalid">
-
-<Code lang="tsx" code={"import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectInvalidExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\" aria-invalid>\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        {fruits.map((fruit) => (\n          <SelectItem key={fruit.value} value={fruit.value}>\n            {fruit.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="select-invalid" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"SelectTrigger","href":"#selecttrigger","children":[{"name":"SelectValue","href":"#selectvalue","children":[]}]},{"name":"SelectContent","href":"#selectcontent","children":[{"name":"SelectGroup","href":"#selectgroup","children":[{"name":"SelectItem","href":"#selectitem","children":[]},{"name":"SelectLabel","href":"#selectlabel","children":[]}]},{"name":"SelectItem","href":"#selectitem","children":[]},{"name":"SelectSeparator","href":"#selectseparator","children":[]}]}]} />
+<Anatomy>
+
+- [SelectTrigger](#selecttrigger)
+  - [SelectValue](#selectvalue)
+- [SelectContent](#selectcontent)
+  - [SelectGroup](#selectgroup)
+    - [SelectItem](#selectitem)
+    - [SelectLabel](#selectlabel)
+  - [SelectItem](#selectitem)
+  - [SelectSeparator](#selectseparator)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -128,7 +127,7 @@ Marks the trigger with `aria-invalid` to show an error state.
 
 Groups related options; label it with a `SelectLabel`.
 
-<PropsTable extends={["SelectPrimitive.Group.Props"]} />
+Also accepts the props of `SelectPrimitive.Group.Props`.
 
 </ApiPart>
 
@@ -138,7 +137,7 @@ Groups related options; label it with a `SelectLabel`.
 
 Shows the selected option's label, or the placeholder, inside the trigger.
 
-<PropsTable extends={["SelectPrimitive.Value.Props"]} />
+Also accepts the props of `SelectPrimitive.Value.Props`.
 
 </ApiPart>
 
@@ -148,7 +147,11 @@ Shows the selected option's label, or the placeholder, inside the trigger.
 
 The button that opens the popup and displays the current value.
 
-<PropsTable extends={["SelectPrimitive.Trigger.Props"]} props={[{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` | Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners. |
+
+Also accepts the props of `SelectPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -158,7 +161,7 @@ The button that opens the popup and displays the current value.
 
 The positioned popup that holds the option list and scroll arrows.
 
-<PropsTable extends={["SelectPrimitive.Popup.Props","SelectPrimitive.Positioner.Props"]} />
+Also accepts the props of `SelectPrimitive.Popup.Props`, `SelectPrimitive.Positioner.Props`.
 
 </ApiPart>
 
@@ -168,7 +171,7 @@ The positioned popup that holds the option list and scroll arrows.
 
 A heading that names a `SelectGroup`.
 
-<PropsTable extends={["SelectPrimitive.GroupLabel.Props"]} />
+Also accepts the props of `SelectPrimitive.GroupLabel.Props`.
 
 </ApiPart>
 
@@ -178,7 +181,7 @@ A heading that names a `SelectGroup`.
 
 A selectable option, with a check mark when selected.
 
-<PropsTable extends={["SelectPrimitive.Item.Props"]} />
+Also accepts the props of `SelectPrimitive.Item.Props`.
 
 </ApiPart>
 
@@ -188,7 +191,7 @@ A selectable option, with a check mark when selected.
 
 A thin line that divides groups of options.
 
-<PropsTable extends={["SelectPrimitive.Separator.Props"]} />
+Also accepts the props of `SelectPrimitive.Separator.Props`.
 
 </ApiPart>
 
@@ -198,7 +201,7 @@ A thin line that divides groups of options.
 
 An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>"]} />
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>`.
 
 </ApiPart>
 
@@ -208,7 +211,7 @@ An arrow that scrolls the list up when it overflows; rendered by `SelectContent`
 
 An arrow that scrolls the list down when it overflows; rendered by `SelectContent`.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>"]} />
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>`.
 
 </ApiPart>
 
@@ -231,11 +234,7 @@ An arrow that scrolls the list down when it overflows; rendered by `SelectConten
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-select--open-by-default" width={880} height={696}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectOpenByDefaultExample() {\n  return (\n    <SelectDemo initial={fruits[2]} defaultOpen />\n  )\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--open-by-default" />
 
 `Select` is built on the select primitive. `SelectTrigger` is a pressable field with the `combobox` role and an up-down caret. `SelectContent` renders in a portal, positioned next to the trigger, and fades in and out with Reanimated. The list matches the trigger width.
 
@@ -245,19 +244,25 @@ The trigger comes in two sizes, `default` and `sm`. Use Select for picking one v
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add select"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add select
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add select --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add select --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add select --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add select --platform kotlin
+```
 
 </Only>
 
@@ -273,13 +278,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/select.tsx`:
 
-<SourceFile path="uniwind/components/ui/select.tsx" />
+<ComponentSource path="uniwind/components/ui/select.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -289,13 +296,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/select.tsx`:
 
-<SourceFile path="nativewind/components/ui/select.tsx" />
+<ComponentSource path="nativewind/components/ui/select.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -305,13 +314,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/select.tsx`:
 
-<SourceFile path="stylesheet/components/ui/select.tsx" />
+<ComponentSource path="stylesheet/components/ui/select.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -327,35 +338,37 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -365,35 +378,40 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Select.kt" />
+<ComponentSource path="kotlin/components/Select.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -401,9 +419,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator } from \"@/components/ui/select\""} />
+```tsx
+import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator } from "@/components/ui/select"
+```
 
-<Code lang="tsx" code={"<SelectDemo initial={fruits[2]} defaultOpen />"} />
+```tsx
+<SelectDemo initial={fruits[2]} defaultOpen />
+```
 
 Put a `SelectValue` inside `SelectTrigger`, and `SelectItem` entries inside `SelectContent`. Group items with `SelectGroup` and `SelectLabel`, and divide groups with `SelectSeparator`.
 
@@ -415,99 +437,43 @@ Give each `SelectItem` a `value` and a `label`; the label is shown when no child
 
 ### Default
 
-<NativeExample id="components-select--default" width={880} height={669} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectExample() {\n  return (\n    <SelectDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nstruct SelectDemo: View {\n  var size: SelectSize = .default\n\n  @State private var value: String?\n\n  init(initial: String? = nil, size: SelectSize = .default) {\n    self.size = size\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select a fruit\", size: size) {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits, id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n    }\n    .frame(width: 192)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSize\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\n@Composable\nfun SelectDemo(\n    initial: String? = null,\n    size: SelectSize = SelectSize.Default,\n    enabled: Boolean = true,\n    invalid: Boolean = false,\n    label: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = selectFruits.firstOrNull { it.value == value }?.label,\n        modifier = Modifier\n            .width(192.dp)\n            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n        placeholder = \"Select a fruit\",\n        size = size,\n        invalid = invalid,\n        enabled = enabled,\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            selectFruits.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--default" />
 
 ### With value
 
 A select that starts with a chosen value.
 
-<NativeExample id="components-select--with-value" width={880} height={669} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectWithValueExample() {\n  return (\n    <SelectDemo initial={fruits[2]} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectWithValueExample: View {\n  var body: some View {\n    SelectDemo(initial: \"blueberry\")\n  }\n}\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nstruct SelectDemo: View {\n  var size: SelectSize = .default\n\n  @State private var value: String?\n\n  init(initial: String? = nil, size: SelectSize = .default) {\n    self.size = size\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select a fruit\", size: size) {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits, id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n    }\n    .frame(width: 192)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSize\n\n@Composable\nfun SelectWithValueExample() {\n    SelectDemo(initial = \"blueberry\")\n}\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\n@Composable\nfun SelectDemo(\n    initial: String? = null,\n    size: SelectSize = SelectSize.Default,\n    enabled: Boolean = true,\n    invalid: Boolean = false,\n    label: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = selectFruits.firstOrNull { it.value == value }?.label,\n        modifier = Modifier\n            .width(192.dp)\n            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n        placeholder = \"Select a fruit\",\n        size = size,\n        invalid = invalid,\n        enabled = enabled,\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            selectFruits.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--with-value" />
 
 ### Small
 
 The `sm` trigger size.
 
-<NativeExample id="components-select--small" width={880} height={653} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectSmallExample() {\n  return (\n    <SelectDemo size=\"sm\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectSmallExample: View {\n  var body: some View {\n    SelectDemo(size: .sm)\n  }\n}\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nstruct SelectDemo: View {\n  var size: SelectSize = .default\n\n  @State private var value: String?\n\n  init(initial: String? = nil, size: SelectSize = .default) {\n    self.size = size\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select a fruit\", size: size) {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits, id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n    }\n    .frame(width: 192)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSize\n\n@Composable\nfun SelectSmallExample() {\n    SelectDemo(size = SelectSize.Sm)\n}\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\n@Composable\nfun SelectDemo(\n    initial: String? = null,\n    size: SelectSize = SelectSize.Default,\n    enabled: Boolean = true,\n    invalid: Boolean = false,\n    label: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = selectFruits.firstOrNull { it.value == value }?.label,\n        modifier = Modifier\n            .width(192.dp)\n            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n        placeholder = \"Select a fruit\",\n        size = size,\n        invalid = invalid,\n        enabled = enabled,\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            selectFruits.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--small" />
 
 ### Grouped
 
 Two labeled groups divided by a separator.
 
-<NativeExample id="components-select--grouped" width={880} height={840} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst vegetables: Option[] = [\n  { value: \"carrot\", label: \"Carrot\" },\n  { value: \"broccoli\", label: \"Broccoli\" },\n  { value: \"spinach\", label: \"Spinach\" },\n]\n\nfunction GroupedDemo() {\n  const [value, setValue] = React.useState<string | null>(null)\n  return (\n    <Select\n      items={[...fruits.slice(0, 3), ...vegetables]}\n      value={value}\n      onValueChange={setValue}\n    >\n      <SelectTrigger className=\"w-56\">\n        <SelectValue placeholder=\"Select produce\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-56\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.slice(0, 3).map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n        <SelectSeparator />\n        <SelectGroup>\n          <SelectLabel>Vegetables</SelectLabel>\n          {vegetables.map((vegetable) => (\n            <SelectItem\n              key={vegetable.value}\n              value={vegetable.value}\n              label={vegetable.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectGroupedExample() {\n  return (\n    <GroupedDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nlet selectVegetables = [\n  SelectOption(value: \"carrot\", label: \"Carrot\"),\n  SelectOption(value: \"broccoli\", label: \"Broccoli\"),\n  SelectOption(value: \"spinach\", label: \"Spinach\"),\n]\n\nstruct SelectGroupedDemo: View {\n  @State private var value: String?\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select produce\") {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits.prefix(3), id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n      SelectSeparator()\n      SelectGroup {\n        SelectLabel(\"Vegetables\")\n        ForEach(selectVegetables, id: \\.value) { vegetable in\n          SelectItem(vegetable.label, value: vegetable.value)\n        }\n      }\n    }\n    .frame(width: 224)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSeparator\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\nval selectVegetables = listOf(\n    SelectOption(\"carrot\", \"Carrot\"),\n    SelectOption(\"broccoli\", \"Broccoli\"),\n    SelectOption(\"spinach\", \"Spinach\"),\n)\n\n@Composable\nfun SelectGrouped() {\n    var value by rememberSaveable { mutableStateOf<String?>(null) }\n    val fruits = selectFruits.take(3)\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = (fruits + selectVegetables).firstOrNull { it.value == value }?.label,\n        modifier = Modifier.width(224.dp),\n        placeholder = \"Select produce\",\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            fruits.forEach { SelectItem(it.value, it.label) }\n        }\n        SelectSeparator()\n        SelectGroup {\n            SelectLabel(\"Vegetables\")\n            selectVegetables.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--grouped" />
 
 ### With label
 
 A select labeled by a `Label` through `accessibilityLabelledBy`, with helper text.
 
-<NativeExample id="components-select--with-label" width={880} height={729} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\nimport { Text } from \"@/components/ui/text\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectWithLabelExample() {\n  return (\n    <View className=\"gap-2\">\n      <Label nativeID=\"select-fruit\">Favorite fruit</Label>\n      <SelectDemo labelledBy=\"select-fruit\" />\n      <Text className=\"text-sm text-label-secondary\">\n        Used to personalize your recommendations.\n      </Text>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectWithLabelExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      FieldLabel(\"Favorite fruit\")\n        .accessibilityHidden(true)\n      SelectDemo()\n        .accessibilityLabel(Text(\"Favorite fruit\"))\n      Text(\"Used to personalize your recommendations.\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nstruct SelectDemo: View {\n  var size: SelectSize = .default\n\n  @State private var value: String?\n\n  init(initial: String? = nil, size: SelectSize = .default) {\n    self.size = size\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select a fruit\", size: size) {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits, id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n    }\n    .frame(width: 192)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSize\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\n@Composable\nfun SelectDemo(\n    initial: String? = null,\n    size: SelectSize = SelectSize.Default,\n    enabled: Boolean = true,\n    invalid: Boolean = false,\n    label: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = selectFruits.firstOrNull { it.value == value }?.label,\n        modifier = Modifier\n            .width(192.dp)\n            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n        placeholder = \"Select a fruit\",\n        size = size,\n        invalid = invalid,\n        enabled = enabled,\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            selectFruits.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}\n\n@Composable\nfun SelectWithLabel() {\n    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Label(\"Favorite fruit\")\n        SelectDemo(label = \"Favorite fruit\")\n        Text(\"Used to personalize your recommendations.\", style = Typography.sm, color = EsuissTheme.colors.labelSecondary)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--with-label" />
 
 ### Disabled
 
 A disabled select with a value.
 
-<NativeExample id="components-select--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectDisabledExample() {\n  return (\n    <SelectDemo disabled initial={fruits[0]} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectDisabledExample: View {\n  var body: some View {\n    SelectDemo(initial: \"mango\")\n      .disabled(true)\n  }\n}\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nstruct SelectDemo: View {\n  var size: SelectSize = .default\n\n  @State private var value: String?\n\n  init(initial: String? = nil, size: SelectSize = .default) {\n    self.size = size\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select a fruit\", size: size) {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits, id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n    }\n    .frame(width: 192)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSize\n\n@Composable\nfun SelectDisabledExample() {\n    SelectDemo(initial = \"mango\", enabled = false)\n}\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\n@Composable\nfun SelectDemo(\n    initial: String? = null,\n    size: SelectSize = SelectSize.Default,\n    enabled: Boolean = true,\n    invalid: Boolean = false,\n    label: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = selectFruits.firstOrNull { it.value == value }?.label,\n        modifier = Modifier\n            .width(192.dp)\n            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n        placeholder = \"Select a fruit\",\n        size = size,\n        invalid = invalid,\n        enabled = enabled,\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            selectFruits.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--disabled" />
 
 ### Invalid
 
 The invalid state with an error message.
 
-<NativeExample id="components-select--invalid" width={880} height={669} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from \"@/components/ui/select\"\nimport { Text } from \"@/components/ui/text\"\n\nconst fruits: Option[] = [\n  { value: \"mango\", label: \"Mango\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nfunction SelectDemo({\n  initial,\n  size,\n  disabled = false,\n  invalid = false,\n  labelledBy,\n  defaultOpen,\n}: {\n  initial?: Option\n  size?: \"default\" | \"sm\"\n  disabled?: boolean\n  invalid?: boolean\n  labelledBy?: string\n  defaultOpen?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(\n    initial?.value ?? null\n  )\n  return (\n    <Select\n      items={fruits}\n      value={value}\n      onValueChange={setValue}\n      disabled={disabled}\n      defaultOpen={defaultOpen}\n    >\n      <SelectTrigger\n        size={size}\n        accessibilityLabelledBy={labelledBy}\n        invalid={invalid}\n        className=\"w-48\"\n      >\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent className=\"w-48\">\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          {fruits.map((fruit) => (\n            <SelectItem\n              key={fruit.value}\n              value={fruit.value}\n              label={fruit.label}\n            />\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}\n\nexport function SelectInvalidExample() {\n  return (\n    <View className=\"gap-2\">\n      <SelectDemo invalid />\n      <Text className=\"text-sm text-danger\">Please select a fruit.</Text>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SelectInvalidExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      SelectDemo()\n        .invalid()\n      Text(\"Please select a fruit.\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.danger)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct SelectOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet selectFruits = [\n  SelectOption(value: \"mango\", label: \"Mango\"),\n  SelectOption(value: \"banana\", label: \"Banana\"),\n  SelectOption(value: \"blueberry\", label: \"Blueberry\"),\n  SelectOption(value: \"grapes\", label: \"Grapes\"),\n  SelectOption(value: \"pineapple\", label: \"Pineapple\"),\n]\n\nstruct SelectDemo: View {\n  var size: SelectSize = .default\n\n  @State private var value: String?\n\n  init(initial: String? = nil, size: SelectSize = .default) {\n    self.size = size\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SelectField(selection: $value, placeholder: \"Select a fruit\", size: size) {\n      SelectGroup {\n        SelectLabel(\"Fruits\")\n        ForEach(selectFruits, id: \\.value) { fruit in\n          SelectItem(fruit.label, value: fruit.value)\n        }\n      }\n    }\n    .frame(width: 192)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Select\nimport com.esuiss.ui.components.SelectGroup\nimport com.esuiss.ui.components.SelectItem\nimport com.esuiss.ui.components.SelectLabel\nimport com.esuiss.ui.components.SelectOption\nimport com.esuiss.ui.components.SelectSize\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nval selectFruits = listOf(\n    SelectOption(\"mango\", \"Mango\"),\n    SelectOption(\"banana\", \"Banana\"),\n    SelectOption(\"blueberry\", \"Blueberry\"),\n    SelectOption(\"grapes\", \"Grapes\"),\n    SelectOption(\"pineapple\", \"Pineapple\"),\n)\n\n@Composable\nfun SelectDemo(\n    initial: String? = null,\n    size: SelectSize = SelectSize.Default,\n    enabled: Boolean = true,\n    invalid: Boolean = false,\n    label: String? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(initial) }\n    Select(\n        value = value,\n        onValueChange = { value = it },\n        displayValue = selectFruits.firstOrNull { it.value == value }?.label,\n        modifier = Modifier\n            .width(192.dp)\n            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n        placeholder = \"Select a fruit\",\n        size = size,\n        invalid = invalid,\n        enabled = enabled,\n    ) {\n        SelectGroup {\n            SelectLabel(\"Fruits\")\n            selectFruits.forEach { SelectItem(it.value, it.label) }\n        }\n    }\n}\n\n@Composable\nfun SelectInvalid() {\n    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        SelectDemo(invalid = true)\n        Text(\"Please select a fruit.\", style = Typography.sm, color = EsuissTheme.colors.danger)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-select--invalid" />
 
 ## API Reference
 
@@ -517,7 +483,7 @@ The invalid state with an error message.
 
 Groups related items.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.Group>"]} />
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Group>`.
 
 </ApiPart>
 
@@ -527,7 +493,7 @@ Groups related items.
 
 Shows the selected label or the placeholder.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.Value>"]} />
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Value>`.
 
 </ApiPart>
 
@@ -537,7 +503,13 @@ Shows the selected label or the placeholder.
 
 Pressable field that opens the list.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.Trigger>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"size","type":"\"default\" | \"sm\"","default":"\"default\"","description":"Trigger height: `default` or `sm`."},{"name":"invalid","type":"boolean","description":"Shows the danger border. Falls back to the invalid state of an enclosing field."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+| `size` | `"default" \| "sm"` | `"default"` | Trigger height: `default` or `sm`. |
+| `invalid` | `boolean` | - | Shows the danger border. Falls back to the invalid state of an enclosing field. |
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`.
 
 </ApiPart>
 
@@ -547,7 +519,11 @@ Pressable field that opens the list.
 
 Floating list rendered in a portal.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.Popup>","PositionerProps"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Popup>`, `PositionerProps`.
 
 </ApiPart>
 
@@ -557,7 +533,7 @@ Floating list rendered in a portal.
 
 Heading for a group.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.GroupLabel>"]} />
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.GroupLabel>`.
 
 </ApiPart>
 
@@ -567,7 +543,11 @@ Heading for a group.
 
 One option, with a check mark when selected.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.Item>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Item>`.
 
 </ApiPart>
 
@@ -577,7 +557,7 @@ One option, with a check mark when selected.
 
 Line between groups.
 
-<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Separator>`.
 
 </ApiPart>
 

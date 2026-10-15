@@ -3,16 +3,11 @@ title: Toggle Group
 description: "A set of toggle buttons for choosing one or several related options, including segmented controls."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="toggle-group" story="Default">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupExample() {\n  return (\n    <ToggleGroup spacing={2} orientation=\"horizontal\" multiple defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-demo" />
 
 `ToggleGroup` wraps the Base UI Toggle Group primitive and holds `ToggleGroupItem` buttons that share the group's `variant` and `size`. Items can be spaced apart, attached into one bar, or combined into a segmented control.
 
@@ -22,27 +17,45 @@ With `spacing={0}` and the `default` variant, the group becomes a segmented cont
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle-group"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toggle-group
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Toggle](/docs/components/toggle).
 
 3. Copy the source into `components/ui/toggle-group.tsx`:
 
-<SourceFile path="components/ui/toggle-group.tsx" />
+<ComponentSource path="components/ui/toggle-group.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\""} />
+```tsx
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+```
 
-<Code lang="tsx" code={"<ToggleGroup spacing={2} orientation=\"horizontal\" multiple defaultValue={[\"bold\"]}>\n  <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n    <TextBIcon />\n  </ToggleGroupItem>\n  <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n    <TextItalicIcon />\n  </ToggleGroupItem>\n  <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n    <TextUnderlineIcon />\n  </ToggleGroupItem>\n</ToggleGroup>"} />
+```tsx
+<ToggleGroup spacing={2} orientation="horizontal" multiple defaultValue={["bold"]}>
+  <ToggleGroupItem value="bold" aria-label="Toggle bold">
+    <TextBIcon />
+  </ToggleGroupItem>
+  <ToggleGroupItem value="italic" aria-label="Toggle italic">
+    <TextItalicIcon />
+  </ToggleGroupItem>
+  <ToggleGroupItem value="underline" aria-label="Toggle underline">
+    <TextUnderlineIcon />
+  </ToggleGroupItem>
+</ToggleGroup>
+```
 
 The group's value is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it. Set `multiple` to let several items be pressed at once; without it, pressing an item releases the others.
 
@@ -54,105 +67,70 @@ Set `variant` and `size` on `ToggleGroup`; items take these from the group. Use 
 
 Uses the `outline` variant with spaced items.
 
-<Example kind="ui" name="toggle-group" story="Outline">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupOutlineExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={2} orientation=\"horizontal\" multiple defaultValue={[\"italic\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-outline" />
 
 ### Attached
 
 Joins outline items into one bar with `spacing={0}`.
 
-<Example kind="ui" name="toggle-group" story="Attached">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupAttachedExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={0} orientation=\"horizontal\" multiple defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-attached" />
 
 ### Sizes
 
 Compares the `sm`, `default` and `lg` sizes.
 
-<Example kind="ui" name="toggle-group" story="Sizes">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"sm\", \"default\", \"lg\"] as const).map((size) => (\n        <ToggleGroup key={size} spacing={2} orientation=\"horizontal\" multiple size={size}>\n          <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n            <TextBIcon />\n          </ToggleGroupItem>\n          <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n            <TextItalicIcon />\n          </ToggleGroupItem>\n          <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n            <TextUnderlineIcon />\n          </ToggleGroupItem>\n        </ToggleGroup>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-sizes" />
 
 ### Segmented
 
 Shows a single-choice segmented control with a sliding pill.
 
-<Example kind="ui" name="toggle-group" story="Segmented">
-
-<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedExample() {\n  return (\n    <ToggleGroup spacing={0} orientation=\"horizontal\" defaultValue={[\"week\"]} aria-label=\"Calendar view\">\n      <ToggleGroupItem value=\"day\">Day</ToggleGroupItem>\n      <ToggleGroupItem value=\"week\">Week</ToggleGroupItem>\n      <ToggleGroupItem value=\"month\">Month</ToggleGroupItem>\n      <ToggleGroupItem value=\"year\">Year</ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-segmented" />
 
 ### Segmented vertical
 
 Stacks a segmented control vertically.
 
-<Example kind="ui" name="toggle-group" story="SegmentedVertical">
-
-<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedVerticalExample() {\n  return (\n    <ToggleGroup spacing={0} orientation=\"vertical\" defaultValue={[\"week\"]} aria-label=\"Calendar view\">\n      <ToggleGroupItem value=\"day\">Day</ToggleGroupItem>\n      <ToggleGroupItem value=\"week\">Week</ToggleGroupItem>\n      <ToggleGroupItem value=\"month\">Month</ToggleGroupItem>\n      <ToggleGroupItem value=\"year\">Year</ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-segmented-vertical" />
 
 ### Segmented multiple
 
 Uses a segmented control that allows several pressed items.
 
-<Example kind="ui" name="toggle-group" story="SegmentedMultiple">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedMultipleExample() {\n  return (\n    <ToggleGroup spacing={0} orientation=\"horizontal\" multiple defaultValue={[\"bold\", \"underline\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-segmented-multiple" />
 
 ### Segmented sizes
 
 Compares segmented controls in each size.
 
-<Example kind="ui" name="toggle-group" story="SegmentedSizes">
-
-<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSegmentedSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"sm\", \"default\", \"lg\"] as const).map((size) => (\n        <ToggleGroup\n          key={size} spacing={0} orientation=\"horizontal\"\n          size={size}\n          defaultValue={[\"week\"]}\n          aria-label={`Calendar view, ${size}`}\n        >\n          <ToggleGroupItem value=\"day\">Day</ToggleGroupItem>\n          <ToggleGroupItem value=\"week\">Week</ToggleGroupItem>\n          <ToggleGroupItem value=\"month\">Month</ToggleGroupItem>\n        </ToggleGroup>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-segmented-sizes" />
 
 ### Single selection
 
 Allows only one pressed item in an outline group.
 
-<Example kind="ui" name="toggle-group" story="SingleSelection">
-
-<Code lang="tsx" code={"import { TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupSingleSelectionExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={2} orientation=\"horizontal\" defaultValue={[\"left\"]}>\n      <ToggleGroupItem value=\"left\" aria-label=\"Align left\">\n        <TextAlignLeftIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"center\" aria-label=\"Align center\">\n        <TextAlignCenterIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"right\" aria-label=\"Align right\">\n        <TextAlignRightIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-single-selection" />
 
 ### Vertical
 
 Stacks attached outline items vertically.
 
-<Example kind="ui" name="toggle-group" story="Vertical">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupVerticalExample() {\n  return (\n    <ToggleGroup variant=\"outline\" spacing={0} orientation=\"vertical\" multiple defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-vertical" />
 
 ### Disabled
 
 Disables every item in the group.
 
-<Example kind="ui" name="toggle-group" story="Disabled">
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"@phosphor-icons/react\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function ToggleGroupDisabledExample() {\n  return (\n    <ToggleGroup spacing={2} orientation=\"horizontal\" multiple disabled defaultValue={[\"bold\"]}>\n      <ToggleGroupItem value=\"bold\" aria-label=\"Toggle bold\">\n        <TextBIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" aria-label=\"Toggle italic\">\n        <TextItalicIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" aria-label=\"Toggle underline\">\n        <TextUnderlineIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toggle-group-disabled" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"ToggleGroup","href":"#togglegroup","children":[{"name":"ToggleGroupItem","href":"#togglegroupitem","children":[]}]}]} />
+<Anatomy>
+
+- [ToggleGroup](#togglegroup)
+  - [ToggleGroupItem](#togglegroupitem)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -160,7 +138,12 @@ Disables every item in the group.
 
 The container that holds the pressed values and shared styles.
 
-<PropsTable extends={["ToggleGroupPrimitive.Props"]} props={[{"name":"spacing","type":"number","default":"2","description":"Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant."},{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"Lays items out in a row or a column, and sets which arrow keys move focus."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+
+Also accepts the props of `ToggleGroupPrimitive.Props`.
 
 </ApiPart>
 
@@ -170,7 +153,7 @@ The container that holds the pressed values and shared styles.
 
 A toggle button within the group, identified by its `value`.
 
-<PropsTable extends={["TogglePrimitive.Props"]} />
+Also accepts the props of `TogglePrimitive.Props`.
 
 </ApiPart>
 
@@ -192,15 +175,7 @@ A toggle button within the group, identified by its `value`.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-toggle-group--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupExample() {\n  return (\n    <FormattingDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--default" />
 
 `ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column. Items take the same `variant` and `size` styles as Toggle. The `spacing` prop sets the gap between items in steps of 4 points.
 
@@ -210,19 +185,25 @@ With `spacing={0}`, the group changes shape: the `default` variant becomes a seg
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle-group"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toggle-group
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle-group --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toggle-group --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle-group --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toggle-group --platform kotlin
+```
 
 </Only>
 
@@ -238,13 +219,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/toggle-group.tsx`:
 
-<SourceFile path="uniwind/components/ui/toggle-group.tsx" />
+<ComponentSource path="uniwind/components/ui/toggle-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -254,13 +237,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/toggle-group.tsx`:
 
-<SourceFile path="nativewind/components/ui/toggle-group.tsx" />
+<ComponentSource path="nativewind/components/ui/toggle-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -270,13 +255,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle), and the primitives `components/primitives/toggle.tsx`, `components/primitives/toggle-group.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/toggle-group.tsx`:
 
-<SourceFile path="stylesheet/components/ui/toggle-group.tsx" />
+<ComponentSource path="stylesheet/components/ui/toggle-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -292,33 +279,35 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/ToggleGroup.swift" />
+<ComponentSource path="swift/Components/ToggleGroup.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Components/Toggle.swift" />
+<ComponentSource path="swift/Components/Toggle.swift" />
 
 5. Add the files to your app target.
 
@@ -328,35 +317,40 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/ToggleGroup.kt" />
+<ComponentSource path="kotlin/components/ToggleGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Toggle.kt" />
+<ComponentSource path="kotlin/components/Toggle.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -364,9 +358,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { ToggleGroup, ToggleGroupItem, ToggleGroupIcon } from \"@/components/ui/toggle-group\""} />
+```tsx
+import { ToggleGroup, ToggleGroupItem, ToggleGroupIcon } from "@/components/ui/toggle-group"
+```
 
-<Code lang="tsx" code={"<FormattingDemo />"} />
+```tsx
+<FormattingDemo />
+```
 
 The value is always an array of strings. Use `value` and `onValueChange` for controlled use, or `defaultValue`. Set `multiple` to allow more than one pressed item; without it, pressing an item replaces the selection.
 
@@ -378,141 +376,61 @@ Give each `ToggleGroupItem` a `value`. Put icons in a `ToggleGroupIcon`, which s
 
 The `outline` variant.
 
-<NativeExample id="components-toggle-group--outline" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupOutlineExample() {\n  return (\n    <FormattingDemo variant=\"outline\" initial={[\"italic\"]} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleGroupOutlineExample: View {\n  var body: some View {\n    FormattingDemo(initial: [\"italic\"], variant: .outline)\n  }\n}\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupOutlineExample() {\n    ToggleGroupFormatting(variant = ToggleVariant.Outline, initial = setOf(\"italic\"))\n}\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--outline" />
 
 ### Attached
 
 Outlined items joined into one strip with `spacing={0}`.
 
-<NativeExample id="components-toggle-group--attached" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupAttachedExample() {\n  return (\n    <FormattingDemo variant=\"outline\" spacing={0} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleGroupAttachedExample: View {\n  var body: some View {\n    FormattingDemo(variant: .outline, spacing: 0)\n  }\n}\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupAttachedExample() {\n    ToggleGroupFormatting(variant = ToggleVariant.Outline, spacing = 0)\n}\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--attached" />
 
 ### Sizes
 
 The `sm`, `default` and `lg` sizes.
 
-<NativeExample id="components-toggle-group--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupSizesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <FormattingDemo size=\"sm\" />\n      <FormattingDemo />\n      <FormattingDemo size=\"lg\" />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleGroupSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      FormattingDemo(size: .sm)\n      FormattingDemo()\n      FormattingDemo(size: .lg)\n    }\n  }\n}\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}\n\n@Composable\nfun ToggleGroupSizes() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        ToggleGroupFormatting(size = ToggleSize.Sm)\n        ToggleGroupFormatting()\n        ToggleGroupFormatting(size = ToggleSize.Lg)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--sizes" />
 
 ### Segmented
 
 A single-selection segmented control for calendar views.
 
-<NativeExample id="components-toggle-group--segmented" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Text } from \"@/components/ui/text\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nconst views = [\"day\", \"week\", \"month\", \"year\"]\n\nfunction SegmentedDemo({\n  items = views,\n  ...props\n}: GroupProps & { items?: string[] }) {\n  const [value, setValue] = React.useState<string[]>([\"week\"])\n  return (\n    <ToggleGroup\n      spacing={0}\n      value={value}\n      onValueChange={setValue}\n      accessibilityLabel=\"Calendar view\"\n      {...props}\n    >\n      {items.map((item) => (\n        <ToggleGroupItem key={item} value={item}>\n          <Text className=\"capitalize\">{item}</Text>\n        </ToggleGroupItem>\n      ))}\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupSegmentedExample() {\n  return (\n    <SegmentedDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nlet segmentedViews = [\"Day\", \"Week\", \"Month\", \"Year\"]\n\nstruct SegmentedDemo: View {\n  var items: [String] = segmentedViews\n  var size: ToggleSize = .default\n  var orientation: Axis = .horizontal\n\n  @State private var value: String? = \"Week\"\n\n  var body: some View {\n    ToggleGroup(selection: $value, size: size, spacing: 0, orientation: orientation) {\n      ForEach(items, id: \\.self) { item in\n        ToggleGroupItem(value: item) {\n          Text(verbatim: item)\n        }\n      }\n    }\n    .accessibilityLabel(Text(\"Calendar view\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\n\nval toggleGroupViews = listOf(\"day\", \"week\", \"month\", \"year\")\n\n@Composable\nfun ToggleGroupSegmented(\n    items: List<String> = toggleGroupViews,\n    size: ToggleSize = ToggleSize.Default,\n    orientation: Orientation = Orientation.Horizontal,\n) {\n    var value by rememberSaveable { mutableStateOf<String?>(\"week\") }\n    ToggleGroup(\n        value = value,\n        onValueChange = { value = it },\n        modifier = Modifier.semantics { contentDescription = \"Calendar view\" },\n        size = size,\n        spacing = 0,\n        orientation = orientation,\n    ) {\n        items.forEach { item ->\n            ToggleGroupItem(item.replaceFirstChar { it.uppercaseChar() }, value = item)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--segmented" />
 
 ### Segmented vertical
 
 The segmented control in a vertical orientation.
 
-<NativeExample id="components-toggle-group--segmented-vertical" width={880} height={407} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Text } from \"@/components/ui/text\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nconst views = [\"day\", \"week\", \"month\", \"year\"]\n\nfunction SegmentedDemo({\n  items = views,\n  ...props\n}: GroupProps & { items?: string[] }) {\n  const [value, setValue] = React.useState<string[]>([\"week\"])\n  return (\n    <ToggleGroup\n      spacing={0}\n      value={value}\n      onValueChange={setValue}\n      accessibilityLabel=\"Calendar view\"\n      {...props}\n    >\n      {items.map((item) => (\n        <ToggleGroupItem key={item} value={item}>\n          <Text className=\"capitalize\">{item}</Text>\n        </ToggleGroupItem>\n      ))}\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupSegmentedVerticalExample() {\n  return (\n    <SegmentedDemo orientation=\"vertical\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ToggleGroupSegmentedVerticalExample: View {\n  var body: some View {\n    SegmentedDemo(orientation: .vertical)\n      .fixedSize(horizontal: true, vertical: false)\n  }\n}\n\nlet segmentedViews = [\"Day\", \"Week\", \"Month\", \"Year\"]\n\nstruct SegmentedDemo: View {\n  var items: [String] = segmentedViews\n  var size: ToggleSize = .default\n  var orientation: Axis = .horizontal\n\n  @State private var value: String? = \"Week\"\n\n  var body: some View {\n    ToggleGroup(selection: $value, size: size, spacing: 0, orientation: orientation) {\n      ForEach(items, id: \\.self) { item in\n        ToggleGroupItem(value: item) {\n          Text(verbatim: item)\n        }\n      }\n    }\n    .accessibilityLabel(Text(\"Calendar view\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\n\n@Composable\nfun ToggleGroupSegmentedVerticalExample() {\n    ToggleGroupSegmented(orientation = Orientation.Vertical)\n}\n\nval toggleGroupViews = listOf(\"day\", \"week\", \"month\", \"year\")\n\n@Composable\nfun ToggleGroupSegmented(\n    items: List<String> = toggleGroupViews,\n    size: ToggleSize = ToggleSize.Default,\n    orientation: Orientation = Orientation.Horizontal,\n) {\n    var value by rememberSaveable { mutableStateOf<String?>(\"week\") }\n    ToggleGroup(\n        value = value,\n        onValueChange = { value = it },\n        modifier = Modifier.semantics { contentDescription = \"Calendar view\" },\n        size = size,\n        spacing = 0,\n        orientation = orientation,\n    ) {\n        items.forEach { item ->\n            ToggleGroupItem(item.replaceFirstChar { it.uppercaseChar() }, value = item)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--segmented-vertical" />
 
 ### Segmented multiple
 
 A segmented control that allows several selected items.
 
-<NativeExample id="components-toggle-group--segmented-multiple" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupSegmentedMultipleExample() {\n  return (\n    <FormattingDemo spacing={0} initial={[\"bold\", \"underline\"]} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleGroupSegmentedMultipleExample: View {\n  var body: some View {\n    FormattingDemo(initial: [\"bold\", \"underline\"], spacing: 0)\n  }\n}\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupSegmentedMultipleExample() {\n    ToggleGroupFormatting(spacing = 0, initial = setOf(\"bold\", \"underline\"))\n}\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--segmented-multiple" />
 
 ### Segmented sizes
 
 Segmented controls at each size.
 
-<NativeExample id="components-toggle-group--segmented-sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Text } from \"@/components/ui/text\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nconst views = [\"day\", \"week\", \"month\", \"year\"]\n\nfunction SegmentedDemo({\n  items = views,\n  ...props\n}: GroupProps & { items?: string[] }) {\n  const [value, setValue] = React.useState<string[]>([\"week\"])\n  return (\n    <ToggleGroup\n      spacing={0}\n      value={value}\n      onValueChange={setValue}\n      accessibilityLabel=\"Calendar view\"\n      {...props}\n    >\n      {items.map((item) => (\n        <ToggleGroupItem key={item} value={item}>\n          <Text className=\"capitalize\">{item}</Text>\n        </ToggleGroupItem>\n      ))}\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupSegmentedSizesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <SegmentedDemo size=\"sm\" items={views.slice(0, 3)} />\n      <SegmentedDemo items={views.slice(0, 3)} />\n      <SegmentedDemo size=\"lg\" items={views.slice(0, 3)} />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ToggleGroupSegmentedSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      SegmentedDemo(items: Array(segmentedViews.prefix(3)), size: .sm)\n      SegmentedDemo(items: Array(segmentedViews.prefix(3)))\n      SegmentedDemo(items: Array(segmentedViews.prefix(3)), size: .lg)\n    }\n  }\n}\n\nlet segmentedViews = [\"Day\", \"Week\", \"Month\", \"Year\"]\n\nstruct SegmentedDemo: View {\n  var items: [String] = segmentedViews\n  var size: ToggleSize = .default\n  var orientation: Axis = .horizontal\n\n  @State private var value: String? = \"Week\"\n\n  var body: some View {\n    ToggleGroup(selection: $value, size: size, spacing: 0, orientation: orientation) {\n      ForEach(items, id: \\.self) { item in\n        ToggleGroupItem(value: item) {\n          Text(verbatim: item)\n        }\n      }\n    }\n    .accessibilityLabel(Text(\"Calendar view\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\n\nval toggleGroupViews = listOf(\"day\", \"week\", \"month\", \"year\")\n\n@Composable\nfun ToggleGroupSegmented(\n    items: List<String> = toggleGroupViews,\n    size: ToggleSize = ToggleSize.Default,\n    orientation: Orientation = Orientation.Horizontal,\n) {\n    var value by rememberSaveable { mutableStateOf<String?>(\"week\") }\n    ToggleGroup(\n        value = value,\n        onValueChange = { value = it },\n        modifier = Modifier.semantics { contentDescription = \"Calendar view\" },\n        size = size,\n        spacing = 0,\n        orientation = orientation,\n    ) {\n        items.forEach { item ->\n            ToggleGroupItem(item.replaceFirstChar { it.uppercaseChar() }, value = item)\n        }\n    }\n}\n\n@Composable\nfun ToggleGroupSegmentedSizes() {\n    val items = toggleGroupViews.take(3)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        ToggleGroupSegmented(items, ToggleSize.Sm)\n        ToggleGroupSegmented(items)\n        ToggleGroupSegmented(items, ToggleSize.Lg)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--segmented-sizes" />
 
 ### Single selection
 
 Outlined alignment options where only one item can be pressed.
 
-<NativeExample id="components-toggle-group--single-selection" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nfunction AlignmentDemo() {\n  const [value, setValue] = React.useState<string[]>([\"left\"])\n  return (\n    <ToggleGroup value={value} onValueChange={setValue} variant=\"outline\">\n      <ToggleGroupItem value=\"left\" accessibilityLabel=\"Align left\">\n        <ToggleGroupIcon as={TextAlignLeftIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"center\" accessibilityLabel=\"Align center\">\n        <ToggleGroupIcon as={TextAlignCenterIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"right\" accessibilityLabel=\"Align right\">\n        <ToggleGroupIcon as={TextAlignRightIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupSingleSelectionExample() {\n  return (\n    <AlignmentDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AlignmentDemo: View {\n  @State private var value: String? = \"left\"\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: .outline) {\n      ToggleGroupItem(value: \"left\") {\n        Ph.textAlignLeft.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Align left\"))\n      ToggleGroupItem(value: \"center\") {\n        Ph.textAlignCenter.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Align center\"))\n      ToggleGroupItem(value: \"right\") {\n        Ph.textAlignRight.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Align right\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextAlignCenter\nimport com.adamglin.phosphoricons.regular.TextAlignLeft\nimport com.adamglin.phosphoricons.regular.TextAlignRight\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupAlignment() {\n    var value by rememberSaveable { mutableStateOf<String?>(\"left\") }\n    ToggleGroup(value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {\n        ToggleGroupIconItem(\"left\", \"Align left\", PhosphorIcons.Regular.TextAlignLeft)\n        ToggleGroupIconItem(\"center\", \"Align center\", PhosphorIcons.Regular.TextAlignCenter)\n        ToggleGroupIconItem(\"right\", \"Align right\", PhosphorIcons.Regular.TextAlignRight)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--single-selection" />
 
 ### Vertical
 
 Joined outline items stacked in a column.
 
-<NativeExample id="components-toggle-group--vertical" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupVerticalExample() {\n  return (\n    <FormattingDemo orientation=\"vertical\" variant=\"outline\" spacing={0} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleGroupVerticalExample: View {\n  var body: some View {\n    FormattingDemo(variant: .outline, spacing: 0, orientation: .vertical)\n      .fixedSize(horizontal: true, vertical: false)\n  }\n}\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupVerticalExample() {\n    ToggleGroupFormatting(variant = ToggleVariant.Outline, spacing = 0, orientation = Orientation.Vertical)\n}\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--vertical" />
 
 ### Disabled
 
 A disabled group.
 
-<NativeExample id="components-toggle-group--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\ntype GroupProps = Omit<\n  React.ComponentProps<typeof ToggleGroup>,\n  \"value\" | \"onValueChange\" | \"children\"\n>\n\nfunction FormattingDemo({\n  initial = [\"bold\"],\n  ...props\n}: GroupProps & { initial?: string[] }) {\n  const [value, setValue] = React.useState<string[]>(initial)\n  return (\n    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>\n      <ToggleGroupItem value=\"bold\" accessibilityLabel=\"Toggle bold\">\n        <ToggleGroupIcon as={TextBIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"italic\" accessibilityLabel=\"Toggle italic\">\n        <ToggleGroupIcon as={TextItalicIcon} />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"underline\" accessibilityLabel=\"Toggle underline\">\n        <ToggleGroupIcon as={TextUnderlineIcon} />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}\n\nexport function ToggleGroupDisabledExample() {\n  return (\n    <FormattingDemo disabled />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ToggleGroupDisabledExample: View {\n  var body: some View {\n    FormattingDemo()\n      .disabled(true)\n  }\n}\n\nstruct FormattingDemo: View {\n  let variant: ToggleVariant\n  let size: ToggleSize\n  let spacing: Int\n  let orientation: Axis\n\n  @State private var value: Set<String>\n\n  init(\n    initial: Set<String> = [\"bold\"],\n    variant: ToggleVariant = .default,\n    size: ToggleSize = .default,\n    spacing: Int = 2,\n    orientation: Axis = .horizontal\n  ) {\n    self.variant = variant\n    self.size = size\n    self.spacing = spacing\n    self.orientation = orientation\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {\n      ToggleGroupItem(value: \"bold\") {\n        Ph.textB.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle bold\"))\n      ToggleGroupItem(value: \"italic\") {\n        Ph.textItalic.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle italic\"))\n      ToggleGroupItem(value: \"underline\") {\n        Ph.textUnderline.regular.frame(width: 16, height: 16)\n      }\n      .accessibilityLabel(Text(\"Toggle underline\"))\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.TextB\nimport com.adamglin.phosphoricons.regular.TextItalic\nimport com.adamglin.phosphoricons.regular.TextUnderline\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.ToggleGroup\nimport com.esuiss.ui.components.ToggleGroupItem\nimport com.esuiss.ui.components.ToggleSize\nimport com.esuiss.ui.components.ToggleVariant\n\n@Composable\nfun ToggleGroupDisabledExample() {\n    ToggleGroupFormatting(enabled = false)\n}\n\n@Composable\nfun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {\n    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun ToggleGroupFormatting(\n    variant: ToggleVariant = ToggleVariant.Default,\n    size: ToggleSize = ToggleSize.Default,\n    spacing: Int = 2,\n    orientation: Orientation = Orientation.Horizontal,\n    enabled: Boolean = true,\n    initial: Set<String> = setOf(\"bold\"),\n) {\n    var values by rememberSaveable { mutableStateOf(initial.toList()) }\n    ToggleGroup(\n        values = values.toSet(),\n        onValuesChange = { values = it.toList() },\n        variant = variant,\n        size = size,\n        spacing = spacing,\n        orientation = orientation,\n        enabled = enabled,\n    ) {\n        ToggleGroupIconItem(\"bold\", \"Toggle bold\", PhosphorIcons.Regular.TextB)\n        ToggleGroupIconItem(\"italic\", \"Toggle italic\", PhosphorIcons.Regular.TextItalic)\n        ToggleGroupIconItem(\"underline\", \"Toggle underline\", PhosphorIcons.Regular.TextUnderline)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toggle-group--disabled" />
 
 ## API Reference
 
@@ -522,7 +440,11 @@ A disabled group.
 
 Container that holds the shared value.
 
-<PropsTable extends={["React.ComponentProps<typeof ToggleGroupPrimitive>"]} props={[{"name":"spacing","type":"number","default":"2","description":"Gap between items in steps of 4 points. `0` joins the items. Defaults to `2`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `spacing` | `number` | `2` | Gap between items in steps of 4 points. `0` joins the items. Defaults to `2`. |
+
+Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
 
 </ApiPart>
 
@@ -532,7 +454,7 @@ Container that holds the shared value.
 
 One toggle in the group.
 
-<PropsTable extends={["React.ComponentProps<typeof TogglePrimitive>"]} />
+Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`.
 
 </ApiPart>
 
@@ -542,7 +464,7 @@ One toggle in the group.
 
 Icon sized for a toggle group item.
 
-<PropsTable extends={["React.ComponentProps<typeof Icon>"]} />
+Also accepts the props of `React.ComponentProps<typeof Icon>`.
 
 </ApiPart>
 

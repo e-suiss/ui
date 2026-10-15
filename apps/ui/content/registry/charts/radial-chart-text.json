@@ -1,6 +1,0 @@
-{
-  "description": "A single full-circle progress ring with a percentage and caption centered inside.",
-  "overview": "A single full-circle progress ring with a percentage and caption centered inside. Use it for one headline ratio, such as storage used or a completion rate.",
-  "usage": "Set the value in `chartData` and keep the `domain` on `PolarAngleAxis` at your maximum. Update the percentage and caption in the center overlay, and change the color in `chartConfig`.",
-  "notes": "The center text is hard-coded, not computed from the data, and there is no tooltip."
-}

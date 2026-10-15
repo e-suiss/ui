@@ -3,16 +3,11 @@ title: Combobox
 description: "A text input with a filterable list of options, for choosing one or more values by typing."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="combobox" story="Default">
-
-<Code lang="tsx" code={"import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nexport function ComboboxExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox items={frameworks}>\n        <ComboboxInput\n          placeholder=\"Select a framework\"\n          disabled={false}\n        />\n        <ComboboxContent>\n          <ComboboxEmpty>No framework found.</ComboboxEmpty>\n          <ComboboxList>\n            {(item: string) => (\n              <ComboboxItem key={item} value={item}>\n                {item}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="combobox-demo" />
 
 Combobox is built on the Base UI Combobox. The `Combobox` root takes the `items` to choose from and holds the value. `ComboboxInput` renders the text field inside an `InputGroup`, with an optional button that opens the list and an optional clear button. `ComboboxContent` renders the popup in a portal; inside it, `ComboboxList` renders each item through a render function, `ComboboxEmpty` appears when nothing matches, and `ComboboxItem` shows a check mark when selected. Group related items with `ComboboxGroup`, `ComboboxLabel`, `ComboboxCollection` and `ComboboxSeparator`.
 
@@ -22,27 +17,52 @@ For multiple selection, replace `ComboboxInput` with `ComboboxChips`, which show
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add combobox"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add combobox
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Input Group](/docs/components/input-group).
 
 3. Copy the source into `components/ui/combobox.tsx`:
 
-<SourceFile path="components/ui/combobox.tsx" />
+<ComponentSource path="components/ui/combobox.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from \"@/components/ui/combobox\""} />
+```tsx
+import { ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
+```
 
-<Code lang="tsx" code={"<div className=\"w-72\">\n  <Combobox items={frameworks}>\n    <ComboboxInput\n      placeholder=\"Select a framework\"\n      disabled={false}\n    />\n    <ComboboxContent>\n      <ComboboxEmpty>No framework found.</ComboboxEmpty>\n      <ComboboxList>\n        {(item: string) => (\n          <ComboboxItem key={item} value={item}>\n            {item}\n          </ComboboxItem>\n        )}\n      </ComboboxList>\n    </ComboboxContent>\n  </Combobox>\n</div>"} />
+```tsx
+<div className="w-72">
+  <Combobox items={frameworks}>
+    <ComboboxInput
+      placeholder="Select a framework"
+      disabled={false}
+    />
+    <ComboboxContent>
+      <ComboboxEmpty>No framework found.</ComboboxEmpty>
+      <ComboboxList>
+        {(item: string) => (
+          <ComboboxItem key={item} value={item}>
+            {item}
+          </ComboboxItem>
+        )}
+      </ComboboxList>
+    </ComboboxContent>
+  </Combobox>
+</div>
+```
 
 Pass `items` to the root and a function as the child of `ComboboxList`, which receives each item and returns a `ComboboxItem` with a matching `value`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. To read or control the typed text, use `inputValue` and `onInputValueChange`.
 
@@ -54,55 +74,48 @@ For grouped data, pass groups as `items`, render a `ComboboxGroup` with its own 
 
 A combobox with a starting value and a clear button, enabled with `showClear`.
 
-<Example kind="ui" name="combobox" story="WithClearButton">
-
-<Code lang="tsx" code={"import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nexport function ComboboxWithClearButtonExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox items={frameworks} defaultValue=\"Astro\">\n        <ComboboxInput placeholder=\"Select a framework\" showClear />\n        <ComboboxContent>\n          <ComboboxEmpty>No framework found.</ComboboxEmpty>\n          <ComboboxList>\n            {(item: string) => (\n              <ComboboxItem key={item} value={item}>\n                {item}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="combobox-with-clear-button" />
 
 ### Disabled
 
 A disabled combobox whose input and toggle button cannot be focused or used.
 
-<Example kind="ui" name="combobox" story="Disabled">
-
-<Code lang="tsx" code={"import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nexport function ComboboxDisabledExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox disabled items={frameworks}>\n        <ComboboxInput\n          placeholder=\"Select a framework\"\n          disabled={true}\n        />\n        <ComboboxContent>\n          <ComboboxEmpty>No framework found.</ComboboxEmpty>\n          <ComboboxList>\n            {(item: string) => (\n              <ComboboxItem key={item} value={item}>\n                {item}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="combobox-disabled" />
 
 ### Grouped
 
 Options grouped by region with labels and separators between groups.
 
-<Example kind="ui" name="combobox" story="Grouped">
-
-<Code lang="tsx" code={"import { Combobox, ComboboxCollection, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxLabel, ComboboxList, ComboboxSeparator } from \"@/components/ui/combobox\"\n\nconst timezones = [\n  {\n    value: \"Americas\",\n    items: [\"New York\", \"Chicago\", \"Los Angeles\", \"São Paulo\"],\n  },\n  {\n    value: \"Europe\",\n    items: [\"London\", \"Berlin\", \"Istanbul\", \"Madrid\"],\n  },\n  {\n    value: \"Asia\",\n    items: [\"Tokyo\", \"Singapore\", \"Dubai\"],\n  },\n]\n\nexport function ComboboxGroupedExample() {\n  return (\n    <div className=\"w-72\">\n      <Combobox items={timezones}>\n        <ComboboxInput placeholder=\"Select a city\" />\n        <ComboboxContent>\n          <ComboboxEmpty>No city found.</ComboboxEmpty>\n          <ComboboxList>\n            {(group: (typeof timezones)[number], index: number) => (\n              <ComboboxGroup key={group.value} items={group.items}>\n                {index > 0 && <ComboboxSeparator />}\n                <ComboboxLabel>{group.value}</ComboboxLabel>\n                <ComboboxCollection>\n                  {(item: string) => (\n                    <ComboboxItem key={item} value={item}>\n                      {item}\n                    </ComboboxItem>\n                  )}\n                </ComboboxCollection>\n              </ComboboxGroup>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="combobox-grouped" />
 
 ### Highlight match
 
 A controlled `inputValue` used to emphasize the matching part of each option.
 
-<Example kind="ui" name="combobox" story="HighlightMatch">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nfunction HighlightedMatch({ text, query }: { text: string; query: string }) {\n  const start = query ? text.toLowerCase().indexOf(query.toLowerCase()) : -1\n  if (start < 0) return text\n  return (\n    <span>\n      {text.slice(0, start)}\n      <span className=\"font-semibold\">\n        {text.slice(start, start + query.length)}\n      </span>\n      {text.slice(start + query.length)}\n    </span>\n  )\n}\n\nfunction HighlightMatchCombobox() {\n  const [query, setQuery] = React.useState(\"\")\n  return (\n    <Combobox\n      items={frameworks}\n      inputValue={query}\n      onInputValueChange={setQuery}\n    >\n      <ComboboxInput placeholder=\"Type to filter\" />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              <HighlightedMatch text={item} query={query} />\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxHighlightMatchExample() {\n  return (\n    <div className=\"w-72\">\n      <HighlightMatchCombobox />\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="combobox-highlight-match" />
 
 ### Multiple
 
 Multiple selection shown as removable chips, with Backspace removing the last chip.
 
-<Example kind="ui" name="combobox" story="Multiple">
-
-<Code lang="tsx" code={"import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxEmpty, ComboboxItem, ComboboxList, ComboboxValue, useComboboxAnchor } from \"@/components/ui/combobox\"\n\nconst frameworks = [\"Next.js\", \"Remix\", \"Astro\", \"SvelteKit\", \"Nuxt\", \"Gatsby\"]\n\nfunction MultipleCombobox({ disabled }: { disabled?: boolean }) {\n  const anchor = useComboboxAnchor()\n\n  return (\n    <Combobox\n      disabled={disabled}\n      multiple\n      items={frameworks}\n      defaultValue={[\"Next.js\", \"Astro\"]}\n    >\n      <ComboboxChips ref={anchor}>\n        <ComboboxValue>\n          {(values: string[]) => (\n            <>\n              {values.map((value) => (\n                <ComboboxChip key={value}>{value}</ComboboxChip>\n              ))}\n              <ComboboxChipsInput placeholder=\"Add framework\" />\n            </>\n          )}\n        </ComboboxValue>\n      </ComboboxChips>\n      <ComboboxContent anchor={anchor}>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxMultipleExample() {\n  return (\n    <div className=\"w-72\">\n      <MultipleCombobox disabled={false} />\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="combobox-multiple" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"ComboboxInput","href":"#comboboxinput","children":[]},{"name":"ComboboxContent","href":"#comboboxcontent","children":[{"name":"ComboboxEmpty","href":"#comboboxempty","children":[]},{"name":"ComboboxList","href":"#comboboxlist","children":[{"name":"ComboboxItem","href":"#comboboxitem","children":[]},{"name":"ComboboxGroup","href":"#comboboxgroup","children":[{"name":"ComboboxSeparator","href":"#comboboxseparator","children":[]},{"name":"ComboboxLabel","href":"#comboboxlabel","children":[]},{"name":"ComboboxCollection","href":"#comboboxcollection","children":[{"name":"ComboboxItem","href":"#comboboxitem","children":[]}]}]}]}]}]} />
+<Anatomy>
+
+- [ComboboxInput](#comboboxinput)
+- [ComboboxContent](#comboboxcontent)
+  - [ComboboxEmpty](#comboboxempty)
+  - [ComboboxList](#comboboxlist)
+    - [ComboboxItem](#comboboxitem)
+    - [ComboboxGroup](#comboboxgroup)
+      - [ComboboxSeparator](#comboboxseparator)
+      - [ComboboxLabel](#comboboxlabel)
+      - [ComboboxCollection](#comboboxcollection)
+        - [ComboboxItem](#comboboxitem)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -110,7 +123,7 @@ Multiple selection shown as removable chips, with Backspace removing the last ch
 
 Renders the current value, or passes it to a render function, for example to draw chips.
 
-<PropsTable extends={["ComboboxPrimitive.Value.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Value.Props`.
 
 </ApiPart>
 
@@ -120,7 +133,7 @@ Renders the current value, or passes it to a render function, for example to dra
 
 A button that opens the list, with a caret icon.
 
-<PropsTable extends={["ComboboxPrimitive.Trigger.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -130,7 +143,12 @@ A button that opens the list, with a caret icon.
 
 The text field, rendered inside an `InputGroup` with optional open and clear buttons.
 
-<PropsTable extends={["ComboboxPrimitive.Input.Props"]} props={[{"name":"showTrigger","type":"boolean","default":"true","description":"Shows the button at the end of the field that opens the list."},{"name":"showClear","type":"boolean","default":"false","description":"Shows a clear button at the end of the field. When shown, it hides the open button."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showTrigger` | `boolean` | `true` | Shows the button at the end of the field that opens the list. |
+| `showClear` | `boolean` | `false` | Shows a clear button at the end of the field. When shown, it hides the open button. |
+
+Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 </ApiPart>
 
@@ -140,7 +158,7 @@ The text field, rendered inside an `InputGroup` with optional open and clear but
 
 The popup, rendered in a portal and positioned below the input.
 
-<PropsTable extends={["ComboboxPrimitive.Popup.Props","ComboboxPrimitive.Positioner.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Popup.Props`, `ComboboxPrimitive.Positioner.Props`.
 
 </ApiPart>
 
@@ -150,7 +168,7 @@ The popup, rendered in a portal and positioned below the input.
 
 The scrollable list that renders items through a render function.
 
-<PropsTable extends={["ComboboxPrimitive.List.Props"]} />
+Also accepts the props of `ComboboxPrimitive.List.Props`.
 
 </ApiPart>
 
@@ -160,7 +178,7 @@ The scrollable list that renders items through a render function.
 
 A selectable option that shows a check mark when selected.
 
-<PropsTable extends={["ComboboxPrimitive.Item.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Item.Props`.
 
 </ApiPart>
 
@@ -170,7 +188,7 @@ A selectable option that shows a check mark when selected.
 
 Groups related options and takes its own `items`.
 
-<PropsTable extends={["ComboboxPrimitive.Group.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Group.Props`.
 
 </ApiPart>
 
@@ -180,7 +198,7 @@ Groups related options and takes its own `items`.
 
 The visible label of a group.
 
-<PropsTable extends={["ComboboxPrimitive.GroupLabel.Props"]} />
+Also accepts the props of `ComboboxPrimitive.GroupLabel.Props`.
 
 </ApiPart>
 
@@ -190,7 +208,7 @@ The visible label of a group.
 
 Renders the items of a group through a render function.
 
-<PropsTable extends={["ComboboxPrimitive.Collection.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Collection.Props`.
 
 </ApiPart>
 
@@ -200,7 +218,7 @@ Renders the items of a group through a render function.
 
 Content shown when no options match the typed text.
 
-<PropsTable extends={["ComboboxPrimitive.Empty.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Empty.Props`.
 
 </ApiPart>
 
@@ -210,7 +228,7 @@ Content shown when no options match the typed text.
 
 A divider between groups.
 
-<PropsTable extends={["ComboboxPrimitive.Separator.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Separator.Props`.
 
 </ApiPart>
 
@@ -220,7 +238,7 @@ A divider between groups.
 
 The field that holds selected values as chips in multiple selection.
 
-<PropsTable extends={["React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>","ComboboxPrimitive.Chips.Props"]} />
+Also accepts the props of `React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>`, `ComboboxPrimitive.Chips.Props`.
 
 </ApiPart>
 
@@ -230,7 +248,11 @@ The field that holds selected values as chips in multiple selection.
 
 A selected value shown as a chip, with an optional remove button.
 
-<PropsTable extends={["ComboboxPrimitive.Chip.Props"]} props={[{"name":"showRemove","type":"boolean","default":"true","description":"Shows a button inside the chip that removes the value."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showRemove` | `boolean` | `true` | Shows a button inside the chip that removes the value. |
+
+Also accepts the props of `ComboboxPrimitive.Chip.Props`.
 
 </ApiPart>
 
@@ -240,7 +262,7 @@ A selected value shown as a chip, with an optional remove button.
 
 The text field placed after the chips in multiple selection.
 
-<PropsTable extends={["ComboboxPrimitive.Input.Props"]} />
+Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 </ApiPart>
 
@@ -265,13 +287,7 @@ The text field placed after the chips in multiple selection.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-combobox--open-by-default" width={880} height={775} live="combobox/OpenByDefault" platforms={["React Native","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxOpenByDefaultExample() {\n  return (\n    <ComboboxDemo defaultValue=\"Expo\" defaultOpen />\n  )\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\n\n@Composable\nfun ComboboxOpenByDefaultExample() {\n    ComboboxDemo(defaultValue = \"Expo\")\n}\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--open-by-default" live="combobox/OpenByDefault" />
 
 `Combobox` pairs a text input with a floating list that filters its `items` as the user types. `ComboboxInput` draws the field with a caret trigger and an optional clear button, and `ComboboxContent` renders the list through a portal (inside a full-window overlay on iOS), positioned below the input and as wide as it.
 
@@ -281,19 +297,25 @@ For multiple selection, set `multiple` and use `ComboboxChips` with a `ComboboxC
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add combobox"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add combobox
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add combobox --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add combobox --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add combobox --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add combobox --platform kotlin
+```
 
 </Only>
 
@@ -309,13 +331,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/combobox.tsx`:
 
-<SourceFile path="uniwind/components/ui/combobox.tsx" />
+<ComponentSource path="uniwind/components/ui/combobox.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -325,13 +349,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/combobox.tsx`:
 
-<SourceFile path="nativewind/components/ui/combobox.tsx" />
+<ComponentSource path="nativewind/components/ui/combobox.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -341,13 +367,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/combobox.tsx`:
 
-<SourceFile path="stylesheet/components/ui/combobox.tsx" />
+<ComponentSource path="stylesheet/components/ui/combobox.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -363,39 +391,41 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Combobox.swift" />
+<ComponentSource path="swift/Components/Combobox.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -405,43 +435,48 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Combobox.kt" />
+<ComponentSource path="kotlin/components/Combobox.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/DropdownMenu.kt" />
+<ComponentSource path="kotlin/components/DropdownMenu.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Select.kt" />
+<ComponentSource path="kotlin/components/Select.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -449,9 +484,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from \"@/components/ui/combobox\""} />
+```tsx
+import { ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
+```
 
-<Code lang="tsx" code={"<ComboboxDemo defaultValue=\"Expo\" defaultOpen />"} />
+```tsx
+<ComboboxDemo defaultValue="Expo" defaultOpen />
+```
 
 Pass `items` to the root and render the filtered list with a function child of `ComboboxList`. For grouped items, render a `ComboboxGroup` per group with a `ComboboxLabel` and a `ComboboxCollection`. Add `ComboboxEmpty` for the no-results message.
 
@@ -463,111 +502,49 @@ With chips, create a ref with `useComboboxAnchor()`, attach it to `ComboboxChips
 
 ### Default
 
-<NativeExample id="components-combobox--default" width={880} height={819} live="combobox/Default" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxExample() {\n  return (\n    <ComboboxDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxDemo: View {\n  @State private var value: String?\n\n  init(initial: String? = nil) {\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Select a framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 256)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--default" live="combobox/Default" />
 
 ### With value
 
 Starts with a selected value.
 
-<NativeExample id="components-combobox--with-value" width={880} height={819} live="combobox/WithValue" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxWithValueExample() {\n  return (\n    <ComboboxDemo defaultValue=\"Expo\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ComboboxWithValueExample: View {\n  var body: some View {\n    ComboboxDemo(initial: \"Expo\")\n  }\n}\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxDemo: View {\n  @State private var value: String?\n\n  init(initial: String? = nil) {\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Select a framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 256)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\n\n@Composable\nfun ComboboxWithValueExample() {\n    ComboboxDemo(defaultValue = \"Expo\")\n}\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--with-value" live="combobox/WithValue" />
 
 ### With clear
 
 A clear button through `showClear`.
 
-<NativeExample id="components-combobox--with-clear" width={880} height={819} live="combobox/WithClear" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxWithClearExample() {\n  return (\n    <ComboboxDemo defaultValue=\"Remix\" showClear />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ComboboxWithClearExample: View {\n  var body: some View {\n    ComboboxDemo(initial: \"Remix\")\n  }\n}\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxDemo: View {\n  @State private var value: String?\n\n  init(initial: String? = nil) {\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Select a framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 256)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\n\n@Composable\nfun ComboboxWithClearExample() {\n    ComboboxDemo(defaultValue = \"Remix\", showClear = true)\n}\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--with-clear" live="combobox/WithClear" />
 
 ### Grouped
 
 Items in labelled groups with separators.
 
-<NativeExample id="components-combobox--grouped" width={880} height={400} live="combobox/Grouped" platforms={["React Native","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxCollection, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxLabel, ComboboxList, ComboboxSeparator } from \"@/components/ui/combobox\"\n\ninterface Produce {\n  value: string\n  label: string\n}\n\nconst produce: { value: string; items: Produce[] }[] = [\n  {\n    value: \"Fruits\",\n    items: [\n      { value: \"mango\", label: \"Mango\" },\n      { value: \"banana\", label: \"Banana\" },\n      { value: \"blueberry\", label: \"Blueberry\" },\n    ],\n  },\n  {\n    value: \"Vegetables\",\n    items: [\n      { value: \"carrot\", label: \"Carrot\" },\n      { value: \"broccoli\", label: \"Broccoli\" },\n      { value: \"spinach\", label: \"Spinach\" },\n    ],\n  },\n]\n\nfunction GroupedDemo() {\n  return (\n    <Combobox items={produce} itemToStringLabel={(item: Produce) => item.label}>\n      <ComboboxInput className=\"w-64\" placeholder=\"Select produce\" />\n      <ComboboxContent>\n        <ComboboxEmpty>No produce found.</ComboboxEmpty>\n        <ComboboxList>\n          {(group: (typeof produce)[number], index: number) => (\n            <React.Fragment key={group.value}>\n              {index > 0 ? <ComboboxSeparator /> : null}\n              <ComboboxGroup items={group.items}>\n                <ComboboxLabel>{group.value}</ComboboxLabel>\n                <ComboboxCollection>\n                  {(item: Produce) => (\n                    <ComboboxItem key={item.value} value={item}>\n                      {item.label}\n                    </ComboboxItem>\n                  )}\n                </ComboboxCollection>\n              </ComboboxGroup>\n            </React.Fragment>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxGroupedExample() {\n  return (\n    <GroupedDemo />\n  )\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\n\ndata class ComboboxProduce(val value: String, val label: String, val group: String)\n\nval ComboboxProduceItems = listOf(\n    ComboboxProduce(\"mango\", \"Mango\", \"Fruits\"),\n    ComboboxProduce(\"banana\", \"Banana\", \"Fruits\"),\n    ComboboxProduce(\"blueberry\", \"Blueberry\", \"Fruits\"),\n    ComboboxProduce(\"carrot\", \"Carrot\", \"Vegetables\"),\n    ComboboxProduce(\"broccoli\", \"Broccoli\", \"Vegetables\"),\n    ComboboxProduce(\"spinach\", \"Spinach\", \"Vegetables\"),\n)\n\n@Composable\nfun ComboboxGrouped() {\n    var value by rememberSaveable { mutableStateOf<String?>(null) }\n    Column {\n        Combobox(\n            items = ComboboxProduceItems,\n            value = ComboboxProduceItems.firstOrNull { it.value == value },\n            onValueChange = { value = it?.value },\n            modifier = Modifier.width(256.dp),\n            itemText = { it.label },\n            placeholder = \"Select produce\",\n            emptyText = \"No produce found.\",\n            groupBy = { it.group },\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--grouped" live="combobox/Grouped" />
 
 ### Multiple
 
 Multiple selection shown as removable chips.
 
-<NativeExample id="components-combobox--multiple" width={880} height={819} live="combobox/Multiple" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxEmpty, ComboboxItem, ComboboxList, useComboboxAnchor } from \"@/components/ui/combobox\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction MultipleDemo() {\n  const anchor = useComboboxAnchor()\n  const [value, setValue] = React.useState<string[]>([\"Expo\", \"Astro\"])\n  return (\n    <Combobox\n      multiple\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n    >\n      <ComboboxChips ref={anchor} className=\"w-72\">\n        {value.map((item) => (\n          <ComboboxChip key={item} value={item}>\n            {item}\n          </ComboboxChip>\n        ))}\n        <ComboboxChipsInput placeholder=\"Add framework\" />\n      </ComboboxChips>\n      <ComboboxContent anchor={anchor}>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxMultipleExample() {\n  return (\n    <MultipleDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxMultipleDemo: View {\n  @State private var value = [\"Expo\", \"Astro\"]\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Add framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 288)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.MultiCombobox\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxMultiple() {\n    var values by rememberSaveable { mutableStateOf(listOf(\"Expo\", \"Astro\")) }\n    Column {\n        MultiCombobox(\n            items = ComboboxFrameworks,\n            values = values,\n            onValuesChange = { values = it },\n            modifier = Modifier.width(288.dp),\n            placeholder = \"Add framework\",\n            emptyText = \"No framework found.\",\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--multiple" live="combobox/Multiple" />
 
 ### With label
 
 Linked to a `Label` with helper text.
 
-<NativeExample id="components-combobox--with-label" width={880} height={879} live="combobox/WithLabel" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\nimport { Label } from \"@/components/ui/label\"\nimport { Text } from \"@/components/ui/text\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxWithLabelExample() {\n  return (\n    <View className=\"gap-2\">\n      <Label nativeID=\"combobox-framework\">Framework</Label>\n      <ComboboxDemo labelledBy=\"combobox-framework\" />\n      <Text className=\"text-sm text-label-secondary\">\n        Search and pick the framework you use.\n      </Text>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ComboboxWithLabelExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      FieldLabel(\"Framework\")\n        .accessibilityHidden(true)\n      ComboboxDemo()\n        .accessibilityLabel(Text(\"Framework\"))\n      Text(\"Search and pick the framework you use.\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n    }\n  }\n}\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxDemo: View {\n  @State private var value: String?\n\n  init(initial: String? = nil) {\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Select a framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 256)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}\n\n@Composable\nfun ComboboxWithLabel() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Label(\"Framework\")\n        ComboboxDemo(label = \"Framework\")\n        Text(\n            \"Search and pick the framework you use.\",\n            style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary),\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--with-label" live="combobox/WithLabel" />
 
 ### Disabled
 
 A disabled combobox.
 
-<NativeExample id="components-combobox--disabled" width={880} height={400} live="combobox/Disabled" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxDisabledExample() {\n  return (\n    <ComboboxDemo defaultValue=\"Astro\" disabled />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ComboboxDisabledExample: View {\n  var body: some View {\n    ComboboxDemo(initial: \"Astro\")\n      .disabled(true)\n  }\n}\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxDemo: View {\n  @State private var value: String?\n\n  init(initial: String? = nil) {\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Select a framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 256)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\n\n@Composable\nfun ComboboxDisabledExample() {\n    ComboboxDemo(defaultValue = \"Astro\", disabled = true)\n}\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--disabled" live="combobox/Disabled" />
 
 ### Invalid
 
 The `invalid` style with an error message.
 
-<NativeExample id="components-combobox--invalid" width={880} height={819} live="combobox/Invalid" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from \"@/components/ui/combobox\"\nimport { Text } from \"@/components/ui/text\"\n\nconst frameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nfunction ComboboxDemo({\n  defaultValue = null,\n  defaultOpen,\n  disabled,\n  showClear,\n  labelledBy,\n  invalid,\n}: {\n  defaultValue?: string | null\n  defaultOpen?: boolean\n  disabled?: boolean\n  showClear?: boolean\n  labelledBy?: string\n  invalid?: boolean\n}) {\n  const [value, setValue] = React.useState<string | null>(defaultValue)\n  return (\n    <Combobox\n      items={frameworks}\n      value={value}\n      onValueChange={setValue}\n      defaultOpen={defaultOpen}\n      disabled={disabled}\n    >\n      <ComboboxInput\n        className=\"w-64\"\n        placeholder=\"Select a framework\"\n        showClear={showClear}\n        disabled={disabled}\n        invalid={invalid}\n        accessibilityLabelledBy={labelledBy}\n      />\n      <ComboboxContent>\n        <ComboboxEmpty>No framework found.</ComboboxEmpty>\n        <ComboboxList>\n          {(item: string) => (\n            <ComboboxItem key={item} value={item}>\n              {item}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport function ComboboxInvalidExample() {\n  return (\n    <View className=\"gap-2\">\n      <ComboboxDemo invalid />\n      <Text className=\"text-sm text-danger\">Please select a framework.</Text>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ComboboxInvalidExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      ComboboxDemo()\n        .invalid()\n      Text(\"Please select a framework.\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.danger)\n    }\n  }\n}\n\nlet comboboxFrameworks = [\n  \"Next.js\",\n  \"SvelteKit\",\n  \"Nuxt.js\",\n  \"Remix\",\n  \"Astro\",\n  \"Gatsby\",\n  \"Expo\",\n]\n\nstruct ComboboxDemo: View {\n  @State private var value: String?\n\n  init(initial: String? = nil) {\n    _value = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Combobox(\n      comboboxFrameworks,\n      selection: $value,\n      placeholder: \"Select a framework\",\n      emptyText: \"No framework found.\"\n    )\n    .frame(width: 256)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Combobox\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nval ComboboxFrameworks = listOf(\"Next.js\", \"SvelteKit\", \"Nuxt.js\", \"Remix\", \"Astro\", \"Gatsby\", \"Expo\")\n\n@Composable\nfun ComboboxDemo(\n    defaultValue: String? = null,\n    disabled: Boolean = false,\n    showClear: Boolean = false,\n    label: String? = null,\n    invalid: Boolean? = null,\n) {\n    var value by rememberSaveable { mutableStateOf(defaultValue) }\n    Column {\n        Combobox(\n            items = ComboboxFrameworks,\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier\n                .width(256.dp)\n                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),\n            placeholder = \"Select a framework\",\n            emptyText = \"No framework found.\",\n            showClear = showClear,\n            invalid = invalid,\n            enabled = !disabled,\n        )\n    }\n}\n\n@Composable\nfun ComboboxInvalid() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        ComboboxDemo(invalid = true)\n        Text(\"Please select a framework.\", style = Typography.sm.copy(color = EsuissTheme.colors.danger))\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-combobox--invalid" live="combobox/Invalid" />
 
 ## API Reference
 
@@ -577,7 +554,11 @@ The `invalid` style with an error message.
 
 Round button that opens the list.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Trigger>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Trigger>`.
 
 </ApiPart>
 
@@ -587,7 +568,15 @@ Round button that opens the list.
 
 Text field with caret trigger and optional clear button.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Input>"]} props={[{"name":"className","type":"string"},{"name":"children","type":"React.ReactNode"},{"name":"showTrigger","type":"boolean","default":"true","description":"Shows the caret button. Defaults to `true`."},{"name":"showClear","type":"boolean","default":"false","description":"Shows a clear button when there is text or a value."},{"name":"invalid","type":"boolean","description":"Shows the danger border; also read from a surrounding Field."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+| `children` | `React.ReactNode` | - |  |
+| `showTrigger` | `boolean` | `true` | Shows the caret button. Defaults to `true`. |
+| `showClear` | `boolean` | `false` | Shows a clear button when there is text or a value. |
+| `invalid` | `boolean` | - | Shows the danger border; also read from a surrounding Field. |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
 
 </ApiPart>
 
@@ -597,7 +586,11 @@ Text field with caret trigger and optional clear button.
 
 Floating popup for the list.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Popup>","PositionerProps"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Popup>`, `PositionerProps`.
 
 </ApiPart>
 
@@ -607,7 +600,7 @@ Floating popup for the list.
 
 Scrollable list of items.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.List>"]} />
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.List>`.
 
 </ApiPart>
 
@@ -617,7 +610,11 @@ Scrollable list of items.
 
 Selectable option with a check mark when selected.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Item>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Item>`.
 
 </ApiPart>
 
@@ -627,7 +624,7 @@ Selectable option with a check mark when selected.
 
 Group of items.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Group>"]} />
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Group>`.
 
 </ApiPart>
 
@@ -637,7 +634,7 @@ Group of items.
 
 Heading for a group.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.GroupLabel>"]} />
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.GroupLabel>`.
 
 </ApiPart>
 
@@ -647,7 +644,7 @@ Heading for a group.
 
 Message shown when nothing matches.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Empty>"]} />
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Empty>`.
 
 </ApiPart>
 
@@ -657,7 +654,7 @@ Message shown when nothing matches.
 
 Line between groups.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Separator>`.
 
 </ApiPart>
 
@@ -667,7 +664,11 @@ Line between groups.
 
 Field that holds chips for multiple selection.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Chips>"]} props={[{"name":"invalid","type":"boolean","description":"Shows the danger border."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `invalid` | `boolean` | - | Shows the danger border. |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chips>`.
 
 </ApiPart>
 
@@ -677,7 +678,11 @@ Field that holds chips for multiple selection.
 
 Selected value with a remove button.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Chip>"]} props={[{"name":"showRemove","type":"boolean","default":"true","description":"Shows the remove button. Defaults to `true`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showRemove` | `boolean` | `true` | Shows the remove button. Defaults to `true`. |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chip>`.
 
 </ApiPart>
 
@@ -687,7 +692,7 @@ Selected value with a remove button.
 
 Text input inside the chips field.
 
-<PropsTable extends={["React.ComponentProps<typeof ComboboxPrimitive.Input>"]} />
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
 
 </ApiPart>
 

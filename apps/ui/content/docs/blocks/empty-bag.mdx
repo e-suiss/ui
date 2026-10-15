@@ -3,16 +3,11 @@ title: Empty Bag
 description: "An empty shopping bag state with sign-in and shopping actions above a row of recommended products."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="empty-bag">
-
-<SourceFile path="components/blocks/empty-bag.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="empty-bag" />
 
 An empty shopping bag state with a short message, Sign In and Continue Shopping buttons and a row of recommended products. Adding a recommendation updates the bag icon's count and switches the message and primary action to a checkout state. Recommendations sit in one column on mobile and three on larger screens. Use it for empty carts, wish lists or saved-items screens.
 
@@ -20,27 +15,35 @@ An empty shopping bag state with a short message, Sign In and Continue Shopping 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks empty-bag"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks empty-bag
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty).
 
 3. Copy the source into `components/blocks/empty-bag.tsx`:
 
-<SourceFile path="components/blocks/empty-bag.tsx" />
+<ComponentSource path="components/blocks/empty-bag.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { EmptyBag } from \"@/components/blocks/empty-bag\""} />
+```tsx
+import { EmptyBag } from "@/components/blocks/empty-bag"
+```
 
-<Code lang="tsx" code={"<EmptyBag />"} />
+```tsx
+<EmptyBag />
+```
 
 Replace `recommended` with products from your recommendation service, each with a name, formatted price and image. Swap the local add toggle for your cart logic, and connect Sign In, Check Out and Continue Shopping to your routes.
 
@@ -52,13 +55,13 @@ Add buttons expose their pressed state and name the product. Product photos are 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-empty-bag--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-empty-bag--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/empty-bag.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/empty-bag.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/EmptyBag.swift" fold={false} />
+<ComponentSource path="swift/Blocks/EmptyBag.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/EmptyBag.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/EmptyBag.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Composes `Screen`, `Empty`, `Button`, `Icon` and `Text`. Adding a recommended pr
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty-bag"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty-bag
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty-bag --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty-bag --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty-bag --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty-bag --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/empty-bag.tsx`:
 
-<SourceFile path="uniwind/components/blocks/empty-bag.tsx" />
+<ComponentSource path="uniwind/components/blocks/empty-bag.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/empty-bag.tsx`:
 
-<SourceFile path="nativewind/components/blocks/empty-bag.tsx" />
+<ComponentSource path="nativewind/components/blocks/empty-bag.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/empty-bag.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/empty-bag.tsx" />
+<ComponentSource path="stylesheet/components/blocks/empty-bag.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,37 +165,39 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/EmptyBag.swift" />
+<ComponentSource path="swift/Blocks/EmptyBag.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Empty.swift" />
+<ComponentSource path="swift/Components/Empty.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -190,29 +207,34 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/EmptyBag.kt" />
+<ComponentSource path="kotlin/blocks/EmptyBag.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Empty.kt" />
+<ComponentSource path="kotlin/components/Empty.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -220,9 +242,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 ## Usage
 
-<Code lang="tsx" code={"import { EmptyBag } from \"@/components/blocks/empty-bag\""} />
+```tsx
+import { EmptyBag } from "@/components/blocks/empty-bag"
+```
 
-<Code lang="tsx" code={"<EmptyBag />"} />
+```tsx
+<EmptyBag />
+```
 
 Replace `RECOMMENDED` with your products. The component takes no props, so wire the Sign In, Check Out and Continue Shopping buttons to your own navigation.
 

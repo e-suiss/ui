@@ -3,20 +3,11 @@ title: Signature Pad
 description: "A drawing area that captures a handwritten signature as strokes and can export it as an SVG string."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-signature-pad--default" width={880} height={463} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SignaturePad } from \"@/components/ui/signature-pad\"\n\nexport function SignaturePadExample() {\n  return (\n    <SignaturePad />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SignaturePadExample: View {\n  var body: some View {\n    SignaturePadDemo(initial: [])\n  }\n}\n\nstruct SignaturePadDemo: View {\n  var strokeWidth: CGFloat = 2.5\n\n  @State private var strokes: [SignatureStroke]\n\n  init(initial: [SignatureStroke], strokeWidth: CGFloat = 2.5) {\n    self.strokeWidth = strokeWidth\n    _strokes = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SignaturePad(value: $strokes, strokeWidth: strokeWidth)\n      .frame(height: 192)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.SignaturePad\n\n@Composable\nfun SignaturePadExample() {\n    SignaturePad(Modifier.fillMaxWidth())\n}"} />
-
-</NativeExample>
+<NativeExample id="components-signature-pad--default" />
 
 `SignaturePad` is a `View` with a single-finger pan gesture from `react-native-gesture-handler`. Each touch records a stroke of points, and the strokes are drawn as smoothed paths with `react-native-svg`. A signature line with an `×` mark and a placeholder sits near the bottom, and a ghost Clear button appears in the top corner once something is drawn.
 
@@ -24,19 +15,25 @@ generated: true
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signature-pad"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signature-pad
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signature-pad --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signature-pad --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signature-pad --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signature-pad --platform kotlin
+```
 
 </Only>
 
@@ -52,13 +49,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/signature-pad.tsx`:
 
-<SourceFile path="uniwind/components/ui/signature-pad.tsx" />
+<ComponentSource path="uniwind/components/ui/signature-pad.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -68,13 +67,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/signature-pad.tsx`:
 
-<SourceFile path="nativewind/components/ui/signature-pad.tsx" />
+<ComponentSource path="nativewind/components/ui/signature-pad.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -84,13 +85,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-gesture-handler react-native-svg"} />
+```bash title="Terminal"
+npx expo install react-native-gesture-handler react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/signature-pad.tsx`:
 
-<SourceFile path="stylesheet/components/ui/signature-pad.tsx" />
+<ComponentSource path="stylesheet/components/ui/signature-pad.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -106,31 +109,33 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/SignaturePad.swift" />
+<ComponentSource path="swift/Components/SignaturePad.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -140,25 +145,29 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/SignaturePad.kt" />
+<ComponentSource path="kotlin/components/SignaturePad.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -166,9 +175,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { SignaturePad } from \"@/components/ui/signature-pad\""} />
+```tsx
+import { SignaturePad } from "@/components/ui/signature-pad"
+```
 
-<Code lang="tsx" code={"<SignaturePad />"} />
+```tsx
+<SignaturePad />
+```
 
 Use it uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. The value is an array of strokes, where each stroke is an array of `{ x, y }` points.
 
@@ -182,57 +195,25 @@ The `SignaturePadHandle`, `SignaturePadPoint` and `SignaturePadStroke` types are
 
 A pad that starts with a saved signature.
 
-<NativeExample id="components-signature-pad--signed" width={880} height={463} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SignaturePad, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nexport function SignaturePadSignedExample() {\n  return (\n    <SignaturePad defaultValue={SIGNATURE} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SignaturePadSignedExample: View {\n  var body: some View {\n    SignaturePadDemo(initial: signaturePadSample)\n  }\n}\n\nfunc signaturePadWave(startX: CGFloat, baseY: CGFloat, length: CGFloat, amplitude: CGFloat, turns: CGFloat) -> SignatureStroke {\n  SignatureStroke((0..<48).map { index in\n    let progress = CGFloat(index) / 47\n    return CGPoint(\n      x: startX + progress * length,\n      y: baseY - sin(progress * .pi * turns) * amplitude * (1 - progress * 0.4)\n    )\n  })\n}\n\nlet signaturePadSample: [SignatureStroke] = [\n  signaturePadWave(startX: 40, baseY: 120, length: 70, amplitude: 40, turns: 3),\n  signaturePadWave(startX: 110, baseY: 115, length: 110, amplitude: 22, turns: 5),\n  SignatureStroke([CGPoint(x: 60, y: 140), CGPoint(x: 140, y: 136), CGPoint(x: 230, y: 134)]),\n]\n\nstruct SignaturePadDemo: View {\n  var strokeWidth: CGFloat = 2.5\n\n  @State private var strokes: [SignatureStroke]\n\n  init(initial: [SignatureStroke], strokeWidth: CGFloat = 2.5) {\n    self.strokeWidth = strokeWidth\n    _strokes = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SignaturePad(value: $strokes, strokeWidth: strokeWidth)\n      .frame(height: 192)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.geometry.Offset\nimport com.esuiss.ui.components.SignaturePad\nimport com.esuiss.ui.components.SignatureStroke\nimport kotlin.math.PI\nimport kotlin.math.sin\n\n@Composable\nfun SignaturePadSignedExample() {\n    SignaturePad(Modifier.fillMaxWidth(), defaultValue = signaturePadSample)\n}\n\nfun signaturePadWave(startX: Float, baseY: Float, length: Float, amplitude: Float, turns: Float): SignatureStroke =\n    SignatureStroke(\n        List(48) { index ->\n            val progress = index / 47f\n            Offset(\n                startX + progress * length,\n                baseY - sin(progress * PI.toFloat() * turns) * amplitude * (1 - progress * 0.4f),\n            )\n        },\n    )\n\nval signaturePadSample = listOf(\n    signaturePadWave(40f, 120f, 70f, 40f, 3f),\n    signaturePadWave(110f, 115f, 110f, 22f, 5f),\n    SignatureStroke(listOf(Offset(60f, 140f), Offset(140f, 136f), Offset(230f, 134f))),\n)"} />
-
-</NativeExample>
+<NativeExample id="components-signature-pad--signed" />
 
 ### Thick stroke
 
 A signature drawn with `strokeWidth={5}`.
 
-<NativeExample id="components-signature-pad--thick-stroke" width={880} height={463} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SignaturePad, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nexport function SignaturePadThickStrokeExample() {\n  return (\n    <SignaturePad defaultValue={SIGNATURE} strokeWidth={5} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SignaturePadThickStrokeExample: View {\n  var body: some View {\n    SignaturePadDemo(initial: signaturePadSample, strokeWidth: 5)\n  }\n}\n\nfunc signaturePadWave(startX: CGFloat, baseY: CGFloat, length: CGFloat, amplitude: CGFloat, turns: CGFloat) -> SignatureStroke {\n  SignatureStroke((0..<48).map { index in\n    let progress = CGFloat(index) / 47\n    return CGPoint(\n      x: startX + progress * length,\n      y: baseY - sin(progress * .pi * turns) * amplitude * (1 - progress * 0.4)\n    )\n  })\n}\n\nlet signaturePadSample: [SignatureStroke] = [\n  signaturePadWave(startX: 40, baseY: 120, length: 70, amplitude: 40, turns: 3),\n  signaturePadWave(startX: 110, baseY: 115, length: 110, amplitude: 22, turns: 5),\n  SignatureStroke([CGPoint(x: 60, y: 140), CGPoint(x: 140, y: 136), CGPoint(x: 230, y: 134)]),\n]\n\nstruct SignaturePadDemo: View {\n  var strokeWidth: CGFloat = 2.5\n\n  @State private var strokes: [SignatureStroke]\n\n  init(initial: [SignatureStroke], strokeWidth: CGFloat = 2.5) {\n    self.strokeWidth = strokeWidth\n    _strokes = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SignaturePad(value: $strokes, strokeWidth: strokeWidth)\n      .frame(height: 192)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.SignaturePad\nimport com.esuiss.ui.components.SignatureStroke\nimport kotlin.math.PI\nimport kotlin.math.sin\n\n@Composable\nfun SignaturePadThickStrokeExample() {\n    SignaturePad(Modifier.fillMaxWidth(), defaultValue = signaturePadSample, strokeWidth = 5.dp)\n}\n\nfun signaturePadWave(startX: Float, baseY: Float, length: Float, amplitude: Float, turns: Float): SignatureStroke =\n    SignatureStroke(\n        List(48) { index ->\n            val progress = index / 47f\n            Offset(\n                startX + progress * length,\n                baseY - sin(progress * PI.toFloat() * turns) * amplitude * (1 - progress * 0.4f),\n            )\n        },\n    )\n\nval signaturePadSample = listOf(\n    signaturePadWave(40f, 120f, 70f, 40f, 3f),\n    signaturePadWave(110f, 115f, 110f, 22f, 5f),\n    SignatureStroke(listOf(Offset(60f, 140f), Offset(140f, 136f), Offset(230f, 134f))),\n)"} />
-
-</NativeExample>
+<NativeExample id="components-signature-pad--thick-stroke" />
 
 ### Disabled
 
 A disabled pad that ignores touches and hides the Clear button.
 
-<NativeExample id="components-signature-pad--disabled" width={880} height={463} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SignaturePad, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nexport function SignaturePadDisabledExample() {\n  return (\n    <SignaturePad defaultValue={SIGNATURE} disabled />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SignaturePadDisabledExample: View {\n  var body: some View {\n    SignaturePadDemo(initial: signaturePadSample)\n      .disabled(true)\n  }\n}\n\nfunc signaturePadWave(startX: CGFloat, baseY: CGFloat, length: CGFloat, amplitude: CGFloat, turns: CGFloat) -> SignatureStroke {\n  SignatureStroke((0..<48).map { index in\n    let progress = CGFloat(index) / 47\n    return CGPoint(\n      x: startX + progress * length,\n      y: baseY - sin(progress * .pi * turns) * amplitude * (1 - progress * 0.4)\n    )\n  })\n}\n\nlet signaturePadSample: [SignatureStroke] = [\n  signaturePadWave(startX: 40, baseY: 120, length: 70, amplitude: 40, turns: 3),\n  signaturePadWave(startX: 110, baseY: 115, length: 110, amplitude: 22, turns: 5),\n  SignatureStroke([CGPoint(x: 60, y: 140), CGPoint(x: 140, y: 136), CGPoint(x: 230, y: 134)]),\n]\n\nstruct SignaturePadDemo: View {\n  var strokeWidth: CGFloat = 2.5\n\n  @State private var strokes: [SignatureStroke]\n\n  init(initial: [SignatureStroke], strokeWidth: CGFloat = 2.5) {\n    self.strokeWidth = strokeWidth\n    _strokes = State(initialValue: initial)\n  }\n\n  var body: some View {\n    SignaturePad(value: $strokes, strokeWidth: strokeWidth)\n      .frame(height: 192)\n      .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.geometry.Offset\nimport com.esuiss.ui.components.SignaturePad\nimport com.esuiss.ui.components.SignatureStroke\nimport kotlin.math.PI\nimport kotlin.math.sin\n\n@Composable\nfun SignaturePadDisabledExample() {\n    SignaturePad(Modifier.fillMaxWidth(), defaultValue = signaturePadSample, enabled = false)\n}\n\nfun signaturePadWave(startX: Float, baseY: Float, length: Float, amplitude: Float, turns: Float): SignatureStroke =\n    SignatureStroke(\n        List(48) { index ->\n            val progress = index / 47f\n            Offset(\n                startX + progress * length,\n                baseY - sin(progress * PI.toFloat() * turns) * amplitude * (1 - progress * 0.4f),\n            )\n        },\n    )\n\nval signaturePadSample = listOf(\n    signaturePadWave(40f, 120f, 70f, 40f, 3f),\n    signaturePadWave(110f, 115f, 110f, 22f, 5f),\n    SignatureStroke(listOf(Offset(60f, 140f), Offset(140f, 136f), Offset(230f, 134f))),\n)"} />
-
-</NativeExample>
+<NativeExample id="components-signature-pad--disabled" />
 
 ### Controlled
 
 A controlled pad that reads the signature through the ref and exports it with `toSVG`.
 
-<NativeExample id="components-signature-pad--controlled" width={880} height={631} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { SignaturePad, type SignaturePadHandle, type SignaturePadStroke } from \"@/components/ui/signature-pad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction wave(\n  startX: number,\n  baseY: number,\n  length: number,\n  amplitude: number,\n  turns: number\n): SignaturePadStroke {\n  return Array.from({ length: 48 }, (_, index) => {\n    const progress = index / 47\n    return {\n      x: startX + progress * length,\n      y:\n        baseY -\n        Math.sin(progress * Math.PI * turns) * amplitude * (1 - progress * 0.4),\n    }\n  })\n}\n\nconst SIGNATURE: SignaturePadStroke[] = [\n  wave(40, 120, 70, 40, 3),\n  wave(110, 115, 110, 22, 5),\n  [\n    { x: 60, y: 140 },\n    { x: 140, y: 136 },\n    { x: 230, y: 134 },\n  ],\n]\n\nfunction ExportDemo() {\n  const ref = React.useRef<SignaturePadHandle>(null)\n  const [strokes, setStrokes] = React.useState<SignaturePadStroke[]>(SIGNATURE)\n  const [size, setSize] = React.useState(\"\")\n  return (\n    <View className=\"w-full gap-4\">\n      <SignaturePad ref={ref} value={strokes} onChange={setStrokes} />\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          setSize(`SVG: ${ref.current?.toSVG().length ?? 0} characters`)\n        }\n      >\n        <Text>Export SVG</Text>\n      </Button>\n      <Text role=\"status\" className=\"text-sm text-label-secondary\">\n        {`${strokes.length} strokes${size ? ` · ${size}` : \"\"}`}\n      </Text>\n    </View>\n  )\n}\n\nexport function SignaturePadControlledExample() {\n  return (\n    <ExportDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nfunc signaturePadWave(startX: CGFloat, baseY: CGFloat, length: CGFloat, amplitude: CGFloat, turns: CGFloat) -> SignatureStroke {\n  SignatureStroke((0..<48).map { index in\n    let progress = CGFloat(index) / 47\n    return CGPoint(\n      x: startX + progress * length,\n      y: baseY - sin(progress * .pi * turns) * amplitude * (1 - progress * 0.4)\n    )\n  })\n}\n\nlet signaturePadSample: [SignatureStroke] = [\n  signaturePadWave(startX: 40, baseY: 120, length: 70, amplitude: 40, turns: 3),\n  signaturePadWave(startX: 110, baseY: 115, length: 110, amplitude: 22, turns: 5),\n  SignatureStroke([CGPoint(x: 60, y: 140), CGPoint(x: 140, y: 136), CGPoint(x: 230, y: 134)]),\n]\n\nstruct SignaturePadExportDemo: View {\n  @State private var strokes = signaturePadSample\n  @State private var exported = \"\"\n  @State private var width: CGFloat = 0\n  @Environment(\\.colorScheme) private var colorScheme\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      SignaturePad(value: $strokes)\n        .frame(height: 192)\n        .frame(maxWidth: .infinity)\n        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }\n        .onChange(of: strokes) { _, _ in exported = \"\" }\n      Button {\n        let image = SignaturePad.image(strokes, size: CGSize(width: width, height: 192), colorScheme: colorScheme)\n        if let image {\n          exported = \"Image: \\(Int(image.size.width * image.scale))×\\(Int(image.size.height * image.scale)) px\"\n        }\n      } label: {\n        Text(\"Export image\").frame(maxWidth: .infinity)\n      }\n      .buttonStyle(.variant(.outline))\n      Text(verbatim: exported.isEmpty ? \"\\(strokes.count) strokes\" : \"\\(strokes.count) strokes · \\(exported)\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.layout.onSizeChanged\nimport androidx.compose.ui.platform.LocalDensity\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.IntSize\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.SignaturePad\nimport com.esuiss.ui.components.SignatureStroke\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.toSvg\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlin.math.PI\nimport kotlin.math.sin\n\nfun signaturePadWave(startX: Float, baseY: Float, length: Float, amplitude: Float, turns: Float): SignatureStroke =\n    SignatureStroke(\n        List(48) { index ->\n            val progress = index / 47f\n            Offset(\n                startX + progress * length,\n                baseY - sin(progress * PI.toFloat() * turns) * amplitude * (1 - progress * 0.4f),\n            )\n        },\n    )\n\nval signaturePadSample = listOf(\n    signaturePadWave(40f, 120f, 70f, 40f, 3f),\n    signaturePadWave(110f, 115f, 110f, 22f, 5f),\n    SignatureStroke(listOf(Offset(60f, 140f), Offset(140f, 136f), Offset(230f, 134f))),\n)\n\n@Composable\nfun SignaturePadControlled() {\n    var strokes by remember { mutableStateOf(signaturePadSample) }\n    var exported by rememberSaveable { mutableStateOf(\"\") }\n    var size by remember { mutableStateOf(IntSize.Zero) }\n    val density = LocalDensity.current\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        SignaturePad(\n            Modifier.fillMaxWidth().onSizeChanged { size = it },\n            value = strokes,\n            onValueChange = { strokes = it },\n        )\n        Button(\n            \"Export SVG\",\n            onClick = {\n                val svg = with(density) { strokes.toSvg(size.width.toDp().value, size.height.toDp().value) }\n                exported = \"SVG: ${svg.length} characters\"\n            },\n            modifier = Modifier.fillMaxWidth(),\n            variant = ButtonVariant.Outline,\n        )\n        Text(\n            \"${strokes.size} strokes\" + if (exported.isNotEmpty()) \" · $exported\" else \"\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-signature-pad--controlled" />
 
 ## API Reference
 
@@ -240,7 +221,18 @@ A controlled pad that reads the signature through the ref and exports it with `t
 
 ### SignaturePad
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"value","type":"SignaturePadStroke[]","description":"Strokes for controlled use."},{"name":"defaultValue","type":"SignaturePadStroke[]","description":"Initial strokes for uncontrolled use."},{"name":"onChange","type":"(value: SignaturePadStroke[]) => void","description":"Called with the full list of strokes after each stroke ends or the pad is cleared."},{"name":"strokeWidth","type":"number","default":"2.5","description":"Line width of the strokes. Defaults to `2.5`."},{"name":"disabled","type":"boolean","default":"false","description":"Turns off drawing, hides the Clear button and dims the pad."},{"name":"placeholder","type":"React.ReactNode","default":"\"Sign here\"","description":"Content shown on the signature line while the pad is empty. Defaults to `\"Sign here\"`."},{"name":"clearLabel","type":"React.ReactNode","default":"\"Clear\"","description":"Label of the Clear button. Defaults to `\"Clear\"`."},{"name":"ref","type":"React.Ref<SignaturePadHandle>","description":"Receives a `SignaturePadHandle` with `toSVG`, `clear` and `isEmpty`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `SignaturePadStroke[]` | - | Strokes for controlled use. |
+| `defaultValue` | `SignaturePadStroke[]` | - | Initial strokes for uncontrolled use. |
+| `onChange` | `(value: SignaturePadStroke[]) => void` | - | Called with the full list of strokes after each stroke ends or the pad is cleared. |
+| `strokeWidth` | `number` | `2.5` | Line width of the strokes. Defaults to `2.5`. |
+| `disabled` | `boolean` | `false` | Turns off drawing, hides the Clear button and dims the pad. |
+| `placeholder` | `React.ReactNode` | `"Sign here"` | Content shown on the signature line while the pad is empty. Defaults to `"Sign here"`. |
+| `clearLabel` | `React.ReactNode` | `"Clear"` | Label of the Clear button. Defaults to `"Clear"`. |
+| `ref` | `React.Ref<SignaturePadHandle>` | - | Receives a `SignaturePadHandle` with `toSVG`, `clear` and `isEmpty`. |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 

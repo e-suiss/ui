@@ -3,16 +3,11 @@ title: Input Otp
 description: "A segmented field for entering one-time passcodes, one character per slot."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="input-otp" story="Default">
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-demo" />
 
 Input OTP is built on the `input-otp` library. `InputOTP` renders a single hidden text input that holds the whole code, and displays it through `InputOTPSlot` elements, each showing the character at its `index`. Group slots with `InputOTPGroup`, and place an `InputOTPSeparator` between groups to split a code, for example into two sets of three.
 
@@ -22,25 +17,45 @@ Use it for verification and two-factor codes. For other short values, use `Input
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-otp"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-otp
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn input-otp"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react cn input-otp
+```
 
 2. Copy the source into `components/ui/input-otp.tsx`:
 
-<SourceFile path="components/ui/input-otp.tsx" />
+<ComponentSource path="components/ui/input-otp.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from \"@/components/ui/input-otp\""} />
+```tsx
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/ui/input-otp"
+```
 
-<Code lang="tsx" code={"<InputOTP maxLength={6} aria-label=\"Verification code\">\n  <InputOTPGroup>\n    <InputOTPSlot index={0} />\n    <InputOTPSlot index={1} />\n    <InputOTPSlot index={2} />\n  </InputOTPGroup>\n  <InputOTPSeparator />\n  <InputOTPGroup>\n    <InputOTPSlot index={3} />\n    <InputOTPSlot index={4} />\n    <InputOTPSlot index={5} />\n  </InputOTPGroup>\n</InputOTP>"} />
+```tsx
+<InputOTP maxLength={6} aria-label="Verification code">
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
 
 Set `maxLength` to the length of the code and render one `InputOTPSlot` for each position, with `index` values from `0`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onChange`, which receives the code as a string. Restrict accepted characters with `pattern`, for example with `REGEXP_ONLY_DIGITS_AND_CHARS` from `input-otp`.
 
@@ -52,65 +67,48 @@ Typing fills the slots in order and stops at `maxLength`; Backspace removes the 
 
 A code that starts filled from `defaultValue`.
 
-<Example kind="ui" name="input-otp" story="Filled">
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpFilledExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" defaultValue=\"482913\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-filled" />
 
 ### Single group
 
 Six slots in a single group with no separator.
 
-<Example kind="ui" name="input-otp" story="SingleGroup">
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpSingleGroupExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        {Array.from({ length: 6 }, (_, index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-single-group" />
 
 ### Four digits
 
 A four-digit code with `maxLength` set to `4`.
 
-<Example kind="ui" name="input-otp" story="FourDigits">
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpFourDigitsExample() {\n  return (\n    <InputOTP maxLength={4} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n        <InputOTPSlot index={3} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-four-digits" />
 
 ### Alphanumeric
 
 A code that accepts letters and digits using the `REGEXP_ONLY_DIGITS_AND_CHARS` pattern.
 
-<Example kind="ui" name="input-otp" story="Alphanumeric">
-
-<Code lang="tsx" code={"import { REGEXP_ONLY_DIGITS_AND_CHARS } from \"input-otp\"\nimport { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpAlphanumericExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-alphanumeric" />
 
 ### Invalid
 
 An invalid code with every slot outlined in the error color.
 
-<Example kind="ui" name="input-otp" story="Invalid">
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpInvalidExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" defaultValue=\"123456\" aria-invalid>\n      <InputOTPGroup>\n        {Array.from({ length: 6 }, (_, index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-invalid" />
 
 ### Disabled
 
 A disabled code that keeps its value and dims its slots and separator.
 
-<Example kind="ui" name="input-otp" story="Disabled">
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpDisabledExample() {\n  return (\n    <InputOTP maxLength={6} disabled aria-label=\"Verification code\" defaultValue=\"123456\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="input-otp-disabled" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"InputOTP","href":"#inputotp","children":[{"name":"InputOTPGroup","href":"#inputotpgroup","children":[{"name":"InputOTPSlot","href":"#inputotpslot","children":[]}]},{"name":"InputOTPSeparator","href":"#inputotpseparator","children":[]}]}]} />
+<Anatomy>
+
+- [InputOTP](#inputotp)
+  - [InputOTPGroup](#inputotpgroup)
+    - [InputOTPSlot](#inputotpslot)
+  - [InputOTPSeparator](#inputotpseparator)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -118,7 +116,11 @@ A disabled code that keeps its value and dims its slots and separator.
 
 The root that holds the code in a single hidden input.
 
-<PropsTable extends={["React.ComponentProps<typeof OTPInput>"]} props={[{"name":"containerClassName","type":"string","description":"Classes applied to the element that wraps the slots."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `containerClassName` | `string` | - | Classes applied to the element that wraps the slots. |
+
+Also accepts the props of `React.ComponentProps<typeof OTPInput>`.
 
 </ApiPart>
 
@@ -128,7 +130,7 @@ The root that holds the code in a single hidden input.
 
 Groups adjacent slots.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -138,7 +140,11 @@ Groups adjacent slots.
 
 Displays one character of the code and a caret when active.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"index","type":"number","required":true,"description":"The position of the character this slot displays."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `index` | `number` | Required | The position of the character this slot displays. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -148,7 +154,7 @@ Displays one character of the code and a caret when active.
 
 A dash shown between groups of slots.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -170,15 +176,7 @@ A dash shown between groups of slots.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-inputotp--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpExample() {\n  return (\n    <InputOTP length={6}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPDefaultDemo: View {\n  @State private var text = \"\"\n\n  var body: some View {\n    InputOTP(text: $text, length: 6) {\n      InputOTPGroup {\n        InputOTPSlot(index: 0)\n        InputOTPSlot(index: 1)\n        InputOTPSlot(index: 2)\n      }\n      InputOTPSeparator()\n      InputOTPGroup {\n        InputOTPSlot(index: 3)\n        InputOTPSlot(index: 4)\n        InputOTPSlot(index: 5)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.InputOTP\nimport com.esuiss.ui.components.InputOTPGroup\nimport com.esuiss.ui.components.InputOTPSeparator\nimport com.esuiss.ui.components.InputOTPSlot\n\n@Composable\nfun InputOTPDefault() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Column {\n        InputOTP(value, { value = it }, maxLength = 6) {\n            InputOTPGroup {\n                InputOTPSlot(0)\n                InputOTPSlot(1)\n                InputOTPSlot(2)\n            }\n            InputOTPSeparator()\n            InputOTPGroup {\n                InputOTPSlot(3)\n                InputOTPSlot(4)\n                InputOTPSlot(5)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-inputotp--default" />
 
 `InputOTP` is backed by one hidden `TextInput` and shows each character in an `InputOTPSlot`. The active slot gets an accent border and a blinking caret. The hidden input uses the one-time-code autofill hints, so codes from messages can be filled in automatically, and pasting fills every slot.
 
@@ -188,19 +186,25 @@ Group slots with `InputOTPGroup` and place an `InputOTPSeparator` between groups
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-otp"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-otp
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-otp --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-otp --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-otp --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-otp --platform kotlin
+```
 
 </Only>
 
@@ -216,13 +220,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/otp-field.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/input-otp.tsx`:
 
-<SourceFile path="uniwind/components/ui/input-otp.tsx" />
+<ComponentSource path="uniwind/components/ui/input-otp.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -232,13 +238,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/otp-field.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/input-otp.tsx`:
 
-<SourceFile path="nativewind/components/ui/input-otp.tsx" />
+<ComponentSource path="nativewind/components/ui/input-otp.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -248,13 +256,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/otp-field.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/input-otp.tsx`:
 
-<SourceFile path="stylesheet/components/ui/input-otp.tsx" />
+<ComponentSource path="stylesheet/components/ui/input-otp.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -270,27 +280,29 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/InputOTP.swift" />
+<ComponentSource path="swift/Components/InputOTP.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -300,29 +312,34 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/InputOTP.kt" />
+<ComponentSource path="kotlin/components/InputOTP.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -330,9 +347,25 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from \"@/components/ui/input-otp\""} />
+```tsx
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/ui/input-otp"
+```
 
-<Code lang="tsx" code={"<InputOTP length={6}>\n  <InputOTPGroup>\n    <InputOTPSlot index={0} />\n    <InputOTPSlot index={1} />\n    <InputOTPSlot index={2} />\n  </InputOTPGroup>\n  <InputOTPSeparator />\n  <InputOTPGroup>\n    <InputOTPSlot index={3} />\n    <InputOTPSlot index={4} />\n    <InputOTPSlot index={5} />\n  </InputOTPGroup>\n</InputOTP>"} />
+```tsx
+<InputOTP length={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
 
 Set `length` and render one `InputOTPSlot` per `index`. Use `value` with `onValueChange` for controlled state, or `defaultValue`. `onValueComplete` fires when every slot is filled.
 
@@ -346,53 +379,25 @@ Use `InputOTPSlotClassContext` to style every slot at once, or `className` on a 
 
 Controlled with `value` and `onValueChange`.
 
-<NativeExample id="components-inputotp--controlled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nfunction ControlledDemo() {\n  const [value, setValue] = React.useState(\"\")\n  const [completed, setCompleted] = React.useState<string | null>(null)\n  return (\n    <View className=\"gap-3\">\n      <InputOTP\n        length={4}\n        value={value}\n        onValueChange={setValue}\n        onValueComplete={setCompleted}\n      >\n        <InputOTPGroup>\n          {slotIndexes(4).map((index) => (\n            <InputOTPSlot key={index} index={index} />\n          ))}\n        </InputOTPGroup>\n      </InputOTP>\n      <Text variant=\"muted\">\n        {completed ? `Submitted ${completed}` : \"Enter the 4 digit code\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function InputOtpControlledExample() {\n  return (\n    <ControlledDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPControlledDemo: View {\n  @State private var value = \"\"\n  @State private var completed: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      InputOTP(text: $value, length: 4)\n      Text(completed.map { \"Submitted \\($0)\" } ?? \"Enter the 4 digit code\")\n        .textVariant(.muted)\n    }\n    .onChange(of: value) { _, next in\n      if next.count == 4 { completed = next }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.InputOTP\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun InputOTPControlled() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    var completed by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        InputOTP(value, { value = it }, maxLength = 4, onComplete = { completed = it })\n        Text(completed?.let { \"Submitted $it\" } ?: \"Enter the 4 digit code\", variant = TextVariant.Muted)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-inputotp--controlled" />
 
 ### Alphanumeric
 
 Letters and numbers with `validationType="alphanumeric"`.
 
-<NativeExample id="components-inputotp--alphanumeric" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nexport function InputOtpAlphanumericExample() {\n  return (\n    <InputOTP\n      length={6}\n      validationType=\"alphanumeric\"\n      normalizeValue={(value) => value.toUpperCase()}\n    >\n      <InputOTPGroup>\n        {slotIndexes(6).map((index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPAlphanumericDemo: View {\n  @State private var value = \"\"\n\n  var body: some View {\n    InputOTP(\n      text: Binding(get: { value }, set: { value = $0.uppercased() }),\n      length: 6,\n      allowed: .alphanumerics\n    )\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.InputOTP\n\n@Composable\nfun InputOTPAlphanumeric() {\n    var value by rememberSaveable { mutableStateOf(\"\") }\n    Column {\n        InputOTP(value, { value = it.uppercase() }, maxLength = 6, keyboardType = KeyboardType.Ascii)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-inputotp--alphanumeric" />
 
 ### Masked
 
 A four-digit code with hidden characters.
 
-<NativeExample id="components-inputotp--masked" width={880} height={400}>
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nexport function InputOtpMaskedExample() {\n  return (\n    <InputOTP length={4} mask defaultValue=\"12\">\n      <InputOTPGroup>\n        {slotIndexes(4).map((index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-</NativeExample>
+<NativeExample id="components-inputotp--masked" />
 
 ### Disabled
 
 A disabled field with a partial value.
 
-<NativeExample id="components-inputotp--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nfunction slotIndexes(length: number) {\n  return Array.from({ length }, (_, index) => index)\n}\n\nexport function InputOtpDisabledExample() {\n  return (\n    <InputOTP length={6} disabled defaultValue=\"123\">\n      <InputOTPGroup>\n        {slotIndexes(6).map((index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct InputOTPDisabledExample: View {\n  var body: some View {\n    InputOTPDemo(length: 6, initial: \"123\")\n      .disabled(true)\n  }\n}\n\nstruct InputOTPDemo: View {\n  let length: Int\n\n  @State private var text: String\n\n  init(length: Int, initial: String = \"\") {\n    self.length = length\n    _text = State(initialValue: initial)\n  }\n\n  var body: some View {\n    InputOTP(text: $text, length: length)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.InputOTP\n\n@Composable\nfun InputOTPDisabled() {\n    var value by rememberSaveable { mutableStateOf(\"123\") }\n    Column {\n        InputOTP(value, { value = it }, maxLength = 6, enabled = false)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-inputotp--disabled" />
 
 ## API Reference
 
@@ -402,7 +407,7 @@ A disabled field with a partial value.
 
 Root that owns the hidden input and the value.
 
-<PropsTable extends={["React.ComponentProps<typeof OTPFieldPrimitive.Root>"]} />
+Also accepts the props of `React.ComponentProps<typeof OTPFieldPrimitive.Root>`.
 
 </ApiPart>
 
@@ -412,7 +417,7 @@ Root that owns the hidden input and the value.
 
 Row of adjacent slots.
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} />
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 
@@ -422,7 +427,7 @@ Row of adjacent slots.
 
 Box that shows one character.
 
-<PropsTable extends={["React.ComponentProps<typeof OTPFieldPrimitive.Input>"]} />
+Also accepts the props of `React.ComponentProps<typeof OTPFieldPrimitive.Input>`.
 
 </ApiPart>
 
@@ -432,7 +437,7 @@ Box that shows one character.
 
 Dash between groups.
 
-<PropsTable extends={["React.ComponentProps<typeof OTPFieldPrimitive.Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof OTPFieldPrimitive.Separator>`.
 
 </ApiPart>
 

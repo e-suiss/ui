@@ -1,5 +1,0 @@
-{
-  "description": "A passkey sign-in screen with a face scan dialog and a welcome view after verifying.",
-  "overview": "A sign-in screen that shows the account with an `Avatar`, a Change link, a Continue with passkey `Button` and a link to sign in with a password. Continuing opens a `Dialog` with an animated scan glyph that turns into a verified state, then shows a welcome view with a Sign out link. The dialog can be cancelled during the scan.",
-  "usage": "Call your passkey API from `onContinue`, and wire `onChangeAccount` and `onUsePassword` to your navigation. The account details and the scan timing are sample values in the component."
-}

@@ -3,16 +3,11 @@ title: Empty
 description: "A placeholder that explains why a view has no content and what people can do next."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="empty" story="Default">
-
-<Code lang="tsx" code={"import { ArrowUpRightIcon, FolderSimpleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyMedia variant=\"icon\">\n            <FolderSimpleIcon />\n          </EmptyMedia>\n          <EmptyTitle>No projects yet</EmptyTitle>\n          <EmptyDescription>\n            You haven&apos;t created any projects yet. Get started by creating\n            your first project.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <div className=\"flex gap-2\">\n            <Button>Create project</Button>\n            <Button variant=\"outline\">Import project</Button>\n          </div>\n          <Button variant=\"link\" size=\"sm\" className=\"text-label-secondary\">\n            Learn more\n            <ArrowUpRightIcon data-icon=\"inline-end\" />\n          </Button>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="empty-demo" />
 
 `Empty` is a centered container for empty states. Inside it, `EmptyHeader` groups an optional `EmptyMedia` with an `EmptyTitle` and `EmptyDescription`, and `EmptyContent` holds the actions, such as buttons, a search field or a help link. All parts are plain, styled elements with no interactive behavior of their own.
 
@@ -22,25 +17,56 @@ Use it when a list, folder, search or page has nothing to show. Keep the title s
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
+```bash title="Terminal"
+npm install class-variance-authority cn
+```
 
 2. Copy the source into `components/ui/empty.tsx`:
 
-<SourceFile path="components/ui/empty.tsx" />
+<ComponentSource path="components/ui/empty.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from \"@/components/ui/empty\""} />
+```tsx
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty"
+```
 
-<Code lang="tsx" code={"<div className=\"w-[32rem]\">\n  <Empty>\n    <EmptyHeader>\n      <EmptyMedia variant=\"icon\">\n        <FolderSimpleIcon />\n      </EmptyMedia>\n      <EmptyTitle>No projects yet</EmptyTitle>\n      <EmptyDescription>\n        You haven&apos;t created any projects yet. Get started by creating\n        your first project.\n      </EmptyDescription>\n    </EmptyHeader>\n    <EmptyContent>\n      <div className=\"flex gap-2\">\n        <Button>Create project</Button>\n        <Button variant=\"outline\">Import project</Button>\n      </div>\n      <Button variant=\"link\" size=\"sm\" className=\"text-label-secondary\">\n        Learn more\n        <ArrowUpRightIcon data-icon=\"inline-end\" />\n      </Button>\n    </EmptyContent>\n  </Empty>\n</div>"} />
+```tsx
+<div className="w-[32rem]">
+  <Empty>
+    <EmptyHeader>
+      <EmptyMedia variant="icon">
+        <FolderSimpleIcon />
+      </EmptyMedia>
+      <EmptyTitle>No projects yet</EmptyTitle>
+      <EmptyDescription>
+        You haven&apos;t created any projects yet. Get started by creating
+        your first project.
+      </EmptyDescription>
+    </EmptyHeader>
+    <EmptyContent>
+      <div className="flex gap-2">
+        <Button>Create project</Button>
+        <Button variant="outline">Import project</Button>
+      </div>
+      <Button variant="link" size="sm" className="text-label-secondary">
+        Learn more
+        <ArrowUpRightIcon data-icon="inline-end" />
+      </Button>
+    </EmptyContent>
+  </Empty>
+</div>
+```
 
 `Empty` has a dashed border style but no border width by default; add `border` through `className` to show an outline. Set `EmptyMedia` to `variant="icon"` for a small icon in a tinted tile, or keep the default to render media such as a large icon or illustration as is. Links placed directly inside `EmptyDescription` are underlined.
 
@@ -50,35 +76,33 @@ Use it when a list, folder, search or page has nothing to show. Keep the title s
 
 An empty state with a visible dashed outline, added through `className="border"`.
 
-<Example kind="ui" name="empty" story="Outline">
-
-<Code lang="tsx" code={"import { CloudIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyOutlineExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty className=\"border\">\n        <EmptyHeader>\n          <EmptyMedia variant=\"icon\">\n            <CloudIcon />\n          </EmptyMedia>\n          <EmptyTitle>Cloud storage is empty</EmptyTitle>\n          <EmptyDescription>\n            Upload files to your cloud storage to access them anywhere.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <Button variant=\"outline\" size=\"sm\">\n            Upload files\n          </Button>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="empty-outline" />
 
 ### Default media
 
 An empty state with a large icon in `EmptyMedia` using the default variant.
 
-<Example kind="ui" name="empty" story="DefaultMedia">
-
-<Code lang="tsx" code={"import { FolderSimpleIcon } from \"@phosphor-icons/react\"\nimport { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyDefaultMediaExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyMedia>\n            <FolderSimpleIcon className=\"text-label-secondary size-12\" />\n          </EmptyMedia>\n          <EmptyTitle>This folder is empty</EmptyTitle>\n          <EmptyDescription>Drag files here to add them.</EmptyDescription>\n        </EmptyHeader>\n      </Empty>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="empty-default-media" />
 
 ### With search
 
 A not-found state with an `InputGroup` search field and a support link in `EmptyContent`.
 
-<Example kind="ui" name="empty" story="WithSearch">
-
-<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from \"@/components/ui/empty\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function EmptyWithSearchExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyTitle>404 - Not found</EmptyTitle>\n          <EmptyDescription>\n            The page you&apos;re looking for doesn&apos;t exist. Try searching for\n            what you need below.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <InputGroup className=\"sm:w-3/4\">\n            <InputGroupInput placeholder=\"Search pages...\" />\n            <InputGroupAddon>\n              <MagnifyingGlassIcon />\n            </InputGroupAddon>\n          </InputGroup>\n          <EmptyDescription>\n            Need help? <a href=\"#support\">Contact support</a>\n          </EmptyDescription>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="empty-with-search" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Empty","href":"#empty","children":[{"name":"EmptyHeader","href":"#emptyheader","children":[{"name":"EmptyMedia","href":"#emptymedia","children":[]},{"name":"EmptyTitle","href":"#emptytitle","children":[]},{"name":"EmptyDescription","href":"#emptydescription","children":[]}]},{"name":"EmptyContent","href":"#emptycontent","children":[{"name":"EmptyDescription","href":"#emptydescription","children":[]}]}]}]} />
+<Anatomy>
+
+- [Empty](#empty)
+  - [EmptyHeader](#emptyheader)
+    - [EmptyMedia](#emptymedia)
+    - [EmptyTitle](#emptytitle)
+    - [EmptyDescription](#emptydescription)
+  - [EmptyContent](#emptycontent)
+    - [EmptyDescription](#emptydescription)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -86,7 +110,7 @@ A not-found state with an `InputGroup` search field and a support link in `Empty
 
 The centered container for the empty state.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -96,7 +120,7 @@ The centered container for the empty state.
 
 Groups the media, title and description.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -106,7 +130,11 @@ Groups the media, title and description.
 
 Holds an icon or image above the title.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"icon\"","default":"\"default\"","description":"`icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "icon"` | `"default"` | `icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -116,7 +144,7 @@ Holds an icon or image above the title.
 
 The short heading of the empty state.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -126,7 +154,7 @@ The short heading of the empty state.
 
 Supporting text that explains the state or suggests a next step.
 
-<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+Also accepts the props of `React.ComponentProps<"p">`.
 
 </ApiPart>
 
@@ -136,7 +164,7 @@ Supporting text that explains the state or suggests a next step.
 
 Holds actions such as buttons, inputs or links.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -156,15 +184,7 @@ Holds actions such as buttons, inputs or links.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-empty--default" width={880} height={1121} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { FolderOpenIcon } from \"phosphor-react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function EmptyExample() {\n  return (\n    <Empty>\n      <EmptyHeader>\n        <EmptyMedia variant=\"icon\">\n          <Icon as={FolderOpenIcon} />\n        </EmptyMedia>\n        <EmptyTitle>No projects yet</EmptyTitle>\n        <EmptyDescription>\n          You haven't created any projects yet. Get started by creating your\n          first project.\n        </EmptyDescription>\n      </EmptyHeader>\n      <EmptyContent>\n        <Button>\n          <Text>Create project</Text>\n        </Button>\n        <Button variant=\"link\">\n          <Text>Import project</Text>\n        </Button>\n      </EmptyContent>\n    </Empty>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct EmptyExample: View {\n  var body: some View {\n    Empty {\n      EmptyHeader {\n        EmptyMedia(.icon) { Ph.folderOpen.regular }\n        EmptyTitle(\"No projects yet\")\n        EmptyDescription(\"You haven't created any projects yet. Get started by creating your first project.\")\n      }\n      EmptyContent {\n        Button(\"Create project\") {}\n          .buttonStyle(.variant())\n        Button(\"Import project\") {}\n          .buttonStyle(.variant(.link))\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.FolderOpen\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Empty\nimport com.esuiss.ui.components.EmptyContent\nimport com.esuiss.ui.components.EmptyDescription\nimport com.esuiss.ui.components.EmptyHeader\nimport com.esuiss.ui.components.EmptyMedia\nimport com.esuiss.ui.components.EmptyMediaVariant\nimport com.esuiss.ui.components.EmptyTitle\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun EmptyDefault() {\n    Empty {\n        EmptyHeader {\n            EmptyMedia(variant = EmptyMediaVariant.Icon) {\n                Icon(PhosphorIcons.Regular.FolderOpen, contentDescription = null)\n            }\n            EmptyTitle(\"No projects yet\")\n            EmptyDescription(\"You haven't created any projects yet. Get started by creating your first project.\")\n        }\n        EmptyContent {\n            Button(\"Create project\", onClick = {})\n            Button(\"Import project\", onClick = {}, variant = ButtonVariant.Link)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-empty--default" />
 
 `Empty` is a centered column that fills the available space and holds an `EmptyHeader` with optional `EmptyMedia`, an `EmptyTitle` and an `EmptyDescription`, followed by `EmptyContent` for actions. Text is centered and the header and content are limited to a readable width.
 
@@ -174,19 +194,25 @@ Use it for empty lists, search results with no matches and first-run screens.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add empty --platform kotlin
+```
 
 </Only>
 
@@ -202,13 +228,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/empty.tsx`:
 
-<SourceFile path="uniwind/components/ui/empty.tsx" />
+<ComponentSource path="uniwind/components/ui/empty.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -218,13 +246,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/empty.tsx`:
 
-<SourceFile path="nativewind/components/ui/empty.tsx" />
+<ComponentSource path="nativewind/components/ui/empty.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -236,7 +266,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the source into `components/ui/empty.tsx`:
 
-<SourceFile path="stylesheet/components/ui/empty.tsx" />
+<ComponentSource path="stylesheet/components/ui/empty.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -252,15 +282,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Empty.swift" />
+<ComponentSource path="swift/Components/Empty.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -270,21 +300,25 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Empty.kt" />
+<ComponentSource path="kotlin/components/Empty.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -292,9 +326,32 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from \"@/components/ui/empty\""} />
+```tsx
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty"
+```
 
-<Code lang="tsx" code={"<Empty>\n  <EmptyHeader>\n    <EmptyMedia variant=\"icon\">\n      <Icon as={FolderOpenIcon} />\n    </EmptyMedia>\n    <EmptyTitle>No projects yet</EmptyTitle>\n    <EmptyDescription>\n      You haven't created any projects yet. Get started by creating your\n      first project.\n    </EmptyDescription>\n  </EmptyHeader>\n  <EmptyContent>\n    <Button>\n      <Text>Create project</Text>\n    </Button>\n    <Button variant=\"link\">\n      <Text>Import project</Text>\n    </Button>\n  </EmptyContent>\n</Empty>"} />
+```tsx
+<Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon">
+      <Icon as={FolderOpenIcon} />
+    </EmptyMedia>
+    <EmptyTitle>No projects yet</EmptyTitle>
+    <EmptyDescription>
+      You haven't created any projects yet. Get started by creating your
+      first project.
+    </EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+    <Button>
+      <Text>Create project</Text>
+    </Button>
+    <Button variant="link">
+      <Text>Import project</Text>
+    </Button>
+  </EmptyContent>
+</Empty>
+```
 
 `EmptyMedia` has two variants: `default` shows its child as is, such as an illustration, and `icon` puts an `Icon` in a small rounded tile. Put buttons or links in `EmptyContent`.
 
@@ -306,15 +363,7 @@ Add a background class such as `bg-surface-secondary` to `Empty` for a filled pa
 
 A filled panel with only a title and description.
 
-<NativeExample id="components-empty--muted" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyMutedExample() {\n  return (\n    <Empty className=\"bg-surface-secondary\">\n      <EmptyHeader>\n        <EmptyTitle>No results</EmptyTitle>\n        <EmptyDescription>Try a different search.</EmptyDescription>\n      </EmptyHeader>\n    </Empty>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct EmptyMutedExample: View {\n  var body: some View {\n    Empty {\n      EmptyHeader {\n        EmptyTitle(\"No results\")\n        EmptyDescription(\"Try a different search.\")\n      }\n    }\n    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Empty\nimport com.esuiss.ui.components.EmptyDescription\nimport com.esuiss.ui.components.EmptyHeader\nimport com.esuiss.ui.components.EmptyTitle\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun EmptyMuted() {\n    Empty(Modifier.background(EsuissTheme.colors.surfaceSecondary, RoundedCornerShape(Radius.xl2))) {\n        EmptyHeader {\n            EmptyTitle(\"No results\")\n            EmptyDescription(\"Try a different search.\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-empty--muted" />
 
 ## API Reference
 
@@ -324,7 +373,7 @@ A filled panel with only a title and description.
 
 Centered container.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -334,7 +383,7 @@ Centered container.
 
 Column for media, title and description.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -344,7 +393,11 @@ Column for media, title and description.
 
 Decorative icon or illustration.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"icon\"","default":"\"default\"","description":"`default` or `icon`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "icon"` | `"default"` | `default` or `icon`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -354,7 +407,7 @@ Decorative icon or illustration.
 
 Heading.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -364,7 +417,7 @@ Heading.
 
 Supporting text.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -374,7 +427,7 @@ Supporting text.
 
 Area for actions.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

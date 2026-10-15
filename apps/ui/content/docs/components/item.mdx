@@ -3,16 +3,11 @@ title: Item
 description: "A flexible row that pairs media, a title, a description and actions, for lists and settings."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="item" story="Default">
-
-<Code lang="tsx" code={"import { ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemMedia variant=\"icon\">\n          <ShieldCheckIcon />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Two-factor authentication</ItemTitle>\n          <ItemDescription>\n            Add an extra layer of security to your account.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button variant=\"outline\" size=\"sm\">\n            Enable\n          </Button>\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-demo" />
 
 `Item` is a row container. Inside it, `ItemMedia` holds an icon, image or avatar, `ItemContent` stacks an `ItemTitle` and `ItemDescription`, and `ItemActions` holds buttons or indicators at the end. `ItemHeader` and `ItemFooter` span the full width of the item, above and below the main row. Use the `render` prop to turn the whole item into a link or button.
 
@@ -22,25 +17,50 @@ generated: true
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add item"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add item
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
 
 2. Copy the source into `components/ui/item.tsx`:
 
-<SourceFile path="components/ui/item.tsx" />
+<ComponentSource path="components/ui/item.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from \"@/components/ui/item\""} />
+```tsx
+import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "@/components/ui/item"
+```
 
-<Code lang="tsx" code={"<div className=\"w-96\">\n  <Item variant=\"outline\">\n    <ItemMedia variant=\"icon\">\n      <ShieldCheckIcon />\n    </ItemMedia>\n    <ItemContent>\n      <ItemTitle>Two-factor authentication</ItemTitle>\n      <ItemDescription>\n        Add an extra layer of security to your account.\n      </ItemDescription>\n    </ItemContent>\n    <ItemActions>\n      <Button variant=\"outline\" size=\"sm\">\n        Enable\n      </Button>\n    </ItemActions>\n  </Item>\n</div>"} />
+```tsx
+<div className="w-96">
+  <Item variant="outline">
+    <ItemMedia variant="icon">
+      <ShieldCheckIcon />
+    </ItemMedia>
+    <ItemContent>
+      <ItemTitle>Two-factor authentication</ItemTitle>
+      <ItemDescription>
+        Add an extra layer of security to your account.
+      </ItemDescription>
+    </ItemContent>
+    <ItemActions>
+      <Button variant="outline" size="sm">
+        Enable
+      </Button>
+    </ItemActions>
+  </Item>
+</div>
+```
 
 `ItemGroup` has the `list` role, so set `role="listitem"` on each `Item` inside it. Choose a `variant` for the item's border and background, and a `size` for its padding. Items inside a group with `sm` or `xs` items are spaced more tightly.
 
@@ -52,75 +72,67 @@ When `ItemDescription` is present, the media aligns to the top of the item inste
 
 The `default`, `outline` and `muted` item variants.
 
-<Example kind="ui" name="item" story="Variants">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemVariantsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        {([\"default\", \"outline\", \"muted\"] as const).map((variant) => (\n          <Item key={variant} variant={variant}>\n            <ItemContent>\n              <ItemTitle>\n                {variant.charAt(0).toUpperCase() + variant.slice(1)} item\n              </ItemTitle>\n              <ItemDescription>\n                A short description of this list entry.\n              </ItemDescription>\n            </ItemContent>\n            <ItemActions>\n              <Button variant=\"outline\" size=\"sm\">\n                Open\n              </Button>\n            </ItemActions>\n          </Item>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-variants" />
 
 ### Sizes
 
 The `default`, `sm` and `xs` item sizes.
 
-<Example kind="ui" name="item" story="Sizes">
-
-<Code lang="tsx" code={"import { CaretRightIcon, CheckCircleIcon } from \"@phosphor-icons/react\"\nimport { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemSizesExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        {([\"default\", \"sm\", \"xs\"] as const).map((size) => (\n          <Item key={size} variant=\"outline\" size={size}>\n            <ItemMedia variant=\"icon\">\n              <CheckCircleIcon />\n            </ItemMedia>\n            <ItemContent>\n              <ItemTitle>Your profile has been verified</ItemTitle>\n            </ItemContent>\n            <ItemActions>\n              <CaretRightIcon className=\"size-4\" />\n            </ItemActions>\n          </Item>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-sizes" />
 
 ### As link
 
 An item rendered as a link, so the whole row is one focusable target.
 
-<Example kind="ui" name="item" story="AsLink">
-
-<Code lang="tsx" code={"import { BellIcon, CaretRightIcon } from \"@phosphor-icons/react\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemAsLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\" render={<a href=\"#notifications\" />}>\n        <ItemMedia variant=\"icon\">\n          <BellIcon />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Notification settings</ItemTitle>\n          <ItemDescription>\n            Choose what you want to be notified about.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <CaretRightIcon className=\"size-4\" />\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-as-link" />
 
 ### With image
 
 A list of people with image media, separators and an invite button on each row.
 
-<Example kind="ui" name="item" story="WithImage">
-
-<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\n\nconst people = [\n  {\n    name: \"Olivia Martin\",\n    email: \"olivia@example.com\",\n    avatar: \"https://i.pravatar.cc/96?img=12\",\n  },\n  {\n    name: \"Liam Chen\",\n    email: \"liam@example.com\",\n    avatar: \"https://github.com/vercel.png\",\n  },\n  {\n    name: \"Sofia Rossi\",\n    email: \"sofia@example.com\",\n    avatar: \"https://github.com/github.png\",\n  },\n]\n\nexport function ItemWithImageExample() {\n  return (\n    <div className=\"w-96\">\n      <ItemGroup>\n        {people.map((person, index) => (\n          <div key={person.email} className=\"contents\">\n            {index > 0 && <ItemSeparator />}\n            <Item variant=\"default\" size=\"sm\" role=\"listitem\">\n              <ItemMedia variant=\"image\">\n                <img src={person.avatar} alt={person.name} />\n              </ItemMedia>\n              <ItemContent>\n                <ItemTitle>{person.name}</ItemTitle>\n                <ItemDescription>{person.email}</ItemDescription>\n              </ItemContent>\n              <ItemActions>\n                <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Invite\">\n                  <PlusIcon />\n                </Button>\n              </ItemActions>\n            </Item>\n          </div>\n        ))}\n      </ItemGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-with-image" />
 
 ### Inset
 
 The same list in an `inset` item group, forming a rounded list with inset separators.
 
-<Example kind="ui" name="item" story="Inset">
-
-<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\n\nconst people = [\n  {\n    name: \"Olivia Martin\",\n    email: \"olivia@example.com\",\n    avatar: \"https://i.pravatar.cc/96?img=12\",\n  },\n  {\n    name: \"Liam Chen\",\n    email: \"liam@example.com\",\n    avatar: \"https://github.com/vercel.png\",\n  },\n  {\n    name: \"Sofia Rossi\",\n    email: \"sofia@example.com\",\n    avatar: \"https://github.com/github.png\",\n  },\n]\n\nexport function ItemInsetExample() {\n  return (\n    <div className=\"w-96\">\n      <ItemGroup variant=\"inset\">\n        {people.map((person, index) => (\n          <div key={person.email} className=\"contents\">\n            {index > 0 && <ItemSeparator />}\n            <Item variant=\"default\" size=\"sm\" role=\"listitem\">\n              <ItemMedia variant=\"image\">\n                <img src={person.avatar} alt={person.name} />\n              </ItemMedia>\n              <ItemContent>\n                <ItemTitle>{person.name}</ItemTitle>\n                <ItemDescription>{person.email}</ItemDescription>\n              </ItemContent>\n              <ItemActions>\n                <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Invite\">\n                  <PlusIcon />\n                </Button>\n              </ItemActions>\n            </Item>\n          </div>\n        ))}\n      </ItemGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-inset" />
 
 ### With avatar
 
 An item with an `Avatar` as media and a Message button.
 
-<Example kind="ui" name="item" story="WithAvatar">
-
-<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemWithAvatarExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemMedia>\n          <Avatar size=\"lg\">\n            <AvatarImage\n              src=\"https://i.pravatar.cc/96?img=12\"\n              alt=\"Olivia Martin\"\n            />\n            <AvatarFallback>OM</AvatarFallback>\n          </Avatar>\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Olivia Martin</ItemTitle>\n          <ItemDescription>Last seen 5 minutes ago</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button size=\"sm\">Message</Button>\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-with-avatar" />
 
 ### With header and footer
 
 A plan summary with a price in the header and a renewal date and action in the footer.
 
-<Example kind="ui" name="item" story="WithHeaderAndFooter">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemWithHeaderAndFooterExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemHeader>\n          <ItemTitle>Pro plan</ItemTitle>\n          <span className=\"text-sm font-medium\">$24/mo</span>\n        </ItemHeader>\n        <ItemContent>\n          <ItemDescription>\n            Unlimited projects, priority support, and advanced analytics.\n          </ItemDescription>\n        </ItemContent>\n        <ItemFooter>\n          <span className=\"text-label-secondary text-xs\">Renews on May 1</span>\n          <Button variant=\"outline\" size=\"sm\">\n            Manage\n          </Button>\n        </ItemFooter>\n      </Item>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="item-with-header-and-footer" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Item","href":"#item","children":[{"name":"ItemMedia","href":"#itemmedia","children":[]},{"name":"ItemContent","href":"#itemcontent","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]},{"name":"ItemDescription","href":"#itemdescription","children":[]}]},{"name":"ItemActions","href":"#itemactions","children":[]},{"name":"ItemHeader","href":"#itemheader","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]}]},{"name":"ItemFooter","href":"#itemfooter","children":[]}]},{"name":"ItemGroup","href":"#itemgroup","children":[{"name":"ItemSeparator","href":"#itemseparator","children":[]},{"name":"Item","href":"#item","children":[{"name":"ItemMedia","href":"#itemmedia","children":[]},{"name":"ItemContent","href":"#itemcontent","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]},{"name":"ItemDescription","href":"#itemdescription","children":[]}]},{"name":"ItemActions","href":"#itemactions","children":[]}]}]}]} />
+<Anatomy>
+
+- [Item](#item)
+  - [ItemMedia](#itemmedia)
+  - [ItemContent](#itemcontent)
+    - [ItemTitle](#itemtitle)
+    - [ItemDescription](#itemdescription)
+  - [ItemActions](#itemactions)
+  - [ItemHeader](#itemheader)
+    - [ItemTitle](#itemtitle)
+  - [ItemFooter](#itemfooter)
+- [ItemGroup](#itemgroup)
+  - [ItemSeparator](#itemseparator)
+  - [Item](#item)
+    - [ItemMedia](#itemmedia)
+    - [ItemContent](#itemcontent)
+      - [ItemTitle](#itemtitle)
+      - [ItemDescription](#itemdescription)
+    - [ItemActions](#itemactions)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -128,7 +140,11 @@ A plan summary with a price in the header and a renewal date and action in the f
 
 Stacks items as a list, or groups them into an inset list.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -138,7 +154,7 @@ Stacks items as a list, or groups them into an inset list.
 
 A divider between items.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -148,7 +164,12 @@ A divider between items.
 
 The row container for media, content and actions.
 
-<PropsTable extends={["useRender.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"outline\" | \"muted\"","default":"\"default\"","description":"`default` has no border or background, `outline` adds a border, and `muted` adds a subtle background."},{"name":"size","type":"\"default\" | \"sm\" | \"xs\"","default":"\"default\"","description":"Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "muted"` | `"default"` | `default` has no border or background, `outline` adds a border, and `muted` adds a subtle background. |
+| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`. |
+
+Also accepts the props of `useRender.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -158,7 +179,11 @@ The row container for media, content and actions.
 
 Holds an icon, image or avatar at the start of the item.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"icon\" | \"image\"","default":"\"default\"","description":"`icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "icon" \| "image"` | `"default"` | `icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -168,7 +193,7 @@ Holds an icon, image or avatar at the start of the item.
 
 Stacks the title and description.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -178,7 +203,7 @@ Stacks the title and description.
 
 The item's title, limited to one line.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -188,7 +213,7 @@ The item's title, limited to one line.
 
 Supporting text, limited to two lines.
 
-<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+Also accepts the props of `React.ComponentProps<"p">`.
 
 </ApiPart>
 
@@ -198,7 +223,7 @@ Supporting text, limited to two lines.
 
 Holds buttons or indicators at the end of the item.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -208,7 +233,7 @@ Holds buttons or indicators at the end of the item.
 
 A full-width row above the item's content.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -218,7 +243,7 @@ A full-width row above the item's content.
 
 A full-width row below the item's content.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -240,15 +265,7 @@ A full-width row below the item's content.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-item--default" width={880} height={599} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CaretRightIcon, ShieldCheckIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemMedia, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ItemExample() {\n  return (\n    <View className=\"gap-4\">\n      <Item variant=\"outline\">\n        <ItemContent>\n          <ItemTitle>Basic item</ItemTitle>\n          <ItemDescription>\n            A simple item with a title and a description.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button variant=\"outline\" size=\"sm\">\n            <Text>Action</Text>\n          </Button>\n        </ItemActions>\n      </Item>\n      <Item variant=\"muted\" size=\"sm\" onPress={() => undefined}>\n        <ItemMedia variant=\"icon\">\n          <Icon as={ShieldCheckIcon} />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Your profile has been verified.</ItemTitle>\n        </ItemContent>\n        <ItemActions>\n          <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n        </ItemActions>\n      </Item>\n      <Item variant=\"outline\" size=\"xs\">\n        <ItemHeader>\n          <ItemTitle>Header</ItemTitle>\n          <Badge>\n            <Text>New</Text>\n          </Badge>\n        </ItemHeader>\n        <ItemContent>\n          <ItemDescription>\n            Items can carry a header and a footer.\n          </ItemDescription>\n        </ItemContent>\n        <ItemFooter>\n          <Text className=\"text-sm text-label-secondary\">Footer</Text>\n        </ItemFooter>\n      </Item>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ItemExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      Item(.outline) {\n        ItemContent {\n          ItemTitle(\"Basic item\")\n          ItemDescription(\"A simple item with a title and a description.\")\n        }\n        ItemActions {\n          Button(\"Action\") {}\n            .buttonStyle(.variant(.outline, size: .sm))\n        }\n      }\n      Item(.muted, size: .sm, action: {}) {\n        ItemMedia(.icon) {\n          Ph.shieldCheck.regular\n        }\n        ItemContent {\n          ItemTitle(\"Your profile has been verified.\")\n        }\n        ItemActions {\n          ItemChevron()\n        }\n      }\n      Item(.outline, size: .xs) {\n        ItemHeader {\n          ItemTitle(\"Header\")\n          Badge(\"New\")\n        }\n        ItemContent {\n          ItemDescription(\"Items can carry a header and a footer.\")\n        }\n        ItemFooter {\n          Text(\"Footer\")\n            .textStyle(.sm)\n            .foregroundStyle(Color.labelSecondary)\n        }\n      }\n    }\n  }\n}\n\nstruct ItemChevron: View {\n  var body: some View {\n    Ph.caretRight.regular\n      .frame(width: 16, height: 16)\n      .foregroundStyle(Color.labelSecondary)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CaretRight\nimport com.adamglin.phosphoricons.regular.ShieldCheck\nimport com.esuiss.ui.components.Badge\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemActions\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemFooter\nimport com.esuiss.ui.components.ItemHeader\nimport com.esuiss.ui.components.ItemMedia\nimport com.esuiss.ui.components.ItemMediaVariant\nimport com.esuiss.ui.components.ItemSize\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.components.ItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ItemCaret() {\n    Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = EsuissTheme.colors.labelSecondary)\n}\n\n@Composable\nfun ItemDefault() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Item(variant = ItemVariant.Outline, role = null) {\n            ItemContent {\n                ItemTitle(\"Basic item\")\n                ItemDescription(\"A simple item with a title and a description.\")\n            }\n            ItemActions {\n                Button(\"Action\", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm)\n            }\n        }\n        Item(variant = ItemVariant.Muted, size = ItemSize.Sm, onClick = {}) {\n            ItemMedia(variant = ItemMediaVariant.Icon) {\n                Icon(PhosphorIcons.Regular.ShieldCheck, contentDescription = null)\n            }\n            ItemContent {\n                ItemTitle(\"Your profile has been verified.\")\n            }\n            ItemActions { ItemCaret() }\n        }\n        Item(variant = ItemVariant.Outline, size = ItemSize.Xs, role = null) {\n            ItemHeader {\n                ItemTitle(\"Header\")\n                Badge(\"New\")\n            }\n            ItemContent {\n                ItemDescription(\"Items can carry a header and a footer.\")\n            }\n            ItemFooter {\n                Text(\"Footer\", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-item--default" />
 
 `Item` is a row that renders as a `Pressable` with the `button` role when it has `onPress` or `onLongPress`, and as a plain `View` with the `listitem` role otherwise. It has three variants (`default`, `outline`, `muted`) and three sizes (`default`, `sm`, `xs`).
 
@@ -258,19 +275,25 @@ A full-width row below the item's content.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add item"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add item
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add item --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add item --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add item --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add item --platform kotlin
+```
 
 </Only>
 
@@ -286,13 +309,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/item.tsx`:
 
-<SourceFile path="uniwind/components/ui/item.tsx" />
+<ComponentSource path="uniwind/components/ui/item.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -302,13 +327,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/item.tsx`:
 
-<SourceFile path="nativewind/components/ui/item.tsx" />
+<ComponentSource path="nativewind/components/ui/item.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -320,7 +347,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the source into `components/ui/item.tsx`:
 
-<SourceFile path="stylesheet/components/ui/item.tsx" />
+<ComponentSource path="stylesheet/components/ui/item.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -336,17 +363,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -356,27 +383,32 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Item.kt" />
+<ComponentSource path="kotlin/components/Item.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -384,9 +416,54 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from \"@/components/ui/item\""} />
+```tsx
+import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "@/components/ui/item"
+```
 
-<Code lang="tsx" code={"<View className=\"gap-4\">\n  <Item variant=\"outline\">\n    <ItemContent>\n      <ItemTitle>Basic item</ItemTitle>\n      <ItemDescription>\n        A simple item with a title and a description.\n      </ItemDescription>\n    </ItemContent>\n    <ItemActions>\n      <Button variant=\"outline\" size=\"sm\">\n        <Text>Action</Text>\n      </Button>\n    </ItemActions>\n  </Item>\n  <Item variant=\"muted\" size=\"sm\" onPress={() => undefined}>\n    <ItemMedia variant=\"icon\">\n      <Icon as={ShieldCheckIcon} />\n    </ItemMedia>\n    <ItemContent>\n      <ItemTitle>Your profile has been verified.</ItemTitle>\n    </ItemContent>\n    <ItemActions>\n      <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n    </ItemActions>\n  </Item>\n  <Item variant=\"outline\" size=\"xs\">\n    <ItemHeader>\n      <ItemTitle>Header</ItemTitle>\n      <Badge>\n        <Text>New</Text>\n      </Badge>\n    </ItemHeader>\n    <ItemContent>\n      <ItemDescription>\n        Items can carry a header and a footer.\n      </ItemDescription>\n    </ItemContent>\n    <ItemFooter>\n      <Text className=\"text-sm text-label-secondary\">Footer</Text>\n    </ItemFooter>\n  </Item>\n</View>"} />
+```tsx
+<View className="gap-4">
+  <Item variant="outline">
+    <ItemContent>
+      <ItemTitle>Basic item</ItemTitle>
+      <ItemDescription>
+        A simple item with a title and a description.
+      </ItemDescription>
+    </ItemContent>
+    <ItemActions>
+      <Button variant="outline" size="sm">
+        <Text>Action</Text>
+      </Button>
+    </ItemActions>
+  </Item>
+  <Item variant="muted" size="sm" onPress={() => undefined}>
+    <ItemMedia variant="icon">
+      <Icon as={ShieldCheckIcon} />
+    </ItemMedia>
+    <ItemContent>
+      <ItemTitle>Your profile has been verified.</ItemTitle>
+    </ItemContent>
+    <ItemActions>
+      <Icon as={CaretRightIcon} className="size-4 text-label-secondary" />
+    </ItemActions>
+  </Item>
+  <Item variant="outline" size="xs">
+    <ItemHeader>
+      <ItemTitle>Header</ItemTitle>
+      <Badge>
+        <Text>New</Text>
+      </Badge>
+    </ItemHeader>
+    <ItemContent>
+      <ItemDescription>
+        Items can carry a header and a footer.
+      </ItemDescription>
+    </ItemContent>
+    <ItemFooter>
+      <Text className="text-sm text-label-secondary">Footer</Text>
+    </ItemFooter>
+  </Item>
+</View>
+```
 
 Compose a row from `ItemMedia`, `ItemContent` (holding `ItemTitle` and `ItemDescription`) and `ItemActions`. Use `ItemHeader` and `ItemFooter` for full-width rows above or below the main content.
 
@@ -400,15 +477,7 @@ Pass `render` to render the row as another component while keeping the item styl
 
 Pressable rows in an inset group, with colored icon tiles, separators and trailing chevrons.
 
-<NativeExample id="components-item--inset-group" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { BellIcon, CaretRightIcon, WifiHighIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ItemInsetGroupExample() {\n  return (\n    <ItemGroup variant=\"inset\">\n      <Item onPress={() => undefined}>\n        <ItemMedia\n          variant=\"image\"\n          className=\"bg-blue items-center justify-center\"\n        >\n          <Icon as={WifiHighIcon} className=\"size-5 text-on-accent\" />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Wi-Fi</ItemTitle>\n        </ItemContent>\n        <ItemActions>\n          <Text>Home</Text>\n          <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n        </ItemActions>\n      </Item>\n      <ItemSeparator />\n      <Item onPress={() => undefined}>\n        <ItemMedia\n          variant=\"image\"\n          className=\"bg-red items-center justify-center\"\n        >\n          <Icon as={BellIcon} className=\"size-5 text-on-accent\" />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Notifications</ItemTitle>\n          <ItemDescription>Banners, sounds, badges</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Icon as={CaretRightIcon} className=\"size-4 text-label-secondary\" />\n        </ItemActions>\n      </Item>\n    </ItemGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ItemInsetGroupExample: View {\n  var body: some View {\n    ItemGroup(.inset) {\n      Item(action: {}) {\n        ItemMedia(.image) {\n          ItemTile(icon: Ph.wifiHigh.regular, color: .accent)\n        }\n        ItemContent {\n          ItemTitle(\"Wi-Fi\")\n        }\n        ItemActions {\n          Text(\"Home\")\n          ItemChevron()\n        }\n      }\n      ItemSeparator()\n      Item(action: {}) {\n        ItemMedia(.image) {\n          ItemTile(icon: Ph.bell.regular, color: .danger)\n        }\n        ItemContent {\n          ItemTitle(\"Notifications\")\n          ItemDescription(\"Banners, sounds, badges\")\n        }\n        ItemActions {\n          ItemChevron()\n        }\n      }\n    }\n  }\n}\n\nstruct ItemChevron: View {\n  var body: some View {\n    Ph.caretRight.regular\n      .frame(width: 16, height: 16)\n      .foregroundStyle(Color.labelSecondary)\n  }\n}\n\nstruct ItemTile: View {\n  let icon: Image\n  let color: Color\n\n  var body: some View {\n    ZStack {\n      color\n      icon\n        .frame(width: 20, height: 20)\n        .foregroundStyle(Color.onAccent)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Bell\nimport com.adamglin.phosphoricons.regular.CaretRight\nimport com.adamglin.phosphoricons.regular.WifiHigh\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemActions\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemGroup\nimport com.esuiss.ui.components.ItemGroupVariant\nimport com.esuiss.ui.components.ItemMedia\nimport com.esuiss.ui.components.ItemMediaVariant\nimport com.esuiss.ui.components.ItemSeparator\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun ItemCaret() {\n    Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = EsuissTheme.colors.labelSecondary)\n}\n\n@Composable\nfun ItemSettingsMedia(icon: ImageVector, background: Color) {\n    ItemMedia(variant = ItemMediaVariant.Image) {\n        Box(Modifier.matchParentSize().background(background))\n        Icon(icon, contentDescription = null, size = 20.dp, tint = EsuissTheme.colors.onAccent)\n    }\n}\n\n@Composable\nfun ItemInsetGroup() {\n    val colors = EsuissTheme.colors\n    ItemGroup(variant = ItemGroupVariant.Inset) {\n        Item(onClick = {}) {\n            ItemSettingsMedia(PhosphorIcons.Regular.WifiHigh, colors.blue)\n            ItemContent {\n                ItemTitle(\"Wi-Fi\")\n            }\n            ItemActions {\n                Text(\"Home\")\n                ItemCaret()\n            }\n        }\n        ItemSeparator()\n        Item(onClick = {}) {\n            ItemSettingsMedia(PhosphorIcons.Regular.Bell, colors.red)\n            ItemContent {\n                ItemTitle(\"Notifications\")\n                ItemDescription(\"Banners, sounds, badges\")\n            }\n            ItemActions { ItemCaret() }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-item--inset-group" />
 
 ## API Reference
 
@@ -418,7 +487,11 @@ Pressable rows in an inset group, with colored icon tiles, separators and traili
 
 List container for items.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`default` stacks items with a gap; `inset` joins them into one rounded card."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "inset"` | `"default"` | `default` stacks items with a gap; `inset` joins them into one rounded card. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -428,7 +501,7 @@ List container for items.
 
 Divider between items, inset inside an inset group.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -438,7 +511,7 @@ Divider between items, inset inside an inset group.
 
 The row itself, pressable when given a press handler.
 
-<PropsTable extends={["ItemProps"]} />
+Also accepts the props of `ItemProps`.
 
 </ApiPart>
 
@@ -448,7 +521,11 @@ The row itself, pressable when given a press handler.
 
 Leading icon, image or avatar.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"icon\" | \"image\"","default":"\"default\"","description":"`default`, `icon` for 16-point icons, or `image` for a square thumbnail."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "icon" \| "image"` | `"default"` | `default`, `icon` for 16-point icons, or `image` for a square thumbnail. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -458,7 +535,7 @@ Leading icon, image or avatar.
 
 Flexible column for the title and description.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -468,7 +545,7 @@ Flexible column for the title and description.
 
 Single-line title.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -478,7 +555,7 @@ Single-line title.
 
 Secondary text, up to two lines.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -488,7 +565,7 @@ Secondary text, up to two lines.
 
 Trailing row for values, buttons or chevrons.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -498,7 +575,7 @@ Trailing row for values, buttons or chevrons.
 
 Full-width row above the content.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -508,7 +585,7 @@ Full-width row above the content.
 
 Full-width row below the content.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

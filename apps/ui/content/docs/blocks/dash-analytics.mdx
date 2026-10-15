@@ -3,16 +3,11 @@ title: Dash Analytics
 description: "An app analytics dashboard with a metric switcher, an interactive area chart, and a regional breakdown."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="dash-analytics">
-
-<SourceFile path="components/blocks/dash-analytics.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="dash-analytics" />
 
 An analytics dashboard for apps: pick a metric, read its current value and growth, and hover the 12-week area chart to see any week's figure in the headline. A By region list below breaks the metric down by share. The app list sits in a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Start here for product analytics, traffic or revenue reports.
 
@@ -20,27 +15,35 @@ An analytics dashboard for apps: pick a metric, read its current value and growt
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks dash-analytics"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks dash-analytics
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react recharts"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react recharts
+```
 
 2. Add the pieces it builds on: [Chart](/docs/components/chart), [Item](/docs/components/item), [Sidebar](/docs/components/sidebar), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-analytics.tsx`:
 
-<SourceFile path="components/blocks/dash-analytics.tsx" />
+<ComponentSource path="components/blocks/dash-analytics.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { DashAnalytics } from \"@/components/blocks/dash-analytics\""} />
+```tsx
+import { DashAnalytics } from "@/components/blocks/dash-analytics"
+```
 
-<Code lang="tsx" code={"<DashAnalytics />"} />
+```tsx
+<DashAnalytics />
+```
 
 Replace `metrics` with your series; each metric has a label, unit, current value and 12 weekly data points. `regions` holds each region's share, and `apps` and `items` fill the navigation. The sample fakes per-app numbers by scaling the first app's data and computes growth on the fly, so load real figures per app from your analytics source.
 
@@ -52,13 +55,13 @@ The headline value is announced as you move through the chart, and the chart sup
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-dash-analytics--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-dash-analytics--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/dash-analytics.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/dash-analytics.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/DashAnalytics.swift" fold={false} />
+<ComponentSource path="swift/Blocks/DashAnalytics.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/DashAnalytics.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/DashAnalytics.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Composes `Screen`, `Header`, `DropdownMenu` for picking the app, `ToggleGroup`, 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dash-analytics"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add dash-analytics
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dash-analytics --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add dash-analytics --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dash-analytics --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add dash-analytics --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-analytics.tsx`:
 
-<SourceFile path="uniwind/components/blocks/dash-analytics.tsx" />
+<ComponentSource path="uniwind/components/blocks/dash-analytics.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-analytics.tsx`:
 
-<SourceFile path="nativewind/components/blocks/dash-analytics.tsx" />
+<ComponentSource path="nativewind/components/blocks/dash-analytics.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-analytics.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/dash-analytics.tsx" />
+<ComponentSource path="stylesheet/components/blocks/dash-analytics.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,55 +165,57 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/DashAnalytics.swift" />
+<ComponentSource path="swift/Blocks/DashAnalytics.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Empty.swift" />
+<ComponentSource path="swift/Components/Empty.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Header.swift" />
+<ComponentSource path="swift/Components/Header.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TabBar.swift" />
+<ComponentSource path="swift/Components/TabBar.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Components/Toggle.swift" />
+<ComponentSource path="swift/Components/Toggle.swift" />
 
-<SourceFile path="swift/Components/ToggleGroup.swift" />
+<ComponentSource path="swift/Components/ToggleGroup.swift" />
 
 5. Add the files to your app target.
 
@@ -208,57 +225,62 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/DashAnalytics.kt" />
+<ComponentSource path="kotlin/blocks/DashAnalytics.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/DropdownMenu.kt" />
+<ComponentSource path="kotlin/components/DropdownMenu.kt" />
 
-<SourceFile path="kotlin/components/Empty.kt" />
+<ComponentSource path="kotlin/components/Empty.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Item.kt" />
+<ComponentSource path="kotlin/components/Item.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/TabBar.kt" />
+<ComponentSource path="kotlin/components/TabBar.kt" />
 
-<SourceFile path="kotlin/components/Toggle.kt" />
+<ComponentSource path="kotlin/components/Toggle.kt" />
 
-<SourceFile path="kotlin/components/ToggleGroup.kt" />
+<ComponentSource path="kotlin/components/ToggleGroup.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -266,9 +288,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](
 
 ## Usage
 
-<Code lang="tsx" code={"import { DashAnalytics } from \"@/components/blocks/dash-analytics\""} />
+```tsx
+import { DashAnalytics } from "@/components/blocks/dash-analytics"
+```
 
-<Code lang="tsx" code={"<DashAnalytics />"} />
+```tsx
+<DashAnalytics />
+```
 
 Replace `apps`, `metrics` and `regions` with your analytics data. Pass `onAppChange`, `onMetricChange` and `onNavigate` to sync the selections with your app.
 

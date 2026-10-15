@@ -3,16 +3,11 @@ title: Radio Group
 description: "A set of radio buttons where only one option can be selected at a time."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="radio-group" story="Default">
-
-<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\">\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem value={option.value} />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="radio-group-demo" />
 
 Radio Group wraps Base UI's Radio Group and Radio. `RadioGroup` holds the selected value and contains one `RadioGroupItem` per option. Each item renders a round control with an indicator dot when checked; pair it with a `Label` to give it visible text.
 
@@ -22,25 +17,42 @@ Use a radio group for a small set of mutually exclusive options that should all 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radio-group"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radio-group
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react cn
+```
 
 2. Copy the source into `components/ui/radio-group.tsx`:
 
-<SourceFile path="components/ui/radio-group.tsx" />
+<ComponentSource path="components/ui/radio-group.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\""} />
+```tsx
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+```
 
-<Code lang="tsx" code={"<div className=\"w-64\">\n  <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\">\n    {options.map((option) => (\n      <Label key={option.value}>\n        <RadioGroupItem value={option.value} />\n        {option.label}\n      </Label>\n    ))}\n  </RadioGroup>\n</div>"} />
+```tsx
+<div className="w-64">
+  <RadioGroup aria-label="Notification method" defaultValue="email">
+    {options.map((option) => (
+      <Label key={option.value}>
+        <RadioGroupItem value={option.value} />
+        {option.label}
+      </Label>
+    ))}
+  </RadioGroup>
+</div>
+```
 
 Give each `RadioGroupItem` a unique `value`. The group is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Set `disabled` on the group to disable every item, or on a single item.
 
@@ -52,45 +64,34 @@ Wrap each item and its text in a `Label` so clicking the text selects the option
 
 Options with a title and a secondary description, linked with `aria-labelledby` and `aria-describedby`.
 
-<Example kind="ui" name="radio-group" story="WithDescriptions">
-
-<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function RadioGroupWithDescriptionsExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Shipping speed\" defaultValue=\"standard\">\n        {[\n          {\n            value: \"standard\",\n            label: \"Standard\",\n            description: \"Arrives in 4 to 6 business days.\",\n          },\n          {\n            value: \"express\",\n            label: \"Express\",\n            description: \"Arrives in 1 to 2 business days.\",\n          },\n        ].map((option) => (\n          <Label key={option.value} className=\"items-start\">\n            <RadioGroupItem\n              value={option.value}\n              aria-labelledby={`${option.value}-label`}\n              aria-describedby={`${option.value}-description`}\n            />\n            <span className=\"flex flex-col gap-1\">\n              <span id={`${option.value}-label`}>{option.label}</span>\n              <span\n                id={`${option.value}-description`}\n                className=\"text-label-secondary font-normal\"\n              >\n                {option.description}\n              </span>\n            </span>\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="radio-group-with-descriptions" />
 
 ### Disabled item
 
 A group where one option is disabled and skipped by arrow-key navigation.
 
-<Example kind="ui" name="radio-group" story="DisabledItem">
-
-<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupDisabledItemExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\">\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem\n              value={option.value}\n              disabled={option.value === \"push\"}\n            />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="radio-group-disabled-item" />
 
 ### Disabled
 
 A fully disabled group that ignores clicks.
 
-<Example kind="ui" name="radio-group" story="Disabled">
-
-<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupDisabledExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\" disabled>\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem value={option.value} />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="radio-group-disabled" />
 
 ### Invalid
 
 Items marked with `aria-invalid` and shown with a danger border.
 
-<Example kind="ui" name="radio-group" story="Invalid">
-
-<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupInvalidExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue={undefined}>\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem value={option.value} aria-invalid />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="radio-group-invalid" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"RadioGroup","href":"#radiogroup","children":[{"name":"RadioGroupItem","href":"#radiogroupitem","children":[]}]}]} />
+<Anatomy>
+
+- [RadioGroup](#radiogroup)
+  - [RadioGroupItem](#radiogroupitem)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -98,7 +99,7 @@ Items marked with `aria-invalid` and shown with a danger border.
 
 The container that manages the selected value and keyboard navigation.
 
-<PropsTable extends={["RadioGroupPrimitive.Props"]} />
+Also accepts the props of `RadioGroupPrimitive.Props`.
 
 </ApiPart>
 
@@ -108,7 +109,7 @@ The container that manages the selected value and keyboard navigation.
 
 A single radio button with a checked indicator.
 
-<PropsTable extends={["RadioPrimitive.Root.Props"]} />
+Also accepts the props of `RadioPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -130,15 +131,7 @@ A single radio button with a checked indicator.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-radio-group--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nfunction RadioGroupDemo({\n  disabled = false,\n  disabledItem,\n}: {\n  disabled?: boolean\n  disabledItem?: string\n}) {\n  const [value, setValue] = React.useState(\"comfortable\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>\n      {options.map((option) => {\n        const isDisabled = disabled || option.value === disabledItem\n        return (\n          <View key={option.value} className=\"flex-row items-center gap-3\">\n            <RadioGroupItem\n              value={option.value}\n              accessibilityLabelledBy={`radio-${option.value}`}\n              disabled={isDisabled}\n            />\n            <Label\n              nativeID={`radio-${option.value}`}\n              disabled={isDisabled}\n              onPress={() => setValue(option.value)}\n            >\n              {option.label}\n            </Label>\n          </View>\n        )\n      })}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupExample() {\n  return (\n    <RadioGroupDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct RadioGroupOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet radioGroupOptions = [\n  RadioGroupOption(value: \"default\", label: \"Default\"),\n  RadioGroupOption(value: \"comfortable\", label: \"Comfortable\"),\n  RadioGroupOption(value: \"compact\", label: \"Compact\"),\n]\n\nstruct RadioGroupDemo: View {\n  var disabled = false\n  var disabledItem: String?\n\n  @State private var value = \"comfortable\"\n\n  var body: some View {\n    RadioGroup(selection: $value) {\n      ForEach(radioGroupOptions, id: \\.value) { option in\n        RadioGroupItem(option.label, value: option.value)\n          .disabled(disabled || option.value == disabledItem)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.RadioGroup\nimport com.esuiss.ui.components.RadioGroupItem\n\nclass RadioGroupOption(val value: String, val label: String, val description: String = \"\")\n\nval radioGroupOptions = listOf(\n    RadioGroupOption(\"default\", \"Default\"),\n    RadioGroupOption(\"comfortable\", \"Comfortable\"),\n    RadioGroupOption(\"compact\", \"Compact\"),\n)\n\n@Composable\nfun Modifier.radioGroupTap(enabled: Boolean, onTap: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    enabled = enabled,\n    onClick = onTap,\n)\n\n@Composable\nfun RadioGroupDemo(disabled: Boolean = false, disabledItem: String? = null) {\n    var value by rememberSaveable { mutableStateOf(\"comfortable\") }\n    RadioGroup(value = value, onValueChange = { value = it }, enabled = !disabled) {\n        radioGroupOptions.forEach { option ->\n            val isDisabled = disabled || option.value == disabledItem\n            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n                RadioGroupItem(\n                    option.value,\n                    Modifier.semantics { contentDescription = option.label },\n                    enabled = !isDisabled,\n                )\n                Label(option.label, Modifier.radioGroupTap(!isDisabled) { value = option.value }, enabled = !isDisabled)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-radio-group--default" />
 
 `RadioGroup` is a `View` with the `radiogroup` role that holds the selected value. Each `RadioGroupItem` is a small round `Pressable` with the `radio` role; when checked it fills with the accent color and shows a dot. Items have an enlarged hit area so they are easy to press.
 
@@ -146,19 +139,25 @@ A single radio button with a checked indicator.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radio-group"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radio-group
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radio-group --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radio-group --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radio-group --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radio-group --platform kotlin
+```
 
 </Only>
 
@@ -172,13 +171,15 @@ A single radio button with a checked indicator.
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/radio.tsx`, `components/primitives/radio-group.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/radio-group.tsx`:
 
-<SourceFile path="uniwind/components/ui/radio-group.tsx" />
+<ComponentSource path="uniwind/components/ui/radio-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -188,13 +189,15 @@ A single radio button with a checked indicator.
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/radio.tsx`, `components/primitives/radio-group.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/radio-group.tsx`:
 
-<SourceFile path="nativewind/components/ui/radio-group.tsx" />
+<ComponentSource path="nativewind/components/ui/radio-group.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -206,7 +209,7 @@ A single radio button with a checked indicator.
 
 2. Copy the source into `components/ui/radio-group.tsx`:
 
-<SourceFile path="stylesheet/components/ui/radio-group.tsx" />
+<ComponentSource path="stylesheet/components/ui/radio-group.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -222,39 +225,41 @@ A single radio button with a checked indicator.
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/RadioGroup.swift" />
+<ComponentSource path="swift/Components/RadioGroup.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Label.swift" />
+<ComponentSource path="swift/Components/Label.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -264,33 +269,38 @@ A single radio button with a checked indicator.
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/RadioGroup.kt" />
+<ComponentSource path="kotlin/components/RadioGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -298,9 +308,13 @@ A single radio button with a checked indicator.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\""} />
+```tsx
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+```
 
-<Code lang="tsx" code={"<RadioGroupDemo />"} />
+```tsx
+<RadioGroupDemo />
+```
 
 Give every `RadioGroupItem` a unique `value`. Control the group with `value` and `onValueChange(value, details)`, or leave it uncontrolled with `defaultValue`. Values are generic, so they can be strings or other types.
 
@@ -312,57 +326,25 @@ Put a `Label` next to each item and link it through `nativeID` and `accessibilit
 
 Options with a label and a line of description each.
 
-<NativeExample id="components-radio-group--with-descriptions" width={880} height={416} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\nimport { Text } from \"@/components/ui/text\"\n\nconst plans = [\n  {\n    value: \"starter\",\n    label: \"Starter\",\n    description: \"For individuals getting started.\",\n  },\n  {\n    value: \"pro\",\n    label: \"Pro\",\n    description: \"For growing teams that need more.\",\n  },\n  {\n    value: \"enterprise\",\n    label: \"Enterprise\",\n    description: \"For large organizations with custom needs.\",\n  },\n]\n\nfunction WithDescriptionsDemo() {\n  const [value, setValue] = React.useState(\"pro\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} className=\"gap-4\">\n      {plans.map((plan) => (\n        <View key={plan.value} className=\"flex-row items-start gap-3\">\n          <RadioGroupItem\n            value={plan.value}\n            accessibilityLabelledBy={`plan-${plan.value}`}\n          />\n          <View className=\"flex-1 gap-1\">\n            <Label\n              nativeID={`plan-${plan.value}`}\n              onPress={() => setValue(plan.value)}\n            >\n              {plan.label}\n            </Label>\n            <Text className=\"text-sm text-label-secondary\">\n              {plan.description}\n            </Text>\n          </View>\n        </View>\n      ))}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupWithDescriptionsExample() {\n  return (\n    <WithDescriptionsDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct RadioGroupPlan {\n  let value: String\n  let label: LocalizedStringKey\n  let description: LocalizedStringKey\n}\n\nlet radioGroupPlans = [\n  RadioGroupPlan(value: \"starter\", label: \"Starter\", description: \"For individuals getting started.\"),\n  RadioGroupPlan(value: \"pro\", label: \"Pro\", description: \"For growing teams that need more.\"),\n  RadioGroupPlan(value: \"enterprise\", label: \"Enterprise\", description: \"For large organizations with custom needs.\"),\n]\n\nstruct RadioGroupDescriptionsDemo: View {\n  @State private var value = \"pro\"\n\n  var body: some View {\n    RadioGroup(selection: $value) {\n      ForEach(radioGroupPlans, id: \\.value) { plan in\n        RadioGroupItem(value: plan.value) {\n          VStack(alignment: .leading, spacing: 4) {\n            FieldLabel(plan.label)\n            Text(plan.description)\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n          }\n          .frame(maxWidth: .infinity, alignment: .leading)\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.RadioGroup\nimport com.esuiss.ui.components.RadioGroupItem\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nclass RadioGroupOption(val value: String, val label: String, val description: String = \"\")\n\nval radioGroupPlans = listOf(\n    RadioGroupOption(\"starter\", \"Starter\", \"For individuals getting started.\"),\n    RadioGroupOption(\"pro\", \"Pro\", \"For growing teams that need more.\"),\n    RadioGroupOption(\"enterprise\", \"Enterprise\", \"For large organizations with custom needs.\"),\n)\n\n@Composable\nfun Modifier.radioGroupTap(enabled: Boolean, onTap: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    enabled = enabled,\n    onClick = onTap,\n)\n\n@Composable\nfun RadioGroupWithDescriptions() {\n    var value by rememberSaveable { mutableStateOf(\"pro\") }\n    val colors = EsuissTheme.colors\n    RadioGroup(value = value, onValueChange = { value = it }) {\n        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n            radioGroupPlans.forEach { plan ->\n                Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {\n                    RadioGroupItem(plan.value, Modifier.semantics { contentDescription = plan.label })\n                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {\n                        Label(plan.label, Modifier.radioGroupTap(true) { value = plan.value })\n                        Text(plan.description, style = Typography.sm, color = colors.labelSecondary)\n                    }\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-radio-group--with-descriptions" />
 
 ### Disabled item
 
 A group with one disabled option.
 
-<NativeExample id="components-radio-group--disabled-item" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nfunction RadioGroupDemo({\n  disabled = false,\n  disabledItem,\n}: {\n  disabled?: boolean\n  disabledItem?: string\n}) {\n  const [value, setValue] = React.useState(\"comfortable\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>\n      {options.map((option) => {\n        const isDisabled = disabled || option.value === disabledItem\n        return (\n          <View key={option.value} className=\"flex-row items-center gap-3\">\n            <RadioGroupItem\n              value={option.value}\n              accessibilityLabelledBy={`radio-${option.value}`}\n              disabled={isDisabled}\n            />\n            <Label\n              nativeID={`radio-${option.value}`}\n              disabled={isDisabled}\n              onPress={() => setValue(option.value)}\n            >\n              {option.label}\n            </Label>\n          </View>\n        )\n      })}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupDisabledItemExample() {\n  return (\n    <RadioGroupDemo disabledItem=\"compact\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct RadioGroupDisabledItemExample: View {\n  var body: some View {\n    RadioGroupDemo(disabledItem: \"compact\")\n  }\n}\n\nstruct RadioGroupOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet radioGroupOptions = [\n  RadioGroupOption(value: \"default\", label: \"Default\"),\n  RadioGroupOption(value: \"comfortable\", label: \"Comfortable\"),\n  RadioGroupOption(value: \"compact\", label: \"Compact\"),\n]\n\nstruct RadioGroupDemo: View {\n  var disabled = false\n  var disabledItem: String?\n\n  @State private var value = \"comfortable\"\n\n  var body: some View {\n    RadioGroup(selection: $value) {\n      ForEach(radioGroupOptions, id: \\.value) { option in\n        RadioGroupItem(option.label, value: option.value)\n          .disabled(disabled || option.value == disabledItem)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.RadioGroup\nimport com.esuiss.ui.components.RadioGroupItem\n\n@Composable\nfun RadioGroupDisabledItemExample() {\n    RadioGroupDemo(disabledItem = \"compact\")\n}\n\nclass RadioGroupOption(val value: String, val label: String, val description: String = \"\")\n\nval radioGroupOptions = listOf(\n    RadioGroupOption(\"default\", \"Default\"),\n    RadioGroupOption(\"comfortable\", \"Comfortable\"),\n    RadioGroupOption(\"compact\", \"Compact\"),\n)\n\n@Composable\nfun Modifier.radioGroupTap(enabled: Boolean, onTap: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    enabled = enabled,\n    onClick = onTap,\n)\n\n@Composable\nfun RadioGroupDemo(disabled: Boolean = false, disabledItem: String? = null) {\n    var value by rememberSaveable { mutableStateOf(\"comfortable\") }\n    RadioGroup(value = value, onValueChange = { value = it }, enabled = !disabled) {\n        radioGroupOptions.forEach { option ->\n            val isDisabled = disabled || option.value == disabledItem\n            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n                RadioGroupItem(\n                    option.value,\n                    Modifier.semantics { contentDescription = option.label },\n                    enabled = !isDisabled,\n                )\n                Label(option.label, Modifier.radioGroupTap(!isDisabled) { value = option.value }, enabled = !isDisabled)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-radio-group--disabled-item" />
 
 ### Disabled
 
 A fully disabled group.
 
-<NativeExample id="components-radio-group--disabled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nfunction RadioGroupDemo({\n  disabled = false,\n  disabledItem,\n}: {\n  disabled?: boolean\n  disabledItem?: string\n}) {\n  const [value, setValue] = React.useState(\"comfortable\")\n  return (\n    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>\n      {options.map((option) => {\n        const isDisabled = disabled || option.value === disabledItem\n        return (\n          <View key={option.value} className=\"flex-row items-center gap-3\">\n            <RadioGroupItem\n              value={option.value}\n              accessibilityLabelledBy={`radio-${option.value}`}\n              disabled={isDisabled}\n            />\n            <Label\n              nativeID={`radio-${option.value}`}\n              disabled={isDisabled}\n              onPress={() => setValue(option.value)}\n            >\n              {option.label}\n            </Label>\n          </View>\n        )\n      })}\n    </RadioGroup>\n  )\n}\n\nexport function RadioGroupDisabledExample() {\n  return (\n    <RadioGroupDemo disabled />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct RadioGroupDisabledExample: View {\n  var body: some View {\n    RadioGroupDemo(disabled: true)\n  }\n}\n\nstruct RadioGroupOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet radioGroupOptions = [\n  RadioGroupOption(value: \"default\", label: \"Default\"),\n  RadioGroupOption(value: \"comfortable\", label: \"Comfortable\"),\n  RadioGroupOption(value: \"compact\", label: \"Compact\"),\n]\n\nstruct RadioGroupDemo: View {\n  var disabled = false\n  var disabledItem: String?\n\n  @State private var value = \"comfortable\"\n\n  var body: some View {\n    RadioGroup(selection: $value) {\n      ForEach(radioGroupOptions, id: \\.value) { option in\n        RadioGroupItem(option.label, value: option.value)\n          .disabled(disabled || option.value == disabledItem)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.RadioGroup\nimport com.esuiss.ui.components.RadioGroupItem\n\n@Composable\nfun RadioGroupDisabledExample() {\n    RadioGroupDemo(disabled = true)\n}\n\nclass RadioGroupOption(val value: String, val label: String, val description: String = \"\")\n\nval radioGroupOptions = listOf(\n    RadioGroupOption(\"default\", \"Default\"),\n    RadioGroupOption(\"comfortable\", \"Comfortable\"),\n    RadioGroupOption(\"compact\", \"Compact\"),\n)\n\n@Composable\nfun Modifier.radioGroupTap(enabled: Boolean, onTap: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    enabled = enabled,\n    onClick = onTap,\n)\n\n@Composable\nfun RadioGroupDemo(disabled: Boolean = false, disabledItem: String? = null) {\n    var value by rememberSaveable { mutableStateOf(\"comfortable\") }\n    RadioGroup(value = value, onValueChange = { value = it }, enabled = !disabled) {\n        radioGroupOptions.forEach { option ->\n            val isDisabled = disabled || option.value == disabledItem\n            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n                RadioGroupItem(\n                    option.value,\n                    Modifier.semantics { contentDescription = option.label },\n                    enabled = !isDisabled,\n                )\n                Label(option.label, Modifier.radioGroupTap(!isDisabled) { value = option.value }, enabled = !isDisabled)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-radio-group--disabled" />
 
 ### Invalid
 
 Items with the `invalid` border.
 
-<NativeExample id="components-radio-group--invalid" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"default\", label: \"Default\" },\n  { value: \"comfortable\", label: \"Comfortable\" },\n  { value: \"compact\", label: \"Compact\" },\n]\n\nexport function RadioGroupInvalidExample() {\n  return (\n    <RadioGroup className=\"gap-3\">\n      {options.map((option) => (\n        <View key={option.value} className=\"flex-row items-center gap-3\">\n          <RadioGroupItem\n            invalid\n            value={option.value}\n            accessibilityLabelledBy={`radio-invalid-${option.value}`}\n          />\n          <Label nativeID={`radio-invalid-${option.value}`}>\n            {option.label}\n          </Label>\n        </View>\n      ))}\n    </RadioGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct RadioGroupInvalidExample: View {\n  var body: some View {\n    RadioGroup(selection: .constant(String?.none)) {\n      ForEach(radioGroupOptions, id: \\.value) { option in\n        RadioGroupItem(option.label, value: option.value)\n      }\n    }\n    .invalid()\n  }\n}\n\nstruct RadioGroupOption {\n  let value: String\n  let label: LocalizedStringKey\n}\n\nlet radioGroupOptions = [\n  RadioGroupOption(value: \"default\", label: \"Default\"),\n  RadioGroupOption(value: \"comfortable\", label: \"Comfortable\"),\n  RadioGroupOption(value: \"compact\", label: \"Compact\"),\n]"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.clickable\nimport androidx.compose.foundation.interaction.MutableInteractionSource\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Label\nimport com.esuiss.ui.components.RadioGroup\nimport com.esuiss.ui.components.RadioGroupItem\n\nclass RadioGroupOption(val value: String, val label: String, val description: String = \"\")\n\nval radioGroupOptions = listOf(\n    RadioGroupOption(\"default\", \"Default\"),\n    RadioGroupOption(\"comfortable\", \"Comfortable\"),\n    RadioGroupOption(\"compact\", \"Compact\"),\n)\n\n@Composable\nfun Modifier.radioGroupTap(enabled: Boolean, onTap: () -> Unit): Modifier = clickable(\n    interactionSource = remember { MutableInteractionSource() },\n    indication = null,\n    enabled = enabled,\n    onClick = onTap,\n)\n\n@Composable\nfun RadioGroupInvalid() {\n    var value by rememberSaveable { mutableStateOf<String?>(null) }\n    RadioGroup(value = value, onValueChange = { value = it }) {\n        radioGroupOptions.forEach { option ->\n            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {\n                RadioGroupItem(option.value, Modifier.semantics { contentDescription = option.label }, invalid = true)\n                Label(option.label)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-radio-group--invalid" />
 
 ## API Reference
 
@@ -372,7 +354,7 @@ Items with the `invalid` border.
 
 The container that holds the selected value.
 
-<PropsTable extends={["RadioGroupProps<Value>"]} />
+Also accepts the props of `RadioGroupProps<Value>`.
 
 </ApiPart>
 
@@ -382,7 +364,11 @@ The container that holds the selected value.
 
 A single radio button with its checked indicator.
 
-<PropsTable extends={["RadioPrimitive.RootProps<Value>"]} props={[{"name":"invalid","type":"boolean","description":"Shows a danger border while unchecked."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `invalid` | `boolean` | - | Shows a danger border while unchecked. |
+
+Also accepts the props of `RadioPrimitive.RootProps<Value>`.
 
 </ApiPart>
 

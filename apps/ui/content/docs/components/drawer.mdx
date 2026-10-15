@@ -3,16 +3,11 @@ title: Drawer
 description: "A panel that slides in from an edge of the screen and can be dismissed with a swipe."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="drawer" story="Default">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerExample() {\n  return (\n    <Drawer swipeDirection=\"down\" showSwipeHandle modal>\n      <DrawerTrigger render={<Button variant=\"outline\" />}>\n        Open drawer\n      </DrawerTrigger>\n      <DrawerContent>\n        <DrawerHeader>\n          <DrawerTitle>Move goal</DrawerTitle>\n          <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"flex flex-col items-center gap-1 p-4\">\n          <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n          <span className=\"text-label-secondary text-xs uppercase\">\n            Calories per day\n          </span>\n        </div>\n        <DrawerFooter>\n          <Button>Save goal</Button>\n          <DrawerClose render={<Button variant=\"outline\" />}>\n            Cancel\n          </DrawerClose>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-demo" />
 
 Drawer wraps the Base UI Drawer. The `Drawer` root manages the open state and the swipe direction, and `DrawerTrigger` opens it. `DrawerContent` renders the panel in a portal, over a dimmed `DrawerOverlay` when modal, with an optional swipe handle and close button. Inside it, `DrawerHeader` holds the `DrawerTitle` and `DrawerDescription`, and `DrawerFooter` holds the actions. `DrawerClose` closes the drawer from any element.
 
@@ -22,27 +17,57 @@ The drawer opens from the bottom by default and can also open from the top, left
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add drawer
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
 
 3. Copy the source into `components/ui/drawer.tsx`:
 
-<SourceFile path="components/ui/drawer.tsx" />
+<ComponentSource path="components/ui/drawer.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerTrigger, DrawerPortal, DrawerClose, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from \"@/components/ui/drawer\""} />
+```tsx
+import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerTrigger, DrawerPortal, DrawerClose, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
+```
 
-<Code lang="tsx" code={"<Drawer swipeDirection=\"down\" showSwipeHandle modal>\n  <DrawerTrigger render={<Button variant=\"outline\" />}>\n    Open drawer\n  </DrawerTrigger>\n  <DrawerContent>\n    <DrawerHeader>\n      <DrawerTitle>Move goal</DrawerTitle>\n      <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n    </DrawerHeader>\n    <div className=\"flex flex-col items-center gap-1 p-4\">\n      <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n      <span className=\"text-label-secondary text-xs uppercase\">\n        Calories per day\n      </span>\n    </div>\n    <DrawerFooter>\n      <Button>Save goal</Button>\n      <DrawerClose render={<Button variant=\"outline\" />}>\n        Cancel\n      </DrawerClose>\n    </DrawerFooter>\n  </DrawerContent>\n</Drawer>"} />
+```tsx
+<Drawer swipeDirection="down" showSwipeHandle modal>
+  <DrawerTrigger render={<Button variant="outline" />}>
+    Open drawer
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Move goal</DrawerTitle>
+      <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+    </DrawerHeader>
+    <div className="flex flex-col items-center gap-1 p-4">
+      <span className="text-5xl font-semibold tracking-tight">350</span>
+      <span className="text-label-secondary text-xs uppercase">
+        Calories per day
+      </span>
+    </div>
+    <DrawerFooter>
+      <Button>Save goal</Button>
+      <DrawerClose render={<Button variant="outline" />}>
+        Cancel
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+```
 
 The drawer is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `swipeDirection` to `down`, `up`, `left` or `right` to choose the edge it opens from and the direction it is swiped to close.
 
@@ -56,75 +81,58 @@ For the indented page effect, place `DrawerIndentBackground` and `DrawerIndent` 
 
 Four drawers that open from the bottom, top, left and right edges.
 
-<Example kind="ui" name="drawer" story="Directions">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerDirectionsExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      {([\"down\", \"up\", \"left\", \"right\"] as const).map((direction) => (\n        <Drawer key={direction} showSwipeHandle modal swipeDirection={direction}>\n          <DrawerTrigger render={<Button variant=\"outline\" />}>\n            {direction.charAt(0).toUpperCase() + direction.slice(1)}\n          </DrawerTrigger>\n          <DrawerContent>\n            <DrawerHeader>\n              <DrawerTitle>Notifications</DrawerTitle>\n              <DrawerDescription>\n                You have three unread messages.\n              </DrawerDescription>\n            </DrawerHeader>\n            <DrawerFooter className=\"pt-4\">\n              <DrawerClose render={<Button variant=\"outline\" />}>\n                Close\n              </DrawerClose>\n            </DrawerFooter>\n          </DrawerContent>\n        </Drawer>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-directions" />
 
 ### With close button
 
 A drawer with an icon close button in the top corner.
 
-<Example kind="ui" name="drawer" story="WithCloseButton">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerWithCloseButtonExample() {\n  return (\n    <Drawer swipeDirection=\"down\" showSwipeHandle modal>\n      <DrawerTrigger render={<Button variant=\"outline\" />}>\n        Open drawer\n      </DrawerTrigger>\n      <DrawerContent showCloseButton>\n        <DrawerHeader>\n          <DrawerTitle>Move goal</DrawerTitle>\n          <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"flex flex-col items-center gap-1 p-4\">\n          <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n          <span className=\"text-label-secondary text-xs uppercase\">\n            Calories per day\n          </span>\n        </div>\n        <DrawerFooter>\n          <Button>Save goal</Button>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-with-close-button" />
 
 ### With close label
 
 A drawer whose close button shows a text label instead of an icon.
 
-<Example kind="ui" name="drawer" story="WithCloseLabel">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerWithCloseLabelExample() {\n  return (\n    <Drawer swipeDirection=\"down\" showSwipeHandle modal>\n      <DrawerTrigger render={<Button variant=\"outline\" />}>\n        Open drawer\n      </DrawerTrigger>\n      <DrawerContent showCloseButton closeLabel=\"Close\">\n        <DrawerHeader>\n          <DrawerTitle>Move goal</DrawerTitle>\n          <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"flex flex-col items-center gap-1 p-4\">\n          <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n          <span className=\"text-label-secondary text-xs uppercase\">\n            Calories per day\n          </span>\n        </div>\n        <DrawerFooter>\n          <Button>Save goal</Button>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-with-close-label" />
 
 ### Floating
 
 A floating drawer, inset from the screen edges with rounded corners on all sides.
 
-<Example kind="ui" name="drawer" story="Floating">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerFloatingExample() {\n  return (\n    <Drawer swipeDirection=\"down\" floating showSwipeHandle modal>\n      <DrawerTrigger render={<Button variant=\"outline\" />}>\n        Open drawer\n      </DrawerTrigger>\n      <DrawerContent>\n        <DrawerHeader>\n          <DrawerTitle>Move goal</DrawerTitle>\n          <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"flex flex-col items-center gap-1 p-4\">\n          <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n          <span className=\"text-label-secondary text-xs uppercase\">\n            Calories per day\n          </span>\n        </div>\n        <DrawerFooter>\n          <Button>Save goal</Button>\n          <DrawerClose render={<Button variant=\"outline\" />}>\n            Cancel\n          </DrawerClose>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-floating" />
 
 ### With snap points
 
 A drawer that opens at half height and expands when dragged up.
 
-<Example kind="ui" name="drawer" story="WithSnapPoints">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerWithSnapPointsExample() {\n  return (\n    <Drawer swipeDirection=\"down\" showSwipeHandle modal snapPoints={[0.5, 1]}>\n      <DrawerTrigger render={<Button variant=\"outline\" />}>\n        Open drawer\n      </DrawerTrigger>\n      <DrawerContent>\n        <DrawerHeader>\n          <DrawerTitle>Move goal</DrawerTitle>\n          <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"flex flex-col items-center gap-1 p-4\">\n          <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n          <span className=\"text-label-secondary text-xs uppercase\">\n            Calories per day\n          </span>\n        </div>\n        <DrawerFooter>\n          <Button>Save goal</Button>\n          <DrawerClose render={<Button variant=\"outline\" />}>\n            Cancel\n          </DrawerClose>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-with-snap-points" />
 
 ### Non modal
 
 A non-modal drawer that leaves the rest of the page interactive.
 
-<Example kind="ui" name="drawer" story="NonModal">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function DrawerNonModalExample() {\n  return (\n    <Drawer swipeDirection=\"down\" showSwipeHandle>\n      <DrawerTrigger render={<Button variant=\"outline\" />}>\n        Open drawer\n      </DrawerTrigger>\n      <DrawerContent>\n        <DrawerHeader>\n          <DrawerTitle>Move goal</DrawerTitle>\n          <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"flex flex-col items-center gap-1 p-4\">\n          <span className=\"text-5xl font-semibold tracking-tight\">350</span>\n          <span className=\"text-label-secondary text-xs uppercase\">\n            Calories per day\n          </span>\n        </div>\n        <DrawerFooter>\n          <Button>Save goal</Button>\n          <DrawerClose render={<Button variant=\"outline\" />}>\n            Cancel\n          </DrawerClose>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-non-modal" />
 
 ### Sheet with detents
 
 An iOS-style event sheet with snap points that scales the page behind it using `DrawerIndent`.
 
-<Example kind="ui" name="drawer" story="SheetWithDetents">
-
-<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerIndent, DrawerIndentBackground, DrawerProvider, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Input } from \"@/components/ui/input\"\nimport { Switch } from \"@/components/ui/switch\"\n\nconst days = Array.from({ length: 35 }, (_, index) => index - 2)\n\nconst weekdays = [\n  \"Sunday\",\n  \"Monday\",\n  \"Tuesday\",\n  \"Wednesday\",\n  \"Thursday\",\n  \"Friday\",\n  \"Saturday\",\n]\n\nfunction CalendarExample() {\n  const [open, setOpen] = React.useState(false)\n  const [allDay, setAllDay] = React.useState(false)\n\n  return (\n    <DrawerProvider>\n      <DrawerIndentBackground />\n      <DrawerIndent className=\"flex flex-col px-4 pt-6 pb-10\">\n        <div className=\"mx-auto flex w-full max-w-md flex-col gap-4\">\n          <div className=\"flex items-center justify-between\">\n            <h2 className=\"text-3xl font-bold tracking-tight\">October</h2>\n            <Drawer\n              open={open}\n              onOpenChange={setOpen}\n              snapPoints={[0.5, 1]}\n              showSwipeHandle\n            >\n              <DrawerTrigger\n                render={\n                  <Button\n                    variant=\"plain\"\n                    size=\"icon-lg\"\n                    aria-label=\"New event\"\n                  />\n                }\n              >\n                <PlusIcon weight=\"bold\" className=\"size-5.5\" />\n              </DrawerTrigger>\n              <DrawerContent>\n                <div className=\"flex items-center justify-between px-2 pt-1\">\n                  <DrawerClose render={<Button variant=\"plain\" />}>\n                    Cancel\n                  </DrawerClose>\n                  <DrawerTitle>New Event</DrawerTitle>\n                  <Button\n                    variant=\"plain\"\n                    className=\"font-semibold\"\n                    onClick={() => setOpen(false)}\n                  >\n                    Add\n                  </Button>\n                </div>\n                <DrawerDescription className=\"sr-only\">\n                  Drag the handle up for the full form.\n                </DrawerDescription>\n                <div className=\"flex flex-col gap-4 overflow-y-auto p-4\">\n                  <div className=\"flex flex-col overflow-hidden rounded-xl bg-surface-secondary\">\n                    <Input\n                      aria-label=\"Title\"\n                      placeholder=\"Title\"\n                      className=\"rounded-none border-0 bg-transparent\"\n                    />\n                    <Input\n                      aria-label=\"Location\"\n                      placeholder=\"Location or Video Call\"\n                      className=\"rounded-none border-0 border-t border-separator bg-transparent\"\n                    />\n                  </div>\n                  <div className=\"flex flex-col divide-y divide-separator overflow-hidden rounded-xl bg-surface-secondary\">\n                    <div className=\"flex min-h-11 items-center justify-between px-3 text-base\">\n                      <span id=\"all-day-label\">All-day</span>\n                      <Switch\n                        aria-labelledby=\"all-day-label\"\n                        checked={allDay}\n                        onCheckedChange={setAllDay}\n                      />\n                    </div>\n                    <div className=\"flex min-h-11 items-center justify-between px-3 text-base\">\n                      Starts\n                      <span className=\"text-label-secondary\">\n                        {allDay ? \"Oct 14\" : \"Oct 14, 9:00 AM\"}\n                      </span>\n                    </div>\n                    <div className=\"flex min-h-11 items-center justify-between px-3 text-base\">\n                      Ends\n                      <span className=\"text-label-secondary\">\n                        {allDay ? \"Oct 14\" : \"Oct 14, 10:00 AM\"}\n                      </span>\n                    </div>\n                  </div>\n                  <textarea\n                    aria-label=\"Notes\"\n                    placeholder=\"Notes\"\n                    rows={6}\n                    className=\"resize-none rounded-xl bg-surface-secondary p-3 text-base outline-none placeholder:text-label-secondary focus-visible:focus-ring\"\n                  />\n                </div>\n              </DrawerContent>\n            </Drawer>\n          </div>\n          <div className=\"grid grid-cols-7 gap-y-3 text-center text-sm\">\n            {weekdays.map((day) => (\n              <abbr\n                key={day}\n                title={day}\n                className=\"text-xs font-semibold text-label-secondary no-underline\"\n              >\n                {day[0]}\n              </abbr>\n            ))}\n            {days.map((day) => (\n              <span\n                key={day}\n                className={\n                  day === 14\n                    ? \"mx-auto flex size-9 items-center justify-center rounded-full bg-danger font-semibold text-surface\"\n                    : \"flex h-9 items-center justify-center\"\n                }\n              >\n                {day > 0 && day <= 31 ? day : \"\"}\n              </span>\n            ))}\n          </div>\n          <div className=\"flex flex-col gap-2 rounded-2xl bg-surface-secondary p-4\">\n            <span className=\"text-sm font-semibold\">Tuesday, October 14</span>\n            <span className=\"text-sm text-label-secondary\">\n              9:00 AM · Design review\n            </span>\n            <span className=\"text-sm text-label-secondary\">\n              1:00 PM · Lunch with Sam\n            </span>\n          </div>\n        </div>\n      </DrawerIndent>\n    </DrawerProvider>\n  )\n}\n\nexport function DrawerSheetWithDetentsExample() {\n  return (\n    <CalendarExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="drawer-sheet-with-detents" layout="fullscreen" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Drawer","href":"#drawer","children":[{"name":"DrawerTrigger","href":"#drawertrigger","children":[]},{"name":"DrawerContent","href":"#drawercontent","children":[{"name":"DrawerHeader","href":"#drawerheader","children":[{"name":"DrawerTitle","href":"#drawertitle","children":[]},{"name":"DrawerDescription","href":"#drawerdescription","children":[]}]},{"name":"DrawerFooter","href":"#drawerfooter","children":[{"name":"DrawerClose","href":"#drawerclose","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [Drawer](#drawer)
+  - [DrawerTrigger](#drawertrigger)
+  - [DrawerContent](#drawercontent)
+    - [DrawerHeader](#drawerheader)
+      - [DrawerTitle](#drawertitle)
+      - [DrawerDescription](#drawerdescription)
+    - [DrawerFooter](#drawerfooter)
+      - [DrawerClose](#drawerclose)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -132,7 +140,7 @@ An iOS-style event sheet with snap points that scales the page behind it using `
 
 Coordinates drawers with `DrawerIndent` so the page can react when a drawer opens.
 
-<PropsTable extends={["DrawerPrimitive.Provider.Props"]} />
+Also accepts the props of `DrawerPrimitive.Provider.Props`.
 
 </ApiPart>
 
@@ -142,7 +150,7 @@ Coordinates drawers with `DrawerIndent` so the page can react when a drawer open
 
 The dark layer shown behind the page when it scales down.
 
-<PropsTable extends={["DrawerPrimitive.IndentBackground.Props"]} />
+Also accepts the props of `DrawerPrimitive.IndentBackground.Props`.
 
 </ApiPart>
 
@@ -152,7 +160,7 @@ The dark layer shown behind the page when it scales down.
 
 Wraps the page content and scales it down while a bottom drawer is open.
 
-<PropsTable extends={["DrawerPrimitive.Indent.Props"]} />
+Also accepts the props of `DrawerPrimitive.Indent.Props`.
 
 </ApiPart>
 
@@ -162,7 +170,12 @@ Wraps the page content and scales it down while a bottom drawer is open.
 
 The root that manages the open state, swipe direction and snap points.
 
-<PropsTable extends={["DrawerPrimitive.Root.Props"]} props={[{"name":"floating","type":"boolean","default":"false","description":"Insets the drawer from the screen edges and rounds all of its corners."},{"name":"showSwipeHandle","type":"boolean","default":"false","description":"Shows a grab bar on the edge of the panel that faces the screen center."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `floating` | `boolean` | `false` | Insets the drawer from the screen edges and rounds all of its corners. |
+| `showSwipeHandle` | `boolean` | `false` | Shows a grab bar on the edge of the panel that faces the screen center. |
+
+Also accepts the props of `DrawerPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -172,7 +185,7 @@ The root that manages the open state, swipe direction and snap points.
 
 The button that opens the drawer.
 
-<PropsTable extends={["DrawerPrimitive.Trigger.Props"]} />
+Also accepts the props of `DrawerPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -182,7 +195,7 @@ The button that opens the drawer.
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-<PropsTable extends={["DrawerPrimitive.Portal.Props"]} />
+Also accepts the props of `DrawerPrimitive.Portal.Props`.
 
 </ApiPart>
 
@@ -192,7 +205,7 @@ Renders its children into a portal outside the current DOM hierarchy.
 
 A button that closes the drawer.
 
-<PropsTable extends={["DrawerPrimitive.Close.Props"]} />
+Also accepts the props of `DrawerPrimitive.Close.Props`.
 
 </ApiPart>
 
@@ -202,7 +215,7 @@ A button that closes the drawer.
 
 The dimmed layer behind a modal drawer, which fades as the drawer is swiped away.
 
-<PropsTable extends={["DrawerPrimitive.Backdrop.Props"]} />
+Also accepts the props of `DrawerPrimitive.Backdrop.Props`.
 
 </ApiPart>
 
@@ -212,7 +225,7 @@ The dimmed layer behind a modal drawer, which fades as the drawer is swiped away
 
 The grab bar people drag to move or dismiss the drawer.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -222,7 +235,12 @@ The grab bar people drag to move or dismiss the drawer.
 
 The drawer panel, rendered in a portal with an optional overlay, swipe handle and close button.
 
-<PropsTable extends={["DrawerPrimitive.Popup.Props"]} props={[{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the top corner."},{"name":"closeLabel","type":"string","description":"Replaces the close button's icon with this text."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `boolean` | `false` | Shows a close button in the top corner. |
+| `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
+
+Also accepts the props of `DrawerPrimitive.Popup.Props`.
 
 </ApiPart>
 
@@ -232,7 +250,7 @@ The drawer panel, rendered in a portal with an optional overlay, swipe handle an
 
 Groups the title and description.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -242,7 +260,7 @@ Groups the title and description.
 
 Holds the drawer's actions at the bottom of the panel.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -252,7 +270,7 @@ Holds the drawer's actions at the bottom of the panel.
 
 The drawer's title, which also names it for assistive technology.
 
-<PropsTable extends={["DrawerPrimitive.Title.Props"]} />
+Also accepts the props of `DrawerPrimitive.Title.Props`.
 
 </ApiPart>
 
@@ -262,7 +280,7 @@ The drawer's title, which also names it for assistive technology.
 
 Supporting text that describes the drawer for assistive technology.
 
-<PropsTable extends={["DrawerPrimitive.Description.Props"]} />
+Also accepts the props of `DrawerPrimitive.Description.Props`.
 
 </ApiPart>
 
@@ -286,15 +304,7 @@ Supporting text that describes the drawer for assistive technology.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-drawer--open-by-default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer defaultOpen showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DrawerOpenByDefaultExample: View {\n  var body: some View {\n    DrawerGoal(open: true)\n  }\n}\n\nstruct DrawerGoal: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Open drawer\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .drawer(isPresented: $open) {\n        DrawerGoalContent()\n      }\n  }\n}\n\nstruct DrawerGoalContent: View {\n  var body: some View {\n    DrawerContent {\n      DrawerHeader {\n        DrawerTitle(\"Move goal\")\n        DrawerDescription(\"Set your daily activity goal.\")\n      }\n      VStack(spacing: 4) {\n        Text(verbatim: \"350\")\n          .font(.system(size: 48, weight: .semibold))\n          .tracking(-1.2)\n          .foregroundStyle(Color.label)\n        Text(\"Calories/day\")\n          .textCase(.uppercase)\n          .textStyle(.xs)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .frame(maxWidth: .infinity)\n      .padding(16)\n      DrawerFooter {\n        Button {} label: {\n          Text(\"Submit\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        DrawerClose {\n          Text(\"Cancel\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\n\n@Composable\nfun DrawerOpenByDefaultExample() {\n    DrawerGoal(defaultOpen = true, floating = false)\n}\n\n@Composable\nfun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = \"Open drawer\") {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {\n            DrawerGoalContent(onClose = { open = false })\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-drawer--open-by-default" />
 
 `Drawer` presents content in a panel attached to an edge of the screen. It slides in from the bottom by default, or from the top, left or right with `swipeDirection`, and the user can drag it closed in that direction. The content renders through a portal (inside a full-window overlay on iOS) and respects the safe-area insets.
 
@@ -304,19 +314,25 @@ Set `floating` to inset the panel from the screen edges with all corners rounded
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add drawer
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add drawer --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add drawer --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add drawer --platform kotlin
+```
 
 </Only>
 
@@ -332,13 +348,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/drawer.tsx`:
 
-<SourceFile path="uniwind/components/ui/drawer.tsx" />
+<ComponentSource path="uniwind/components/ui/drawer.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -348,13 +366,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/drawer.tsx`:
 
-<SourceFile path="nativewind/components/ui/drawer.tsx" />
+<ComponentSource path="nativewind/components/ui/drawer.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -364,13 +384,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/drawer.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/drawer.tsx`:
 
-<SourceFile path="stylesheet/components/ui/drawer.tsx" />
+<ComponentSource path="stylesheet/components/ui/drawer.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -386,35 +408,37 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Drawer.swift" />
+<ComponentSource path="swift/Components/Drawer.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Dialog.swift" />
+<ComponentSource path="swift/Components/Dialog.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -424,27 +448,32 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Drawer.kt" />
+<ComponentSource path="kotlin/components/Drawer.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -452,9 +481,20 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from \"@/components/ui/drawer\""} />
+```tsx
+import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
+```
 
-<Code lang="tsx" code={"<View className=\"items-start\">\n  <Drawer defaultOpen showSwipeHandle>\n    <DrawerTrigger render={<Button variant=\"outline\" />}>\n      <Text>Open drawer</Text>\n    </DrawerTrigger>\n    <GoalContent />\n  </Drawer>\n</View>"} />
+```tsx
+<View className="items-start">
+  <Drawer defaultOpen showSwipeHandle>
+    <DrawerTrigger render={<Button variant="outline" />}>
+      <Text>Open drawer</Text>
+    </DrawerTrigger>
+    <GoalContent />
+  </Drawer>
+</View>
+```
 
 Compose `DrawerTrigger` and `DrawerContent` with a `DrawerHeader` (`DrawerTitle`, `DrawerDescription`), your content and a `DrawerFooter`. Use `DrawerClose` to close it from a button.
 
@@ -466,51 +506,25 @@ With `modal={false}` there is no scrim. For the scaled background, render `Drawe
 
 ### Default
 
-<NativeExample id="components-drawer--default" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DrawerGoal: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(\"Open drawer\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .drawer(isPresented: $open) {\n        DrawerGoalContent()\n      }\n  }\n}\n\nstruct DrawerGoalContent: View {\n  var body: some View {\n    DrawerContent {\n      DrawerHeader {\n        DrawerTitle(\"Move goal\")\n        DrawerDescription(\"Set your daily activity goal.\")\n      }\n      VStack(spacing: 4) {\n        Text(verbatim: \"350\")\n          .font(.system(size: 48, weight: .semibold))\n          .tracking(-1.2)\n          .foregroundStyle(Color.label)\n        Text(\"Calories/day\")\n          .textCase(.uppercase)\n          .textStyle(.xs)\n          .foregroundStyle(Color.labelSecondary)\n      }\n      .frame(maxWidth: .infinity)\n      .padding(16)\n      DrawerFooter {\n        Button {} label: {\n          Text(\"Submit\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant())\n        DrawerClose {\n          Text(\"Cancel\").frame(maxWidth: .infinity)\n        }\n        .buttonStyle(.variant(.secondary))\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\n\n@Composable\nfun DrawerExample() {\n    DrawerGoal(defaultOpen = false, floating = false)\n}\n\n@Composable\nfun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = \"Open drawer\") {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {\n            DrawerGoalContent(onClose = { open = false })\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-drawer--default" />
 
 ### Snap points
 
 A drawer that rests at 40% and full height.
 
-<NativeExample id="components-drawer--snap-points" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ScrollView, View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nconst ITEMS = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`)\n\nexport function DrawerSnapPointsExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer snapPoints={[0.4, 1]} showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open with snap points</Text>\n        </DrawerTrigger>\n        <DrawerContent showCloseButton>\n          <DrawerHeader>\n            <DrawerTitle>Snap points</DrawerTitle>\n            <DrawerDescription>\n              Drag up to expand, drag down to collapse or dismiss.\n            </DrawerDescription>\n          </DrawerHeader>\n          <ScrollView contentContainerClassName=\"gap-3 p-4\">\n            {ITEMS.map((item) => (\n              <View\n                key={item}\n                className=\"h-12 justify-center rounded-xl bg-surface-secondary px-4\"\n              >\n                <Text>{item}</Text>\n              </View>\n            ))}\n          </ScrollView>\n        </DrawerContent>\n      </Drawer>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct DrawerSnapPoints: View {\n  @State private var open = false\n\n  var body: some View {\n    Button(\"Open with snap points\") { open = true }\n      .buttonStyle(.variant(.outline))\n      .drawer(isPresented: $open, detents: [.fraction(0.4), .large]) {\n        DrawerContent(showCloseButton: true) {\n          DrawerHeader {\n            DrawerTitle(\"Snap points\")\n            DrawerDescription(\"Drag up to expand, drag down to collapse or dismiss.\")\n          }\n          ScrollView {\n            VStack(spacing: 12) {\n              ForEach(1...20, id: \\.self) { index in\n                Text(verbatim: \"Item \\(index)\")\n                  .textStyle(.base)\n                  .foregroundStyle(Color.label)\n                  .padding(.horizontal, 16)\n                  .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)\n                  .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n              }\n            }\n            .padding(16)\n          }\n        }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.foundation.verticalScroll\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\nimport com.esuiss.ui.components.DrawerDescription\nimport com.esuiss.ui.components.DrawerHeader\nimport com.esuiss.ui.components.DrawerTitle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\nval DrawerItems = List(20) { \"Item ${it + 1}\" }\n\n@Composable\nfun DrawerSnapPoints() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Open with snap points\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(\n            open = open,\n            onOpenChange = { open = it },\n            snapPoints = listOf(0.4f, 1f),\n            showSwipeHandle = true,\n            showCloseButton = true,\n        ) {\n            DrawerHeader {\n                DrawerTitle(\"Snap points\")\n                DrawerDescription(\"Drag up to expand, drag down to collapse or dismiss.\")\n            }\n            Column(\n                modifier = Modifier\n                    .weight(1f, fill = false)\n                    .verticalScroll(rememberScrollState())\n                    .padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(12.dp),\n            ) {\n                DrawerItems.forEach { item ->\n                    Box(\n                        modifier = Modifier\n                            .fillMaxWidth()\n                            .height(48.dp)\n                            .clip(RoundedCornerShape(Radius.xl))\n                            .background(EsuissTheme.colors.surfaceSecondary)\n                            .padding(horizontal = 16.dp),\n                        contentAlignment = Alignment.CenterStart,\n                    ) {\n                        Text(item)\n                    }\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-drawer--snap-points" />
 
 ### Floating
 
 A floating drawer inset from the edges.
 
-<NativeExample id="components-drawer--floating" width={880} height={400} platforms={["React Native","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction GoalContent() {\n  return (\n    <DrawerContent>\n      <DrawerHeader>\n        <DrawerTitle>Move goal</DrawerTitle>\n        <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n      </DrawerHeader>\n      <View className=\"items-center gap-1 p-4\">\n        <Text className=\"text-5xl font-semibold tracking-tight\">350</Text>\n        <Text className=\"text-xs text-label-secondary uppercase\">\n          Calories/day\n        </Text>\n      </View>\n      <DrawerFooter>\n        <Button>\n          <Text>Submit</Text>\n        </Button>\n        <DrawerClose render={<Button variant=\"secondary\" />}>\n          <Text>Cancel</Text>\n        </DrawerClose>\n      </DrawerFooter>\n    </DrawerContent>\n  )\n}\n\nexport function DrawerFloatingExample() {\n  return (\n    <View className=\"items-start\">\n      <Drawer floating showSwipeHandle>\n        <DrawerTrigger render={<Button variant=\"outline\" />}>\n          <Text>Open floating drawer</Text>\n        </DrawerTrigger>\n        <GoalContent />\n      </Drawer>\n    </View>\n  )\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Drawer\n\n@Composable\nfun DrawerFloatingExample() {\n    DrawerGoal(defaultOpen = false, floating = true, label = \"Open floating drawer\")\n}\n\n@Composable\nfun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = \"Open drawer\") {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)\n        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {\n            DrawerGoalContent(onClose = { open = false })\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-drawer--floating" />
 
 ### Sides
 
 Drawers from the top, bottom, left and right.
 
-<NativeExample id="components-drawer--sides" width={880} height={439}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function DrawerSidesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      {([\"up\", \"right\", \"down\", \"left\"] as const).map((direction) => (\n        <Drawer key={direction} swipeDirection={direction} showSwipeHandle>\n          <DrawerTrigger render={<Button variant=\"outline\" />}>\n            <Text>Swipe {direction}</Text>\n          </DrawerTrigger>\n          <DrawerContent showCloseButton closeLabel=\"Done\">\n            <DrawerHeader>\n              <DrawerTitle>Swipe {direction} to close</DrawerTitle>\n              <DrawerDescription>\n                This drawer is dismissed by swiping {direction}.\n              </DrawerDescription>\n            </DrawerHeader>\n            <View className=\"p-4\">\n              <Text className=\"text-sm text-label-secondary\">\n                Android back and the VoiceOver escape gesture also close it.\n              </Text>\n            </View>\n          </DrawerContent>\n        </Drawer>\n      ))}\n    </View>\n  )\n}"} />
-
-</NativeExample>
+<NativeExample id="components-drawer--sides" />
 
 ## API Reference
 
@@ -520,7 +534,7 @@ Drawers from the top, bottom, left and right.
 
 Tracks open drawers for the indent effect.
 
-<PropsTable extends={["DrawerPrimitive.ProviderProps"]} />
+Also accepts the props of `DrawerPrimitive.ProviderProps`.
 
 </ApiPart>
 
@@ -530,7 +544,7 @@ Tracks open drawers for the indent effect.
 
 Background shown behind the scaled screen.
 
-<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.IndentBackground>"]} />
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.IndentBackground>`.
 
 </ApiPart>
 
@@ -540,7 +554,7 @@ Background shown behind the scaled screen.
 
 Screen wrapper that scales back while a bottom drawer is open.
 
-<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Indent>"]} />
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Indent>`.
 
 </ApiPart>
 
@@ -550,7 +564,12 @@ Screen wrapper that scales back while a bottom drawer is open.
 
 Root that holds the open state, direction and snap points.
 
-<PropsTable extends={["DrawerPrimitive.RootProps"]} props={[{"name":"floating","type":"boolean","default":"false","description":"Insets the panel from the edges."},{"name":"showSwipeHandle","type":"boolean","default":"false","description":"Shows a grab handle."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `floating` | `boolean` | `false` | Insets the panel from the edges. |
+| `showSwipeHandle` | `boolean` | `false` | Shows a grab handle. |
+
+Also accepts the props of `DrawerPrimitive.RootProps`.
 
 </ApiPart>
 
@@ -560,7 +579,7 @@ Root that holds the open state, direction and snap points.
 
 Dimmed scrim behind a modal drawer.
 
-<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Backdrop>"]} />
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Backdrop>`.
 
 </ApiPart>
 
@@ -570,7 +589,7 @@ Dimmed scrim behind a modal drawer.
 
 Grab handle on the dragging edge.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -580,7 +599,13 @@ Grab handle on the dragging edge.
 
 Sliding panel with optional handle and close button.
 
-<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a corner close button."},{"name":"closeLabel","type":"string","description":"Text for the close button instead of the icon."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+| `showCloseButton` | `boolean` | `false` | Shows a corner close button. |
+| `closeLabel` | `string` | - | Text for the close button instead of the icon. |
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Popup>`.
 
 </ApiPart>
 
@@ -590,7 +615,7 @@ Sliding panel with optional handle and close button.
 
 Area for the title and description.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -600,7 +625,7 @@ Area for the title and description.
 
 Area for actions at the end of the panel.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -610,7 +635,7 @@ Area for actions at the end of the panel.
 
 Drawer heading, centered for top and bottom drawers.
 
-<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Title>"]} />
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Title>`.
 
 </ApiPart>
 
@@ -620,7 +645,7 @@ Drawer heading, centered for top and bottom drawers.
 
 Supporting text.
 
-<PropsTable extends={["React.ComponentProps<typeof DrawerPrimitive.Description>"]} />
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
 
 </ApiPart>
 

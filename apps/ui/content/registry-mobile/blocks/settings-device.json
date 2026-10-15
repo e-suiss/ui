@@ -1,5 +1,0 @@
-{
-  "description": "A device settings home screen with search, an account row and grouped rows with icons, toggles and details.",
-  "overview": "A large-title `Header` sits over an `InputGroup` search field, an account `Item` with an `Avatar`, and inset `ItemGroup` lists of rows with tinted icons. Airplane Mode, Wi-Fi, Bluetooth and Focus use a `Switch`, and other rows show a detail value and a chevron. Typing filters the rows and shows a message when nothing matches.",
-  "usage": "Replace `GROUPS` with your rows and the account details with your user. Use `onAccountPress` and `onRowPress`, which receives the row label, to navigate."
-}

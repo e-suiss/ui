@@ -3,16 +3,11 @@ title: Hover Card
 description: "A card that previews content behind a link when people hover over or focus it."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="hover-card" story="Default">
-
-<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { buttonVariants } from \"@/components/ui/button\"\nimport { HoverCard, HoverCardContent, HoverCardTrigger } from \"@/components/ui/hover-card\"\n\nexport function HoverCardExample() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger\n        href=\"#\"\n        className={buttonVariants({ variant: \"link\" })}\n      >\n        @nextjs\n      </HoverCardTrigger>\n      <HoverCardContent className=\"w-80\">\n        <div className=\"flex gap-4\">\n          <Avatar size=\"lg\">\n            <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n            <AvatarFallback>NJ</AvatarFallback>\n          </Avatar>\n          <div className=\"flex flex-col gap-1\">\n            <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n            <p className=\"text-sm\">\n              The React framework, created and maintained by @vercel.\n            </p>\n            <div className=\"text-label-secondary mt-1 flex items-center gap-1.5 text-xs\">\n              <CalendarBlankIcon />\n              Joined December 2021\n            </div>\n          </div>\n        </div>\n      </HoverCardContent>\n    </HoverCard>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="hover-card-demo" />
 
 `HoverCard` wraps the Base UI Preview Card. The `HoverCard` root manages the open state, `HoverCardTrigger` renders the link that opens it, and `HoverCardContent` renders the floating card in a portal, positioned next to the trigger.
 
@@ -22,25 +17,58 @@ Use a hover card for supplementary, non-essential previews, such as a profile su
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add hover-card"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add hover-card
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react cn
+```
 
 2. Copy the source into `components/ui/hover-card.tsx`:
 
-<SourceFile path="components/ui/hover-card.tsx" />
+<ComponentSource path="components/ui/hover-card.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { HoverCard, HoverCardTrigger, HoverCardContent } from \"@/components/ui/hover-card\""} />
+```tsx
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
+```
 
-<Code lang="tsx" code={"<HoverCard>\n  <HoverCardTrigger\n    href=\"#\"\n    className={buttonVariants({ variant: \"link\" })}\n  >\n    @nextjs\n  </HoverCardTrigger>\n  <HoverCardContent className=\"w-80\">\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"text-label-secondary mt-1 flex items-center gap-1.5 text-xs\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  </HoverCardContent>\n</HoverCard>"} />
+```tsx
+<HoverCard>
+  <HoverCardTrigger
+    href="#"
+    className={buttonVariants({ variant: "link" })}
+  >
+    @nextjs
+  </HoverCardTrigger>
+  <HoverCardContent className="w-80">
+    <div className="flex gap-4">
+      <Avatar size="lg">
+        <AvatarImage src="https://github.com/vercel.png" alt="@nextjs" />
+        <AvatarFallback>NJ</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-col gap-1">
+        <h4 className="text-sm font-semibold">@nextjs</h4>
+        <p className="text-sm">
+          The React framework, created and maintained by @vercel.
+        </p>
+        <div className="text-label-secondary mt-1 flex items-center gap-1.5 text-xs">
+          <CalendarBlankIcon />
+          Joined December 2021
+        </div>
+      </div>
+    </div>
+  </HoverCardContent>
+</HoverCard>
+```
 
 The trigger renders an anchor, so give it an `href`. Position the card with the `side`, `sideOffset`, `align` and `alignOffset` props on `HoverCardContent`; by default it opens on the `bottom`, centered, with a `4` pixel offset. Set `defaultOpen` on the root to start open, or control it with `open` and `onOpenChange`.
 
@@ -50,15 +78,17 @@ The trigger renders an anchor, so give it an `href`. Position the card with the 
 
 Four hover cards opening on the `top`, `right`, `bottom` and `left` sides of their triggers.
 
-<Example kind="ui" name="hover-card" story="Sides">
-
-<Code lang="tsx" code={"import { buttonVariants } from \"@/components/ui/button\"\nimport { HoverCard, HoverCardContent, HoverCardTrigger } from \"@/components/ui/hover-card\"\n\nexport function HoverCardSidesExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-3 p-24\">\n      {([\"top\", \"right\", \"bottom\", \"left\"] as const).map((side) => (\n        <HoverCard key={side}>\n          <HoverCardTrigger\n            href=\"#\"\n            className={buttonVariants({ variant: \"outline\" })}\n          >\n            {side.charAt(0).toUpperCase() + side.slice(1)}\n          </HoverCardTrigger>\n          <HoverCardContent side={side} className=\"w-56\">\n            <p className=\"text-sm\">\n              This card opens on the {side} side of its trigger.\n            </p>\n          </HoverCardContent>\n        </HoverCard>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="hover-card-sides" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"HoverCard","href":"#hovercard","children":[{"name":"HoverCardTrigger","href":"#hovercardtrigger","children":[]},{"name":"HoverCardContent","href":"#hovercardcontent","children":[]}]}]} />
+<Anatomy>
+
+- [HoverCard](#hovercard)
+  - [HoverCardTrigger](#hovercardtrigger)
+  - [HoverCardContent](#hovercardcontent)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -66,7 +96,7 @@ Four hover cards opening on the `top`, `right`, `bottom` and `left` sides of the
 
 The root that manages the card's open state.
 
-<PropsTable extends={["PreviewCardPrimitive.Root.Props"]} />
+Also accepts the props of `PreviewCardPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -76,7 +106,7 @@ The root that manages the card's open state.
 
 The link that opens the card on hover or focus.
 
-<PropsTable extends={["PreviewCardPrimitive.Trigger.Props"]} />
+Also accepts the props of `PreviewCardPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -86,7 +116,7 @@ The link that opens the card on hover or focus.
 
 The floating card, rendered in a portal and positioned relative to the trigger.
 
-<PropsTable extends={["PreviewCardPrimitive.Popup.Props","PreviewCardPrimitive.Positioner.Props"]} />
+Also accepts the props of `PreviewCardPrimitive.Popup.Props`, `PreviewCardPrimitive.Positioner.Props`.
 
 </ApiPart>
 

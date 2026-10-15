@@ -1,5 +1,0 @@
-{
-  "description": "A screen that explains why the app needs a permission before asking, with Allow and Not now buttons.",
-  "overview": "A primer shown before a system permission prompt: a large icon, a title, a description and a list of benefits, each with its own icon. Allow and Not now buttons sit in a `BottomBar`. By default it asks for notifications.",
-  "usage": "Every piece is a prop: `icon`, `title`, `description`, `benefits`, `allowLabel` and `dismissLabel`. Request the real permission in `onAllow` and close the screen in `onDismiss`."
-}

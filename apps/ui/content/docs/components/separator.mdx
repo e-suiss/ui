@@ -3,16 +3,11 @@ title: Separator
 description: "A thin line that visually divides content, horizontally or vertically."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="separator" story="Default">
-
-<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorExample() {\n  return (\n    <div className=\"w-72\">\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-medium\">Account settings</h4>\n        <p className=\"text-label-secondary text-sm\">\n          Manage your profile and preferences.\n        </p>\n      </div>\n      <Separator orientation=\"horizontal\" className=\"my-4\" />\n      <div className=\"flex h-5 items-center gap-4 text-sm\">\n        <span>Profile</span>\n        <Separator orientation=\"vertical\" />\n        <span>Billing</span>\n        <Separator orientation=\"vertical\" />\n        <span>Security</span>\n      </div>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="separator-demo" />
 
 `Separator` wraps the Base UI Separator primitive. It draws a 1px line in the `separator` color: full width when horizontal, and stretched to the container's height when vertical.
 
@@ -22,25 +17,48 @@ Use it between groups of content or between inline items. Inside menus and selec
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add separator"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add separator
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react cn
+```
 
 2. Copy the source into `components/ui/separator.tsx`:
 
-<SourceFile path="components/ui/separator.tsx" />
+<ComponentSource path="components/ui/separator.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\""} />
+```tsx
+import { Separator } from "@/components/ui/separator"
+```
 
-<Code lang="tsx" code={"<div className=\"w-72\">\n  <div className=\"flex flex-col gap-1\">\n    <h4 className=\"text-sm font-medium\">Account settings</h4>\n    <p className=\"text-label-secondary text-sm\">\n      Manage your profile and preferences.\n    </p>\n  </div>\n  <Separator orientation=\"horizontal\" className=\"my-4\" />\n  <div className=\"flex h-5 items-center gap-4 text-sm\">\n    <span>Profile</span>\n    <Separator orientation=\"vertical\" />\n    <span>Billing</span>\n    <Separator orientation=\"vertical\" />\n    <span>Security</span>\n  </div>\n</div>"} />
+```tsx
+<div className="w-72">
+  <div className="flex flex-col gap-1">
+    <h4 className="text-sm font-medium">Account settings</h4>
+    <p className="text-label-secondary text-sm">
+      Manage your profile and preferences.
+    </p>
+  </div>
+  <Separator orientation="horizontal" className="my-4" />
+  <div className="flex h-5 items-center gap-4 text-sm">
+    <span>Profile</span>
+    <Separator orientation="vertical" />
+    <span>Billing</span>
+    <Separator orientation="vertical" />
+    <span>Security</span>
+  </div>
+</div>
+```
 
 `orientation` defaults to `horizontal`. Set `orientation="vertical"` inside a flex row; the line stretches to the row's height, so give the row a height.
 
@@ -50,21 +68,13 @@ Use it between groups of content or between inline items. Inside menus and selec
 
 Divides two stacked lines of text.
 
-<Example kind="ui" name="separator" story="Horizontal">
-
-<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorHorizontalExample() {\n  return (\n    <div className=\"flex w-72 flex-col gap-3 text-sm\">\n      <span>Recent activity</span>\n      <Separator orientation=\"horizontal\" />\n      <span>Archived items</span>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="separator-horizontal" />
 
 ### Vertical
 
 Divides inline links in a row.
 
-<Example kind="ui" name="separator" story="Vertical">
-
-<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorVerticalExample() {\n  return (\n    <div className=\"flex h-6 items-center gap-4 text-sm\">\n      <span>Docs</span>\n      <Separator orientation=\"vertical\" />\n      <span>Blog</span>\n      <Separator orientation=\"vertical\" />\n      <span>Changelog</span>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="separator-vertical" />
 
 ## API Reference
 
@@ -74,7 +84,7 @@ Divides inline links in a row.
 
 Draws the dividing line.
 
-<PropsTable extends={["SeparatorPrimitive.Props"]} />
+Also accepts the props of `SeparatorPrimitive.Props`.
 
 </ApiPart>
 
@@ -91,15 +101,7 @@ Draws the dividing line.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-separator--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SeparatorExample() {\n  return (\n    <View>\n      <View className=\"gap-1\">\n        <Text className=\"text-sm font-medium\">esuiss</Text>\n        <Text variant=\"muted\">An open-source UI component library.</Text>\n      </View>\n      <Separator className=\"my-4\" />\n      <View className=\"h-5 flex-row items-center gap-4\">\n        <Text className=\"text-sm\">Blog</Text>\n        <Separator orientation=\"vertical\" />\n        <Text className=\"text-sm\">Docs</Text>\n        <Separator orientation=\"vertical\" />\n        <Text className=\"text-sm\">Source</Text>\n      </View>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SeparatorExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      VStack(alignment: .leading, spacing: 4) {\n        Text(\"esuiss\")\n          .textStyle(.sm, weight: .medium)\n          .foregroundStyle(Color.label)\n        Text(\"An open-source UI component library.\")\n          .textVariant(.muted)\n      }\n      Separator()\n        .padding(.vertical, 16)\n      HStack(spacing: 16) {\n        SeparatorText(\"Blog\")\n        Separator(.vertical)\n        SeparatorText(\"Docs\")\n        Separator(.vertical)\n        SeparatorText(\"Source\")\n      }\n      .frame(height: 20)\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct SeparatorText: View {\n  let title: LocalizedStringKey\n\n  init(_ title: LocalizedStringKey) {\n    self.title = title\n  }\n\n  var body: some View {\n    Text(title)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SeparatorVerticalRow(labels: List<String>, height: Int) {\n    Row(\n        modifier = Modifier.height(height.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator(orientation = Orientation.Vertical)\n            Text(label, style = Typography.sm)\n        }\n    }\n}\n\n@Composable\nfun SeparatorDefault() {\n    Column(Modifier.fillMaxWidth()) {\n        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {\n            Text(\"esuiss\", style = Typography.sm.copy(fontWeight = FontWeight.Medium))\n            Text(\"An open-source UI component library.\", variant = TextVariant.Muted)\n        }\n        Separator(Modifier.padding(vertical = 16.dp))\n        SeparatorVerticalRow(listOf(\"Blog\", \"Docs\", \"Source\"), 20)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-separator--default" />
 
 `Separator` is a `View` drawn as a one-pixel line. Horizontal separators fill the width of their container; vertical separators stretch to the height of a row.
 
@@ -107,19 +109,25 @@ Draws the dividing line.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add separator"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add separator
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add separator --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add separator --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add separator --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add separator --platform kotlin
+```
 
 </Only>
 
@@ -133,13 +141,15 @@ Draws the dividing line.
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/separator.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/separator.tsx`:
 
-<SourceFile path="uniwind/components/ui/separator.tsx" />
+<ComponentSource path="uniwind/components/ui/separator.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -149,13 +159,15 @@ Draws the dividing line.
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/separator.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/separator.tsx`:
 
-<SourceFile path="nativewind/components/ui/separator.tsx" />
+<ComponentSource path="nativewind/components/ui/separator.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -167,7 +179,7 @@ Draws the dividing line.
 
 2. Copy the source into `components/ui/separator.tsx`:
 
-<SourceFile path="stylesheet/components/ui/separator.tsx" />
+<ComponentSource path="stylesheet/components/ui/separator.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -183,13 +195,13 @@ Draws the dividing line.
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source:
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
 4. Add the files to your app target.
 
@@ -199,17 +211,21 @@ Draws the dividing line.
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source:
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -217,9 +233,26 @@ Draws the dividing line.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\""} />
+```tsx
+import { Separator } from "@/components/ui/separator"
+```
 
-<Code lang="tsx" code={"<View>\n  <View className=\"gap-1\">\n    <Text className=\"text-sm font-medium\">esuiss</Text>\n    <Text variant=\"muted\">An open-source UI component library.</Text>\n  </View>\n  <Separator className=\"my-4\" />\n  <View className=\"h-5 flex-row items-center gap-4\">\n    <Text className=\"text-sm\">Blog</Text>\n    <Separator orientation=\"vertical\" />\n    <Text className=\"text-sm\">Docs</Text>\n    <Separator orientation=\"vertical\" />\n    <Text className=\"text-sm\">Source</Text>\n  </View>\n</View>"} />
+```tsx
+<View>
+  <View className="gap-1">
+    <Text className="text-sm font-medium">esuiss</Text>
+    <Text variant="muted">An open-source UI component library.</Text>
+  </View>
+  <Separator className="my-4" />
+  <View className="h-5 flex-row items-center gap-4">
+    <Text className="text-sm">Blog</Text>
+    <Separator orientation="vertical" />
+    <Text className="text-sm">Docs</Text>
+    <Separator orientation="vertical" />
+    <Text className="text-sm">Source</Text>
+  </View>
+</View>
+```
 
 Use the default `horizontal` orientation between stacked blocks, and `orientation="vertical"` between items in a row. Add spacing with `className`, such as `my-4`.
 
@@ -229,29 +262,13 @@ Use the default `horizontal` orientation between stacked blocks, and `orientatio
 
 A horizontal separator between two lines of text.
 
-<NativeExample id="components-separator--horizontal" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SeparatorHorizontalExample() {\n  return (\n    <View className=\"gap-4\">\n      <Text className=\"text-sm\">Above</Text>\n      <Separator />\n      <Text className=\"text-sm\">Below</Text>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SeparatorHorizontalExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 16) {\n      SeparatorText(\"Above\")\n      Separator()\n      SeparatorText(\"Below\")\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct SeparatorText: View {\n  let title: LocalizedStringKey\n\n  init(_ title: LocalizedStringKey) {\n    self.title = title\n  }\n\n  var body: some View {\n    Text(title)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SeparatorHorizontal() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Text(\"Above\", style = Typography.sm)\n        Separator()\n        Text(\"Below\", style = Typography.sm)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-separator--horizontal" />
 
 ### Vertical
 
 A vertical separator between two items in a row.
 
-<NativeExample id="components-separator--vertical" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SeparatorVerticalExample() {\n  return (\n    <View className=\"h-6 flex-row items-center gap-4\">\n      <Text className=\"text-sm\">Left</Text>\n      <Separator orientation=\"vertical\" />\n      <Text className=\"text-sm\">Right</Text>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SeparatorVerticalExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      SeparatorText(\"Left\")\n      Separator(.vertical)\n      SeparatorText(\"Right\")\n    }\n    .frame(height: 24)\n  }\n}\n\nstruct SeparatorText: View {\n  let title: LocalizedStringKey\n\n  init(_ title: LocalizedStringKey) {\n    self.title = title\n  }\n\n  var body: some View {\n    Text(title)\n      .textStyle(.sm)\n      .foregroundStyle(Color.label)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.gestures.Orientation\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun SeparatorVerticalExample() {\n    SeparatorVerticalRow(listOf(\"Left\", \"Right\"), 24)\n}\n\n@Composable\nfun SeparatorVerticalRow(labels: List<String>, height: Int) {\n    Row(\n        modifier = Modifier.height(height.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator(orientation = Orientation.Vertical)\n            Text(label, style = Typography.sm)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-separator--vertical" />
 
 ## API Reference
 
@@ -259,7 +276,7 @@ A vertical separator between two items in a row.
 
 ### Separator
 
-<PropsTable extends={["React.ComponentProps<typeof SeparatorPrimitive>"]} />
+Also accepts the props of `React.ComponentProps<typeof SeparatorPrimitive>`.
 
 </ApiPart>
 

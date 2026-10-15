@@ -1,6 +1,0 @@
-{
-  "description": "A phone model comparison where toggle chips show up to three models, which grow in and out of the radar.",
-  "overview": "A phone comparison where chips select up to three models; their shapes grow into or shrink out of the radar, and side cards show each model's overall score or the score on the hovered axis. Use it as a template for comparing a handful of items across shared criteria.",
-  "usage": "Replace `AXES` with your criteria and `SCORES` with one array per item in the same order, then add each item's label and color to `chartConfig`. Change `MAX_SELECTED` to allow more or fewer items at once and the initial `selected` state to pick which ones start visible.",
-  "notes": "The scale is fixed from 0 to 100, so rescale your scores or change the radius axis domain. Selecting past the limit drops the oldest selection, and the last model can't be turned off. The score cards are a live region, and the grow animation is skipped when reduced motion is preferred."
-}

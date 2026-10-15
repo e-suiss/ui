@@ -1,6 +1,0 @@
-{
-  "description": "Two areas stacked on top of each other so the top edge shows the combined total, with a legend.",
-  "overview": "Two series stacked so the top edge shows the combined total, with a legend underneath. Use it when both the total and each part's contribution matter, as in desktop plus mobile traffic.",
-  "usage": "Replace `chartData` and rename the series keys in the data, both areas and `chartConfig`. Give every series the same `stackId` to stack them; the first one declared sits at the bottom. The legend picks up labels and colors from the config automatically.",
-  "notes": "The tooltip follows the cursor or the arrow keys once the plot has focus."
-}

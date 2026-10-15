@@ -3,16 +3,11 @@ title: Toast
 description: "Brief, stacked notifications that appear at the bottom of the screen and dismiss themselves."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="toast" story="Default">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction DefaultExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast.add({\n          title: \"Event created\",\n          description: \"Friday, October 3 at 9:00 AM\",\n        })\n      }\n    >\n      Show toast\n    </Button>\n  )\n}\n\nexport function ToastExample() {\n  return (\n    <DefaultExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-demo" />
 
 Toasts are built on the Base UI Toast primitive. `Toaster` is the ready-made setup: it combines `ToastProvider`, `ToastPortal` and `ToastViewport`, and renders each queued toast as a `Toast` with a `ToastContent` row holding a status icon, `ToastTitle`, `ToastDescription`, `ToastAction` and `ToastClose`.
 
@@ -22,27 +17,35 @@ New toasts stack at the bottom of the screen, with older ones scaled down behind
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toast"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toast
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
 3. Copy the source into `components/ui/toast.tsx`:
 
-<SourceFile path="components/ui/toast.tsx" />
+<ComponentSource path="components/ui/toast.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from \"@/components/ui/toast\""} />
+```tsx
+import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from "@/components/ui/toast"
+```
 
-<Code lang="tsx" code={"<DefaultExample />"} />
+```tsx
+<DefaultExample />
+```
 
 Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.
 
@@ -56,61 +59,37 @@ Pass `actionProps` to show a `ToastAction` button, and `timeout` in milliseconds
 
 Shows each toast `type` with its icon and color.
 
-<Example kind="ui" name="toast" story="Types">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TypesExample() {\n  const toast = useToastManager()\n\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"success\",\n            title: \"Changes saved\",\n            description: \"Your profile has been updated.\",\n          })\n        }\n      >\n        Success\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"info\",\n            title: \"New version available\",\n            description: \"Refresh the page to get the latest features.\",\n          })\n        }\n      >\n        Info\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"warning\",\n            title: \"Storage almost full\",\n            description: \"You have used 90% of your storage.\",\n          })\n        }\n      >\n        Warning\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"error\",\n            title: \"Upload failed\",\n            description: \"The file is larger than 10 MB.\",\n          })\n        }\n      >\n        Error\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"loading\",\n            title: \"Uploading file\",\n            description: \"This may take a few seconds.\",\n          })\n        }\n      >\n        Loading\n      </Button>\n    </div>\n  )\n}\n\nexport function ToastTypesExample() {\n  return (\n    <TypesExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-types" />
 
 ### Title only
 
 Shows a toast with a title and no description.
 
-<Example kind="ui" name="toast" story="TitleOnly">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TitleOnlyExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() => toast.add({ type: \"success\", title: \"8 photos uploaded\" })}\n    >\n      Upload photos\n    </Button>\n  )\n}\n\nexport function ToastTitleOnlyExample() {\n  return (\n    <TitleOnlyExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-title-only" />
 
 ### With action
 
 Adds an `Undo` action button that closes the toast.
 
-<Example kind="ui" name="toast" story="WithAction">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction WithActionExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() => {\n        const id = toast.add({\n          title: \"Message archived\",\n          description: \"The conversation was moved to your archive.\",\n          actionProps: {\n            children: \"Undo\",\n            onClick: () => toast.close(id),\n          },\n        })\n      }}\n    >\n      Archive message\n    </Button>\n  )\n}\n\nexport function ToastWithActionExample() {\n  return (\n    <WithActionExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-with-action" />
 
 ### Timeout
 
 Compares a short `timeout` with a persistent toast that stays until closed.
 
-<Example kind="ui" name="toast" story="Timeout">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TimeoutExample() {\n  const toast = useToastManager()\n\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Button\n        variant=\"outline\"\n        onClick={() => toast.add({ title: \"Link copied\", timeout: 1500 })}\n      >\n        Short\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"warning\",\n            title: \"Connection lost\",\n            description: \"Stays until you close it.\",\n            timeout: 0,\n          })\n        }\n      >\n        Persistent\n      </Button>\n      <Button variant=\"outline\" onClick={() => toast.close()}>\n        Close all\n      </Button>\n    </div>\n  )\n}\n\nexport function ToastTimeoutExample() {\n  return (\n    <TimeoutExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-timeout" />
 
 ### Promise toast
 
 Uses `toast.promise` to move from loading to success.
 
-<Example kind="ui" name="toast" story="PromiseToast">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction PromiseExample({ fail = false }: { fail?: boolean }) {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast\n          .promise(\n            fail\n              ? wait(2000).then(() =>\n                  Promise.reject(new Error(\"Network error\"))\n                )\n              : wait(2000),\n            {\n              loading: {\n                title: \"Publishing post\",\n                description: \"Hang tight, this only takes a moment.\",\n              },\n              success: {\n                title: \"Post published\",\n                description: \"Your post is now live.\",\n              },\n              error: (error) => ({\n                title: \"Publishing failed\",\n                description:\n                  error instanceof Error ? error.message : \"Please try again.\",\n              }),\n            }\n          )\n          .catch(() => undefined)\n      }\n    >\n      Publish post\n    </Button>\n  )\n}\n\nexport function ToastPromiseToastExample() {\n  return (\n    <PromiseExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-promise-toast" />
 
 ### Promise rejected
 
 Uses `toast.promise` to move from loading to an error when the promise rejects.
 
-<Example kind="ui" name="toast" story="PromiseRejected">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction PromiseExample({ fail = false }: { fail?: boolean }) {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast\n          .promise(\n            fail\n              ? wait(2000).then(() =>\n                  Promise.reject(new Error(\"Network error\"))\n                )\n              : wait(2000),\n            {\n              loading: {\n                title: \"Publishing post\",\n                description: \"Hang tight, this only takes a moment.\",\n              },\n              success: {\n                title: \"Post published\",\n                description: \"Your post is now live.\",\n              },\n              error: (error) => ({\n                title: \"Publishing failed\",\n                description:\n                  error instanceof Error ? error.message : \"Please try again.\",\n              }),\n            }\n          )\n          .catch(() => undefined)\n      }\n    >\n      Publish post\n    </Button>\n  )\n}\n\nexport function ToastPromiseRejectedExample() {\n  return (\n    <PromiseExample fail />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="toast-promise-rejected" />
 
 ## API Reference
 
@@ -120,7 +99,7 @@ Uses `toast.promise` to move from loading to an error when the promise rejects.
 
 Provides a toast manager to the parts inside it.
 
-<PropsTable extends={["ToastPrimitive.Provider.Props"]} />
+Also accepts the props of `ToastPrimitive.Provider.Props`.
 
 </ApiPart>
 
@@ -130,7 +109,7 @@ Provides a toast manager to the parts inside it.
 
 Renders the viewport into a portal.
 
-<PropsTable extends={["ToastPrimitive.Portal.Props"]} />
+Also accepts the props of `ToastPrimitive.Portal.Props`.
 
 </ApiPart>
 
@@ -140,7 +119,7 @@ Renders the viewport into a portal.
 
 The fixed region at the bottom of the screen that holds the stack.
 
-<PropsTable extends={["ToastPrimitive.Viewport.Props"]} />
+Also accepts the props of `ToastPrimitive.Viewport.Props`.
 
 </ApiPart>
 
@@ -150,7 +129,7 @@ The fixed region at the bottom of the screen that holds the stack.
 
 A single toast in the stack, positioned and animated by its index.
 
-<PropsTable extends={["ToastPrimitive.Root.Props"]} />
+Also accepts the props of `ToastPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -160,7 +139,7 @@ A single toast in the stack, positioned and animated by its index.
 
 The row that lays out a toast's icon, text and buttons.
 
-<PropsTable extends={["ToastPrimitive.Content.Props"]} />
+Also accepts the props of `ToastPrimitive.Content.Props`.
 
 </ApiPart>
 
@@ -170,7 +149,7 @@ The row that lays out a toast's icon, text and buttons.
 
 The toast's title, which names it.
 
-<PropsTable extends={["ToastPrimitive.Title.Props"]} />
+Also accepts the props of `ToastPrimitive.Title.Props`.
 
 </ApiPart>
 
@@ -180,7 +159,7 @@ The toast's title, which names it.
 
 Supporting text, which describes the toast.
 
-<PropsTable extends={["ToastPrimitive.Description.Props"]} />
+Also accepts the props of `ToastPrimitive.Description.Props`.
 
 </ApiPart>
 
@@ -190,7 +169,7 @@ Supporting text, which describes the toast.
 
 An optional action button, rendered as a small outline `Button`.
 
-<PropsTable extends={["ToastPrimitive.Action.Props"]} />
+Also accepts the props of `ToastPrimitive.Action.Props`.
 
 </ApiPart>
 
@@ -200,7 +179,7 @@ An optional action button, rendered as a small outline `Button`.
 
 An icon button that dismisses the toast.
 
-<PropsTable extends={["ToastPrimitive.Close.Props"]} />
+Also accepts the props of `ToastPrimitive.Close.Props`.
 
 </ApiPart>
 
@@ -210,7 +189,7 @@ An icon button that dismisses the toast.
 
 The complete setup: provider, portal, viewport and the rendered toasts.
 
-<PropsTable extends={["ToastPrimitive.Provider.Props"]} />
+Also accepts the props of `ToastPrimitive.Provider.Props`.
 
 </ApiPart>
 
@@ -232,11 +211,7 @@ The complete setup: provider, portal, viewport and the rendered toasts.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-toast--default" width={880} height={1720}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\nimport { Toaster, toast } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise<void>((resolve) => setTimeout(resolve, ms))\n}\n\nfunction Examples() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Event created\",\n            description: \"Sunday, December 3 at 9:00 AM\",\n          })\n        }\n      >\n        <Text>Show toast</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Message archived\",\n            type: \"info\",\n            actionProps: {\n              children: \"Undo\",\n              onPress: () => toast.add({ title: \"Restored\", type: \"success\" }),\n            },\n          })\n        }\n      >\n        <Text>With action</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Storage almost full\",\n            description: \"Free up space to keep syncing.\",\n            type: \"warning\",\n          })\n        }\n      >\n        <Text>Warning</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Upload failed\",\n            description: \"Check your connection and try again.\",\n            type: \"error\",\n            priority: \"high\",\n          })\n        }\n      >\n        <Text>Error</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() => {\n          toast\n            .promise(wait(2000), {\n              loading: \"Saving changes\",\n              success: \"Changes saved\",\n              error: \"Could not save changes\",\n            })\n            .catch(() => undefined)\n        }}\n      >\n        <Text>Promise</Text>\n      </Button>\n    </View>\n  )\n}\n\nexport function ToastExample() {\n  return (\n    <Toaster>\n      <Examples />\n    </Toaster>\n  )\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toast--default" />
 
 `Toaster` wraps your app in a toast provider and renders the queue through a portal into a full-screen viewport. On iOS the viewport sits inside a `FullWindowOverlay` from `react-native-screens`, so toasts appear above native modals. Each toast is a Reanimated view that slides in from the bottom edge, fades out downward, and is capped at 384 points wide.
 
@@ -246,19 +221,25 @@ Visible toasts stack with a small peek and shrink behind the frontmost one. Touc
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toast"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toast
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toast --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toast --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toast --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add toast --platform kotlin
+```
 
 </Only>
 
@@ -274,13 +255,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/toast.tsx`:
 
-<SourceFile path="uniwind/components/ui/toast.tsx" />
+<ComponentSource path="uniwind/components/ui/toast.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -290,13 +273,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/toast.tsx`:
 
-<SourceFile path="nativewind/components/ui/toast.tsx" />
+<ComponentSource path="nativewind/components/ui/toast.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -306,13 +291,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/toast.tsx`:
 
-<SourceFile path="stylesheet/components/ui/toast.tsx" />
+<ComponentSource path="stylesheet/components/ui/toast.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -328,31 +315,33 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Toast.swift" />
+<ComponentSource path="swift/Components/Toast.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -362,25 +351,30 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Toast.kt" />
+<ComponentSource path="kotlin/components/Toast.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -388,9 +382,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from \"@/components/ui/toast\""} />
+```tsx
+import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from "@/components/ui/toast"
+```
 
-<Code lang="tsx" code={"<Toaster>\n  <Examples />\n</Toaster>"} />
+```tsx
+<Toaster>
+  <Examples />
+</Toaster>
+```
 
 Render `Toaster` once near the root, then call the exported `toast` manager from anywhere: `toast.add({ title, description, type })` returns an id, `toast.update(id, updates)` changes a toast, and `toast.close(id)` removes it (or all toasts when called without an id).
 
@@ -406,11 +406,7 @@ Use `createToastManager` to create a separate manager and pass it to `Toaster` a
 
 Shows a success toast as soon as the screen mounts.
 
-<NativeExample id="components-toast--show-on-load" width={880} height={1720}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\nimport { Toaster, toast } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise<void>((resolve) => setTimeout(resolve, ms))\n}\n\nfunction ShowOnMount() {\n  React.useEffect(() => {\n    const id = toast.add({\n      title: \"Event created\",\n      description: \"Sunday, December 3 at 9:00 AM\",\n      type: \"success\",\n    })\n    return () => toast.close(id)\n  }, [])\n  return null\n}\n\nfunction Examples() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Event created\",\n            description: \"Sunday, December 3 at 9:00 AM\",\n          })\n        }\n      >\n        <Text>Show toast</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Message archived\",\n            type: \"info\",\n            actionProps: {\n              children: \"Undo\",\n              onPress: () => toast.add({ title: \"Restored\", type: \"success\" }),\n            },\n          })\n        }\n      >\n        <Text>With action</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Storage almost full\",\n            description: \"Free up space to keep syncing.\",\n            type: \"warning\",\n          })\n        }\n      >\n        <Text>Warning</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() =>\n          toast.add({\n            title: \"Upload failed\",\n            description: \"Check your connection and try again.\",\n            type: \"error\",\n            priority: \"high\",\n          })\n        }\n      >\n        <Text>Error</Text>\n      </Button>\n      <Button\n        variant=\"outline\"\n        onPress={() => {\n          toast\n            .promise(wait(2000), {\n              loading: \"Saving changes\",\n              success: \"Changes saved\",\n              error: \"Could not save changes\",\n            })\n            .catch(() => undefined)\n        }}\n      >\n        <Text>Promise</Text>\n      </Button>\n    </View>\n  )\n}\n\nexport function ToastShowOnLoadExample() {\n  return (\n    <Toaster>\n      <ShowOnMount />\n      <Examples />\n    </Toaster>\n  )\n}"} />
-
-</NativeExample>
+<NativeExample id="components-toast--show-on-load" />
 
 ## API Reference
 
@@ -420,7 +416,7 @@ Shows a success toast as soon as the screen mounts.
 
 Holds the toast queue, default timeout and visible limit.
 
-<PropsTable extends={["ToastPrimitive.ProviderProps"]} />
+Also accepts the props of `ToastPrimitive.ProviderProps`.
 
 </ApiPart>
 
@@ -430,7 +426,7 @@ Holds the toast queue, default timeout and visible limit.
 
 Renders its children into a portal host.
 
-<PropsTable extends={["ToastPrimitive.PortalProps"]} />
+Also accepts the props of `ToastPrimitive.PortalProps`.
 
 </ApiPart>
 
@@ -440,7 +436,7 @@ Renders its children into a portal host.
 
 Full-screen layer that holds the stack and expands it on touch.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Viewport>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Viewport>`.
 
 </ApiPart>
 
@@ -450,7 +446,7 @@ Full-screen layer that holds the stack and expands it on touch.
 
 One animated, swipeable toast in the stack.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Root>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Root>`.
 
 </ApiPart>
 
@@ -460,7 +456,7 @@ One animated, swipeable toast in the stack.
 
 Row layout for the icon, text, action and close button.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Content>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Content>`.
 
 </ApiPart>
 
@@ -470,7 +466,7 @@ Row layout for the icon, text, action and close button.
 
 The toast title, read from the toast object.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Title>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Title>`.
 
 </ApiPart>
 
@@ -480,7 +476,7 @@ The toast title, read from the toast object.
 
 Secondary text under the title.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Description>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Description>`.
 
 </ApiPart>
 
@@ -490,7 +486,7 @@ Secondary text under the title.
 
 Outline button rendered from `actionProps`.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Action>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Action>`.
 
 </ApiPart>
 
@@ -500,7 +496,7 @@ Outline button rendered from `actionProps`.
 
 Icon button that dismisses the toast.
 
-<PropsTable extends={["React.ComponentProps<typeof ToastPrimitive.Close>"]} />
+Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Close>`.
 
 </ApiPart>
 
@@ -510,7 +506,11 @@ Icon button that dismisses the toast.
 
 Provider, portal and viewport that render the default toast list.
 
-<PropsTable extends={["ToastPrimitive.ProviderProps"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+
+Also accepts the props of `ToastPrimitive.ProviderProps`.
 
 </ApiPart>
 

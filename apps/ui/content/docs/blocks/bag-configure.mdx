@@ -3,16 +3,11 @@ title: Bag Configure
 description: "A product configurator for choosing a model, finish, and storage, with a live price and Add to Bag button."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="bag-configure">
-
-<SourceFile path="components/blocks/bag-configure.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="bag-configure" />
 
 A buy page where shoppers pick a model, a finish and a storage size while the product photo and price update to match. On desktop the photo sits beside the options; on mobile it shrinks to a panel above them, and a sticky footer keeps the price and Add to Bag button in reach. Good for any configurable product, such as hardware, tiered subscriptions or made-to-order goods.
 
@@ -20,7 +15,9 @@ A buy page where shoppers pick a model, a finish and a storage size while the pr
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks bag-configure"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks bag-configure
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A buy page where shoppers pick a model, a finish and a storage size while the pr
 
 2. Copy the source into `components/blocks/bag-configure.tsx`:
 
-<SourceFile path="components/blocks/bag-configure.tsx" />
+<ComponentSource path="components/blocks/bag-configure.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BagConfigure } from \"@/components/blocks/bag-configure\""} />
+```tsx
+import { BagConfigure } from "@/components/blocks/bag-configure"
+```
 
-<Code lang="tsx" code={"<BagConfigure />"} />
+```tsx
+<BagConfigure />
+```
 
 Edit the `models`, `finishes` and `storage` lists: models carry a base price, finishes a swatch color and photo, and storage options a surcharge. The price is the model price plus the storage surcharge, with a 12-month estimate below it. Replace the Add to Bag handler, which only flips a local flag, with your cart call, and update the heading copy.
 
@@ -48,13 +49,13 @@ Price changes are announced to screen readers, and each swatch is labeled with i
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-bag-configure--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-bag-configure--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/bag-configure.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/bag-configure.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/BagConfigure.swift" fold={false} />
+<ComponentSource path="swift/Blocks/BagConfigure.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/BagConfigure.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/BagConfigure.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +65,25 @@ Composes `Screen`, `ToggleGroup` color swatches, `Button`, `Text` and `BottomBar
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bag-configure"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bag-configure
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bag-configure --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bag-configure --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bag-configure --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bag-configure --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +99,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/bag-configure.tsx`:
 
-<SourceFile path="uniwind/components/blocks/bag-configure.tsx" />
+<ComponentSource path="uniwind/components/blocks/bag-configure.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +117,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/bag-configure.tsx`:
 
-<SourceFile path="nativewind/components/blocks/bag-configure.tsx" />
+<ComponentSource path="nativewind/components/blocks/bag-configure.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +135,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/bag-configure.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/bag-configure.tsx" />
+<ComponentSource path="stylesheet/components/blocks/bag-configure.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,37 +159,39 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/BagConfigure.swift" />
+<ComponentSource path="swift/Blocks/BagConfigure.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -186,31 +201,36 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/BagConfigure.kt" />
+<ComponentSource path="kotlin/blocks/BagConfigure.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -218,9 +238,13 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 ## Usage
 
-<Code lang="tsx" code={"import { BagConfigure } from \"@/components/blocks/bag-configure\""} />
+```tsx
+import { BagConfigure } from "@/components/blocks/bag-configure"
+```
 
-<Code lang="tsx" code={"<BagConfigure />"} />
+```tsx
+<BagConfigure />
+```
 
 Replace `MODELS`, `FINISHES` and `STORAGE` with your catalog data. Pass `onAddToBag` to receive the selected model, finish, storage and price.
 

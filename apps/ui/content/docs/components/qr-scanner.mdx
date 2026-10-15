@@ -3,20 +3,11 @@ title: Qr Scanner
 description: "A camera overlay with a rounded cut-out scan frame, rounded corner brackets, an optional scan line and an optional flashlight toggle."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-qr-scanner--default" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerExample() {\n  return (\n    <Scanner description=\"Point your camera at a code to pay or connect.\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QRScannerExample: View {\n  var body: some View {\n    QRScannerDemo(hint: \"Point your camera at a code to pay or connect.\")\n  }\n}\n\nstruct QRScannerDemo: View {\n  var state: QRScannerState = .idle\n  let hint: LocalizedStringKey\n  var scanLine = false\n\n  @State private var torch = false\n\n  var body: some View {\n    QRScanner(\n      state: state,\n      title: \"Scan QR code\",\n      hint: hint,\n      scanLine: scanLine,\n      isTorchOn: torch,\n      onTorchToggle: { torch.toggle() }\n    ) {\n      QRScannerCameraPlaceholder()\n    }\n    .ignoresSafeArea()\n  }\n}\n\nenum QRCodeSample {\n  static let count = 21\n  static let module: CGFloat = 6\n  static let padding: CGFloat = 10\n  static let side = CGFloat(count) * module + padding * 2\n\n  static func isDark(_ r: Int, _ c: Int) -> Bool {\n    for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n      let i = r - fr\n      let j = c - fc\n      if (0...6).contains(i) && (0...6).contains(j) {\n        return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n      }\n    }\n    if r <= 7 && c <= 7 { return false }\n    if r <= 7 && c >= 13 { return false }\n    if r >= 13 && c <= 7 { return false }\n    return (r * 7 + c * 11 + r * c) % 5 < 2\n  }\n\n  static let modules: Path = {\n    var path = Path()\n    for r in 0..<count {\n      for c in 0..<count where isDark(r, c) {\n        path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n      }\n    }\n    return path\n  }()\n}\n\nstruct QRScannerCameraPlaceholder: View {\n  var body: some View {\n    GeometryReader { proxy in\n      Canvas { context, _ in\n        let card = CGRect(origin: .zero, size: CGSize(width: QRCodeSample.side, height: QRCodeSample.side))\n        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(.onMedia))\n        context.fill(QRCodeSample.modules, with: .color(.media))\n      }\n      .frame(width: QRCodeSample.side, height: QRCodeSample.side)\n      .rotationEffect(.degrees(-6))\n      .position(x: proxy.size.width / 2, y: proxy.size.height / 2 - 24)\n    }\n    .background(Color.media)\n    .accessibilityHidden(true)\n  }\n}\n\nlet count = 21\n\nlet module: CGFloat = 6\n\nlet padding: CGFloat = 10\n\nlet side = CGFloat(count) * module + padding * 2\n\nfunc isDark(_ r: Int, _ c: Int) -> Bool {\n  for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n    let i = r - fr\n    let j = c - fc\n    if (0...6).contains(i) && (0...6).contains(j) {\n      return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n    }\n  }\n  if r <= 7 && c <= 7 { return false }\n  if r <= 7 && c >= 13 { return false }\n  if r >= 13 && c <= 7 { return false }\n  return (r * 7 + c * 11 + r * c) % 5 < 2\n}\n\nlet modules: Path = {\n  var path = Path()\n  for r in 0..<count {\n    for c in 0..<count where isDark(r, c) {\n      path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n    }\n  }\n  return path\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.QrScanner\nimport com.esuiss.ui.components.QrScannerState\n\n@Composable\nfun QRScannerExample() {\n    QrScannerDemo(hint = \"Point your camera at a code to pay or connect.\")\n}\n\n@Composable\nfun QrScannerDemo(\n    state: QrScannerState = QrScannerState.Idle,\n    hint: String? = null,\n    scanLine: Boolean = false,\n) {\n    var torch by rememberSaveable { mutableStateOf(false) }\n    QrScanner(\n        modifier = Modifier.fillMaxSize(),\n        state = state,\n        title = \"Scan QR code\",\n        hint = hint,\n        scanLine = scanLine,\n        torch = torch,\n        onTorchToggle = { torch = it },\n    ) {\n        QrScannerCameraPlaceholder()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-qr-scanner--default" />
 
 `QRScanner` is a `View` that draws an overlay on top of whatever you pass as `children`, usually a camera preview. It does not open the camera itself. The overlay dims everything outside a square frame with rounded corners (drawn with `react-native-svg`) and marks the frame with four rounded corner brackets. When `scanLine` is set, a line moves up and down inside the frame with Reanimated while the state is `idle`.
 
@@ -26,19 +17,25 @@ The frame size defaults to 66% of the shorter side, capped at 260 points. It is 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add qr-scanner"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add qr-scanner
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add qr-scanner --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add qr-scanner --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add qr-scanner --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add qr-scanner --platform kotlin
+```
 
 </Only>
 
@@ -54,13 +51,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
 
 3. Copy the source into `components/ui/qr-scanner.tsx`:
 
-<SourceFile path="uniwind/components/ui/qr-scanner.tsx" />
+<ComponentSource path="uniwind/components/ui/qr-scanner.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -70,13 +69,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
 
 3. Copy the source into `components/ui/qr-scanner.tsx`:
 
-<SourceFile path="nativewind/components/ui/qr-scanner.tsx" />
+<ComponentSource path="nativewind/components/ui/qr-scanner.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -86,13 +87,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
 
 3. Copy the source into `components/ui/qr-scanner.tsx`:
 
-<SourceFile path="stylesheet/components/ui/qr-scanner.tsx" />
+<ComponentSource path="stylesheet/components/ui/qr-scanner.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,45 +111,47 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/QRScanner.swift" />
+<ComponentSource path="swift/Components/QRScanner.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Dialog.swift" />
+<ComponentSource path="swift/Components/Dialog.swift" />
 
-<SourceFile path="swift/Components/Drawer.swift" />
+<ComponentSource path="swift/Components/Drawer.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Keypad.swift" />
+<ComponentSource path="swift/Components/Keypad.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Popover.swift" />
+<ComponentSource path="swift/Components/Popover.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Patterns/Adaptive.swift" />
+<ComponentSource path="swift/Patterns/Adaptive.swift" />
 
-<SourceFile path="swift/Patterns/Preview.swift" />
+<ComponentSource path="swift/Patterns/Preview.swift" />
 
 5. Add the files to your app target.
 
@@ -156,39 +161,44 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/QrScanner.kt" />
+<ComponentSource path="kotlin/components/QrScanner.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Keypad.kt" />
+<ComponentSource path="kotlin/components/Keypad.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Switch.kt" />
+<ComponentSource path="kotlin/components/Switch.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +206,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { QRScanner } from \"@/components/ui/qr-scanner\""} />
+```tsx
+import { QRScanner } from "@/components/ui/qr-scanner"
+```
 
-<Code lang="tsx" code={"<Scanner description=\"Point your camera at a code to pay or connect.\" />"} />
+```tsx
+<Scanner description="Point your camera at a code to pay or connect." />
+```
 
 Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-media`.
 
@@ -212,57 +226,25 @@ The `QRScannerState` type is also exported.
 
 The `success` state with green brackets and a slightly smaller frame.
 
-<NativeExample id="components-qr-scanner--success" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerSuccessExample() {\n  return (\n    <Scanner state=\"success\" description=\"Code recognised\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QRScannerSuccessExample: View {\n  var body: some View {\n    QRScannerDemo(state: .success, hint: \"Code recognised\")\n  }\n}\n\nstruct QRScannerDemo: View {\n  var state: QRScannerState = .idle\n  let hint: LocalizedStringKey\n  var scanLine = false\n\n  @State private var torch = false\n\n  var body: some View {\n    QRScanner(\n      state: state,\n      title: \"Scan QR code\",\n      hint: hint,\n      scanLine: scanLine,\n      isTorchOn: torch,\n      onTorchToggle: { torch.toggle() }\n    ) {\n      QRScannerCameraPlaceholder()\n    }\n    .ignoresSafeArea()\n  }\n}\n\nenum QRCodeSample {\n  static let count = 21\n  static let module: CGFloat = 6\n  static let padding: CGFloat = 10\n  static let side = CGFloat(count) * module + padding * 2\n\n  static func isDark(_ r: Int, _ c: Int) -> Bool {\n    for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n      let i = r - fr\n      let j = c - fc\n      if (0...6).contains(i) && (0...6).contains(j) {\n        return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n      }\n    }\n    if r <= 7 && c <= 7 { return false }\n    if r <= 7 && c >= 13 { return false }\n    if r >= 13 && c <= 7 { return false }\n    return (r * 7 + c * 11 + r * c) % 5 < 2\n  }\n\n  static let modules: Path = {\n    var path = Path()\n    for r in 0..<count {\n      for c in 0..<count where isDark(r, c) {\n        path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n      }\n    }\n    return path\n  }()\n}\n\nstruct QRScannerCameraPlaceholder: View {\n  var body: some View {\n    GeometryReader { proxy in\n      Canvas { context, _ in\n        let card = CGRect(origin: .zero, size: CGSize(width: QRCodeSample.side, height: QRCodeSample.side))\n        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(.onMedia))\n        context.fill(QRCodeSample.modules, with: .color(.media))\n      }\n      .frame(width: QRCodeSample.side, height: QRCodeSample.side)\n      .rotationEffect(.degrees(-6))\n      .position(x: proxy.size.width / 2, y: proxy.size.height / 2 - 24)\n    }\n    .background(Color.media)\n    .accessibilityHidden(true)\n  }\n}\n\nlet count = 21\n\nlet module: CGFloat = 6\n\nlet padding: CGFloat = 10\n\nlet side = CGFloat(count) * module + padding * 2\n\nfunc isDark(_ r: Int, _ c: Int) -> Bool {\n  for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n    let i = r - fr\n    let j = c - fc\n    if (0...6).contains(i) && (0...6).contains(j) {\n      return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n    }\n  }\n  if r <= 7 && c <= 7 { return false }\n  if r <= 7 && c >= 13 { return false }\n  if r >= 13 && c <= 7 { return false }\n  return (r * 7 + c * 11 + r * c) % 5 < 2\n}\n\nlet modules: Path = {\n  var path = Path()\n  for r in 0..<count {\n    for c in 0..<count where isDark(r, c) {\n      path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n    }\n  }\n  return path\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.QrScanner\nimport com.esuiss.ui.components.QrScannerState\n\n@Composable\nfun QRScannerSuccessExample() {\n    QrScannerDemo(state = QrScannerState.Success, hint = \"Code recognised\")\n}\n\n@Composable\nfun QrScannerDemo(\n    state: QrScannerState = QrScannerState.Idle,\n    hint: String? = null,\n    scanLine: Boolean = false,\n) {\n    var torch by rememberSaveable { mutableStateOf(false) }\n    QrScanner(\n        modifier = Modifier.fillMaxSize(),\n        state = state,\n        title = \"Scan QR code\",\n        hint = hint,\n        scanLine = scanLine,\n        torch = torch,\n        onTorchToggle = { torch = it },\n    ) {\n        QrScannerCameraPlaceholder()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-qr-scanner--success" />
 
 ### Error
 
 The `error` state, which shakes the frame and turns the brackets red.
 
-<NativeExample id="components-qr-scanner--error-state" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerErrorStateExample() {\n  return (\n    <Scanner state=\"error\" description=\"This code is not supported.\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QRScannerErrorStateExample: View {\n  var body: some View {\n    QRScannerDemo(state: .error, hint: \"This code is not supported.\")\n  }\n}\n\nstruct QRScannerDemo: View {\n  var state: QRScannerState = .idle\n  let hint: LocalizedStringKey\n  var scanLine = false\n\n  @State private var torch = false\n\n  var body: some View {\n    QRScanner(\n      state: state,\n      title: \"Scan QR code\",\n      hint: hint,\n      scanLine: scanLine,\n      isTorchOn: torch,\n      onTorchToggle: { torch.toggle() }\n    ) {\n      QRScannerCameraPlaceholder()\n    }\n    .ignoresSafeArea()\n  }\n}\n\nenum QRCodeSample {\n  static let count = 21\n  static let module: CGFloat = 6\n  static let padding: CGFloat = 10\n  static let side = CGFloat(count) * module + padding * 2\n\n  static func isDark(_ r: Int, _ c: Int) -> Bool {\n    for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n      let i = r - fr\n      let j = c - fc\n      if (0...6).contains(i) && (0...6).contains(j) {\n        return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n      }\n    }\n    if r <= 7 && c <= 7 { return false }\n    if r <= 7 && c >= 13 { return false }\n    if r >= 13 && c <= 7 { return false }\n    return (r * 7 + c * 11 + r * c) % 5 < 2\n  }\n\n  static let modules: Path = {\n    var path = Path()\n    for r in 0..<count {\n      for c in 0..<count where isDark(r, c) {\n        path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n      }\n    }\n    return path\n  }()\n}\n\nstruct QRScannerCameraPlaceholder: View {\n  var body: some View {\n    GeometryReader { proxy in\n      Canvas { context, _ in\n        let card = CGRect(origin: .zero, size: CGSize(width: QRCodeSample.side, height: QRCodeSample.side))\n        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(.onMedia))\n        context.fill(QRCodeSample.modules, with: .color(.media))\n      }\n      .frame(width: QRCodeSample.side, height: QRCodeSample.side)\n      .rotationEffect(.degrees(-6))\n      .position(x: proxy.size.width / 2, y: proxy.size.height / 2 - 24)\n    }\n    .background(Color.media)\n    .accessibilityHidden(true)\n  }\n}\n\nlet count = 21\n\nlet module: CGFloat = 6\n\nlet padding: CGFloat = 10\n\nlet side = CGFloat(count) * module + padding * 2\n\nfunc isDark(_ r: Int, _ c: Int) -> Bool {\n  for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n    let i = r - fr\n    let j = c - fc\n    if (0...6).contains(i) && (0...6).contains(j) {\n      return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n    }\n  }\n  if r <= 7 && c <= 7 { return false }\n  if r <= 7 && c >= 13 { return false }\n  if r >= 13 && c <= 7 { return false }\n  return (r * 7 + c * 11 + r * c) % 5 < 2\n}\n\nlet modules: Path = {\n  var path = Path()\n  for r in 0..<count {\n    for c in 0..<count where isDark(r, c) {\n      path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n    }\n  }\n  return path\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.QrScanner\nimport com.esuiss.ui.components.QrScannerState\n\n@Composable\nfun QRScannerErrorStateExample() {\n    QrScannerDemo(state = QrScannerState.Error, hint = \"This code is not supported.\")\n}\n\n@Composable\nfun QrScannerDemo(\n    state: QrScannerState = QrScannerState.Idle,\n    hint: String? = null,\n    scanLine: Boolean = false,\n) {\n    var torch by rememberSaveable { mutableStateOf(false) }\n    QrScanner(\n        modifier = Modifier.fillMaxSize(),\n        state = state,\n        title = \"Scan QR code\",\n        hint = hint,\n        scanLine = scanLine,\n        torch = torch,\n        onTorchToggle = { torch = it },\n    ) {\n        QrScannerCameraPlaceholder()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-qr-scanner--error-state" />
 
 ### With scan line
 
 The scanner with `scanLine` turned on.
 
-<NativeExample id="components-qr-scanner--with-scan-line" width={880} height={1637} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner, type QRScannerState } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nfunction Scanner({\n  state,\n  description,\n  scanLine,\n}: {\n  state?: QRScannerState\n  description?: string\n  scanLine?: boolean\n}) {\n  const [torch, setTorch] = React.useState(false)\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      state={state}\n      scanLine={scanLine}\n      title=\"Scan QR code\"\n      description={description}\n      torch={torch}\n      onTorchToggle={setTorch}\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}\n\nexport function QrScannerWithScanLineExample() {\n  return (\n    <Scanner scanLine description=\"Hold steady over the code.\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QRScannerWithScanLineExample: View {\n  var body: some View {\n    QRScannerDemo(hint: \"Hold steady over the code.\", scanLine: true)\n  }\n}\n\nstruct QRScannerDemo: View {\n  var state: QRScannerState = .idle\n  let hint: LocalizedStringKey\n  var scanLine = false\n\n  @State private var torch = false\n\n  var body: some View {\n    QRScanner(\n      state: state,\n      title: \"Scan QR code\",\n      hint: hint,\n      scanLine: scanLine,\n      isTorchOn: torch,\n      onTorchToggle: { torch.toggle() }\n    ) {\n      QRScannerCameraPlaceholder()\n    }\n    .ignoresSafeArea()\n  }\n}\n\nenum QRCodeSample {\n  static let count = 21\n  static let module: CGFloat = 6\n  static let padding: CGFloat = 10\n  static let side = CGFloat(count) * module + padding * 2\n\n  static func isDark(_ r: Int, _ c: Int) -> Bool {\n    for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n      let i = r - fr\n      let j = c - fc\n      if (0...6).contains(i) && (0...6).contains(j) {\n        return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n      }\n    }\n    if r <= 7 && c <= 7 { return false }\n    if r <= 7 && c >= 13 { return false }\n    if r >= 13 && c <= 7 { return false }\n    return (r * 7 + c * 11 + r * c) % 5 < 2\n  }\n\n  static let modules: Path = {\n    var path = Path()\n    for r in 0..<count {\n      for c in 0..<count where isDark(r, c) {\n        path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n      }\n    }\n    return path\n  }()\n}\n\nstruct QRScannerCameraPlaceholder: View {\n  var body: some View {\n    GeometryReader { proxy in\n      Canvas { context, _ in\n        let card = CGRect(origin: .zero, size: CGSize(width: QRCodeSample.side, height: QRCodeSample.side))\n        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(.onMedia))\n        context.fill(QRCodeSample.modules, with: .color(.media))\n      }\n      .frame(width: QRCodeSample.side, height: QRCodeSample.side)\n      .rotationEffect(.degrees(-6))\n      .position(x: proxy.size.width / 2, y: proxy.size.height / 2 - 24)\n    }\n    .background(Color.media)\n    .accessibilityHidden(true)\n  }\n}\n\nlet count = 21\n\nlet module: CGFloat = 6\n\nlet padding: CGFloat = 10\n\nlet side = CGFloat(count) * module + padding * 2\n\nfunc isDark(_ r: Int, _ c: Int) -> Bool {\n  for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n    let i = r - fr\n    let j = c - fc\n    if (0...6).contains(i) && (0...6).contains(j) {\n      return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n    }\n  }\n  if r <= 7 && c <= 7 { return false }\n  if r <= 7 && c >= 13 { return false }\n  if r >= 13 && c <= 7 { return false }\n  return (r * 7 + c * 11 + r * c) % 5 < 2\n}\n\nlet modules: Path = {\n  var path = Path()\n  for r in 0..<count {\n    for c in 0..<count where isDark(r, c) {\n      path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n    }\n  }\n  return path\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.QrScanner\nimport com.esuiss.ui.components.QrScannerState\n\n@Composable\nfun QRScannerWithScanLineExample() {\n    QrScannerDemo(scanLine = true, hint = \"Hold steady over the code.\")\n}\n\n@Composable\nfun QrScannerDemo(\n    state: QrScannerState = QrScannerState.Idle,\n    hint: String? = null,\n    scanLine: Boolean = false,\n) {\n    var torch by rememberSaveable { mutableStateOf(false) }\n    QrScanner(\n        modifier = Modifier.fillMaxSize(),\n        state = state,\n        title = \"Scan QR code\",\n        hint = hint,\n        scanLine = scanLine,\n        torch = torch,\n        onTorchToggle = { torch = it },\n    ) {\n        QrScannerCameraPlaceholder()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-qr-scanner--with-scan-line" />
 
 ### Without torch
 
 A title and description with no flashlight button, because `onTorchToggle` is not passed.
 
-<NativeExample id="components-qr-scanner--without-torch" width={880} height={1196} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { IconProps as PhosphorIconProps } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Path } from \"react-native-svg\"\nimport Svg from \"react-native-svg\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { QRScanner } from \"@/components/ui/qr-scanner\"\n\nconst MODULES = 21\n\nconst MODULE_SIZE = 6\n\nconst CODE_SIZE = MODULES * MODULE_SIZE\n\nconst FINDERS = [\n  [0, 0],\n  [0, 14],\n  [14, 0],\n]\n\nfunction isDark(row: number, column: number) {\n  for (const [top, left] of FINDERS) {\n    const i = row - top\n    const j = column - left\n    if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {\n      return (\n        i === 0 ||\n        i === 6 ||\n        j === 0 ||\n        j === 6 ||\n        (i >= 2 && i <= 4 && j >= 2 && j <= 4)\n      )\n    }\n    const boxTop = top === 0 ? 0 : top - 1\n    const boxLeft = left === 0 ? 0 : left - 1\n    if (\n      row >= boxTop &&\n      row <= boxTop + 7 &&\n      column >= boxLeft &&\n      column <= boxLeft + 7\n    ) {\n      return false\n    }\n  }\n  return (row * 7 + column * 11 + row * column) % 5 < 2\n}\n\nconst CODE_PATH = Array.from({ length: MODULES * MODULES }, (_, index) => {\n  const row = Math.floor(index / MODULES)\n  const column = index % MODULES\n  return isDark(row, column)\n    ? `M${column * MODULE_SIZE} ${row * MODULE_SIZE}h${MODULE_SIZE}v${MODULE_SIZE}h-${MODULE_SIZE}Z`\n    : \"\"\n}).join(\"\")\n\nfunction QRCode({ color }: PhosphorIconProps) {\n  return (\n    <Svg width={CODE_SIZE} height={CODE_SIZE}>\n      <Path d={CODE_PATH} fill={color} />\n    </Svg>\n  )\n}\n\nfunction CameraPlaceholder() {\n  return (\n    <View className=\"flex-1 items-center justify-center bg-media\">\n      <View className=\"mb-12 -rotate-6 rounded-xl bg-on-media p-2.5\">\n        <Icon as={QRCode} className=\"text-media\" />\n      </View>\n    </View>\n  )\n}\n\nexport function QrScannerWithoutTorchExample() {\n  return (\n    <QRScanner\n      className=\"flex-1\"\n      title=\"Scan to sign in\"\n      description=\"Open Settings on your other device.\"\n    >\n      <CameraPlaceholder />\n    </QRScanner>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct QRScannerWithoutTorchExample: View {\n  var body: some View {\n    QRScanner(title: \"Scan to sign in\", hint: \"Open Settings on your other device.\") {\n      QRScannerCameraPlaceholder()\n    }\n    .ignoresSafeArea()\n  }\n}\n\nenum QRCodeSample {\n  static let count = 21\n  static let module: CGFloat = 6\n  static let padding: CGFloat = 10\n  static let side = CGFloat(count) * module + padding * 2\n\n  static func isDark(_ r: Int, _ c: Int) -> Bool {\n    for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n      let i = r - fr\n      let j = c - fc\n      if (0...6).contains(i) && (0...6).contains(j) {\n        return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n      }\n    }\n    if r <= 7 && c <= 7 { return false }\n    if r <= 7 && c >= 13 { return false }\n    if r >= 13 && c <= 7 { return false }\n    return (r * 7 + c * 11 + r * c) % 5 < 2\n  }\n\n  static let modules: Path = {\n    var path = Path()\n    for r in 0..<count {\n      for c in 0..<count where isDark(r, c) {\n        path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n      }\n    }\n    return path\n  }()\n}\n\nstruct QRScannerCameraPlaceholder: View {\n  var body: some View {\n    GeometryReader { proxy in\n      Canvas { context, _ in\n        let card = CGRect(origin: .zero, size: CGSize(width: QRCodeSample.side, height: QRCodeSample.side))\n        context.fill(Path(roundedRect: card, cornerRadius: Radius.xl, style: .continuous), with: .color(.onMedia))\n        context.fill(QRCodeSample.modules, with: .color(.media))\n      }\n      .frame(width: QRCodeSample.side, height: QRCodeSample.side)\n      .rotationEffect(.degrees(-6))\n      .position(x: proxy.size.width / 2, y: proxy.size.height / 2 - 24)\n    }\n    .background(Color.media)\n    .accessibilityHidden(true)\n  }\n}\n\nlet count = 21\n\nlet module: CGFloat = 6\n\nlet padding: CGFloat = 10\n\nlet side = CGFloat(count) * module + padding * 2\n\nfunc isDark(_ r: Int, _ c: Int) -> Bool {\n  for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {\n    let i = r - fr\n    let j = c - fc\n    if (0...6).contains(i) && (0...6).contains(j) {\n      return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))\n    }\n  }\n  if r <= 7 && c <= 7 { return false }\n  if r <= 7 && c >= 13 { return false }\n  if r >= 13 && c <= 7 { return false }\n  return (r * 7 + c * 11 + r * c) % 5 < 2\n}\n\nlet modules: Path = {\n  var path = Path()\n  for r in 0..<count {\n    for c in 0..<count where isDark(r, c) {\n      path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))\n    }\n  }\n  return path\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.QrScanner\n\n@Composable\nfun QrScannerWithoutTorch() {\n    QrScanner(\n        modifier = Modifier.fillMaxSize(),\n        title = \"Scan to sign in\",\n        hint = \"Open Settings on your other device.\",\n    ) {\n        QrScannerCameraPlaceholder()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-qr-scanner--without-torch" />
 
 ## API Reference
 
@@ -270,7 +252,18 @@ A title and description with no flashlight button, because `onTorchToggle` is no
 
 ### QRScanner
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"state","type":"QRScannerState","default":"\"idle\"","description":"`idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. Defaults to `idle`."},{"name":"title","type":"React.ReactNode","description":"Content shown above the frame. Strings are wrapped in a `Text`."},{"name":"description","type":"React.ReactNode","description":"Content shown below the frame. Strings are wrapped in a `Text`."},{"name":"scanLine","type":"boolean","default":"false","description":"Shows the animated scan line while the state is `idle`. Defaults to `false`."},{"name":"torch","type":"boolean","default":"false","description":"Whether the flashlight is on. The button fills and the icon uses the fill weight when on. Defaults to `false`."},{"name":"onTorchToggle","type":"(torch: boolean) => void","description":"Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set."},{"name":"torchLabel","type":"string","default":"\"Flashlight\"","description":"Accessibility label for the flashlight button. Defaults to `\"Flashlight\"`."},{"name":"frameSize","type":"number","description":"Side length of the scan frame in points. Overrides the automatic size."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `QRScannerState` | `"idle"` | `idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. Defaults to `idle`. |
+| `title` | `React.ReactNode` | - | Content shown above the frame. Strings are wrapped in a `Text`. |
+| `description` | `React.ReactNode` | - | Content shown below the frame. Strings are wrapped in a `Text`. |
+| `scanLine` | `boolean` | `false` | Shows the animated scan line while the state is `idle`. Defaults to `false`. |
+| `torch` | `boolean` | `false` | Whether the flashlight is on. The button fills and the icon uses the fill weight when on. Defaults to `false`. |
+| `onTorchToggle` | `(torch: boolean) => void` | - | Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set. |
+| `torchLabel` | `string` | `"Flashlight"` | Accessibility label for the flashlight button. Defaults to `"Flashlight"`. |
+| `frameSize` | `number` | - | Side length of the scan frame in points. Overrides the automatic size. |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 

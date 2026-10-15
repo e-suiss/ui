@@ -1,5 +1,0 @@
-{
-  "description": "Two lines comparing desktop and mobile visitors across six months, with a legend.",
-  "overview": "Desktop and mobile series drawn as monotone lines on the same axis. A legend below the plot names both series, and the tooltip lists each value for the touched month.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Line` and a `chartConfig` entry for each extra series; the legend picks them up. The component takes no props."
-}

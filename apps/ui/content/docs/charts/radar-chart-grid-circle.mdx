@@ -3,16 +3,11 @@ title: Radar Chart Grid Circle
 description: "A single radar shape drawn over circular rings instead of polygonal grid lines."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="radar-chart-grid-circle">
-
-<SourceFile path="components/charts/radar-chart-grid-circle.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="radar-chart-grid-circle" />
 
 The default radar shape drawn over concentric circles instead of polygon rings. Circles look softer and avoid suggesting straight edges between axes that the data doesn't have.
 
@@ -20,27 +15,35 @@ The default radar shape drawn over concentric circles instead of polygon rings. 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-grid-circle"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts radar-chart-grid-circle
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/radar-chart-grid-circle.tsx`:
 
-<SourceFile path="components/charts/radar-chart-grid-circle.tsx" />
+<ComponentSource path="components/charts/radar-chart-grid-circle.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadarChartGridCircle } from \"@/components/charts/radar-chart-grid-circle\""} />
+```tsx
+import { RadarChartGridCircle } from "@/components/charts/radar-chart-grid-circle"
+```
 
-<Code lang="tsx" code={"<RadarChartGridCircle />"} />
+```tsx
+<RadarChartGridCircle />
+```
 
 Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Switch back to polygon rings by removing `gridType` from `PolarGrid`.
 
@@ -48,13 +51,13 @@ Replace `chartData`, set the axis and value keys, and rename the series in `char
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-radar--grid-circle" width={880} height={719} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-radar--grid-circle" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/radar-chart-grid-circle.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/radar-chart-grid-circle.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/RadarChartGridCircle.swift" fold={false} />
+<ComponentSource path="swift/Charts/RadarChartGridCircle.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/RadarChartGridCircle.kt" fold={false} />
+<ComponentSource path="kotlin/charts/RadarChartGridCircle.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +67,25 @@ A `RadarChart` whose `PolarGrid` uses `gridType="circle"`, with one filled `Rada
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-grid-circle"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-grid-circle
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-grid-circle --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-grid-circle --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radar-chart-grid-circle --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add radar-chart-grid-circle --platform kotlin
+```
 
 </Only>
 
@@ -94,7 +103,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-grid-circle.tsx`:
 
-<SourceFile path="uniwind/components/charts/radar-chart-grid-circle.tsx" />
+<ComponentSource path="uniwind/components/charts/radar-chart-grid-circle.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -106,7 +115,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-grid-circle.tsx`:
 
-<SourceFile path="nativewind/components/charts/radar-chart-grid-circle.tsx" />
+<ComponentSource path="nativewind/components/charts/radar-chart-grid-circle.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -118,7 +127,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/radar-chart-grid-circle.tsx`:
 
-<SourceFile path="stylesheet/components/charts/radar-chart-grid-circle.tsx" />
+<ComponentSource path="stylesheet/components/charts/radar-chart-grid-circle.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -134,25 +143,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/RadarChartGridCircle.swift" />
+<ComponentSource path="swift/Charts/RadarChartGridCircle.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -162,29 +171,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/RadarChartGridCircle.kt" />
+<ComponentSource path="kotlin/charts/RadarChartGridCircle.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -192,9 +205,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { RadarChartGridCircle } from \"@/components/charts/radar-chart-grid-circle\""} />
+```tsx
+import { RadarChartGridCircle } from "@/components/charts/radar-chart-grid-circle"
+```
 
-<Code lang="tsx" code={"<RadarChartGridCircle />"} />
+```tsx
+<RadarChartGridCircle />
+```
 
 Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
 

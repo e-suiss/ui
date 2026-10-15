@@ -1,5 +1,0 @@
-{
-  "description": "A weight card with a straight-line trend, dots on each month and the latest value in the header.",
-  "overview": "Ten monthly weights drawn with `type=\"linear\"` and a dot on every reading, plus a larger dot for the touched point. A value axis on the right covers a fixed range, and the tooltip formats values in kilograms. The header shows the latest weight and the change since January as static text.",
-  "usage": "Replace the weight array in `chartData` and update the header text to match. Adjust the `YAxis` `domain` and `ticks` for your range. The component takes no props."
-}

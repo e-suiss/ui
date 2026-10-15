@@ -3,20 +3,11 @@ title: Page Indicator
 description: "A row of dots that shows the current page in a pager or carousel, with an elongated dot for the active page."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-page-indicator--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorExample() {\n  return (\n    <PageIndicator count={5} index={1} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorExample: View {\n  var body: some View {\n    PageIndicator(count: 5, index: 1)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.PageIndicator\n\n@Composable\nfun PageIndicatorExample() {\n    PageIndicator(count = 5, index = 1)\n}"} />
-
-</NativeExample>
+<NativeExample id="components-page-indicator--default" />
 
 `PageIndicator` draws one dot per page and widens the active one into a pill. Width and position changes animate with Reanimated. When `count` exceeds `maxVisible`, only a window of dots is shown; the window slides to keep the active dot near the center and the dots at its edges shrink to hint that more pages exist.
 
@@ -26,19 +17,25 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add page-indicator"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add page-indicator
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add page-indicator --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add page-indicator --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add page-indicator --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add page-indicator --platform kotlin
+```
 
 </Only>
 
@@ -52,13 +49,15 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/ui/page-indicator.tsx`:
 
-<SourceFile path="uniwind/components/ui/page-indicator.tsx" />
+<ComponentSource path="uniwind/components/ui/page-indicator.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -68,13 +67,15 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/ui/page-indicator.tsx`:
 
-<SourceFile path="nativewind/components/ui/page-indicator.tsx" />
+<ComponentSource path="nativewind/components/ui/page-indicator.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -84,13 +85,15 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/ui/page-indicator.tsx`:
 
-<SourceFile path="stylesheet/components/ui/page-indicator.tsx" />
+<ComponentSource path="stylesheet/components/ui/page-indicator.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -106,33 +109,35 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/PageIndicator.swift" />
+<ComponentSource path="swift/Components/PageIndicator.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Carousel.swift" />
+<ComponentSource path="swift/Components/Carousel.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -142,29 +147,34 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/PageIndicator.kt" />
+<ComponentSource path="kotlin/components/PageIndicator.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Carousel.kt" />
+<ComponentSource path="kotlin/components/Carousel.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -172,9 +182,13 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 ## Usage
 
-<Code lang="tsx" code={"import { PageIndicator } from \"@/components/ui/page-indicator\""} />
+```tsx
+import { PageIndicator } from "@/components/ui/page-indicator"
+```
 
-<Code lang="tsx" code={"<PageIndicator count={5} index={1} />"} />
+```tsx
+<PageIndicator count={5} index={1} />
+```
 
 The component is controlled: pass `count` and the current `index`. Pass `onIndexChange` to make the dots pressable; without it the indicator is display-only. Pressing a dot plays a selection haptic.
 
@@ -186,57 +200,25 @@ The `PageIndicatorSize` and `PageIndicatorVariant` types are also exported.
 
 The `sm` and `default` sizes.
 
-<NativeExample id="components-page-indicator--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorSizesExample() {\n  return (\n    <View className=\"items-center gap-6\">\n      <PageIndicator count={5} index={1} size=\"sm\" />\n      <PageIndicator count={5} index={1} />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorSizesExample: View {\n  var body: some View {\n    VStack(spacing: 24) {\n      PageIndicator(count: 5, index: 1, size: .sm)\n      PageIndicator(count: 5, index: 1)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.PageIndicatorSize\n\n@Composable\nfun PageIndicatorCentered(spacing: Int, content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(spacing.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PageIndicatorSizes() {\n    PageIndicatorCentered(24) {\n        PageIndicator(count = 5, index = 1, size = PageIndicatorSize.Sm)\n        PageIndicator(count = 5, index = 1)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-page-indicator--sizes" />
 
 ### Accent
 
 The `accent` variant.
 
-<NativeExample id="components-page-indicator--accent" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorAccentExample() {\n  return (\n    <PageIndicator count={5} index={1} variant=\"accent\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorAccentExample: View {\n  var body: some View {\n    PageIndicator(count: 5, index: 1, variant: .accent)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.PageIndicatorVariant\n\n@Composable\nfun PageIndicatorAccentExample() {\n    PageIndicator(count = 5, index = 1, variant = PageIndicatorVariant.Accent)\n}"} />
-
-</NativeExample>
+<NativeExample id="components-page-indicator--accent" />
 
 ### Many pages
 
 Twelve pages shown in a sliding window at the start, middle and end.
 
-<NativeExample id="components-page-indicator--many-pages" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\n\nexport function PageIndicatorManyPagesExample() {\n  return (\n    <View className=\"items-center gap-6\">\n      <PageIndicator count={12} index={0} />\n      <PageIndicator count={12} index={5} />\n      <PageIndicator count={12} index={11} />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorManyPagesExample: View {\n  var body: some View {\n    VStack(spacing: 24) {\n      PageIndicator(count: 12, index: 0)\n      PageIndicator(count: 12, index: 5)\n      PageIndicator(count: 12, index: 11)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PageIndicator\n\n@Composable\nfun PageIndicatorCentered(spacing: Int, content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(spacing.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PageIndicatorManyPages() {\n    PageIndicatorCentered(24) {\n        PageIndicator(count = 12, index = 0)\n        PageIndicator(count = 12, index = 5)\n        PageIndicator(count = 12, index = 11)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-page-indicator--many-pages" />
 
 ### Interactive
 
 Pressable dots that change the page through `onIndexChange`.
 
-<NativeExample id="components-page-indicator--interactive" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PageIndicator } from \"@/components/ui/page-indicator\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction InteractiveIndicator({ count }: { count: number }) {\n  const [index, setIndex] = React.useState(0)\n  return (\n    <View className=\"items-center gap-3\">\n      <PageIndicator count={count} index={index} onIndexChange={setIndex} />\n      <Text variant=\"muted\">\n        Page {index + 1} of {count}\n      </Text>\n    </View>\n  )\n}\n\nexport function PageIndicatorInteractiveExample() {\n  return (\n    <InteractiveIndicator count={12} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PageIndicatorInteractiveExample: View {\n  var body: some View {\n    PageIndicatorInteractive(count: 12)\n  }\n}\n\nstruct PageIndicatorInteractive: View {\n  let count: Int\n\n  @State private var index = 0\n\n  var body: some View {\n    VStack(spacing: 12) {\n      PageIndicator(count: count, index: index) { index = $0 }\n      Text(verbatim: \"Page \\(index + 1) of \\(count)\")\n        .textVariant(.muted)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.PageIndicator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun PageIndicatorInteractiveExample() {\n    PageIndicatorInteractive(12)\n}\n\n@Composable\nfun PageIndicatorCentered(spacing: Int, content: @Composable () -> Unit) {\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(spacing.dp),\n    ) {\n        content()\n    }\n}\n\n@Composable\nfun PageIndicatorInteractive(count: Int) {\n    var index by rememberSaveable { mutableIntStateOf(0) }\n    PageIndicatorCentered(12) {\n        PageIndicator(count = count, index = index, onIndexChange = { index = it })\n        Text(\"Page ${index + 1} of $count\", variant = TextVariant.Muted)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-page-indicator--interactive" />
 
 ## API Reference
 
@@ -244,7 +226,16 @@ Pressable dots that change the page through `onIndexChange`.
 
 ### PageIndicator
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"count","type":"number","required":true,"description":"Total number of pages. Nothing renders when it is `0`."},{"name":"index","type":"number","required":true,"description":"Zero-based index of the current page."},{"name":"onIndexChange","type":"(index: number) => void","description":"Called with the new index when a dot is pressed or an accessibility action is used."},{"name":"size","type":"PageIndicatorSize","default":"\"default\"","description":"Dot size: `default` or `sm`."},{"name":"variant","type":"PageIndicatorVariant","default":"\"default\"","description":"Active dot color: `default` or `accent`."},{"name":"maxVisible","type":"number","default":"7","description":"Most dots shown at once. Defaults to `7`, minimum `3`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `count` | `number` | Required | Total number of pages. Nothing renders when it is `0`. |
+| `index` | `number` | Required | Zero-based index of the current page. |
+| `onIndexChange` | `(index: number) => void` | - | Called with the new index when a dot is pressed or an accessibility action is used. |
+| `size` | `PageIndicatorSize` | `"default"` | Dot size: `default` or `sm`. |
+| `variant` | `PageIndicatorVariant` | `"default"` | Active dot color: `default` or `accent`. |
+| `maxVisible` | `number` | `7` | Most dots shown at once. Defaults to `7`, minimum `3`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

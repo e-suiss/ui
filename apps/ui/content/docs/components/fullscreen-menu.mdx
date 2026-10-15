@@ -3,16 +3,11 @@ title: Fullscreen Menu
 description: "A navigation menu that covers the whole screen, for site links on small viewports."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="fullscreen-menu" story="Default">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { FullscreenMenu, FullscreenMenuContent, FullscreenMenuGroup, FullscreenMenuLabel, FullscreenMenuLink, FullscreenMenuTitle, FullscreenMenuTrigger } from \"@/components/ui/fullscreen-menu\"\n\nconst primary = [\"Store\", \"Products\", \"Services\", \"Company\", \"Support\"]\n\nconst sections = [\n  { label: \"Explore\", links: [\"Overview\", \"Compare\", \"Accessories\"] },\n  { label: \"Shop\", links: [\"Shop online\", \"Find a store\", \"Order status\"] },\n]\n\nfunction MenuExample({\n  defaultOpen,\n  closeLabel,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  closeLabel?: string\n  withSections?: boolean\n}) {\n  const [active, setActive] = React.useState(\"Store\")\n\n  return (\n    <div className=\"flex h-14 items-center justify-between px-4\">\n      <span className=\"font-semibold\">Acme</span>\n      <FullscreenMenu defaultOpen={defaultOpen}>\n        <FullscreenMenuTrigger aria-label=\"Menu\" />\n        <FullscreenMenuContent closeLabel={closeLabel}>\n          <FullscreenMenuTitle>Menu</FullscreenMenuTitle>\n          <FullscreenMenuGroup>\n            {primary.map((link) => (\n              <FullscreenMenuLink\n                key={link}\n                href={`#${link.toLowerCase()}`}\n                isActive={active === link}\n                onClick={() => setActive(link)}\n              >\n                {link}\n              </FullscreenMenuLink>\n            ))}\n          </FullscreenMenuGroup>\n          {withSections &&\n            sections.map((section) => (\n              <FullscreenMenuGroup key={section.label}>\n                <FullscreenMenuLabel>{section.label}</FullscreenMenuLabel>\n                {section.links.map((link) => (\n                  <FullscreenMenuLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                  >\n                    {link}\n                  </FullscreenMenuLink>\n                ))}\n              </FullscreenMenuGroup>\n            ))}\n        </FullscreenMenuContent>\n      </FullscreenMenu>\n    </div>\n  )\n}\n\nexport function FullscreenMenuExample() {\n  return (\n    <MenuExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="fullscreen-menu-demo" layout="fullscreen" />
 
 Fullscreen menu is built on the Base UI Dialog. The `FullscreenMenu` root manages the open state, and `FullscreenMenuTrigger` renders a menu button whose two-line icon animates into a close icon. `FullscreenMenuContent` covers the viewport and reveals from the top, with a sticky header that holds the close button. Inside it, `FullscreenMenuTitle` names the menu, `FullscreenMenuGroup` holds a list of `FullscreenMenuLink` items, and `FullscreenMenuLabel` adds a caption to a group. Links and labels fade in with a staggered delay as the menu opens.
 
@@ -22,27 +17,35 @@ Use it for the primary navigation of a website on phones, like the global naviga
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add fullscreen-menu"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add fullscreen-menu
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
 3. Copy the source into `components/ui/fullscreen-menu.tsx`:
 
-<SourceFile path="components/ui/fullscreen-menu.tsx" />
+<ComponentSource path="components/ui/fullscreen-menu.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { FullscreenMenu, FullscreenMenuTrigger, FullscreenMenuContent, FullscreenMenuTitle, FullscreenMenuGroup, FullscreenMenuLabel, FullscreenMenuLink, FullscreenMenuClose } from \"@/components/ui/fullscreen-menu\""} />
+```tsx
+import { FullscreenMenu, FullscreenMenuTrigger, FullscreenMenuContent, FullscreenMenuTitle, FullscreenMenuGroup, FullscreenMenuLabel, FullscreenMenuLink, FullscreenMenuClose } from "@/components/ui/fullscreen-menu"
+```
 
-<Code lang="tsx" code={"<MenuExample />"} />
+```tsx
+<MenuExample />
+```
 
 The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Choosing a `FullscreenMenuLink` closes the menu. Set `isActive` on the link for the current page.
 
@@ -54,21 +57,13 @@ Groups that contain a `FullscreenMenuLabel` render their links smaller than grou
 
 A menu with a single group of primary links and no labelled sections.
 
-<Example kind="ui" name="fullscreen-menu" story="LinksOnly">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { FullscreenMenu, FullscreenMenuContent, FullscreenMenuGroup, FullscreenMenuLabel, FullscreenMenuLink, FullscreenMenuTitle, FullscreenMenuTrigger } from \"@/components/ui/fullscreen-menu\"\n\nconst primary = [\"Store\", \"Products\", \"Services\", \"Company\", \"Support\"]\n\nconst sections = [\n  { label: \"Explore\", links: [\"Overview\", \"Compare\", \"Accessories\"] },\n  { label: \"Shop\", links: [\"Shop online\", \"Find a store\", \"Order status\"] },\n]\n\nfunction MenuExample({\n  defaultOpen,\n  closeLabel,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  closeLabel?: string\n  withSections?: boolean\n}) {\n  const [active, setActive] = React.useState(\"Store\")\n\n  return (\n    <div className=\"flex h-14 items-center justify-between px-4\">\n      <span className=\"font-semibold\">Acme</span>\n      <FullscreenMenu defaultOpen={defaultOpen}>\n        <FullscreenMenuTrigger aria-label=\"Menu\" />\n        <FullscreenMenuContent closeLabel={closeLabel}>\n          <FullscreenMenuTitle>Menu</FullscreenMenuTitle>\n          <FullscreenMenuGroup>\n            {primary.map((link) => (\n              <FullscreenMenuLink\n                key={link}\n                href={`#${link.toLowerCase()}`}\n                isActive={active === link}\n                onClick={() => setActive(link)}\n              >\n                {link}\n              </FullscreenMenuLink>\n            ))}\n          </FullscreenMenuGroup>\n          {withSections &&\n            sections.map((section) => (\n              <FullscreenMenuGroup key={section.label}>\n                <FullscreenMenuLabel>{section.label}</FullscreenMenuLabel>\n                {section.links.map((link) => (\n                  <FullscreenMenuLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                  >\n                    {link}\n                  </FullscreenMenuLink>\n                ))}\n              </FullscreenMenuGroup>\n            ))}\n        </FullscreenMenuContent>\n      </FullscreenMenu>\n    </div>\n  )\n}\n\nexport function FullscreenMenuLinksOnlyExample() {\n  return (\n    <MenuExample withSections={false} />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="fullscreen-menu-links-only" layout="fullscreen" />
 
 ### With close label
 
 A menu whose close button shows the text `Done` instead of an icon.
 
-<Example kind="ui" name="fullscreen-menu" story="WithCloseLabel">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { FullscreenMenu, FullscreenMenuContent, FullscreenMenuGroup, FullscreenMenuLabel, FullscreenMenuLink, FullscreenMenuTitle, FullscreenMenuTrigger } from \"@/components/ui/fullscreen-menu\"\n\nconst primary = [\"Store\", \"Products\", \"Services\", \"Company\", \"Support\"]\n\nconst sections = [\n  { label: \"Explore\", links: [\"Overview\", \"Compare\", \"Accessories\"] },\n  { label: \"Shop\", links: [\"Shop online\", \"Find a store\", \"Order status\"] },\n]\n\nfunction MenuExample({\n  defaultOpen,\n  closeLabel,\n  withSections = true,\n}: {\n  defaultOpen?: boolean\n  closeLabel?: string\n  withSections?: boolean\n}) {\n  const [active, setActive] = React.useState(\"Store\")\n\n  return (\n    <div className=\"flex h-14 items-center justify-between px-4\">\n      <span className=\"font-semibold\">Acme</span>\n      <FullscreenMenu defaultOpen={defaultOpen}>\n        <FullscreenMenuTrigger aria-label=\"Menu\" />\n        <FullscreenMenuContent closeLabel={closeLabel}>\n          <FullscreenMenuTitle>Menu</FullscreenMenuTitle>\n          <FullscreenMenuGroup>\n            {primary.map((link) => (\n              <FullscreenMenuLink\n                key={link}\n                href={`#${link.toLowerCase()}`}\n                isActive={active === link}\n                onClick={() => setActive(link)}\n              >\n                {link}\n              </FullscreenMenuLink>\n            ))}\n          </FullscreenMenuGroup>\n          {withSections &&\n            sections.map((section) => (\n              <FullscreenMenuGroup key={section.label}>\n                <FullscreenMenuLabel>{section.label}</FullscreenMenuLabel>\n                {section.links.map((link) => (\n                  <FullscreenMenuLink\n                    key={link}\n                    href={`#${link.toLowerCase().replaceAll(\" \", \"-\")}`}\n                  >\n                    {link}\n                  </FullscreenMenuLink>\n                ))}\n              </FullscreenMenuGroup>\n            ))}\n        </FullscreenMenuContent>\n      </FullscreenMenu>\n    </div>\n  )\n}\n\nexport function FullscreenMenuWithCloseLabelExample() {\n  return (\n    <MenuExample closeLabel=\"Done\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="fullscreen-menu-with-close-label" layout="fullscreen" />
 
 ## API Reference
 
@@ -78,7 +73,7 @@ A menu whose close button shows the text `Done` instead of an icon.
 
 The root that manages the menu's open state.
 
-<PropsTable extends={["DialogPrimitive.Root.Props","FullscreenMenuProps"]} />
+Also accepts the props of `DialogPrimitive.Root.Props`, `FullscreenMenuProps`.
 
 </ApiPart>
 
@@ -88,7 +83,7 @@ The root that manages the menu's open state.
 
 The menu button, with an icon that animates between menu and close states.
 
-<PropsTable extends={["DialogPrimitive.Trigger.Props"]} />
+Also accepts the props of `DialogPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -98,7 +93,12 @@ The menu button, with an icon that animates between menu and close states.
 
 The full-screen panel, with a sticky header that holds the close button.
 
-<PropsTable extends={["DialogPrimitive.Popup.Props"]} props={[{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the header with a close button at the top of the menu."},{"name":"closeLabel","type":"string","description":"Replaces the close button's icon with this text."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `boolean` | `true` | Shows the header with a close button at the top of the menu. |
+| `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
+
+Also accepts the props of `DialogPrimitive.Popup.Props`.
 
 </ApiPart>
 
@@ -108,7 +108,7 @@ The full-screen panel, with a sticky header that holds the close button.
 
 The menu's title, visually hidden and used as its accessible name.
 
-<PropsTable extends={["DialogPrimitive.Title.Props"]} />
+Also accepts the props of `DialogPrimitive.Title.Props`.
 
 </ApiPart>
 
@@ -118,7 +118,7 @@ The menu's title, visually hidden and used as its accessible name.
 
 A list of links, animated in sequence.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -128,7 +128,7 @@ A list of links, animated in sequence.
 
 A caption for a group of links.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -138,7 +138,11 @@ A caption for a group of links.
 
 A navigation link that closes the menu when chosen.
 
-<PropsTable extends={["useRender.ComponentProps<\"a\">","React.ComponentProps<\"a\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the link as the current page with `aria-current=\"page\"` and the link color."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"` and the link color. |
+
+Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps<"a">`.
 
 </ApiPart>
 
@@ -148,7 +152,7 @@ A navigation link that closes the menu when chosen.
 
 A button that closes the menu from any element.
 
-<PropsTable extends={["DialogPrimitive.Close.Props"]} />
+Also accepts the props of `DialogPrimitive.Close.Props`.
 
 </ApiPart>
 

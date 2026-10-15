@@ -3,16 +3,11 @@ title: Area Chart Interactive
 description: "A stock price chart with time-range toggles, a scrubbing cursor that updates the header, and animated transitions between ranges."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="area-chart-interactive">
-
-<SourceFile path="components/charts/area-chart-interactive.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="area-chart-interactive" />
 
 A stock-style price chart with range toggles from one day to five years. Scrubbing the plot updates the price, change and date in the header, and switching ranges morphs the line into its new shape. Use it as a starting point for financial or any time-series dashboard where readers drill into time ranges.
 
@@ -20,27 +15,35 @@ A stock-style price chart with range toggles from one day to five years. Scrubbi
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts area-chart-interactive"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts area-chart-interactive
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/charts/area-chart-interactive.tsx`:
 
-<SourceFile path="components/charts/area-chart-interactive.tsx" />
+<ComponentSource path="components/charts/area-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { AreaChartInteractive } from \"@/components/charts/area-chart-interactive\""} />
+```tsx
+import { AreaChartInteractive } from "@/components/charts/area-chart-interactive"
+```
 
-<Code lang="tsx" code={"<AreaChartInteractive />"} />
+```tsx
+<AreaChartInteractive />
+```
 
 The demo generates prices from a seeded random series; replace the `generate` function with your own fetch or data per range, keeping one price and one label per point. Edit `RANGES` to change the available toggles and their captions. The stats row under the chart, including the volume figure, is static and should be wired to your data.
 
@@ -52,13 +55,13 @@ The line turns green or red depending on whether the price at the cursor is abov
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-area--interactive" width={880} height={1241} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-area--interactive" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/area-chart-interactive.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/area-chart-interactive.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/AreaChartInteractive.swift" fold={false} />
+<ComponentSource path="swift/Charts/AreaChartInteractive.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/AreaChartInteractive.kt" fold={false} />
+<ComponentSource path="kotlin/charts/AreaChartInteractive.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ One price series drawn as a linear area with a fading gradient, a value axis on 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-interactive"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add area-chart-interactive
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-interactive --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add area-chart-interactive --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add area-chart-interactive --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add area-chart-interactive --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/charts/area-chart-interactive.tsx`:
 
-<SourceFile path="uniwind/components/charts/area-chart-interactive.tsx" />
+<ComponentSource path="uniwind/components/charts/area-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/charts/area-chart-interactive.tsx`:
 
-<SourceFile path="nativewind/components/charts/area-chart-interactive.tsx" />
+<ComponentSource path="nativewind/components/charts/area-chart-interactive.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -130,7 +143,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/area-chart-interactive.tsx`:
 
-<SourceFile path="stylesheet/components/charts/area-chart-interactive.tsx" />
+<ComponentSource path="stylesheet/components/charts/area-chart-interactive.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -146,41 +159,43 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/AreaChartInteractive.swift" />
+<ComponentSource path="swift/Charts/AreaChartInteractive.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Components/Toggle.swift" />
+<ComponentSource path="swift/Components/Toggle.swift" />
 
-<SourceFile path="swift/Components/ToggleGroup.swift" />
+<ComponentSource path="swift/Components/ToggleGroup.swift" />
 
 5. Add the files to your app target.
 
@@ -190,41 +205,46 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/AreaChartInteractive.kt" />
+<ComponentSource path="kotlin/charts/AreaChartInteractive.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Toggle.kt" />
+<ComponentSource path="kotlin/components/Toggle.kt" />
 
-<SourceFile path="kotlin/components/ToggleGroup.kt" />
+<ComponentSource path="kotlin/components/ToggleGroup.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -232,9 +252,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { AreaChartInteractive } from \"@/components/charts/area-chart-interactive\""} />
+```tsx
+import { AreaChartInteractive } from "@/components/charts/area-chart-interactive"
+```
 
-<Code lang="tsx" code={"<AreaChartInteractive />"} />
+```tsx
+<AreaChartInteractive />
+```
 
 Replace `generate()` with your price history for each range, and set the symbol, company name and `LAST_PRICE`. Volume values are hard-coded in `stats`. The component takes no props.
 

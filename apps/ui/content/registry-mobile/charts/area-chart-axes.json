@@ -1,5 +1,0 @@
-{
-  "description": "A single area with a gradient fill, dots on each point and a value axis on the right.",
-  "overview": "One series drawn as a monotone curve with a fill that fades from top to bottom, a dot on every month, a month axis below and a four-tick value axis on the right. The tooltip follows your finger across the plot.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`, and adjust `tickCount` on the `YAxis` to change how many values it shows. The component takes no props."
-}

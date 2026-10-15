@@ -1,6 +1,0 @@
-{
-  "description": "Monthly temperatures for several cities, with chips to show or hide each city and an average, high or low switch.",
-  "overview": "Monthly temperatures for several cities with chips to show or hide each city and a switch between average, high and low. A row of stats under the chart shows each city's range and follows the cursor month. Use it as a pattern for comparing many series where readers pick which ones to see.",
-  "usage": "Replace `CITIES` with your own series and add a matching entry with label and color to `chartConfig` for each one. Set which series start visible in the `visible` state. The high and low modes are derived from the averages with a demo formula, so replace `temperature` with real values, and adjust the fixed value axis `domain` to your range.",
-  "notes": "The last visible city can't be hidden, so the chart is never empty. Values outside the fixed value axis range are clipped. Newly shown lines draw in with an animation that is skipped when reduced motion is preferred."
-}

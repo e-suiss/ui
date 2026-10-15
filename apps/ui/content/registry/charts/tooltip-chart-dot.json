@@ -1,6 +1,0 @@
-{
-  "description": "A stacked bar chart showing the default tooltip indicator, a small colored square for each series.",
-  "overview": "A stacked bar chart that shows the default tooltip indicator, a small colored square beside each series. It is the most compact indicator and the one you get without setting anything.",
-  "usage": "Leave `indicator` unset or set it to `dot` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig` with your own.",
-  "notes": "The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden."
-}

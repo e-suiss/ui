@@ -1,5 +1,0 @@
-{
-  "description": "A single filled area drawn as steps, so each value holds until the next reading.",
-  "overview": "One series with `type=\"step\"`, which draws flat runs between readings instead of a slope. Use it for values that change at discrete moments, such as prices or plan limits. It has a month axis, a dashed grid and a tooltip.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props."
-}

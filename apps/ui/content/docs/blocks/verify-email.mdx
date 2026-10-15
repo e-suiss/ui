@@ -3,16 +3,11 @@ title: Verify Email
 description: "A check-your-inbox screen after signup, with open mail and resend actions and a cooldown timer."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="verify-email">
-
-<SourceFile path="components/blocks/verify-email.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="verify-email" />
 
 A check-your-inbox screen shown after signup that names the address the link went to, with an Open Mail button, a Resend button with a 45-second cooldown and a link to change the address. Use it for email verification, magic links or password reset confirmations.
 
@@ -20,27 +15,35 @@ A check-your-inbox screen shown after signup that names the address the link wen
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks verify-email"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks verify-email
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
 3. Copy the source into `components/blocks/verify-email.tsx`:
 
-<SourceFile path="components/blocks/verify-email.tsx" />
+<ComponentSource path="components/blocks/verify-email.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { VerifyEmail } from \"@/components/blocks/verify-email\""} />
+```tsx
+import { VerifyEmail } from "@/components/blocks/verify-email"
+```
 
-<Code lang="tsx" code={"<VerifyEmail />"} />
+```tsx
+<VerifyEmail />
+```
 
 Pass the real address in place of the `EMAIL` constant. In the demo, Open Mail marks the email as verified, but in production verification happens when the user follows the link, so point that button at a mail app or remove it. Connect Resend to your email service and `#change` to your account settings.
 
@@ -48,13 +51,13 @@ Pass the real address in place of the `EMAIL` constant. In the demo, Open Mail m
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-verify-email--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-verify-email--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/verify-email.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/verify-email.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/VerifyEmail.swift" fold={false} />
+<ComponentSource path="swift/Blocks/VerifyEmail.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/VerifyEmail.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/VerifyEmail.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +67,25 @@ The screen shows the address the link was sent to and a link to change it. The `
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add verify-email"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add verify-email
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add verify-email --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add verify-email --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add verify-email --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add verify-email --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +101,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/verify-email.tsx`:
 
-<SourceFile path="uniwind/components/blocks/verify-email.tsx" />
+<ComponentSource path="uniwind/components/blocks/verify-email.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +119,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/verify-email.tsx`:
 
-<SourceFile path="nativewind/components/blocks/verify-email.tsx" />
+<ComponentSource path="nativewind/components/blocks/verify-email.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +137,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/verify-email.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/verify-email.tsx" />
+<ComponentSource path="stylesheet/components/blocks/verify-email.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,37 +161,39 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/VerifyEmail.swift" />
+<ComponentSource path="swift/Blocks/VerifyEmail.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -186,29 +203,34 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/VerifyEmail.kt" />
+<ComponentSource path="kotlin/blocks/VerifyEmail.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -216,9 +238,13 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 ## Usage
 
-<Code lang="tsx" code={"import { VerifyEmail } from \"@/components/blocks/verify-email\""} />
+```tsx
+import { VerifyEmail } from "@/components/blocks/verify-email"
+```
 
-<Code lang="tsx" code={"<VerifyEmail />"} />
+```tsx
+<VerifyEmail />
+```
 
 Replace `EMAIL` with the user's address. Use `onOpenMail` to open the mail app and `onChangeAddress` to go back to the email field.
 

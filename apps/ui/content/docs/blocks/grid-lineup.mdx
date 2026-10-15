@@ -3,16 +3,11 @@ title: Grid Lineup
 description: "A product lineup comparing models side by side, each with finish swatches, a price, and buy actions."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="grid-lineup">
-
-<SourceFile path="components/blocks/grid-lineup.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="grid-lineup" />
 
 A side-by-side model comparison where each model shows a photo, finish swatches, a name and tagline, a starting price, a Buy button and a Learn more link. Models sit two per row, or four on large screens, and the text blocks keep a fixed height so prices line up. Use it for a product family page or any plan or tier lineup.
 
@@ -20,7 +15,9 @@ A side-by-side model comparison where each model shows a photo, finish swatches,
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks grid-lineup"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks grid-lineup
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A side-by-side model comparison where each model shows a photo, finish swatches,
 
 2. Copy the source into `components/blocks/grid-lineup.tsx`:
 
-<SourceFile path="components/blocks/grid-lineup.tsx" />
+<ComponentSource path="components/blocks/grid-lineup.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { GridLineup } from \"@/components/blocks/grid-lineup\""} />
+```tsx
+import { GridLineup } from "@/components/blocks/grid-lineup"
+```
 
-<Code lang="tsx" code={"<GridLineup />"} />
+```tsx
+<GridLineup />
+```
 
 Edit `models`; each has a name, tagline, formatted price, optional kicker, image, alt text and a list of finishes with a label and color. Picking a swatch changes only the selection, not the photo, so add per-finish images if you need them. Give Buy a handler and point the `#learn` links at real pages.
 
@@ -48,13 +49,13 @@ Swatches are labeled with their finish names and have enlarged hit areas. Photos
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-grid-lineup--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-grid-lineup--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/grid-lineup.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/grid-lineup.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/GridLineup.swift" fold={false} />
+<ComponentSource path="swift/Blocks/GridLineup.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/GridLineup.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/GridLineup.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +65,25 @@ Composes `Screen`, `ToggleGroup` color swatches, `Button` and `Text`. Each model
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add grid-lineup"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add grid-lineup
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add grid-lineup --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add grid-lineup --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add grid-lineup --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add grid-lineup --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +99,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/grid-lineup.tsx`:
 
-<SourceFile path="uniwind/components/blocks/grid-lineup.tsx" />
+<ComponentSource path="uniwind/components/blocks/grid-lineup.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +117,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/grid-lineup.tsx`:
 
-<SourceFile path="nativewind/components/blocks/grid-lineup.tsx" />
+<ComponentSource path="nativewind/components/blocks/grid-lineup.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +135,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/grid-lineup.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/grid-lineup.tsx" />
+<ComponentSource path="stylesheet/components/blocks/grid-lineup.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,35 +159,37 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/GridLineup.swift" />
+<ComponentSource path="swift/Blocks/GridLineup.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -184,29 +199,34 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/GridLineup.kt" />
+<ComponentSource path="kotlin/blocks/GridLineup.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -214,9 +234,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 ## Usage
 
-<Code lang="tsx" code={"import { GridLineup } from \"@/components/blocks/grid-lineup\""} />
+```tsx
+import { GridLineup } from "@/components/blocks/grid-lineup"
+```
 
-<Code lang="tsx" code={"<GridLineup />"} />
+```tsx
+<GridLineup />
+```
 
 Replace `MODELS` with your lineup. Pass `onBuy` to receive the model name and finish, and `onLearnMore` for the Learn more link.
 

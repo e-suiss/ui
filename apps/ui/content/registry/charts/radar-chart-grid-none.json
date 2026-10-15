@@ -1,6 +1,0 @@
-{
-  "description": "A single solid radar shape with no grid and no outline, leaving only the shape and axis labels.",
-  "overview": "A solid radar shape with no grid and no outline, leaving only the shape and the axis labels. Use it as a compact, decorative profile where exact values come from the tooltip.",
-  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Change the shape's intensity with `fillOpacity` on `Radar`.",
-  "notes": "With no grid, readers can't estimate values from the chart itself, so keep the tooltip or show the numbers elsewhere."
-}

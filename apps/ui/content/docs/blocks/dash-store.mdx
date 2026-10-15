@@ -3,16 +3,11 @@ title: Dash Store
 description: "A store admin overview with sales stats, an online versus in-store bar chart, and a filterable orders list."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="dash-store">
-
-<SourceFile path="components/blocks/dash-store.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="dash-store" />
 
 A store admin home with sales stats for the chosen range, a bar chart comparing online and in-store sales by day and a recent orders list filtered by status. Hovering a day dims the other bars and updates the chart headline. Order status shows from small tablets up, and the `Sidebar` navigation opens as a sheet from the trigger on mobile. A good base for e-commerce, point-of-sale or bookings dashboards.
 
@@ -20,27 +15,35 @@ A store admin home with sales stats for the chosen range, a bar chart comparing 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks dash-store"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks dash-store
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react recharts"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react recharts
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Chart](/docs/components/chart), [Item](/docs/components/item), [Sidebar](/docs/components/sidebar), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-store.tsx`:
 
-<SourceFile path="components/blocks/dash-store.tsx" />
+<ComponentSource path="components/blocks/dash-store.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { DashStore } from \"@/components/blocks/dash-store\""} />
+```tsx
+import { DashStore } from "@/components/blocks/dash-store"
+```
 
-<Code lang="tsx" code={"<DashStore />"} />
+```tsx
+<DashStore />
+```
 
 Replace `week` with your daily online and in-store series and `orders` with recent orders, each with an id, customer name, product, status, total and avatar hue. The stats and change percentages are fixed numbers multiplied by the range factor in `ranges`, so fetch real values per range from your backend. `items` sets the navigation.
 
@@ -52,13 +55,13 @@ The chart supports keyboard navigation, and its headline is announced as you mov
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-dash-store--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-dash-store--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/dash-store.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/dash-store.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/DashStore.swift" fold={false} />
+<ComponentSource path="swift/Blocks/DashStore.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/DashStore.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/DashStore.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Composes `Screen`, `Header`, `DropdownMenu` for picking the store, `ToggleGroup`
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dash-store"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add dash-store
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dash-store --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add dash-store --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dash-store --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add dash-store --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-store.tsx`:
 
-<SourceFile path="uniwind/components/blocks/dash-store.tsx" />
+<ComponentSource path="uniwind/components/blocks/dash-store.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-store.tsx`:
 
-<SourceFile path="nativewind/components/blocks/dash-store.tsx" />
+<ComponentSource path="nativewind/components/blocks/dash-store.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/dash-store.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/dash-store.tsx" />
+<ComponentSource path="stylesheet/components/blocks/dash-store.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,55 +165,57 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/DashStore.swift" />
+<ComponentSource path="swift/Blocks/DashStore.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Empty.swift" />
+<ComponentSource path="swift/Components/Empty.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Header.swift" />
+<ComponentSource path="swift/Components/Header.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TabBar.swift" />
+<ComponentSource path="swift/Components/TabBar.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Components/Toggle.swift" />
+<ComponentSource path="swift/Components/Toggle.swift" />
 
-<SourceFile path="swift/Components/ToggleGroup.swift" />
+<ComponentSource path="swift/Components/ToggleGroup.swift" />
 
 5. Add the files to your app target.
 
@@ -208,59 +225,64 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/DashStore.kt" />
+<ComponentSource path="kotlin/blocks/DashStore.kt" />
 
-<SourceFile path="kotlin/blocks/DashAnalytics.kt" />
+<ComponentSource path="kotlin/blocks/DashAnalytics.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/DropdownMenu.kt" />
+<ComponentSource path="kotlin/components/DropdownMenu.kt" />
 
-<SourceFile path="kotlin/components/Empty.kt" />
+<ComponentSource path="kotlin/components/Empty.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Item.kt" />
+<ComponentSource path="kotlin/components/Item.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/TabBar.kt" />
+<ComponentSource path="kotlin/components/TabBar.kt" />
 
-<SourceFile path="kotlin/components/Toggle.kt" />
+<ComponentSource path="kotlin/components/Toggle.kt" />
 
-<SourceFile path="kotlin/components/ToggleGroup.kt" />
+<ComponentSource path="kotlin/components/ToggleGroup.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -268,9 +290,13 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 ## Usage
 
-<Code lang="tsx" code={"import { DashStore } from \"@/components/blocks/dash-store\""} />
+```tsx
+import { DashStore } from "@/components/blocks/dash-store"
+```
 
-<Code lang="tsx" code={"<DashStore />"} />
+```tsx
+<DashStore />
+```
 
 Replace `STORES`, `ranges`, `week`, `orders` and `filters` with your store data. Pass `onRangeChange`, `onFilterChange`, `onStoreChange`, `onOrderPress` and `onNavigate` to react to each control.
 

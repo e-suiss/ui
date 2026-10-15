@@ -3,16 +3,11 @@ title: Attachment
 description: "A compact file card that shows a document or image with its name, details, upload state and actions."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="attachment" story="Default">
-
-<Code lang="tsx" code={"import { XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentMedia variant=\"document\">\n        <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>\n        <AttachmentDescription>2.4 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction aria-label=\"Remove\">\n          <XIcon />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-demo" />
 
 An `Attachment` typically contains an `AttachmentMedia` thumbnail, an `AttachmentContent` block with `AttachmentTitle` and `AttachmentDescription`, and an `AttachmentActions` slot holding one or more `AttachmentAction` buttons. `AttachmentMedia` can hold an icon, an `img`, or an `AttachmentLabel` file-type tag. During an upload, put an `AttachmentProgress` bar inside the content. Add an `AttachmentTrigger` to make the whole card clickable.
 
@@ -22,27 +17,48 @@ Wrap several attachments in an `AttachmentGroup` to render them as a single list
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add attachment"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add attachment
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
 3. Copy the source into `components/ui/attachment.tsx`:
 
-<SourceFile path="components/ui/attachment.tsx" />
+<ComponentSource path="components/ui/attachment.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from \"@/components/ui/attachment\""} />
+```tsx
+import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from "@/components/ui/attachment"
+```
 
-<Code lang="tsx" code={"<Attachment orientation=\"horizontal\" state=\"done\">\n  <AttachmentMedia variant=\"document\">\n    <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n  </AttachmentMedia>\n  <AttachmentContent>\n    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>\n    <AttachmentDescription>2.4 MB</AttachmentDescription>\n  </AttachmentContent>\n  <AttachmentActions>\n    <AttachmentAction aria-label=\"Remove\">\n      <XIcon />\n    </AttachmentAction>\n  </AttachmentActions>\n</Attachment>"} />
+```tsx
+<Attachment orientation="horizontal" state="done">
+  <AttachmentMedia variant="document">
+    <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+  </AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
+    <AttachmentDescription>2.4 MB</AttachmentDescription>
+  </AttachmentContent>
+  <AttachmentActions>
+    <AttachmentAction aria-label="Remove">
+      <XIcon />
+    </AttachmentAction>
+  </AttachmentActions>
+</Attachment>
+```
 
 Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outside a group), and `error` colors the description with the danger color. The `state`, `size` and `orientation` values are also exposed as `data-*` attributes for your own styling.
 
@@ -56,103 +72,86 @@ Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outsid
 
 Compares the `default`, `sm` and `xs` sizes.
 
-<Example kind="ui" name="attachment" story="Sizes">
-
-<Code lang="tsx" code={"import { FileTextIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"default\", \"sm\", \"xs\"] as const).map((size) => (\n        <Attachment key={size} orientation=\"horizontal\" state=\"done\" size={size}>\n          <AttachmentMedia>\n            <FileTextIcon />\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Meeting notes.docx</AttachmentTitle>\n            <AttachmentDescription>184 KB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction aria-label=\"Remove\">\n              <XIcon />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-sizes" />
 
 ### States
 
 Shows the `idle`, `uploading`, `processing`, `error` and `done` states.
 
-<Example kind="ui" name="attachment" story="States">
-
-<Code lang="tsx" code={"import { UploadSimpleIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function AttachmentStatesExample() {\n  return (\n    <div className=\"flex w-96 flex-col gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"idle\" className=\"w-full\">\n        <AttachmentMedia>\n          <UploadSimpleIcon />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Drop a file here</AttachmentTitle>\n          <AttachmentDescription>\n            PDF, PNG or JPG up to 10 MB\n          </AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction variant=\"link\">Choose File</AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"uploading\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentProgress value={64} aria-label=\"Uploading\" />\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Cancel upload\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"processing\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentDescription>Processing…</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <Spinner className=\"size-5 text-label-secondary\" />\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"error\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-orange-700\">key</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Presentation.key</AttachmentTitle>\n          <AttachmentDescription>File type not supported</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentDescription>1.1 MB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-states" />
 
 ### Drop zone
 
-<Example kind="ui" name="attachment" story="DropZone">
-
-<Code lang="tsx" code={"import { UploadSimpleIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle, AttachmentTrigger } from \"@/components/ui/attachment\"\n\nexport function AttachmentDropZoneExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"idle\" className=\"w-96\">\n      <AttachmentTrigger aria-label=\"Choose a file to upload\" />\n      <AttachmentMedia>\n        <UploadSimpleIcon />\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Drop a file or click to choose</AttachmentTitle>\n        <AttachmentDescription>\n          PDF, PNG or JPG up to 10 MB\n        </AttachmentDescription>\n      </AttachmentContent>\n    </Attachment>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-drop-zone" />
 
 ### Image
 
 Uses an image thumbnail with the `image` media variant.
 
-<Example kind="ui" name="attachment" story="Image">
-
-<Code lang="tsx" code={"import { XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentImageExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentMedia variant=\"image\">\n        <img src={imageUrl} alt=\"Mountain lake\" />\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Lake.jpg</AttachmentTitle>\n        <AttachmentDescription>3.2 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction aria-label=\"Remove\">\n          <XIcon />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-image" />
 
 ### Vertical
 
 Stacks the media above the content with `orientation="vertical"`.
 
-<Example kind="ui" name="attachment" story="Vertical">
-
-<Code lang="tsx" code={"import { FilePdfIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentVerticalExample() {\n  return (\n    <div className=\"flex items-start gap-3\">\n      <Attachment orientation=\"vertical\" state=\"done\">\n        <AttachmentMedia variant=\"image\">\n          <img src={imageUrl} alt=\"Mountain lake\" />\n        </AttachmentMedia>\n        <AttachmentActions>\n          <AttachmentAction variant=\"secondary\" aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"vertical\" state=\"done\">\n        <AttachmentMedia>\n          <FilePdfIcon />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Contract.pdf</AttachmentTitle>\n          <AttachmentDescription>860 KB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-vertical" />
 
 ### Clickable
 
 Makes the whole card a button with `AttachmentTrigger`, alongside a separate download action.
 
-<Example kind="ui" name="attachment" story="Clickable">
-
-<Code lang="tsx" code={"import { DownloadSimpleIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle, AttachmentTrigger } from \"@/components/ui/attachment\"\n\nexport function AttachmentClickableExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentTrigger aria-label=\"Open Brand guidelines.pdf\" />\n      <AttachmentMedia variant=\"document\">\n        <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>\n        <AttachmentDescription>5.8 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction aria-label=\"Download\">\n          <DownloadSimpleIcon />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-clickable" />
 
 ### Group
 
 Combines several attachments in one `AttachmentGroup` list.
 
-<Example kind="ui" name="attachment" story="Group">
-
-<Code lang="tsx" code={"import { CheckCircleIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentGroup, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentGroupExample() {\n  return (\n    <div className=\"w-96\">\n      <AttachmentGroup>\n        <Attachment orientation=\"horizontal\" state=\"uploading\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>\n            <AttachmentProgress value={64} aria-label=\"Uploading\" />\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction aria-label=\"Cancel upload\">\n              <XIcon />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"processing\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-blue-600\">docx</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Contract.docx</AttachmentTitle>\n            <AttachmentDescription>Processing…</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <Spinner className=\"size-5 text-label-secondary\" />\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-green-700\">xlsx</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n            <AttachmentDescription>2.4 MB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <CheckCircleIcon\n              weight=\"fill\"\n              aria-label=\"Uploaded\"\n              className=\"size-6 text-success\"\n            />\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"image\">\n            <img src={imageUrl} alt=\"Mountain lake\" />\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n            <AttachmentDescription>1.8 MB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction aria-label=\"Remove\">\n              <XIcon />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"error\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>\n            <AttachmentDescription>Upload failed</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction variant=\"link\">Try Again</AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n      </AttachmentGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-group" />
 
 ### File types
 
 Uses colored `AttachmentLabel` tags to indicate file extensions.
 
-<Example kind="ui" name="attachment" story="FileTypes">
-
-<Code lang="tsx" code={"import { Attachment, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentFileTypesExample() {\n  return (\n    <div className=\"flex flex-col gap-3\">\n      {[\n        {\n          name: \"Invoice.pdf\",\n          meta: \"128 KB\",\n          extension: \"pdf\",\n          tone: \"bg-red-600\",\n        },\n        {\n          name: \"Menu.xlsx\",\n          meta: \"2.4 MB\",\n          extension: \"xlsx\",\n          tone: \"bg-green-700\",\n        },\n        {\n          name: \"Contract.docx\",\n          meta: \"84 KB\",\n          extension: \"docx\",\n          tone: \"bg-blue-600\",\n        },\n        {\n          name: \"Pitch.key\",\n          meta: \"12 MB\",\n          extension: \"key\",\n          tone: \"bg-orange-700\",\n        },\n        { name: \"Archive.zip\", meta: \"48 MB\", extension: \"zip\", tone: \"\" },\n      ].map((file) => (\n        <Attachment key={file.name} orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className={file.tone}>\n              {file.extension}\n            </AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>{file.name}</AttachmentTitle>\n            <AttachmentDescription>{file.meta}</AttachmentDescription>\n          </AttachmentContent>\n        </Attachment>\n      ))}\n      <Attachment orientation=\"horizontal\" state=\"done\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-blue-600\">MD</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>README.md</AttachmentTitle>\n          <AttachmentDescription>4 KB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-file-types" />
 
 ### File list
 
 A full-width list of separate attachment cards.
 
-<Example kind="ui" name="attachment" story="FileList">
-
-<Code lang="tsx" code={"import { XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentFileListExample() {\n  return (\n    <div className=\"flex w-96 flex-col gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>\n          <AttachmentDescription>128 KB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-green-700\">xlsx</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n          <AttachmentDescription>2.4 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"image\">\n          <img src={imageUrl} alt=\"Mountain lake\" />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n          <AttachmentDescription>1.8 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"error\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>\n          <AttachmentDescription>Upload failed</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction variant=\"link\">Try Again</AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-file-list" />
 
 ### Uploaded
 
 Marks completed uploads with a check icon in the actions slot.
 
-<Example kind="ui" name="attachment" story="Uploaded">
-
-<Code lang="tsx" code={"import { CheckCircleIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentUploadedExample() {\n  return (\n    <div className=\"flex w-96 flex-col gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-green-700\">xlsx</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n          <AttachmentDescription>2.4 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <CheckCircleIcon\n            weight=\"fill\"\n            aria-label=\"Uploaded\"\n            className=\"size-6 text-success\"\n          />\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"image\">\n          <img src={imageUrl} alt=\"Mountain lake\" />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n          <AttachmentDescription>1.8 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <CheckCircleIcon\n            weight=\"fill\"\n            aria-label=\"Uploaded\"\n            className=\"size-6 text-success\"\n          />\n        </AttachmentActions>\n      </Attachment>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="attachment-uploaded" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Attachment","href":"#attachment","children":[{"name":"AttachmentMedia","href":"#attachmentmedia","children":[{"name":"AttachmentLabel","href":"#attachmentlabel","children":[]}]},{"name":"AttachmentContent","href":"#attachmentcontent","children":[{"name":"AttachmentTitle","href":"#attachmenttitle","children":[]},{"name":"AttachmentDescription","href":"#attachmentdescription","children":[]},{"name":"AttachmentProgress","href":"#attachmentprogress","children":[]}]},{"name":"AttachmentActions","href":"#attachmentactions","children":[{"name":"AttachmentAction","href":"#attachmentaction","children":[]}]},{"name":"AttachmentTrigger","href":"#attachmenttrigger","children":[]}]},{"name":"AttachmentGroup","href":"#attachmentgroup","children":[{"name":"Attachment","href":"#attachment","children":[{"name":"AttachmentMedia","href":"#attachmentmedia","children":[{"name":"AttachmentLabel","href":"#attachmentlabel","children":[]}]},{"name":"AttachmentContent","href":"#attachmentcontent","children":[{"name":"AttachmentTitle","href":"#attachmenttitle","children":[]},{"name":"AttachmentProgress","href":"#attachmentprogress","children":[]},{"name":"AttachmentDescription","href":"#attachmentdescription","children":[]}]},{"name":"AttachmentActions","href":"#attachmentactions","children":[{"name":"AttachmentAction","href":"#attachmentaction","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [Attachment](#attachment)
+  - [AttachmentMedia](#attachmentmedia)
+    - [AttachmentLabel](#attachmentlabel)
+  - [AttachmentContent](#attachmentcontent)
+    - [AttachmentTitle](#attachmenttitle)
+    - [AttachmentDescription](#attachmentdescription)
+    - [AttachmentProgress](#attachmentprogress)
+  - [AttachmentActions](#attachmentactions)
+    - [AttachmentAction](#attachmentaction)
+  - [AttachmentTrigger](#attachmenttrigger)
+- [AttachmentGroup](#attachmentgroup)
+  - [Attachment](#attachment)
+    - [AttachmentMedia](#attachmentmedia)
+      - [AttachmentLabel](#attachmentlabel)
+    - [AttachmentContent](#attachmentcontent)
+      - [AttachmentTitle](#attachmenttitle)
+      - [AttachmentProgress](#attachmentprogress)
+      - [AttachmentDescription](#attachmentdescription)
+    - [AttachmentActions](#attachmentactions)
+      - [AttachmentAction](#attachmentaction)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -160,7 +159,13 @@ Marks completed uploads with a check icon in the actions slot.
 
 The card container that sets size, orientation and state.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"xs\"","default":"\"default\"","description":"Overall density: `default`, `sm` or `xs`."},{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"`horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media."},{"name":"state","type":"\"idle\" | \"uploading\" | \"processing\" | \"error\" | \"done\"","default":"\"done\"","description":"Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Overall density: `default`, `sm` or `xs`. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
+| `state` | `"idle" \| "uploading" \| "processing" \| "error" \| "done"` | `"done"` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -170,7 +175,7 @@ The card container that sets size, orientation and state.
 
 A small uppercase tag, usually the file extension, shown inside the media.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -180,7 +185,11 @@ A small uppercase tag, usually the file extension, shown inside the media.
 
 The thumbnail area for an icon, document tag or image.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"icon\" | \"document\" | \"image\"","default":"\"icon\"","description":"Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"icon" \| "document" \| "image"` | `"icon"` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -190,7 +199,7 @@ The thumbnail area for an icon, document tag or image.
 
 Wraps the title, description and progress bar.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -200,7 +209,7 @@ Wraps the title, description and progress bar.
 
 The file name, truncated to one line.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -210,7 +219,7 @@ The file name, truncated to one line.
 
 Secondary details such as file size or an error message.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -220,7 +229,7 @@ Secondary details such as file size or an error message.
 
 A progress bar with a value readout for uploads.
 
-<PropsTable extends={["ProgressPrimitive.Root.Props"]} />
+Also accepts the props of `ProgressPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -230,7 +239,7 @@ A progress bar with a value readout for uploads.
 
 The slot for action buttons or status indicators.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -240,7 +249,7 @@ The slot for action buttons or status indicators.
 
 A compact button for actions such as remove, cancel or download.
 
-<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 </ApiPart>
 
@@ -250,7 +259,7 @@ A compact button for actions such as remove, cancel or download.
 
 An invisible button covering the card to make it clickable.
 
-<PropsTable extends={["useRender.ComponentProps<\"button\">"]} />
+Also accepts the props of `useRender.ComponentProps<"button">`.
 
 </ApiPart>
 
@@ -260,7 +269,7 @@ An invisible button covering the card to make it clickable.
 
 Stacks attachments into one rounded list with dividers.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -281,15 +290,7 @@ Stacks attachments into one rounded list with dividers.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-attachment--default" width={880} height={400} live="attachment/Default" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { XIcon } from \"phosphor-react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function AttachmentExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentMedia variant=\"document\">\n        <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>\n        <AttachmentDescription>2.4 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction accessibilityLabel=\"Remove\">\n          <Icon as={XIcon} />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentExample: View {\n  var body: some View {\n    Attachment {\n      AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n      AttachmentContent {\n        AttachmentTitle(\"Quarterly report.pdf\")\n        AttachmentDescription(\"2.4 MB\")\n      }\n      AttachmentActions {\n        AttachmentAction(\"Remove\", icon: Ph.x.bold) {}\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentLabel\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentMediaVariant\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun AttachmentDocument(extension: String, tone: Color) {\n    AttachmentMedia(variant = AttachmentMediaVariant.Document) {\n        AttachmentLabel(extension, background = tone)\n    }\n}\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentDefault() {\n    Row {\n        Attachment {\n            AttachmentDocument(\"pdf\", EsuissTheme.colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Quarterly report.pdf\")\n                AttachmentDescription(\"2.4 MB\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Remove\") }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--default" live="attachment/Default" />
 
 `Attachment` is a rounded `View` that lays out an `AttachmentMedia` thumbnail, an `AttachmentContent` column and `AttachmentActions`. It comes in `default`, `sm` and `xs` sizes and in `horizontal` or `vertical` orientation; the vertical layout makes a tile with the actions floating over the media.
 
@@ -299,19 +300,25 @@ The `state` prop reflects the upload lifecycle: `idle` draws a dashed border for
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add attachment"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add attachment
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add attachment --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add attachment --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add attachment --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add attachment --platform kotlin
+```
 
 </Only>
 
@@ -327,13 +334,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text), and the primitives `components/primitives/progress.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/attachment.tsx`:
 
-<SourceFile path="uniwind/components/ui/attachment.tsx" />
+<ComponentSource path="uniwind/components/ui/attachment.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -343,13 +352,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text), and the primitives `components/primitives/progress.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/attachment.tsx`:
 
-<SourceFile path="nativewind/components/ui/attachment.tsx" />
+<ComponentSource path="nativewind/components/ui/attachment.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -361,7 +372,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Copy the source into `components/ui/attachment.tsx`:
 
-<SourceFile path="stylesheet/components/ui/attachment.tsx" />
+<ComponentSource path="stylesheet/components/ui/attachment.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -377,33 +388,35 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Attachment.swift" />
+<ComponentSource path="swift/Components/Attachment.swift" />
 
-<SourceFile path="swift/Components/Avatar.swift" />
+<ComponentSource path="swift/Components/Avatar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -413,25 +426,29 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Attachment.kt" />
+<ComponentSource path="kotlin/components/Attachment.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -439,9 +456,26 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { Attachment, AttachmentMedia, AttachmentLabel, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from \"@/components/ui/attachment\""} />
+```tsx
+import { Attachment, AttachmentMedia, AttachmentLabel, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from "@/components/ui/attachment"
+```
 
-<Code lang="tsx" code={"<Attachment orientation=\"horizontal\" state=\"done\">\n  <AttachmentMedia variant=\"document\">\n    <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n  </AttachmentMedia>\n  <AttachmentContent>\n    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>\n    <AttachmentDescription>2.4 MB</AttachmentDescription>\n  </AttachmentContent>\n  <AttachmentActions>\n    <AttachmentAction accessibilityLabel=\"Remove\">\n      <Icon as={XIcon} />\n    </AttachmentAction>\n  </AttachmentActions>\n</Attachment>"} />
+```tsx
+<Attachment orientation="horizontal" state="done">
+  <AttachmentMedia variant="document">
+    <AttachmentLabel className="bg-red">pdf</AttachmentLabel>
+  </AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
+    <AttachmentDescription>2.4 MB</AttachmentDescription>
+  </AttachmentContent>
+  <AttachmentActions>
+    <AttachmentAction accessibilityLabel="Remove">
+      <Icon as={XIcon} />
+    </AttachmentAction>
+  </AttachmentActions>
+</Attachment>
+```
 
 `AttachmentMedia` has three variants: `icon` for a glyph, `document` for a page shape (pair it with `AttachmentLabel` to show a file extension), and `image` for a thumbnail. Put `AttachmentTitle` and `AttachmentDescription` in `AttachmentContent`, and add `AttachmentProgress` with a `value` while uploading.
 
@@ -455,99 +489,43 @@ To make the whole card pressable, add an `AttachmentTrigger`; it covers the card
 
 The `default`, `sm` and `xs` sizes.
 
-<NativeExample id="components-attachment--sizes" width={880} height={453} live="attachment/Sizes" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { FileTextIcon, XIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function AttachmentSizesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      {([\"default\", \"sm\", \"xs\"] as const).map((size) => (\n        <Attachment key={size} orientation=\"horizontal\" state=\"done\" size={size}>\n          <AttachmentMedia>\n            <Icon as={FileTextIcon} />\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Meeting notes.docx</AttachmentTitle>\n            <AttachmentDescription>184 KB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction accessibilityLabel=\"Remove\">\n              <Icon as={XIcon} />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n      ))}\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      ForEach(AttachmentSize.allCases, id: \\.self) { size in\n        Attachment(size: size) {\n          AttachmentMedia(icon: Ph.fileText.regular)\n          AttachmentContent {\n            AttachmentTitle(\"Meeting notes.docx\")\n            AttachmentDescription(\"184 KB\")\n          }\n          AttachmentActions {\n            AttachmentAction(\"Remove\", icon: Ph.x.bold) {}\n          }\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.FileText\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentSize\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentSizes() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        AttachmentSize.entries.forEach { size ->\n            Attachment(size = size) {\n                AttachmentMedia { Icon(PhosphorIcons.Regular.FileText, contentDescription = null) }\n                AttachmentContent {\n                    AttachmentTitle(\"Meeting notes.docx\")\n                    AttachmentDescription(\"184 KB\")\n                }\n                AttachmentActions { AttachmentIconAction(\"Remove\") }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--sizes" live="attachment/Sizes" />
 
 ### States
 
 The `idle`, uploading, processing, error and done states.
 
-<NativeExample id="components-attachment--states" width={880} height={857} live="attachment/States" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { UploadSimpleIcon, XIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function AttachmentStatesExample() {\n  return (\n    <View className=\"gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"idle\" className=\"w-full\">\n        <AttachmentMedia>\n          <Icon as={UploadSimpleIcon} />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Add a file</AttachmentTitle>\n          <AttachmentDescription>\n            PDF, PNG or JPG up to 10 MB\n          </AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction variant=\"link\">Choose File</AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"uploading\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentProgress value={64} accessibilityLabel=\"Uploading\" />\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction accessibilityLabel=\"Cancel upload\">\n            <Icon as={XIcon} />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"processing\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentDescription>Processing…</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <Spinner size={20} />\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"error\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-orange\">key</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Presentation.key</AttachmentTitle>\n          <AttachmentDescription>File type not supported</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction accessibilityLabel=\"Remove\">\n            <Icon as={XIcon} />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentDescription>1.1 MB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentStatesExample: View {\n  var body: some View {\n    VStack(spacing: 12) {\n      Attachment(state: .idle, block: true) {\n        AttachmentMedia(icon: Ph.uploadSimple.regular)\n        AttachmentContent {\n          AttachmentTitle(\"Add a file\")\n          AttachmentDescription(\"PDF, PNG or JPG up to 10 MB\")\n        }\n        AttachmentActions {\n          AttachmentAction(\"Choose File\") {}\n        }\n      }\n      Attachment(state: .uploading, block: true) {\n        AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n        AttachmentContent {\n          AttachmentTitle(\"Invoice March.pdf\")\n          AttachmentProgress(value: 64, label: \"Uploading\")\n        }\n        AttachmentActions {\n          AttachmentAction(\"Cancel upload\", icon: Ph.x.bold) {}\n        }\n      }\n      Attachment(state: .processing, block: true) {\n        AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n        AttachmentContent {\n          AttachmentTitle(\"Invoice March.pdf\")\n          AttachmentDescription(\"Processing…\")\n        }\n        AttachmentActions {\n          Spinner(dimension: 20)\n        }\n      }\n      Attachment(state: .error, block: true) {\n        AttachmentMedia(.document) { AttachmentLabel(\"key\", tint: .warning) }\n        AttachmentContent {\n          AttachmentTitle(\"Presentation.key\")\n          AttachmentDescription(\"File type not supported\")\n        }\n        AttachmentActions {\n          AttachmentAction(\"Remove\", icon: Ph.x.bold) {}\n        }\n      }\n      Attachment(state: .done, block: true) {\n        AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n        AttachmentContent {\n          AttachmentTitle(\"Invoice March.pdf\")\n          AttachmentDescription(\"1.1 MB\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.UploadSimple\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentLabel\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentMediaVariant\nimport com.esuiss.ui.components.AttachmentProgress\nimport com.esuiss.ui.components.AttachmentState\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Spinner\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun AttachmentDocument(extension: String, tone: Color) {\n    AttachmentMedia(variant = AttachmentMediaVariant.Document) {\n        AttachmentLabel(extension, background = tone)\n    }\n}\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentStates() {\n    val colors = EsuissTheme.colors\n    val fill = Modifier.fillMaxWidth()\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Attachment(fill, state = AttachmentState.Idle) {\n            AttachmentMedia { Icon(PhosphorIcons.Regular.UploadSimple, contentDescription = null) }\n            AttachmentContent {\n                AttachmentTitle(\"Add a file\")\n                AttachmentDescription(\"PDF, PNG or JPG up to 10 MB\")\n            }\n            AttachmentActions { AttachmentAction(\"Choose File\", onClick = {}) }\n        }\n        Attachment(fill, state = AttachmentState.Uploading) {\n            AttachmentDocument(\"pdf\", colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Invoice March.pdf\")\n                AttachmentProgress(64f, contentDescription = \"Uploading\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Cancel upload\") }\n        }\n        Attachment(fill, state = AttachmentState.Processing) {\n            AttachmentDocument(\"pdf\", colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Invoice March.pdf\")\n                AttachmentDescription(\"Processing…\")\n            }\n            AttachmentActions { Spinner(size = 20.dp) }\n        }\n        Attachment(fill, state = AttachmentState.Error) {\n            AttachmentDocument(\"key\", colors.orange)\n            AttachmentContent {\n                AttachmentTitle(\"Presentation.key\")\n                AttachmentDescription(\"File type not supported\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Remove\") }\n        }\n        Attachment(fill, state = AttachmentState.Done) {\n            AttachmentDocument(\"pdf\", colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Invoice March.pdf\")\n                AttachmentDescription(\"1.1 MB\")\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--states" live="attachment/States" />
 
 ### Image
 
 An image thumbnail with the `image` media variant.
 
-<NativeExample id="components-attachment--image" width={880} height={400} live="attachment/Image" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { XIcon } from \"phosphor-react-native\"\nimport { Image as NativeImage } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nfunction Thumbnail() {\n  return (\n    <NativeImage\n      source={{ uri: imageUrl }}\n      accessibilityLabel=\"Mountain lake\"\n      className=\"size-full\"\n      resizeMode=\"cover\"\n    />\n  )\n}\n\nexport function AttachmentImageExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentMedia variant=\"image\">\n        <Thumbnail />\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Lake.jpg</AttachmentTitle>\n        <AttachmentDescription>3.2 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction accessibilityLabel=\"Remove\">\n          <Icon as={XIcon} />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentImageExample: View {\n  var body: some View {\n    Attachment {\n      AttachmentThumbnail()\n      AttachmentContent {\n        AttachmentTitle(\"Lake.jpg\")\n        AttachmentDescription(\"3.2 MB\")\n      }\n      AttachmentActions {\n        AttachmentAction(\"Remove\", icon: Ph.x.bold) {}\n      }\n    }\n  }\n}\n\nstruct AttachmentThumbnail: View {\n  var body: some View {\n    AttachmentMedia(url: URL(string: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"))\n      .accessibilityLabel(Text(\"Mountain lake\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.remember\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.painter.BrushPainter\nimport androidx.compose.ui.graphics.painter.Painter\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun attachmentPhoto(): Painter {\n    val colors = EsuissTheme.colors\n    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }\n}\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentImage() {\n    val photo = attachmentPhoto()\n    Row {\n        Attachment {\n            AttachmentMedia(photo, contentDescription = \"Mountain lake\")\n            AttachmentContent {\n                AttachmentTitle(\"Lake.jpg\")\n                AttachmentDescription(\"3.2 MB\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Remove\") }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--image" live="attachment/Image" />
 
 ### Vertical
 
 Tiles with `orientation="vertical"`.
 
-<NativeExample id="components-attachment--vertical" width={880} height={410} live="attachment/Vertical" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { FilePdfIcon, XIcon } from \"phosphor-react-native\"\nimport { Image as NativeImage, View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nfunction Thumbnail() {\n  return (\n    <NativeImage\n      source={{ uri: imageUrl }}\n      accessibilityLabel=\"Mountain lake\"\n      className=\"size-full\"\n      resizeMode=\"cover\"\n    />\n  )\n}\n\nexport function AttachmentVerticalExample() {\n  return (\n    <View className=\"flex-row items-start gap-3\">\n      <Attachment orientation=\"vertical\" state=\"done\">\n        <AttachmentMedia variant=\"image\">\n          <Thumbnail />\n        </AttachmentMedia>\n        <AttachmentActions>\n          <AttachmentAction accessibilityLabel=\"Remove\">\n            <Icon as={XIcon} />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"vertical\" state=\"done\">\n        <AttachmentMedia>\n          <Icon as={FilePdfIcon} />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Contract.pdf</AttachmentTitle>\n          <AttachmentDescription>860 KB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentVerticalExample: View {\n  var body: some View {\n    HStack(alignment: .top, spacing: 12) {\n      Attachment(orientation: .vertical) {\n        AttachmentThumbnail()\n        AttachmentActions {\n          AttachmentAction(\"Remove\", icon: Ph.x.bold) {}\n        }\n      }\n      Attachment(orientation: .vertical) {\n        AttachmentMedia(icon: Ph.filePdf.regular)\n        AttachmentContent {\n          AttachmentTitle(\"Contract.pdf\")\n          AttachmentDescription(\"860 KB\")\n        }\n      }\n    }\n  }\n}\n\nstruct AttachmentThumbnail: View {\n  var body: some View {\n    AttachmentMedia(url: URL(string: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"))\n      .accessibilityLabel(Text(\"Mountain lake\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.remember\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.painter.BrushPainter\nimport androidx.compose.ui.graphics.painter.Painter\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.FilePdf\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentOrientation\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun attachmentPhoto(): Painter {\n    val colors = EsuissTheme.colors\n    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }\n}\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentVertical() {\n    val photo = attachmentPhoto()\n    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {\n        Attachment(orientation = AttachmentOrientation.Vertical) {\n            AttachmentMedia(photo, contentDescription = \"Mountain lake\")\n            AttachmentActions { AttachmentIconAction(\"Remove\") }\n        }\n        Attachment(orientation = AttachmentOrientation.Vertical) {\n            AttachmentMedia { Icon(PhosphorIcons.Regular.FilePdf, contentDescription = null) }\n            AttachmentContent {\n                AttachmentTitle(\"Contract.pdf\")\n                AttachmentDescription(\"860 KB\")\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--vertical" live="attachment/Vertical" />
 
 ### Pressable
 
 A card made pressable with `AttachmentTrigger`.
 
-<NativeExample id="components-attachment--pressable" width={880} height={400} live="attachment/Pressable" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { DownloadSimpleIcon } from \"phosphor-react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle, AttachmentTrigger } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function AttachmentPressableExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentTrigger\n        accessibilityLabel=\"Open Brand guidelines.pdf\"\n        onPress={() => undefined}\n      />\n      <AttachmentMedia variant=\"document\">\n        <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>\n        <AttachmentDescription>5.8 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction accessibilityLabel=\"Download\">\n          <Icon as={DownloadSimpleIcon} />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentPressableExample: View {\n  var body: some View {\n    Attachment {\n      AttachmentTrigger(\"Open Brand guidelines.pdf\") {}\n      AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n      AttachmentContent {\n        AttachmentTitle(\"Brand guidelines.pdf\")\n        AttachmentDescription(\"5.8 MB\")\n      }\n      AttachmentActions {\n        AttachmentAction(\"Download\", icon: Ph.downloadSimple.bold) {}\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.contentDescription\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.DownloadSimple\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentLabel\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentMediaVariant\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun AttachmentDocument(extension: String, tone: Color) {\n    AttachmentMedia(variant = AttachmentMediaVariant.Document) {\n        AttachmentLabel(extension, background = tone)\n    }\n}\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentPressable() {\n    Row {\n        Attachment(onClick = {}, onClickLabel = \"Open Brand guidelines.pdf\") {\n            AttachmentDocument(\"pdf\", EsuissTheme.colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Brand guidelines.pdf\")\n                AttachmentDescription(\"5.8 MB\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Download\", PhosphorIcons.Regular.DownloadSimple) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--pressable" live="attachment/Pressable" />
 
 ### Group
 
 Several attachments in an `AttachmentGroup`, one of them uploading.
 
-<NativeExample id="components-attachment--group" width={880} height={761} live="attachment/Group" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CheckCircleIcon, XIcon } from \"phosphor-react-native\"\nimport { Image as NativeImage, View } from \"react-native\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentGroup, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nfunction Thumbnail() {\n  return (\n    <NativeImage\n      source={{ uri: imageUrl }}\n      accessibilityLabel=\"Mountain lake\"\n      className=\"size-full\"\n      resizeMode=\"cover\"\n    />\n  )\n}\n\nexport function AttachmentGroupExample() {\n  return (\n    <AttachmentGroup>\n      <Attachment orientation=\"horizontal\" state=\"uploading\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>\n          <AttachmentProgress value={64} accessibilityLabel=\"Uploading\" />\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction accessibilityLabel=\"Cancel upload\">\n            <Icon as={XIcon} />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"processing\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-blue\">docx</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Contract.docx</AttachmentTitle>\n          <AttachmentDescription>Processing…</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <Spinner size={20} />\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-green\">xlsx</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n          <AttachmentDescription>2.4 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <View accessible accessibilityLabel=\"Uploaded\">\n            <Icon\n              as={CheckCircleIcon}\n              weight=\"fill\"\n              className=\"size-6 text-success\"\n            />\n          </View>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\">\n        <AttachmentMedia variant=\"image\">\n          <Thumbnail />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n          <AttachmentDescription>1.8 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction accessibilityLabel=\"Remove\">\n            <Icon as={XIcon} />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"error\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>\n          <AttachmentDescription>Upload failed</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction variant=\"link\">Try Again</AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n    </AttachmentGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct AttachmentGroupExample: View {\n  var body: some View {\n    AttachmentGroup {\n      Attachment(state: .uploading) {\n        AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n        AttachmentContent {\n          AttachmentTitle(\"Invoice_1042.pdf\")\n          AttachmentProgress(value: 64, label: \"Uploading\")\n        }\n        AttachmentActions {\n          AttachmentAction(\"Cancel upload\", icon: Ph.x.bold) {}\n        }\n      }\n      Attachment(state: .processing) {\n        AttachmentMedia(.document) { AttachmentLabel(\"docx\", tint: .accent) }\n        AttachmentContent {\n          AttachmentTitle(\"Contract.docx\")\n          AttachmentDescription(\"Processing…\")\n        }\n        AttachmentActions {\n          Spinner(dimension: 20)\n        }\n      }\n      Attachment {\n        AttachmentMedia(.document) { AttachmentLabel(\"xlsx\", tint: .success) }\n        AttachmentContent {\n          AttachmentTitle(\"Menu_October.xlsx\")\n          AttachmentDescription(\"2.4 MB\")\n        }\n        AttachmentActions {\n          Ph.checkCircle.fill\n            .frame(width: 24, height: 24)\n            .foregroundStyle(Color.success)\n            .accessibilityElement()\n            .accessibilityLabel(Text(\"Uploaded\"))\n        }\n      }\n      Attachment {\n        AttachmentThumbnail()\n        AttachmentContent {\n          AttachmentTitle(\"Table_12.jpg\")\n          AttachmentDescription(\"1.8 MB\")\n        }\n        AttachmentActions {\n          AttachmentAction(\"Remove\", icon: Ph.x.bold) {}\n        }\n      }\n      Attachment(state: .error) {\n        AttachmentMedia(.document) { AttachmentLabel(\"pdf\", tint: .danger) }\n        AttachmentContent {\n          AttachmentTitle(\"Z-Report_30-09.pdf\")\n          AttachmentDescription(\"Upload failed\")\n        }\n        AttachmentActions {\n          AttachmentAction(\"Try Again\") {}\n        }\n      }\n    }\n  }\n}\n\nstruct AttachmentThumbnail: View {\n  var body: some View {\n    AttachmentMedia(url: URL(string: \"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"))\n      .accessibilityLabel(Text(\"Mountain lake\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Box\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.remember\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.graphics.painter.BrushPainter\nimport androidx.compose.ui.graphics.painter.Painter\nimport androidx.compose.ui.semantics.clearAndSetSemantics\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.fill.CheckCircle\nimport com.adamglin.phosphoricons.regular.X\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentAction\nimport com.esuiss.ui.components.AttachmentActions\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentGroup\nimport com.esuiss.ui.components.AttachmentLabel\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentMediaVariant\nimport com.esuiss.ui.components.AttachmentProgress\nimport com.esuiss.ui.components.AttachmentState\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Spinner\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun attachmentPhoto(): Painter {\n    val colors = EsuissTheme.colors\n    return remember(colors) { BrushPainter(Brush.linearGradient(listOf(colors.teal, colors.blue, colors.indigo))) }\n}\n\n@Composable\nfun AttachmentDocument(extension: String, tone: Color) {\n    AttachmentMedia(variant = AttachmentMediaVariant.Document) {\n        AttachmentLabel(extension, background = tone)\n    }\n}\n\n@Composable\nfun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {\n    AttachmentAction(onClick = {}, contentDescription = label) {\n        Icon(icon, contentDescription = null)\n    }\n}\n\n@Composable\nfun AttachmentGroupStory() {\n    val colors = EsuissTheme.colors\n    val photo = attachmentPhoto()\n    AttachmentGroup {\n        Attachment(state = AttachmentState.Uploading) {\n            AttachmentDocument(\"pdf\", colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Invoice_1042.pdf\")\n                AttachmentProgress(64f, contentDescription = \"Uploading\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Cancel upload\") }\n        }\n        Attachment(state = AttachmentState.Processing) {\n            AttachmentDocument(\"docx\", colors.blue)\n            AttachmentContent {\n                AttachmentTitle(\"Contract.docx\")\n                AttachmentDescription(\"Processing…\")\n            }\n            AttachmentActions { Spinner(size = 20.dp) }\n        }\n        Attachment {\n            AttachmentDocument(\"xlsx\", colors.green)\n            AttachmentContent {\n                AttachmentTitle(\"Menu_October.xlsx\")\n                AttachmentDescription(\"2.4 MB\")\n            }\n            AttachmentActions {\n                Box(Modifier.clearAndSetSemantics { contentDescription = \"Uploaded\" }) {\n                    Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, size = 24.dp, tint = colors.success)\n                }\n            }\n        }\n        Attachment {\n            AttachmentMedia(photo, contentDescription = \"Mountain lake\")\n            AttachmentContent {\n                AttachmentTitle(\"Table_12.jpg\")\n                AttachmentDescription(\"1.8 MB\")\n            }\n            AttachmentActions { AttachmentIconAction(\"Remove\") }\n        }\n        Attachment(state = AttachmentState.Error) {\n            AttachmentDocument(\"pdf\", colors.red)\n            AttachmentContent {\n                AttachmentTitle(\"Z-Report_30-09.pdf\")\n                AttachmentDescription(\"Upload failed\")\n            }\n            AttachmentActions { AttachmentAction(\"Try Again\", onClick = {}) }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--group" live="attachment/Group" />
 
 ### File types
 
 Document media with colored extension labels.
 
-<NativeExample id="components-attachment--file-types" width={880} height={857} live="attachment/FileTypes" platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Attachment, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentFileTypesExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      {[\n        {\n          name: \"Invoice.pdf\",\n          meta: \"128 KB\",\n          extension: \"pdf\",\n          tone: \"bg-red\",\n        },\n        {\n          name: \"Menu.xlsx\",\n          meta: \"2.4 MB\",\n          extension: \"xlsx\",\n          tone: \"bg-green\",\n        },\n        {\n          name: \"Contract.docx\",\n          meta: \"84 KB\",\n          extension: \"docx\",\n          tone: \"bg-blue\",\n        },\n        {\n          name: \"Pitch.key\",\n          meta: \"12 MB\",\n          extension: \"key\",\n          tone: \"bg-orange\",\n        },\n        { name: \"Archive.zip\", meta: \"48 MB\", extension: \"zip\", tone: \"\" },\n      ].map((file) => (\n        <Attachment key={file.name} orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className={file.tone}>\n              {file.extension}\n            </AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>{file.name}</AttachmentTitle>\n            <AttachmentDescription>{file.meta}</AttachmentDescription>\n          </AttachmentContent>\n        </Attachment>\n      ))}\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AttachmentFileTypesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      ForEach(AttachmentFile.all, id: \\.name) { file in\n        Attachment {\n          AttachmentMedia(.document) { AttachmentLabel(verbatim: file.ext, tint: file.tint) }\n          AttachmentContent {\n            AttachmentTitle(verbatim: file.name)\n            AttachmentDescription(verbatim: file.meta)\n          }\n        }\n      }\n    }\n  }\n}\n\nstruct AttachmentFile {\n  let name: String\n  let meta: String\n  let ext: String\n  let tint: Color\n\n  static let all: [AttachmentFile] = [\n    AttachmentFile(name: \"Invoice.pdf\", meta: \"128 KB\", ext: \"pdf\", tint: .danger),\n    AttachmentFile(name: \"Menu.xlsx\", meta: \"2.4 MB\", ext: \"xlsx\", tint: .success),\n    AttachmentFile(name: \"Contract.docx\", meta: \"84 KB\", ext: \"docx\", tint: .accent),\n    AttachmentFile(name: \"Pitch.key\", meta: \"12 MB\", ext: \"key\", tint: .warning),\n    AttachmentFile(name: \"Archive.zip\", meta: \"48 MB\", ext: \"zip\", tint: .accent),\n  ]\n}\n\nlet all: [AttachmentFile] = [\n  AttachmentFile(name: \"Invoice.pdf\", meta: \"128 KB\", ext: \"pdf\", tint: .danger),\n  AttachmentFile(name: \"Menu.xlsx\", meta: \"2.4 MB\", ext: \"xlsx\", tint: .success),\n  AttachmentFile(name: \"Contract.docx\", meta: \"84 KB\", ext: \"docx\", tint: .accent),\n  AttachmentFile(name: \"Pitch.key\", meta: \"12 MB\", ext: \"key\", tint: .warning),\n  AttachmentFile(name: \"Archive.zip\", meta: \"48 MB\", ext: \"zip\", tint: .accent),\n]"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Attachment\nimport com.esuiss.ui.components.AttachmentContent\nimport com.esuiss.ui.components.AttachmentDescription\nimport com.esuiss.ui.components.AttachmentLabel\nimport com.esuiss.ui.components.AttachmentMedia\nimport com.esuiss.ui.components.AttachmentMediaVariant\nimport com.esuiss.ui.components.AttachmentTitle\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun AttachmentDocument(extension: String, tone: Color) {\n    AttachmentMedia(variant = AttachmentMediaVariant.Document) {\n        AttachmentLabel(extension, background = tone)\n    }\n}\n\nclass AttachmentFile(val name: String, val meta: String, val extension: String, val tone: @Composable () -> Color)\n\nval attachmentFiles = listOf(\n    AttachmentFile(\"Invoice.pdf\", \"128 KB\", \"pdf\") { EsuissTheme.colors.red },\n    AttachmentFile(\"Menu.xlsx\", \"2.4 MB\", \"xlsx\") { EsuissTheme.colors.green },\n    AttachmentFile(\"Contract.docx\", \"84 KB\", \"docx\") { EsuissTheme.colors.blue },\n    AttachmentFile(\"Pitch.key\", \"12 MB\", \"key\") { EsuissTheme.colors.orange },\n    AttachmentFile(\"Archive.zip\", \"48 MB\", \"zip\") { EsuissTheme.colors.accent },\n)\n\n@Composable\nfun AttachmentFileTypes() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        attachmentFiles.forEach { file ->\n            Attachment {\n                AttachmentDocument(file.extension, file.tone())\n                AttachmentContent {\n                    AttachmentTitle(file.name)\n                    AttachmentDescription(file.meta)\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-attachment--file-types" live="attachment/FileTypes" />
 
 ## API Reference
 
@@ -557,7 +535,13 @@ Document media with colored extension labels.
 
 Card that provides state, size and orientation to its parts.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"state","type":"AttachmentState","default":"\"done\"","description":"`idle`, `uploading`, `processing`, `error` or `done`. Defaults to `done`."},{"name":"size","type":"AttachmentSize","default":"\"default\"","description":"`default`, `sm` or `xs`."},{"name":"orientation","type":"AttachmentOrientation","default":"\"horizontal\"","description":"`horizontal` or `vertical`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `AttachmentState` | `"done"` | `idle`, `uploading`, `processing`, `error` or `done`. Defaults to `done`. |
+| `size` | `AttachmentSize` | `"default"` | `default`, `sm` or `xs`. |
+| `orientation` | `AttachmentOrientation` | `"horizontal"` | `horizontal` or `vertical`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -567,7 +551,11 @@ Card that provides state, size and orientation to its parts.
 
 Thumbnail area for an icon, document shape or image.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"icon\" | \"document\" | \"image\"","default":"\"icon\"","description":"`icon`, `document` or `image`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"icon" \| "document" \| "image"` | `"icon"` | `icon`, `document` or `image`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -577,7 +565,7 @@ Thumbnail area for an icon, document shape or image.
 
 Small uppercase tag, such as a file extension.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -587,7 +575,7 @@ Small uppercase tag, such as a file extension.
 
 Column for the title, description and progress.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -597,7 +585,7 @@ Column for the title, description and progress.
 
 File name, one line by default.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -607,7 +595,7 @@ File name, one line by default.
 
 Secondary details, red in the `error` state.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -617,7 +605,7 @@ Secondary details, red in the `error` state.
 
 Progress bar with a percentage value.
 
-<PropsTable extends={["React.ComponentProps<typeof ProgressPrimitive.Root>"]} />
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Root>`.
 
 </ApiPart>
 
@@ -627,7 +615,7 @@ Progress bar with a percentage value.
 
 Row of actions; floats over the media in vertical layout.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -637,7 +625,7 @@ Row of actions; floats over the media in vertical layout.
 
 Small button sized to the attachment.
 
-<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 </ApiPart>
 
@@ -647,7 +635,11 @@ Small button sized to the attachment.
 
 Pressable overlay that makes the whole card pressable.
 
-<PropsTable extends={["React.ComponentProps<typeof Pressable>","React.RefAttributes<View>"]} props={[{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
 
 </ApiPart>
 
@@ -657,7 +649,7 @@ Pressable overlay that makes the whole card pressable.
 
 List container that joins attachments with separators.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

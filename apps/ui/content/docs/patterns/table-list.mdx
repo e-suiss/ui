@@ -3,16 +3,11 @@ title: Table List
 description: "Tabular data that renders as a table on desktop and a grouped list on mobile."
 eyebrow: Pattern
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="pattern" name="table-list" story="Default">
-
-<Code lang="tsx" code={"import { cn } from \"cn\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Order = {\n  id: number\n  product: string\n  status: \"shipped\" | \"delivered\" | \"preparing\" | \"returned\"\n  date: string\n  total: number\n}\n\nconst orders: Order[] = [\n  {\n    id: 1042,\n    product: \"Wireless earbuds\",\n    status: \"shipped\",\n    date: \"Oct 3\",\n    total: 249,\n  },\n  {\n    id: 1041,\n    product: \"Magnetic charger\",\n    status: \"delivered\",\n    date: \"Sep 28\",\n    total: 49,\n  },\n  {\n    id: 1040,\n    product: \"Phone case\",\n    status: \"preparing\",\n    date: \"Sep 27\",\n    total: 59,\n  },\n  {\n    id: 1039,\n    product: \"Watch band\",\n    status: \"returned\",\n    date: \"Sep 20\",\n    total: 39,\n  },\n]\n\nconst statusLabel: Record<Order[\"status\"], string> = {\n  shipped: \"Shipped\",\n  delivered: \"Delivered\",\n  preparing: \"Preparing\",\n  returned: \"Returned\",\n}\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst columns: TableListColumn<Order>[] = [\n  {\n    key: \"id\",\n    header: \"Order\",\n    cell: (order) => `#${order.id}`,\n    slot: \"description\",\n  },\n  {\n    key: \"product\",\n    header: \"Product\",\n    cell: (order) => order.product,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (order) => (\n      <span\n        className={cn(\n          \"font-semibold text-label-secondary\",\n          order.status === \"shipped\" && \"text-link\",\n          order.status === \"returned\" && \"text-danger\"\n        )}\n      >\n        {statusLabel[order.status]}\n      </span>\n    ),\n    mobileCell: (order) => statusLabel[order.status],\n    slot: \"description\",\n  },\n  {\n    key: \"date\",\n    header: \"Date\",\n    cell: (order) => order.date,\n    slot: \"description\",\n  },\n  {\n    key: \"total\",\n    header: \"Total\",\n    cell: (order) => currency.format(order.total),\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListExample() {\n  return (\n    <TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title=\"Orders\" className=\"mx-auto w-full max-w-3xl\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="table-list-demo" layout="padded" responsive />
 
 `TableList` displays rows of data from a column definition. On desktop it renders a suiss/ui `Table` inside a bordered section, with a header row and one cell per column. On mobile (below `48rem`, via `useIsMobile`), where wide tables do not fit, it renders an inset grouped list: each row shows a title line, a secondary line that joins description columns with a middle dot, and trailing values on the end.
 
@@ -22,27 +17,35 @@ Each column chooses its place in the mobile row through `slot`, and can provide 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns table-list"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add patterns table-list
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Add the pieces it builds on: [Table](/docs/components/table), `use-mobile`.
 
 3. Copy the source into `components/patterns/table-list.tsx`:
 
-<SourceFile path="components/patterns/table-list.tsx" />
+<ComponentSource path="components/patterns/table-list.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { TableList } from \"@/components/patterns/table-list\""} />
+```tsx
+import { TableList } from "@/components/patterns/table-list"
+```
 
-<Code lang="tsx" code={"<TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title=\"Orders\" className=\"mx-auto w-full max-w-3xl\" />"} />
+```tsx
+<TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title="Orders" className="mx-auto w-full max-w-3xl" />
+```
 
 - Each `TableListColumn` has a `key`, a `header` and a `cell` renderer. Optional fields are `mobileCell`, `slot` (`title`, `description`, `trailing` or `hidden`) and `align` (`start` or `end`).
 - On mobile, the first `title` column becomes the primary line, `description` columns form the secondary line, and `trailing` columns appear at the end. Columns without a slot, or with `hidden`, are left out on mobile.
@@ -55,21 +58,13 @@ Each column chooses its place in the mobile row through `slot`, and can provide 
 
 Renders the table without a heading or region.
 
-<Example kind="pattern" name="table-list" story="WithoutTitle">
-
-<Code lang="tsx" code={"import { cn } from \"cn\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Order = {\n  id: number\n  product: string\n  status: \"shipped\" | \"delivered\" | \"preparing\" | \"returned\"\n  date: string\n  total: number\n}\n\nconst orders: Order[] = [\n  {\n    id: 1042,\n    product: \"Wireless earbuds\",\n    status: \"shipped\",\n    date: \"Oct 3\",\n    total: 249,\n  },\n  {\n    id: 1041,\n    product: \"Magnetic charger\",\n    status: \"delivered\",\n    date: \"Sep 28\",\n    total: 49,\n  },\n  {\n    id: 1040,\n    product: \"Phone case\",\n    status: \"preparing\",\n    date: \"Sep 27\",\n    total: 59,\n  },\n  {\n    id: 1039,\n    product: \"Watch band\",\n    status: \"returned\",\n    date: \"Sep 20\",\n    total: 39,\n  },\n]\n\nconst statusLabel: Record<Order[\"status\"], string> = {\n  shipped: \"Shipped\",\n  delivered: \"Delivered\",\n  preparing: \"Preparing\",\n  returned: \"Returned\",\n}\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst columns: TableListColumn<Order>[] = [\n  {\n    key: \"id\",\n    header: \"Order\",\n    cell: (order) => `#${order.id}`,\n    slot: \"description\",\n  },\n  {\n    key: \"product\",\n    header: \"Product\",\n    cell: (order) => order.product,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (order) => (\n      <span\n        className={cn(\n          \"font-semibold text-label-secondary\",\n          order.status === \"shipped\" && \"text-link\",\n          order.status === \"returned\" && \"text-danger\"\n        )}\n      >\n        {statusLabel[order.status]}\n      </span>\n    ),\n    mobileCell: (order) => statusLabel[order.status],\n    slot: \"description\",\n  },\n  {\n    key: \"date\",\n    header: \"Date\",\n    cell: (order) => order.date,\n    slot: \"description\",\n  },\n  {\n    key: \"total\",\n    header: \"Total\",\n    cell: (order) => currency.format(order.total),\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListWithoutTitleExample() {\n  return (\n    <TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title={undefined} className=\"mx-auto w-full max-w-3xl\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="table-list-without-title" layout="padded" responsive />
 
 ### Empty
 
 Shows custom `emptyText` when there are no rows.
 
-<Example kind="pattern" name="table-list" story="Empty">
-
-<Code lang="tsx" code={"import { cn } from \"cn\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Order = {\n  id: number\n  product: string\n  status: \"shipped\" | \"delivered\" | \"preparing\" | \"returned\"\n  date: string\n  total: number\n}\n\nconst orders: Order[] = [\n  {\n    id: 1042,\n    product: \"Wireless earbuds\",\n    status: \"shipped\",\n    date: \"Oct 3\",\n    total: 249,\n  },\n  {\n    id: 1041,\n    product: \"Magnetic charger\",\n    status: \"delivered\",\n    date: \"Sep 28\",\n    total: 49,\n  },\n  {\n    id: 1040,\n    product: \"Phone case\",\n    status: \"preparing\",\n    date: \"Sep 27\",\n    total: 59,\n  },\n  {\n    id: 1039,\n    product: \"Watch band\",\n    status: \"returned\",\n    date: \"Sep 20\",\n    total: 39,\n  },\n]\n\nconst statusLabel: Record<Order[\"status\"], string> = {\n  shipped: \"Shipped\",\n  delivered: \"Delivered\",\n  preparing: \"Preparing\",\n  returned: \"Returned\",\n}\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst columns: TableListColumn<Order>[] = [\n  {\n    key: \"id\",\n    header: \"Order\",\n    cell: (order) => `#${order.id}`,\n    slot: \"description\",\n  },\n  {\n    key: \"product\",\n    header: \"Product\",\n    cell: (order) => order.product,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (order) => (\n      <span\n        className={cn(\n          \"font-semibold text-label-secondary\",\n          order.status === \"shipped\" && \"text-link\",\n          order.status === \"returned\" && \"text-danger\"\n        )}\n      >\n        {statusLabel[order.status]}\n      </span>\n    ),\n    mobileCell: (order) => statusLabel[order.status],\n    slot: \"description\",\n  },\n  {\n    key: \"date\",\n    header: \"Date\",\n    cell: (order) => order.date,\n    slot: \"description\",\n  },\n  {\n    key: \"total\",\n    header: \"Total\",\n    cell: (order) => currency.format(order.total),\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListEmptyExample() {\n  return (\n    <TableList<Order> rows={[]} columns={columns} getKey={(order: Order) => order.id} title=\"Orders\" className=\"mx-auto w-full max-w-3xl\" emptyText=\"No orders yet.\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="table-list-empty" layout="padded" responsive />
 
 ## API Reference
 
@@ -79,7 +74,15 @@ Shows custom `emptyText` when there are no rows.
 
 The section that renders the rows as a table or a grouped list.
 
-<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"rows","type":"T[]","required":true,"description":"The data rows to display."},{"name":"columns","type":"TableListColumn<T>[]","required":true,"description":"The column definitions that render each row."},{"name":"getKey","type":"(row: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns the React key for a row."},{"name":"title","type":"React.ReactNode","description":"A heading above the data that also names the section."},{"name":"emptyText","type":"React.ReactNode","default":"\"No results.\"","description":"Content shown when `rows` is empty."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `rows` | `T[]` | Required | The data rows to display. |
+| `columns` | `TableListColumn<T>[]` | Required | The column definitions that render each row. |
+| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` | Returns the React key for a row. |
+| `title` | `React.ReactNode` | - | A heading above the data that also names the section. |
+| `emptyText` | `React.ReactNode` | `"No results."` | Content shown when `rows` is empty. |
+
+Also accepts the props of `React.ComponentProps<"section">`.
 
 </ApiPart>
 
@@ -97,15 +100,7 @@ Styling hooks: `data-slot="table-list"` and `table-list-title`; on mobile also `
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="patterns-table-list--default" width={880} height={891} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { TableList, type TableListColumn } from \"@/components/patterns/table-list\"\n\ntype Invoice = {\n  id: string\n  customer: string\n  status: string\n  method: string\n  amount: string\n}\n\nconst invoices: Invoice[] = [\n  {\n    id: \"INV001\",\n    customer: \"Olivia Martin\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$250.00\",\n  },\n  {\n    id: \"INV002\",\n    customer: \"Jackson Lee\",\n    status: \"Pending\",\n    method: \"PayPal\",\n    amount: \"$150.00\",\n  },\n  {\n    id: \"INV003\",\n    customer: \"Isabella Nguyen\",\n    status: \"Unpaid\",\n    method: \"Transfer\",\n    amount: \"$350.00\",\n  },\n  {\n    id: \"INV004\",\n    customer: \"William Kim\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$450.00\",\n  },\n]\n\nconst columns: TableListColumn<Invoice>[] = [\n  {\n    key: \"customer\",\n    header: \"Customer\",\n    cell: (row) => row.customer,\n    slot: \"title\",\n  },\n  {\n    key: \"status\",\n    header: \"Status\",\n    cell: (row) => row.status,\n    slot: \"description\",\n  },\n  {\n    key: \"method\",\n    header: \"Method\",\n    cell: (row) => row.method,\n    slot: \"description\",\n  },\n  {\n    key: \"amount\",\n    header: \"Amount\",\n    cell: (row) => row.amount,\n    slot: \"trailing\",\n    align: \"end\",\n  },\n]\n\nexport function TableListExample() {\n  return (\n    <View className=\"gap-8\">\n      <TableList\n        title=\"Invoices\"\n        rows={invoices}\n        columns={columns}\n        getKey={(row) => row.id}\n        onRowPress={() => undefined}\n      />\n      <TableList rows={[]} columns={columns} emptyText=\"No invoices yet.\" />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TableListExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 32) {\n      TableList(tableListInvoices, columns: tableListColumns, title: \"Invoices\", action: { _ in })\n      TableList([TableListInvoice](), columns: tableListColumns, emptyText: \"No invoices yet.\")\n    }\n  }\n}\n\nstruct TableListInvoice: Identifiable {\n  let id: String\n  let customer: String\n  let status: String\n  let method: String\n  let amount: String\n}\n\nlet tableListInvoices = [\n  TableListInvoice(id: \"INV001\", customer: \"Olivia Martin\", status: \"Paid\", method: \"Card\", amount: \"$250.00\"),\n  TableListInvoice(id: \"INV002\", customer: \"Jackson Lee\", status: \"Pending\", method: \"PayPal\", amount: \"$150.00\"),\n  TableListInvoice(id: \"INV003\", customer: \"Isabella Nguyen\", status: \"Unpaid\", method: \"Transfer\", amount: \"$350.00\"),\n  TableListInvoice(id: \"INV004\", customer: \"William Kim\", status: \"Paid\", method: \"Card\", amount: \"$450.00\"),\n]\n\nlet tableListColumns: [TableListColumn<TableListInvoice>] = [\n  TableListColumn(\"customer\", header: \"Customer\", slot: .title) { Text(verbatim: $0.customer) },\n  TableListColumn(\"status\", header: \"Status\", slot: .description) { Text(verbatim: $0.status) },\n  TableListColumn(\"method\", header: \"Method\", slot: .description) { Text(verbatim: $0.method) },\n  TableListColumn(\"amount\", header: \"Amount\", slot: .trailing) { Text(verbatim: $0.amount) },\n]"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.patterns.TableList\nimport com.esuiss.ui.patterns.TableListAlign\nimport com.esuiss.ui.patterns.TableListColumn\nimport com.esuiss.ui.patterns.TableListSlot\n\nclass TableListInvoice(\n    val id: String,\n    val customer: String,\n    val status: String,\n    val method: String,\n    val amount: String,\n)\n\nval tableListInvoices = listOf(\n    TableListInvoice(\"INV001\", \"Olivia Martin\", \"Paid\", \"Card\", \"$250.00\"),\n    TableListInvoice(\"INV002\", \"Jackson Lee\", \"Pending\", \"PayPal\", \"$150.00\"),\n    TableListInvoice(\"INV003\", \"Isabella Nguyen\", \"Unpaid\", \"Transfer\", \"$350.00\"),\n    TableListInvoice(\"INV004\", \"William Kim\", \"Paid\", \"Card\", \"$450.00\"),\n)\n\nval tableListColumns = listOf(\n    TableListColumn<TableListInvoice>(\"customer\", \"Customer\", slot = TableListSlot.Title) { Text(it.customer, maxLines = 1) },\n    TableListColumn<TableListInvoice>(\"status\", \"Status\", slot = TableListSlot.Description) { Text(it.status, maxLines = 1) },\n    TableListColumn<TableListInvoice>(\"method\", \"Method\", slot = TableListSlot.Description) { Text(it.method, maxLines = 1) },\n    TableListColumn<TableListInvoice>(\"amount\", \"Amount\", slot = TableListSlot.Trailing, align = TableListAlign.End) {\n        Text(it.amount, maxLines = 1)\n    },\n)\n\n@Composable\nfun TableListDefault() {\n    Column(verticalArrangement = Arrangement.spacedBy(32.dp)) {\n        TableList(\n            rows = tableListInvoices,\n            columns = tableListColumns,\n            getKey = { row, _ -> row.id },\n            title = \"Invoices\",\n            onRowClick = {},\n        )\n        TableList(rows = emptyList(), columns = tableListColumns, emptyText = \"No invoices yet.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-table-list--default" />
 
 `TableList` takes `rows` and a `columns` definition, and renders each row as a `TableListRow` inside one rounded group. Each column has a `slot` that decides where its cell goes: the row title, the description line, the trailing side, or nowhere.
 
@@ -115,19 +110,25 @@ The row parts are also exported, so you can build the same grouped look inside a
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add table-list"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add table-list
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add table-list --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add table-list --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add table-list --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add table-list --platform kotlin
+```
 
 </Only>
 
@@ -143,13 +144,15 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/table-list.tsx`:
 
-<SourceFile path="uniwind/components/patterns/table-list.tsx" />
+<ComponentSource path="uniwind/components/patterns/table-list.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -159,13 +162,15 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/table-list.tsx`:
 
-<SourceFile path="nativewind/components/patterns/table-list.tsx" />
+<ComponentSource path="nativewind/components/patterns/table-list.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -177,7 +182,7 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 2. Copy the source into `components/patterns/table-list.tsx`:
 
-<SourceFile path="stylesheet/components/patterns/table-list.tsx" />
+<ComponentSource path="stylesheet/components/patterns/table-list.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -193,19 +198,19 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Patterns/TableList.swift" />
+<ComponentSource path="swift/Patterns/TableList.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -215,29 +220,34 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/patterns/TableList.kt" />
+<ComponentSource path="kotlin/patterns/TableList.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Item.kt" />
+<ComponentSource path="kotlin/components/Item.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -245,9 +255,22 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, TableListRow, TableList } from \"@/components/patterns/table-list\""} />
+```tsx
+import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, TableListRow, TableList } from "@/components/patterns/table-list"
+```
 
-<Code lang="tsx" code={"<View className=\"gap-8\">\n  <TableList\n    title=\"Invoices\"\n    rows={invoices}\n    columns={columns}\n    getKey={(row) => row.id}\n    onRowPress={() => undefined}\n  />\n  <TableList rows={[]} columns={columns} emptyText=\"No invoices yet.\" />\n</View>"} />
+```tsx
+<View className="gap-8">
+  <TableList
+    title="Invoices"
+    rows={invoices}
+    columns={columns}
+    getKey={(row) => row.id}
+    onRowPress={() => undefined}
+  />
+  <TableList rows={[]} columns={columns} emptyText="No invoices yet." />
+</View>
+```
 
 Define columns with `key`, `header`, `cell` and `slot`. Several `description` columns are joined with ` · `, and several `trailing` columns are shown side by side. Use `mobileCell` to render a different value than `cell` in the list, such as a shorter date.
 
@@ -261,15 +284,7 @@ With a `FlatList`, use `TableListRow` as the item, pass `first` and `last` to ro
 
 Builds the grouped list in a `FlatList` with a header, footer and separators.
 
-<NativeExample id="patterns-table-list--with-flat-list" width={880} height={762} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { FlatList } from \"react-native\"\nimport { TableListFooter, TableListHeader, TableListRow, TableListSeparator } from \"@/components/patterns/table-list\"\n\ntype Invoice = {\n  id: string\n  customer: string\n  status: string\n  method: string\n  amount: string\n}\n\nconst invoices: Invoice[] = [\n  {\n    id: \"INV001\",\n    customer: \"Olivia Martin\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$250.00\",\n  },\n  {\n    id: \"INV002\",\n    customer: \"Jackson Lee\",\n    status: \"Pending\",\n    method: \"PayPal\",\n    amount: \"$150.00\",\n  },\n  {\n    id: \"INV003\",\n    customer: \"Isabella Nguyen\",\n    status: \"Unpaid\",\n    method: \"Transfer\",\n    amount: \"$350.00\",\n  },\n  {\n    id: \"INV004\",\n    customer: \"William Kim\",\n    status: \"Paid\",\n    method: \"Card\",\n    amount: \"$450.00\",\n  },\n]\n\nexport function TableListWithFlatListExample() {\n  return (\n    <FlatList\n      data={invoices}\n      keyExtractor={(item) => item.id}\n      ListHeaderComponent={<TableListHeader>Recent</TableListHeader>}\n      ListFooterComponent={\n        <TableListFooter>Payments settle within two days.</TableListFooter>\n      }\n      ItemSeparatorComponent={TableListSeparator}\n      renderItem={({ item, index }) => (\n        <TableListRow\n          first={index === 0}\n          last={index === invoices.length - 1}\n          title={item.customer}\n          description={item.status}\n          trailing={item.amount}\n          onPress={() => undefined}\n        />\n      )}\n    />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct TableListWithFlatListExample: View {\n  var body: some View {\n    TableListSection(header: \"Recent\", footer: \"Payments settle within two days.\") {\n      ForEach(tableListInvoices) { invoice in\n        TableListRow(action: {}) {\n          VStack(alignment: .leading, spacing: 2) {\n            Text(verbatim: invoice.customer)\n              .textStyle(.base)\n              .foregroundStyle(Color.label)\n              .lineLimit(1)\n            Text(verbatim: invoice.status)\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n              .lineLimit(1)\n          }\n          .frame(maxWidth: .infinity, alignment: .leading)\n          Text(verbatim: invoice.amount)\n            .textStyle(.base)\n            .monospacedDigit()\n            .foregroundStyle(Color.labelSecondary)\n            .lineLimit(1)\n            .fixedSize()\n        }\n      }\n    }\n  }\n}\n\nstruct TableListInvoice: Identifiable {\n  let id: String\n  let customer: String\n  let status: String\n  let method: String\n  let amount: String\n}\n\nlet tableListInvoices = [\n  TableListInvoice(id: \"INV001\", customer: \"Olivia Martin\", status: \"Paid\", method: \"Card\", amount: \"$250.00\"),\n  TableListInvoice(id: \"INV002\", customer: \"Jackson Lee\", status: \"Pending\", method: \"PayPal\", amount: \"$150.00\"),\n  TableListInvoice(id: \"INV003\", customer: \"Isabella Nguyen\", status: \"Unpaid\", method: \"Transfer\", amount: \"$350.00\"),\n  TableListInvoice(id: \"INV004\", customer: \"William Kim\", status: \"Paid\", method: \"Card\", amount: \"$450.00\"),\n]"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.heightIn\nimport androidx.compose.foundation.lazy.LazyColumn\nimport androidx.compose.foundation.lazy.itemsIndexed\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.patterns.TableListFooter\nimport com.esuiss.ui.patterns.TableListHeader\nimport com.esuiss.ui.patterns.TableListRow\nimport com.esuiss.ui.patterns.TableListRowText\n\nclass TableListInvoice(\n    val id: String,\n    val customer: String,\n    val status: String,\n    val method: String,\n    val amount: String,\n)\n\nval tableListInvoices = listOf(\n    TableListInvoice(\"INV001\", \"Olivia Martin\", \"Paid\", \"Card\", \"$250.00\"),\n    TableListInvoice(\"INV002\", \"Jackson Lee\", \"Pending\", \"PayPal\", \"$150.00\"),\n    TableListInvoice(\"INV003\", \"Isabella Nguyen\", \"Unpaid\", \"Transfer\", \"$350.00\"),\n    TableListInvoice(\"INV004\", \"William Kim\", \"Paid\", \"Card\", \"$450.00\"),\n)\n\n@Composable\nfun TableListWithFlatList() {\n    LazyColumn(Modifier.fillMaxWidth().heightIn(max = 640.dp)) {\n        item(key = \"header\") { TableListHeader(\"Recent\") }\n        itemsIndexed(tableListInvoices, key = { _, item -> item.id }) { index, item ->\n            TableListRow(first = index == 0, last = index == tableListInvoices.lastIndex, onClick = {}) {\n                TableListRowText(item.customer, item.status, item.amount)\n            }\n        }\n        item(key = \"footer\") { TableListFooter(\"Payments settle within two days.\") }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-table-list--with-flat-list" />
 
 ## API Reference
 
@@ -279,7 +294,7 @@ Builds the grouped list in a `FlatList` with a header, footer and separators.
 
 A large heading above the list.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -289,7 +304,7 @@ A large heading above the list.
 
 A small uppercase heading above a group.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -299,7 +314,7 @@ A small uppercase heading above a group.
 
 A note below a group.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 
@@ -309,7 +324,7 @@ A note below a group.
 
 An inset divider between rows.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -319,7 +334,16 @@ An inset divider between rows.
 
 One row with a title, description and trailing content.
 
-<PropsTable extends={["React.ComponentProps<typeof Item>"]} props={[{"name":"title","type":"React.ReactNode","description":"The row's main text."},{"name":"description","type":"React.ReactNode","description":"A single-line secondary text."},{"name":"trailing","type":"React.ReactNode","description":"Content on the end side; text is shown in secondary color with tabular numbers."},{"name":"first","type":"boolean","default":"false","description":"Rounds the top corners."},{"name":"last","type":"boolean","default":"false","description":"Rounds the bottom corners."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `React.ReactNode` | - | The row's main text. |
+| `description` | `React.ReactNode` | - | A single-line secondary text. |
+| `trailing` | `React.ReactNode` | - | Content on the end side; text is shown in secondary color with tabular numbers. |
+| `first` | `boolean` | `false` | Rounds the top corners. |
+| `last` | `boolean` | `false` | Rounds the bottom corners. |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof Item>`.
 
 </ApiPart>
 
@@ -329,7 +353,16 @@ One row with a title, description and trailing content.
 
 Renders rows from a column definition, with an optional title and empty state.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"rows","type":"T[]","required":true,"description":"The data to render."},{"name":"columns","type":"TableListColumn<T>[]","required":true,"description":"Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`."},{"name":"getKey","type":"(row: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns a unique key for a row. Defaults to the index."},{"name":"title","type":"React.ReactNode","description":"Heading shown above the list."},{"name":"emptyText","type":"React.ReactNode","default":"\"No results.\"","description":"Content shown when `rows` is empty. Defaults to `No results.`."},{"name":"onRowPress","type":"(row: T, index: number) => void","description":"Called with the row and index when a row is pressed."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `rows` | `T[]` | Required | The data to render. |
+| `columns` | `TableListColumn<T>[]` | Required | Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`. |
+| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` | Returns a unique key for a row. Defaults to the index. |
+| `title` | `React.ReactNode` | - | Heading shown above the list. |
+| `emptyText` | `React.ReactNode` | `"No results."` | Content shown when `rows` is empty. Defaults to `No results.`. |
+| `onRowPress` | `(row: T, index: number) => void` | - | Called with the row and index when a row is pressed. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

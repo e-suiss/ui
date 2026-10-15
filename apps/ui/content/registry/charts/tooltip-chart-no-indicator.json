@@ -1,6 +1,0 @@
-{
-  "description": "A stacked bar chart whose tooltip lists series names and values without color indicators.",
-  "overview": "A stacked bar chart whose tooltip lists series names and values without any color marker. Use it for single-series charts, or when the series names are clear enough on their own.",
-  "usage": "Set `hideIndicator` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig`, and keep the labels descriptive since they are the only cue.",
-  "notes": "With several series and no color marker, readers can't match a row to a bar by color, so this suits one or two clearly named series best."
-}

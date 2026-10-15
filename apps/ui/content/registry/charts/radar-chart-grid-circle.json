@@ -1,5 +1,0 @@
-{
-  "description": "A single radar shape drawn over circular rings instead of polygonal grid lines.",
-  "overview": "The default radar shape drawn over concentric circles instead of polygon rings. Circles look softer and avoid suggesting straight edges between axes that the data doesn't have.",
-  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Switch back to polygon rings by removing `gridType` from `PolarGrid`."
-}

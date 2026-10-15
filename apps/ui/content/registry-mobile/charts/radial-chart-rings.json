@@ -1,5 +1,0 @@
-{
-  "description": "Three concentric activity rings showing move, exercise and stand progress toward their goals.",
-  "overview": "Three rings drawn with `Svg` circles colored through `ChartPalette`. Each entry in `rings` has a value and a goal, and the filled arc is capped at a full circle. The whole graphic is one accessible image whose label lists each ring's value and goal. Nothing is interactive.",
-  "usage": "Replace the values, goals and colors in `rings`, and change `SIZE` and `BAR` to resize the rings. The component takes no props."
-}

@@ -3,16 +3,11 @@ title: Accordion
 description: "A vertically stacked set of headings that each reveal a section of content."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="accordion" story="Default">
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="accordion-demo" />
 
 Accordion wraps the Base UI Accordion primitive. An `Accordion` holds one or more `AccordionItem` parts; each item pairs an `AccordionTrigger` with an `AccordionContent` panel. The trigger renders inside a heading element and shows a caret that flips between down and up as the panel opens and closes.
 
@@ -22,25 +17,42 @@ Use an accordion to shorten long pages of related content, such as FAQs or setti
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add accordion"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add accordion
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react class-variance-authority cn
+```
 
 2. Copy the source into `components/ui/accordion.tsx`:
 
-<SourceFile path="components/ui/accordion.tsx" />
+<ComponentSource path="components/ui/accordion.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from \"@/components/ui/accordion\""} />
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+```
 
-<Code lang="tsx" code={"<div className=\"w-96\">\n  <Accordion>\n    {items.map((item) => (\n      <AccordionItem key={item.value} value={item.value}>\n        <AccordionTrigger>{item.title}</AccordionTrigger>\n        <AccordionContent>{item.content}</AccordionContent>\n      </AccordionItem>\n    ))}\n  </Accordion>\n</div>"} />
+```tsx
+<div className="w-96">
+  <Accordion>
+    {items.map((item) => (
+      <AccordionItem key={item.value} value={item.value}>
+        <AccordionTrigger>{item.title}</AccordionTrigger>
+        <AccordionContent>{item.content}</AccordionContent>
+      </AccordionItem>
+    ))}
+  </Accordion>
+</div>
+```
 
 Give each `AccordionItem` a unique `value`. By default only one panel is open at a time; opening another closes the previous one. Set `multiple` on `Accordion` to let several panels stay open.
 
@@ -52,35 +64,30 @@ The open state is an array of item values. Use `defaultValue` (for example `["sh
 
 The `filled` variant places the items on a rounded, secondary surface.
 
-<Example kind="ui" name="accordion" story="Filled">
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionFilledExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion variant=\"filled\">\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="accordion-filled" />
 
 ### By default
 
 Opens an item on first render with `defaultValue`.
 
-<Example kind="ui" name="accordion" story="OpenByDefault">
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionOpenByDefaultExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion defaultValue={[\"shipping\"]}>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="accordion-open-by-default" />
 
 ### Multiple
 
 Keeps several panels open at once with `multiple`.
 
-<Example kind="ui" name="accordion" story="Multiple">
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionMultipleExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion multiple defaultValue={[\"shipping\", \"returns\"]}>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="accordion-multiple" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Accordion","href":"#accordion","children":[{"name":"AccordionItem","href":"#accordionitem","children":[{"name":"AccordionTrigger","href":"#accordiontrigger","children":[]},{"name":"AccordionContent","href":"#accordioncontent","children":[]}]}]}]} />
+<Anatomy>
+
+- [Accordion](#accordion)
+  - [AccordionItem](#accordionitem)
+    - [AccordionTrigger](#accordiontrigger)
+    - [AccordionContent](#accordioncontent)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -88,7 +95,11 @@ Keeps several panels open at once with `multiple`.
 
 The root that groups items and manages which panels are open.
 
-<PropsTable extends={["AccordionPrimitive.Root.Props"]} props={[{"name":"variant","type":"\"default\" | \"filled\"","default":"\"default\"","description":"Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container. |
+
+Also accepts the props of `AccordionPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -98,7 +109,7 @@ The root that groups items and manages which panels are open.
 
 A single section that pairs a trigger with its panel, identified by `value`.
 
-<PropsTable extends={["AccordionPrimitive.Item.Props"]} />
+Also accepts the props of `AccordionPrimitive.Item.Props`.
 
 </ApiPart>
 
@@ -108,7 +119,7 @@ A single section that pairs a trigger with its panel, identified by `value`.
 
 The button, inside a heading, that toggles its item's panel and shows the caret indicator.
 
-<PropsTable extends={["AccordionPrimitive.Trigger.Props"]} />
+Also accepts the props of `AccordionPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -118,7 +129,7 @@ The button, inside a heading, that toggles its item's panel and shows the caret 
 
 The collapsible panel holding the item's content.
 
-<PropsTable extends={["AccordionPrimitive.Panel.Props"]} />
+Also accepts the props of `AccordionPrimitive.Panel.Props`.
 
 </ApiPart>
 
@@ -139,15 +150,7 @@ The collapsible panel holding the item's content.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-accordion--open-by-default" width={880} height={421} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nexport function AccordionOpenByDefaultExample() {\n  return (\n    <Accordion defaultValue={[\"item-2\"]}>\n      <AccordionItems />\n    </Accordion>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AccordionOpenByDefaultExample: View {\n  var body: some View {\n    AccordionDemo(initial: [\"item-2\"], multiple: false)\n  }\n}\n\nstruct AccordionEntry: Identifiable {\n  let value: String\n  let title: LocalizedStringKey\n  let content: LocalizedStringKey\n\n  var id: String { value }\n}\n\nlet accordionEntries = [\n  AccordionEntry(value: \"item-1\", title: \"Is it accessible?\", content: \"Yes. It works with VoiceOver and TalkBack.\"),\n  AccordionEntry(\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content: \"Yes. It comes with default styles that match the other components.\"\n  ),\n  AccordionEntry(value: \"item-3\", title: \"Is it animated?\", content: \"Yes. It animates open and closed by default.\"),\n]\n\nstruct AccordionItems: View {\n  var body: some View {\n    ForEach(accordionEntries) { entry in\n      AccordionItem(entry.title, value: entry.value) {\n        Text(entry.content)\n      }\n    }\n  }\n}\n\nstruct AccordionDemo: View {\n  let multiple: Bool\n\n  @State private var expanded: Set<String>\n\n  init(initial: Set<String>, multiple: Bool) {\n    self.multiple = multiple\n    _expanded = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Accordion(expanded: $expanded, multiple: multiple) {\n      AccordionItems()\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Accordion\nimport com.esuiss.ui.components.AccordionItem\nimport com.esuiss.ui.components.AccordionVariant\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun AccordionOpenByDefaultExample() {\n    AccordionSingle(AccordionVariant.Default, \"item-2\")\n}\n\nclass AccordionEntry(val value: String, val title: String, val content: String)\n\nval accordionEntries = listOf(\n    AccordionEntry(\"item-1\", \"Is it accessible?\", \"Yes. It works with VoiceOver and TalkBack.\"),\n    AccordionEntry(\"item-2\", \"Is it styled?\", \"Yes. It comes with default styles that match the other components.\"),\n    AccordionEntry(\"item-3\", \"Is it animated?\", \"Yes. It animates open and closed by default.\"),\n)\n\n@Composable\nfun AccordionItems(open: List<String>, onToggle: (String, Boolean) -> Unit) {\n    accordionEntries.forEach { entry ->\n        AccordionItem(\n            expanded = entry.value in open,\n            onExpandedChange = { onToggle(entry.value, it) },\n            title = entry.title,\n        ) {\n            Text(entry.content)\n        }\n    }\n}\n\n@Composable\nfun AccordionSingle(variant: AccordionVariant, defaultValue: String) {\n    var open by rememberSaveable { mutableStateOf(defaultValue) }\n    Accordion(variant = variant) {\n        AccordionItems(listOf(open)) { value, expanded -> open = if (expanded) value else \"\" }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-accordion--open-by-default" />
 
 `Accordion` groups `AccordionItem`s, each with an `AccordionTrigger` and an `AccordionContent` panel. The root and items are Reanimated views with a layout transition, so items below move smoothly as a panel opens or closes, and the trigger's caret rotates as it opens.
 
@@ -157,19 +160,25 @@ The `default` variant draws items on the page background separated by hairlines.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add accordion"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add accordion
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add accordion --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add accordion --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add accordion --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add accordion --platform kotlin
+```
 
 </Only>
 
@@ -185,13 +194,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/accordion.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/accordion.tsx`:
 
-<SourceFile path="uniwind/components/ui/accordion.tsx" />
+<ComponentSource path="uniwind/components/ui/accordion.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -201,13 +212,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/accordion.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/accordion.tsx`:
 
-<SourceFile path="nativewind/components/ui/accordion.tsx" />
+<ComponentSource path="nativewind/components/ui/accordion.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -217,13 +230,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/accordion.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/accordion.tsx`:
 
-<SourceFile path="stylesheet/components/ui/accordion.tsx" />
+<ComponentSource path="stylesheet/components/ui/accordion.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -239,17 +254,19 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source:
 
-<SourceFile path="swift/Components/Accordion.swift" />
+<ComponentSource path="swift/Components/Accordion.swift" />
 
 5. Add the files to your app target.
 
@@ -259,25 +276,30 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Accordion.kt" />
+<ComponentSource path="kotlin/components/Accordion.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -285,9 +307,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from \"@/components/ui/accordion\""} />
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+```
 
-<Code lang="tsx" code={"<Accordion defaultValue={[\"item-2\"]}>\n  <AccordionItems />\n</Accordion>"} />
+```tsx
+<Accordion defaultValue={["item-2"]}>
+  <AccordionItems />
+</Accordion>
+```
 
 Give each `AccordionItem` a `value`. By default only one item is open at a time; set `multiple` to let several stay open.
 
@@ -299,43 +327,19 @@ Use `defaultValue` (an array of item values) for uncontrolled state, or `value` 
 
 ### Default
 
-<NativeExample id="components-accordion--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nexport function AccordionExample() {\n  return (\n    <Accordion>\n      <AccordionItems />\n    </Accordion>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AccordionExample: View {\n  var body: some View {\n    Accordion {\n      AccordionItems()\n    }\n  }\n}\n\nstruct AccordionEntry: Identifiable {\n  let value: String\n  let title: LocalizedStringKey\n  let content: LocalizedStringKey\n\n  var id: String { value }\n}\n\nlet accordionEntries = [\n  AccordionEntry(value: \"item-1\", title: \"Is it accessible?\", content: \"Yes. It works with VoiceOver and TalkBack.\"),\n  AccordionEntry(\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content: \"Yes. It comes with default styles that match the other components.\"\n  ),\n  AccordionEntry(value: \"item-3\", title: \"Is it animated?\", content: \"Yes. It animates open and closed by default.\"),\n]\n\nstruct AccordionItems: View {\n  var body: some View {\n    ForEach(accordionEntries) { entry in\n      AccordionItem(entry.title, value: entry.value) {\n        Text(entry.content)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Accordion\nimport com.esuiss.ui.components.AccordionItem\nimport com.esuiss.ui.components.AccordionVariant\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun AccordionExample() {\n    AccordionSingle(AccordionVariant.Default, \"\")\n}\n\nclass AccordionEntry(val value: String, val title: String, val content: String)\n\nval accordionEntries = listOf(\n    AccordionEntry(\"item-1\", \"Is it accessible?\", \"Yes. It works with VoiceOver and TalkBack.\"),\n    AccordionEntry(\"item-2\", \"Is it styled?\", \"Yes. It comes with default styles that match the other components.\"),\n    AccordionEntry(\"item-3\", \"Is it animated?\", \"Yes. It animates open and closed by default.\"),\n)\n\n@Composable\nfun AccordionItems(open: List<String>, onToggle: (String, Boolean) -> Unit) {\n    accordionEntries.forEach { entry ->\n        AccordionItem(\n            expanded = entry.value in open,\n            onExpandedChange = { onToggle(entry.value, it) },\n            title = entry.title,\n        ) {\n            Text(entry.content)\n        }\n    }\n}\n\n@Composable\nfun AccordionSingle(variant: AccordionVariant, defaultValue: String) {\n    var open by rememberSaveable { mutableStateOf(defaultValue) }\n    Accordion(variant = variant) {\n        AccordionItems(listOf(open)) { value, expanded -> open = if (expanded) value else \"\" }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-accordion--default" />
 
 ### Filled
 
 The `filled` variant on a rounded secondary surface.
 
-<NativeExample id="components-accordion--filled" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nexport function AccordionFilledExample() {\n  return (\n    <Accordion variant=\"filled\">\n      <AccordionItems />\n    </Accordion>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AccordionFilledExample: View {\n  var body: some View {\n    Accordion(.filled) {\n      AccordionItems()\n    }\n  }\n}\n\nstruct AccordionEntry: Identifiable {\n  let value: String\n  let title: LocalizedStringKey\n  let content: LocalizedStringKey\n\n  var id: String { value }\n}\n\nlet accordionEntries = [\n  AccordionEntry(value: \"item-1\", title: \"Is it accessible?\", content: \"Yes. It works with VoiceOver and TalkBack.\"),\n  AccordionEntry(\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content: \"Yes. It comes with default styles that match the other components.\"\n  ),\n  AccordionEntry(value: \"item-3\", title: \"Is it animated?\", content: \"Yes. It animates open and closed by default.\"),\n]\n\nstruct AccordionItems: View {\n  var body: some View {\n    ForEach(accordionEntries) { entry in\n      AccordionItem(entry.title, value: entry.value) {\n        Text(entry.content)\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Accordion\nimport com.esuiss.ui.components.AccordionItem\nimport com.esuiss.ui.components.AccordionVariant\nimport com.esuiss.ui.components.Text\n\n@Composable\nfun AccordionFilledExample() {\n    AccordionSingle(AccordionVariant.Filled, \"\")\n}\n\nclass AccordionEntry(val value: String, val title: String, val content: String)\n\nval accordionEntries = listOf(\n    AccordionEntry(\"item-1\", \"Is it accessible?\", \"Yes. It works with VoiceOver and TalkBack.\"),\n    AccordionEntry(\"item-2\", \"Is it styled?\", \"Yes. It comes with default styles that match the other components.\"),\n    AccordionEntry(\"item-3\", \"Is it animated?\", \"Yes. It animates open and closed by default.\"),\n)\n\n@Composable\nfun AccordionItems(open: List<String>, onToggle: (String, Boolean) -> Unit) {\n    accordionEntries.forEach { entry ->\n        AccordionItem(\n            expanded = entry.value in open,\n            onExpandedChange = { onToggle(entry.value, it) },\n            title = entry.title,\n        ) {\n            Text(entry.content)\n        }\n    }\n}\n\n@Composable\nfun AccordionSingle(variant: AccordionVariant, defaultValue: String) {\n    var open by rememberSaveable { mutableStateOf(defaultValue) }\n    Accordion(variant = variant) {\n        AccordionItems(listOf(open)) { value, expanded -> open = if (expanded) value else \"\" }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-accordion--filled" />
 
 ### Multiple
 
 A controlled accordion with `multiple`, so several items stay open.
 
-<NativeExample id="components-accordion--multiple" width={880} height={448} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Text } from \"@/components/ui/text\"\n\nconst items = [\n  {\n    value: \"item-1\",\n    title: \"Is it accessible?\",\n    content: \"Yes. It works with VoiceOver and TalkBack.\",\n  },\n  {\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content:\n      \"Yes. It comes with default styles that match the other components.\",\n  },\n  {\n    value: \"item-3\",\n    title: \"Is it animated?\",\n    content: \"Yes. It animates open and closed by default.\",\n  },\n]\n\nfunction AccordionItems() {\n  return items.map((item) => (\n    <AccordionItem key={item.value} value={item.value}>\n      <AccordionTrigger>\n        <Text>{item.title}</Text>\n      </AccordionTrigger>\n      <AccordionContent>\n        <Text>{item.content}</Text>\n      </AccordionContent>\n    </AccordionItem>\n  ))\n}\n\nfunction MultipleDemo() {\n  const [value, setValue] = React.useState<string[]>([\"item-1\", \"item-3\"])\n  return (\n    <Accordion multiple value={value} onValueChange={setValue}>\n      <AccordionItems />\n    </Accordion>\n  )\n}\n\nexport function AccordionMultipleExample() {\n  return (\n    <MultipleDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AccordionMultipleExample: View {\n  var body: some View {\n    AccordionDemo(initial: [\"item-1\", \"item-3\"], multiple: true)\n  }\n}\n\nstruct AccordionEntry: Identifiable {\n  let value: String\n  let title: LocalizedStringKey\n  let content: LocalizedStringKey\n\n  var id: String { value }\n}\n\nlet accordionEntries = [\n  AccordionEntry(value: \"item-1\", title: \"Is it accessible?\", content: \"Yes. It works with VoiceOver and TalkBack.\"),\n  AccordionEntry(\n    value: \"item-2\",\n    title: \"Is it styled?\",\n    content: \"Yes. It comes with default styles that match the other components.\"\n  ),\n  AccordionEntry(value: \"item-3\", title: \"Is it animated?\", content: \"Yes. It animates open and closed by default.\"),\n]\n\nstruct AccordionItems: View {\n  var body: some View {\n    ForEach(accordionEntries) { entry in\n      AccordionItem(entry.title, value: entry.value) {\n        Text(entry.content)\n      }\n    }\n  }\n}\n\nstruct AccordionDemo: View {\n  let multiple: Bool\n\n  @State private var expanded: Set<String>\n\n  init(initial: Set<String>, multiple: Bool) {\n    self.multiple = multiple\n    _expanded = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Accordion(expanded: $expanded, multiple: multiple) {\n      AccordionItems()\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.Accordion\nimport com.esuiss.ui.components.AccordionItem\nimport com.esuiss.ui.components.Text\n\nclass AccordionEntry(val value: String, val title: String, val content: String)\n\nval accordionEntries = listOf(\n    AccordionEntry(\"item-1\", \"Is it accessible?\", \"Yes. It works with VoiceOver and TalkBack.\"),\n    AccordionEntry(\"item-2\", \"Is it styled?\", \"Yes. It comes with default styles that match the other components.\"),\n    AccordionEntry(\"item-3\", \"Is it animated?\", \"Yes. It animates open and closed by default.\"),\n)\n\n@Composable\nfun AccordionItems(open: List<String>, onToggle: (String, Boolean) -> Unit) {\n    accordionEntries.forEach { entry ->\n        AccordionItem(\n            expanded = entry.value in open,\n            onExpandedChange = { onToggle(entry.value, it) },\n            title = entry.title,\n        ) {\n            Text(entry.content)\n        }\n    }\n}\n\n@Composable\nfun AccordionMultiple() {\n    var open by rememberSaveable { mutableStateOf(\"item-1,item-3\") }\n    Accordion {\n        AccordionItems(open.split(\",\")) { value, expanded ->\n            val current = open.split(\",\").filter { it.isNotEmpty() }\n            open = (if (expanded) current + value else current - value).joinToString(\",\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-accordion--multiple" />
 
 ## API Reference
 
@@ -345,7 +349,11 @@ A controlled accordion with `multiple`, so several items stay open.
 
 Root that holds the open state and lays out the items.
 
-<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Root>"]} props={[{"name":"variant","type":"\"default\" | \"filled\"","default":"\"default\"","description":"`default` or `filled`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "filled"` | `"default"` | `default` or `filled`. |
+
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Root>`.
 
 </ApiPart>
 
@@ -355,7 +363,7 @@ Root that holds the open state and lays out the items.
 
 One section, separated from the previous one by a hairline.
 
-<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Item>"]} />
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Item>`.
 
 </ApiPart>
 
@@ -365,7 +373,7 @@ One section, separated from the previous one by a hairline.
 
 Pressable heading row with a rotating caret.
 
-<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Trigger>"]} />
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Trigger>`.
 
 </ApiPart>
 
@@ -375,7 +383,11 @@ Pressable heading row with a rotating caret.
 
 Panel shown while the item is open; fades out upward on close.
 
-<PropsTable extends={["React.ComponentProps<typeof AccordionPrimitive.Panel>"]} props={[{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Panel>`.
 
 </ApiPart>
 

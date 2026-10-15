@@ -3,16 +3,11 @@ title: Alert Sheet
 description: "An action sheet that slides up from the bottom of the screen to confirm or choose an action."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="alert-sheet" story="Default">
-
-<Code lang="tsx" code={"import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertSheetExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          Delete order\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle className=\"sr-only\">Delete order</AlertSheetTitle>\n              <AlertSheetDescription>\n                Order #1042 will be permanently deleted. This action cannot be\n                undone.\n              </AlertSheetDescription>\n            </AlertSheetHeader>\n            <AlertSheetAction variant=\"destructive\">\n              Delete Order\n            </AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="alert-sheet-demo" layout="fullscreen" />
 
 Alert Sheet is an iOS-style action sheet built on Base UI's dialog primitives. An `AlertSheet` root contains an `AlertSheetTrigger` and an `AlertSheetContent`, which renders its own portal and scrim overlay. Inside, an `AlertSheetGroup` holds an optional `AlertSheetHeader` (with `AlertSheetTitle` and `AlertSheetDescription`) and one or more `AlertSheetAction` rows. A separate `AlertSheetCancel` sits below the group.
 
@@ -22,27 +17,56 @@ Use it to offer a short list of actions tied to the current context, especially 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert-sheet"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add alert-sheet
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
 
 2. Add the pieces it builds on: `use-scrollbar-gap`.
 
 3. Copy the source into `components/ui/alert-sheet.tsx`:
 
-<SourceFile path="components/ui/alert-sheet.tsx" />
+<ComponentSource path="components/ui/alert-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from \"@/components/ui/alert-sheet\""} />
+```tsx
+import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from "@/components/ui/alert-sheet"
+```
 
-<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <AlertSheet>\n    <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n      Delete order\n    </AlertSheetTrigger>\n    <AlertSheetContent>\n      <AlertSheetGroup>\n        <AlertSheetHeader>\n          <AlertSheetTitle className=\"sr-only\">Delete order</AlertSheetTitle>\n          <AlertSheetDescription>\n            Order #1042 will be permanently deleted. This action cannot be\n            undone.\n          </AlertSheetDescription>\n        </AlertSheetHeader>\n        <AlertSheetAction variant=\"destructive\">\n          Delete Order\n        </AlertSheetAction>\n      </AlertSheetGroup>\n      <AlertSheetCancel>Cancel</AlertSheetCancel>\n    </AlertSheetContent>\n  </AlertSheet>\n</div>"} />
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <AlertSheet>
+    <AlertSheetTrigger render={<Button variant="outline" />}>
+      Delete order
+    </AlertSheetTrigger>
+    <AlertSheetContent>
+      <AlertSheetGroup>
+        <AlertSheetHeader>
+          <AlertSheetTitle className="sr-only">Delete order</AlertSheetTitle>
+          <AlertSheetDescription>
+            Order #1042 will be permanently deleted. This action cannot be
+            undone.
+          </AlertSheetDescription>
+        </AlertSheetHeader>
+        <AlertSheetAction variant="destructive">
+          Delete Order
+        </AlertSheetAction>
+      </AlertSheetGroup>
+      <AlertSheetCancel>Cancel</AlertSheetCancel>
+    </AlertSheetContent>
+  </AlertSheet>
+</div>
+```
 
 Every sheet needs an `AlertSheetTitle` for its accessible name. If the title should not be visible, hide it with `className="sr-only"`.
 
@@ -56,25 +80,29 @@ When the sheet opens, focus moves to `AlertSheetCancel` unless you pass your own
 
 Shows a visible title above the description.
 
-<Example kind="ui" name="alert-sheet" story="WithTitle">
-
-<Code lang="tsx" code={"import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertSheetWithTitleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          Sign out\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle>Sign out of your account?</AlertSheetTitle>\n              <AlertSheetDescription>\n                You will need to sign in again to access your projects.\n              </AlertSheetDescription>\n            </AlertSheetHeader>\n            <AlertSheetAction variant=\"destructive\">Sign Out</AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="alert-sheet-with-title" layout="fullscreen" />
 
 ### Multiple actions
 
 Offers a default and a destructive action in one group.
 
-<Example kind="ui" name="alert-sheet" story="MultipleActions">
-
-<Code lang="tsx" code={"import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertSheetMultipleActionsExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          Close draft\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle>Save changes to this draft?</AlertSheetTitle>\n            </AlertSheetHeader>\n            <AlertSheetAction>Save Draft</AlertSheetAction>\n            <AlertSheetAction variant=\"destructive\">\n              Delete Draft\n            </AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="alert-sheet-multiple-actions" layout="fullscreen" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"AlertSheet","href":"#alertsheet","children":[{"name":"AlertSheetTrigger","href":"#alertsheettrigger","children":[]},{"name":"AlertSheetContent","href":"#alertsheetcontent","children":[{"name":"AlertSheetGroup","href":"#alertsheetgroup","children":[{"name":"AlertSheetHeader","href":"#alertsheetheader","children":[{"name":"AlertSheetTitle","href":"#alertsheettitle","children":[]},{"name":"AlertSheetDescription","href":"#alertsheetdescription","children":[]}]},{"name":"AlertSheetAction","href":"#alertsheetaction","children":[]}]},{"name":"AlertSheetCancel","href":"#alertsheetcancel","children":[]}]}]}]} />
+<Anatomy>
+
+- [AlertSheet](#alertsheet)
+  - [AlertSheetTrigger](#alertsheettrigger)
+  - [AlertSheetContent](#alertsheetcontent)
+    - [AlertSheetGroup](#alertsheetgroup)
+      - [AlertSheetHeader](#alertsheetheader)
+        - [AlertSheetTitle](#alertsheettitle)
+        - [AlertSheetDescription](#alertsheetdescription)
+      - [AlertSheetAction](#alertsheetaction)
+    - [AlertSheetCancel](#alertsheetcancel)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -82,7 +110,11 @@ Offers a default and a destructive action in one group.
 
 The root that manages the open state and dismissal behavior.
 
-<PropsTable extends={["AlertSheetPrimitive.Root.Props"]} props={[{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, renders as a dialog; when `false`, renders as an alert dialog."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dismissible` | `boolean` | `true` | When `true`, renders as a dialog; when `false`, renders as an alert dialog. |
+
+Also accepts the props of `AlertSheetPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -92,7 +124,7 @@ The root that manages the open state and dismissal behavior.
 
 The control that opens the sheet.
 
-<PropsTable extends={["AlertSheetPrimitive.Trigger.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -102,7 +134,7 @@ The control that opens the sheet.
 
 Renders the sheet into a portal outside the DOM hierarchy.
 
-<PropsTable extends={["AlertSheetPrimitive.Portal.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Portal.Props`.
 
 </ApiPart>
 
@@ -112,7 +144,7 @@ Renders the sheet into a portal outside the DOM hierarchy.
 
 The full-screen scrim behind the sheet.
 
-<PropsTable extends={["AlertSheetPrimitive.Backdrop.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Backdrop.Props`.
 
 </ApiPart>
 
@@ -122,7 +154,7 @@ The full-screen scrim behind the sheet.
 
 The bottom-anchored container, rendered with its own portal and overlay.
 
-<PropsTable extends={["AlertSheetPrimitive.Popup.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Popup.Props`.
 
 </ApiPart>
 
@@ -132,7 +164,7 @@ The bottom-anchored container, rendered with its own portal and overlay.
 
 A rounded surface that stacks the header and actions with dividers.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -142,7 +174,7 @@ A rounded surface that stacks the header and actions with dividers.
 
 A padded wrapper for the title and description.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -152,7 +184,7 @@ A padded wrapper for the title and description.
 
 The heading that names the sheet.
 
-<PropsTable extends={["AlertSheetPrimitive.Title.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Title.Props`.
 
 </ApiPart>
 
@@ -162,7 +194,7 @@ The heading that names the sheet.
 
 Supporting text that describes the sheet.
 
-<PropsTable extends={["AlertSheetPrimitive.Description.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Description.Props`.
 
 </ApiPart>
 
@@ -172,7 +204,11 @@ Supporting text that describes the sheet.
 
 A full-width row button that performs an action and closes the sheet.
 
-<PropsTable extends={["AlertSheetPrimitive.Close.Props"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"Text color of the action. `default` uses the link color; `destructive` uses the danger color."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` | Text color of the action. `default` uses the link color; `destructive` uses the danger color. |
+
+Also accepts the props of `AlertSheetPrimitive.Close.Props`.
 
 </ApiPart>
 
@@ -182,7 +218,7 @@ A full-width row button that performs an action and closes the sheet.
 
 A separate, bold button that dismisses the sheet.
 
-<PropsTable extends={["AlertSheetPrimitive.Close.Props"]} />
+Also accepts the props of `AlertSheetPrimitive.Close.Props`.
 
 </ApiPart>
 
@@ -203,15 +239,7 @@ A separate, bold button that dismisses the sheet.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-alert-sheet--open-by-default" width={880} height={1767} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction SheetBody() {\n  return (\n    <AlertSheetContent>\n      <AlertSheetGroup>\n        <AlertSheetHeader>\n          <AlertSheetTitle>Delete this photo?</AlertSheetTitle>\n          <AlertSheetDescription>\n            This photo will be deleted from all of your devices.\n          </AlertSheetDescription>\n        </AlertSheetHeader>\n        <AlertSheetAction>Save to Files</AlertSheetAction>\n        <AlertSheetAction variant=\"destructive\">Delete Photo</AlertSheetAction>\n      </AlertSheetGroup>\n      <AlertSheetCancel>Cancel</AlertSheetCancel>\n    </AlertSheetContent>\n  )\n}\n\nexport function AlertSheetOpenByDefaultExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertSheet defaultOpen>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show sheet</Text>\n        </AlertSheetTrigger>\n        <SheetBody />\n      </AlertSheet>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AlertSheetOpenByDefaultExample: View {\n  var body: some View {\n    AlertSheetDemo(title: \"Show sheet\", open: true) {\n      AlertSheetBody()\n    }\n  }\n}\n\nstruct AlertSheetDemo<Body: View>: View {\n  let title: LocalizedStringKey\n  let dismissible: Bool\n  let content: () -> Body\n\n  @State private var open: Bool\n\n  init(\n    title: LocalizedStringKey,\n    open: Bool = false,\n    dismissible: Bool = true,\n    @ViewBuilder content: @escaping () -> Body\n  ) {\n    self.title = title\n    self.dismissible = dismissible\n    self.content = content\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .alertSheet(isPresented: $open, dismissible: dismissible, content: content)\n  }\n}\n\nstruct AlertSheetBody: View {\n  var body: some View {\n    AlertSheetContent {\n      AlertSheetGroup {\n        AlertSheetHeader {\n          AlertSheetTitle(\"Delete this photo?\")\n          AlertSheetDescription(\"This photo will be deleted from all of your devices.\")\n        }\n        AlertSheetAction(\"Save to Files\")\n        AlertSheetAction(\"Delete Photo\", variant: .destructive)\n      }\n      AlertSheetCancel(\"Cancel\")\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.AlertSheet\nimport com.esuiss.ui.components.AlertSheetAction\nimport com.esuiss.ui.components.AlertSheetActionVariant\nimport com.esuiss.ui.components.AlertSheetCancel\nimport com.esuiss.ui.components.AlertSheetDescription\nimport com.esuiss.ui.components.AlertSheetGroup\nimport com.esuiss.ui.components.AlertSheetHeader\nimport com.esuiss.ui.components.AlertSheetTitle\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\n\n@Composable\nfun AlertSheetOpenByDefaultExample() {\n    AlertSheetDefault(defaultOpen = true)\n}\n\n@Composable\nfun AlertSheetDefault(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(\"Show sheet\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        AlertSheet(open = open, onOpenChange = { open = it }) {\n            AlertSheetGroup {\n                AlertSheetHeader {\n                    AlertSheetTitle(\"Delete this photo?\")\n                    AlertSheetDescription(\"This photo will be deleted from all of your devices.\")\n                }\n                AlertSheetAction(\"Save to Files\", onClick = {})\n                AlertSheetAction(\"Delete Photo\", onClick = {}, variant = AlertSheetActionVariant.Destructive)\n            }\n            AlertSheetCancel(\"Cancel\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-alert-sheet--open-by-default" />
 
 `AlertSheet` presents a set of choices related to the current context. `AlertSheetContent` renders through a portal (inside a full-window overlay on iOS), slides up from the bottom over a dimmed scrim, and respects the safe-area insets.
 
@@ -221,19 +249,25 @@ Actions sit in an `AlertSheetGroup`, a rounded card that draws a hairline betwee
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert-sheet"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add alert-sheet
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert-sheet --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add alert-sheet --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert-sheet --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add alert-sheet --platform kotlin
+```
 
 </Only>
 
@@ -249,13 +283,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/alert-sheet.tsx`:
 
-<SourceFile path="uniwind/components/ui/alert-sheet.tsx" />
+<ComponentSource path="uniwind/components/ui/alert-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -265,13 +301,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/alert-sheet.tsx`:
 
-<SourceFile path="nativewind/components/ui/alert-sheet.tsx" />
+<ComponentSource path="nativewind/components/ui/alert-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -281,13 +319,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/alert-sheet.tsx`:
 
-<SourceFile path="stylesheet/components/ui/alert-sheet.tsx" />
+<ComponentSource path="stylesheet/components/ui/alert-sheet.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -303,33 +343,35 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/AlertSheet.swift" />
+<ComponentSource path="swift/Components/AlertSheet.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -339,29 +381,34 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/AlertSheet.kt" />
+<ComponentSource path="kotlin/components/AlertSheet.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -369,9 +416,20 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { AlertSheet, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from \"@/components/ui/alert-sheet\""} />
+```tsx
+import { AlertSheet, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from "@/components/ui/alert-sheet"
+```
 
-<Code lang="tsx" code={"<View className=\"items-start\">\n  <AlertSheet defaultOpen>\n    <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n      <Text>Show sheet</Text>\n    </AlertSheetTrigger>\n    <SheetBody />\n  </AlertSheet>\n</View>"} />
+```tsx
+<View className="items-start">
+  <AlertSheet defaultOpen>
+    <AlertSheetTrigger render={<Button variant="outline" />}>
+      <Text>Show sheet</Text>
+    </AlertSheetTrigger>
+    <SheetBody />
+  </AlertSheet>
+</View>
+```
 
 Compose `AlertSheetTrigger` and `AlertSheetContent`. Inside the content, put an `AlertSheetGroup` with an optional `AlertSheetHeader` (`AlertSheetTitle`, `AlertSheetDescription`) followed by `AlertSheetAction`s, then an `AlertSheetCancel`.
 
@@ -383,29 +441,13 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 ### Default
 
-<NativeExample id="components-alert-sheet--default" width={880} height={1767} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction SheetBody() {\n  return (\n    <AlertSheetContent>\n      <AlertSheetGroup>\n        <AlertSheetHeader>\n          <AlertSheetTitle>Delete this photo?</AlertSheetTitle>\n          <AlertSheetDescription>\n            This photo will be deleted from all of your devices.\n          </AlertSheetDescription>\n        </AlertSheetHeader>\n        <AlertSheetAction>Save to Files</AlertSheetAction>\n        <AlertSheetAction variant=\"destructive\">Delete Photo</AlertSheetAction>\n      </AlertSheetGroup>\n      <AlertSheetCancel>Cancel</AlertSheetCancel>\n    </AlertSheetContent>\n  )\n}\n\nexport function AlertSheetExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertSheet>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Show sheet</Text>\n        </AlertSheetTrigger>\n        <SheetBody />\n      </AlertSheet>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AlertSheetExample: View {\n  var body: some View {\n    AlertSheetDemo(title: \"Show sheet\") {\n      AlertSheetBody()\n    }\n  }\n}\n\nstruct AlertSheetDemo<Body: View>: View {\n  let title: LocalizedStringKey\n  let dismissible: Bool\n  let content: () -> Body\n\n  @State private var open: Bool\n\n  init(\n    title: LocalizedStringKey,\n    open: Bool = false,\n    dismissible: Bool = true,\n    @ViewBuilder content: @escaping () -> Body\n  ) {\n    self.title = title\n    self.dismissible = dismissible\n    self.content = content\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .alertSheet(isPresented: $open, dismissible: dismissible, content: content)\n  }\n}\n\nstruct AlertSheetBody: View {\n  var body: some View {\n    AlertSheetContent {\n      AlertSheetGroup {\n        AlertSheetHeader {\n          AlertSheetTitle(\"Delete this photo?\")\n          AlertSheetDescription(\"This photo will be deleted from all of your devices.\")\n        }\n        AlertSheetAction(\"Save to Files\")\n        AlertSheetAction(\"Delete Photo\", variant: .destructive)\n      }\n      AlertSheetCancel(\"Cancel\")\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.AlertSheet\nimport com.esuiss.ui.components.AlertSheetAction\nimport com.esuiss.ui.components.AlertSheetActionVariant\nimport com.esuiss.ui.components.AlertSheetCancel\nimport com.esuiss.ui.components.AlertSheetDescription\nimport com.esuiss.ui.components.AlertSheetGroup\nimport com.esuiss.ui.components.AlertSheetHeader\nimport com.esuiss.ui.components.AlertSheetTitle\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\n\n@Composable\nfun AlertSheetExample() {\n    AlertSheetDefault(defaultOpen = false)\n}\n\n@Composable\nfun AlertSheetDefault(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    Column {\n        Button(\"Show sheet\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        AlertSheet(open = open, onOpenChange = { open = it }) {\n            AlertSheetGroup {\n                AlertSheetHeader {\n                    AlertSheetTitle(\"Delete this photo?\")\n                    AlertSheetDescription(\"This photo will be deleted from all of your devices.\")\n                }\n                AlertSheetAction(\"Save to Files\", onClick = {})\n                AlertSheetAction(\"Delete Photo\", onClick = {}, variant = AlertSheetActionVariant.Destructive)\n            }\n            AlertSheetCancel(\"Cancel\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-alert-sheet--default" />
 
 ### Not dismissible
 
 `dismissible={false}` with a destructive and a disabled action.
 
-<NativeExample id="components-alert-sheet--not-dismissible" width={880} height={1767} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from \"@/components/ui/alert-sheet\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function AlertSheetNotDismissibleExample() {\n  return (\n    <View className=\"items-start\">\n      <AlertSheet dismissible={false}>\n        <AlertSheetTrigger render={<Button variant=\"outline\" />}>\n          <Text>Sign out</Text>\n        </AlertSheetTrigger>\n        <AlertSheetContent>\n          <AlertSheetGroup>\n            <AlertSheetHeader>\n              <AlertSheetTitle>Sign out of all devices?</AlertSheetTitle>\n            </AlertSheetHeader>\n            <AlertSheetAction variant=\"destructive\">Sign Out</AlertSheetAction>\n            <AlertSheetAction disabled>Keep Signed In Here</AlertSheetAction>\n          </AlertSheetGroup>\n          <AlertSheetCancel>Cancel</AlertSheetCancel>\n        </AlertSheetContent>\n      </AlertSheet>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct AlertSheetNotDismissibleExample: View {\n  var body: some View {\n    AlertSheetDemo(title: \"Sign out\", dismissible: false) {\n      AlertSheetContent {\n        AlertSheetGroup {\n          AlertSheetHeader {\n            AlertSheetTitle(\"Sign out of all devices?\")\n          }\n          AlertSheetAction(\"Sign Out\", variant: .destructive)\n          AlertSheetAction(\"Keep Signed In Here\")\n            .disabled(true)\n        }\n        AlertSheetCancel(\"Cancel\")\n      }\n    }\n  }\n}\n\nstruct AlertSheetDemo<Body: View>: View {\n  let title: LocalizedStringKey\n  let dismissible: Bool\n  let content: () -> Body\n\n  @State private var open: Bool\n\n  init(\n    title: LocalizedStringKey,\n    open: Bool = false,\n    dismissible: Bool = true,\n    @ViewBuilder content: @escaping () -> Body\n  ) {\n    self.title = title\n    self.dismissible = dismissible\n    self.content = content\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    Button(title) { open = true }\n      .buttonStyle(.variant(.outline))\n      .alertSheet(isPresented: $open, dismissible: dismissible, content: content)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.components.AlertSheet\nimport com.esuiss.ui.components.AlertSheetAction\nimport com.esuiss.ui.components.AlertSheetActionVariant\nimport com.esuiss.ui.components.AlertSheetCancel\nimport com.esuiss.ui.components.AlertSheetGroup\nimport com.esuiss.ui.components.AlertSheetHeader\nimport com.esuiss.ui.components.AlertSheetTitle\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\n\n@Composable\nfun AlertSheetNotDismissible() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    Column {\n        Button(\"Sign out\", onClick = { open = true }, variant = ButtonVariant.Outline)\n        AlertSheet(open = open, onOpenChange = { open = it }, dismissible = false) {\n            AlertSheetGroup {\n                AlertSheetHeader {\n                    AlertSheetTitle(\"Sign out of all devices?\")\n                }\n                AlertSheetAction(\"Sign Out\", onClick = {}, variant = AlertSheetActionVariant.Destructive)\n                AlertSheetAction(\"Keep Signed In Here\", onClick = {}, enabled = false)\n            }\n            AlertSheetCancel(\"Cancel\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-alert-sheet--not-dismissible" />
 
 ## API Reference
 
@@ -415,7 +457,11 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 Root that holds the open state.
 
-<PropsTable extends={["AlertSheetPrimitive.RootProps"]} props={[{"name":"dismissible","type":"boolean","default":"true","description":"When `false`, the scrim no longer closes the sheet. Defaults to `true`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dismissible` | `boolean` | `true` | When `false`, the scrim no longer closes the sheet. Defaults to `true`. |
+
+Also accepts the props of `AlertSheetPrimitive.RootProps`.
 
 </ApiPart>
 
@@ -425,7 +471,7 @@ Root that holds the open state.
 
 Dimmed scrim behind the sheet.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetPrimitive.Backdrop>"]} />
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Backdrop>`.
 
 </ApiPart>
 
@@ -435,7 +481,11 @@ Dimmed scrim behind the sheet.
 
 Bottom-anchored container that slides in and out.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetPrimitive.Popup>"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Popup>`.
 
 </ApiPart>
 
@@ -445,7 +495,7 @@ Bottom-anchored container that slides in and out.
 
 Rounded card that separates its children with hairlines.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -455,7 +505,7 @@ Rounded card that separates its children with hairlines.
 
 Centered block for the title and description.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -465,7 +515,7 @@ Centered block for the title and description.
 
 Small, bold heading for the sheet.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetPrimitive.Title>"]} />
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Title>`.
 
 </ApiPart>
 
@@ -475,7 +525,7 @@ Small, bold heading for the sheet.
 
 Supporting text below the title.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetPrimitive.Description>"]} />
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Description>`.
 
 </ApiPart>
 
@@ -485,7 +535,7 @@ Supporting text below the title.
 
 Full-width action row that closes the sheet.
 
-<PropsTable extends={["AlertSheetActionProps"]} />
+Also accepts the props of `AlertSheetActionProps`.
 
 </ApiPart>
 
@@ -495,7 +545,7 @@ Full-width action row that closes the sheet.
 
 Separate cancel card with bold text.
 
-<PropsTable extends={["AlertSheetActionProps"]} />
+Also accepts the props of `AlertSheetActionProps`.
 
 </ApiPart>
 

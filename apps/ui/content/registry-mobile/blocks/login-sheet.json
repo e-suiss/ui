@@ -1,5 +1,0 @@
-{
-  "description": "A sign-in screen whose primary button opens a bottom sheet to share or hide your email.",
-  "overview": "An app welcome screen with two buttons: Sign in with suiss and Continue with email. The first opens a `Drawer` that shows the account name and a `RadioGroup` to share the real email or use a hidden forwarding address, with a Continue `Button` that shows a `Spinner` before closing the sheet and showing a welcome message.",
-  "usage": "Edit `EMAIL_OPTIONS` to change the email choices. Wire `onContinue` (receives `share` or `hide`) to your sign-in flow and `onContinueWithEmail` to your email sign-up screen."
-}

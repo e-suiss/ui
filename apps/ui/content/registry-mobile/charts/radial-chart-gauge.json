@@ -1,5 +1,0 @@
-{
-  "description": "A gauge arc showing an air quality reading of 38 with a label in the middle.",
-  "overview": "A `RadialBarChart` drawn from 210 to -30 degrees, with a single value on a 0 to 100 `PolarAngleAxis` and a tinted track behind it. The number and its rating are `Text` layered over the arc. Nothing is interactive.",
-  "usage": "Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props."
-}

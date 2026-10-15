@@ -3,16 +3,11 @@ title: Tooltip Chart Custom
 description: "A bar chart whose tooltip is fully custom markup, showing a large total, a unit and the day."
 eyebrow: Chart
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="tooltip-chart-custom">
-
-<SourceFile path="components/charts/tooltip-chart-custom.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="tooltip-chart-custom" />
 
 A step-count bar chart whose tooltip is built from scratch as a small card with a big number, unit and day name. Reach for it when the stock tooltip layout can't express what you need, such as a single headline value.
 
@@ -20,27 +15,35 @@ A step-count bar chart whose tooltip is built from scratch as a small card with 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-custom"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts tooltip-chart-custom
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/tooltip-chart-custom.tsx`:
 
-<SourceFile path="components/charts/tooltip-chart-custom.tsx" />
+<ComponentSource path="components/charts/tooltip-chart-custom.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { TooltipChartCustom } from \"@/components/charts/tooltip-chart-custom\""} />
+```tsx
+import { TooltipChartCustom } from "@/components/charts/tooltip-chart-custom"
+```
 
-<Code lang="tsx" code={"<TooltipChartCustom />"} />
+```tsx
+<TooltipChartCustom />
+```
 
 Pass your own render function to the `content` prop of `ChartTooltip`; it receives the active state, the hovered rows and the label, and should return null when inactive. Change the unit text and number format inside it, and replace `chartData` and `chartConfig` as usual.
 

@@ -1,5 +1,0 @@
-{
-  "description": "A shopping bag screen with item rows, quantity steppers, a subtotal and checkout buttons.",
-  "overview": "Composes `Screen`, `Stepper` from the interactions, `Button`, `Text` and `BottomBar`. Each compact row shows a thumbnail, the product name with its line price, the variant, a quantity stepper and a Remove link; tapping the thumbnail or the name opens the product details. The heading and totals update as the bag changes, and removing every item shows an empty state with a Continue Shopping button.",
-  "usage": "Replace `INITIAL_ITEMS` with your cart lines. Wire `onCheckout`, `onShowDetails`, `onContinueShopping`, `onQuantityChange` and `onRemove` to your cart logic."
-}

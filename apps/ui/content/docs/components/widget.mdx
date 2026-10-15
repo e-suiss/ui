@@ -3,16 +3,11 @@ title: Widget
 description: "A rounded card in the style of home screen widgets, with fixed sizes and optional drag-to-resize."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="widget" story="Default">
-
-<Code lang="tsx" code={"import { SunIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nexport function WidgetExample() {\n  return (\n    <Widget size=\"small\" align=\"start\">\n      <WidgetHeader>\n        <WidgetIcon>\n          <SunIcon weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </Widget>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-demo" />
 
 `Widget` is a rounded `surface-secondary` card that comes in four sizes: `small` (168 × 168), `medium` (352 × 168), `large` (352 × 352) and `extra-large` (720 × 352), or `auto` to fill its parent. Compose it from `WidgetHeader`, which holds a `WidgetIcon`, `WidgetTitle` and an optional `WidgetAction`, followed by `WidgetValue`, `WidgetDescription`, `WidgetContent` and a `WidgetFooter` pinned to the bottom.
 
@@ -22,25 +17,45 @@ With `resizable`, a corner handle lets people drag the widget to another size. W
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add widget"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add widget
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Copy the source into `components/ui/widget.tsx`:
 
-<SourceFile path="components/ui/widget.tsx" />
+<ComponentSource path="components/ui/widget.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from \"@/components/ui/widget\""} />
+```tsx
+import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from "@/components/ui/widget"
+```
 
-<Code lang="tsx" code={"<Widget size=\"small\" align=\"start\">\n  <WidgetHeader>\n    <WidgetIcon>\n      <SunIcon weight=\"fill\" />\n    </WidgetIcon>\n    <WidgetTitle>Istanbul</WidgetTitle>\n  </WidgetHeader>\n  <WidgetContent>\n    <WidgetValue>24°</WidgetValue>\n    <WidgetDescription>Partly cloudy</WidgetDescription>\n  </WidgetContent>\n  <WidgetFooter>H 27° · L 18°</WidgetFooter>\n</Widget>"} />
+```tsx
+<Widget size="small" align="start">
+  <WidgetHeader>
+    <WidgetIcon>
+      <SunIcon weight="fill" />
+    </WidgetIcon>
+    <WidgetTitle>Istanbul</WidgetTitle>
+  </WidgetHeader>
+  <WidgetContent>
+    <WidgetValue>24°</WidgetValue>
+    <WidgetDescription>Partly cloudy</WidgetDescription>
+  </WidgetContent>
+  <WidgetFooter>H 27° · L 18°</WidgetFooter>
+</Widget>
+```
 
 Use `size` with `onSizeChange` to control the size, or `defaultSize` to set where an uncontrolled widget starts. Without either, a resizable widget starts `small` and a fixed widget is `auto`. Limit the sizes a drag can snap to with `sizes`.
 
@@ -54,95 +69,73 @@ Adapt the content to the current size with the `group/widget` group and `data-si
 
 Shows a resizable widget whose chart and list adapt to each size.
 
-<Example kind="ui" name="widget" story="Sales">
-
-<Code lang="tsx" code={"import { CashRegisterIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14]\n\nconst topItems = [\n  { name: \"Grilled meatballs\", count: 38 },\n  { name: \"Lahmacun\", count: 31 },\n  { name: \"Adana kebab\", count: 24 },\n  { name: \"Künefe\", count: 19 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetSalesExample() {\n  return (\n    <div>\n      <Widget resizable defaultSize=\"large\">\n        <WidgetHeader className=\"gap-1.5 text-warning\">\n          <WidgetIcon size=\"sm\" className=\"text-warning\">\n            <CashRegisterIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Hestia</WidgetTitle>\n        </WidgetHeader>\n        <div className=\"flex min-h-0 flex-col gap-3 group-data-[size=medium]/widget:flex-1 group-data-[size=medium]/widget:flex-row group-data-[size=medium]/widget:items-end\">\n          <div className=\"shrink-0\">\n            <WidgetValue>₺18,240</WidgetValue>\n            <WidgetDescription className=\"text-xs\">\n              Today's revenue · 42 orders\n            </WidgetDescription>\n          </div>\n          <div\n            aria-hidden=\"true\"\n            className=\"flex h-14 shrink-0 items-end gap-1 group-data-[size=medium]/widget:h-full group-data-[size=medium]/widget:flex-1 group-data-[size=small]/widget:hidden\"\n          >\n            {hourly.map((value, index) => (\n              <span\n                key={index}\n                data-now={value === 100}\n                className=\"flex-1 rounded-sm bg-control data-[now=true]:bg-orange\"\n                style={{ height: `${value}%` }}\n              />\n            ))}\n          </div>\n        </div>\n        <ul className=\"flex flex-col group-data-[size=medium]/widget:hidden group-data-[size=small]/widget:hidden\">\n          {topItems.map((item) => (\n            <li\n              key={item.name}\n              className=\"flex items-center justify-between border-t py-1.5 text-sm\"\n            >\n              {item.name}\n              <span className=\"text-label-secondary tabular-nums\">\n                {item.count}\n              </span>\n            </li>\n          ))}\n        </ul>\n      </Widget>\n      <Hint>\n        Hover the corner and drag the handle. Double-click it to reset.\n      </Hint>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-sales" />
 
 ### Kitchen
 
 Places the resize handle inside the widget's corner.
 
-<Example kind="ui" name="widget" story="Kitchen">
-
-<Code lang="tsx" code={"import { CookingPotIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst tickets = [\n  { id: \"#1042\", place: \"Table 4\", minutes: 18 },\n  { id: \"#1043\", place: \"Takeaway\", minutes: 15 },\n  { id: \"#1044\", place: \"Table 12\", minutes: 9 },\n  { id: \"#1045\", place: \"Pickup\", minutes: 7 },\n  { id: \"#1046\", place: \"Garden 3\", minutes: 5 },\n  { id: \"#1047\", place: \"Table 7\", minutes: 3 },\n  { id: \"#1048\", place: \"Takeaway\", minutes: 1 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetKitchenExample() {\n  return (\n    <div>\n      <Widget\n        resizable\n        handle=\"inside\"\n        defaultSize=\"large\"\n        className=\"flex-row gap-4\"\n      >\n        <div className=\"flex w-32 shrink-0 flex-col gap-1 group-data-[size=small]/widget:w-full\">\n          <WidgetHeader className=\"gap-1.5 text-warning\">\n            <WidgetIcon size=\"sm\" className=\"text-warning\">\n              <CookingPotIcon weight=\"fill\" />\n            </WidgetIcon>\n            <WidgetTitle>Kitchen</WidgetTitle>\n          </WidgetHeader>\n          <WidgetValue className=\"mt-2 text-5xl\">7</WidgetValue>\n          <WidgetDescription className=\"text-xs\">\n            pending orders\n          </WidgetDescription>\n          <p className=\"text-xs font-medium text-danger\">2 running late</p>\n        </div>\n        <ul className=\"flex min-w-0 flex-1 flex-col group-data-[size=small]/widget:hidden\">\n          {tickets.map((ticket) => (\n            <li\n              key={ticket.id}\n              className=\"flex items-center gap-2 border-b py-1.5 text-sm group-data-[size=medium]/widget:nth-[n+4]:hidden\"\n            >\n              <span\n                aria-hidden=\"true\"\n                data-late={ticket.minutes >= 15}\n                className=\"size-1.5 shrink-0 rounded-full bg-orange data-[late=true]:bg-red\"\n              />\n              <span className=\"min-w-0 flex-1 truncate\">\n                {ticket.id} · {ticket.place}\n              </span>\n              <span\n                data-late={ticket.minutes >= 15}\n                className=\"text-xs text-label-secondary tabular-nums data-[late=true]:font-medium data-[late=true]:text-danger\"\n              >\n                {ticket.minutes} min\n              </span>\n            </li>\n          ))}\n        </ul>\n      </Widget>\n      <Hint>Handle inside the corner. Hover the corner to reveal it.</Hint>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-kitchen" />
 
 ### Reservations
 
 Limits resizing to the `small` and `medium` sizes.
 
-<Example kind="ui" name="widget" story="Reservations">
-
-<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetAction, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetReservationsExample() {\n  return (\n    <div>\n      <Widget resizable defaultSize=\"medium\" sizes={[\"small\", \"medium\"]}>\n        <WidgetHeader className=\"gap-1.5 text-link\">\n          <WidgetIcon size=\"sm\" className=\"text-link\">\n            <CalendarBlankIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Reservations</WidgetTitle>\n          <WidgetAction className=\"text-xs text-label-secondary\">\n            Up next\n          </WidgetAction>\n        </WidgetHeader>\n        <div>\n          <WidgetValue>20:00</WidgetValue>\n          <p className=\"text-sm\">Ayşe Y. · 6 guests</p>\n        </div>\n        <div className=\"mt-auto flex flex-col gap-1 group-data-[size=small]/widget:hidden\">\n          <div className=\"flex justify-between text-2xs text-label-secondary tabular-nums\">\n            <span>18:00</span>\n            <span>20:00</span>\n            <span>22:00</span>\n            <span>24:00</span>\n          </div>\n          <div className=\"relative h-2 rounded-full bg-control\">\n            <span className=\"absolute inset-y-0 start-[30%] w-[45%] rounded-full bg-blue\" />\n          </div>\n        </div>\n      </Widget>\n      <Hint>Snaps between small and medium only.</Hint>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-reservations" />
 
 ### Weekly report
 
 Starts at `extra-large` and reveals extra content only at that size.
 
-<Example kind="ui" name="widget" story="WeeklyReport">
-
-<Code lang="tsx" code={"import { ChartBarIcon, TriangleIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst week = [\n  { day: \"Mon\", value: 52 },\n  { day: \"Tue\", value: 44 },\n  { day: \"Wed\", value: 60 },\n  { day: \"Thu\", value: 56 },\n  { day: \"Fri\", value: 82 },\n  { day: \"Sat\", value: 100 },\n  { day: \"Sun\", value: 70 },\n]\n\nconst channels = [\n  { name: \"Dine-in\", amount: \"₺64,200\", tint: \"bg-blue\" },\n  { name: \"Takeaway\", amount: \"₺38,900\", tint: \"bg-orange\" },\n  { name: \"Pickup\", amount: \"₺18,800\", tint: \"bg-green\" },\n]\n\nconst bestSellers = [\n  { name: \"Grilled meatballs\", count: 238 },\n  { name: \"Lahmacun\", count: 201 },\n  { name: \"Adana kebab\", count: 164 },\n  { name: \"Künefe\", count: 131 },\n  { name: \"Ayran\", count: 120 },\n  { name: \"Lentil soup\", count: 96 },\n] as const\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nexport function WidgetWeeklyReportExample() {\n  return (\n    <div>\n      <Widget resizable defaultSize=\"extra-large\" className=\"flex-row gap-6\">\n        <div className=\"flex min-w-0 flex-1 flex-col gap-3\">\n          <WidgetHeader className=\"gap-1.5 text-success\">\n            <WidgetIcon size=\"sm\" className=\"text-success\">\n              <ChartBarIcon weight=\"fill\" />\n            </WidgetIcon>\n            <WidgetTitle>This week</WidgetTitle>\n          </WidgetHeader>\n          <div className=\"flex min-h-0 flex-col gap-3 group-data-[size=medium]/widget:flex-1 group-data-[size=medium]/widget:flex-row group-data-[size=medium]/widget:items-end\">\n            <div className=\"shrink-0\">\n              <WidgetValue>₺121,900</WidgetValue>\n              <p className=\"flex items-center gap-1 text-xs font-medium text-success\">\n                <TriangleIcon weight=\"fill\" className=\"size-2.5\" />\n                12% more than last week\n              </p>\n            </div>\n            <div className=\"flex h-24 min-w-0 shrink-0 items-end gap-2 group-data-[size=medium]/widget:h-full group-data-[size=medium]/widget:gap-1.5 group-data-[size=medium]/widget:flex-1 group-data-[size=small]/widget:hidden\">\n              {week.map((day) => (\n                <div\n                  key={day.day}\n                  className=\"flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1\"\n                >\n                  <div className=\"flex min-h-0 w-full flex-1 items-end\">\n                    <span\n                      aria-hidden=\"true\"\n                      data-top={day.value === 100}\n                      className=\"w-full rounded-md bg-control data-[top=true]:bg-green\"\n                      style={{ height: `${day.value}%` }}\n                    />\n                  </div>\n                  <span className=\"text-2xs text-label-secondary group-data-[size=medium]/widget:hidden\">\n                    {day.day}\n                  </span>\n                </div>\n              ))}\n            </div>\n          </div>\n          <ul className=\"flex flex-col group-data-[size=medium]/widget:hidden group-data-[size=small]/widget:hidden\">\n            {channels.map((channel) => (\n              <li\n                key={channel.name}\n                className=\"flex items-center gap-2 border-t py-1.5 text-sm\"\n              >\n                <span\n                  aria-hidden=\"true\"\n                  className={`size-2 rounded-full ${channel.tint}`}\n                />\n                <span className=\"flex-1\">{channel.name}</span>\n                <span className=\"text-label-secondary tabular-nums\">\n                  {channel.amount}\n                </span>\n              </li>\n            ))}\n          </ul>\n        </div>\n        <div className=\"hidden w-72 shrink-0 flex-col gap-2 group-data-[size=extra-large]/widget:flex\">\n          <p className=\"text-xs font-semibold text-label-secondary\">\n            Best sellers\n          </p>\n          {bestSellers.map((item) => (\n            <div key={item.name} className=\"flex flex-col gap-1\">\n              <div className=\"flex justify-between text-sm\">\n                {item.name}\n                <span className=\"text-label-secondary tabular-nums\">\n                  {item.count}\n                </span>\n              </div>\n              <div className=\"h-1 rounded-full bg-control\">\n                <div\n                  className=\"h-full rounded-full bg-green\"\n                  style={{\n                    width: `${(item.count / bestSellers[0].count) * 100}%`,\n                  }}\n                />\n              </div>\n            </div>\n          ))}\n        </div>\n      </Widget>\n      <Hint>Extra large shows best sellers, large hides them.</Hint>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-weekly-report" layout="padded" />
 
 ### Free resize
 
 Resizes freely with the pointer instead of snapping to sizes.
 
-<Example kind="ui" name="widget" story="FreeResize">
-
-<Code lang="tsx" code={"import { BowlFoodIcon, CoffeeIcon, HamburgerIcon, IceCreamIcon, OrangeSliceIcon, PizzaIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\nimport { Widget, WidgetTitle } from \"@/components/ui/widget\"\n\nconst menu = [\n  { name: \"Meatballs\", price: \"₺280\", icon: <HamburgerIcon /> },\n  { name: \"Pide\", price: \"₺220\", icon: <PizzaIcon /> },\n  { name: \"Soup\", price: \"₺90\", icon: <BowlFoodIcon /> },\n  { name: \"Coffee\", price: \"₺75\", icon: <CoffeeIcon /> },\n  { name: \"Künefe\", price: \"₺160\", icon: <IceCreamIcon /> },\n  { name: \"Lemonade\", price: \"₺70\", icon: <OrangeSliceIcon /> },\n  { name: \"Ayran\", price: \"₺40\", icon: <CoffeeIcon /> },\n  { name: \"Baklava\", price: \"₺180\", icon: <IceCreamIcon /> },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <p className=\"mt-6 text-xs text-label-secondary\">{children}</p>\n}\n\nfunction FreeResizeExample() {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [box, setBox] = React.useState({ width: 0, height: 0, columns: 0 })\n\n  React.useEffect(() => {\n    const widget = ref.current\n    if (!widget) return\n    const measure = () => {\n      const grid = widget.querySelector<HTMLElement>(\"[data-menu-grid]\")\n      const columns = grid\n        ? getComputedStyle(grid).gridTemplateColumns.split(\" \").length\n        : 0\n      setBox({\n        width: Math.round(widget.offsetWidth),\n        height: Math.round(widget.offsetHeight),\n        columns,\n      })\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(widget)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div>\n      <Widget\n        ref={ref}\n        resizable=\"free\"\n        defaultSize=\"large\"\n        className=\"gap-0 p-0\"\n      >\n        <div className=\"flex items-baseline justify-between px-4 pt-4 pb-3\">\n          <WidgetTitle className=\"text-xl\">Hestia POS</WidgetTitle>\n          <span className=\"text-sm text-label-secondary tabular-nums\">\n            {box.columns} columns\n          </span>\n        </div>\n        <ScrollArea className=\"min-h-0 flex-1\">\n          <div\n            data-menu-grid\n            className=\"grid grid-cols-2 gap-2 px-4 pb-4 @[30rem]/widget:grid-cols-3 @[44rem]/widget:grid-cols-4\"\n          >\n            {menu.map((item) => (\n              <div\n                key={item.name}\n                className=\"flex flex-col gap-2 rounded-2xl bg-surface-raised p-3\"\n              >\n                <span\n                  aria-hidden=\"true\"\n                  className=\"text-warning [&_svg]:size-6\"\n                >\n                  {item.icon}\n                </span>\n                <div>\n                  <p className=\"text-sm font-semibold\">{item.name}</p>\n                  <p className=\"text-sm text-label-secondary tabular-nums\">\n                    {item.price}\n                  </p>\n                </div>\n              </div>\n            ))}\n          </div>\n        </ScrollArea>\n      </Widget>\n      <Hint>\n        Free resize · {box.width} × {box.height}\n      </Hint>\n    </div>\n  )\n}\n\nexport function WidgetFreeResizeExample() {\n  return (\n    <FreeResizeExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-free-resize" layout="padded" />
 
 ### Auto resize
 
 Fills its parent with `auto`, and snaps to fixed sizes when dragged.
 
-<Example kind="ui" name="widget" story="AutoResize">
-
-<Code lang="tsx" code={"import { CashRegisterIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle } from \"@/components/ui/widget\"\n\nexport function WidgetAutoResizeExample() {\n  return (\n    <div className=\"h-60 w-full max-w-180\">\n      <Widget resizable defaultSize=\"auto\">\n        <WidgetHeader>\n          <WidgetIcon>\n            <CashRegisterIcon />\n          </WidgetIcon>\n          <WidgetTitle>Point of sale</WidgetTitle>\n        </WidgetHeader>\n        <WidgetDescription>\n          Fills its parent. Drag to snap to a size, double-click to fill again.\n        </WidgetDescription>\n      </Widget>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-auto-resize" layout="padded" />
 
 ### Centered
 
 Centers the icon, title and description with `align="center"`.
 
-<Example kind="ui" name="widget" story="Centered">
-
-<Code lang="tsx" code={"import { CashRegisterIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle } from \"@/components/ui/widget\"\n\nexport function WidgetCenteredExample() {\n  return (\n    <Widget size=\"small\" align=\"center\">\n      <WidgetHeader>\n        <WidgetIcon size=\"lg\">\n          <CashRegisterIcon />\n        </WidgetIcon>\n        <WidgetTitle>Point of sale</WidgetTitle>\n      </WidgetHeader>\n      <WidgetDescription>3 open orders</WidgetDescription>\n    </Widget>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-centered" />
 
 ### Sizes
 
 Shows each fixed size side by side.
 
-<Example kind="ui" name="widget" story="Sizes">
-
-<Code lang="tsx" code={"import { Widget, WidgetFooter, WidgetHeader, WidgetTitle } from \"@/components/ui/widget\"\n\nconst gridSpans = {\n  small: \"1 × 1\",\n  medium: \"2 × 1\",\n  large: \"2 × 2\",\n  \"extra-large\": \"4 × 2\",\n}\n\nexport function WidgetSizesExample() {\n  return (\n    <div className=\"flex flex-wrap items-start gap-4\">\n      {([\"small\", \"medium\", \"large\", \"extra-large\"] as const).map((size) => (\n        <Widget key={size} size={size}>\n          <WidgetHeader>\n            <WidgetTitle className=\"capitalize\">\n              {size.replace(\"-\", \" \")}\n            </WidgetTitle>\n          </WidgetHeader>\n          <WidgetFooter>{gridSpans[size]}</WidgetFooter>\n        </Widget>\n      ))}\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-sizes" layout="padded" />
 
 ### Dashboard
 
 Arranges fixed widgets in a grid as a dashboard.
 
-<Example kind="ui" name="widget" story="Dashboard">
-
-<Code lang="tsx" code={"import { CalendarBlankIcon, CashRegisterIcon, CookingPotIcon, SunIcon } from \"@phosphor-icons/react\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst tickets = [\n  { id: \"#1042\", place: \"Table 4\", minutes: 18 },\n  { id: \"#1043\", place: \"Takeaway\", minutes: 15 },\n  { id: \"#1044\", place: \"Table 12\", minutes: 9 },\n  { id: \"#1045\", place: \"Pickup\", minutes: 7 },\n  { id: \"#1046\", place: \"Garden 3\", minutes: 5 },\n  { id: \"#1047\", place: \"Table 7\", minutes: 3 },\n  { id: \"#1048\", place: \"Takeaway\", minutes: 1 },\n]\n\nexport function WidgetDashboardExample() {\n  return (\n    <div className=\"grid max-w-4xl auto-rows-[10.5rem] grid-cols-2 gap-4 md:grid-cols-4\">\n      <Widget>\n        <WidgetHeader>\n          <WidgetIcon>\n            <SunIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Istanbul</WidgetTitle>\n        </WidgetHeader>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetFooter>Partly cloudy</WidgetFooter>\n      </Widget>\n      <Widget align=\"center\">\n        <WidgetHeader>\n          <WidgetIcon size=\"lg\">\n            <CookingPotIcon />\n          </WidgetIcon>\n          <WidgetTitle>Kitchen display</WidgetTitle>\n        </WidgetHeader>\n        <WidgetDescription>5 tickets</WidgetDescription>\n      </Widget>\n      <Widget className=\"col-span-2\">\n        <WidgetHeader className=\"gap-1.5 text-warning\">\n          <WidgetIcon size=\"sm\" className=\"text-warning\">\n            <CashRegisterIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Hestia</WidgetTitle>\n        </WidgetHeader>\n        <WidgetValue>₺18,240</WidgetValue>\n        <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>\n      </Widget>\n      <Widget className=\"col-span-2 row-span-2\">\n        <WidgetHeader className=\"gap-1.5 text-link\">\n          <WidgetIcon size=\"sm\" className=\"text-link\">\n            <CalendarBlankIcon weight=\"fill\" />\n          </WidgetIcon>\n          <WidgetTitle>Reservations</WidgetTitle>\n        </WidgetHeader>\n        <WidgetContent className=\"gap-2\">\n          {tickets.slice(0, 5).map((ticket, index) => (\n            <div key={ticket.id} className=\"flex items-baseline gap-3 text-sm\">\n              <span className=\"w-11 shrink-0 text-label-secondary tabular-nums\">\n                {`${18 + index}:00`}\n              </span>\n              <span className=\"truncate\">{ticket.place}</span>\n            </div>\n          ))}\n        </WidgetContent>\n      </Widget>\n      <Widget className=\"col-span-2 row-span-2\" align=\"center\">\n        <WidgetHeader>\n          <WidgetIcon size=\"lg\">\n            <CashRegisterIcon />\n          </WidgetIcon>\n          <WidgetTitle>Point of sale</WidgetTitle>\n        </WidgetHeader>\n        <WidgetDescription>3 open orders</WidgetDescription>\n      </Widget>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="widget-dashboard" layout="padded" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Widget","href":"#widget","children":[{"name":"WidgetHeader","href":"#widgetheader","children":[{"name":"WidgetIcon","href":"#widgeticon","children":[]},{"name":"WidgetTitle","href":"#widgettitle","children":[]},{"name":"WidgetAction","href":"#widgetaction","children":[]}]},{"name":"WidgetContent","href":"#widgetcontent","children":[{"name":"WidgetValue","href":"#widgetvalue","children":[]},{"name":"WidgetDescription","href":"#widgetdescription","children":[]}]},{"name":"WidgetFooter","href":"#widgetfooter","children":[]},{"name":"WidgetValue","href":"#widgetvalue","children":[]},{"name":"WidgetDescription","href":"#widgetdescription","children":[]}]}]} />
+<Anatomy>
+
+- [Widget](#widget)
+  - [WidgetHeader](#widgetheader)
+    - [WidgetIcon](#widgeticon)
+    - [WidgetTitle](#widgettitle)
+    - [WidgetAction](#widgetaction)
+  - [WidgetContent](#widgetcontent)
+    - [WidgetValue](#widgetvalue)
+    - [WidgetDescription](#widgetdescription)
+  - [WidgetFooter](#widgetfooter)
+  - [WidgetValue](#widgetvalue)
+  - [WidgetDescription](#widgetdescription)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -150,7 +143,17 @@ Arranges fixed widgets in a grid as a dashboard.
 
 The rounded card that sets the size, alignment and resize behavior.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"size","type":"WidgetSize | \"auto\"","description":"Controls the current size, or `auto` to fill the parent."},{"name":"defaultSize","type":"WidgetSize | \"auto\"","description":"Sets the starting size when uncontrolled; double-clicking the handle also returns to it."},{"name":"onSizeChange","type":"(size: WidgetSize | \"auto\") => void","description":"Called with the new size when a drag snaps to a different size or the size is reset."},{"name":"sizes","type":"WidgetSize[]","default":"[\"small\", \"medium\", \"large\", \"extra-large\"]","description":"Lists the sizes a drag can snap to; the largest also caps free resizing."},{"name":"resizable","type":"boolean | \"free\"","default":"false","description":"Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer."},{"name":"handle","type":"\"inside\" | \"outside\"","default":"\"outside\"","description":"Places the resize handle `inside` or `outside` the bottom corner."},{"name":"align","type":"\"start\" | \"center\"","default":"\"start\"","description":"Centers the content horizontally and vertically when set to `center`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `WidgetSize \| "auto"` | - | Controls the current size, or `auto` to fill the parent. |
+| `defaultSize` | `WidgetSize \| "auto"` | - | Sets the starting size when uncontrolled; double-clicking the handle also returns to it. |
+| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | - | Called with the new size when a drag snaps to a different size or the size is reset. |
+| `sizes` | `WidgetSize[]` | `["small", "medium", "large", "extra-large"]` | Lists the sizes a drag can snap to; the largest also caps free resizing. |
+| `resizable` | `boolean \| "free"` | `false` | Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer. |
+| `handle` | `"inside" \| "outside"` | `"outside"` | Places the resize handle `inside` or `outside` the bottom corner. |
+| `align` | `"start" \| "center"` | `"start"` | Centers the content horizontally and vertically when set to `center`. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -160,7 +163,7 @@ The rounded card that sets the size, alignment and resize behavior.
 
 A row that holds the icon, title and action.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -170,7 +173,11 @@ A row that holds the icon, title and action.
 
 A decorative icon, shown on a tile in the `default` and `lg` sizes.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -180,7 +187,7 @@ A decorative icon, shown on a tile in the `default` and `lg` sizes.
 
 The widget's title, truncated to one line.
 
-<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+Also accepts the props of `React.ComponentProps<"p">`.
 
 </ApiPart>
 
@@ -190,7 +197,7 @@ The widget's title, truncated to one line.
 
 A slot at the end of the header for a control; hidden when centered.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -200,7 +207,7 @@ A slot at the end of the header for a control; hidden when centered.
 
 Secondary text that explains the content.
 
-<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+Also accepts the props of `React.ComponentProps<"p">`.
 
 </ApiPart>
 
@@ -210,7 +217,7 @@ Secondary text that explains the content.
 
 A large figure in tabular numbers, such as a total or temperature.
 
-<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+Also accepts the props of `React.ComponentProps<"p">`.
 
 </ApiPart>
 
@@ -220,7 +227,7 @@ A large figure in tabular numbers, such as a total or temperature.
 
 A flexible column that fills the remaining space.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -230,7 +237,7 @@ A flexible column that fills the remaining space.
 
 Small secondary text pinned to the bottom of the widget.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -250,15 +257,7 @@ Small secondary text pinned to the bottom of the widget.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-widget--default" width={880} height={415} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SunIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Weather() {\n  return (\n    <>\n      <WidgetHeader>\n        <WidgetIcon>\n          <Icon as={SunIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetExample() {\n  return (\n    <Widget size=\"small\" align=\"start\">\n      <Weather />\n    </Widget>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetExample: View {\n  var body: some View {\n    Widget(.small) {\n      WidgetWeather()\n    }\n  }\n}\n\nstruct WidgetWeather: View {\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon {\n        Ph.sun.fill\n      }\n      WidgetTitle(\"Istanbul\")\n    }\n    WidgetContent {\n      WidgetValue(verbatim: \"24°\")\n      WidgetDescription(\"Partly cloudy\")\n    }\n    WidgetFooter(verbatim: \"H 27° · L 18°\")\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport androidx.compose.ui.text.style.TextOverflow\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.fill.Sun\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetContent\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\n\n@Composable\nfun WidgetExample() {\n    Widget(size = WidgetSize.Small) { WidgetWeather() }\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetWeather() {\n    WidgetHeader {\n        WidgetIcon { Icon(PhosphorIcons.Fill.Sun, contentDescription = null) }\n        WidgetTitle(\"Istanbul\")\n    }\n    WidgetContent {\n        WidgetValue(\"24°\")\n        WidgetDescription(\"Partly cloudy\")\n    }\n    WidgetFooterText(\"H 27° · L 18°\")\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--default" />
 
 `Widget` is a `View` with a rounded, filled surface. It comes in four fixed sizes, `small` (168×168), `medium` (352×168), `large` (352×352) and `extra-large` (720×352), or `auto`, which fills its parent. Fixed sizes animate with Reanimated when the size changes.
 
@@ -268,19 +267,25 @@ With `resizable`, a corner handle lets the user drag the widget between sizes: a
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add widget"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add widget
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add widget --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add widget --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add widget --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add widget --platform kotlin
+```
 
 </Only>
 
@@ -296,13 +301,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/ui/widget.tsx`:
 
-<SourceFile path="uniwind/components/ui/widget.tsx" />
+<ComponentSource path="uniwind/components/ui/widget.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -312,13 +319,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/ui/widget.tsx`:
 
-<SourceFile path="nativewind/components/ui/widget.tsx" />
+<ComponentSource path="nativewind/components/ui/widget.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -328,13 +337,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
 
 3. Copy the source into `components/ui/widget.tsx`:
 
-<SourceFile path="stylesheet/components/ui/widget.tsx" />
+<ComponentSource path="stylesheet/components/ui/widget.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -350,43 +361,45 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Widget.swift" />
+<ComponentSource path="swift/Components/Widget.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Dialog.swift" />
+<ComponentSource path="swift/Components/Dialog.swift" />
 
-<SourceFile path="swift/Components/Drawer.swift" />
+<ComponentSource path="swift/Components/Drawer.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Popover.swift" />
+<ComponentSource path="swift/Components/Popover.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Patterns/Adaptive.swift" />
+<ComponentSource path="swift/Patterns/Adaptive.swift" />
 
-<SourceFile path="swift/Patterns/Preview.swift" />
+<ComponentSource path="swift/Patterns/Preview.swift" />
 
 5. Add the files to your app target.
 
@@ -396,23 +409,27 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Widget.kt" />
+<ComponentSource path="kotlin/components/Widget.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -420,9 +437,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from \"@/components/ui/widget\""} />
+```tsx
+import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from "@/components/ui/widget"
+```
 
-<Code lang="tsx" code={"<Widget size=\"small\" align=\"start\">\n  <Weather />\n</Widget>"} />
+```tsx
+<Widget size="small" align="start">
+  <Weather />
+</Widget>
+```
 
 Compose the content from `WidgetHeader` (with `WidgetIcon`, `WidgetTitle` and `WidgetAction`), then `WidgetValue`, `WidgetDescription` or `WidgetContent`, and `WidgetFooter`, which sticks to the bottom. Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.
 
@@ -436,113 +459,49 @@ The size is uncontrolled with `defaultSize`, or controlled with `size` and `onSi
 
 The four fixed sizes side by side.
 
-<NativeExample id="components-widget--sizes" width={880} height={415} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ScrollView } from \"react-native\"\nimport { Widget, WidgetFooter, WidgetHeader, type WidgetSize, WidgetTitle } from \"@/components/ui/widget\"\n\nconst gridSpans: Record<WidgetSize, string> = {\n  small: \"1 × 1\",\n  medium: \"2 × 1\",\n  large: \"2 × 2\",\n  \"extra-large\": \"4 × 2\",\n}\n\nexport function WidgetSizesExample() {\n  return (\n    <ScrollView\n      horizontal\n      contentContainerClassName=\"items-start gap-4\"\n      showsHorizontalScrollIndicator={false}\n    >\n      {([\"small\", \"medium\", \"large\", \"extra-large\"] as const).map((size) => (\n        <Widget key={size} size={size}>\n          <WidgetHeader>\n            <WidgetTitle className=\"capitalize\">\n              {size.replace(\"-\", \" \")}\n            </WidgetTitle>\n          </WidgetHeader>\n          <WidgetFooter>{gridSpans[size]}</WidgetFooter>\n        </Widget>\n      ))}\n    </ScrollView>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct WidgetSizesExample: View {\n  var body: some View {\n    ScrollView(.horizontal, showsIndicators: false) {\n      HStack(alignment: .top, spacing: 16) {\n        ForEach(widgetSizeNames, id: \\.title) { entry in\n          Widget(entry.size) {\n            WidgetHeader {\n              WidgetTitle(verbatim: entry.title)\n            }\n            WidgetFooter(verbatim: entry.span)\n          }\n        }\n      }\n    }\n  }\n}\n\nstruct WidgetSizeName {\n  let size: WidgetSize\n  let title: String\n  let span: String\n}\n\nlet widgetSizeNames = [\n  WidgetSizeName(size: .small, title: \"Small\", span: \"1 × 1\"),\n  WidgetSizeName(size: .medium, title: \"Medium\", span: \"2 × 1\"),\n  WidgetSizeName(size: .large, title: \"Large\", span: \"2 × 2\"),\n  WidgetSizeName(size: .extraLarge, title: \"Extra large\", span: \"4 × 2\"),\n]"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.horizontalScroll\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\n\nfun widgetSizeName(size: WidgetSize): String = when (size) {\n    WidgetSize.Auto -> \"auto\"\n    WidgetSize.Small -> \"small\"\n    WidgetSize.Medium -> \"medium\"\n    WidgetSize.Large -> \"large\"\n    WidgetSize.ExtraLarge -> \"extra-large\"\n}\n\nfun widgetGridSpan(size: WidgetSize): String = when (size) {\n    WidgetSize.Small -> \"1 × 1\"\n    WidgetSize.Medium -> \"2 × 1\"\n    WidgetSize.Large -> \"2 × 2\"\n    else -> \"4 × 2\"\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetSizes() {\n    Row(\n        Modifier.horizontalScroll(rememberScrollState()),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.Top,\n    ) {\n        listOf(WidgetSize.Small, WidgetSize.Medium, WidgetSize.Large, WidgetSize.ExtraLarge).forEach { size ->\n            Widget(size = size) {\n                WidgetHeader {\n                    WidgetTitle(\n                        widgetSizeName(size).split(\"-\").joinToString(\" \") { word -> word.replaceFirstChar { it.uppercaseChar() } },\n                    )\n                }\n                WidgetFooterText(widgetGridSpan(size))\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--sizes" />
 
 ### Editing
 
 A resizable widget starting at `large`.
 
-<NativeExample id="components-widget--editing" width={880} height={895} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CashRegisterIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { useWidget, Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14].map(\n  (value, hour) => ({ hour: hour + 10, value })\n)\n\nconst topItems = [\n  { name: \"Grilled meatballs\", count: 38 },\n  { name: \"Lahmacun\", count: 31 },\n  { name: \"Adana kebab\", count: 24 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction SalesBody() {\n  const { size } = useWidget()\n  return (\n    <>\n      <WidgetHeader className=\"gap-1.5\">\n        <WidgetIcon size=\"sm\" iconClassName=\"text-warning\">\n          <Icon as={CashRegisterIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle className=\"text-warning\">Hestia</WidgetTitle>\n      </WidgetHeader>\n      <View\n        className={\n          size === \"medium\"\n            ? \"min-h-0 grow flex-row items-end gap-3\"\n            : \"min-h-0 gap-3\"\n        }\n      >\n        <WidgetContent className=\"grow-0\">\n          <WidgetValue>₺18,240</WidgetValue>\n          <WidgetDescription>Today's revenue</WidgetDescription>\n        </WidgetContent>\n        {size === \"small\" ? null : (\n          <View\n            className={\n              size === \"medium\"\n                ? \"h-full flex-1 flex-row items-end gap-1\"\n                : \"h-14 flex-row items-end gap-1\"\n            }\n          >\n            {hourly.map(({ hour, value }) => (\n              <View\n                key={hour}\n                className={\n                  value === 100\n                    ? \"flex-1 rounded-sm bg-warning\"\n                    : \"flex-1 rounded-sm bg-warning/40\"\n                }\n                style={{ height: `${value}%` }}\n              />\n            ))}\n          </View>\n        )}\n      </View>\n      {size === \"large\" || size === \"extra-large\" ? (\n        <View className=\"min-h-0 shrink overflow-hidden\">\n          {topItems.map((item) => (\n            <View\n              key={item.name}\n              className=\"flex-row items-center justify-between border-b border-separator py-1.5\"\n            >\n              <Text className=\"text-sm\">{item.name}</Text>\n              <Text className=\"text-sm text-label-secondary\">{item.count}</Text>\n            </View>\n          ))}\n        </View>\n      ) : null}\n      <WidgetFooter>42 orders · 18:42</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetEditingExample() {\n  return (\n    <View className=\"w-full\">\n      <Widget resizable defaultSize=\"large\">\n        <SalesBody />\n      </Widget>\n      <Hint>\n        Drag the corner handle to snap between sizes. Double tap it to reset.\n      </Hint>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetEditingExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      WidgetEditable(initial: .large) {\n        WidgetSales()\n      }\n      WidgetHint(text: \"Drag the corner handle to snap between sizes. Double tap it to reset.\")\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nlet widgetHourly: [CGFloat] = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14]\n\nstruct WidgetTopItem {\n  let name: String\n  let count: Int\n}\n\nlet widgetTopItems = [\n  WidgetTopItem(name: \"Grilled meatballs\", count: 38),\n  WidgetTopItem(name: \"Lahmacun\", count: 31),\n  WidgetTopItem(name: \"Adana kebab\", count: 24),\n]\n\nstruct WidgetHint: View {\n  let text: String\n\n  var body: some View {\n    Text(verbatim: text)\n      .textStyle(.xs)\n      .foregroundStyle(Color.labelSecondary)\n      .padding(.top, 24)\n  }\n}\n\nstruct WidgetEditable<Content: View>: View {\n  let sizes: [WidgetSize]\n  let handle: WidgetHandlePlacement\n  let resetSize: WidgetSize\n  @ViewBuilder let content: () -> Content\n\n  @State private var size: WidgetSize\n\n  init(\n    initial: WidgetSize,\n    sizes: [WidgetSize] = WidgetSize.allCases,\n    handle: WidgetHandlePlacement = .outside,\n    @ViewBuilder content: @escaping () -> Content\n  ) {\n    self.sizes = sizes\n    self.handle = handle\n    resetSize = initial\n    self.content = content\n    _size = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Widget(size: $size, sizes: sizes, editing: true, handle: handle, resetSize: resetSize) {\n      content()\n    }\n  }\n}\n\nstruct WidgetSalesHeader: View {\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon(size: .sm) {\n        Ph.cashRegister.fill.foregroundStyle(Color.warning)\n      }\n      WidgetTitle(\"Hestia\")\n        .foregroundStyle(Color.warning)\n    }\n  }\n}\n\nstruct WidgetBars: View {\n  var body: some View {\n    GeometryReader { proxy in\n      HStack(alignment: .bottom, spacing: 4) {\n        ForEach(Array(widgetHourly.enumerated()), id: \\.offset) { _, value in\n          RoundedRectangle(cornerRadius: Radius.sm, style: .continuous)\n            .fill(value == 100 ? Color.warning : Color.warning.opacity(0.4))\n            .frame(height: proxy.size.height * value / 100)\n            .frame(maxWidth: .infinity)\n        }\n      }\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)\n    }\n    .accessibilityHidden(true)\n  }\n}\n\nstruct WidgetSales: View {\n  @Environment(\\.widgetSize) private var size\n\n  var body: some View {\n    WidgetSalesHeader()\n    if size == .medium {\n      HStack(alignment: .bottom, spacing: 12) {\n        revenue\n        WidgetBars()\n      }\n      .frame(maxHeight: .infinity)\n    } else {\n      VStack(alignment: .leading, spacing: 12) {\n        revenue\n        if size != .small {\n          WidgetBars().frame(height: 56)\n        }\n      }\n    }\n    if size == .large || size == .extraLarge {\n      VStack(spacing: 0) {\n        ForEach(widgetTopItems, id: \\.name) { item in\n          HStack {\n            Text(verbatim: item.name)\n              .textStyle(.sm)\n            Spacer(minLength: 8)\n            Text(verbatim: \"\\(item.count)\")\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n          }\n          .padding(.vertical, 6)\n          .overlay(alignment: .bottom) {\n            Color.separator.frame(height: 1)\n          }\n        }\n      }\n      .clipped()\n    }\n    WidgetFooter(verbatim: \"42 orders · 18:42\")\n  }\n\n  var revenue: some View {\n    WidgetContent {\n      WidgetValue(verbatim: \"₺18,240\")\n      WidgetDescription(\"Today's revenue\")\n    }\n    .fixedSize(horizontal: true, vertical: false)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxHeight\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.CompositionLocalProvider\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.fill.CashRegister\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.LocalContentStyle\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetContent\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetIconSize\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nval widgetHourly = listOf(12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14)\n\nval widgetTopItems = listOf(\n    \"Grilled meatballs\" to 38,\n    \"Lahmacun\" to 31,\n    \"Adana kebab\" to 24,\n)\n\n@Composable\nfun WidgetTintedTitle(text: String, color: Color) {\n    CompositionLocalProvider(LocalContentStyle provides LocalContentStyle.current.copy(color = color)) {\n        WidgetTitle(text)\n    }\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetHint(text: String) {\n    Text(\n        text,\n        Modifier.padding(top = 24.dp),\n        style = Typography.xs,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun WidgetSalesHeader() {\n    val warning = EsuissTheme.colors.warning\n    WidgetHeader {\n        WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CashRegister, contentDescription = null, tint = warning) }\n        WidgetTintedTitle(\"Hestia\", warning)\n    }\n}\n\n@Composable\nfun WidgetRevenue() {\n    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {\n        WidgetValue(\"₺18,240\")\n        WidgetDescription(\"Today's revenue\")\n    }\n}\n\n@Composable\nfun WidgetBars(modifier: Modifier) {\n    val warning = EsuissTheme.colors.warning\n    Row(modifier, horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Bottom) {\n        widgetHourly.forEach { value ->\n            Box(\n                Modifier\n                    .weight(1f)\n                    .fillMaxHeight(value / 100f)\n                    .background(if (value == 100) warning else warning.copy(alpha = 0.4f), RoundedCornerShape(Radius.sm)),\n            )\n        }\n    }\n}\n\n@Composable\nfun WidgetSalesBody(size: WidgetSize) {\n    WidgetSalesHeader()\n    if (size == WidgetSize.Medium) {\n        WidgetContent {\n            Row(\n                Modifier.fillMaxWidth().fillMaxHeight(),\n                horizontalArrangement = Arrangement.spacedBy(12.dp),\n                verticalAlignment = Alignment.Bottom,\n            ) {\n                WidgetRevenue()\n                WidgetBars(Modifier.weight(1f).fillMaxHeight())\n            }\n        }\n    } else {\n        WidgetContent {\n            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n                WidgetRevenue()\n                if (size != WidgetSize.Small) WidgetBars(Modifier.fillMaxWidth().height(56.dp))\n            }\n        }\n    }\n    if (size == WidgetSize.Large || size == WidgetSize.ExtraLarge) {\n        Column {\n            widgetTopItems.forEach { (name, count) ->\n                Row(\n                    Modifier.fillMaxWidth().padding(vertical = 6.dp),\n                    horizontalArrangement = Arrangement.SpaceBetween,\n                    verticalAlignment = Alignment.CenterVertically,\n                ) {\n                    Text(name, style = Typography.sm)\n                    Text(count.toString(), style = Typography.sm, color = EsuissTheme.colors.labelSecondary)\n                }\n                Separator()\n            }\n        }\n    }\n    WidgetFooterText(\"42 orders · 18:42\")\n}\n\n@Composable\nfun WidgetEditing() {\n    Column(Modifier.fillMaxWidth()) {\n        Widget(resizable = true, defaultSize = WidgetSize.Large) { WidgetSalesBody(size) }\n        WidgetHint(\"Drag the corner handle to snap between sizes. Double tap it to reset.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--editing" />
 
 ### Inside handle
 
 A resizable widget with the handle drawn inside the corner.
 
-<NativeExample id="components-widget--inside-handle" width={880} height={491} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CashRegisterIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { useWidget, Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14].map(\n  (value, hour) => ({ hour: hour + 10, value })\n)\n\nconst topItems = [\n  { name: \"Grilled meatballs\", count: 38 },\n  { name: \"Lahmacun\", count: 31 },\n  { name: \"Adana kebab\", count: 24 },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction SalesBody() {\n  const { size } = useWidget()\n  return (\n    <>\n      <WidgetHeader className=\"gap-1.5\">\n        <WidgetIcon size=\"sm\" iconClassName=\"text-warning\">\n          <Icon as={CashRegisterIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle className=\"text-warning\">Hestia</WidgetTitle>\n      </WidgetHeader>\n      <View\n        className={\n          size === \"medium\"\n            ? \"min-h-0 grow flex-row items-end gap-3\"\n            : \"min-h-0 gap-3\"\n        }\n      >\n        <WidgetContent className=\"grow-0\">\n          <WidgetValue>₺18,240</WidgetValue>\n          <WidgetDescription>Today's revenue</WidgetDescription>\n        </WidgetContent>\n        {size === \"small\" ? null : (\n          <View\n            className={\n              size === \"medium\"\n                ? \"h-full flex-1 flex-row items-end gap-1\"\n                : \"h-14 flex-row items-end gap-1\"\n            }\n          >\n            {hourly.map(({ hour, value }) => (\n              <View\n                key={hour}\n                className={\n                  value === 100\n                    ? \"flex-1 rounded-sm bg-warning\"\n                    : \"flex-1 rounded-sm bg-warning/40\"\n                }\n                style={{ height: `${value}%` }}\n              />\n            ))}\n          </View>\n        )}\n      </View>\n      {size === \"large\" || size === \"extra-large\" ? (\n        <View className=\"min-h-0 shrink overflow-hidden\">\n          {topItems.map((item) => (\n            <View\n              key={item.name}\n              className=\"flex-row items-center justify-between border-b border-separator py-1.5\"\n            >\n              <Text className=\"text-sm\">{item.name}</Text>\n              <Text className=\"text-sm text-label-secondary\">{item.count}</Text>\n            </View>\n          ))}\n        </View>\n      ) : null}\n      <WidgetFooter>42 orders · 18:42</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetInsideHandleExample() {\n  return (\n    <View className=\"w-full\">\n      <Widget resizable handle=\"inside\" defaultSize=\"medium\">\n        <SalesBody />\n      </Widget>\n      <Hint>The handle sits inside the corner.</Hint>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetInsideHandleExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      WidgetEditable(initial: .medium, handle: .inside) {\n        WidgetSales()\n      }\n      WidgetHint(text: \"The handle sits inside the corner.\")\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nlet widgetHourly: [CGFloat] = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14]\n\nstruct WidgetTopItem {\n  let name: String\n  let count: Int\n}\n\nlet widgetTopItems = [\n  WidgetTopItem(name: \"Grilled meatballs\", count: 38),\n  WidgetTopItem(name: \"Lahmacun\", count: 31),\n  WidgetTopItem(name: \"Adana kebab\", count: 24),\n]\n\nstruct WidgetHint: View {\n  let text: String\n\n  var body: some View {\n    Text(verbatim: text)\n      .textStyle(.xs)\n      .foregroundStyle(Color.labelSecondary)\n      .padding(.top, 24)\n  }\n}\n\nstruct WidgetEditable<Content: View>: View {\n  let sizes: [WidgetSize]\n  let handle: WidgetHandlePlacement\n  let resetSize: WidgetSize\n  @ViewBuilder let content: () -> Content\n\n  @State private var size: WidgetSize\n\n  init(\n    initial: WidgetSize,\n    sizes: [WidgetSize] = WidgetSize.allCases,\n    handle: WidgetHandlePlacement = .outside,\n    @ViewBuilder content: @escaping () -> Content\n  ) {\n    self.sizes = sizes\n    self.handle = handle\n    resetSize = initial\n    self.content = content\n    _size = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Widget(size: $size, sizes: sizes, editing: true, handle: handle, resetSize: resetSize) {\n      content()\n    }\n  }\n}\n\nstruct WidgetSalesHeader: View {\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon(size: .sm) {\n        Ph.cashRegister.fill.foregroundStyle(Color.warning)\n      }\n      WidgetTitle(\"Hestia\")\n        .foregroundStyle(Color.warning)\n    }\n  }\n}\n\nstruct WidgetBars: View {\n  var body: some View {\n    GeometryReader { proxy in\n      HStack(alignment: .bottom, spacing: 4) {\n        ForEach(Array(widgetHourly.enumerated()), id: \\.offset) { _, value in\n          RoundedRectangle(cornerRadius: Radius.sm, style: .continuous)\n            .fill(value == 100 ? Color.warning : Color.warning.opacity(0.4))\n            .frame(height: proxy.size.height * value / 100)\n            .frame(maxWidth: .infinity)\n        }\n      }\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)\n    }\n    .accessibilityHidden(true)\n  }\n}\n\nstruct WidgetSales: View {\n  @Environment(\\.widgetSize) private var size\n\n  var body: some View {\n    WidgetSalesHeader()\n    if size == .medium {\n      HStack(alignment: .bottom, spacing: 12) {\n        revenue\n        WidgetBars()\n      }\n      .frame(maxHeight: .infinity)\n    } else {\n      VStack(alignment: .leading, spacing: 12) {\n        revenue\n        if size != .small {\n          WidgetBars().frame(height: 56)\n        }\n      }\n    }\n    if size == .large || size == .extraLarge {\n      VStack(spacing: 0) {\n        ForEach(widgetTopItems, id: \\.name) { item in\n          HStack {\n            Text(verbatim: item.name)\n              .textStyle(.sm)\n            Spacer(minLength: 8)\n            Text(verbatim: \"\\(item.count)\")\n              .textStyle(.sm)\n              .foregroundStyle(Color.labelSecondary)\n          }\n          .padding(.vertical, 6)\n          .overlay(alignment: .bottom) {\n            Color.separator.frame(height: 1)\n          }\n        }\n      }\n      .clipped()\n    }\n    WidgetFooter(verbatim: \"42 orders · 18:42\")\n  }\n\n  var revenue: some View {\n    WidgetContent {\n      WidgetValue(verbatim: \"₺18,240\")\n      WidgetDescription(\"Today's revenue\")\n    }\n    .fixedSize(horizontal: true, vertical: false)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxHeight\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.CompositionLocalProvider\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.fill.CashRegister\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.LocalContentStyle\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetContent\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHandlePlacement\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetIconSize\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\nval widgetHourly = listOf(12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14)\n\nval widgetTopItems = listOf(\n    \"Grilled meatballs\" to 38,\n    \"Lahmacun\" to 31,\n    \"Adana kebab\" to 24,\n)\n\n@Composable\nfun WidgetTintedTitle(text: String, color: Color) {\n    CompositionLocalProvider(LocalContentStyle provides LocalContentStyle.current.copy(color = color)) {\n        WidgetTitle(text)\n    }\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetHint(text: String) {\n    Text(\n        text,\n        Modifier.padding(top = 24.dp),\n        style = Typography.xs,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun WidgetSalesHeader() {\n    val warning = EsuissTheme.colors.warning\n    WidgetHeader {\n        WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CashRegister, contentDescription = null, tint = warning) }\n        WidgetTintedTitle(\"Hestia\", warning)\n    }\n}\n\n@Composable\nfun WidgetRevenue() {\n    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {\n        WidgetValue(\"₺18,240\")\n        WidgetDescription(\"Today's revenue\")\n    }\n}\n\n@Composable\nfun WidgetBars(modifier: Modifier) {\n    val warning = EsuissTheme.colors.warning\n    Row(modifier, horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Bottom) {\n        widgetHourly.forEach { value ->\n            Box(\n                Modifier\n                    .weight(1f)\n                    .fillMaxHeight(value / 100f)\n                    .background(if (value == 100) warning else warning.copy(alpha = 0.4f), RoundedCornerShape(Radius.sm)),\n            )\n        }\n    }\n}\n\n@Composable\nfun WidgetSalesBody(size: WidgetSize) {\n    WidgetSalesHeader()\n    if (size == WidgetSize.Medium) {\n        WidgetContent {\n            Row(\n                Modifier.fillMaxWidth().fillMaxHeight(),\n                horizontalArrangement = Arrangement.spacedBy(12.dp),\n                verticalAlignment = Alignment.Bottom,\n            ) {\n                WidgetRevenue()\n                WidgetBars(Modifier.weight(1f).fillMaxHeight())\n            }\n        }\n    } else {\n        WidgetContent {\n            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n                WidgetRevenue()\n                if (size != WidgetSize.Small) WidgetBars(Modifier.fillMaxWidth().height(56.dp))\n            }\n        }\n    }\n    if (size == WidgetSize.Large || size == WidgetSize.ExtraLarge) {\n        Column {\n            widgetTopItems.forEach { (name, count) ->\n                Row(\n                    Modifier.fillMaxWidth().padding(vertical = 6.dp),\n                    horizontalArrangement = Arrangement.SpaceBetween,\n                    verticalAlignment = Alignment.CenterVertically,\n                ) {\n                    Text(name, style = Typography.sm)\n                    Text(count.toString(), style = Typography.sm, color = EsuissTheme.colors.labelSecondary)\n                }\n                Separator()\n            }\n        }\n    }\n    WidgetFooterText(\"42 orders · 18:42\")\n}\n\n@Composable\nfun WidgetInsideHandle() {\n    Column(Modifier.fillMaxWidth()) {\n        Widget(resizable = true, handle = WidgetHandlePlacement.Inside, defaultSize = WidgetSize.Medium) { WidgetSalesBody(size) }\n        WidgetHint(\"The handle sits inside the corner.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--inside-handle" />
 
 ### Limited sizes
 
 Resizing limited to `small` and `medium`.
 
-<NativeExample id="components-widget--limited-sizes" width={880} height={496} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CalendarBlankIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { useWidget, Widget, WidgetContent, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nconst reservations = [\n  { time: \"18:00\", place: \"Table 4\" },\n  { time: \"19:00\", place: \"Garden 3\" },\n  { time: \"20:00\", place: \"Table 12\" },\n  { time: \"21:00\", place: \"Table 7\" },\n]\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction ReservationsBody() {\n  const { size } = useWidget()\n  return (\n    <>\n      <WidgetHeader className=\"gap-1.5\">\n        <WidgetIcon size=\"sm\" iconClassName=\"text-link\">\n          <Icon as={CalendarBlankIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle className=\"text-link\">Reservations</WidgetTitle>\n      </WidgetHeader>\n      <View className=\"min-h-0 grow flex-row items-end gap-4\">\n        <WidgetContent className=\"grow-0\">\n          <WidgetValue>12</WidgetValue>\n          <WidgetDescription>Tonight</WidgetDescription>\n        </WidgetContent>\n        {size === \"medium\" ? (\n          <View className=\"flex-1 gap-1\">\n            {reservations.slice(0, 3).map((item) => (\n              <View key={item.time} className=\"flex-row gap-3\">\n                <Text className=\"w-11 text-sm text-label-secondary\">\n                  {item.time}\n                </Text>\n                <Text className=\"flex-1 text-sm\" numberOfLines={1}>\n                  {item.place}\n                </Text>\n              </View>\n            ))}\n          </View>\n        ) : null}\n      </View>\n    </>\n  )\n}\n\nexport function WidgetLimitedSizesExample() {\n  return (\n    <View className=\"w-full\">\n      <Widget resizable defaultSize=\"medium\" sizes={[\"small\", \"medium\"]}>\n        <ReservationsBody />\n      </Widget>\n      <Hint>Only small and medium are offered.</Hint>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetLimitedSizesExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      WidgetEditable(initial: .medium, sizes: [.small, .medium]) {\n        WidgetReservations()\n      }\n      WidgetHint(text: \"Only small and medium are offered.\")\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct WidgetReservation {\n  let time: String\n  let place: String\n}\n\nlet widgetReservations = [\n  WidgetReservation(time: \"18:00\", place: \"Table 4\"),\n  WidgetReservation(time: \"19:00\", place: \"Garden 3\"),\n  WidgetReservation(time: \"20:00\", place: \"Table 12\"),\n  WidgetReservation(time: \"21:00\", place: \"Table 7\"),\n]\n\nstruct WidgetHint: View {\n  let text: String\n\n  var body: some View {\n    Text(verbatim: text)\n      .textStyle(.xs)\n      .foregroundStyle(Color.labelSecondary)\n      .padding(.top, 24)\n  }\n}\n\nstruct WidgetEditable<Content: View>: View {\n  let sizes: [WidgetSize]\n  let handle: WidgetHandlePlacement\n  let resetSize: WidgetSize\n  @ViewBuilder let content: () -> Content\n\n  @State private var size: WidgetSize\n\n  init(\n    initial: WidgetSize,\n    sizes: [WidgetSize] = WidgetSize.allCases,\n    handle: WidgetHandlePlacement = .outside,\n    @ViewBuilder content: @escaping () -> Content\n  ) {\n    self.sizes = sizes\n    self.handle = handle\n    resetSize = initial\n    self.content = content\n    _size = State(initialValue: initial)\n  }\n\n  var body: some View {\n    Widget(size: $size, sizes: sizes, editing: true, handle: handle, resetSize: resetSize) {\n      content()\n    }\n  }\n}\n\nstruct WidgetReservations: View {\n  @Environment(\\.widgetSize) private var size\n\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon(size: .sm) {\n        Ph.calendarBlank.fill.foregroundStyle(Color.link)\n      }\n      WidgetTitle(\"Reservations\")\n        .foregroundStyle(Color.link)\n    }\n    HStack(alignment: .bottom, spacing: 16) {\n      WidgetContent {\n        WidgetValue(verbatim: \"12\")\n        WidgetDescription(\"Tonight\")\n      }\n      .fixedSize(horizontal: true, vertical: false)\n      if size == .medium {\n        VStack(alignment: .leading, spacing: 4) {\n          ForEach(widgetReservations.prefix(3), id: \\.time) { item in\n            HStack(spacing: 12) {\n              Text(verbatim: item.time)\n                .textStyle(.sm)\n                .foregroundStyle(Color.labelSecondary)\n                .frame(width: 44, alignment: .leading)\n              Text(verbatim: item.place)\n                .textStyle(.sm)\n                .lineLimit(1)\n                .frame(maxWidth: .infinity, alignment: .leading)\n            }\n          }\n        }\n        .frame(maxWidth: .infinity)\n      }\n    }\n    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxHeight\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.CompositionLocalProvider\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.fill.CalendarBlank\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.LocalContentStyle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetContent\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetIconSize\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nval widgetReservations = listOf(\n    \"18:00\" to \"Table 4\",\n    \"19:00\" to \"Garden 3\",\n    \"20:00\" to \"Table 12\",\n    \"21:00\" to \"Table 7\",\n)\n\n@Composable\nfun WidgetTintedTitle(text: String, color: Color) {\n    CompositionLocalProvider(LocalContentStyle provides LocalContentStyle.current.copy(color = color)) {\n        WidgetTitle(text)\n    }\n}\n\n@Composable\nfun WidgetHint(text: String) {\n    Text(\n        text,\n        Modifier.padding(top = 24.dp),\n        style = Typography.xs,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun WidgetReservationsBody(size: WidgetSize) {\n    val colors = EsuissTheme.colors\n    WidgetHeader {\n        WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CalendarBlank, contentDescription = null, tint = colors.link) }\n        WidgetTintedTitle(\"Reservations\", colors.link)\n    }\n    WidgetContent {\n        Row(\n            Modifier.fillMaxWidth().fillMaxHeight(),\n            horizontalArrangement = Arrangement.spacedBy(16.dp),\n            verticalAlignment = Alignment.Bottom,\n        ) {\n            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {\n                WidgetValue(\"12\")\n                WidgetDescription(\"Tonight\")\n            }\n            if (size == WidgetSize.Medium) {\n                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {\n                    widgetReservations.take(3).forEach { (time, place) ->\n                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {\n                            Text(time, Modifier.width(44.dp), style = Typography.sm, color = colors.labelSecondary)\n                            Text(place, Modifier.weight(1f), style = Typography.sm, maxLines = 1, overflow = TextOverflow.Ellipsis)\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n\n@Composable\nfun WidgetLimitedSizes() {\n    Column(Modifier.fillMaxWidth()) {\n        Widget(\n            resizable = true,\n            defaultSize = WidgetSize.Medium,\n            sizes = listOf(WidgetSize.Small, WidgetSize.Medium),\n        ) { WidgetReservationsBody(size) }\n        WidgetHint(\"Only small and medium are offered.\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--limited-sizes" />
 
 ### Controlled
 
 Controls the size with `size` and `onSizeChange`.
 
-<NativeExample id="components-widget--controlled" width={880} height={491} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SunIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, type WidgetSize, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Hint({ children }: { children: React.ReactNode }) {\n  return <Text className=\"mt-6 text-xs text-label-secondary\">{children}</Text>\n}\n\nfunction Weather() {\n  return (\n    <>\n      <WidgetHeader>\n        <WidgetIcon>\n          <Icon as={SunIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </>\n  )\n}\n\nfunction ControlledEditing() {\n  const [size, setSize] = React.useState<WidgetSize | \"auto\">(\"small\")\n  return (\n    <View className=\"w-full\">\n      <Widget resizable size={size} onSizeChange={setSize}>\n        <Weather />\n      </Widget>\n      <Hint>{`Size: ${size}`}</Hint>\n    </View>\n  )\n}\n\nexport function WidgetControlledExample() {\n  return (\n    <ControlledEditing />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nfunc widgetSizeValue(_ size: WidgetSize) -> String {\n  switch size {\n  case .small: \"small\"\n  case .medium: \"medium\"\n  case .large: \"large\"\n  case .extraLarge: \"extra-large\"\n  }\n}\n\nstruct WidgetHint: View {\n  let text: String\n\n  var body: some View {\n    Text(verbatim: text)\n      .textStyle(.xs)\n      .foregroundStyle(Color.labelSecondary)\n      .padding(.top, 24)\n  }\n}\n\nstruct WidgetControlled: View {\n  @State private var size: WidgetSize = .small\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 0) {\n      Widget(size: $size, editing: true) {\n        WidgetWeather()\n      }\n      WidgetHint(text: \"Size: \\(widgetSizeValue(size))\")\n    }\n    .frame(maxWidth: .infinity, alignment: .leading)\n  }\n}\n\nstruct WidgetWeather: View {\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon {\n        Ph.sun.fill\n      }\n      WidgetTitle(\"Istanbul\")\n    }\n    WidgetContent {\n      WidgetValue(verbatim: \"24°\")\n      WidgetDescription(\"Partly cloudy\")\n    }\n    WidgetFooter(verbatim: \"H 27° · L 18°\")\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.fill.Sun\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetContent\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\nfun widgetSizeName(size: WidgetSize): String = when (size) {\n    WidgetSize.Auto -> \"auto\"\n    WidgetSize.Small -> \"small\"\n    WidgetSize.Medium -> \"medium\"\n    WidgetSize.Large -> \"large\"\n    WidgetSize.ExtraLarge -> \"extra-large\"\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetHint(text: String) {\n    Text(\n        text,\n        Modifier.padding(top = 24.dp),\n        style = Typography.xs,\n        color = EsuissTheme.colors.labelSecondary,\n    )\n}\n\n@Composable\nfun WidgetWeather() {\n    WidgetHeader {\n        WidgetIcon { Icon(PhosphorIcons.Fill.Sun, contentDescription = null) }\n        WidgetTitle(\"Istanbul\")\n    }\n    WidgetContent {\n        WidgetValue(\"24°\")\n        WidgetDescription(\"Partly cloudy\")\n    }\n    WidgetFooterText(\"H 27° · L 18°\")\n}\n\n@Composable\nfun WidgetControlled() {\n    var size by rememberSaveable { mutableStateOf(WidgetSize.Small) }\n    Column(Modifier.fillMaxWidth()) {\n        Widget(size = size, onSizeChange = { size = it }, resizable = true) { WidgetWeather() }\n        WidgetHint(\"Size: ${widgetSizeName(size)}\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--controlled" />
 
 ### Centered
 
 Centered content with `align="center"`.
 
-<NativeExample id="components-widget--centered" width={880} height={415} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CashRegisterIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetDescription, WidgetHeader, WidgetIcon, WidgetTitle } from \"@/components/ui/widget\"\n\nexport function WidgetCenteredExample() {\n  return (\n    <Widget size=\"small\" align=\"center\">\n      <WidgetHeader>\n        <WidgetIcon size=\"lg\">\n          <Icon as={CashRegisterIcon} />\n        </WidgetIcon>\n        <WidgetTitle>Point of sale</WidgetTitle>\n      </WidgetHeader>\n      <WidgetDescription>3 open orders</WidgetDescription>\n    </Widget>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetCenteredExample: View {\n  var body: some View {\n    Widget(.small, align: .center) {\n      WidgetHeader {\n        WidgetIcon(size: .lg) {\n          Ph.cashRegister.regular\n        }\n        WidgetTitle(\"Point of sale\")\n      }\n      WidgetDescription(\"3 open orders\")\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetAlign\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetIconSize\nimport com.esuiss.ui.components.WidgetSize\nimport com.esuiss.ui.components.WidgetTitle\n\n@Composable\nfun WidgetCentered() {\n    Widget(size = WidgetSize.Small, align = WidgetAlign.Center) {\n        WidgetHeader {\n            WidgetIcon(size = WidgetIconSize.Lg) { Icon(PhosphorIcons.Regular.CashRegisterRegular, contentDescription = null) }\n            WidgetTitle(\"Point of sale\")\n        }\n        WidgetDescription(\"3 open orders\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--centered" />
 
 ### Auto
 
 An `auto` widget that fills its parent.
 
-<NativeExample id="components-widget--auto" width={880} height={463} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { SunIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nfunction Weather() {\n  return (\n    <>\n      <WidgetHeader>\n        <WidgetIcon>\n          <Icon as={SunIcon} weight=\"fill\" />\n        </WidgetIcon>\n        <WidgetTitle>Istanbul</WidgetTitle>\n      </WidgetHeader>\n      <WidgetContent>\n        <WidgetValue>24°</WidgetValue>\n        <WidgetDescription>Partly cloudy</WidgetDescription>\n      </WidgetContent>\n      <WidgetFooter>H 27° · L 18°</WidgetFooter>\n    </>\n  )\n}\n\nexport function WidgetAutoExample() {\n  return (\n    <View className=\"h-48 w-full\">\n      <Widget>\n        <Weather />\n      </Widget>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetAutoExample: View {\n  var body: some View {\n    Widget(nil) {\n      WidgetWeather()\n    }\n    .frame(maxWidth: .infinity)\n    .frame(height: 192)\n  }\n}\n\nstruct WidgetWeather: View {\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon {\n        Ph.sun.fill\n      }\n      WidgetTitle(\"Istanbul\")\n    }\n    WidgetContent {\n      WidgetValue(verbatim: \"24°\")\n      WidgetDescription(\"Partly cloudy\")\n    }\n    WidgetFooter(verbatim: \"H 27° · L 18°\")\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.fill.Sun\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetContent\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\n\n@Composable\nfun WidgetAutoExample() {\n    Widget(Modifier.height(192.dp)) { WidgetWeather() }\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetWeather() {\n    WidgetHeader {\n        WidgetIcon { Icon(PhosphorIcons.Fill.Sun, contentDescription = null) }\n        WidgetTitle(\"Istanbul\")\n    }\n    WidgetContent {\n        WidgetValue(\"24°\")\n        WidgetDescription(\"Partly cloudy\")\n    }\n    WidgetFooterText(\"H 27° · L 18°\")\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--auto" />
 
 ### Dashboard
 
 Several auto-sized widgets arranged in a grid.
 
-<NativeExample id="components-widget--dashboard" width={880} height={783} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CashRegisterIcon, CookingPotIcon, SunIcon } from \"phosphor-react-native\"\nimport { ScrollView, View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Widget, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from \"@/components/ui/widget\"\n\nexport function WidgetDashboardExample() {\n  return (\n    <ScrollView contentContainerClassName=\"gap-4\">\n      <View className=\"h-42 flex-row gap-4\">\n        <View className=\"flex-1\">\n          <Widget>\n            <WidgetHeader>\n              <WidgetIcon>\n                <Icon as={SunIcon} weight=\"fill\" />\n              </WidgetIcon>\n              <WidgetTitle>Istanbul</WidgetTitle>\n            </WidgetHeader>\n            <WidgetValue>24°</WidgetValue>\n            <WidgetFooter>Partly cloudy</WidgetFooter>\n          </Widget>\n        </View>\n        <View className=\"flex-1\">\n          <Widget align=\"center\">\n            <WidgetHeader>\n              <WidgetIcon size=\"lg\">\n                <Icon as={CookingPotIcon} />\n              </WidgetIcon>\n              <WidgetTitle>Kitchen display</WidgetTitle>\n            </WidgetHeader>\n            <WidgetDescription>5 tickets</WidgetDescription>\n          </Widget>\n        </View>\n      </View>\n      <View className=\"h-42\">\n        <Widget>\n          <WidgetHeader className=\"gap-1.5\">\n            <WidgetIcon size=\"sm\" iconClassName=\"text-warning\">\n              <Icon as={CashRegisterIcon} weight=\"fill\" />\n            </WidgetIcon>\n            <WidgetTitle className=\"text-warning\">Hestia</WidgetTitle>\n          </WidgetHeader>\n          <WidgetValue>₺18,240</WidgetValue>\n          <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>\n        </Widget>\n      </View>\n    </ScrollView>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct WidgetDashboardExample: View {\n  var body: some View {\n    VStack(spacing: 16) {\n      HStack(spacing: 16) {\n        Widget(nil) {\n          WidgetHeader {\n            WidgetIcon {\n              Ph.sun.fill\n            }\n            WidgetTitle(\"Istanbul\")\n          }\n          WidgetValue(verbatim: \"24°\")\n          WidgetFooter(\"Partly cloudy\")\n        }\n        Widget(nil, align: .center) {\n          WidgetHeader {\n            WidgetIcon(size: .lg) {\n              Ph.cookingPot.regular\n            }\n            WidgetTitle(\"Kitchen display\")\n          }\n          WidgetDescription(\"5 tickets\")\n        }\n      }\n      .frame(height: 168)\n      Widget(nil) {\n        WidgetSalesHeader()\n        WidgetValue(verbatim: \"₺18,240\")\n        WidgetFooter(\"Today's revenue · 42 orders\")\n      }\n      .frame(height: 168)\n    }\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct WidgetSalesHeader: View {\n  var body: some View {\n    WidgetHeader {\n      WidgetIcon(size: .sm) {\n        Ph.cashRegister.fill.foregroundStyle(Color.warning)\n      }\n      WidgetTitle(\"Hestia\")\n        .foregroundStyle(Color.warning)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.CompositionLocalProvider\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.fill.CashRegister\nimport com.adamglin.phosphoricons.fill.Sun\nimport com.adamglin.phosphoricons.regular.CookingPot\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.LocalContentStyle\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.Widget\nimport com.esuiss.ui.components.WidgetAlign\nimport com.esuiss.ui.components.WidgetDescription\nimport com.esuiss.ui.components.WidgetFooter\nimport com.esuiss.ui.components.WidgetHeader\nimport com.esuiss.ui.components.WidgetIcon\nimport com.esuiss.ui.components.WidgetIconSize\nimport com.esuiss.ui.components.WidgetTitle\nimport com.esuiss.ui.components.WidgetValue\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun WidgetTintedTitle(text: String, color: Color) {\n    CompositionLocalProvider(LocalContentStyle provides LocalContentStyle.current.copy(color = color)) {\n        WidgetTitle(text)\n    }\n}\n\n@Composable\nfun WidgetFooterText(text: String) {\n    WidgetFooter {\n        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)\n    }\n}\n\n@Composable\nfun WidgetDashboard() {\n    val warning = EsuissTheme.colors.warning\n    val tall = Modifier.height(168.dp)\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {\n        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {\n            Box(Modifier.weight(1f)) {\n                Widget(tall) {\n                    WidgetHeader {\n                        WidgetIcon { Icon(PhosphorIcons.Fill.Sun, contentDescription = null) }\n                        WidgetTitle(\"Istanbul\")\n                    }\n                    WidgetValue(\"24°\")\n                    WidgetFooterText(\"Partly cloudy\")\n                }\n            }\n            Box(Modifier.weight(1f)) {\n                Widget(tall, align = WidgetAlign.Center) {\n                    WidgetHeader {\n                        WidgetIcon(size = WidgetIconSize.Lg) { Icon(PhosphorIcons.Regular.CookingPot, contentDescription = null) }\n                        WidgetTitle(\"Kitchen display\")\n                    }\n                    WidgetDescription(\"5 tickets\")\n                }\n            }\n        }\n        Widget(tall) {\n            WidgetHeader {\n                WidgetIcon(size = WidgetIconSize.Sm) { Icon(PhosphorIcons.Fill.CashRegister, contentDescription = null, tint = warning) }\n                WidgetTintedTitle(\"Hestia\", warning)\n            }\n            WidgetValue(\"₺18,240\")\n            WidgetFooterText(\"Today's revenue · 42 orders\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-widget--dashboard" />
 
 ## API Reference
 
@@ -552,7 +511,19 @@ Several auto-sized widgets arranged in a grid.
 
 The card surface and optional resize handle.
 
-<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"},{"name":"size","type":"WidgetSize | \"auto\"","description":"Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`."},{"name":"defaultSize","type":"WidgetSize | \"auto\"","description":"Initial size when uncontrolled."},{"name":"onSizeChange","type":"(size: WidgetSize | \"auto\") => void","description":"Called with the new size after a resize."},{"name":"sizes","type":"WidgetSize[]","default":"ALL_SIZES","description":"Sizes the user can resize to. Defaults to all four."},{"name":"resizable","type":"boolean","default":"false","description":"Shows a drag handle for resizing."},{"name":"handle","type":"WidgetHandlePlacement","default":"\"outside\"","description":"Handle placement: `outside` the corner or `inside` it. Defaults to `outside`."},{"name":"align","type":"WidgetAlign","default":"\"start\"","description":"`start` or `center` content alignment."},{"name":"resizeLabel","type":"string","default":"\"Resize widget\"","description":"Accessibility label for the handle. Defaults to \"Resize widget\"."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+| `size` | `WidgetSize \| "auto"` | - | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
+| `defaultSize` | `WidgetSize \| "auto"` | - | Initial size when uncontrolled. |
+| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | - | Called with the new size after a resize. |
+| `sizes` | `WidgetSize[]` | `ALL_SIZES` | Sizes the user can resize to. Defaults to all four. |
+| `resizable` | `boolean` | `false` | Shows a drag handle for resizing. |
+| `handle` | `WidgetHandlePlacement` | `"outside"` | Handle placement: `outside` the corner or `inside` it. Defaults to `outside`. |
+| `align` | `WidgetAlign` | `"start"` | `start` or `center` content alignment. |
+| `resizeLabel` | `string` | `"Resize widget"` | Accessibility label for the handle. Defaults to "Resize widget". |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
 
@@ -562,7 +533,11 @@ The card surface and optional resize handle.
 
 Row for the icon, title and action.
 
-<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
 
@@ -572,7 +547,13 @@ Row for the icon, title and action.
 
 Icon frame in `default`, `sm` or `lg` size.
 
-<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"},{"name":"iconClassName","type":"string","description":"Classes applied to the icon inside."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"`default`, `sm` or `lg`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+| `iconClassName` | `string` | - | Classes applied to the icon inside. |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | `default`, `sm` or `lg`. |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
 
@@ -582,7 +563,7 @@ Icon frame in `default`, `sm` or `lg` size.
 
 Single-line heading.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
 
 </ApiPart>
 
@@ -592,7 +573,11 @@ Single-line heading.
 
 Trailing slot in the header; hidden when centered.
 
-<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
 
@@ -602,7 +587,7 @@ Trailing slot in the header; hidden when centered.
 
 Secondary text.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
 
 </ApiPart>
 
@@ -612,7 +597,7 @@ Secondary text.
 
 Large number with tabular figures.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>","React.RefAttributes<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
 
 </ApiPart>
 
@@ -622,7 +607,11 @@ Large number with tabular figures.
 
 Flexible body area that clips overflow.
 
-<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
 
@@ -632,7 +621,11 @@ Flexible body area that clips overflow.
 
 Small secondary text and icons pinned to the bottom.
 
-<PropsTable extends={["ViewProps","React.RefAttributes<View>"]} props={[{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
 

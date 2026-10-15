@@ -1,5 +1,0 @@
-{
-  "description": "Radial bars for users by device, with each device name printed at the start of its bar.",
-  "overview": "A `RadialBarChart` with one bar per record in `chartData`, sweeping from 90 to -200 degrees. Bars are colored through `Cell` and labeled with a `LabelList` that reads names from `chartConfig`. Pressing a bar shows a tooltip.",
-  "usage": "Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props."
-}

@@ -1,5 +1,0 @@
-{
-  "description": "Two overlapping radar shapes with a legend beneath that names each series.",
-  "overview": "Two overlapping radar shapes with a legend underneath naming each series. Pick it over the plain multiple-series chart when readers need to know which shape is which without hovering.",
-  "usage": "Replace `chartData` and rename the series keys in the data, both `Radar` elements and `chartConfig`; the legend reads labels and colors from the config. The series declared last is drawn on top."
-}

@@ -1,6 +1,0 @@
-{
-  "description": "A dark subscription bundle picker comparing three plans and the services each one includes.",
-  "overview": "A dark plan picker comparing three subscription bundles, each with its audience, monthly price and the services it includes, with excluded services struck through. Cards stack on mobile and sit in three columns on desktop, and the selected one gains an accent outline. A Try it free button and a savings link that follows the selection close the section. Use it for bundle, tier or membership pricing.",
-  "usage": "Edit `services` and `plans`. Each plan includes the first services in order, up to its `included` count, and the fourth service shows the plan's storage, so order `services` from most basic to most premium. Give Try it free a handler and point `#compare` at your comparison page.",
-  "notes": "Excluded services include hidden not-included text, so the strike-through is not the only cue."
-}

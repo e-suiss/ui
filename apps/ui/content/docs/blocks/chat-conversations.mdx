@@ -3,16 +3,11 @@ title: Chat Conversations
 description: "A messaging app layout with a conversation list beside the selected thread and a message composer."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="chat-conversations">
-
-<SourceFile path="components/blocks/chat-conversations.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="chat-conversations" />
 
 A messaging app with conversations on the left, the open thread on the right and a composer whose send button appears once you type. On mobile only one pane shows at a time, starting with the conversation list, and a back button returns to it. Built on `SplitView` and `MessageScroller`, it is a starting point for direct messages, team chat or customer conversations.
 
@@ -20,27 +15,35 @@ A messaging app with conversations on the left, the open thread on the right and
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks chat-conversations"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks chat-conversations
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Input](/docs/components/input), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Split View](/docs/patterns/split-view).
 
 3. Copy the source into `components/blocks/chat-conversations.tsx`:
 
-<SourceFile path="components/blocks/chat-conversations.tsx" />
+<ComponentSource path="components/blocks/chat-conversations.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ChatConversations } from \"@/components/blocks/chat-conversations\""} />
+```tsx
+import { ChatConversations } from "@/components/blocks/chat-conversations"
+```
 
-<Code lang="tsx" code={"<ChatConversations />"} />
+```tsx
+<ChatConversations />
+```
 
 Replace the `threads` array; each thread has a name, avatar hue, time and lines written as strings prefixed with `me:` or `them:`. The `send` function fakes a typing indicator and a canned reply from `replies`, so replace it with your messaging backend. The New message, attachment, video call and details buttons have no handlers.
 
@@ -52,13 +55,13 @@ Typing status is announced, and icon-only buttons are labeled. The composer inpu
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-chat-conversations--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-chat-conversations--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/chat-conversations.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/chat-conversations.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/ChatConversations.swift" fold={false} />
+<ComponentSource path="swift/Blocks/ChatConversations.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/ChatConversations.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/ChatConversations.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Composes `Screen`, `Header`, `SwipeActions` from the interactions, `Avatar`, `Me
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add chat-conversations"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add chat-conversations
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add chat-conversations --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add chat-conversations --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add chat-conversations --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add chat-conversations --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/chat-conversations.tsx`:
 
-<SourceFile path="uniwind/components/blocks/chat-conversations.tsx" />
+<ComponentSource path="uniwind/components/blocks/chat-conversations.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/chat-conversations.tsx`:
 
-<SourceFile path="nativewind/components/blocks/chat-conversations.tsx" />
+<ComponentSource path="nativewind/components/blocks/chat-conversations.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/chat-conversations.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/chat-conversations.tsx" />
+<ComponentSource path="stylesheet/components/blocks/chat-conversations.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,49 +165,51 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/ChatConversations.swift" />
+<ComponentSource path="swift/Blocks/ChatConversations.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Bubble.swift" />
+<ComponentSource path="swift/Components/Bubble.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Header.swift" />
+<ComponentSource path="swift/Components/Header.swift" />
 
-<SourceFile path="swift/Components/InputGroup.swift" />
+<ComponentSource path="swift/Components/InputGroup.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Message.swift" />
+<ComponentSource path="swift/Components/Message.swift" />
 
-<SourceFile path="swift/Components/MessageScroller.swift" />
+<ComponentSource path="swift/Components/MessageScroller.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Interactions/SwipeActions.swift" />
+<ComponentSource path="swift/Interactions/SwipeActions.swift" />
 
 5. Add the files to your app target.
 
@@ -202,57 +219,62 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/ChatConversations.kt" />
+<ComponentSource path="kotlin/blocks/ChatConversations.kt" />
 
-<SourceFile path="kotlin/components/Avatar.kt" />
+<ComponentSource path="kotlin/components/Avatar.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Bubble.kt" />
+<ComponentSource path="kotlin/components/Bubble.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/InputGroup.kt" />
+<ComponentSource path="kotlin/components/InputGroup.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Message.kt" />
+<ComponentSource path="kotlin/components/Message.kt" />
 
-<SourceFile path="kotlin/components/MessageScroller.kt" />
+<ComponentSource path="kotlin/components/MessageScroller.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/SignaturePad.kt" />
+<ComponentSource path="kotlin/components/SignaturePad.kt" />
 
-<SourceFile path="kotlin/components/Spinner.kt" />
+<ComponentSource path="kotlin/components/Spinner.kt" />
 
-<SourceFile path="kotlin/interactions/SwipeActions.kt" />
+<ComponentSource path="kotlin/interactions/SwipeActions.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -260,9 +282,13 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 ## Usage
 
-<Code lang="tsx" code={"import { ChatConversations } from \"@/components/blocks/chat-conversations\""} />
+```tsx
+import { ChatConversations } from "@/components/blocks/chat-conversations"
+```
 
-<Code lang="tsx" code={"<ChatConversations />"} />
+```tsx
+<ChatConversations />
+```
 
 Replace `THREADS` and `REPLIES` with your conversations and drop the canned replies. Wire `onSend`, `onNewMessage`, `onAttach`, `onVideoCall`, `onDetails` and `onDelete` to your messaging backend.
 

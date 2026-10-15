@@ -3,16 +3,11 @@ title: Signup Trial
 description: "A free trial signup split between a promotional image panel and a short form with a password strength meter."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="signup-trial">
-
-<SourceFile path="components/blocks/signup-trial.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="signup-trial" />
 
 A free trial signup that pairs a promotional image panel with a short form: email, password with a strength meter, and a terms checkbox. The submit button stays disabled until the form is valid. The panel sits beside the form on desktop and above it on mobile. Use it for trial, waitlist or account signups that need a sales pitch alongside.
 
@@ -20,27 +15,35 @@ A free trial signup that pairs a promotional image panel with a short form: emai
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks signup-trial"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks signup-trial
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Input](/docs/components/input), [Label](/docs/components/label).
 
 3. Copy the source into `components/blocks/signup-trial.tsx`:
 
-<SourceFile path="components/blocks/signup-trial.tsx" />
+<ComponentSource path="components/blocks/signup-trial.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { SignupTrial } from \"@/components/blocks/signup-trial\""} />
+```tsx
+import { SignupTrial } from "@/components/blocks/signup-trial"
+```
 
-<Code lang="tsx" code={"<SignupTrial />"} />
+```tsx
+<SignupTrial />
+```
 
 Replace the promotional copy, the `image` constant and the success branch with your trial signup call. `strength` scores length, mixed case, a digit and a symbol, and the form needs 3 of 4, so tune it to your password policy. Point `#sign-in` at your sign-in page.
 
@@ -52,13 +55,13 @@ The strength meter exposes its level to screen readers. The promo panel is a CSS
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-signup-trial--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-signup-trial--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/signup-trial.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/signup-trial.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/SignupTrial.swift" fold={false} />
+<ComponentSource path="swift/Blocks/SignupTrial.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/SignupTrial.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/SignupTrial.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A hero image sits above an `InputAccessoryBar` with email and password inputs; t
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signup-trial"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signup-trial
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signup-trial --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signup-trial --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signup-trial --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signup-trial --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/signup-trial.tsx`:
 
-<SourceFile path="uniwind/components/blocks/signup-trial.tsx" />
+<ComponentSource path="uniwind/components/blocks/signup-trial.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/signup-trial.tsx`:
 
-<SourceFile path="nativewind/components/blocks/signup-trial.tsx" />
+<ComponentSource path="nativewind/components/blocks/signup-trial.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/signup-trial.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/signup-trial.tsx" />
+<ComponentSource path="stylesheet/components/blocks/signup-trial.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,39 +165,41 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/SignupTrial.swift" />
+<ComponentSource path="swift/Blocks/SignupTrial.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/InputAccessoryBar.swift" />
+<ComponentSource path="swift/Components/InputAccessoryBar.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -192,45 +209,50 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/SignupTrial.kt" />
+<ComponentSource path="kotlin/blocks/SignupTrial.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/InputAccessoryBar.kt" />
+<ComponentSource path="kotlin/components/InputAccessoryBar.kt" />
 
-<SourceFile path="kotlin/components/KeyboardScrollView.kt" />
+<ComponentSource path="kotlin/components/KeyboardScrollView.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -238,9 +260,13 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 ## Usage
 
-<Code lang="tsx" code={"import { SignupTrial } from \"@/components/blocks/signup-trial\""} />
+```tsx
+import { SignupTrial } from "@/components/blocks/signup-trial"
+```
 
-<Code lang="tsx" code={"<SignupTrial />"} />
+```tsx
+<SignupTrial />
+```
 
 Replace `IMAGE` and the copy with your own. `onSubmit` receives the email and password, and `onSignIn` handles the sign-in link. The hero photo is an Unsplash placeholder.
 

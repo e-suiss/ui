@@ -3,16 +3,11 @@ title: Message
 description: "Lays out a single chat message with an optional avatar, header and footer."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="message" story="Default">
-
-<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageExample() {\n  return (\n    <div className=\"w-96\">\n      <Message align=\"start\">\n        <MessageAvatar>\n          <Avatar>\n            <AvatarFallback>MK</AvatarFallback>\n          </Avatar>\n        </MessageAvatar>\n        <MessageContent>\n          <Bubble variant=\"muted\">\n            <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="message-demo" />
 
 `Message` arranges one message row: an optional `MessageAvatar` and a `MessageContent` column. Inside the content, place an optional `MessageHeader` (such as a sender name), one or more bubbles, and an optional `MessageFooter` (such as a timestamp or read receipt). Wrap consecutive messages in `MessageGroup` to stack them.
 
@@ -22,25 +17,46 @@ generated: true
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add message"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add message
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Copy the source into `components/ui/message.tsx`:
 
-<SourceFile path="components/ui/message.tsx" />
+<ComponentSource path="components/ui/message.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from \"@/components/ui/message\""} />
+```tsx
+import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from "@/components/ui/message"
+```
 
-<Code lang="tsx" code={"<div className=\"w-96\">\n  <Message align=\"start\">\n    <MessageAvatar>\n      <Avatar>\n        <AvatarFallback>MK</AvatarFallback>\n      </Avatar>\n    </MessageAvatar>\n    <MessageContent>\n      <Bubble variant=\"muted\">\n        <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n      </Bubble>\n    </MessageContent>\n  </Message>\n</div>"} />
+```tsx
+<div className="w-96">
+  <Message align="start">
+    <MessageAvatar>
+      <Avatar>
+        <AvatarFallback>MK</AvatarFallback>
+      </Avatar>
+    </MessageAvatar>
+    <MessageContent>
+      <Bubble variant="muted">
+        <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>
+      </Bubble>
+    </MessageContent>
+  </Message>
+</div>
+```
 
 Set `align="end"` for messages sent by the current user. The row reverses, so the avatar moves to the end, and the content's children and the footer align to the end edge.
 
@@ -50,35 +66,36 @@ Set `align="end"` for messages sent by the current user. The row reverses, so th
 
 A message aligned to the end, as used for outgoing messages.
 
-<Example kind="ui" name="message" story="AlignEnd">
-
-<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageAlignEndExample() {\n  return (\n    <div className=\"w-96\">\n      <Message align=\"end\">\n        <MessageContent>\n          <Bubble>\n            <BubbleContent>Yes, see you at noon.</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="message-align-end" />
 
 ### With header and footer
 
 A message with a sender name above the bubble and a timestamp below it.
 
-<Example kind="ui" name="message" story="WithHeaderAndFooter">
-
-<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\n\nexport function MessageWithHeaderAndFooterExample() {\n  return (\n    <div className=\"w-96\">\n      <Message align=\"start\">\n        <MessageAvatar>\n          <Avatar>\n            <AvatarFallback>JL</AvatarFallback>\n          </Avatar>\n        </MessageAvatar>\n        <MessageContent>\n          <MessageHeader>Jordan Lee</MessageHeader>\n          <Bubble variant=\"muted\">\n            <BubbleContent>\n              I pushed the updated designs to the shared folder.\n            </BubbleContent>\n          </Bubble>\n          <MessageFooter>9:41 AM</MessageFooter>\n        </MessageContent>\n      </Message>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="message-with-header-and-footer" />
 
 ### Conversation
 
 A `MessageGroup` with an incoming message of two bubbles and an outgoing reply.
 
-<Example kind="ui" name="message" story="Conversation">
-
-<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup } from \"@/components/ui/message\"\n\nexport function MessageConversationExample() {\n  return (\n    <div className=\"w-96\">\n      <MessageGroup className=\"gap-4\">\n        <Message>\n          <MessageAvatar>\n            <Avatar>\n              <AvatarFallback>MK</AvatarFallback>\n            </Avatar>\n          </MessageAvatar>\n          <MessageContent>\n            <Bubble variant=\"muted\">\n              <BubbleContent>Did the build pass?</BubbleContent>\n            </Bubble>\n            <Bubble variant=\"muted\">\n              <BubbleContent>I want to ship before the weekend.</BubbleContent>\n            </Bubble>\n          </MessageContent>\n        </Message>\n        <Message align=\"end\">\n          <MessageContent>\n            <Bubble>\n              <BubbleContent>All green. Merging it now.</BubbleContent>\n            </Bubble>\n            <MessageFooter>Read 10:02 AM</MessageFooter>\n          </MessageContent>\n        </Message>\n      </MessageGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="message-conversation" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Message","href":"#message","children":[{"name":"MessageAvatar","href":"#messageavatar","children":[]},{"name":"MessageContent","href":"#messagecontent","children":[{"name":"MessageHeader","href":"#messageheader","children":[]},{"name":"MessageFooter","href":"#messagefooter","children":[]}]}]},{"name":"MessageGroup","href":"#messagegroup","children":[{"name":"Message","href":"#message","children":[{"name":"MessageAvatar","href":"#messageavatar","children":[]},{"name":"MessageContent","href":"#messagecontent","children":[{"name":"MessageFooter","href":"#messagefooter","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [Message](#message)
+  - [MessageAvatar](#messageavatar)
+  - [MessageContent](#messagecontent)
+    - [MessageHeader](#messageheader)
+    - [MessageFooter](#messagefooter)
+- [MessageGroup](#messagegroup)
+  - [Message](#message)
+    - [MessageAvatar](#messageavatar)
+    - [MessageContent](#messagecontent)
+      - [MessageFooter](#messagefooter)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -86,7 +103,7 @@ A `MessageGroup` with an incoming message of two bubbles and an outgoing reply.
 
 Stacks several messages vertically.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -96,7 +113,11 @@ Stacks several messages vertically.
 
 The row for one message that sets its alignment.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"start\" | \"end\"","default":"\"start\"","description":"Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align` | `"start" \| "end"` | `"start"` | Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -106,7 +127,7 @@ The row for one message that sets its alignment.
 
 A round container for the sender's avatar, aligned to the bottom of the row.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -116,7 +137,7 @@ A round container for the sender's avatar, aligned to the bottom of the row.
 
 The column that holds the header, bubbles and footer.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -126,7 +147,7 @@ The column that holds the header, bubbles and footer.
 
 Small secondary text above the bubbles, such as the sender name.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -136,7 +157,7 @@ Small secondary text above the bubbles, such as the sender name.
 
 Small secondary text below the bubbles, such as a timestamp.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -151,15 +172,7 @@ Small secondary text below the bubbles, such as a timestamp.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-message--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageExample() {\n  return (\n    <Message align=\"start\">\n      <MessageAvatar>\n        <Avatar>\n          <AvatarFallback>MK</AvatarFallback>\n        </Avatar>\n      </MessageAvatar>\n      <MessageContent>\n        <Bubble variant=\"muted\">\n          <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n        </Bubble>\n      </MessageContent>\n    </Message>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct MessageExample: View {\n  var body: some View {\n    Message {\n      MessageAvatar {\n        Avatar { AvatarFallback(\"MK\") }\n      }\n      MessageContent {\n        Bubble(variant: .muted) {\n          BubbleContent(\"Are we still on for lunch tomorrow?\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Avatar\nimport com.esuiss.ui.components.AvatarFallback\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleVariant\nimport com.esuiss.ui.components.Message\nimport com.esuiss.ui.components.MessageAvatar\nimport com.esuiss.ui.components.MessageContent\n\n@Composable\nfun MessageInitials(text: String) {\n    MessageAvatar {\n        Avatar(fallback = { AvatarFallback(text) })\n    }\n}\n\n@Composable\nfun MessageDefault() {\n    Message(Modifier.fillMaxWidth()) {\n        MessageInitials(\"MK\")\n        MessageContent {\n            Bubble(variant = BubbleVariant.Muted) {\n                BubbleContent(\"Are we still on for lunch tomorrow?\")\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-message--default" />
 
 `Message` is a horizontal `View` that places an avatar next to a column of bubbles. Its `align` prop puts the row on the leading (`start`) or trailing (`end`) side and passes the alignment to any `Bubble` inside through context.
 
@@ -169,19 +182,25 @@ Small secondary text below the bubbles, such as a timestamp.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add message"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add message
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add message --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add message --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add message --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add message --platform kotlin
+```
 
 </Only>
 
@@ -197,13 +216,15 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/message.tsx`:
 
-<SourceFile path="uniwind/components/ui/message.tsx" />
+<ComponentSource path="uniwind/components/ui/message.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -213,13 +234,15 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/message.tsx`:
 
-<SourceFile path="nativewind/components/ui/message.tsx" />
+<ComponentSource path="nativewind/components/ui/message.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -231,7 +254,7 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 2. Copy the source into `components/ui/message.tsx`:
 
-<SourceFile path="stylesheet/components/ui/message.tsx" />
+<ComponentSource path="stylesheet/components/ui/message.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -247,33 +270,35 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Message.swift" />
+<ComponentSource path="swift/Components/Message.swift" />
 
-<SourceFile path="swift/Components/Bubble.swift" />
+<ComponentSource path="swift/Components/Bubble.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -283,33 +308,37 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Message.kt" />
+<ComponentSource path="kotlin/components/Message.kt" />
 
-<SourceFile path="kotlin/components/Avatar.kt" />
+<ComponentSource path="kotlin/components/Avatar.kt" />
 
-<SourceFile path="kotlin/components/Bubble.kt" />
+<ComponentSource path="kotlin/components/Bubble.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/SignaturePad.kt" />
+<ComponentSource path="kotlin/components/SignaturePad.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -317,9 +346,24 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from \"@/components/ui/message\""} />
+```tsx
+import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from "@/components/ui/message"
+```
 
-<Code lang="tsx" code={"<Message align=\"start\">\n  <MessageAvatar>\n    <Avatar>\n      <AvatarFallback>MK</AvatarFallback>\n    </Avatar>\n  </MessageAvatar>\n  <MessageContent>\n    <Bubble variant=\"muted\">\n      <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n    </Bubble>\n  </MessageContent>\n</Message>"} />
+```tsx
+<Message align="start">
+  <MessageAvatar>
+    <Avatar>
+      <AvatarFallback>MK</AvatarFallback>
+    </Avatar>
+  </MessageAvatar>
+  <MessageContent>
+    <Bubble variant="muted">
+      <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>
+    </Bubble>
+  </MessageContent>
+</Message>
+```
 
 Put a `MessageAvatar` and a `MessageContent` inside each `Message`, and place `Bubble` components, a `MessageHeader` and a `MessageFooter` in `MessageContent`.
 
@@ -333,43 +377,19 @@ When `MessageContent` contains a `MessageFooter`, the avatar shifts up so it lin
 
 A message aligned to the trailing side, as for the current user.
 
-<NativeExample id="components-message--align-end" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent } from \"@/components/ui/message\"\n\nexport function MessageAlignEndExample() {\n  return (\n    <Message align=\"end\">\n      <MessageContent>\n        <Bubble>\n          <BubbleContent>Yes, see you at noon.</BubbleContent>\n        </Bubble>\n      </MessageContent>\n    </Message>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct MessageAlignEndExample: View {\n  var body: some View {\n    Message(align: .end) {\n      MessageContent {\n        Bubble {\n          BubbleContent(\"Yes, see you at noon.\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.Message\nimport com.esuiss.ui.components.MessageAlign\nimport com.esuiss.ui.components.MessageContent\n\n@Composable\nfun MessageAlignEnd() {\n    Message(Modifier.fillMaxWidth(), align = MessageAlign.End) {\n        MessageContent {\n            Bubble {\n                BubbleContent(\"Yes, see you at noon.\")\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-message--align-end" />
 
 ### With header and footer
 
 A message with a sender name above and a timestamp below.
 
-<NativeExample id="components-message--with-header-and-footer" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from \"@/components/ui/message\"\n\nexport function MessageWithHeaderAndFooterExample() {\n  return (\n    <Message align=\"start\">\n      <MessageAvatar>\n        <Avatar>\n          <AvatarFallback>JL</AvatarFallback>\n        </Avatar>\n      </MessageAvatar>\n      <MessageContent>\n        <MessageHeader>Jordan Lee</MessageHeader>\n        <Bubble variant=\"muted\">\n          <BubbleContent>\n            I pushed the updated designs to the shared folder.\n          </BubbleContent>\n        </Bubble>\n        <MessageFooter>9:41 AM</MessageFooter>\n      </MessageContent>\n    </Message>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct MessageWithHeaderAndFooterExample: View {\n  var body: some View {\n    Message {\n      MessageAvatar {\n        Avatar { AvatarFallback(\"JL\") }\n      }\n      MessageContent {\n        MessageHeader(verbatim: \"Jordan Lee\")\n        Bubble(variant: .muted) {\n          BubbleContent(\"I pushed the updated designs to the shared folder.\")\n        }\n        MessageFooter(verbatim: \"9:41 AM\")\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Avatar\nimport com.esuiss.ui.components.AvatarFallback\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleVariant\nimport com.esuiss.ui.components.Message\nimport com.esuiss.ui.components.MessageAvatar\nimport com.esuiss.ui.components.MessageContent\nimport com.esuiss.ui.components.MessageFooter\nimport com.esuiss.ui.components.MessageHeader\n\n@Composable\nfun MessageInitials(text: String) {\n    MessageAvatar {\n        Avatar(fallback = { AvatarFallback(text) })\n    }\n}\n\n@Composable\nfun MessageWithHeaderAndFooter() {\n    Message(Modifier.fillMaxWidth()) {\n        MessageInitials(\"JL\")\n        MessageContent {\n            MessageHeader(\"Jordan Lee\")\n            Bubble(variant = BubbleVariant.Muted) {\n                BubbleContent(\"I pushed the updated designs to the shared folder.\")\n            }\n            MessageFooter(\"9:41 AM\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-message--with-header-and-footer" />
 
 ### Conversation
 
 A `MessageGroup` with an incoming and an outgoing message, including a read receipt footer.
 
-<NativeExample id="components-message--conversation" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ChecksIcon } from \"phosphor-react-native\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\nimport { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup } from \"@/components/ui/message\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function MessageConversationExample() {\n  return (\n    <MessageGroup className=\"gap-4\">\n      <Message>\n        <MessageAvatar>\n          <Avatar>\n            <AvatarFallback>MK</AvatarFallback>\n          </Avatar>\n        </MessageAvatar>\n        <MessageContent>\n          <Bubble variant=\"muted\">\n            <BubbleContent>Did the build pass?</BubbleContent>\n          </Bubble>\n          <Bubble variant=\"muted\">\n            <BubbleContent>I want to ship before the weekend.</BubbleContent>\n          </Bubble>\n        </MessageContent>\n      </Message>\n      <Message align=\"end\">\n        <MessageContent>\n          <Bubble>\n            <BubbleContent>All green. Merging it now.</BubbleContent>\n          </Bubble>\n          <MessageFooter className=\"gap-1\">\n            <Icon as={ChecksIcon} className=\"text-accent\" />\n            <Text>Read 10:02 AM</Text>\n          </MessageFooter>\n        </MessageContent>\n      </Message>\n    </MessageGroup>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct MessageConversationExample: View {\n  var body: some View {\n    MessageGroup(spacing: 16) {\n      Message {\n        MessageAvatar {\n          Avatar { AvatarFallback(\"MK\") }\n        }\n        MessageContent {\n          Bubble(variant: .muted) {\n            BubbleContent(\"Did the build pass?\")\n          }\n          Bubble(variant: .muted) {\n            BubbleContent(\"I want to ship before the weekend.\")\n          }\n        }\n      }\n      Message(align: .end) {\n        MessageContent {\n          Bubble {\n            BubbleContent(\"All green. Merging it now.\")\n          }\n          MessageFooter {\n            Ph.checks.regular\n              .frame(width: 16, height: 16)\n              .foregroundStyle(Color.accent)\n            Text(\"Read 10:02 AM\")\n          }\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Checks\nimport com.esuiss.ui.components.Avatar\nimport com.esuiss.ui.components.AvatarFallback\nimport com.esuiss.ui.components.Bubble\nimport com.esuiss.ui.components.BubbleContent\nimport com.esuiss.ui.components.BubbleVariant\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Message\nimport com.esuiss.ui.components.MessageAlign\nimport com.esuiss.ui.components.MessageAvatar\nimport com.esuiss.ui.components.MessageContent\nimport com.esuiss.ui.components.MessageFooter\nimport com.esuiss.ui.components.MessageGroup\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun MessageInitials(text: String) {\n    MessageAvatar {\n        Avatar(fallback = { AvatarFallback(text) })\n    }\n}\n\n@Composable\nfun MessageConversation() {\n    MessageGroup(Modifier.fillMaxWidth()) {\n        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {\n            Message(Modifier.fillMaxWidth()) {\n                MessageInitials(\"MK\")\n                MessageContent {\n                    Bubble(variant = BubbleVariant.Muted) {\n                        BubbleContent(\"Did the build pass?\")\n                    }\n                    Bubble(variant = BubbleVariant.Muted) {\n                        BubbleContent(\"I want to ship before the weekend.\")\n                    }\n                }\n            }\n            Message(Modifier.fillMaxWidth(), align = MessageAlign.End) {\n                MessageContent {\n                    Bubble {\n                        BubbleContent(\"All green. Merging it now.\")\n                    }\n                    MessageFooter {\n                        Icon(PhosphorIcons.Regular.Checks, contentDescription = null, tint = EsuissTheme.colors.accent)\n                        Text(\"Read 10:02 AM\")\n                    }\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-message--conversation" />
 
 ## API Reference
 
@@ -379,7 +399,7 @@ A `MessageGroup` with an incoming and an outgoing message, including a read rece
 
 Vertical stack of messages.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -389,7 +409,11 @@ Vertical stack of messages.
 
 Row that holds the avatar and content and sets the alignment.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"align","type":"MessageAlign","default":"\"start\"","description":"Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align` | `MessageAlign` | `"start"` | Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -399,7 +423,7 @@ Row that holds the avatar and content and sets the alignment.
 
 Round slot for an avatar, pinned to the bottom of the row.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -409,7 +433,7 @@ Round slot for an avatar, pinned to the bottom of the row.
 
 Column of bubbles built on `BubbleGroup`.
 
-<PropsTable extends={["React.ComponentProps<typeof BubbleGroup>"]} />
+Also accepts the props of `React.ComponentProps<typeof BubbleGroup>`.
 
 </ApiPart>
 
@@ -419,7 +443,7 @@ Column of bubbles built on `BubbleGroup`.
 
 Small secondary text above the bubbles.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -429,7 +453,7 @@ Small secondary text above the bubbles.
 
 Small secondary text below the bubbles, aligned with the message side.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

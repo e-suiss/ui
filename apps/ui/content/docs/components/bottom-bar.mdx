@@ -3,20 +3,11 @@ title: Bottom Bar
 description: "A bar pinned to the bottom of a screen for primary actions, which rises above the keyboard."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-bottom-bar--default" width={880} height={1675} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarExample() {\n  return (\n    <Page>\n      <BottomBar>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Continue</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BottomBarExample: View {\n  var body: some View {\n    BottomBarPage {\n      BottomBar(separator: false) {\n        BottomBarContent {\n          Button(\"Continue\") {}.buttonStyle(.variant(size: .lg, block: true))\n        }\n      }\n    }\n  }\n}\n\nstruct BottomBarPage<Bar: View>: View {\n  @ViewBuilder let bar: () -> Bar\n\n  var body: some View {\n    VStack(spacing: 0) {\n      VStack(alignment: .leading, spacing: 8) {\n        Text(\"Review order\").textVariant(.h3)\n        Text(\"2 items, delivery on Thursday.\").textVariant(.muted)\n      }\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)\n      bar()\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.ColumnScope\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.BottomBar\nimport com.esuiss.ui.components.BottomBarContent\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenEdge\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun BottomBarPage(page: @Composable ColumnScope.() -> Unit, bar: @Composable () -> Unit) {\n    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {\n        Column(Modifier.fillMaxSize()) {\n            Column(\n                Modifier.weight(1f).fillMaxWidth().padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(8.dp),\n                content = page,\n            )\n            bar()\n        }\n    }\n}\n\n@Composable\nfun BottomBarOrder(bar: @Composable () -> Unit) {\n    BottomBarPage(\n        page = {\n            Text(\"Review order\", variant = TextVariant.H3)\n            Text(\"2 items, delivery on Thursday.\", variant = TextVariant.Muted)\n        },\n        bar = bar,\n    )\n}\n\n@Composable\nfun BottomBarDefault() {\n    BottomBarOrder {\n        BottomBar {\n            BottomBarContent {\n                Button(\"Continue\", onClick = {}, size = ButtonSize.Lg, block = true)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-bottom-bar--default" />
 
 `BottomBar` is an animated `View` that adds bottom padding equal to the safe-area inset, or to the keyboard height while the keyboard is open, and animates between them with the keyboard's own timing. `BottomBarContent` adds the standard padding and spacing for the buttons inside.
 
@@ -26,19 +17,25 @@ Use it for the main call to action of a screen, such as checkout or a form submi
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bottom-bar"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bottom-bar
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bottom-bar --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bottom-bar --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bottom-bar --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bottom-bar --platform kotlin
+```
 
 </Only>
 
@@ -54,13 +51,15 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
+```
 
 2. Add the pieces it builds on: [Screen](/docs/components/screen), and the primitives `components/primitives/keyboard.tsx`.
 
 3. Copy the source into `components/ui/bottom-bar.tsx`:
 
-<SourceFile path="uniwind/components/ui/bottom-bar.tsx" />
+<ComponentSource path="uniwind/components/ui/bottom-bar.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -70,13 +69,15 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
+```
 
 2. Add the pieces it builds on: [Screen](/docs/components/screen), and the primitives `components/primitives/keyboard.tsx`.
 
 3. Copy the source into `components/ui/bottom-bar.tsx`:
 
-<SourceFile path="nativewind/components/ui/bottom-bar.tsx" />
+<ComponentSource path="nativewind/components/ui/bottom-bar.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -86,13 +87,15 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets
+```
 
 2. Add the pieces it builds on: [Screen](/docs/components/screen), and the primitives `components/primitives/keyboard.tsx`.
 
 3. Copy the source into `components/ui/bottom-bar.tsx`:
 
-<SourceFile path="stylesheet/components/ui/bottom-bar.tsx" />
+<ComponentSource path="stylesheet/components/ui/bottom-bar.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,17 +111,17 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen).
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
 4. Add the files to your app target.
 
@@ -128,21 +131,25 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen).
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -150,9 +157,21 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen).
 
 ## Usage
 
-<Code lang="tsx" code={"import { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\""} />
+```tsx
+import { BottomBar, BottomBarContent } from "@/components/ui/bottom-bar"
+```
 
-<Code lang="tsx" code={"<Page>\n  <BottomBar>\n    <BottomBarContent>\n      <Button size=\"lg\" block>\n        <Text>Continue</Text>\n      </Button>\n    </BottomBarContent>\n  </BottomBar>\n</Page>"} />
+```tsx
+<Page>
+  <BottomBar>
+    <BottomBarContent>
+      <Button size="lg" block>
+        <Text>Continue</Text>
+      </Button>
+    </BottomBarContent>
+  </BottomBar>
+</Page>
+```
 
 Place `BottomBar` as the last child of the screen so it sits below the scrolling content. Stack buttons in `BottomBarContent`, or add `flex-row` to place them side by side.
 
@@ -164,57 +183,25 @@ Set `separator` to draw a hairline above the bar. Inside a `Screen` that already
 
 A hairline above the bar with `separator`.
 
-<NativeExample id="components-bottom-bar--with-separator" width={880} height={1675} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarWithSeparatorExample() {\n  return (\n    <Page>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Place order</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BottomBarWithSeparatorExample: View {\n  var body: some View {\n    BottomBarPage {\n      BottomBar(separator: true) {\n        BottomBarContent {\n          Button(\"Place order\") {}.buttonStyle(.variant(size: .lg, block: true))\n        }\n      }\n    }\n  }\n}\n\nstruct BottomBarPage<Bar: View>: View {\n  @ViewBuilder let bar: () -> Bar\n\n  var body: some View {\n    VStack(spacing: 0) {\n      VStack(alignment: .leading, spacing: 8) {\n        Text(\"Review order\").textVariant(.h3)\n        Text(\"2 items, delivery on Thursday.\").textVariant(.muted)\n      }\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)\n      bar()\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.ColumnScope\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.BottomBar\nimport com.esuiss.ui.components.BottomBarContent\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenEdge\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun BottomBarPage(page: @Composable ColumnScope.() -> Unit, bar: @Composable () -> Unit) {\n    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {\n        Column(Modifier.fillMaxSize()) {\n            Column(\n                Modifier.weight(1f).fillMaxWidth().padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(8.dp),\n                content = page,\n            )\n            bar()\n        }\n    }\n}\n\n@Composable\nfun BottomBarOrder(bar: @Composable () -> Unit) {\n    BottomBarPage(\n        page = {\n            Text(\"Review order\", variant = TextVariant.H3)\n            Text(\"2 items, delivery on Thursday.\", variant = TextVariant.Muted)\n        },\n        bar = bar,\n    )\n}\n\n@Composable\nfun BottomBarWithSeparator() {\n    BottomBarOrder {\n        BottomBar(separator = true) {\n            BottomBarContent {\n                Button(\"Place order\", onClick = {}, size = ButtonSize.Lg, block = true)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-bottom-bar--with-separator" />
 
 ### Two actions
 
 A primary and a plain button stacked.
 
-<NativeExample id="components-bottom-bar--two-actions" width={880} height={1645} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarTwoActionsExample() {\n  return (\n    <Page>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Place order</Text>\n          </Button>\n          <Button size=\"lg\" variant=\"plain\" block>\n            <Text>Save for later</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BottomBarTwoActionsExample: View {\n  var body: some View {\n    BottomBarPage {\n      BottomBar(separator: true) {\n        BottomBarContent {\n          Button(\"Place order\") {}.buttonStyle(.variant(size: .lg, block: true))\n          Button(\"Save for later\") {}.buttonStyle(.variant(.plain, size: .lg, block: true))\n        }\n      }\n    }\n  }\n}\n\nstruct BottomBarPage<Bar: View>: View {\n  @ViewBuilder let bar: () -> Bar\n\n  var body: some View {\n    VStack(spacing: 0) {\n      VStack(alignment: .leading, spacing: 8) {\n        Text(\"Review order\").textVariant(.h3)\n        Text(\"2 items, delivery on Thursday.\").textVariant(.muted)\n      }\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)\n      bar()\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.ColumnScope\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.BottomBar\nimport com.esuiss.ui.components.BottomBarContent\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenEdge\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun BottomBarPage(page: @Composable ColumnScope.() -> Unit, bar: @Composable () -> Unit) {\n    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {\n        Column(Modifier.fillMaxSize()) {\n            Column(\n                Modifier.weight(1f).fillMaxWidth().padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(8.dp),\n                content = page,\n            )\n            bar()\n        }\n    }\n}\n\n@Composable\nfun BottomBarOrder(bar: @Composable () -> Unit) {\n    BottomBarPage(\n        page = {\n            Text(\"Review order\", variant = TextVariant.H3)\n            Text(\"2 items, delivery on Thursday.\", variant = TextVariant.Muted)\n        },\n        bar = bar,\n    )\n}\n\n@Composable\nfun BottomBarTwoActions() {\n    BottomBarOrder {\n        BottomBar(separator = true) {\n            BottomBarContent {\n                Button(\"Place order\", onClick = {}, size = ButtonSize.Lg, block = true)\n                Button(\"Save for later\", onClick = {}, size = ButtonSize.Lg, variant = ButtonVariant.Plain, block = true)\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-bottom-bar--two-actions" />
 
 ### Side by side
 
 Back and Next buttons in a row.
 
-<NativeExample id="components-bottom-bar--side-by-side" width={880} height={1675} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Page({ children }: { children: React.ReactNode }) {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-2 p-4\">\n        <Text variant=\"h3\">Review order</Text>\n        <Text variant=\"muted\">2 items, delivery on Thursday.</Text>\n      </View>\n      {children}\n    </View>\n  )\n}\n\nexport function BottomBarSideBySideExample() {\n  return (\n    <Page>\n      <BottomBar separator>\n        <BottomBarContent className=\"flex-row\">\n          <Button size=\"lg\" variant=\"secondary\" block className=\"flex-1\">\n            <Text>Back</Text>\n          </Button>\n          <Button size=\"lg\" block className=\"flex-1\">\n            <Text>Next</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Page>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BottomBarSideBySideExample: View {\n  var body: some View {\n    BottomBarPage {\n      BottomBar(separator: true) {\n        BottomBarContent {\n          HStack(spacing: 8) {\n            Button(\"Back\") {}.buttonStyle(.variant(.secondary, size: .lg, block: true))\n            Button(\"Next\") {}.buttonStyle(.variant(size: .lg, block: true))\n          }\n        }\n      }\n    }\n  }\n}\n\nstruct BottomBarPage<Bar: View>: View {\n  @ViewBuilder let bar: () -> Bar\n\n  var body: some View {\n    VStack(spacing: 0) {\n      VStack(alignment: .leading, spacing: 8) {\n        Text(\"Review order\").textVariant(.h3)\n        Text(\"2 items, delivery on Thursday.\").textVariant(.muted)\n      }\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)\n      bar()\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.ColumnScope\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.BottomBar\nimport com.esuiss.ui.components.BottomBarContent\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenEdge\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun BottomBarPage(page: @Composable ColumnScope.() -> Unit, bar: @Composable () -> Unit) {\n    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {\n        Column(Modifier.fillMaxSize()) {\n            Column(\n                Modifier.weight(1f).fillMaxWidth().padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(8.dp),\n                content = page,\n            )\n            bar()\n        }\n    }\n}\n\n@Composable\nfun BottomBarOrder(bar: @Composable () -> Unit) {\n    BottomBarPage(\n        page = {\n            Text(\"Review order\", variant = TextVariant.H3)\n            Text(\"2 items, delivery on Thursday.\", variant = TextVariant.Muted)\n        },\n        bar = bar,\n    )\n}\n\n@Composable\nfun BottomBarSideBySide() {\n    BottomBarOrder {\n        BottomBar(separator = true) {\n            BottomBarContent {\n                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {\n                    Button(\"Back\", onClick = {}, modifier = Modifier.weight(1f), size = ButtonSize.Lg, variant = ButtonVariant.Secondary, block = true)\n                    Button(\"Next\", onClick = {}, modifier = Modifier.weight(1f), size = ButtonSize.Lg, block = true)\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-bottom-bar--side-by-side" />
 
 ### Above keyboard
 
 The bar moving up with the keyboard while an input is focused.
 
-<NativeExample id="components-bottom-bar--above-keyboard" width={880} height={1675} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function BottomBarAboveKeyboardExample() {\n  return (\n    <View className=\"-m-4 flex-1\">\n      <View className=\"flex-1 gap-3 p-4\">\n        <Text variant=\"h3\">Promo code</Text>\n        <Input placeholder=\"Enter code\" autoFocus autoCapitalize=\"characters\" />\n      </View>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Apply</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct BottomBarKeyboardDemo: View {\n  @State private var code = \"\"\n  @FocusState private var focused: Bool\n\n  var body: some View {\n    VStack(spacing: 0) {\n      VStack(alignment: .leading, spacing: 12) {\n        Text(\"Promo code\").textVariant(.h3)\n        TextField(\"Promo code\", text: $code, prompt: Text(\"Enter code\"))\n          .textFieldStyle(.input)\n          .textInputAutocapitalization(.characters)\n          .focused($focused)\n      }\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)\n      BottomBar(separator: true) {\n        BottomBarContent {\n          Button(\"Apply\") {}.buttonStyle(.variant(size: .lg, block: true))\n        }\n      }\n    }\n    .onAppear { focused = true }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.ColumnScope\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.focus.FocusRequester\nimport androidx.compose.ui.focus.focusRequester\nimport androidx.compose.ui.text.input.KeyboardCapitalization\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.BottomBar\nimport com.esuiss.ui.components.BottomBarContent\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenEdge\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun BottomBarPage(page: @Composable ColumnScope.() -> Unit, bar: @Composable () -> Unit) {\n    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {\n        Column(Modifier.fillMaxSize()) {\n            Column(\n                Modifier.weight(1f).fillMaxWidth().padding(16.dp),\n                verticalArrangement = Arrangement.spacedBy(8.dp),\n                content = page,\n            )\n            bar()\n        }\n    }\n}\n\n@Composable\nfun BottomBarAboveKeyboard() {\n    var code by rememberSaveable { mutableStateOf(\"\") }\n    val focus = remember { FocusRequester() }\n    LaunchedEffect(Unit) { focus.requestFocus() }\n    BottomBarPage(\n        page = {\n            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n                Text(\"Promo code\", variant = TextVariant.H3)\n                Input(\n                    code,\n                    { code = it },\n                    Modifier.focusRequester(focus),\n                    placeholder = \"Enter code\",\n                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),\n                )\n            }\n        },\n        bar = {\n            BottomBar(separator = true) {\n                BottomBarContent {\n                    Button(\"Apply\", onClick = {}, size = ButtonSize.Lg, block = true)\n                }\n            }\n        },\n    )\n}"} />
-
-</NativeExample>
+<NativeExample id="components-bottom-bar--above-keyboard" />
 
 ## API Reference
 
@@ -224,7 +211,11 @@ The bar moving up with the keyboard while an input is focused.
 
 Bottom container that follows the safe area and keyboard.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"separator","type":"boolean","default":"false","description":"Draws a top border. Defaults to `false`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `separator` | `boolean` | `false` | Draws a top border. Defaults to `false`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -234,7 +225,7 @@ Bottom container that follows the safe area and keyboard.
 
 Padded area for the actions.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

@@ -1,6 +1,0 @@
-{
-  "description": "A single line drawn as horizontal steps, holding each value until the next reading.",
-  "overview": "A single line drawn as flat steps that hold each value until the next reading. It fits values that change in discrete jumps, like prices, plan tiers or headcount.",
-  "usage": "Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Use `stepAfter` or `stepBefore` as the curve type to move where each jump happens.",
-  "notes": "The tooltip follows the cursor, or the arrow keys once the chart has focus."
-}

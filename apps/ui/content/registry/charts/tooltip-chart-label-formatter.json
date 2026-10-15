@@ -1,6 +1,0 @@
-{
-  "description": "A gradient area chart whose tooltip heading shows a longer date than the axis ticks.",
-  "overview": "Two weeks of active energy as a gradient area, where the axis shows only day numbers but the tooltip heading spells out the weekday. Use a label formatter when the axis needs short labels and the tooltip has room for the full context.",
-  "usage": "Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. Adjust the date format there to add the month or year if your range spans more than one month.",
-  "notes": "The demo format shows the day number and weekday but not the month, which can be ambiguous across month boundaries."
-}

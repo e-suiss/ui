@@ -1,5 +1,0 @@
-{
-  "description": "Grouped bars comparing desktop and mobile visitors side by side for each month.",
-  "overview": "Two `Bar` series sit next to each other in every month, separated by a small `barGap`. The tooltip lists both values with a dashed indicator.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Bar` and a `chartConfig` entry for each extra series. The component takes no props."
-}

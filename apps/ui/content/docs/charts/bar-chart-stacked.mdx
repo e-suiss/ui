@@ -3,16 +3,11 @@ title: Bar Chart Stacked
 description: "Two series stacked into one bar per month, with a legend below the plot."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="bar-chart-stacked">
-
-<SourceFile path="components/charts/bar-chart-stacked.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="bar-chart-stacked" />
 
 Two series stacked into one bar per month, with a legend under the plot. Use it when the total per month matters as well as how each series contributes to it.
 
@@ -20,27 +15,35 @@ Two series stacked into one bar per month, with a legend under the plot. Use it 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-stacked"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts bar-chart-stacked
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/bar-chart-stacked.tsx`:
 
-<SourceFile path="components/charts/bar-chart-stacked.tsx" />
+<ComponentSource path="components/charts/bar-chart-stacked.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartStacked } from \"@/components/charts/bar-chart-stacked\""} />
+```tsx
+import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
+```
 
-<Code lang="tsx" code={"<BarChartStacked />"} />
+```tsx
+<BarChartStacked />
+```
 
 Replace `chartData` and rename the series keys in the data, both `Bar` elements and `chartConfig`. Every bar in the stack needs the same `stackId`; the first one sits at the bottom. If you add a series, move the rounded top corners via `radius` to whichever bar is on top.
 
@@ -52,13 +55,13 @@ The legend takes labels and colors from the config. Focus the chart and use the 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-bar--stacked" width={880} height={719} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-bar--stacked" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/bar-chart-stacked.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/bar-chart-stacked.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/BarChartStacked.swift" fold={false} />
+<ComponentSource path="swift/Charts/BarChartStacked.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/BarChartStacked.kt" fold={false} />
+<ComponentSource path="kotlin/charts/BarChartStacked.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Desktop and mobile bars share a `stackId`, so each column shows both parts and t
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-stacked"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-stacked
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-stacked --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-stacked --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-stacked --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-stacked --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
 
-<SourceFile path="uniwind/components/charts/bar-chart-stacked.tsx" />
+<ComponentSource path="uniwind/components/charts/bar-chart-stacked.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
 
-<SourceFile path="nativewind/components/charts/bar-chart-stacked.tsx" />
+<ComponentSource path="nativewind/components/charts/bar-chart-stacked.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
 
-<SourceFile path="stylesheet/components/charts/bar-chart-stacked.tsx" />
+<ComponentSource path="stylesheet/components/charts/bar-chart-stacked.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/BarChartStacked.swift" />
+<ComponentSource path="swift/Charts/BarChartStacked.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/BarChartStacked.kt" />
+<ComponentSource path="kotlin/charts/BarChartStacked.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartStacked } from \"@/components/charts/bar-chart-stacked\""} />
+```tsx
+import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
+```
 
-<Code lang="tsx" code={"<BarChartStacked />"} />
+```tsx
+<BarChartStacked />
+```
 
 Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig` and add a `Bar` for each. The component takes no props.
 

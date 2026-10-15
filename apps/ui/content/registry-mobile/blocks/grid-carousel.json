@@ -1,5 +1,0 @@
-{
-  "description": "A horizontal carousel of large product cards with a page indicator.",
-  "overview": "Composes `Screen`, `Carousel` with `CarouselPageIndicator`, `Text` and product photos. Each card shows an optional kicker, name, tagline and starting price, and the whole card is pressable.",
-  "usage": "Replace `PRODUCTS` with your items. Pass `onSelectProduct` to receive the name of the pressed product."
-}

@@ -1,5 +1,0 @@
-{
-  "description": "A radar chart comparing this month and last month, with a legend below.",
-  "overview": "A `RadarChart` with two filled `Radar` series and a `ChartLegend` that names them from `chartConfig`. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip with both values.",
-  "usage": "Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props."
-}

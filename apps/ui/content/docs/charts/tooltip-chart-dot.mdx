@@ -3,16 +3,11 @@ title: Tooltip Chart Dot
 description: "A stacked bar chart showing the default tooltip indicator, a small colored square for each series."
 eyebrow: Chart
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="tooltip-chart-dot">
-
-<SourceFile path="components/charts/tooltip-chart-dot.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="tooltip-chart-dot" />
 
 A stacked bar chart that shows the default tooltip indicator, a small colored square beside each series. It is the most compact indicator and the one you get without setting anything.
 
@@ -20,27 +15,35 @@ A stacked bar chart that shows the default tooltip indicator, a small colored sq
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-dot"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts tooltip-chart-dot
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/tooltip-chart-dot.tsx`:
 
-<SourceFile path="components/charts/tooltip-chart-dot.tsx" />
+<ComponentSource path="components/charts/tooltip-chart-dot.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { TooltipChartDot } from \"@/components/charts/tooltip-chart-dot\""} />
+```tsx
+import { TooltipChartDot } from "@/components/charts/tooltip-chart-dot"
+```
 
-<Code lang="tsx" code={"<TooltipChartDot />"} />
+```tsx
+<TooltipChartDot />
+```
 
 Leave `indicator` unset or set it to `dot` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig` with your own.
 

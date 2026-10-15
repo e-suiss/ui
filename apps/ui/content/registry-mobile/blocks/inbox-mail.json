@@ -1,5 +1,0 @@
-{
-  "description": "A mail app with a mailbox sidebar, a searchable message list, a reader and swipe actions on each row.",
-  "overview": "A three-column mail screen built on `SplitView`: a sidebar of mailboxes (Inbox, Starred, Sent, Archive, Trash), a message list with a search field made from `InputGroup`, and a reader. On phones each column opens in turn. Rows use `Avatar` and support `SwipeActions` to archive or delete, and searching filters by sender, subject and body. The reader has Reply, Star, Archive and Delete buttons, and Reply opens a `Textarea`.",
-  "usage": "Replace `INITIAL_MAIL` with your messages and `MAILBOXES` with your folders. Wire `onMailboxChange`, `onNewMessage`, `onReply`, `onStarChange`, `onArchive` and `onDelete` to your mail service."
-}

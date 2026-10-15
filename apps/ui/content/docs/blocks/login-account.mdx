@@ -3,16 +3,11 @@ title: Login Account
 description: "A two-step account sign-in form that asks for an email, then reveals a password field."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="login-account">
-
-<SourceFile path="components/blocks/login-account.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="login-account" />
 
 A sign-in form that asks for an email first, then reveals a password field below it. Errors appear inline and shake the fields, followed by a Remember me checkbox and links for a forgotten password and account creation. A successful sign-in shows a greeting with a Sign out link. Use it for any email-and-password login.
 
@@ -20,27 +15,35 @@ A sign-in form that asks for an email first, then reveals a password field below
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks login-account"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks login-account
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Input](/docs/components/input), [Label](/docs/components/label), [Spinner](/docs/components/spinner).
 
 3. Copy the source into `components/blocks/login-account.tsx`:
 
-<SourceFile path="components/blocks/login-account.tsx" />
+<ComponentSource path="components/blocks/login-account.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { LoginAccount } from \"@/components/blocks/login-account\""} />
+```tsx
+import { LoginAccount } from "@/components/blocks/login-account"
+```
 
-<Code lang="tsx" code={"<LoginAccount />"} />
+```tsx
+<LoginAccount />
+```
 
 Replace the second step of `submit`, which accepts any password of four or more characters after a delay, with your authentication call, and pass its error message to `fail`. Point the `#forgot` and `#create` links at your routes, and wire the Remember me checkbox, which is uncontrolled. Drop the greeting view if you redirect after login.
 
@@ -52,13 +55,13 @@ Inputs use the `username` and `current-password` autocomplete values so password
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-login-account--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-login-account--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/login-account.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/login-account.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/LoginAccount.swift" fold={false} />
+<ComponentSource path="swift/Blocks/LoginAccount.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/LoginAccount.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/LoginAccount.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A sign-in screen inside a `KeyboardScrollView`. The email `Input` comes first; w
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add login-account"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add login-account
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add login-account --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add login-account --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add login-account --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add login-account --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/login-account.tsx`:
 
-<SourceFile path="uniwind/components/blocks/login-account.tsx" />
+<ComponentSource path="uniwind/components/blocks/login-account.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/login-account.tsx`:
 
-<SourceFile path="nativewind/components/blocks/login-account.tsx" />
+<ComponentSource path="nativewind/components/blocks/login-account.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/login-account.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/login-account.tsx" />
+<ComponentSource path="stylesheet/components/blocks/login-account.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,37 +165,39 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/LoginAccount.swift" />
+<ComponentSource path="swift/Blocks/LoginAccount.swift" />
 
-<SourceFile path="swift/Components/Avatar.swift" />
+<ComponentSource path="swift/Components/Avatar.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Keypad.swift" />
+<ComponentSource path="swift/Components/Keypad.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/Spinner.swift" />
+<ComponentSource path="swift/Components/Spinner.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -190,41 +207,46 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/LoginAccount.kt" />
+<ComponentSource path="kotlin/blocks/LoginAccount.kt" />
 
-<SourceFile path="kotlin/components/Avatar.kt" />
+<ComponentSource path="kotlin/components/Avatar.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/KeyboardScrollView.kt" />
+<ComponentSource path="kotlin/components/KeyboardScrollView.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Spinner.kt" />
+<ComponentSource path="kotlin/components/Spinner.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -232,9 +254,13 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 ## Usage
 
-<Code lang="tsx" code={"import { LoginAccount } from \"@/components/blocks/login-account\""} />
+```tsx
+import { LoginAccount } from "@/components/blocks/login-account"
+```
 
-<Code lang="tsx" code={"<LoginAccount />"} />
+```tsx
+<LoginAccount />
+```
 
 Wire `onSubmit` (receives the email and password) to your auth service, and `onForgotPassword` and `onCreateAccount` to your navigation. The sign-in delay and the success view are simulated in the component.
 

@@ -1,5 +1,0 @@
-{
-  "description": "A two-step sign-in that asks for the email first, then reveals the password field, with inline errors.",
-  "overview": "A sign-in screen inside a `KeyboardScrollView`. The email `Input` comes first; when the address looks valid, the password field appears below it and takes focus. Invalid input shakes the form and shows an error. It also has a Remember me `Checkbox` with a `Label`, a Forgot password link, a create account link, and a `Spinner` while signing in, followed by a welcome view with an `Avatar` and a Sign out link.",
-  "usage": "Wire `onSubmit` (receives the email and password) to your auth service, and `onForgotPassword` and `onCreateAccount` to your navigation. The sign-in delay and the success view are simulated in the component."
-}

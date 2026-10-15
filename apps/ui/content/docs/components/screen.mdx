@@ -3,20 +3,11 @@ title: Screen
 description: "A full-screen container that pads for safe area insets and sets the status bar style."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-screen--default" width={880} height={789} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Screen, ScreenContent } from \"@/components/ui/screen\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Rows({ count = 4 }: { count?: number }) {\n  return (\n    <View className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n      {Array.from({ length: count }, (_, index) => `Row ${index + 1}`).map(\n        (label, index) => (\n          <View\n            key={label}\n            className={\n              index > 0 ? \"border-t border-separator px-4 py-3\" : \"px-4 py-3\"\n            }\n          >\n            <Text>{label}</Text>\n          </View>\n        )\n      )}\n    </View>\n  )\n}\n\nexport function ScreenExample() {\n  return (\n    <Screen className=\"-m-4\">\n      <ScreenContent>\n        <Text variant=\"h2\">Account</Text>\n        <Text variant=\"muted\">\n          The screen pads every safe-area edge and sets the status bar style\n          from the color scheme.\n        </Text>\n        <Rows />\n      </ScreenContent>\n    </Screen>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ScreenExample: View {\n  var body: some View {\n    Screen {\n      ScreenContent(scroll: false) {\n        Text(\"Account\").textVariant(.h2)\n        Text(\"The screen pads every safe-area edge and sets the status bar style from the color scheme.\")\n          .textVariant(.muted)\n        ScreenRows()\n      }\n    }\n  }\n}\n\nstruct ScreenRows: View {\n  var labels: [String] = (1...4).map { \"Row \\($0)\" }\n  var background: Color = .surfaceSecondary\n\n  var body: some View {\n    VStack(spacing: 0) {\n      ForEach(Array(labels.enumerated()), id: \\.offset) { index, label in\n        Text(verbatim: label)\n          .textVariant(.default)\n          .frame(maxWidth: .infinity, alignment: .leading)\n          .padding(.horizontal, 16)\n          .padding(.vertical, 12)\n          .overlay(alignment: .top) {\n            if index > 0 {\n              Color.separator.frame(height: 1)\n            }\n          }\n      }\n    }\n    .background(background)\n    .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenContent\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun ScreenRows(labels: List<String>, background: Color) {\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .clip(RoundedCornerShape(Radius.xl2))\n            .background(background),\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator()\n            Text(label, Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp))\n        }\n    }\n}\n\nfun screenRowLabels(count: Int): List<String> = (1..count).map { \"Row $it\" }\n\n@Composable\nfun ScreenDefault() {\n    Screen {\n        ScreenContent {\n            Text(\"Account\", variant = TextVariant.H2)\n            Text(\n                \"The screen pads every safe-area edge and sets the status bar style from the color scheme.\",\n                variant = TextVariant.Muted,\n            )\n            ScreenRows(screenRowLabels(4), EsuissTheme.colors.surfaceSecondary)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-screen--default" />
 
 `Screen` is a `View` that fills the screen, paints the surface background and adds padding for the safe area insets on the edges you choose. It also renders a `StatusBar` with light or dark content to match the color scheme.
 
@@ -26,19 +17,25 @@ generated: true
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add screen"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add screen
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add screen --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add screen --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add screen --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add screen --platform kotlin
+```
 
 </Only>
 
@@ -54,13 +51,15 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-safe-area-context"} />
+```bash title="Terminal"
+npx expo install cn react-native-safe-area-context
+```
 
 2. Add the pieces it builds on: [Keyboard Scroll View](/docs/components/keyboard-scroll-view).
 
 3. Copy the source into `components/ui/screen.tsx`:
 
-<SourceFile path="uniwind/components/ui/screen.tsx" />
+<ComponentSource path="uniwind/components/ui/screen.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -70,13 +69,15 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-safe-area-context"} />
+```bash title="Terminal"
+npx expo install cn react-native-safe-area-context
+```
 
 2. Add the pieces it builds on: [Keyboard Scroll View](/docs/components/keyboard-scroll-view).
 
 3. Copy the source into `components/ui/screen.tsx`:
 
-<SourceFile path="nativewind/components/ui/screen.tsx" />
+<ComponentSource path="nativewind/components/ui/screen.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -86,13 +87,15 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-safe-area-context"} />
+```bash title="Terminal"
+npx expo install react-native-safe-area-context
+```
 
 2. Add the pieces it builds on: [Keyboard Scroll View](/docs/components/keyboard-scroll-view).
 
 3. Copy the source into `components/ui/screen.tsx`:
 
-<SourceFile path="stylesheet/components/ui/screen.tsx" />
+<ComponentSource path="stylesheet/components/ui/screen.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,15 +111,15 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
 4. Add the files to your app target.
 
@@ -126,19 +129,23 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -146,9 +153,22 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 ## Usage
 
-<Code lang="tsx" code={"import { Screen, ScreenContent } from \"@/components/ui/screen\""} />
+```tsx
+import { Screen, ScreenContent } from "@/components/ui/screen"
+```
 
-<Code lang="tsx" code={"<Screen className=\"-m-4\">\n  <ScreenContent>\n    <Text variant=\"h2\">Account</Text>\n    <Text variant=\"muted\">\n      The screen pads every safe-area edge and sets the status bar style\n      from the color scheme.\n    </Text>\n    <Rows />\n  </ScreenContent>\n</Screen>"} />
+```tsx
+<Screen className="-m-4">
+  <ScreenContent>
+    <Text variant="h2">Account</Text>
+    <Text variant="muted">
+      The screen pads every safe-area edge and sets the status bar style
+      from the color scheme.
+    </Text>
+    <Rows />
+  </ScreenContent>
+</Screen>
+```
 
 Wrap each screen in `Screen` and put the body in `ScreenContent`. Use `variant="secondary"` for grouped screens such as settings.
 
@@ -162,57 +182,25 @@ The app must be wrapped in a `SafeAreaProvider` from `react-native-safe-area-con
 
 A screen with the `secondary` background.
 
-<NativeExample id="components-screen--secondary" width={880} height={583} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Screen, ScreenContent } from \"@/components/ui/screen\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ScreenSecondaryExample() {\n  return (\n    <Screen variant=\"secondary\" className=\"-m-4\">\n      <ScreenContent>\n        <Text variant=\"h2\">Settings</Text>\n        <View className=\"overflow-hidden rounded-2xl bg-surface\">\n          {[\"General\", \"Privacy\", \"Notifications\"].map((label, index) => (\n            <View\n              key={label}\n              className={\n                index > 0 ? \"border-t border-separator px-4 py-3\" : \"px-4 py-3\"\n              }\n            >\n              <Text>{label}</Text>\n            </View>\n          ))}\n        </View>\n      </ScreenContent>\n    </Screen>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ScreenSecondaryExample: View {\n  var body: some View {\n    Screen(background: .surfaceSecondary) {\n      ScreenContent(scroll: false) {\n        Text(\"Settings\").textVariant(.h2)\n        ScreenRows(labels: [\"General\", \"Privacy\", \"Notifications\"], background: .surface)\n      }\n    }\n  }\n}\n\nstruct ScreenRows: View {\n  var labels: [String] = (1...4).map { \"Row \\($0)\" }\n  var background: Color = .surfaceSecondary\n\n  var body: some View {\n    VStack(spacing: 0) {\n      ForEach(Array(labels.enumerated()), id: \\.offset) { index, label in\n        Text(verbatim: label)\n          .textVariant(.default)\n          .frame(maxWidth: .infinity, alignment: .leading)\n          .padding(.horizontal, 16)\n          .padding(.vertical, 12)\n          .overlay(alignment: .top) {\n            if index > 0 {\n              Color.separator.frame(height: 1)\n            }\n          }\n      }\n    }\n    .background(background)\n    .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenContent\nimport com.esuiss.ui.components.ScreenVariant\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun ScreenRows(labels: List<String>, background: Color) {\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .clip(RoundedCornerShape(Radius.xl2))\n            .background(background),\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator()\n            Text(label, Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp))\n        }\n    }\n}\n\n@Composable\nfun ScreenSecondary() {\n    Screen(variant = ScreenVariant.Secondary) {\n        ScreenContent {\n            Text(\"Settings\", variant = TextVariant.H2)\n            ScreenRows(listOf(\"General\", \"Privacy\", \"Notifications\"), EsuissTheme.colors.surface)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-screen--secondary" />
 
 ### Scrollable
 
 A screen whose content scrolls.
 
-<NativeExample id="components-screen--scrollable" width={880} height={1699} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Screen, ScreenContent } from \"@/components/ui/screen\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction Rows({ count = 4 }: { count?: number }) {\n  return (\n    <View className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n      {Array.from({ length: count }, (_, index) => `Row ${index + 1}`).map(\n        (label, index) => (\n          <View\n            key={label}\n            className={\n              index > 0 ? \"border-t border-separator px-4 py-3\" : \"px-4 py-3\"\n            }\n          >\n            <Text>{label}</Text>\n          </View>\n        )\n      )}\n    </View>\n  )\n}\n\nexport function ScreenScrollableExample() {\n  return (\n    <Screen className=\"-m-4\">\n      <ScreenContent scrollable>\n        <Text variant=\"h2\">Long content</Text>\n        <Rows count={24} />\n      </ScreenContent>\n    </Screen>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ScreenScrollableExample: View {\n  var body: some View {\n    Screen {\n      ScreenContent {\n        Text(\"Long content\").textVariant(.h2)\n        ScreenRows(labels: (1...24).map { \"Row \\($0)\" })\n      }\n    }\n  }\n}\n\nstruct ScreenRows: View {\n  var labels: [String] = (1...4).map { \"Row \\($0)\" }\n  var background: Color = .surfaceSecondary\n\n  var body: some View {\n    VStack(spacing: 0) {\n      ForEach(Array(labels.enumerated()), id: \\.offset) { index, label in\n        Text(verbatim: label)\n          .textVariant(.default)\n          .frame(maxWidth: .infinity, alignment: .leading)\n          .padding(.horizontal, 16)\n          .padding(.vertical, 12)\n          .overlay(alignment: .top) {\n            if index > 0 {\n              Color.separator.frame(height: 1)\n            }\n          }\n      }\n    }\n    .background(background)\n    .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenContent\nimport com.esuiss.ui.components.Separator\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun ScreenRows(labels: List<String>, background: Color) {\n    Column(\n        Modifier\n            .fillMaxWidth()\n            .clip(RoundedCornerShape(Radius.xl2))\n            .background(background),\n    ) {\n        labels.forEachIndexed { index, label ->\n            if (index > 0) Separator()\n            Text(label, Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp))\n        }\n    }\n}\n\nfun screenRowLabels(count: Int): List<String> = (1..count).map { \"Row $it\" }\n\n@Composable\nfun ScreenScrollable() {\n    Screen {\n        ScreenContent(Modifier.fillMaxSize(), scrollable = true) {\n            Text(\"Long content\", variant = TextVariant.H2)\n            ScreenRows(screenRowLabels(24), EsuissTheme.colors.surfaceSecondary)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-screen--scrollable" />
 
 ### Top edge only
 
 A screen that pads only the top inset.
 
-<NativeExample id="components-screen--top-edge-only" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Screen, ScreenContent } from \"@/components/ui/screen\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ScreenTopEdgeOnlyExample() {\n  return (\n    <Screen edges={[\"top\"]} className=\"-m-4\">\n      <ScreenContent className=\"bg-surface-secondary\">\n        <Text variant=\"h3\">Top edge only</Text>\n        <Text variant=\"muted\">\n          The bottom, left and right edges are not padded.\n        </Text>\n      </ScreenContent>\n    </Screen>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ScreenTopEdgeOnlyExample: View {\n  var body: some View {\n    Screen(edges: .top) {\n      ScreenContent(scroll: false) {\n        Text(\"Top edge only\").textVariant(.h3)\n        Text(\"The bottom, left and right edges are not padded.\")\n          .textVariant(.muted)\n      }\n      .background(Color.surfaceSecondary)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenContent\nimport com.esuiss.ui.components.ScreenEdge\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun ScreenTopEdgeOnly() {\n    Screen(edges = setOf(ScreenEdge.Top)) {\n        ScreenContent(Modifier.background(EsuissTheme.colors.surfaceSecondary)) {\n            Text(\"Top edge only\", variant = TextVariant.H3)\n            Text(\"The bottom, left and right edges are not padded.\", variant = TextVariant.Muted)\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-screen--top-edge-only" />
 
 ### With bottom bar
 
 A scrollable form with a bottom bar holding the main action.
 
-<NativeExample id="components-screen--with-bottom-bar" width={880} height={1675} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { BottomBar, BottomBarContent } from \"@/components/ui/bottom-bar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Screen, ScreenContent } from \"@/components/ui/screen\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function ScreenWithBottomBarExample() {\n  return (\n    <Screen className=\"-m-4\">\n      <ScreenContent scrollable>\n        <Text variant=\"h2\">Your email</Text>\n        <Text variant=\"muted\">We will send a code to this address.</Text>\n        <Input placeholder=\"name@example.com\" keyboardType=\"email-address\" />\n      </ScreenContent>\n      <BottomBar separator>\n        <BottomBarContent>\n          <Button size=\"lg\" block>\n            <Text>Continue</Text>\n          </Button>\n        </BottomBarContent>\n      </BottomBar>\n    </Screen>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ScreenBottomBarDemo: View {\n  @State private var email = \"\"\n\n  var body: some View {\n    Screen {\n      ScreenContent {\n        Text(\"Your email\").textVariant(.h2)\n        Text(\"We will send a code to this address.\").textVariant(.muted)\n        TextField(String(\"name@example.com\"), text: $email)\n          .textFieldStyle(.input)\n          .keyboardType(.emailAddress)\n          .textInputAutocapitalization(.never)\n      }\n      BottomBar(separator: true) {\n        BottomBarContent {\n          Button {} label: {\n            Text(\"Continue\")\n          }\n          .buttonStyle(.variant(size: .lg, block: true))\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.text.KeyboardOptions\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.input.KeyboardType\nimport com.esuiss.ui.components.BottomBar\nimport com.esuiss.ui.components.BottomBarContent\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonSize\nimport com.esuiss.ui.components.Input\nimport com.esuiss.ui.components.Screen\nimport com.esuiss.ui.components.ScreenContent\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\n\n@Composable\nfun ScreenWithBottomBar() {\n    var email by rememberSaveable { mutableStateOf(\"\") }\n    Screen {\n        Column(Modifier.fillMaxSize()) {\n            ScreenContent(Modifier.weight(1f), scrollable = true) {\n                Text(\"Your email\", variant = TextVariant.H2)\n                Text(\"We will send a code to this address.\", variant = TextVariant.Muted)\n                Input(\n                    email,\n                    { email = it },\n                    placeholder = \"name@example.com\",\n                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),\n                )\n            }\n            BottomBar(separator = true) {\n                BottomBarContent {\n                    Button(\"Continue\", onClick = {}, size = ButtonSize.Lg, block = true)\n                }\n            }\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-screen--with-bottom-bar" />
 
 ## API Reference
 
@@ -222,7 +210,12 @@ A scrollable form with a bottom bar holding the main action.
 
 The root view that pads for safe area insets.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"edges","type":"readonly ScreenEdge[]","default":"ALL_EDGES","description":"Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. Defaults to all four."},{"name":"variant","type":"\"default\" | \"secondary\"","default":"\"default\"","description":"Background: `default` or `secondary`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `edges` | `readonly ScreenEdge[]` | `ALL_EDGES` | Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. Defaults to all four. |
+| `variant` | `"default" \| "secondary"` | `"default"` | Background: `default` or `secondary`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -232,7 +225,11 @@ The root view that pads for safe area insets.
 
 The padded body, optionally scrollable.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"scrollable","type":"boolean","default":"false","description":"Renders a `KeyboardScrollView` instead of a `View`. Defaults to `false`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `scrollable` | `boolean` | `false` | Renders a `KeyboardScrollView` instead of a `View`. Defaults to `false`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

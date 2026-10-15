@@ -3,16 +3,11 @@ title: Price Care
 description: "A device protection plan picker with device chips, payment options, an optional theft add-on, and a live total."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="price-care">
-
-<SourceFile path="components/blocks/price-care.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="price-care" />
 
 A protection plan picker: choose a device, pick a payment option for it and, for some devices, add theft and loss cover, with a live total and an Add to Bag button. A photo of the selected device sits beside the options on desktop and above them on mobile. Use it for warranties, insurance add-ons or any per-product plan.
 
@@ -20,7 +15,9 @@ A protection plan picker: choose a device, pick a payment option for it and, for
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks price-care"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks price-care
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A protection plan picker: choose a device, pick a payment option for it and, for
 
 2. Copy the source into `components/blocks/price-care.tsx`:
 
-<SourceFile path="components/blocks/price-care.tsx" />
+<ComponentSource path="components/blocks/price-care.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { PriceCare } from \"@/components/blocks/price-care\""} />
+```tsx
+import { PriceCare } from "@/components/blocks/price-care"
+```
 
-<Code lang="tsx" code={"<PriceCare />"} />
+```tsx
+<PriceCare />
+```
 
 Edit `devices`; each has a name, photo, alt text and payment options with a label, price and optional theft surcharge. The theft switch only appears for Phone Pro, so change that check if other devices offer it. Give Add to Bag a handler.
 
@@ -48,13 +49,13 @@ The total is announced when it changes. Photos are Unsplash placeholders.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-price-care--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-price-care--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/price-care.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/price-care.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/PriceCare.swift" fold={false} />
+<ComponentSource path="swift/Blocks/PriceCare.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/PriceCare.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/PriceCare.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +65,25 @@ A product screen with a hero photo per device, a `ToggleGroup` to pick the devic
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add price-care"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add price-care
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add price-care --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add price-care --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add price-care --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add price-care --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +99,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/price-care.tsx`:
 
-<SourceFile path="uniwind/components/blocks/price-care.tsx" />
+<ComponentSource path="uniwind/components/blocks/price-care.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +117,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/price-care.tsx`:
 
-<SourceFile path="nativewind/components/blocks/price-care.tsx" />
+<ComponentSource path="nativewind/components/blocks/price-care.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +135,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
 3. Copy the source into `components/blocks/price-care.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/price-care.tsx" />
+<ComponentSource path="stylesheet/components/blocks/price-care.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,53 +159,55 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/PriceCare.swift" />
+<ComponentSource path="swift/Blocks/PriceCare.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Label.swift" />
+<ComponentSource path="swift/Components/Label.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/RadioGroup.swift" />
+<ComponentSource path="swift/Components/RadioGroup.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/Switch.swift" />
+<ComponentSource path="swift/Components/Switch.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Components/Toggle.swift" />
+<ComponentSource path="swift/Components/Toggle.swift" />
 
-<SourceFile path="swift/Components/ToggleGroup.swift" />
+<ComponentSource path="swift/Components/ToggleGroup.swift" />
 
 5. Add the files to your app target.
 
@@ -202,49 +217,54 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/PriceCare.kt" />
+<ComponentSource path="kotlin/blocks/PriceCare.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/RadioGroup.kt" />
+<ComponentSource path="kotlin/components/RadioGroup.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Switch.kt" />
+<ComponentSource path="kotlin/components/Switch.kt" />
 
-<SourceFile path="kotlin/components/Toggle.kt" />
+<ComponentSource path="kotlin/components/Toggle.kt" />
 
-<SourceFile path="kotlin/components/ToggleGroup.kt" />
+<ComponentSource path="kotlin/components/ToggleGroup.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -252,9 +272,13 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 ## Usage
 
-<Code lang="tsx" code={"import { PriceCare } from \"@/components/blocks/price-care\""} />
+```tsx
+import { PriceCare } from "@/components/blocks/price-care"
+```
 
-<Code lang="tsx" code={"<PriceCare />"} />
+```tsx
+<PriceCare />
+```
 
 Replace `DEVICES` with your products, options and prices. Wire `onAddToBag`, which receives the device, option, theft add-on and total. The photos are Unsplash placeholders.
 

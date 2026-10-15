@@ -3,16 +3,11 @@ title: Pie Chart Active
 description: "A donut where one slice is enlarged and outlined with an outer arc to highlight it."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="pie-chart-active">
-
-<SourceFile path="components/charts/pie-chart-active.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="pie-chart-active" />
 
 A donut with one slice pulled outward and traced by a thin outer arc, so a single category stands out from the rest. Use it to call attention to the segment a page is about, such as the current plan or the user's own device.
 
@@ -20,27 +15,35 @@ A donut with one slice pulled outward and traced by a thin outer arc, so a singl
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-active"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts pie-chart-active
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/pie-chart-active.tsx`:
 
-<SourceFile path="components/charts/pie-chart-active.tsx" />
+<ComponentSource path="components/charts/pie-chart-active.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { PieChartActive } from \"@/components/charts/pie-chart-active\""} />
+```tsx
+import { PieChartActive } from "@/components/charts/pie-chart-active"
+```
 
-<Code lang="tsx" code={"<PieChartActive />"} />
+```tsx
+<PieChartActive />
+```
 
 Replace `chartData` with your categories, giving each a value and a `fill` that points at its color in `chartConfig`. Set `ACTIVE` to the index of the slice you want to emphasize, or drive it from state if it should follow a selection.
 
@@ -52,13 +55,13 @@ The highlight is fixed and does not follow hover; wire `ACTIVE` to state if you 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-pie--active" width={880} height={687} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-pie--active" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/pie-chart-active.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/pie-chart-active.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/PieChartActive.swift" fold={false} />
+<ComponentSource path="swift/Charts/PieChartActive.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/PieChartActive.kt" fold={false} />
+<ComponentSource path="kotlin/charts/PieChartActive.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A `PieChart` donut inside a `Card`, showing users by device. `chartData` holds o
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-active"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-active
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-active --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-active --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-active --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-active --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-active.tsx`:
 
-<SourceFile path="uniwind/components/charts/pie-chart-active.tsx" />
+<ComponentSource path="uniwind/components/charts/pie-chart-active.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-active.tsx`:
 
-<SourceFile path="nativewind/components/charts/pie-chart-active.tsx" />
+<ComponentSource path="nativewind/components/charts/pie-chart-active.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-active.tsx`:
 
-<SourceFile path="stylesheet/components/charts/pie-chart-active.tsx" />
+<ComponentSource path="stylesheet/components/charts/pie-chart-active.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/PieChartActive.swift" />
+<ComponentSource path="swift/Charts/PieChartActive.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/PieChartActive.kt" />
+<ComponentSource path="kotlin/charts/PieChartActive.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { PieChartActive } from \"@/components/charts/pie-chart-active\""} />
+```tsx
+import { PieChartActive } from "@/components/charts/pie-chart-active"
+```
 
-<Code lang="tsx" code={"<PieChartActive />"} />
+```tsx
+<PieChartActive />
+```
 
 Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; change `ACTIVE` to highlight a different slice. The component takes no props.
 

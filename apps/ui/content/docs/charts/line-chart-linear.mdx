@@ -3,16 +3,11 @@ title: Line Chart Linear
 description: "A single line drawn with straight segments between readings instead of a smoothed curve."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="line-chart-linear">
-
-<SourceFile path="components/charts/line-chart-linear.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="line-chart-linear" />
 
 One series joined by straight segments instead of a smoothed curve. Prefer it to the default when smoothing would imply values between readings that were never measured.
 
@@ -20,27 +15,35 @@ One series joined by straight segments instead of a smoothed curve. Prefer it to
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts line-chart-linear"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts line-chart-linear
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/line-chart-linear.tsx`:
 
-<SourceFile path="components/charts/line-chart-linear.tsx" />
+<ComponentSource path="components/charts/line-chart-linear.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { LineChartLinear } from \"@/components/charts/line-chart-linear\""} />
+```tsx
+import { LineChartLinear } from "@/components/charts/line-chart-linear"
+```
 
-<Code lang="tsx" code={"<LineChartLinear />"} />
+```tsx
+<LineChartLinear />
+```
 
 Replace `chartData`, update each `dataKey` and set the label and color in `chartConfig`. Everything else matches the default line chart.
 
@@ -52,13 +55,13 @@ Keyboard users can focus the chart and move between points with the arrow keys.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-line--linear" width={880} height={655} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-line--linear" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/line-chart-linear.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/line-chart-linear.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/LineChartLinear.swift" fold={false} />
+<ComponentSource path="swift/Charts/LineChartLinear.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/LineChartLinear.kt" fold={false} />
+<ComponentSource path="kotlin/charts/LineChartLinear.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ One series with `type="linear"`, so each month connects to the next with a strai
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-linear"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add line-chart-linear
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-linear --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add line-chart-linear --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add line-chart-linear --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add line-chart-linear --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/line-chart-linear.tsx`:
 
-<SourceFile path="uniwind/components/charts/line-chart-linear.tsx" />
+<ComponentSource path="uniwind/components/charts/line-chart-linear.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/line-chart-linear.tsx`:
 
-<SourceFile path="nativewind/components/charts/line-chart-linear.tsx" />
+<ComponentSource path="nativewind/components/charts/line-chart-linear.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/line-chart-linear.tsx`:
 
-<SourceFile path="stylesheet/components/charts/line-chart-linear.tsx" />
+<ComponentSource path="stylesheet/components/charts/line-chart-linear.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/LineChartLinear.swift" />
+<ComponentSource path="swift/Charts/LineChartLinear.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/LineChartLinear.kt" />
+<ComponentSource path="kotlin/charts/LineChartLinear.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { LineChartLinear } from \"@/components/charts/line-chart-linear\""} />
+```tsx
+import { LineChartLinear } from "@/components/charts/line-chart-linear"
+```
 
-<Code lang="tsx" code={"<LineChartLinear />"} />
+```tsx
+<LineChartLinear />
+```
 
 Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.
 

@@ -3,16 +3,11 @@ title: Action Menu
 description: "A list of actions that opens as a dropdown menu on desktop and an action sheet on mobile."
 eyebrow: Pattern
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="pattern" name="action-menu" story="Default">
-
-<Code lang="tsx" code={"import { ActionMenu, ActionMenuContent, ActionMenuItem, ActionMenuLabel, ActionMenuSeparator, ActionMenuTrigger } from \"@/components/patterns/action-menu\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ActionMenuExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <ActionMenu>\n        <ActionMenuTrigger render={<Button variant=\"outline\" />}>\n          Order actions\n        </ActionMenuTrigger>\n        <ActionMenuContent>\n          <ActionMenuLabel>Order #1042</ActionMenuLabel>\n          <ActionMenuItem>Edit</ActionMenuItem>\n          <ActionMenuItem>Duplicate</ActionMenuItem>\n          <ActionMenuItem>Share</ActionMenuItem>\n          <ActionMenuSeparator />\n          <ActionMenuItem variant=\"destructive\">Delete</ActionMenuItem>\n        </ActionMenuContent>\n      </ActionMenu>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-menu-demo" layout="fullscreen" responsive />
 
 `ActionMenu` renders a `DropdownMenu` on desktop and an `AlertSheet` below the `48rem` breakpoint (`useIsMobile`). Each part switches to its matching component: items become `DropdownMenuItem`s or `AlertSheetAction`s, and the label becomes a menu label or the sheet title. On mobile, the content wraps the items in a grouped card and appends a Cancel button.
 
@@ -22,7 +17,9 @@ Use it for a short set of actions on a single object, such as editing, sharing o
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns action-menu"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add patterns action-menu
+```
 
 ### Manual
 
@@ -30,15 +27,33 @@ Use it for a short set of actions on a single object, such as editing, sharing o
 
 2. Copy the source into `components/patterns/action-menu.tsx`:
 
-<SourceFile path="components/patterns/action-menu.tsx" />
+<ComponentSource path="components/patterns/action-menu.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from \"@/components/patterns/action-menu\""} />
+```tsx
+import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from "@/components/patterns/action-menu"
+```
 
-<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <ActionMenu>\n    <ActionMenuTrigger render={<Button variant=\"outline\" />}>\n      Order actions\n    </ActionMenuTrigger>\n    <ActionMenuContent>\n      <ActionMenuLabel>Order #1042</ActionMenuLabel>\n      <ActionMenuItem>Edit</ActionMenuItem>\n      <ActionMenuItem>Duplicate</ActionMenuItem>\n      <ActionMenuItem>Share</ActionMenuItem>\n      <ActionMenuSeparator />\n      <ActionMenuItem variant=\"destructive\">Delete</ActionMenuItem>\n    </ActionMenuContent>\n  </ActionMenu>\n</div>"} />
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <ActionMenu>
+    <ActionMenuTrigger render={<Button variant="outline" />}>
+      Order actions
+    </ActionMenuTrigger>
+    <ActionMenuContent>
+      <ActionMenuLabel>Order #1042</ActionMenuLabel>
+      <ActionMenuItem>Edit</ActionMenuItem>
+      <ActionMenuItem>Duplicate</ActionMenuItem>
+      <ActionMenuItem>Share</ActionMenuItem>
+      <ActionMenuSeparator />
+      <ActionMenuItem variant="destructive">Delete</ActionMenuItem>
+    </ActionMenuContent>
+  </ActionMenu>
+</div>
+```
 
 Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
 
@@ -48,25 +63,26 @@ Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Butt
 
 Places an icon before every action, including a destructive Delete item.
 
-<Example kind="pattern" name="action-menu" story="WithIcons">
-
-<Code lang="tsx" code={"import { CopyIcon, PencilSimpleIcon, ShareIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionMenu, ActionMenuContent, ActionMenuItem, ActionMenuSeparator, ActionMenuTrigger } from \"@/components/patterns/action-menu\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ActionMenuWithIconsExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <ActionMenu>\n        <ActionMenuTrigger render={<Button variant=\"outline\" />}>\n          Order actions\n        </ActionMenuTrigger>\n        <ActionMenuContent>\n          <ActionMenuItem>\n            <PencilSimpleIcon />\n            Edit\n          </ActionMenuItem>\n          <ActionMenuItem>\n            <CopyIcon />\n            Duplicate\n          </ActionMenuItem>\n          <ActionMenuItem>\n            <ShareIcon />\n            Share\n          </ActionMenuItem>\n          <ActionMenuSeparator />\n          <ActionMenuItem variant=\"destructive\">\n            <TrashIcon />\n            Delete\n          </ActionMenuItem>\n        </ActionMenuContent>\n      </ActionMenu>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-menu-with-icons" layout="fullscreen" responsive />
 
 ### Not dismissible
 
 Sets `dismissible` to `false` so the mobile sheet closes only through an action or Cancel.
 
-<Example kind="pattern" name="action-menu" story="NotDismissible">
-
-<Code lang="tsx" code={"import { ActionMenu } from \"@/components/patterns/action-menu\"\n\nexport function ActionMenuNotDismissibleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <ActionMenu />\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-menu-not-dismissible" layout="fullscreen" responsive />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"ActionMenu","href":"#actionmenu","children":[{"name":"ActionMenuTrigger","href":"#actionmenutrigger","children":[]},{"name":"ActionMenuContent","href":"#actionmenucontent","children":[{"name":"ActionMenuLabel","href":"#actionmenulabel","children":[]},{"name":"ActionMenuItem","href":"#actionmenuitem","children":[]},{"name":"ActionMenuSeparator","href":"#actionmenuseparator","children":[]}]}]}]} />
+<Anatomy>
+
+- [ActionMenu](#actionmenu)
+  - [ActionMenuTrigger](#actionmenutrigger)
+  - [ActionMenuContent](#actionmenucontent)
+    - [ActionMenuLabel](#actionmenulabel)
+    - [ActionMenuItem](#actionmenuitem)
+    - [ActionMenuSeparator](#actionmenuseparator)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -74,7 +90,12 @@ Sets `dismissible` to `false` so the mobile sheet closes only through an action 
 
 The root that renders a `DropdownMenu` on desktop and an `AlertSheet` on mobile.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu or sheet opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu or sheet opens or closes. |
+| `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
+
+Also accepts the props of `React.ComponentProps<typeof DropdownMenu>`.
 
 </ApiPart>
 
@@ -84,7 +105,11 @@ The root that renders a `DropdownMenu` on desktop and an `AlertSheet` on mobile.
 
 The button that opens the menu or sheet.
 
-<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the default button element with your own element, such as a `Button`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
+
+Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
 
 </ApiPart>
 
@@ -94,7 +119,11 @@ The button that opens the menu or sheet.
 
 The popup holding the actions; on mobile it adds a Cancel button below them.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof DropdownMenuContent>"]} props={[{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button shown below the actions on mobile."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
+
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentProps<typeof DropdownMenuContent>`.
 
 </ApiPart>
 
@@ -104,7 +133,7 @@ The popup holding the actions; on mobile it adds a Cancel button below them.
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 </ApiPart>
 
@@ -114,7 +143,12 @@ A non-interactive heading; a menu label on desktop and the sheet title on mobile
 
 An actionable entry that closes the menu when chosen.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
+| `disabled` | `boolean` | - | Prevents the item from being chosen. |
+
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 </ApiPart>
 
@@ -124,7 +158,7 @@ An actionable entry that closes the menu when chosen.
 
 A divider between groups of items, rendered on desktop only.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 </ApiPart>
 

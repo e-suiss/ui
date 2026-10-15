@@ -3,20 +3,11 @@ title: Icon
 description: "Renders a Phosphor icon with size and color set through class names."
 eyebrow: Component
 platforms: [rn, kotlin]
-generated: true
 ---
 
 <Only platform="rn kotlin">
 
-<NativeExample id="components-icon--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { StarIcon } from \"phosphor-react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconExample() {\n  return (\n    <Icon as={StarIcon} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct IconExample: View {\n  var body: some View {\n    IconGlyph(image: Ph.star.regular)\n  }\n}\n\nstruct IconGlyph: View {\n  let image: Image\n  var size: CGFloat = 20\n  var color: Color = .label\n\n  var body: some View {\n    image\n      .resizable()\n      .scaledToFit()\n      .frame(width: size, height: size)\n      .foregroundStyle(color)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Star\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun IconRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun IconDefault() {\n    IconRow {\n        Icon(PhosphorIcons.Regular.Star, contentDescription = null)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-icon--default" />
 
 `Icon` takes a Phosphor icon component in `as` and maps `size-*` classes to its size and `text-*` classes to its color. It defaults to `size-5 text-label`.
 
@@ -26,13 +17,17 @@ Icons inherit text and icon classes from their parent, so an `Icon` inside a `Bu
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add icon"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add icon
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add icon --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add icon --platform kotlin
+```
 
 </Only>
 
@@ -48,13 +43,15 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg uniwind"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg uniwind
+```
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/icon.tsx`:
 
-<SourceFile path="uniwind/components/ui/icon.tsx" />
+<ComponentSource path="uniwind/components/ui/icon.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -64,13 +61,15 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn nativewind phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/icon.tsx`:
 
-<SourceFile path="nativewind/components/ui/icon.tsx" />
+<ComponentSource path="nativewind/components/ui/icon.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -80,13 +79,15 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/icon.tsx`:
 
-<SourceFile path="stylesheet/components/ui/icon.tsx" />
+<ComponentSource path="stylesheet/components/ui/icon.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -100,19 +101,23 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -120,9 +125,13 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 ## Usage
 
-<Code lang="tsx" code={"import { Icon } from \"@/components/ui/icon\""} />
+```tsx
+import { Icon } from "@/components/ui/icon"
+```
 
-<Code lang="tsx" code={"<Icon as={StarIcon} />"} />
+```tsx
+<Icon as={StarIcon} />
+```
 
 Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-danger`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
 
@@ -134,43 +143,19 @@ Wrap a subtree in `IconClassContext.Provider` to set default classes for the ico
 
 Icons at several `size-*` classes.
 
-<NativeExample id="components-icon--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { BellIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Icon as={BellIcon} className=\"size-4\" />\n      <Icon as={BellIcon} />\n      <Icon as={BellIcon} className=\"size-6\" />\n      <Icon as={BellIcon} className=\"size-8\" />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct IconSizesExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      IconGlyph(image: Ph.bell.regular, size: 16)\n      IconGlyph(image: Ph.bell.regular)\n      IconGlyph(image: Ph.bell.regular, size: 24)\n      IconGlyph(image: Ph.bell.regular, size: 32)\n    }\n  }\n}\n\nstruct IconGlyph: View {\n  let image: Image\n  var size: CGFloat = 20\n  var color: Color = .label\n\n  var body: some View {\n    image\n      .resizable()\n      .scaledToFit()\n      .frame(width: size, height: size)\n      .foregroundStyle(color)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Bell\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun IconRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun IconSizes() {\n    IconRow {\n        Icon(PhosphorIcons.Regular.Bell, contentDescription = null, size = 16.dp)\n        Icon(PhosphorIcons.Regular.Bell, contentDescription = null)\n        Icon(PhosphorIcons.Regular.Bell, contentDescription = null, size = 24.dp)\n        Icon(PhosphorIcons.Regular.Bell, contentDescription = null, size = 32.dp)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-icon--sizes" />
 
 ### Colors
 
 Icons in different color tokens.
 
-<NativeExample id="components-icon--colors" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { GearIcon, HeartIcon, InfoIcon, WarningIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconColorsExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Icon as={InfoIcon} />\n      <Icon as={GearIcon} className=\"text-label-secondary\" />\n      <Icon as={HeartIcon} className=\"text-accent\" weight=\"fill\" />\n      <Icon as={WarningIcon} className=\"text-danger\" />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct IconColorsExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      IconGlyph(image: Ph.info.regular)\n      IconGlyph(image: Ph.gear.regular, color: .labelSecondary)\n      IconGlyph(image: Ph.heart.fill, color: .accent)\n      IconGlyph(image: Ph.warning.regular, color: .danger)\n    }\n  }\n}\n\nstruct IconGlyph: View {\n  let image: Image\n  var size: CGFloat = 20\n  var color: Color = .label\n\n  var body: some View {\n    image\n      .resizable()\n      .scaledToFit()\n      .frame(width: size, height: size)\n      .foregroundStyle(color)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Gear\nimport com.adamglin.phosphoricons.regular.Info\nimport com.adamglin.phosphoricons.regular.Warning\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun IconRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun IconColors() {\n    val colors = EsuissTheme.colors\n    IconRow {\n        Icon(PhosphorIcons.Regular.Info, contentDescription = null)\n        Icon(PhosphorIcons.Regular.Gear, contentDescription = null, tint = colors.labelSecondary)\n        Icon(PhosphorIcons.Fill.FillHeart, contentDescription = null, tint = colors.accent)\n        Icon(PhosphorIcons.Regular.Warning, contentDescription = null, tint = colors.danger)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-icon--colors" />
 
 ### Weights
 
 The available Phosphor weights.
 
-<NativeExample id="components-icon--weights" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { StarIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function IconWeightsExample() {\n  return (\n    <View className=\"flex-row items-center gap-4\">\n      <Icon as={StarIcon} className=\"size-6\" weight=\"thin\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"light\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"regular\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"bold\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"fill\" />\n      <Icon as={StarIcon} className=\"size-6\" weight=\"duotone\" />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct IconWeightsExample: View {\n  var body: some View {\n    HStack(spacing: 16) {\n      IconGlyph(image: Ph.star.thin, size: 24)\n      IconGlyph(image: Ph.star.light, size: 24)\n      IconGlyph(image: Ph.star.regular, size: 24)\n      IconGlyph(image: Ph.star.bold, size: 24)\n      IconGlyph(image: Ph.star.fill, size: 24)\n      IconGlyph(image: Ph.star.duotone, size: 24)\n    }\n  }\n}\n\nstruct IconGlyph: View {\n  let image: Image\n  var size: CGFloat = 20\n  var color: Color = .label\n\n  var body: some View {\n    image\n      .resizable()\n      .scaledToFit()\n      .frame(width: size, height: size)\n      .foregroundStyle(color)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Bold\nimport com.adamglin.phosphoricons.Duotone\nimport com.adamglin.phosphoricons.Fill\nimport com.adamglin.phosphoricons.Light\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.Thin\nimport com.adamglin.phosphoricons.regular.Star\nimport com.esuiss.ui.components.Icon\n\n@Composable\nfun IconRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun IconWeights() {\n    IconRow {\n        Icon(PhosphorIcons.Thin.ThinStar, contentDescription = null, size = 24.dp)\n        Icon(PhosphorIcons.Light.LightStar, contentDescription = null, size = 24.dp)\n        Icon(PhosphorIcons.Regular.Star, contentDescription = null, size = 24.dp)\n        Icon(PhosphorIcons.Bold.BoldStar, contentDescription = null, size = 24.dp)\n        Icon(PhosphorIcons.Fill.FillStar, contentDescription = null, size = 24.dp)\n        Icon(PhosphorIcons.Duotone.DuotoneStar, contentDescription = null, size = 24.dp)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-icon--weights" />
 
 ## API Reference
 
@@ -180,7 +165,7 @@ The available Phosphor weights.
 
 Styled Phosphor icon.
 
-<PropsTable extends={["IconProps"]} />
+Also accepts the props of `IconProps`.
 
 </ApiPart>
 

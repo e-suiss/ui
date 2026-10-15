@@ -1,6 +1,0 @@
-{
-  "description": "A donut whose slices are pulled apart with wide gaps and rounded corners.",
-  "overview": "A donut whose slices are pushed apart with wide gaps and rounded corners, giving each segment a tile-like look. Choose it for a softer, more decorative style than the standard donut.",
-  "usage": "Replace `chartData` and add each category to `chartConfig`. Tune the spacing with `paddingAngle` and the rounding with `cornerRadius`; large values for either make small slices hard to see.",
-  "notes": "The wide gaps and rounded corners squeeze very thin slices, so this style suits data without tiny values."
-}

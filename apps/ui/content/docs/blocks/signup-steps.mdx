@@ -3,16 +3,11 @@ title: Signup Steps
 description: "A one-question-at-a-time signup flow for name, email, and password, with a progress indicator."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="signup-steps">
-
-<SourceFile path="components/blocks/signup-steps.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="signup-steps" />
 
 A signup flow that asks one question at a time, name, then email, then password, with progress dots above. Each step slides in from the direction of travel, Continue stays disabled until the answer is valid, and the last step becomes Create account. The finish screen greets the user by first name. Use it for onboarding where a long form would feel heavy.
 
@@ -20,27 +15,35 @@ A signup flow that asks one question at a time, name, then email, then password,
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks signup-steps"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks signup-steps
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input).
 
 3. Copy the source into `components/blocks/signup-steps.tsx`:
 
-<SourceFile path="components/blocks/signup-steps.tsx" />
+<ComponentSource path="components/blocks/signup-steps.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { SignupSteps } from \"@/components/blocks/signup-steps\""} />
+```tsx
+import { SignupSteps } from "@/components/blocks/signup-steps"
+```
 
-<Code lang="tsx" code={"<SignupSteps />"} />
+```tsx
+<SignupSteps />
+```
 
 Edit `steps`; each has a key, title, description, placeholder, input type, autocomplete value and a `valid` function. Add matching keys to the `Values` type when you add steps. Replace the final step with a call to your registration API.
 
@@ -52,13 +55,13 @@ The progress dots are an ordered list with the current step marked, and each inp
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-signup-steps--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-signup-steps--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/signup-steps.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/signup-steps.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/SignupSteps.swift" fold={false} />
+<ComponentSource path="swift/Blocks/SignupSteps.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/SignupSteps.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/SignupSteps.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A progress bar tracks the step, and each step slides in with a title, descriptio
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signup-steps"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signup-steps
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signup-steps --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signup-steps --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add signup-steps --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add signup-steps --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/signup-steps.tsx`:
 
-<SourceFile path="uniwind/components/blocks/signup-steps.tsx" />
+<ComponentSource path="uniwind/components/blocks/signup-steps.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/signup-steps.tsx`:
 
-<SourceFile path="nativewind/components/blocks/signup-steps.tsx" />
+<ComponentSource path="nativewind/components/blocks/signup-steps.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/signup-steps.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/signup-steps.tsx" />
+<ComponentSource path="stylesheet/components/blocks/signup-steps.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,37 +165,39 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/SignupSteps.swift" />
+<ComponentSource path="swift/Blocks/SignupSteps.swift" />
 
-<SourceFile path="swift/Components/BottomBar.swift" />
+<ComponentSource path="swift/Components/BottomBar.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -190,37 +207,42 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/SignupSteps.kt" />
+<ComponentSource path="kotlin/blocks/SignupSteps.kt" />
 
-<SourceFile path="kotlin/components/BottomBar.kt" />
+<ComponentSource path="kotlin/components/BottomBar.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Carousel.kt" />
+<ComponentSource path="kotlin/components/Carousel.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/KeyboardScrollView.kt" />
+<ComponentSource path="kotlin/components/KeyboardScrollView.kt" />
 
-<SourceFile path="kotlin/components/PageIndicator.kt" />
+<ComponentSource path="kotlin/components/PageIndicator.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -228,9 +250,13 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 ## Usage
 
-<Code lang="tsx" code={"import { SignupSteps } from \"@/components/blocks/signup-steps\""} />
+```tsx
+import { SignupSteps } from "@/components/blocks/signup-steps"
+```
 
-<Code lang="tsx" code={"<SignupSteps />"} />
+```tsx
+<SignupSteps />
+```
 
 Edit the `STEPS` copy and `RULES` to fit your product. `onSubmit` receives the name, email and password when the last step is completed.
 

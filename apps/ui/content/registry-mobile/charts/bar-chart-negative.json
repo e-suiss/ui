@@ -1,5 +1,0 @@
-{
-  "description": "Monthly cash flow bars above and below a zero line, green for gains and red for losses.",
-  "overview": "One bar per month, colored per value through a `Cell`: green when the flow is positive and red when it is negative. A `ReferenceLine` at zero anchors the bars, and the month axis shows every other label.",
-  "usage": "Replace `chartData` with your months and signed `flow` values. Change the colors in the `Cell` `fill` expression. The component takes no props."
-}

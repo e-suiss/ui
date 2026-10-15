@@ -3,16 +3,11 @@ title: Inbox Mail
 description: "A three-column mail client with mailboxes, a searchable message list, and a message reader with reply."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="inbox-mail">
-
-<SourceFile path="components/blocks/inbox-mail.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="inbox-mail" />
 
 A three-pane mail client: mailboxes on the left, a searchable message list in the middle and the open message with a reply box on the right. On small screens the panes collapse into a single view with a back button. Start from it for any inbox-style screen, such as support tickets or notifications.
 
@@ -20,27 +15,35 @@ A three-pane mail client: mailboxes on the left, a searchable message list in th
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks inbox-mail"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks inbox-mail
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Input Group](/docs/components/input-group), [Split View](/docs/patterns/split-view), [Textarea](/docs/components/textarea).
 
 3. Copy the source into `components/blocks/inbox-mail.tsx`:
 
-<SourceFile path="components/blocks/inbox-mail.tsx" />
+<ComponentSource path="components/blocks/inbox-mail.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { InboxMail } from \"@/components/blocks/inbox-mail\""} />
+```tsx
+import { InboxMail } from "@/components/blocks/inbox-mail"
+```
 
-<Code lang="tsx" code={"<InboxMail />"} />
+```tsx
+<InboxMail />
+```
 
 Replace `initialMail` with your messages, each with a sender, subject, body, time, avatar hue and unread and starred flags, and `mailboxes` with your folders. Only Starred actually filters the list, so load each folder from your mail backend. Archive and Delete both remove the message, the reply form only clears on submit, and New message has no handler.
 
@@ -52,13 +55,13 @@ Search runs in the browser over sender, subject and body, so move it server-side
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-inbox-mail--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-inbox-mail--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/inbox-mail.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/inbox-mail.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/InboxMail.swift" fold={false} />
+<ComponentSource path="swift/Blocks/InboxMail.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/InboxMail.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/InboxMail.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A three-column mail screen built on `SplitView`: a sidebar of mailboxes (Inbox, 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add inbox-mail"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add inbox-mail
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add inbox-mail --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add inbox-mail --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add inbox-mail --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add inbox-mail --platform kotlin
+```
 
 </Only>
 
@@ -96,13 +105,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
 
 3. Copy the source into `components/blocks/inbox-mail.tsx`:
 
-<SourceFile path="uniwind/components/blocks/inbox-mail.tsx" />
+<ComponentSource path="uniwind/components/blocks/inbox-mail.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -112,13 +123,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
 
 3. Copy the source into `components/blocks/inbox-mail.tsx`:
 
-<SourceFile path="nativewind/components/blocks/inbox-mail.tsx" />
+<ComponentSource path="nativewind/components/blocks/inbox-mail.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -128,13 +141,15 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea).
 
 3. Copy the source into `components/blocks/inbox-mail.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/inbox-mail.tsx" />
+<ComponentSource path="stylesheet/components/blocks/inbox-mail.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -150,51 +165,53 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/InboxMail.swift" />
+<ComponentSource path="swift/Blocks/InboxMail.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Input.swift" />
+<ComponentSource path="swift/Components/Input.swift" />
 
-<SourceFile path="swift/Components/InputGroup.swift" />
+<ComponentSource path="swift/Components/InputGroup.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Components/Textarea.swift" />
+<ComponentSource path="swift/Components/Textarea.swift" />
 
-<SourceFile path="swift/Interactions/SwipeActions.swift" />
+<ComponentSource path="swift/Interactions/SwipeActions.swift" />
 
-<SourceFile path="swift/Patterns/SplitView.swift" />
+<ComponentSource path="swift/Patterns/SplitView.swift" />
 
 5. Add the files to your app target.
 
@@ -204,45 +221,50 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/InboxMail.kt" />
+<ComponentSource path="kotlin/blocks/InboxMail.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/InputGroup.kt" />
+<ComponentSource path="kotlin/components/InputGroup.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Textarea.kt" />
+<ComponentSource path="kotlin/components/Textarea.kt" />
 
-<SourceFile path="kotlin/interactions/SwipeActions.kt" />
+<ComponentSource path="kotlin/interactions/SwipeActions.kt" />
 
-<SourceFile path="kotlin/patterns/SplitView.kt" />
+<ComponentSource path="kotlin/patterns/SplitView.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -250,9 +272,13 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 ## Usage
 
-<Code lang="tsx" code={"import { InboxMail } from \"@/components/blocks/inbox-mail\""} />
+```tsx
+import { InboxMail } from "@/components/blocks/inbox-mail"
+```
 
-<Code lang="tsx" code={"<InboxMail />"} />
+```tsx
+<InboxMail />
+```
 
 Replace `INITIAL_MAIL` with your messages and `MAILBOXES` with your folders. Wire `onMailboxChange`, `onNewMessage`, `onReply`, `onStarChange`, `onArchive` and `onDelete` to your mail service.
 

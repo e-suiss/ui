@@ -3,16 +3,11 @@ title: Menubar
 description: "A horizontal bar of menus, like a desktop application's menu bar."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="menubar" story="Default">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from \"@/components/ui/menubar\"\n\nfunction MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {\n  return (\n    <>\n      <MenubarMenu defaultOpen={fileOpen}>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              New tab\n              <MenubarShortcut mod>T</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              New window\n              <MenubarShortcut mod>N</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem disabled>New private window</MenubarItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarSub>\n            <MenubarSubTrigger>Share</MenubarSubTrigger>\n            <MenubarSubContent>\n              <MenubarItem>Email link</MenubarItem>\n              <MenubarItem>Messages</MenubarItem>\n              <MenubarItem>Notes</MenubarItem>\n            </MenubarSubContent>\n          </MenubarSub>\n          <MenubarSeparator />\n          <MenubarItem>\n            Print\n            <MenubarShortcut mod>P</MenubarShortcut>\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>Edit</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              <ScissorsIcon />\n              Cut\n              <MenubarShortcut mod>X</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              <CopyIcon />\n              Copy\n              <MenubarShortcut mod>C</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              <ClipboardTextIcon />\n              Paste\n              <MenubarShortcut mod>V</MenubarShortcut>\n            </MenubarItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem variant=\"destructive\">\n            <TrashIcon />\n            Delete\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>View</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarCheckboxItem defaultChecked>\n              Show bookmarks bar\n            </MenubarCheckboxItem>\n            <MenubarCheckboxItem>Show full URLs</MenubarCheckboxItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem inset>Reload</MenubarItem>\n          <MenubarItem inset>Toggle full screen</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>Profiles</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarLabel>Switch profile</MenubarLabel>\n            <MenubarRadioGroup defaultValue=\"alex\">\n              <MenubarRadioItem value=\"alex\">Alex</MenubarRadioItem>\n              <MenubarRadioItem value=\"sam\">Sam</MenubarRadioItem>\n              <MenubarRadioItem value=\"taylor\">Taylor</MenubarRadioItem>\n            </MenubarRadioGroup>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem inset>Manage profiles</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n    </>\n  )\n}\n\nexport function MenubarExampleDemo() {\n  return (\n    <div className=\"min-h-96\">\n      <Menubar>\n        <MenubarExample />\n      </Menubar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="menubar-demo" layout="padded" />
 
 `Menubar` wraps Base UI's Menubar and groups several menus into one keyboard-navigable bar. Each `MenubarMenu` holds a `MenubarTrigger` and a `MenubarContent` popup. Inside the content, compose `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup` with `MenubarRadioItem`, `MenubarLabel`, `MenubarGroup`, `MenubarSeparator`, `MenubarShortcut`, and nested submenus built from `MenubarSub`, `MenubarSubTrigger` and `MenubarSubContent`.
 
@@ -22,27 +17,39 @@ Most parts reuse the Dropdown Menu components with menubar styling. Use `Menubar
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add menubar"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add menubar
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: [Dropdown Menu](/docs/components/dropdown-menu).
 
 3. Copy the source into `components/ui/menubar.tsx`:
 
-<SourceFile path="components/ui/menubar.tsx" />
+<ComponentSource path="components/ui/menubar.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Menubar, MenubarMenu, MenubarGroup, MenubarPortal, MenubarTrigger, MenubarContent, MenubarItem, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarLabel, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubTrigger, MenubarSubContent } from \"@/components/ui/menubar\""} />
+```tsx
+import { Menubar, MenubarMenu, MenubarGroup, MenubarPortal, MenubarTrigger, MenubarContent, MenubarItem, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarLabel, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubTrigger, MenubarSubContent } from "@/components/ui/menubar"
+```
 
-<Code lang="tsx" code={"<div className=\"min-h-96\">\n  <Menubar>\n    <MenubarExample />\n  </Menubar>\n</div>"} />
+```tsx
+<div className="min-h-96">
+  <Menubar>
+    <MenubarExample />
+  </Menubar>
+</div>
+```
 
 Each `MenubarMenu` accepts the menu root props, such as `open`, `defaultOpen` and `onOpenChange`. `MenubarItem` also accepts `variant="destructive"` and `inset`. Checkbox items use `checked`/`defaultChecked`, and radio groups use `value`/`defaultValue`. Pass `disabled` on `Menubar` to disable the whole bar, or on an individual item.
 
@@ -54,21 +61,13 @@ Each `MenubarMenu` accepts the menu root props, such as `open`, `defaultOpen` an
 
 The File menu opened on first render with `defaultOpen`, including a Share submenu.
 
-<Example kind="ui" name="menubar" story="OpenByDefault">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from \"@/components/ui/menubar\"\n\nfunction MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {\n  return (\n    <>\n      <MenubarMenu defaultOpen={fileOpen}>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              New tab\n              <MenubarShortcut mod>T</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              New window\n              <MenubarShortcut mod>N</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem disabled>New private window</MenubarItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarSub>\n            <MenubarSubTrigger>Share</MenubarSubTrigger>\n            <MenubarSubContent>\n              <MenubarItem>Email link</MenubarItem>\n              <MenubarItem>Messages</MenubarItem>\n              <MenubarItem>Notes</MenubarItem>\n            </MenubarSubContent>\n          </MenubarSub>\n          <MenubarSeparator />\n          <MenubarItem>\n            Print\n            <MenubarShortcut mod>P</MenubarShortcut>\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>Edit</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              <ScissorsIcon />\n              Cut\n              <MenubarShortcut mod>X</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              <CopyIcon />\n              Copy\n              <MenubarShortcut mod>C</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              <ClipboardTextIcon />\n              Paste\n              <MenubarShortcut mod>V</MenubarShortcut>\n            </MenubarItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem variant=\"destructive\">\n            <TrashIcon />\n            Delete\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>View</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarCheckboxItem defaultChecked>\n              Show bookmarks bar\n            </MenubarCheckboxItem>\n            <MenubarCheckboxItem>Show full URLs</MenubarCheckboxItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem inset>Reload</MenubarItem>\n          <MenubarItem inset>Toggle full screen</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>Profiles</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarLabel>Switch profile</MenubarLabel>\n            <MenubarRadioGroup defaultValue=\"alex\">\n              <MenubarRadioItem value=\"alex\">Alex</MenubarRadioItem>\n              <MenubarRadioItem value=\"sam\">Sam</MenubarRadioItem>\n              <MenubarRadioItem value=\"taylor\">Taylor</MenubarRadioItem>\n            </MenubarRadioGroup>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem inset>Manage profiles</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n    </>\n  )\n}\n\nexport function MenubarOpenByDefaultExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Menubar>\n        <MenubarExample fileOpen />\n      </Menubar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="menubar-open-by-default" layout="padded" />
 
 ### Disabled
 
 A menubar with `disabled` set, so none of its menus open.
 
-<Example kind="ui" name="menubar" story="Disabled">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from \"@/components/ui/menubar\"\n\nfunction MenubarExample({ fileOpen = false }: { fileOpen?: boolean }) {\n  return (\n    <>\n      <MenubarMenu defaultOpen={fileOpen}>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              New tab\n              <MenubarShortcut mod>T</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              New window\n              <MenubarShortcut mod>N</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem disabled>New private window</MenubarItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarSub>\n            <MenubarSubTrigger>Share</MenubarSubTrigger>\n            <MenubarSubContent>\n              <MenubarItem>Email link</MenubarItem>\n              <MenubarItem>Messages</MenubarItem>\n              <MenubarItem>Notes</MenubarItem>\n            </MenubarSubContent>\n          </MenubarSub>\n          <MenubarSeparator />\n          <MenubarItem>\n            Print\n            <MenubarShortcut mod>P</MenubarShortcut>\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>Edit</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              <ScissorsIcon />\n              Cut\n              <MenubarShortcut mod>X</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              <CopyIcon />\n              Copy\n              <MenubarShortcut mod>C</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              <ClipboardTextIcon />\n              Paste\n              <MenubarShortcut mod>V</MenubarShortcut>\n            </MenubarItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem variant=\"destructive\">\n            <TrashIcon />\n            Delete\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>View</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarCheckboxItem defaultChecked>\n              Show bookmarks bar\n            </MenubarCheckboxItem>\n            <MenubarCheckboxItem>Show full URLs</MenubarCheckboxItem>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem inset>Reload</MenubarItem>\n          <MenubarItem inset>Toggle full screen</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>Profiles</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarLabel>Switch profile</MenubarLabel>\n            <MenubarRadioGroup defaultValue=\"alex\">\n              <MenubarRadioItem value=\"alex\">Alex</MenubarRadioItem>\n              <MenubarRadioItem value=\"sam\">Sam</MenubarRadioItem>\n              <MenubarRadioItem value=\"taylor\">Taylor</MenubarRadioItem>\n            </MenubarRadioGroup>\n          </MenubarGroup>\n          <MenubarSeparator />\n          <MenubarItem inset>Manage profiles</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n    </>\n  )\n}\n\nexport function MenubarDisabledExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Menubar disabled>\n        <MenubarExample />\n      </Menubar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="menubar-disabled" layout="padded" />
 
 ## API Reference
 
@@ -78,7 +77,7 @@ A menubar with `disabled` set, so none of its menus open.
 
 The bar that contains the menus and manages keyboard navigation between them.
 
-<PropsTable extends={["MenubarPrimitive.Props"]} />
+Also accepts the props of `MenubarPrimitive.Props`.
 
 </ApiPart>
 
@@ -88,7 +87,7 @@ The bar that contains the menus and manages keyboard navigation between them.
 
 Groups one trigger with its popup and holds that menu's open state.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenu>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenu>`.
 
 </ApiPart>
 
@@ -98,7 +97,7 @@ Groups one trigger with its popup and holds that menu's open state.
 
 Groups related items inside a menu.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuGroup>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuGroup>`.
 
 </ApiPart>
 
@@ -108,7 +107,7 @@ Groups related items inside a menu.
 
 Renders menu content into a portal outside the bar.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuPortal>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuPortal>`.
 
 </ApiPart>
 
@@ -118,7 +117,7 @@ Renders menu content into a portal outside the bar.
 
 The button in the bar that opens its menu.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuTrigger>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuTrigger>`.
 
 </ApiPart>
 
@@ -128,7 +127,7 @@ The button in the bar that opens its menu.
 
 The positioned popup that holds a menu's items.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuContent>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuContent>`.
 
 </ApiPart>
 
@@ -138,7 +137,7 @@ The positioned popup that holds a menu's items.
 
 A single command in a menu.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuItem>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuItem>`.
 
 </ApiPart>
 
@@ -148,7 +147,11 @@ A single command in a menu.
 
 An item that toggles on and off, with a leading check indicator.
 
-<PropsTable extends={["MenuPrimitive.CheckboxItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Sets `data-inset` on the item for inset alignment."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
+
+Also accepts the props of `MenuPrimitive.CheckboxItem.Props`.
 
 </ApiPart>
 
@@ -158,7 +161,7 @@ An item that toggles on and off, with a leading check indicator.
 
 Groups radio items so only one can be selected.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuRadioGroup>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuRadioGroup>`.
 
 </ApiPart>
 
@@ -168,7 +171,11 @@ Groups radio items so only one can be selected.
 
 One option in a radio group, with a leading check indicator when selected.
 
-<PropsTable extends={["MenuPrimitive.RadioItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Sets `data-inset` on the item for inset alignment."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
+
+Also accepts the props of `MenuPrimitive.RadioItem.Props`.
 
 </ApiPart>
 
@@ -178,7 +185,11 @@ One option in a radio group, with a leading check indicator when selected.
 
 A non-interactive heading for a section of items.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuLabel>"]} props={[{"name":"inset","type":"boolean","description":"Indents the label to align with items that show a leading icon or indicator."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Indents the label to align with items that show a leading icon or indicator. |
+
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuLabel>`.
 
 </ApiPart>
 
@@ -188,7 +199,7 @@ A non-interactive heading for a section of items.
 
 A thin divider between groups of items.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuSeparator>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuSeparator>`.
 
 </ApiPart>
 
@@ -198,7 +209,7 @@ A thin divider between groups of items.
 
 A trailing keyboard shortcut hint inside an item.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuShortcut>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuShortcut>`.
 
 </ApiPart>
 
@@ -208,7 +219,7 @@ A trailing keyboard shortcut hint inside an item.
 
 The root of a nested submenu.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuSub>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuSub>`.
 
 </ApiPart>
 
@@ -218,7 +229,11 @@ The root of a nested submenu.
 
 The item that opens a submenu.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuSubTrigger>"]} props={[{"name":"inset","type":"boolean","description":"Indents the trigger to align with items that show a leading icon or indicator."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Indents the trigger to align with items that show a leading icon or indicator. |
+
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuSubTrigger>`.
 
 </ApiPart>
 
@@ -228,7 +243,7 @@ The item that opens a submenu.
 
 The popup that holds a submenu's items.
 
-<PropsTable extends={["React.ComponentProps<typeof DropdownMenuSubContent>"]} />
+Also accepts the props of `React.ComponentProps<typeof DropdownMenuSubContent>`.
 
 </ApiPart>
 

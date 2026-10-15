@@ -1,6 +1,0 @@
-{
-  "description": "Two radar outlines with no fill, comparing this month and last month by stroke alone.",
-  "overview": "Two radar outlines without fill, comparing this month with last month by stroke alone. Use it when filled shapes would hide each other, especially with more than two series.",
-  "usage": "Replace `chartData` and rename the series keys in the data, the `Radar` elements and `chartConfig`. Add more `Radar` elements for extra series; give each a distinct color in the config.",
-  "notes": "Without fill or legend, color is the only cue for which line is which, so add a legend or pick strongly contrasting colors."
-}

@@ -1,6 +1,0 @@
-{
-  "description": "A bar chart whose tooltip is fully custom markup, showing a large total, a unit and the day.",
-  "overview": "A step-count bar chart whose tooltip is built from scratch as a small card with a big number, unit and day name. Reach for it when the stock tooltip layout can't express what you need, such as a single headline value.",
-  "usage": "Pass your own render function to the `content` prop of `ChartTooltip`; it receives the active state, the hovered rows and the label, and should return null when inactive. Change the unit text and number format inside it, and replace `chartData` and `chartConfig` as usual.",
-  "notes": "A custom tooltip skips the built-in one entirely, so labels and colors from the config only appear if you read them yourself. The tooltip opens on a preset bar when the chart loads; remove `defaultIndex` to start hidden."
-}

@@ -3,16 +3,11 @@ title: Tooltip Chart No Label
 description: "A stacked bar chart whose tooltip omits the category heading and shows only the series rows."
 eyebrow: Chart
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="tooltip-chart-no-label">
-
-<SourceFile path="components/charts/tooltip-chart-no-label.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="tooltip-chart-no-label" />
 
 A stacked bar chart whose tooltip drops the category heading and shows only the series rows. Use it when the hovered category is obvious from the axis and you want a smaller tooltip.
 
@@ -20,27 +15,35 @@ A stacked bar chart whose tooltip drops the category heading and shows only the 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts tooltip-chart-no-label"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts tooltip-chart-no-label
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/tooltip-chart-no-label.tsx`:
 
-<SourceFile path="components/charts/tooltip-chart-no-label.tsx" />
+<ComponentSource path="components/charts/tooltip-chart-no-label.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { TooltipChartNoLabel } from \"@/components/charts/tooltip-chart-no-label\""} />
+```tsx
+import { TooltipChartNoLabel } from "@/components/charts/tooltip-chart-no-label"
+```
 
-<Code lang="tsx" code={"<TooltipChartNoLabel />"} />
+```tsx
+<TooltipChartNoLabel />
+```
 
 Set `hideLabel` on `ChartTooltipContent`. Replace `chartData` and the series in `chartConfig` with your own.
 

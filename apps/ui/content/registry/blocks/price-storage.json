@@ -1,5 +1,0 @@
-{
-  "description": "A cloud storage plan picker with a monthly or yearly toggle, four plan cards, and a switch action.",
-  "overview": "A cloud storage plan picker with a monthly or yearly switch, four plan cards with feature lists and a button that names the selected plan. One card carries a Most popular badge. Cards show one column on mobile, two on tablets and four on large screens. Use it for storage, seat or usage-based pricing.",
-  "usage": "Edit `plans`; each has a size, monthly price, a list of features and an optional popular flag. Yearly prices are ten times the monthly price to match the 2 months free label, so change both together. Replace the button handler, which only shows a confirmation, with your billing call."
-}

@@ -3,16 +3,11 @@ title: Roles Editor
 description: "A role editor that lists roles beside grouped permission switches, with save and revert for unsaved changes."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="roles-editor">
-
-<SourceFile path="components/blocks/roles-editor.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="roles-editor" />
 
 A role editor with roles and their permission counts on the left and the selected role's permissions on the right as grouped switches. Revert and Save appear only when there are unsaved changes. It combines `Sidebar` navigation with a `SplitView`, so on mobile the role list and editor show one at a time. Use it for any role-based access control screen.
 
@@ -20,27 +15,35 @@ A role editor with roles and their permission counts on the left and the selecte
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks roles-editor"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks roles-editor
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Item](/docs/components/item), [Sidebar](/docs/components/sidebar), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch).
 
 3. Copy the source into `components/blocks/roles-editor.tsx`:
 
-<SourceFile path="components/blocks/roles-editor.tsx" />
+<ComponentSource path="components/blocks/roles-editor.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { RolesEditor } from \"@/components/blocks/roles-editor\""} />
+```tsx
+import { RolesEditor } from "@/components/blocks/roles-editor"
+```
 
-<Code lang="tsx" code={"<RolesEditor />"} />
+```tsx
+<RolesEditor />
+```
 
 Edit `groups` for the permissions, `roles` and `members` for the role list, and `defaults` for each role's starting switches. The `defaults` arrays are positional, mapping to permissions in the order they appear across all groups, so keep them in step with `groups` or switch to keyed data. Save only updates local state, so call your API there, and give New Role a handler.
 
@@ -48,13 +51,13 @@ Edit `groups` for the permissions, `roles` and `members` for the role list, and 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-roles-editor--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-roles-editor--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/roles-editor.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/roles-editor.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/RolesEditor.swift" fold={false} />
+<ComponentSource path="swift/Blocks/RolesEditor.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/RolesEditor.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/RolesEditor.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +67,25 @@ A `SplitView` lists the Editor, Support and Viewer roles with their member count
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add roles-editor"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add roles-editor
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add roles-editor --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add roles-editor --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add roles-editor --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add roles-editor --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +101,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/roles-editor.tsx`:
 
-<SourceFile path="uniwind/components/blocks/roles-editor.tsx" />
+<ComponentSource path="uniwind/components/blocks/roles-editor.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +119,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/roles-editor.tsx`:
 
-<SourceFile path="nativewind/components/blocks/roles-editor.tsx" />
+<ComponentSource path="nativewind/components/blocks/roles-editor.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +137,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/roles-editor.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/roles-editor.tsx" />
+<ComponentSource path="stylesheet/components/blocks/roles-editor.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,51 +161,53 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/RolesEditor.swift" />
+<ComponentSource path="swift/Blocks/RolesEditor.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Empty.swift" />
+<ComponentSource path="swift/Components/Empty.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/Switch.swift" />
+<ComponentSource path="swift/Components/Switch.swift" />
 
-<SourceFile path="swift/Components/TabBar.swift" />
+<ComponentSource path="swift/Components/TabBar.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Patterns/SplitView.swift" />
+<ComponentSource path="swift/Patterns/SplitView.swift" />
 
 5. Add the files to your app target.
 
@@ -200,49 +217,54 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/RolesEditor.kt" />
+<ComponentSource path="kotlin/blocks/RolesEditor.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Header.kt" />
+<ComponentSource path="kotlin/components/Header.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Item.kt" />
+<ComponentSource path="kotlin/components/Item.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/components/Switch.kt" />
+<ComponentSource path="kotlin/components/Switch.kt" />
 
-<SourceFile path="kotlin/components/TabBar.kt" />
+<ComponentSource path="kotlin/components/TabBar.kt" />
 
-<SourceFile path="kotlin/patterns/SplitView.kt" />
+<ComponentSource path="kotlin/patterns/SplitView.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -250,9 +272,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { RolesEditor } from \"@/components/blocks/roles-editor\""} />
+```tsx
+import { RolesEditor } from "@/components/blocks/roles-editor"
+```
 
-<Code lang="tsx" code={"<RolesEditor />"} />
+```tsx
+<RolesEditor />
+```
 
 Replace `GROUPS`, `ROLES`, `MEMBERS` and `DEFAULTS` with your permissions and grants. Use `onTogglePermission`, `onSave`, `onRevert`, `onNewRole` and `onNavigate` to persist changes and route between sections.
 

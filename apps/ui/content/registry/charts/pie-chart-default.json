@@ -1,6 +1,0 @@
-{
-  "description": "A full pie split into five device slices, separated by thin surface-colored borders.",
-  "overview": "A full pie split into five slices separated by thin gaps, with a tooltip for each slice. Use it for a quick part-to-whole view of a small number of categories.",
-  "usage": "Give each record a category key, a value and a `fill` that references its color, then add a label and color for every key in `chartConfig`. Point `dataKey` and `nameKey` on the `Pie` at your value and category fields.",
-  "notes": "Pies work best with about five slices or fewer; group the long tail into an Other slice."
-}

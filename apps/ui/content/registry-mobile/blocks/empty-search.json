@@ -1,5 +1,0 @@
-{
-  "description": "A search screen with a field, live suggestions and a no-results state with suggested searches.",
-  "overview": "Composes `Screen`, `Input`, `Empty`, `Button`, `Icon` and `Text`. Typing filters the suggestions list, the clear button empties the field and refocuses it, and when nothing matches the screen shows a no-results message with suggestion buttons that fill in the query.",
-  "usage": "Replace `SUGGESTIONS` and the prefix matching with results from your search service. The component takes no props."
-}

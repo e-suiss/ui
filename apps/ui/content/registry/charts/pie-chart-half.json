@@ -1,6 +1,0 @@
-{
-  "description": "A semicircular gauge-style pie showing battery share by device, with a caption under the arc.",
-  "overview": "A semicircular donut that reads like a gauge, with a figure and caption tucked under the arc. Use it in compact cards where a full circle takes too much height.",
-  "usage": "Replace `chartData` with your categories and their shares, and add each key to `chartConfig`. The tooltip appends a percent sign, so change its formatter if your values aren't percentages. Update the figure and caption under the arc, which are plain text.",
-  "notes": "The centered figure and caption are hard-coded, not computed from the data. The arc's size depends on the container height, so check the fit if you change the chart's height."
-}

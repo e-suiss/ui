@@ -3,16 +3,11 @@ title: Native Select
 description: "A styled native select element for choosing one option from a list."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="native-select" story="Default">
-
-<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectExample() {\n  return (\n    <NativeSelect defaultValue=\"\" aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="native-select-demo" />
 
 `NativeSelect` wraps the browser's `select` element with the library's control styling and a trailing up-down caret. Add choices with `NativeSelectOption`, and group them under headings with `NativeSelectOptGroup`.
 
@@ -22,25 +17,41 @@ Because it uses the platform picker, it works well on touch devices and in plain
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add native-select"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add native-select
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react cn
+```
 
 2. Copy the source into `components/ui/native-select.tsx`:
 
-<SourceFile path="components/ui/native-select.tsx" />
+<ComponentSource path="components/ui/native-select.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from \"@/components/ui/native-select\""} />
+```tsx
+import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from "@/components/ui/native-select"
+```
 
-<Code lang="tsx" code={"<NativeSelect defaultValue=\"\" aria-label=\"Fruit\">\n  <NativeSelectOption value=\"\" disabled>\n    Select a fruit\n  </NativeSelectOption>\n  <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n  <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n  <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n  <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n</NativeSelect>"} />
+```tsx
+<NativeSelect defaultValue="" aria-label="Fruit">
+  <NativeSelectOption value="" disabled>
+    Select a fruit
+  </NativeSelectOption>
+  <NativeSelectOption value="apple">Apple</NativeSelectOption>
+  <NativeSelectOption value="banana">Banana</NativeSelectOption>
+  <NativeSelectOption value="cherry">Cherry</NativeSelectOption>
+  <NativeSelectOption value="grape">Grape</NativeSelectOption>
+</NativeSelect>
+```
 
 All standard `select` attributes, such as `value`, `defaultValue`, `onChange`, `name`, `disabled` and `required`, pass through to the `select` element. `className` is applied to the wrapper, not the `select`.
 
@@ -52,45 +63,36 @@ To show a placeholder, add a first option with `value=""` and `disabled`; while 
 
 The `sm` and `default` sizes side by side.
 
-<Example kind="ui" name="native-select" story="Sizes">
-
-<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <NativeSelect defaultValue=\"weekly\" size=\"sm\" aria-label=\"Frequency\">\n        <NativeSelectOption value=\"daily\">Daily</NativeSelectOption>\n        <NativeSelectOption value=\"weekly\">Weekly</NativeSelectOption>\n        <NativeSelectOption value=\"monthly\">Monthly</NativeSelectOption>\n      </NativeSelect>\n      <NativeSelect defaultValue=\"weekly\" size=\"default\" aria-label=\"Frequency\">\n        <NativeSelectOption value=\"daily\">Daily</NativeSelectOption>\n        <NativeSelectOption value=\"weekly\">Weekly</NativeSelectOption>\n        <NativeSelectOption value=\"monthly\">Monthly</NativeSelectOption>\n      </NativeSelect>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="native-select-sizes" />
 
 ### With groups
 
 Options organized under labelled `NativeSelectOptGroup` headings.
 
-<Example kind="ui" name="native-select" story="WithGroups">
-
-<Code lang="tsx" code={"import { NativeSelect, NativeSelectOptGroup, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectWithGroupsExample() {\n  return (\n    <NativeSelect defaultValue=\"berlin\" aria-label=\"City\">\n      <NativeSelectOptGroup label=\"Europe\">\n        <NativeSelectOption value=\"berlin\">Berlin</NativeSelectOption>\n        <NativeSelectOption value=\"lisbon\">Lisbon</NativeSelectOption>\n        <NativeSelectOption value=\"zurich\">Zurich</NativeSelectOption>\n      </NativeSelectOptGroup>\n      <NativeSelectOptGroup label=\"Asia\">\n        <NativeSelectOption value=\"seoul\">Seoul</NativeSelectOption>\n        <NativeSelectOption value=\"singapore\">Singapore</NativeSelectOption>\n        <NativeSelectOption value=\"tokyo\">Tokyo</NativeSelectOption>\n      </NativeSelectOptGroup>\n    </NativeSelect>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="native-select-with-groups" />
 
 ### Disabled
 
 A select with `disabled` set, shown with the disabled control colors.
 
-<Example kind="ui" name="native-select" story="Disabled">
-
-<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectDisabledExample() {\n  return (\n    <NativeSelect disabled defaultValue=\"\" aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="native-select-disabled" />
 
 ### Invalid
 
 A select with `aria-invalid` set, shown with the danger border and tint.
 
-<Example kind="ui" name="native-select" story="Invalid">
-
-<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectInvalidExample() {\n  return (\n    <NativeSelect defaultValue=\"\" aria-invalid aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="native-select-invalid" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"NativeSelect","href":"#nativeselect","children":[{"name":"NativeSelectOption","href":"#nativeselectoption","children":[]},{"name":"NativeSelectOptGroup","href":"#nativeselectoptgroup","children":[{"name":"NativeSelectOption","href":"#nativeselectoption","children":[]}]}]}]} />
+<Anatomy>
+
+- [NativeSelect](#nativeselect)
+  - [NativeSelectOption](#nativeselectoption)
+  - [NativeSelectOptGroup](#nativeselectoptgroup)
+    - [NativeSelectOption](#nativeselectoption)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -98,7 +100,7 @@ A select with `aria-invalid` set, shown with the danger border and tint.
 
 The wrapper and native `select` element, with a decorative caret icon.
 
-<PropsTable extends={["NativeSelectProps"]} />
+Also accepts the props of `NativeSelectProps`.
 
 </ApiPart>
 
@@ -108,7 +110,7 @@ The wrapper and native `select` element, with a decorative caret icon.
 
 A single choice, rendered as an `option` element.
 
-<PropsTable extends={["React.ComponentProps<\"option\">"]} />
+Also accepts the props of `React.ComponentProps<"option">`.
 
 </ApiPart>
 
@@ -118,7 +120,7 @@ A single choice, rendered as an `option` element.
 
 A labelled group of options, rendered as an `optgroup` element.
 
-<PropsTable extends={["React.ComponentProps<\"optgroup\">"]} />
+Also accepts the props of `React.ComponentProps<"optgroup">`.
 
 </ApiPart>
 

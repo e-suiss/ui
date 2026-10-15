@@ -3,16 +3,11 @@ title: Otp Autofill
 description: "A one-time code field that offers an incoming code, fills it digit by digit, and verifies it automatically."
 eyebrow: Interaction
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="interaction" name="otp-autofill" story="Default">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { Button } from \"@/components/ui/button\"\nimport { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nconst CODE = \"482913\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <p\n      role=\"status\"\n      className=\"min-h-5 text-sm text-label-secondary data-[state=invalid]:text-danger data-[state=verified]:text-success\"\n      data-state={state}\n    >\n      {state === \"verifying\" && \"Verifying…\"}\n      {state === \"verified\" && \"Verified\"}\n      {state === \"invalid\" && \"That code didn't work. Try again.\"}\n    </p>\n  )\n}\n\nfunction VerificationExample({ incoming }: { incoming: string }) {\n  const [suggestion, setSuggestion] = React.useState<string | null>(null)\n  const [sending, setSending] = React.useState(false)\n\n  const send = React.useCallback(async () => {\n    setSending(true)\n    setSuggestion(null)\n    await wait(1200)\n    setSuggestion(incoming)\n    setSending(false)\n  }, [incoming])\n\n  React.useEffect(() => {\n    send()\n  }, [send])\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col items-center gap-2 text-center\">\n      <h2 className=\"text-2xl font-bold tracking-tight\">Enter the code</h2>\n      <p className=\"text-sm text-label-secondary\">\n        We sent a 6-digit code to +1 555 0100.\n      </p>\n      <OtpAutofill\n        maxLength={6}\n        onVerify={async (code) => {\n          await wait(700)\n          return code === CODE\n        }}\n        className=\"mt-4\"\n      >\n        <OtpAutofillInput autoFocus aria-label=\"Verification code\">\n          <InputOTPGroup>\n            <InputOTPSlot index={0} />\n            <InputOTPSlot index={1} />\n            <InputOTPSlot index={2} />\n          </InputOTPGroup>\n          <InputOTPSeparator />\n          <InputOTPGroup>\n            <InputOTPSlot index={3} />\n            <InputOTPSlot index={4} />\n            <InputOTPSlot index={5} />\n          </InputOTPGroup>\n        </OtpAutofillInput>\n        <Status />\n        <OtpAutofillSuggestion code={suggestion} />\n      </OtpAutofill>\n      <Button variant=\"plain\" onClick={send} disabled={sending}>\n        {sending ? \"Sending…\" : \"Resend code\"}\n      </Button>\n    </div>\n  )\n}\n\nexport function OtpAutofillExample() {\n  return (\n    <VerificationExample incoming={CODE} />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="otp-autofill-demo" responsive />
 
 `OtpAutofill` builds on the suiss/ui `InputOTP` component to recreate the iOS security code autofill flow. When the field is focused and empty, `OtpAutofillSuggestion` offers the received code; choosing it types the digits in with a short pop animation and calls `onVerify` once all slots are filled. A valid code turns the slots green and locks the field; an invalid one shakes the slots, marks them red, then clears the field and refocuses it.
 
@@ -22,27 +17,35 @@ The suggestion adapts to the device through `useIsMobile`. Below `48rem` it dock
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions otp-autofill"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add interactions otp-autofill
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp), `use-mobile`.
 
 3. Copy the source into `components/interactions/otp-autofill.tsx`:
 
-<SourceFile path="components/interactions/otp-autofill.tsx" />
+<ComponentSource path="components/interactions/otp-autofill.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from \"@/components/interactions/otp-autofill\""} />
+```tsx
+import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from "@/components/interactions/otp-autofill"
+```
 
-<Code lang="tsx" code={"<VerificationExample incoming={CODE} />"} />
+```tsx
+<VerificationExample incoming={CODE} />
+```
 
 - Place `OtpAutofillInput` and `OtpAutofillSuggestion` inside `OtpAutofill`. Pass `InputOTPGroup`, `InputOTPSlot`, and `InputOTPSeparator` from `input-otp` as the input's children.
 - The value is managed internally. Typing or pasting also verifies automatically once the code reaches `maxLength`; a paste of several characters fills with the same animation.
@@ -55,11 +58,7 @@ The suggestion adapts to the device through `useIsMobile`. Below `48rem` it dock
 
 A rejected code shakes the field, shows an error, clears, and accepts a code typed by hand.
 
-<Example kind="interaction" name="otp-autofill" story="WrongCode">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { Button } from \"@/components/ui/button\"\nimport { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nconst CODE = \"482913\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <p\n      role=\"status\"\n      className=\"min-h-5 text-sm text-label-secondary data-[state=invalid]:text-danger data-[state=verified]:text-success\"\n      data-state={state}\n    >\n      {state === \"verifying\" && \"Verifying…\"}\n      {state === \"verified\" && \"Verified\"}\n      {state === \"invalid\" && \"That code didn't work. Try again.\"}\n    </p>\n  )\n}\n\nfunction VerificationExample({ incoming }: { incoming: string }) {\n  const [suggestion, setSuggestion] = React.useState<string | null>(null)\n  const [sending, setSending] = React.useState(false)\n\n  const send = React.useCallback(async () => {\n    setSending(true)\n    setSuggestion(null)\n    await wait(1200)\n    setSuggestion(incoming)\n    setSending(false)\n  }, [incoming])\n\n  React.useEffect(() => {\n    send()\n  }, [send])\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col items-center gap-2 text-center\">\n      <h2 className=\"text-2xl font-bold tracking-tight\">Enter the code</h2>\n      <p className=\"text-sm text-label-secondary\">\n        We sent a 6-digit code to +1 555 0100.\n      </p>\n      <OtpAutofill\n        maxLength={6}\n        onVerify={async (code) => {\n          await wait(700)\n          return code === CODE\n        }}\n        className=\"mt-4\"\n      >\n        <OtpAutofillInput autoFocus aria-label=\"Verification code\">\n          <InputOTPGroup>\n            <InputOTPSlot index={0} />\n            <InputOTPSlot index={1} />\n            <InputOTPSlot index={2} />\n          </InputOTPGroup>\n          <InputOTPSeparator />\n          <InputOTPGroup>\n            <InputOTPSlot index={3} />\n            <InputOTPSlot index={4} />\n            <InputOTPSlot index={5} />\n          </InputOTPGroup>\n        </OtpAutofillInput>\n        <Status />\n        <OtpAutofillSuggestion code={suggestion} />\n      </OtpAutofill>\n      <Button variant=\"plain\" onClick={send} disabled={sending}>\n        {sending ? \"Sending…\" : \"Resend code\"}\n      </Button>\n    </div>\n  )\n}\n\nexport function OtpAutofillWrongCodeExample() {\n  return (\n    <VerificationExample incoming=\"113355\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="otp-autofill-wrong-code" responsive />
 
 ## API Reference
 
@@ -69,7 +68,13 @@ A rejected code shakes the field, shows an error, clears, and accepts a code typ
 
 The root that holds the code value and verification state.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"maxLength","type":"number","required":true,"description":"The number of characters in the code; verification runs once it is reached."},{"name":"onVerify","type":"(code: string) => Promise<boolean> | boolean","required":true,"description":"Called with the complete code; return or resolve `true` to accept it or `false` to reject it."},{"name":"webOtp","type":"boolean","default":"true","description":"Listens for SMS codes through the WebOTP API, where supported."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `maxLength` | `number` | Required | The number of characters in the code; verification runs once it is reached. |
+| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required | Called with the complete code; return or resolve `true` to accept it or `false` to reject it. |
+| `webOtp` | `boolean` | `true` | Listens for SMS codes through the WebOTP API, where supported. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -79,7 +84,12 @@ The root that holds the code value and verification state.
 
 The `InputOTP` field wired to the autofill state.
 
-<PropsTable extends={["React.ComponentProps<\"input\">"]} props={[{"name":"containerClassName","type":"string","description":"Classes for the slot container, merged with the state styles."},{"name":"children","type":"React.ReactNode","required":true,"description":"The slot groups and separators that make up the field."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `containerClassName` | `string` | - | Classes for the slot container, merged with the state styles. |
+| `children` | `React.ReactNode` | Required | The slot groups and separators that make up the field. |
+
+Also accepts the props of `React.ComponentProps<"input">`.
 
 </ApiPart>
 
@@ -89,7 +99,12 @@ The `InputOTP` field wired to the autofill state.
 
 The button that offers the received code and fills it when pressed.
 
-<PropsTable extends={["React.ComponentProps<\"button\">"]} props={[{"name":"code","type":"string | null | undefined","required":true,"description":"The received code to offer; the suggestion is hidden while it is empty."},{"name":"source","type":"React.ReactNode","default":"\"From Messages\"","description":"The label that names where the code came from."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string \| null \| undefined` | Required | The received code to offer; the suggestion is hidden while it is empty. |
+| `source` | `React.ReactNode` | `"From Messages"` | The label that names where the code came from. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
 
 </ApiPart>
 
@@ -109,15 +124,7 @@ The button that offers the received code and fills it when pressed.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="interactions-otp-autofill--default" width={880} height={491} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { Button } from \"@/components/ui/button\"\nimport { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\nimport { Text } from \"@/components/ui/text\"\n\nconst CODE = \"482913\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction statusClassName(state: string) {\n  if (state === \"invalid\") return \"min-h-5 text-sm text-danger\"\n  if (state === \"verified\") return \"min-h-5 text-sm text-success\"\n  return \"min-h-5 text-sm text-label-secondary\"\n}\n\nfunction statusText(state: string) {\n  if (state === \"verifying\") return \"Verifying…\"\n  if (state === \"verified\") return \"Verified\"\n  if (state === \"invalid\") return \"That code didn't work. Try again.\"\n  return \"\"\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <Text\n      role=\"status\"\n      accessibilityLiveRegion=\"polite\"\n      className={statusClassName(state)}\n    >\n      {statusText(state)}\n    </Text>\n  )\n}\n\nfunction VerificationExample({ incoming }: { incoming: string }) {\n  const [suggestion, setSuggestion] = React.useState<string | null>(null)\n  const [sending, setSending] = React.useState(false)\n\n  const send = React.useCallback(async () => {\n    setSending(true)\n    setSuggestion(null)\n    await wait(1200)\n    setSuggestion(incoming)\n    setSending(false)\n  }, [incoming])\n\n  React.useEffect(() => {\n    send()\n  }, [send])\n\n  return (\n    <View className=\"w-full items-center gap-2\">\n      <Text className=\"text-center text-2xl font-bold\">Enter the code</Text>\n      <Text className=\"text-center text-sm text-label-secondary\">\n        We sent a 6-digit code to +1 555 0100.\n      </Text>\n      <OtpAutofill\n        maxLength={6}\n        onVerify={async (code) => {\n          await wait(700)\n          return code === CODE\n        }}\n        className=\"mt-4\"\n      >\n        <OtpAutofillInput autoFocus accessibilityLabel=\"Verification code\">\n          <InputOTPGroup>\n            <InputOTPSlot index={0} />\n            <InputOTPSlot index={1} />\n            <InputOTPSlot index={2} />\n          </InputOTPGroup>\n          <InputOTPSeparator />\n          <InputOTPGroup>\n            <InputOTPSlot index={3} />\n            <InputOTPSlot index={4} />\n            <InputOTPSlot index={5} />\n          </InputOTPGroup>\n        </OtpAutofillInput>\n        <Status />\n        <OtpAutofillSuggestion code={suggestion} />\n      </OtpAutofill>\n      <Button variant=\"plain\" onPress={send} disabled={sending}>\n        <Text>{sending ? \"Sending…\" : \"Resend code\"}</Text>\n      </Button>\n    </View>\n  )\n}\n\nexport function OtpAutofillExample() {\n  return (\n    <VerificationExample incoming={CODE} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct OTPAutofillExample: View {\n  var body: some View {\n    OtpAutofillVerification(incoming: otpAutofillCode)\n  }\n}\n\nlet otpAutofillCode = \"482913\"\n\nstruct OtpAutofillStatus: View {\n  let state: OtpAutofillState\n\n  var body: some View {\n    Text(text)\n      .textStyle(.sm)\n      .foregroundStyle(color)\n      .frame(minHeight: 20)\n      .accessibilityAddTraits(.updatesFrequently)\n  }\n\n  var text: LocalizedStringKey {\n    switch state {\n    case .verifying: \"Verifying…\"\n    case .verified: \"Verified\"\n    case .invalid: \"That code didn't work. Try again.\"\n    case .idle, .filling: \"\"\n    }\n  }\n\n  var color: Color {\n    switch state {\n    case .verified: .success\n    case .invalid: .danger\n    default: .labelSecondary\n    }\n  }\n}\n\nstruct OtpAutofillVerification: View {\n  let incoming: String\n\n  @State private var suggestion: String?\n  @State private var sending = false\n\n  var body: some View {\n    VStack(spacing: 8) {\n      Text(\"Enter the code\")\n        .textStyle(.xl2, weight: .bold)\n        .foregroundStyle(Color.label)\n        .multilineTextAlignment(.center)\n      Text(\"We sent a 6-digit code to +1 555 0100.\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n        .multilineTextAlignment(.center)\n      OtpAutofill(length: 6, onVerify: { code in\n        try? await Task.sleep(for: .milliseconds(700))\n        return code == otpAutofillCode\n      }) { state in\n        OtpAutofillInput(autoFocus: true) {\n          InputOTPGroup {\n            InputOTPSlot(index: 0)\n            InputOTPSlot(index: 1)\n            InputOTPSlot(index: 2)\n          }\n          InputOTPSeparator()\n          InputOTPGroup {\n            InputOTPSlot(index: 3)\n            InputOTPSlot(index: 4)\n            InputOTPSlot(index: 5)\n          }\n        }\n        .accessibilityLabel(Text(\"Verification code\"))\n        OtpAutofillStatus(state: state)\n        OtpAutofillSuggestion(code: suggestion)\n      }\n      .padding(.top, 16)\n      Button {\n        Task { await send() }\n      } label: {\n        Text(sending ? \"Sending…\" : \"Resend code\")\n      }\n      .buttonStyle(.variant(.plain))\n      .disabled(sending)\n    }\n    .frame(maxWidth: .infinity)\n    .task {\n      await send()\n    }\n  }\n\n  func send() async {\n    sending = true\n    suggestion = nil\n    try? await Task.sleep(for: .milliseconds(1200))\n    suggestion = incoming\n    sending = false\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.InputOTPGroup\nimport com.esuiss.ui.components.InputOTPSeparator\nimport com.esuiss.ui.components.InputOTPSlot\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.OtpAutofill\nimport com.esuiss.ui.interactions.OtpAutofillInput\nimport com.esuiss.ui.interactions.OtpAutofillSuggestion\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlinx.coroutines.delay\n\n@Composable\nfun OTPAutofillExample() {\n    OtpAutofillVerification(incoming = OtpAutofillCode)\n}\n\n@Composable\nfun OtpAutofillVerification(incoming: String) {\n    val colors = EsuissTheme.colors\n    var suggestion by rememberSaveable { mutableStateOf<String?>(null) }\n    var sending by rememberSaveable { mutableStateOf(false) }\n    var request by rememberSaveable { mutableIntStateOf(0) }\n    LaunchedEffect(request) {\n        sending = true\n        suggestion = null\n        delay(1200)\n        suggestion = incoming\n        sending = false\n    }\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(8.dp),\n    ) {\n        Text(\"Enter the code\", style = Typography.xl2.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center)\n        Text(\n            \"We sent a 6-digit code to +1 555 0100.\",\n            style = Typography.sm.copy(color = colors.labelSecondary),\n            textAlign = TextAlign.Center,\n        )\n        OtpAutofill(\n            maxLength = 6,\n            onVerify = { code ->\n                delay(700)\n                code == OtpAutofillCode\n            },\n            modifier = Modifier.padding(top = 16.dp),\n        ) {\n            OtpAutofillInput(contentDescription = \"Verification code\", autoFocus = true) {\n                InputOTPGroup {\n                    InputOTPSlot(0)\n                    InputOTPSlot(1)\n                    InputOTPSlot(2)\n                }\n                InputOTPSeparator()\n                InputOTPGroup {\n                    InputOTPSlot(3)\n                    InputOTPSlot(4)\n                    InputOTPSlot(5)\n                }\n            }\n            OtpAutofillStatus()\n            OtpAutofillSuggestion(code = suggestion)\n        }\n        Button(\n            if (sending) \"Sending…\" else \"Resend code\",\n            onClick = { request += 1 },\n            variant = ButtonVariant.Plain,\n            enabled = !sending,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-otp-autofill--default" />
 
 `OtpAutofill` wraps an `InputOTP` and runs it through `idle`, `filling`, `verifying`, `verified` and `invalid` states. When the input is focused and empty, `OtpAutofillSuggestion` slides up above the keyboard with the incoming code; pressing it types the code one digit at a time.
 
@@ -127,19 +134,25 @@ When all digits are entered, `onVerify` runs and the slots dim while it is pendi
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add otp-autofill"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add otp-autofill
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add otp-autofill --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add otp-autofill --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add otp-autofill --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add otp-autofill --platform kotlin
+```
 
 </Only>
 
@@ -155,13 +168,15 @@ The CLI also adds what it builds on: [Input Otp](/docs/components/input-otp), [T
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
+```
 
 2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp), [Text](/docs/components/text), and the primitives `components/primitives/keyboard.tsx`, `components/primitives/portal.tsx`.
 
 3. Copy the source into `components/interactions/otp-autofill.tsx`:
 
-<SourceFile path="uniwind/components/interactions/otp-autofill.tsx" />
+<ComponentSource path="uniwind/components/interactions/otp-autofill.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -171,13 +186,15 @@ The CLI also adds what it builds on: [Input Otp](/docs/components/input-otp), [T
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
+```
 
 2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp), [Text](/docs/components/text), and the primitives `components/primitives/keyboard.tsx`, `components/primitives/portal.tsx`.
 
 3. Copy the source into `components/interactions/otp-autofill.tsx`:
 
-<SourceFile path="nativewind/components/interactions/otp-autofill.tsx" />
+<ComponentSource path="nativewind/components/interactions/otp-autofill.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -187,13 +204,15 @@ The CLI also adds what it builds on: [Input Otp](/docs/components/input-otp), [T
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets
+```
 
 2. Add the pieces it builds on: [Input Otp](/docs/components/input-otp), [Text](/docs/components/text), and the primitives `components/primitives/keyboard.tsx`, `components/primitives/portal.tsx`.
 
 3. Copy the source into `components/interactions/otp-autofill.tsx`:
 
-<SourceFile path="stylesheet/components/interactions/otp-autofill.tsx" />
+<ComponentSource path="stylesheet/components/interactions/otp-autofill.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -209,31 +228,33 @@ The CLI also adds what it builds on: [Input Otp](/docs/components/input-otp), [T
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Interactions/OtpAutofill.swift" />
+<ComponentSource path="swift/Interactions/OtpAutofill.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/InputOTP.swift" />
+<ComponentSource path="swift/Components/InputOTP.swift" />
 
-<SourceFile path="swift/Components/Keypad.swift" />
+<ComponentSource path="swift/Components/Keypad.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -243,39 +264,44 @@ The CLI also adds what it builds on: [Input Otp](/docs/components/input-otp), [T
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/interactions/OtpAutofill.kt" />
+<ComponentSource path="kotlin/interactions/OtpAutofill.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/InputOTP.kt" />
+<ComponentSource path="kotlin/components/InputOTP.kt" />
 
-<SourceFile path="kotlin/components/Keypad.kt" />
+<ComponentSource path="kotlin/components/Keypad.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -283,9 +309,13 @@ The CLI also adds what it builds on: [Input Otp](/docs/components/input-otp), [T
 
 ## Usage
 
-<Code lang="tsx" code={"import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from \"@/components/interactions/otp-autofill\""} />
+```tsx
+import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from "@/components/interactions/otp-autofill"
+```
 
-<Code lang="tsx" code={"<VerificationExample incoming={CODE} />"} />
+```tsx
+<VerificationExample incoming={CODE} />
+```
 
 Pass `maxLength` and `onVerify`, which returns a boolean or a promise of one. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
 
@@ -297,29 +327,13 @@ The input sets `textContentType="oneTimeCode"` and the platform's one-time code 
 
 An incoming code that fails verification, showing the shake and reset.
 
-<NativeExample id="interactions-otp-autofill--wrong-code" width={880} height={491} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { Button } from \"@/components/ui/button\"\nimport { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\nimport { Text } from \"@/components/ui/text\"\n\nconst CODE = \"482913\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction statusClassName(state: string) {\n  if (state === \"invalid\") return \"min-h-5 text-sm text-danger\"\n  if (state === \"verified\") return \"min-h-5 text-sm text-success\"\n  return \"min-h-5 text-sm text-label-secondary\"\n}\n\nfunction statusText(state: string) {\n  if (state === \"verifying\") return \"Verifying…\"\n  if (state === \"verified\") return \"Verified\"\n  if (state === \"invalid\") return \"That code didn't work. Try again.\"\n  return \"\"\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <Text\n      role=\"status\"\n      accessibilityLiveRegion=\"polite\"\n      className={statusClassName(state)}\n    >\n      {statusText(state)}\n    </Text>\n  )\n}\n\nfunction VerificationExample({ incoming }: { incoming: string }) {\n  const [suggestion, setSuggestion] = React.useState<string | null>(null)\n  const [sending, setSending] = React.useState(false)\n\n  const send = React.useCallback(async () => {\n    setSending(true)\n    setSuggestion(null)\n    await wait(1200)\n    setSuggestion(incoming)\n    setSending(false)\n  }, [incoming])\n\n  React.useEffect(() => {\n    send()\n  }, [send])\n\n  return (\n    <View className=\"w-full items-center gap-2\">\n      <Text className=\"text-center text-2xl font-bold\">Enter the code</Text>\n      <Text className=\"text-center text-sm text-label-secondary\">\n        We sent a 6-digit code to +1 555 0100.\n      </Text>\n      <OtpAutofill\n        maxLength={6}\n        onVerify={async (code) => {\n          await wait(700)\n          return code === CODE\n        }}\n        className=\"mt-4\"\n      >\n        <OtpAutofillInput autoFocus accessibilityLabel=\"Verification code\">\n          <InputOTPGroup>\n            <InputOTPSlot index={0} />\n            <InputOTPSlot index={1} />\n            <InputOTPSlot index={2} />\n          </InputOTPGroup>\n          <InputOTPSeparator />\n          <InputOTPGroup>\n            <InputOTPSlot index={3} />\n            <InputOTPSlot index={4} />\n            <InputOTPSlot index={5} />\n          </InputOTPGroup>\n        </OtpAutofillInput>\n        <Status />\n        <OtpAutofillSuggestion code={suggestion} />\n      </OtpAutofill>\n      <Button variant=\"plain\" onPress={send} disabled={sending}>\n        <Text>{sending ? \"Sending…\" : \"Resend code\"}</Text>\n      </Button>\n    </View>\n  )\n}\n\nexport function OtpAutofillWrongCodeExample() {\n  return (\n    <VerificationExample incoming=\"113355\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct OTPAutofillWrongCodeExample: View {\n  var body: some View {\n    OtpAutofillVerification(incoming: \"113355\")\n  }\n}\n\nlet otpAutofillCode = \"482913\"\n\nstruct OtpAutofillStatus: View {\n  let state: OtpAutofillState\n\n  var body: some View {\n    Text(text)\n      .textStyle(.sm)\n      .foregroundStyle(color)\n      .frame(minHeight: 20)\n      .accessibilityAddTraits(.updatesFrequently)\n  }\n\n  var text: LocalizedStringKey {\n    switch state {\n    case .verifying: \"Verifying…\"\n    case .verified: \"Verified\"\n    case .invalid: \"That code didn't work. Try again.\"\n    case .idle, .filling: \"\"\n    }\n  }\n\n  var color: Color {\n    switch state {\n    case .verified: .success\n    case .invalid: .danger\n    default: .labelSecondary\n    }\n  }\n}\n\nstruct OtpAutofillVerification: View {\n  let incoming: String\n\n  @State private var suggestion: String?\n  @State private var sending = false\n\n  var body: some View {\n    VStack(spacing: 8) {\n      Text(\"Enter the code\")\n        .textStyle(.xl2, weight: .bold)\n        .foregroundStyle(Color.label)\n        .multilineTextAlignment(.center)\n      Text(\"We sent a 6-digit code to +1 555 0100.\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n        .multilineTextAlignment(.center)\n      OtpAutofill(length: 6, onVerify: { code in\n        try? await Task.sleep(for: .milliseconds(700))\n        return code == otpAutofillCode\n      }) { state in\n        OtpAutofillInput(autoFocus: true) {\n          InputOTPGroup {\n            InputOTPSlot(index: 0)\n            InputOTPSlot(index: 1)\n            InputOTPSlot(index: 2)\n          }\n          InputOTPSeparator()\n          InputOTPGroup {\n            InputOTPSlot(index: 3)\n            InputOTPSlot(index: 4)\n            InputOTPSlot(index: 5)\n          }\n        }\n        .accessibilityLabel(Text(\"Verification code\"))\n        OtpAutofillStatus(state: state)\n        OtpAutofillSuggestion(code: suggestion)\n      }\n      .padding(.top, 16)\n      Button {\n        Task { await send() }\n      } label: {\n        Text(sending ? \"Sending…\" : \"Resend code\")\n      }\n      .buttonStyle(.variant(.plain))\n      .disabled(sending)\n    }\n    .frame(maxWidth: .infinity)\n    .task {\n      await send()\n    }\n  }\n\n  func send() async {\n    sending = true\n    suggestion = nil\n    try? await Task.sleep(for: .milliseconds(1200))\n    suggestion = incoming\n    sending = false\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.LaunchedEffect\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableIntStateOf\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.InputOTPGroup\nimport com.esuiss.ui.components.InputOTPSeparator\nimport com.esuiss.ui.components.InputOTPSlot\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.OtpAutofill\nimport com.esuiss.ui.interactions.OtpAutofillInput\nimport com.esuiss.ui.interactions.OtpAutofillSuggestion\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\nimport kotlinx.coroutines.delay\n\n@Composable\nfun OTPAutofillWrongCodeExample() {\n    OtpAutofillVerification(incoming = \"113355\")\n}\n\n@Composable\nfun OtpAutofillVerification(incoming: String) {\n    val colors = EsuissTheme.colors\n    var suggestion by rememberSaveable { mutableStateOf<String?>(null) }\n    var sending by rememberSaveable { mutableStateOf(false) }\n    var request by rememberSaveable { mutableIntStateOf(0) }\n    LaunchedEffect(request) {\n        sending = true\n        suggestion = null\n        delay(1200)\n        suggestion = incoming\n        sending = false\n    }\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(8.dp),\n    ) {\n        Text(\"Enter the code\", style = Typography.xl2.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center)\n        Text(\n            \"We sent a 6-digit code to +1 555 0100.\",\n            style = Typography.sm.copy(color = colors.labelSecondary),\n            textAlign = TextAlign.Center,\n        )\n        OtpAutofill(\n            maxLength = 6,\n            onVerify = { code ->\n                delay(700)\n                code == OtpAutofillCode\n            },\n            modifier = Modifier.padding(top = 16.dp),\n        ) {\n            OtpAutofillInput(contentDescription = \"Verification code\", autoFocus = true) {\n                InputOTPGroup {\n                    InputOTPSlot(0)\n                    InputOTPSlot(1)\n                    InputOTPSlot(2)\n                }\n                InputOTPSeparator()\n                InputOTPGroup {\n                    InputOTPSlot(3)\n                    InputOTPSlot(4)\n                    InputOTPSlot(5)\n                }\n            }\n            OtpAutofillStatus()\n            OtpAutofillSuggestion(code = suggestion)\n        }\n        Button(\n            if (sending) \"Sending…\" else \"Resend code\",\n            onClick = { request += 1 },\n            variant = ButtonVariant.Plain,\n            enabled = !sending,\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-otp-autofill--wrong-code" />
 
 ### Four digits
 
 A four-digit code with its own suggestion.
 
-<NativeExample id="interactions-otp-autofill--four-digits" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from \"@/components/interactions/otp-autofill\"\nimport { InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction statusClassName(state: string) {\n  if (state === \"invalid\") return \"min-h-5 text-sm text-danger\"\n  if (state === \"verified\") return \"min-h-5 text-sm text-success\"\n  return \"min-h-5 text-sm text-label-secondary\"\n}\n\nfunction statusText(state: string) {\n  if (state === \"verifying\") return \"Verifying…\"\n  if (state === \"verified\") return \"Verified\"\n  if (state === \"invalid\") return \"That code didn't work. Try again.\"\n  return \"\"\n}\n\nfunction Status() {\n  const { state } = useOtpAutofill()\n\n  return (\n    <Text\n      role=\"status\"\n      accessibilityLiveRegion=\"polite\"\n      className={statusClassName(state)}\n    >\n      {statusText(state)}\n    </Text>\n  )\n}\n\nexport function OtpAutofillFourDigitsExample() {\n  return (\n    <OtpAutofill maxLength={4} onVerify={(code) => code === \"2468\"}>\n      <OtpAutofillInput accessibilityLabel=\"Verification code\">\n        <InputOTPGroup>\n          <InputOTPSlot index={0} />\n          <InputOTPSlot index={1} />\n          <InputOTPSlot index={2} />\n          <InputOTPSlot index={3} />\n        </InputOTPGroup>\n      </OtpAutofillInput>\n      <Status />\n      <OtpAutofillSuggestion code=\"2468\" source=\"From Messages\" />\n    </OtpAutofill>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct OTPAutofillFourDigitsExample: View {\n  var body: some View {\n    OtpAutofill(length: 4, onVerify: { $0 == \"2468\" }) { state in\n      OtpAutofillInput {\n        InputOTPGroup {\n          InputOTPSlot(index: 0)\n          InputOTPSlot(index: 1)\n          InputOTPSlot(index: 2)\n          InputOTPSlot(index: 3)\n        }\n      }\n      .accessibilityLabel(Text(\"Verification code\"))\n      OtpAutofillStatus(state: state)\n      OtpAutofillSuggestion(code: \"2468\", source: \"From Messages\")\n    }\n    .frame(maxWidth: .infinity)\n  }\n}\n\nstruct OtpAutofillStatus: View {\n  let state: OtpAutofillState\n\n  var body: some View {\n    Text(text)\n      .textStyle(.sm)\n      .foregroundStyle(color)\n      .frame(minHeight: 20)\n      .accessibilityAddTraits(.updatesFrequently)\n  }\n\n  var text: LocalizedStringKey {\n    switch state {\n    case .verifying: \"Verifying…\"\n    case .verified: \"Verified\"\n    case .invalid: \"That code didn't work. Try again.\"\n    case .idle, .filling: \"\"\n    }\n  }\n\n  var color: Color {\n    switch state {\n    case .verified: .success\n    case .invalid: .danger\n    default: .labelSecondary\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.components.InputOTPGroup\nimport com.esuiss.ui.components.InputOTPSlot\nimport com.esuiss.ui.interactions.OtpAutofill\nimport com.esuiss.ui.interactions.OtpAutofillInput\nimport com.esuiss.ui.interactions.OtpAutofillSuggestion\n\n@Composable\nfun OtpAutofillFourDigits() {\n    OtpAutofill(maxLength = 4, onVerify = { code -> code == \"2468\" }, modifier = Modifier.fillMaxWidth()) {\n        OtpAutofillInput(contentDescription = \"Verification code\") {\n            InputOTPGroup {\n                InputOTPSlot(0)\n                InputOTPSlot(1)\n                InputOTPSlot(2)\n                InputOTPSlot(3)\n            }\n        }\n        OtpAutofillStatus()\n        OtpAutofillSuggestion(code = \"2468\", source = \"From Messages\")\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-otp-autofill--four-digits" />
 
 ## API Reference
 
@@ -329,7 +343,12 @@ A four-digit code with its own suggestion.
 
 The root that holds the code and verification state.
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"maxLength","type":"number","required":true,"description":"Number of digits in the code."},{"name":"onVerify","type":"(code: string) => Promise<boolean> | boolean","required":true,"description":"Checks a complete code; return `true` when it is valid."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `maxLength` | `number` | Required | Number of digits in the code. |
+| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required | Checks a complete code; return `true` when it is valid. |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 
@@ -339,7 +358,12 @@ The root that holds the code and verification state.
 
 The `InputOTP` that shows each state and shakes on an invalid code.
 
-<PropsTable extends={["React.ComponentProps<typeof InputOTP>"]} props={[{"name":"containerClassName","type":"string","description":"Classes for the animated container around the input."},{"name":"children","type":"React.ReactNode","required":true}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `containerClassName` | `string` | - | Classes for the animated container around the input. |
+| `children` | `React.ReactNode` | Required |  |
+
+Also accepts the props of `React.ComponentProps<typeof InputOTP>`.
 
 </ApiPart>
 
@@ -349,7 +373,14 @@ The `InputOTP` that shows each state and shakes on an invalid code.
 
 A bar above the keyboard that fills the suggested code on press.
 
-<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"code","type":"string | null | undefined","required":true,"description":"The code to suggest, or `null` to hide the bar."},{"name":"source","type":"React.ReactNode","default":"\"From Messages\"","description":"Label above the code. Defaults to `From Messages`."},{"name":"portalHost","type":"string","description":"Name of a portal host to render into."},{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string \| null \| undefined` | Required | The code to suggest, or `null` to hide the bar. |
+| `source` | `React.ReactNode` | `"From Messages"` | Label above the code. Defaults to `From Messages`. |
+| `portalHost` | `string` | - | Name of a portal host to render into. |
+| `className` | `string` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
 

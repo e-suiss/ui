@@ -3,16 +3,11 @@ title: Bar Chart Multiple
 description: "Two series drawn as grouped bars side by side for each month."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="bar-chart-multiple">
-
-<SourceFile path="components/charts/bar-chart-multiple.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="bar-chart-multiple" />
 
 Two series drawn as grouped bars side by side for each month. Pick it over the stacked variant when readers need to compare the series directly rather than see their total.
 
@@ -20,27 +15,35 @@ Two series drawn as grouped bars side by side for each month. Pick it over the s
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-multiple"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts bar-chart-multiple
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/bar-chart-multiple.tsx`:
 
-<SourceFile path="components/charts/bar-chart-multiple.tsx" />
+<ComponentSource path="components/charts/bar-chart-multiple.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartMultiple } from \"@/components/charts/bar-chart-multiple\""} />
+```tsx
+import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
+```
 
-<Code lang="tsx" code={"<BarChartMultiple />"} />
+```tsx
+<BarChartMultiple />
+```
 
 Replace `chartData` and rename the series keys in the data, the two `Bar` elements and `chartConfig`. Add a third `Bar` for another series. Tune `barGap` to control the space between bars in a group.
 
@@ -52,13 +55,13 @@ Grouped bars get thin quickly; beyond three series or a dozen categories, consid
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-bar--multiple" width={880} height={655} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-bar--multiple" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/bar-chart-multiple.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/bar-chart-multiple.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/BarChartMultiple.swift" fold={false} />
+<ComponentSource path="swift/Charts/BarChartMultiple.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/BarChartMultiple.kt" fold={false} />
+<ComponentSource path="kotlin/charts/BarChartMultiple.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Two `Bar` series sit next to each other in every month, separated by a small `ba
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-multiple"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-multiple
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-multiple --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-multiple --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-multiple --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-multiple --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
 
-<SourceFile path="uniwind/components/charts/bar-chart-multiple.tsx" />
+<ComponentSource path="uniwind/components/charts/bar-chart-multiple.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
 
-<SourceFile path="nativewind/components/charts/bar-chart-multiple.tsx" />
+<ComponentSource path="nativewind/components/charts/bar-chart-multiple.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
 
-<SourceFile path="stylesheet/components/charts/bar-chart-multiple.tsx" />
+<ComponentSource path="stylesheet/components/charts/bar-chart-multiple.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/BarChartMultiple.swift" />
+<ComponentSource path="swift/Charts/BarChartMultiple.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/BarChartMultiple.kt" />
+<ComponentSource path="kotlin/charts/BarChartMultiple.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartMultiple } from \"@/components/charts/bar-chart-multiple\""} />
+```tsx
+import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
+```
 
-<Code lang="tsx" code={"<BarChartMultiple />"} />
+```tsx
+<BarChartMultiple />
+```
 
 Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Bar` and a `chartConfig` entry for each extra series. The component takes no props.
 

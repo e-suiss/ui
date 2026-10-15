@@ -1,5 +1,0 @@
-{
-  "description": "A single filled area whose points are joined by straight lines instead of a curve.",
-  "overview": "The same one-series area as the default chart, with `type=\"linear\"` so each month connects to the next with a straight segment. It has a month axis, a dashed grid and a tooltip with a line indicator.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color of the series in `chartConfig`. The component takes no props."
-}

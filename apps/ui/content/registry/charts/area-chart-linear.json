@@ -1,6 +1,0 @@
-{
-  "description": "A single filled area whose points are joined by straight segments instead of a smoothed curve.",
-  "overview": "One series filled under straight line segments instead of a smoothed curve. Prefer it to the default when smoothing would suggest values between points that were never measured.",
-  "usage": "Replace `chartData`, update each `dataKey` to your field names and rename the `chartConfig` entry to set the label and color. Everything else matches the default area chart.",
-  "notes": "Keyboard users can focus the plot and step through the months with the arrow keys."
-}

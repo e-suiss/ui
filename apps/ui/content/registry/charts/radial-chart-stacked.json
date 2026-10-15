@@ -1,6 +1,0 @@
-{
-  "description": "A half-circle arc with two series stacked end to end and the combined total beneath it.",
-  "overview": "A half-circle arc where two series sit end to end and the combined total appears beneath. Use it to show a split of one total, like desktop versus mobile visitors, in a compact space.",
-  "usage": "Set your series values in `visitors`, add a matching entry with label and color for each key in `chartConfig`, and add one `RadialBar` per series with the same `stackId`. The arc's scale is set to the total, so the bars always fill it completely.",
-  "notes": "The tooltip shows both values at once regardless of which segment you hover."
-}

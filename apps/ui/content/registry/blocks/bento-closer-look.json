@@ -1,6 +1,0 @@
-{
-  "description": "A feature spotlight that pairs an auto-advancing accordion of features with a matching cross-fading image.",
-  "overview": "A feature spotlight with a list of features on one side and a photo on the other that cross-fades to match the open item. The list advances on its own every four seconds until someone opens an item, then stays put. On mobile the photo moves above the list. Use it to walk through a handful of product features without a carousel.",
-  "usage": "Edit the `features` array; each entry has a title, description, image and alt text. Change the 4000 ms interval or the heading in the component. Nothing needs wiring to a backend.",
-  "notes": "The automatic rotation keeps running under reduced motion until the user opens an item, so drop the interval if that matters for your audience. Photos are Unsplash placeholders."
-}

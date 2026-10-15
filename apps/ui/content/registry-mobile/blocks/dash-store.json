@@ -1,5 +1,0 @@
-{
-  "description": "A store sales dashboard with a range switcher, stat tiles, a daily bar chart, filtered recent orders and a tab bar.",
-  "overview": "Composes `Screen`, `Header`, `DropdownMenu` for picking the store, `ToggleGroup`, the `BarChart` from `Chart`, `Chip` filters, `Avatar`, `Item` rows and `TabBar`. The bar chart compares online and in-store sales per day, and pressing a day highlights it and shows its total. Order status chips filter the list.",
-  "usage": "Replace `STORES`, `ranges`, `week`, `orders` and `filters` with your store data. Pass `onRangeChange`, `onFilterChange`, `onStoreChange`, `onOrderPress` and `onNavigate` to react to each control."
-}

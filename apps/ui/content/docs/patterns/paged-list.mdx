@@ -3,16 +3,11 @@ title: Paged List
 description: "A list that pages through items with numbered pagination on desktop and a Load more button on mobile."
 eyebrow: Pattern
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="pattern" name="paged-list" story="Default">
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="paged-list-demo" layout="padded" responsive />
 
 `PagedList` slices an array of items into pages and renders each one through `renderItem` inside a plain list. On desktop it shows a suiss/ui `Pagination` with previous and next links, the first and last page, the pages next to the current one, and ellipses for the gaps. The pagination is hidden when everything fits on one page.
 
@@ -22,27 +17,35 @@ On mobile (below `48rem`, via `useIsMobile`), the list grows instead of paging: 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns paged-list"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add patterns paged-list
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Pagination](/docs/components/pagination), `use-mobile`.
 
 3. Copy the source into `components/patterns/paged-list.tsx`:
 
-<SourceFile path="components/patterns/paged-list.tsx" />
+<ComponentSource path="components/patterns/paged-list.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { PagedList } from \"@/components/patterns/paged-list\""} />
+```tsx
+import { PagedList } from "@/components/patterns/paged-list"
+```
 
-<Code lang="tsx" code={"<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />"} />
+```tsx
+<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" />
+```
 
 - The current page is uncontrolled by default and starts at `defaultPage`. Pass `page` and `onPageChange` to control it.
 - Out-of-range page values are clamped between `1` and the page count.
@@ -56,51 +59,31 @@ On mobile (below `48rem`, via `useIsMobile`), the list grows instead of paging: 
 
 Opens on page 4 by setting `defaultPage`.
 
-<Example kind="pattern" name="paged-list" story="StartOnLaterPage">
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListStartOnLaterPageExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" defaultPage={4} />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="paged-list-start-on-later-page" layout="padded" responsive />
 
 ### Single page
 
 Renders every item without pagination when the items fit on one page.
 
-<Example kind="pattern" name="paged-list" story="SinglePage">
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListSinglePageExample() {\n  return (\n    <PagedList<Topic> items={topics.slice(0, 6)} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="paged-list-single-page" layout="padded" responsive />
 
 ### Page links
 
 Gives each page link a real `href` through `getPageHref`.
 
-<Example kind="pattern" name="paged-list" story="PageLinks">
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListPageLinksExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" getPageHref={(page: number) => `#page-${page}`} />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="paged-list-page-links" layout="padded" responsive />
 
 ### Custom labels
 
 Replaces the previous, next and Load more labels.
 
-<Example kind="pattern" name="paged-list" story="CustomLabels">
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListCustomLabelsExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" loadMoreLabel=\"Show more topics\" previousLabel=\"Newer\" nextLabel=\"Older\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="paged-list-custom-labels" layout="padded" responsive />
 
 ### Controlled
 
 Owns the current page in state with `page` and `onPageChange`.
 
-<Example kind="pattern" name="paged-list" story="Controlled">
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nfunction ControlledExample(\n  args: React.ComponentProps<typeof PagedList<Topic>>\n) {\n  const [page, setPage] = React.useState(2)\n\n  return (\n    <div className=\"flex flex-col gap-2\">\n      <PagedList {...args} page={page} onPageChange={setPage} />\n      <p className=\"text-center text-sm text-label-secondary\">Page {page}</p>\n    </div>\n  )\n}\n\nexport function PagedListControlledExample() {\n  return (\n    <ControlledExample items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="paged-list-controlled" layout="padded" responsive />
 
 ## API Reference
 
@@ -110,7 +93,22 @@ Owns the current page in state with `page` and `onPageChange`.
 
 The root that renders the visible items and the pagination or Load more control.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"items","type":"T[]","required":true,"description":"The full array of items to page through."},{"name":"pageSize","type":"number","default":"10","description":"The number of items per page, and per Load more step on mobile."},{"name":"page","type":"number","description":"The current page when controlled."},{"name":"defaultPage","type":"number","default":"1","description":"The page shown first when uncontrolled."},{"name":"onPageChange","type":"(page: number) => void","description":"Called with the new page number when the user changes pages."},{"name":"getPageHref","type":"(page: number) => string","description":"Returns the `href` for a page link, turning pagination into real links."},{"name":"getKey","type":"(item: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns the React key for an item."},{"name":"renderItem","type":"(item: T, index: number) => React.ReactNode","required":true,"description":"Renders one item; receives the item and its index in `items`."},{"name":"loadMoreLabel","type":"string","default":"\"Load more\"","description":"The label of the mobile Load more button."},{"name":"previousLabel","type":"string","description":"Visible text for the previous link; it also becomes its accessible name."},{"name":"nextLabel","type":"string","description":"Visible text for the next link; it also becomes its accessible name."},{"name":"listClassName","type":"string","description":"Classes applied to the inner list element."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `T[]` | Required | The full array of items to page through. |
+| `pageSize` | `number` | `10` | The number of items per page, and per Load more step on mobile. |
+| `page` | `number` | - | The current page when controlled. |
+| `defaultPage` | `number` | `1` | The page shown first when uncontrolled. |
+| `onPageChange` | `(page: number) => void` | - | Called with the new page number when the user changes pages. |
+| `getPageHref` | `(page: number) => string` | - | Returns the `href` for a page link, turning pagination into real links. |
+| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` | Returns the React key for an item. |
+| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required | Renders one item; receives the item and its index in `items`. |
+| `loadMoreLabel` | `string` | `"Load more"` | The label of the mobile Load more button. |
+| `previousLabel` | `string` | - | Visible text for the previous link; it also becomes its accessible name. |
+| `nextLabel` | `string` | - | Visible text for the next link; it also becomes its accessible name. |
+| `listClassName` | `string` | - | Classes applied to the inner list element. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -129,15 +127,7 @@ Styling hooks: `data-slot="paged-list"`, `paged-list-items`, `paged-list-item`, 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="patterns-paged-list--default" width={880} height={1717} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => undefined}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PagedListExample: View {\n  var body: some View {\n    PagedListDemo(topics: pagedListTopics)\n  }\n}\n\nstruct PagedListTopic: Identifiable {\n  let id: Int\n  let title: String\n  let replies: Int\n}\n\nlet pagedListSubjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nlet pagedListTopics: [PagedListTopic] = (0..<57).map { index in\n  PagedListTopic(\n    id: index + 1,\n    title: \"\\(pagedListSubjects[index % pagedListSubjects.count]) · thread \\(index + 1)\",\n    replies: (index * 7) % 23\n  )\n}\n\nstruct PagedListDemo: View {\n  let topics: [PagedListTopic]\n  var pageSize = 10\n  var loadMoreLabel: LocalizedStringKey = \"Load more\"\n\n  var body: some View {\n    PagedList(topics, pageSize: pageSize, loadMoreLabel: loadMoreLabel) { topic, _ in\n      Item(action: {}) {\n        ItemMedia(.icon) {\n          Ph.chatCircle.regular\n        }\n        ItemContent {\n          ItemTitle(verbatim: topic.title)\n          ItemDescription(verbatim: \"\\(topic.replies) replies\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ChatCircle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemMedia\nimport com.esuiss.ui.components.ItemMediaVariant\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.patterns.PagedList\n\n@Composable\nfun PagedListExample() {\n    PagedListDemo(pagedListTopics)\n}\n\nclass PagedListTopic(val id: Int, val title: String, val replies: Int)\n\nval pagedListSubjects = listOf(\n    \"Getting started\",\n    \"Dark mode tokens\",\n    \"Form validation\",\n    \"Release notes\",\n    \"Accessibility\",\n    \"Theming\",\n    \"Server components\",\n    \"Animations\",\n)\n\nval pagedListTopics = List(57) { index ->\n    PagedListTopic(\n        id = index + 1,\n        title = \"${pagedListSubjects[index % pagedListSubjects.size]} · thread ${index + 1}\",\n        replies = (index * 7) % 23,\n    )\n}\n\n@Composable\nfun PagedListDemo(items: List<PagedListTopic>, pageSize: Int = 10, loadMoreLabel: String = \"Load more\") {\n    PagedList(\n        items = items,\n        modifier = Modifier.fillMaxWidth().height(560.dp),\n        pageSize = pageSize,\n        getKey = { topic, _ -> topic.id },\n        loadMoreLabel = loadMoreLabel,\n    ) { topic, _ ->\n        PagedListRow(topic)\n    }\n}\n\n@Composable\nfun PagedListRow(topic: PagedListTopic) {\n    Item(onClick = {}) {\n        ItemMedia(variant = ItemMediaVariant.Icon) {\n            Icon(PhosphorIcons.Regular.ChatCircle, contentDescription = null)\n        }\n        ItemContent {\n            ItemTitle(topic.title)\n            ItemDescription(\"${topic.replies} replies\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-paged-list--default" />
 
 `PagedList` takes the full `items` array and renders only the first `pageSize` items. When the user scrolls near the end, or presses the Load more button in the footer, the next page is appended.
 
@@ -147,19 +137,25 @@ The button disappears once every item is shown. Use it for long local lists wher
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add paged-list"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add paged-list
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add paged-list --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add paged-list --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add paged-list --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add paged-list --platform kotlin
+```
 
 </Only>
 
@@ -175,13 +171,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/paged-list.tsx`:
 
-<SourceFile path="uniwind/components/patterns/paged-list.tsx" />
+<ComponentSource path="uniwind/components/patterns/paged-list.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -191,13 +189,15 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/paged-list.tsx`:
 
-<SourceFile path="nativewind/components/patterns/paged-list.tsx" />
+<ComponentSource path="nativewind/components/patterns/paged-list.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -209,7 +209,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 2. Copy the source into `components/patterns/paged-list.tsx`:
 
-<SourceFile path="stylesheet/components/patterns/paged-list.tsx" />
+<ComponentSource path="stylesheet/components/patterns/paged-list.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -225,33 +225,35 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Patterns/PagedList.swift" />
+<ComponentSource path="swift/Patterns/PagedList.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -261,25 +263,29 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/patterns/PagedList.kt" />
+<ComponentSource path="kotlin/patterns/PagedList.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -287,9 +293,13 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 ## Usage
 
-<Code lang="tsx" code={"import { PagedList } from \"@/components/patterns/paged-list\""} />
+```tsx
+import { PagedList } from "@/components/patterns/paged-list"
+```
 
-<Code lang="tsx" code={"<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />"} />
+```tsx
+<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />
+```
 
 Pass `items`, `renderItem` and a `getKey` that returns a stable key for each item. `renderItem` receives the item and its index, not the `FlatList` info object.
 
@@ -301,43 +311,19 @@ Other `FlatList` props pass through, except `data`, `keyExtractor`, `onEndReache
 
 Uses a `pageSize` of 3 so pages load sooner.
 
-<NativeExample id="patterns-paged-list--small-pages" width={880} height={1717} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => undefined}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListSmallPagesExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={3} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PagedListSmallPagesExample: View {\n  var body: some View {\n    PagedListDemo(topics: pagedListTopics, pageSize: 3)\n  }\n}\n\nstruct PagedListTopic: Identifiable {\n  let id: Int\n  let title: String\n  let replies: Int\n}\n\nlet pagedListSubjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nlet pagedListTopics: [PagedListTopic] = (0..<57).map { index in\n  PagedListTopic(\n    id: index + 1,\n    title: \"\\(pagedListSubjects[index % pagedListSubjects.count]) · thread \\(index + 1)\",\n    replies: (index * 7) % 23\n  )\n}\n\nstruct PagedListDemo: View {\n  let topics: [PagedListTopic]\n  var pageSize = 10\n  var loadMoreLabel: LocalizedStringKey = \"Load more\"\n\n  var body: some View {\n    PagedList(topics, pageSize: pageSize, loadMoreLabel: loadMoreLabel) { topic, _ in\n      Item(action: {}) {\n        ItemMedia(.icon) {\n          Ph.chatCircle.regular\n        }\n        ItemContent {\n          ItemTitle(verbatim: topic.title)\n          ItemDescription(verbatim: \"\\(topic.replies) replies\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ChatCircle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemMedia\nimport com.esuiss.ui.components.ItemMediaVariant\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.patterns.PagedList\n\n@Composable\nfun PagedListSmallPagesExample() {\n    PagedListDemo(pagedListTopics, pageSize = 3)\n}\n\nclass PagedListTopic(val id: Int, val title: String, val replies: Int)\n\nval pagedListSubjects = listOf(\n    \"Getting started\",\n    \"Dark mode tokens\",\n    \"Form validation\",\n    \"Release notes\",\n    \"Accessibility\",\n    \"Theming\",\n    \"Server components\",\n    \"Animations\",\n)\n\nval pagedListTopics = List(57) { index ->\n    PagedListTopic(\n        id = index + 1,\n        title = \"${pagedListSubjects[index % pagedListSubjects.size]} · thread ${index + 1}\",\n        replies = (index * 7) % 23,\n    )\n}\n\n@Composable\nfun PagedListDemo(items: List<PagedListTopic>, pageSize: Int = 10, loadMoreLabel: String = \"Load more\") {\n    PagedList(\n        items = items,\n        modifier = Modifier.fillMaxWidth().height(560.dp),\n        pageSize = pageSize,\n        getKey = { topic, _ -> topic.id },\n        loadMoreLabel = loadMoreLabel,\n    ) { topic, _ ->\n        PagedListRow(topic)\n    }\n}\n\n@Composable\nfun PagedListRow(topic: PagedListTopic) {\n    Item(onClick = {}) {\n        ItemMedia(variant = ItemMediaVariant.Icon) {\n            Icon(PhosphorIcons.Regular.ChatCircle, contentDescription = null)\n        }\n        ItemContent {\n            ItemTitle(topic.title)\n            ItemDescription(\"${topic.replies} replies\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-paged-list--small-pages" />
 
 ### Single page
 
 Fewer items than one page, so no Load more button appears.
 
-<NativeExample id="patterns-paged-list--single-page" width={880} height={957} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => undefined}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListSinglePageExample() {\n  return (\n    <PagedList<Topic> items={topics.slice(0, 6)} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PagedListSinglePageExample: View {\n  var body: some View {\n    PagedListDemo(topics: Array(pagedListTopics.prefix(6)))\n  }\n}\n\nstruct PagedListTopic: Identifiable {\n  let id: Int\n  let title: String\n  let replies: Int\n}\n\nlet pagedListSubjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nlet pagedListTopics: [PagedListTopic] = (0..<57).map { index in\n  PagedListTopic(\n    id: index + 1,\n    title: \"\\(pagedListSubjects[index % pagedListSubjects.count]) · thread \\(index + 1)\",\n    replies: (index * 7) % 23\n  )\n}\n\nstruct PagedListDemo: View {\n  let topics: [PagedListTopic]\n  var pageSize = 10\n  var loadMoreLabel: LocalizedStringKey = \"Load more\"\n\n  var body: some View {\n    PagedList(topics, pageSize: pageSize, loadMoreLabel: loadMoreLabel) { topic, _ in\n      Item(action: {}) {\n        ItemMedia(.icon) {\n          Ph.chatCircle.regular\n        }\n        ItemContent {\n          ItemTitle(verbatim: topic.title)\n          ItemDescription(verbatim: \"\\(topic.replies) replies\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ChatCircle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemMedia\nimport com.esuiss.ui.components.ItemMediaVariant\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.patterns.PagedList\n\n@Composable\nfun PagedListSinglePageExample() {\n    PagedListDemo(pagedListTopics.take(6))\n}\n\nclass PagedListTopic(val id: Int, val title: String, val replies: Int)\n\nval pagedListSubjects = listOf(\n    \"Getting started\",\n    \"Dark mode tokens\",\n    \"Form validation\",\n    \"Release notes\",\n    \"Accessibility\",\n    \"Theming\",\n    \"Server components\",\n    \"Animations\",\n)\n\nval pagedListTopics = List(57) { index ->\n    PagedListTopic(\n        id = index + 1,\n        title = \"${pagedListSubjects[index % pagedListSubjects.size]} · thread ${index + 1}\",\n        replies = (index * 7) % 23,\n    )\n}\n\n@Composable\nfun PagedListDemo(items: List<PagedListTopic>, pageSize: Int = 10, loadMoreLabel: String = \"Load more\") {\n    PagedList(\n        items = items,\n        modifier = Modifier.fillMaxWidth().height(560.dp),\n        pageSize = pageSize,\n        getKey = { topic, _ -> topic.id },\n        loadMoreLabel = loadMoreLabel,\n    ) { topic, _ ->\n        PagedListRow(topic)\n    }\n}\n\n@Composable\nfun PagedListRow(topic: PagedListTopic) {\n    Item(onClick = {}) {\n        ItemMedia(variant = ItemMediaVariant.Icon) {\n            Icon(PhosphorIcons.Regular.ChatCircle, contentDescription = null)\n        }\n        ItemContent {\n            ItemTitle(topic.title)\n            ItemDescription(\"${topic.replies} replies\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-paged-list--single-page" />
 
 ### Custom labels
 
 Renames the button with `loadMoreLabel`.
 
-<NativeExample id="patterns-paged-list--custom-labels" width={880} height={1717} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ChatCircleIcon } from \"phosphor-react-native\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item onPress={() => undefined}>\n      <ItemMedia variant=\"icon\">\n        <Icon as={ChatCircleIcon} />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListCustomLabelsExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={3} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} loadMoreLabel=\"Show more topics\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PagedListCustomLabelsExample: View {\n  var body: some View {\n    PagedListDemo(topics: pagedListTopics, pageSize: 3, loadMoreLabel: \"Show more topics\")\n  }\n}\n\nstruct PagedListTopic: Identifiable {\n  let id: Int\n  let title: String\n  let replies: Int\n}\n\nlet pagedListSubjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nlet pagedListTopics: [PagedListTopic] = (0..<57).map { index in\n  PagedListTopic(\n    id: index + 1,\n    title: \"\\(pagedListSubjects[index % pagedListSubjects.count]) · thread \\(index + 1)\",\n    replies: (index * 7) % 23\n  )\n}\n\nstruct PagedListDemo: View {\n  let topics: [PagedListTopic]\n  var pageSize = 10\n  var loadMoreLabel: LocalizedStringKey = \"Load more\"\n\n  var body: some View {\n    PagedList(topics, pageSize: pageSize, loadMoreLabel: loadMoreLabel) { topic, _ in\n      Item(action: {}) {\n        ItemMedia(.icon) {\n          Ph.chatCircle.regular\n        }\n        ItemContent {\n          ItemTitle(verbatim: topic.title)\n          ItemDescription(verbatim: \"\\(topic.replies) replies\")\n        }\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ChatCircle\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Item\nimport com.esuiss.ui.components.ItemContent\nimport com.esuiss.ui.components.ItemDescription\nimport com.esuiss.ui.components.ItemMedia\nimport com.esuiss.ui.components.ItemMediaVariant\nimport com.esuiss.ui.components.ItemTitle\nimport com.esuiss.ui.patterns.PagedList\n\n@Composable\nfun PagedListCustomLabelsExample() {\n    PagedListDemo(pagedListTopics, pageSize = 3, loadMoreLabel = \"Show more topics\")\n}\n\nclass PagedListTopic(val id: Int, val title: String, val replies: Int)\n\nval pagedListSubjects = listOf(\n    \"Getting started\",\n    \"Dark mode tokens\",\n    \"Form validation\",\n    \"Release notes\",\n    \"Accessibility\",\n    \"Theming\",\n    \"Server components\",\n    \"Animations\",\n)\n\nval pagedListTopics = List(57) { index ->\n    PagedListTopic(\n        id = index + 1,\n        title = \"${pagedListSubjects[index % pagedListSubjects.size]} · thread ${index + 1}\",\n        replies = (index * 7) % 23,\n    )\n}\n\n@Composable\nfun PagedListDemo(items: List<PagedListTopic>, pageSize: Int = 10, loadMoreLabel: String = \"Load more\") {\n    PagedList(\n        items = items,\n        modifier = Modifier.fillMaxWidth().height(560.dp),\n        pageSize = pageSize,\n        getKey = { topic, _ -> topic.id },\n        loadMoreLabel = loadMoreLabel,\n    ) { topic, _ ->\n        PagedListRow(topic)\n    }\n}\n\n@Composable\nfun PagedListRow(topic: PagedListTopic) {\n    Item(onClick = {}) {\n        ItemMedia(variant = ItemMediaVariant.Icon) {\n            Icon(PhosphorIcons.Regular.ChatCircle, contentDescription = null)\n        }\n        ItemContent {\n            ItemTitle(topic.title)\n            ItemDescription(\"${topic.replies} replies\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-paged-list--custom-labels" />
 
 ## API Reference
 
@@ -345,7 +331,17 @@ Renames the button with `loadMoreLabel`.
 
 ### PagedList
 
-<PropsTable extends={["FlatListProps<T>"]} props={[{"name":"items","type":"T[]","required":true,"description":"The full array of items."},{"name":"pageSize","type":"number","default":"10","description":"Items added per page. Defaults to `10`."},{"name":"getKey","type":"(item: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns a unique key for an item. Defaults to the index."},{"name":"renderItem","type":"(item: T, index: number) => React.ReactNode","required":true,"description":"Renders one item from the item and its index."},{"name":"loadMoreLabel","type":"string","default":"\"Load more\"","description":"Text of the footer button. Defaults to `Load more`."},{"name":"className","type":"string","description":"Classes for the `FlatList`."},{"name":"listClassName","type":"string","description":"Classes for the list's content container."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `T[]` | Required | The full array of items. |
+| `pageSize` | `number` | `10` | Items added per page. Defaults to `10`. |
+| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` | Returns a unique key for an item. Defaults to the index. |
+| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required | Renders one item from the item and its index. |
+| `loadMoreLabel` | `string` | `"Load more"` | Text of the footer button. Defaults to `Load more`. |
+| `className` | `string` | - | Classes for the `FlatList`. |
+| `listClassName` | `string` | - | Classes for the list's content container. |
+
+Also accepts the props of `FlatListProps<T>`.
 
 </ApiPart>
 

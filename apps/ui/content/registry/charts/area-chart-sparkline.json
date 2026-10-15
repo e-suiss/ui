@@ -1,6 +1,0 @@
-{
-  "description": "A watchlist with a tiny gradient area chart beside each price, colored by whether the stock is rising or falling.",
-  "overview": "A watchlist where each row pairs a stock's name and price with a tiny gradient area chart, tinted green when rising and red when falling. Use sparklines like these inside lists and tables where a full chart would be too much.",
-  "usage": "Replace the `stocks` array and the demo `series` generator with your own symbols and price history. The tint follows the sign of each row's `change`, and the two colors live in `chartConfig`. Resize the sparkline through the class names on its `ChartContainer`.",
-  "notes": "Sparklines are hidden from assistive technology and have no tooltip or keyboard support, so keep the price and percentage text next to them. Animation is off so long lists render without motion."
-}

@@ -1,6 +1,0 @@
-{
-  "description": "A single series of rounded vertical bars, one per month.",
-  "overview": "The plain bar chart: one series of rounded vertical bars with a month axis and a tooltip. Start from it whenever you compare a handful of discrete values.",
-  "usage": "Replace `chartData`, set the `dataKey` on the axis and the bar to your fields, and rename the `chartConfig` entry to set the label and color. Adjust `radius` for corner rounding and `maxBarSize` to cap bar width on wide containers.",
-  "notes": "Focus the chart and use the arrow keys to move the tooltip from bar to bar."
-}

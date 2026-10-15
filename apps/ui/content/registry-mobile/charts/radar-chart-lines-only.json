@@ -1,5 +1,0 @@
-{
-  "description": "A radar chart comparing two months as outlines with no fill.",
-  "overview": "A `RadarChart` with two `Radar` series drawn with `fillOpacity={0}`, so only the outlines show. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip with both values.",
-  "usage": "Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props."
-}

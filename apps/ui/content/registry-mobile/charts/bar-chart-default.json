@@ -1,5 +1,0 @@
-{
-  "description": "A single series of rounded vertical bars showing desktop visitors over six months.",
-  "overview": "The baseline bar chart inside a `Card`: one rounded bar per month, a month axis, a dashed horizontal grid and a tooltip without a label. Start here and add series, stacking or labels as needed.",
-  "usage": "Replace `chartData` with your records and change each `dataKey` to match your fields. Set the bar color with `fill` and the series label in `chartConfig`. The component takes no props."
-}

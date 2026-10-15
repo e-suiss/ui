@@ -3,16 +3,11 @@ title: Pie Chart Donut Text
 description: "A donut with the total number of users displayed in the center of the ring."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="pie-chart-donut-text">
-
-<SourceFile path="components/charts/pie-chart-donut-text.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="pie-chart-donut-text" />
 
 A donut with the total shown in its center, so readers get the overall number and the breakdown in one glance. Prefer it over the plain donut when the total is the headline.
 
@@ -20,27 +15,35 @@ A donut with the total shown in its center, so readers get the overall number an
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts pie-chart-donut-text"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts pie-chart-donut-text
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
 
-<SourceFile path="components/charts/pie-chart-donut-text.tsx" />
+<ComponentSource path="components/charts/pie-chart-donut-text.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { PieChartDonutText } from \"@/components/charts/pie-chart-donut-text\""} />
+```tsx
+import { PieChartDonutText } from "@/components/charts/pie-chart-donut-text"
+```
 
-<Code lang="tsx" code={"<PieChartDonutText />"} />
+```tsx
+<PieChartDonutText />
+```
 
 Replace `chartData` and the category entries in `chartConfig`; the center total is summed from the data automatically. Change the caption under the number to your unit, and adjust `innerRadius` if a longer number needs more room.
 
@@ -52,13 +55,13 @@ The center text sits on top of the chart but lets pointer events through, so sli
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-pie--donut-text" width={880} height={687} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-pie--donut-text" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/pie-chart-donut-text.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/pie-chart-donut-text.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/PieChartDonutText.swift" fold={false} />
+<ComponentSource path="swift/Charts/PieChartDonutText.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/PieChartDonutText.kt" fold={false} />
+<ComponentSource path="kotlin/charts/PieChartDonutText.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ A `PieChart` donut with small gaps and rounded slice corners. `chartData` holds 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-donut-text"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-donut-text
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-donut-text --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-donut-text --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add pie-chart-donut-text --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add pie-chart-donut-text --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
 
-<SourceFile path="uniwind/components/charts/pie-chart-donut-text.tsx" />
+<ComponentSource path="uniwind/components/charts/pie-chart-donut-text.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
 
-<SourceFile path="nativewind/components/charts/pie-chart-donut-text.tsx" />
+<ComponentSource path="nativewind/components/charts/pie-chart-donut-text.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/pie-chart-donut-text.tsx`:
 
-<SourceFile path="stylesheet/components/charts/pie-chart-donut-text.tsx" />
+<ComponentSource path="stylesheet/components/charts/pie-chart-donut-text.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/PieChartDonutText.swift" />
+<ComponentSource path="swift/Charts/PieChartDonutText.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/PieChartDonutText.kt" />
+<ComponentSource path="kotlin/charts/PieChartDonutText.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { PieChartDonutText } from \"@/components/charts/pie-chart-donut-text\""} />
+```tsx
+import { PieChartDonutText } from "@/components/charts/pie-chart-donut-text"
+```
 
-<Code lang="tsx" code={"<PieChartDonutText />"} />
+```tsx
+<PieChartDonutText />
+```
 
 Replace `chartData` with your records; the center total recalculates from it. Update the `users` caption and `chartConfig` labels and colors to match. The component takes no props.
 

@@ -3,16 +3,11 @@ title: Nav Categories
 description: "A store landing header with a draggable carousel of category tiles and a heading that follows the selection."
 eyebrow: Block
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="nav-categories">
-
-<SourceFile path="components/blocks/nav-categories.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="nav-categories" />
 
 A store landing header with a Store heading and tagline beside quick help links, then a draggable row of image tiles for each category. Selecting a tile lifts it and updates the line below to name the category. Use it as the top of a shop home page or any visual category picker.
 
@@ -20,7 +15,9 @@ A store landing header with a Store heading and tagline beside quick help links,
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks nav-categories"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks nav-categories
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A store landing header with a Store heading and tagline beside quick help links,
 
 2. Copy the source into `components/blocks/nav-categories.tsx`:
 
-<SourceFile path="components/blocks/nav-categories.tsx" />
+<ComponentSource path="components/blocks/nav-categories.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { NavCategories } from \"@/components/blocks/nav-categories\""} />
+```tsx
+import { NavCategories } from "@/components/blocks/nav-categories"
+```
 
-<Code lang="tsx" code={"<NavCategories />"} />
+```tsx
+<NavCategories />
+```
 
 Replace `categories` with your categories, each with a label and image. Tiles only select themselves, so navigate or load products from the `Toggle`'s `onPressedChange`. Point the `#specialist` and `#stores` links at your routes.
 
@@ -48,13 +49,13 @@ Tile images are decorative, so each tile is named by its label. Images are Unspl
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="blocks-nav-categories--default" width={880} height={1720} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="blocks-nav-categories--default" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/blocks/nav-categories.tsx" fold={false} />
+<ComponentSource path="uniwind/components/blocks/nav-categories.tsx" fold={false} />
 
-<SourceFile path="swift/Blocks/NavCategories.swift" fold={false} />
+<ComponentSource path="swift/Blocks/NavCategories.swift" fold={false} />
 
-<SourceFile path="kotlin/blocks/NavCategories.kt" fold={false} />
+<ComponentSource path="kotlin/blocks/NavCategories.kt" fold={false} />
 
 </NativeExample>
 
@@ -64,19 +65,25 @@ A store screen with a large heading, links to ask a specialist or find a store, 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add nav-categories"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add nav-categories
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add nav-categories --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add nav-categories --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add nav-categories --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add nav-categories --platform kotlin
+```
 
 </Only>
 
@@ -92,13 +99,15 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/nav-categories.tsx`:
 
-<SourceFile path="uniwind/components/blocks/nav-categories.tsx" />
+<ComponentSource path="uniwind/components/blocks/nav-categories.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,13 +117,15 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/nav-categories.tsx`:
 
-<SourceFile path="nativewind/components/blocks/nav-categories.tsx" />
+<ComponentSource path="nativewind/components/blocks/nav-categories.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -124,13 +135,15 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-worklets
+```
 
 2. Add the pieces it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text).
 
 3. Copy the source into `components/blocks/nav-categories.tsx`:
 
-<SourceFile path="stylesheet/components/blocks/nav-categories.tsx" />
+<ComponentSource path="stylesheet/components/blocks/nav-categories.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -146,49 +159,51 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Blocks/NavCategories.swift" />
+<ComponentSource path="swift/Blocks/NavCategories.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Chip.swift" />
+<ComponentSource path="swift/Components/Chip.swift" />
 
-<SourceFile path="swift/Components/Combobox.swift" />
+<ComponentSource path="swift/Components/Combobox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Header.swift" />
+<ComponentSource path="swift/Components/Header.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/KeyboardScrollView.swift" />
+<ComponentSource path="swift/Components/KeyboardScrollView.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Screen.swift" />
+<ComponentSource path="swift/Components/Screen.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -198,41 +213,46 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/blocks/NavCategories.kt" />
+<ComponentSource path="kotlin/blocks/NavCategories.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Chip.kt" />
+<ComponentSource path="kotlin/components/Chip.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Screen.kt" />
+<ComponentSource path="kotlin/components/Screen.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -240,9 +260,13 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 ## Usage
 
-<Code lang="tsx" code={"import { NavCategories } from \"@/components/blocks/nav-categories\""} />
+```tsx
+import { NavCategories } from "@/components/blocks/nav-categories"
+```
 
-<Code lang="tsx" code={"<NavCategories />"} />
+```tsx
+<NavCategories />
+```
 
 Replace `CATEGORIES` with your categories and images. Wire `onSelectCategory`, `onAskSpecialist` and `onFindStore` to your navigation. The photos are Unsplash placeholders.
 

@@ -1,5 +1,0 @@
-{
-  "description": "A paged onboarding flow with illustrations, a page indicator and Continue and Skip buttons.",
-  "overview": "A `Carousel` of pages, each with an icon illustration, a title and a description. A `BottomBar` holds a `PageIndicator` you can tap to jump to a page, a Continue `Button` that moves to the next page and becomes Get started on the last, and a Skip button.",
-  "usage": "Pass your own `pages` (each with a `title`, `description` and optional `illustration`), or edit `DEFAULT_PAGES`. `onDone` is called from Get started and Skip."
-}

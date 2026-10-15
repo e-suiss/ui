@@ -1,5 +1,0 @@
-{
-  "description": "A user directory with a list beside a detail pane showing profile, sessions and security for the selected user.",
-  "overview": "A `SplitView` lists users with an `Avatar` and status, and the detail pane shows the selected user's header and a `ToggleGroup` for Profile, Sessions and Security. Profile lists details with a role `Picker`, Sessions lets you sign out one device or all others, and Security has `Switch` rows and a password reset `Button`. The admin `TabBar` switches sections.",
-  "usage": "Replace `USERS`, `ROLES` and `INITIAL_SESSIONS` with your data. Use `onRoleChange`, `onSignOut`, `onSignOutAll`, `onSecurityChange`, `onSendPasswordReset` and `onNavigate` to call your API."
-}

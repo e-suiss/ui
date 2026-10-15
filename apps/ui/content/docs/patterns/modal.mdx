@@ -3,16 +3,11 @@ title: Modal
 description: "A modal window that opens as a centered dialog on desktop and a bottom drawer on mobile."
 eyebrow: Pattern
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="pattern" name="modal" story="Default">
-
-<Code lang="tsx" code={"import { Modal, ModalBody, ModalClose, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from \"@/components/patterns/modal\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function ModalExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal>\n        <ModalTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </ModalTrigger>\n        <ModalContent>\n          <ModalHeader>\n            <ModalTitle>Edit profile</ModalTitle>\n            <ModalDescription>\n              Update your name and username. Click save when you are done.\n            </ModalDescription>\n          </ModalHeader>\n          <ModalBody className=\"grid gap-4\">\n            <div className=\"grid gap-2\">\n              <Label htmlFor=\"modal-name\">Name</Label>\n              <Input id=\"modal-name\" defaultValue=\"Ada Lovelace\" />\n            </div>\n            <div className=\"grid gap-2\">\n              <Label htmlFor=\"modal-username\">Username</Label>\n              <Input id=\"modal-username\" defaultValue=\"@ada\" />\n            </div>\n          </ModalBody>\n          <ModalFooter>\n            <ModalClose render={<Button variant=\"secondary\" />}>\n              Cancel\n            </ModalClose>\n            <Button>Save changes</Button>\n          </ModalFooter>\n        </ModalContent>\n      </Modal>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="modal-demo" layout="fullscreen" responsive />
 
 `Modal` presents focused content that blocks the rest of the page, such as a form or a share sheet. On desktop it renders a `Dialog`. Below the `48rem` breakpoint it renders a bottom `Drawer` with a swipe handle, and each part switches to its drawer counterpart: the header, title, description and close map to the drawer's parts, `ModalBody` gains padding, and `ModalFooter` stacks its buttons in reverse order so the primary action sits on top.
 
@@ -22,27 +17,65 @@ Use it for tasks that need the user's full attention before returning to the pag
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns modal"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add patterns modal
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Add the pieces it builds on: [Dialog](/docs/components/dialog), [Drawer](/docs/components/drawer), `use-mobile`.
 
 3. Copy the source into `components/patterns/modal.tsx`:
 
-<SourceFile path="components/patterns/modal.tsx" />
+<ComponentSource path="components/patterns/modal.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from \"@/components/patterns/modal\""} />
+```tsx
+import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from "@/components/patterns/modal"
+```
 
-<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <Modal>\n    <ModalTrigger render={<Button variant=\"outline\" />}>\n      Edit profile\n    </ModalTrigger>\n    <ModalContent>\n      <ModalHeader>\n        <ModalTitle>Edit profile</ModalTitle>\n        <ModalDescription>\n          Update your name and username. Click save when you are done.\n        </ModalDescription>\n      </ModalHeader>\n      <ModalBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"modal-name\">Name</Label>\n          <Input id=\"modal-name\" defaultValue=\"Ada Lovelace\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"modal-username\">Username</Label>\n          <Input id=\"modal-username\" defaultValue=\"@ada\" />\n        </div>\n      </ModalBody>\n      <ModalFooter>\n        <ModalClose render={<Button variant=\"secondary\" />}>\n          Cancel\n        </ModalClose>\n        <Button>Save changes</Button>\n      </ModalFooter>\n    </ModalContent>\n  </Modal>\n</div>"} />
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Modal>
+    <ModalTrigger render={<Button variant="outline" />}>
+      Edit profile
+    </ModalTrigger>
+    <ModalContent>
+      <ModalHeader>
+        <ModalTitle>Edit profile</ModalTitle>
+        <ModalDescription>
+          Update your name and username. Click save when you are done.
+        </ModalDescription>
+      </ModalHeader>
+      <ModalBody className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="modal-name">Name</Label>
+          <Input id="modal-name" defaultValue="Ada Lovelace" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="modal-username">Username</Label>
+          <Input id="modal-username" defaultValue="@ada" />
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <ModalClose render={<Button variant="secondary" />}>
+          Cancel
+        </ModalClose>
+        <Button>Save changes</Button>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
+</div>
+```
 
 The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Pass `render` to `ModalTrigger` or `ModalClose` to use your own `Button`. `ModalContent` shows a close button by default; set `showCloseButton` to `false` to hide it, or pass `closeLabel` to show text instead of the icon.
 
@@ -52,35 +85,35 @@ The modal can be controlled with `open` and `onOpenChange` or uncontrolled with 
 
 Relies on the default corner close button as the only way to dismiss besides `Escape`.
 
-<Example kind="pattern" name="modal" story="WithCloseButton">
-
-<Code lang="tsx" code={"import { Modal, ModalBody, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from \"@/components/patterns/modal\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ModalWithCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal>\n        <ModalTrigger render={<Button variant=\"outline\" />}>\n          Share project\n        </ModalTrigger>\n        <ModalContent>\n          <ModalHeader>\n            <ModalTitle>Share project</ModalTitle>\n            <ModalDescription>\n              Anyone with the link can view this project.\n            </ModalDescription>\n          </ModalHeader>\n          <ModalBody>\n            <Input\n              readOnly\n              aria-label=\"Project link\"\n              defaultValue=\"https://esuiss.dev/p/1042\"\n            />\n          </ModalBody>\n          <ModalFooter>\n            <Button>Copy link</Button>\n          </ModalFooter>\n        </ModalContent>\n      </Modal>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="modal-with-close-button" layout="fullscreen" responsive />
 
 ### With close label
 
 Replaces the close icon with a text button using `closeLabel`.
 
-<Example kind="pattern" name="modal" story="WithCloseLabel">
-
-<Code lang="tsx" code={"import { Modal, ModalBody, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from \"@/components/patterns/modal\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ModalWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal>\n        <ModalTrigger render={<Button variant=\"outline\" />}>\n          Share project\n        </ModalTrigger>\n        <ModalContent closeLabel=\"Close\">\n          <ModalHeader>\n            <ModalTitle>Share project</ModalTitle>\n            <ModalDescription>\n              Anyone with the link can view this project.\n            </ModalDescription>\n          </ModalHeader>\n          <ModalBody>\n            <Input\n              readOnly\n              aria-label=\"Project link\"\n              defaultValue=\"https://esuiss.dev/p/1042\"\n            />\n          </ModalBody>\n          <ModalFooter>\n            <Button>Copy link</Button>\n          </ModalFooter>\n        </ModalContent>\n      </Modal>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="modal-with-close-label" layout="fullscreen" responsive />
 
 ### Floating
 
 Insets the mobile drawer from the screen edges with `floating`.
 
-<Example kind="pattern" name="modal" story="Floating">
-
-<Code lang="tsx" code={"import { Modal } from \"@/components/patterns/modal\"\n\nexport function ModalFloatingExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal floating />\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="modal-floating" layout="fullscreen" responsive />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Modal","href":"#modal","children":[{"name":"ModalTrigger","href":"#modaltrigger","children":[]},{"name":"ModalContent","href":"#modalcontent","children":[{"name":"ModalHeader","href":"#modalheader","children":[{"name":"ModalTitle","href":"#modaltitle","children":[]},{"name":"ModalDescription","href":"#modaldescription","children":[]}]},{"name":"ModalBody","href":"#modalbody","children":[]},{"name":"ModalFooter","href":"#modalfooter","children":[{"name":"ModalClose","href":"#modalclose","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [Modal](#modal)
+  - [ModalTrigger](#modaltrigger)
+  - [ModalContent](#modalcontent)
+    - [ModalHeader](#modalheader)
+      - [ModalTitle](#modaltitle)
+      - [ModalDescription](#modaldescription)
+    - [ModalBody](#modalbody)
+    - [ModalFooter](#modalfooter)
+      - [ModalClose](#modalclose)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -88,7 +121,12 @@ Insets the mobile drawer from the screen edges with `floating`.
 
 The root that renders a `Dialog` on desktop and a `Drawer` on mobile.
 
-<PropsTable extends={["React.ComponentProps<typeof Dialog>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the modal opens or closes."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the modal opens or closes. |
+| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
+
+Also accepts the props of `React.ComponentProps<typeof Dialog>`.
 
 </ApiPart>
 
@@ -98,7 +136,11 @@ The root that renders a `Dialog` on desktop and a `Drawer` on mobile.
 
 The button that opens the modal.
 
-<PropsTable extends={["React.ComponentProps<typeof DialogTrigger>"]} props={[{"name":"className","type":"string","description":"Classes applied to the trigger."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Classes applied to the trigger. |
+
+Also accepts the props of `React.ComponentProps<typeof DialogTrigger>`.
 
 </ApiPart>
 
@@ -108,7 +150,12 @@ The button that opens the modal.
 
 The popup window, with a close button by default.
 
-<PropsTable extends={["React.ComponentProps<typeof DialogContent>"]} props={[{"name":"className","type":"string","description":"Classes applied to the dialog or drawer popup."},{"name":"style","type":"React.CSSProperties","description":"Inline styles applied to the dialog or drawer popup."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Classes applied to the dialog or drawer popup. |
+| `style` | `React.CSSProperties` | - | Inline styles applied to the dialog or drawer popup. |
+
+Also accepts the props of `React.ComponentProps<typeof DialogContent>`.
 
 </ApiPart>
 
@@ -118,7 +165,7 @@ The popup window, with a close button by default.
 
 Groups the title and description.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -128,7 +175,7 @@ Groups the title and description.
 
 The main content area, padded on mobile.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -138,7 +185,7 @@ The main content area, padded on mobile.
 
 Holds the modal's actions; stacked with the primary action on top on mobile.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -148,7 +195,7 @@ Holds the modal's actions; stacked with the primary action on top on mobile.
 
 The modal's title, used as its accessible name.
 
-<PropsTable extends={["React.ComponentProps<typeof DialogTitle>"]} />
+Also accepts the props of `React.ComponentProps<typeof DialogTitle>`.
 
 </ApiPart>
 
@@ -158,7 +205,7 @@ The modal's title, used as its accessible name.
 
 Supporting text, used as the modal's accessible description.
 
-<PropsTable extends={["React.ComponentProps<typeof DialogDescription>"]} />
+Also accepts the props of `React.ComponentProps<typeof DialogDescription>`.
 
 </ApiPart>
 
@@ -168,7 +215,7 @@ Supporting text, used as the modal's accessible description.
 
 A button that closes the modal.
 
-<PropsTable extends={["React.ComponentProps<typeof DialogClose>"]} />
+Also accepts the props of `React.ComponentProps<typeof DialogClose>`.
 
 </ApiPart>
 

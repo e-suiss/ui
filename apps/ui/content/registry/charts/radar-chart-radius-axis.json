@@ -1,6 +1,0 @@
-{
-  "description": "A single radar shape with a visible 0 to 100 value scale along the vertical axis.",
-  "overview": "A single radar shape with a 0 to 100 scale printed along the vertical axis. Choose it when readers need to estimate values, or when several radar charts must share the same scale.",
-  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Set `domain` on `PolarRadiusAxis` to your score range and `tickCount` for the number of labels. Change its angle to move the scale to another direction.",
-  "notes": "A fixed domain keeps shapes comparable across charts, as long as your scores stay inside it."
-}

@@ -3,16 +3,11 @@ title: Preview Menu
 description: "A context menu that lifts the pressed item into an enlarged preview above its actions, like iOS context menus."
 eyebrow: Interaction
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="interaction" name="preview-menu" story="Default">
-
-<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { cn } from \"cn\"\nimport * as React from \"react\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\n\nconst photos = [\n  \"from-blue to-purple\",\n  \"from-orange to-pink\",\n  \"from-green to-teal\",\n  \"from-indigo to-blue\",\n  \"from-yellow to-orange\",\n  \"from-pink to-red\",\n  \"from-teal to-cyan\",\n  \"from-purple to-indigo\",\n  \"from-mint to-green\",\n]\n\nfunction Photo({ tone, label }: { tone: string; label: string }) {\n  return (\n    <div\n      role=\"img\"\n      aria-label={label}\n      className={cn(\"aspect-square size-full bg-linear-to-br\", tone)}\n    />\n  )\n}\n\nfunction PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {\n  const [log, setLog] = React.useState(\n    \"Touch and hold a photo, or right-click it.\"\n  )\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <div className=\"grid grid-cols-3 gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone}>\n              <PreviewMenuTrigger className=\"aspect-square overflow-hidden rounded-2xl\">\n                <Photo tone={tone} label={label} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onClick={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <CopyIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem onClick={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <ShareNetworkIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onClick={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <HeartIcon />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onClick={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <TrashIcon />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </div>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function PreviewMenuExample() {\n  return (\n    <PhotoGrid />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="preview-menu-demo" layout="padded" responsive />
 
 `PreviewMenu` builds on the Base UI Context Menu. Touching and holding the trigger, or right-clicking it, blurs the page and animates the trigger from its position into a centered preview up to `360px` wide, morphing its corner radius along the way. The menu of actions opens below the preview and the trigger stays hidden until the menu finishes closing, so the preview appears to return to its place.
 
@@ -22,25 +17,33 @@ By default, the preview shows the trigger's own content. Pass `preview` to `Prev
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions preview-menu"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add interactions preview-menu
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react cn
+```
 
 2. Copy the source into `components/interactions/preview-menu.tsx`:
 
-<SourceFile path="components/interactions/preview-menu.tsx" />
+<ComponentSource path="components/interactions/preview-menu.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator } from \"@/components/interactions/preview-menu\""} />
+```tsx
+import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator } from "@/components/interactions/preview-menu"
+```
 
-<Code lang="tsx" code={"<PhotoGrid />"} />
+```tsx
+<PhotoGrid />
+```
 
 - Compose `PreviewMenuTrigger` and `PreviewMenuContent` inside `PreviewMenu`, with `PreviewMenuItem` and `PreviewMenuSeparator` inside the content.
 - The menu is uncontrolled by default; pass `open` and `onOpenChange` to control it.
@@ -53,25 +56,24 @@ By default, the preview shows the trigger's own content. Pass `preview` to `Prev
 
 A disabled item is announced as unavailable and does not act, while the other items still work.
 
-<Example kind="interaction" name="preview-menu" story="DisabledItem">
-
-<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { cn } from \"cn\"\nimport * as React from \"react\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\n\nconst photos = [\n  \"from-blue to-purple\",\n  \"from-orange to-pink\",\n  \"from-green to-teal\",\n  \"from-indigo to-blue\",\n  \"from-yellow to-orange\",\n  \"from-pink to-red\",\n  \"from-teal to-cyan\",\n  \"from-purple to-indigo\",\n  \"from-mint to-green\",\n]\n\nfunction Photo({ tone, label }: { tone: string; label: string }) {\n  return (\n    <div\n      role=\"img\"\n      aria-label={label}\n      className={cn(\"aspect-square size-full bg-linear-to-br\", tone)}\n    />\n  )\n}\n\nfunction PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {\n  const [log, setLog] = React.useState(\n    \"Touch and hold a photo, or right-click it.\"\n  )\n\n  return (\n    <div className=\"mx-auto flex w-full max-w-md flex-col gap-3\">\n      <div className=\"grid grid-cols-3 gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone}>\n              <PreviewMenuTrigger className=\"aspect-square overflow-hidden rounded-2xl\">\n                <Photo tone={tone} label={label} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onClick={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <CopyIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem onClick={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <ShareNetworkIcon />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onClick={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <HeartIcon />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onClick={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <TrashIcon />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </div>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {log}\n      </p>\n    </div>\n  )\n}\n\nexport function PreviewMenuDisabledItemExample() {\n  return (\n    <PhotoGrid withDisabled />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="preview-menu-disabled-item" layout="padded" responsive />
 
 ### Custom preview
 
 A compact album row opens a larger custom preview through the `preview` prop and `aspectRatio`.
 
-<Example kind="interaction" name="preview-menu" story="CustomPreview">
-
-<Code lang="tsx" code={"import { ShareNetworkIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\n\nconst photos = [\n  \"from-blue to-purple\",\n  \"from-orange to-pink\",\n  \"from-green to-teal\",\n  \"from-indigo to-blue\",\n  \"from-yellow to-orange\",\n  \"from-pink to-red\",\n  \"from-teal to-cyan\",\n  \"from-purple to-indigo\",\n  \"from-mint to-green\",\n]\n\nexport function PreviewMenuCustomPreviewExample() {\n  return (\n    <div className=\"mx-auto w-full max-w-md\">\n      <PreviewMenu aspectRatio={4 / 3}>\n        <PreviewMenuTrigger className=\"flex items-center gap-3 rounded-xl bg-surface-secondary p-3\">\n          <div className=\"size-12 shrink-0 rounded-lg bg-linear-to-br from-blue to-purple\" />\n          <div className=\"flex flex-col\">\n            <span className=\"font-semibold\">Trip to the coast</span>\n            <span className=\"text-sm text-label-secondary\">48 photos</span>\n          </div>\n        </PreviewMenuTrigger>\n        <PreviewMenuContent\n          preview={\n            <div className=\"flex flex-col justify-end bg-linear-to-br from-blue to-purple p-4 text-on-accent\">\n              <span className=\"text-lg font-semibold\">Trip to the coast</span>\n              <span className=\"text-sm\">48 photos · Updated today</span>\n            </div>\n          }\n        >\n          <PreviewMenuItem>\n            Share album\n            <ShareNetworkIcon />\n          </PreviewMenuItem>\n          <PreviewMenuItem variant=\"destructive\">\n            Delete album\n            <TrashIcon />\n          </PreviewMenuItem>\n        </PreviewMenuContent>\n      </PreviewMenu>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="preview-menu-custom-preview" layout="padded" responsive />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"PreviewMenu","href":"#previewmenu","children":[{"name":"PreviewMenuTrigger","href":"#previewmenutrigger","children":[]},{"name":"PreviewMenuContent","href":"#previewmenucontent","children":[{"name":"PreviewMenuItem","href":"#previewmenuitem","children":[]}]}]}]} />
+<Anatomy>
+
+- [PreviewMenu](#previewmenu)
+  - [PreviewMenuTrigger](#previewmenutrigger)
+  - [PreviewMenuContent](#previewmenucontent)
+    - [PreviewMenuItem](#previewmenuitem)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -79,7 +81,13 @@ A compact album row opens a larger custom preview through the `preview` prop and
 
 The root that manages open state and measures the preview frame.
 
-<PropsTable props={[{"name":"open","type":"boolean","description":"Whether the menu is open, for controlled use."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the menu starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu opens or closes."},{"name":"aspectRatio","type":"number","description":"The width-to-height ratio of the preview; defaults to the trigger's ratio."},{"name":"children","type":"React.ReactNode","description":"The trigger and content."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu opens or closes. |
+| `aspectRatio` | `number` | - | The width-to-height ratio of the preview; defaults to the trigger's ratio. |
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -89,7 +97,7 @@ The root that manages open state and measures the preview frame.
 
 The element that opens the menu on touch and hold or right-click.
 
-<PropsTable extends={["ContextMenuPrimitive.Trigger.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -99,7 +107,12 @@ The element that opens the menu on touch and hold or right-click.
 
 The backdrop, lifted preview, and popup that holds the menu items.
 
-<PropsTable extends={["ContextMenuPrimitive.Popup.Props"]} props={[{"name":"preview","type":"React.ReactNode","description":"Custom content to show in the preview instead of the trigger's content."},{"name":"previewClassName","type":"string","description":"Classes for the clipped preview container."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `preview` | `React.ReactNode` | - | Custom content to show in the preview instead of the trigger's content. |
+| `previewClassName` | `string` | - | Classes for the clipped preview container. |
+
+Also accepts the props of `ContextMenuPrimitive.Popup.Props`.
 
 </ApiPart>
 
@@ -109,7 +122,11 @@ The backdrop, lifted preview, and popup that holds the menu items.
 
 An action in the menu.
 
-<PropsTable extends={["ContextMenuPrimitive.Item.Props"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"The item style; `destructive` renders the label in the danger color."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` | The item style; `destructive` renders the label in the danger color. |
+
+Also accepts the props of `ContextMenuPrimitive.Item.Props`.
 
 </ApiPart>
 
@@ -119,7 +136,7 @@ An action in the menu.
 
 A thick divider between groups of items.
 
-<PropsTable extends={["ContextMenuPrimitive.Separator.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Separator.Props`.
 
 </ApiPart>
 
@@ -140,15 +157,7 @@ A thick divider between groups of items.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="interactions-preview-menu--open-by-default" width={880} height={1510} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction PhotoGrid({\n  withDisabled = false,\n  openIndex,\n}: {\n  withDisabled?: boolean\n  openIndex?: number\n}) {\n  const [log, setLog] = React.useState(\"Touch and hold a photo.\")\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone} defaultOpen={index === openIndex}>\n              <PreviewMenuTrigger\n                accessibilityLabel={label}\n                className=\"aspect-square w-[31%] overflow-hidden rounded-2xl\"\n              >\n                <View className={`h-full w-full ${tone}`} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onPress={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <Icon as={CopyIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem onPress={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <Icon as={ShareNetworkIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onPress={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <Icon as={HeartIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onPress={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <Icon as={TrashIcon} />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </View>\n      <Text variant=\"muted\">{log}</Text>\n    </View>\n  )\n}\n\nexport function PreviewMenuOpenByDefaultExample() {\n  return (\n    <PhotoGrid openIndex={1} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PreviewMenuOpenByDefaultExample: View {\n  var body: some View {\n    PreviewMenuPhotoGrid(openIndex: 1)\n  }\n}\n\nlet previewMenuTones: [Color] = [\n  .accent,\n  .warning,\n  .success,\n  .link,\n  .danger,\n  .accentPressed,\n  .labelTertiary,\n  .separatorStrong,\n  .surfaceTertiary,\n]\n\nstruct PreviewMenuPhotoGrid: View {\n  var withDisabled = false\n  var openIndex: Int?\n\n  @State private var log: LocalizedStringKey = \"Touch and hold a photo.\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      GeometryReader { proxy in\n        let side = ((proxy.size.width - 16) / 3).rounded(.down)\n        FlowRow(spacing: 8) {\n          ForEach(previewMenuTones.indices, id: \\.self) { index in\n            PreviewMenuPhoto(\n              index: index,\n              side: side,\n              withDisabled: withDisabled,\n              open: index == openIndex,\n              log: $log\n            )\n          }\n        }\n      }\n      .aspectRatio(1, contentMode: .fit)\n      Text(log)\n        .textVariant(.muted)\n    }\n  }\n}\n\nstruct PreviewMenuPhoto: View {\n  let index: Int\n  let side: CGFloat\n  let withDisabled: Bool\n  @Binding var log: LocalizedStringKey\n\n  @State private var open: Bool\n\n  init(index: Int, side: CGFloat, withDisabled: Bool, open: Bool, log: Binding<LocalizedStringKey>) {\n    self.index = index\n    self.side = side\n    self.withDisabled = withDisabled\n    _log = log\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    let label = \"Photo \\(index + 1)\"\n    previewMenuTones[index]\n      .frame(width: side, height: side)\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .accessibilityElement()\n      .accessibilityLabel(Text(verbatim: label))\n      .previewMenu(isPresented: $open) {\n        PreviewMenuItem(\"Copy\", icon: Ph.copy.regular) { log = \"Copied \\(label)\" }\n        PreviewMenuItem(\"Share\", icon: Ph.shareNetwork.regular) { log = \"Shared \\(label)\" }\n        PreviewMenuItem(\"Favorite\", icon: Ph.heart.regular) { log = \"Favorited \\(label)\" }\n          .disabled(withDisabled)\n        PreviewMenuSeparator()\n        PreviewMenuItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) { log = \"Deleted \\(label)\" }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Copy\nimport com.adamglin.phosphoricons.regular.Heart\nimport com.adamglin.phosphoricons.regular.ShareNetwork\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.PreviewMenu\nimport com.esuiss.ui.interactions.PreviewMenuItem\nimport com.esuiss.ui.interactions.PreviewMenuSeparator\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun PreviewMenuOpenByDefaultExample() {\n    PreviewMenuPhotoGrid(openIndex = 1)\n}\n\n@Composable\nfun previewMenuTones(): List<Color> {\n    val colors = EsuissTheme.colors\n    return listOf(\n        colors.blue,\n        colors.orange,\n        colors.green,\n        colors.indigo,\n        colors.yellow,\n        colors.pink,\n        colors.teal,\n        colors.purple,\n        colors.mint,\n    )\n}\n\n@Composable\nfun PreviewMenuPhotoGrid(withDisabled: Boolean = false, openIndex: Int? = null) {\n    var log by rememberSaveable { mutableStateOf(\"Touch and hold a photo.\") }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        FlowRow(\n            modifier = Modifier.fillMaxWidth(),\n            horizontalArrangement = Arrangement.spacedBy(8.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            previewMenuTones().forEachIndexed { index, tone ->\n                val label = \"Photo ${index + 1}\"\n                var open by rememberSaveable(index) { mutableStateOf(index == openIndex) }\n                PreviewMenu(\n                    open = open,\n                    onOpenChange = { open = it },\n                    trigger = {\n                        Box(\n                            Modifier\n                                .fillMaxSize()\n                                .clip(shape)\n                                .background(tone, shape)\n                                .semantics { contentDescription = label },\n                        )\n                    },\n                    modifier = Modifier.fillMaxWidth(0.31f).aspectRatio(1f),\n                ) {\n                    PreviewMenuItem(\"Copy\", onClick = { log = \"Copied $label\" }, icon = PhosphorIcons.Regular.Copy)\n                    PreviewMenuItem(\"Share\", onClick = { log = \"Shared $label\" }, icon = PhosphorIcons.Regular.ShareNetwork)\n                    PreviewMenuItem(\n                        \"Favorite\",\n                        onClick = { log = \"Favorited $label\" },\n                        icon = PhosphorIcons.Regular.Heart,\n                        enabled = !withDisabled,\n                    )\n                    PreviewMenuSeparator()\n                    PreviewMenuItem(\n                        \"Delete\",\n                        onClick = { log = \"Deleted $label\" },\n                        icon = PhosphorIcons.Regular.Trash,\n                        variant = MenuItemVariant.Destructive,\n                    )\n                }\n            }\n        }\n        Text(log, variant = TextVariant.Muted)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-preview-menu--open-by-default" />
 
 Long pressing a `PreviewMenuTrigger` measures it and the menu, then animates its content from its place on screen into a larger preview, up to 360 points wide. The preview and the menu below it are centered together between the top and bottom safe areas. The rest of the screen fades behind a scrim, and the menu grows out of the trigger into place.
 
@@ -158,19 +167,25 @@ The original trigger is hidden while lifted, so the preview appears to rise out 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add preview-menu"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add preview-menu
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add preview-menu --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add preview-menu --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add preview-menu --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add preview-menu --platform kotlin
+```
 
 </Only>
 
@@ -186,13 +201,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/preview-menu.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/interactions/preview-menu.tsx`:
 
-<SourceFile path="uniwind/components/interactions/preview-menu.tsx" />
+<ComponentSource path="uniwind/components/interactions/preview-menu.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -202,13 +219,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/preview-menu.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/interactions/preview-menu.tsx`:
 
-<SourceFile path="nativewind/components/interactions/preview-menu.tsx" />
+<ComponentSource path="nativewind/components/interactions/preview-menu.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -218,13 +237,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets"} />
+```bash title="Terminal"
+npx expo install react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/preview-menu.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/interactions/preview-menu.tsx`:
 
-<SourceFile path="stylesheet/components/interactions/preview-menu.tsx" />
+<ComponentSource path="stylesheet/components/interactions/preview-menu.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -240,33 +261,35 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Interactions/PreviewMenu.swift" />
+<ComponentSource path="swift/Interactions/PreviewMenu.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -276,41 +299,46 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/interactions/PreviewMenu.kt" />
+<ComponentSource path="kotlin/interactions/PreviewMenu.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/DropdownMenu.kt" />
+<ComponentSource path="kotlin/components/DropdownMenu.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -318,9 +346,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator } from \"@/components/interactions/preview-menu\""} />
+```tsx
+import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator } from "@/components/interactions/preview-menu"
+```
 
-<Code lang="tsx" code={"<PhotoGrid openIndex={1} />"} />
+```tsx
+<PhotoGrid openIndex={1} />
+```
 
 Put a `PreviewMenuTrigger` with the element and a `PreviewMenuContent` with `PreviewMenuItem`s inside `PreviewMenu`. By default the preview repeats the trigger's children; pass `preview` to show different content, such as a larger image.
 
@@ -330,57 +362,25 @@ Set `aspectRatio` to size the preview, for example `4 / 3`. The menu can be unco
 
 ### Default
 
-<NativeExample id="interactions-preview-menu--default" width={880} height={930} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction PhotoGrid({\n  withDisabled = false,\n  openIndex,\n}: {\n  withDisabled?: boolean\n  openIndex?: number\n}) {\n  const [log, setLog] = React.useState(\"Touch and hold a photo.\")\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone} defaultOpen={index === openIndex}>\n              <PreviewMenuTrigger\n                accessibilityLabel={label}\n                className=\"aspect-square w-[31%] overflow-hidden rounded-2xl\"\n              >\n                <View className={`h-full w-full ${tone}`} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onPress={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <Icon as={CopyIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem onPress={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <Icon as={ShareNetworkIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onPress={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <Icon as={HeartIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onPress={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <Icon as={TrashIcon} />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </View>\n      <Text variant=\"muted\">{log}</Text>\n    </View>\n  )\n}\n\nexport function PreviewMenuExample() {\n  return (\n    <PhotoGrid />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nlet previewMenuTones: [Color] = [\n  .accent,\n  .warning,\n  .success,\n  .link,\n  .danger,\n  .accentPressed,\n  .labelTertiary,\n  .separatorStrong,\n  .surfaceTertiary,\n]\n\nstruct PreviewMenuPhotoGrid: View {\n  var withDisabled = false\n  var openIndex: Int?\n\n  @State private var log: LocalizedStringKey = \"Touch and hold a photo.\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      GeometryReader { proxy in\n        let side = ((proxy.size.width - 16) / 3).rounded(.down)\n        FlowRow(spacing: 8) {\n          ForEach(previewMenuTones.indices, id: \\.self) { index in\n            PreviewMenuPhoto(\n              index: index,\n              side: side,\n              withDisabled: withDisabled,\n              open: index == openIndex,\n              log: $log\n            )\n          }\n        }\n      }\n      .aspectRatio(1, contentMode: .fit)\n      Text(log)\n        .textVariant(.muted)\n    }\n  }\n}\n\nstruct PreviewMenuPhoto: View {\n  let index: Int\n  let side: CGFloat\n  let withDisabled: Bool\n  @Binding var log: LocalizedStringKey\n\n  @State private var open: Bool\n\n  init(index: Int, side: CGFloat, withDisabled: Bool, open: Bool, log: Binding<LocalizedStringKey>) {\n    self.index = index\n    self.side = side\n    self.withDisabled = withDisabled\n    _log = log\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    let label = \"Photo \\(index + 1)\"\n    previewMenuTones[index]\n      .frame(width: side, height: side)\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .accessibilityElement()\n      .accessibilityLabel(Text(verbatim: label))\n      .previewMenu(isPresented: $open) {\n        PreviewMenuItem(\"Copy\", icon: Ph.copy.regular) { log = \"Copied \\(label)\" }\n        PreviewMenuItem(\"Share\", icon: Ph.shareNetwork.regular) { log = \"Shared \\(label)\" }\n        PreviewMenuItem(\"Favorite\", icon: Ph.heart.regular) { log = \"Favorited \\(label)\" }\n          .disabled(withDisabled)\n        PreviewMenuSeparator()\n        PreviewMenuItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) { log = \"Deleted \\(label)\" }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Copy\nimport com.adamglin.phosphoricons.regular.Heart\nimport com.adamglin.phosphoricons.regular.ShareNetwork\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.PreviewMenu\nimport com.esuiss.ui.interactions.PreviewMenuItem\nimport com.esuiss.ui.interactions.PreviewMenuSeparator\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun previewMenuTones(): List<Color> {\n    val colors = EsuissTheme.colors\n    return listOf(\n        colors.blue,\n        colors.orange,\n        colors.green,\n        colors.indigo,\n        colors.yellow,\n        colors.pink,\n        colors.teal,\n        colors.purple,\n        colors.mint,\n    )\n}\n\n@Composable\nfun PreviewMenuPhotoGrid(withDisabled: Boolean = false, openIndex: Int? = null) {\n    var log by rememberSaveable { mutableStateOf(\"Touch and hold a photo.\") }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        FlowRow(\n            modifier = Modifier.fillMaxWidth(),\n            horizontalArrangement = Arrangement.spacedBy(8.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            previewMenuTones().forEachIndexed { index, tone ->\n                val label = \"Photo ${index + 1}\"\n                var open by rememberSaveable(index) { mutableStateOf(index == openIndex) }\n                PreviewMenu(\n                    open = open,\n                    onOpenChange = { open = it },\n                    trigger = {\n                        Box(\n                            Modifier\n                                .fillMaxSize()\n                                .clip(shape)\n                                .background(tone, shape)\n                                .semantics { contentDescription = label },\n                        )\n                    },\n                    modifier = Modifier.fillMaxWidth(0.31f).aspectRatio(1f),\n                ) {\n                    PreviewMenuItem(\"Copy\", onClick = { log = \"Copied $label\" }, icon = PhosphorIcons.Regular.Copy)\n                    PreviewMenuItem(\"Share\", onClick = { log = \"Shared $label\" }, icon = PhosphorIcons.Regular.ShareNetwork)\n                    PreviewMenuItem(\n                        \"Favorite\",\n                        onClick = { log = \"Favorited $label\" },\n                        icon = PhosphorIcons.Regular.Heart,\n                        enabled = !withDisabled,\n                    )\n                    PreviewMenuSeparator()\n                    PreviewMenuItem(\n                        \"Delete\",\n                        onClick = { log = \"Deleted $label\" },\n                        icon = PhosphorIcons.Regular.Trash,\n                        variant = MenuItemVariant.Destructive,\n                    )\n                }\n            }\n        }\n        Text(log, variant = TextVariant.Muted)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-preview-menu--default" />
 
 ### Disabled item
 
 Includes a disabled menu item.
 
-<NativeExample id="interactions-preview-menu--disabled-item" width={880} height={1511} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CopyIcon, HeartIcon, ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport * as React from \"react\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction PhotoGrid({\n  withDisabled = false,\n  openIndex,\n}: {\n  withDisabled?: boolean\n  openIndex?: number\n}) {\n  const [log, setLog] = React.useState(\"Touch and hold a photo.\")\n  return (\n    <View className=\"gap-3\">\n      <View className=\"flex-row flex-wrap gap-2\">\n        {photos.map((tone, index) => {\n          const label = `Photo ${index + 1}`\n          return (\n            <PreviewMenu key={tone} defaultOpen={index === openIndex}>\n              <PreviewMenuTrigger\n                accessibilityLabel={label}\n                className=\"aspect-square w-[31%] overflow-hidden rounded-2xl\"\n              >\n                <View className={`h-full w-full ${tone}`} />\n              </PreviewMenuTrigger>\n              <PreviewMenuContent>\n                <PreviewMenuItem onPress={() => setLog(`Copied ${label}`)}>\n                  Copy\n                  <Icon as={CopyIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem onPress={() => setLog(`Shared ${label}`)}>\n                  Share\n                  <Icon as={ShareNetworkIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuItem\n                  disabled={withDisabled}\n                  onPress={() => setLog(`Favorited ${label}`)}\n                >\n                  Favorite\n                  <Icon as={HeartIcon} />\n                </PreviewMenuItem>\n                <PreviewMenuSeparator />\n                <PreviewMenuItem\n                  variant=\"destructive\"\n                  onPress={() => setLog(`Deleted ${label}`)}\n                >\n                  Delete\n                  <Icon as={TrashIcon} />\n                </PreviewMenuItem>\n              </PreviewMenuContent>\n            </PreviewMenu>\n          )\n        })}\n      </View>\n      <Text variant=\"muted\">{log}</Text>\n    </View>\n  )\n}\n\nexport function PreviewMenuDisabledItemExample() {\n  return (\n    <PhotoGrid withDisabled openIndex={0} />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PreviewMenuDisabledItemExample: View {\n  var body: some View {\n    PreviewMenuPhotoGrid(withDisabled: true, openIndex: 0)\n  }\n}\n\nlet previewMenuTones: [Color] = [\n  .accent,\n  .warning,\n  .success,\n  .link,\n  .danger,\n  .accentPressed,\n  .labelTertiary,\n  .separatorStrong,\n  .surfaceTertiary,\n]\n\nstruct PreviewMenuPhotoGrid: View {\n  var withDisabled = false\n  var openIndex: Int?\n\n  @State private var log: LocalizedStringKey = \"Touch and hold a photo.\"\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      GeometryReader { proxy in\n        let side = ((proxy.size.width - 16) / 3).rounded(.down)\n        FlowRow(spacing: 8) {\n          ForEach(previewMenuTones.indices, id: \\.self) { index in\n            PreviewMenuPhoto(\n              index: index,\n              side: side,\n              withDisabled: withDisabled,\n              open: index == openIndex,\n              log: $log\n            )\n          }\n        }\n      }\n      .aspectRatio(1, contentMode: .fit)\n      Text(log)\n        .textVariant(.muted)\n    }\n  }\n}\n\nstruct PreviewMenuPhoto: View {\n  let index: Int\n  let side: CGFloat\n  let withDisabled: Bool\n  @Binding var log: LocalizedStringKey\n\n  @State private var open: Bool\n\n  init(index: Int, side: CGFloat, withDisabled: Bool, open: Bool, log: Binding<LocalizedStringKey>) {\n    self.index = index\n    self.side = side\n    self.withDisabled = withDisabled\n    _log = log\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    let label = \"Photo \\(index + 1)\"\n    previewMenuTones[index]\n      .frame(width: side, height: side)\n      .clipShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))\n      .accessibilityElement()\n      .accessibilityLabel(Text(verbatim: label))\n      .previewMenu(isPresented: $open) {\n        PreviewMenuItem(\"Copy\", icon: Ph.copy.regular) { log = \"Copied \\(label)\" }\n        PreviewMenuItem(\"Share\", icon: Ph.shareNetwork.regular) { log = \"Shared \\(label)\" }\n        PreviewMenuItem(\"Favorite\", icon: Ph.heart.regular) { log = \"Favorited \\(label)\" }\n          .disabled(withDisabled)\n        PreviewMenuSeparator()\n        PreviewMenuItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) { log = \"Deleted \\(label)\" }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.FlowRow\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.Copy\nimport com.adamglin.phosphoricons.regular.Heart\nimport com.adamglin.phosphoricons.regular.ShareNetwork\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.PreviewMenu\nimport com.esuiss.ui.interactions.PreviewMenuItem\nimport com.esuiss.ui.interactions.PreviewMenuSeparator\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\n\n@Composable\nfun PreviewMenuDisabledItemExample() {\n    PreviewMenuPhotoGrid(withDisabled = true, openIndex = 0)\n}\n\n@Composable\nfun previewMenuTones(): List<Color> {\n    val colors = EsuissTheme.colors\n    return listOf(\n        colors.blue,\n        colors.orange,\n        colors.green,\n        colors.indigo,\n        colors.yellow,\n        colors.pink,\n        colors.teal,\n        colors.purple,\n        colors.mint,\n    )\n}\n\n@Composable\nfun PreviewMenuPhotoGrid(withDisabled: Boolean = false, openIndex: Int? = null) {\n    var log by rememberSaveable { mutableStateOf(\"Touch and hold a photo.\") }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        FlowRow(\n            modifier = Modifier.fillMaxWidth(),\n            horizontalArrangement = Arrangement.spacedBy(8.dp),\n            verticalArrangement = Arrangement.spacedBy(8.dp),\n        ) {\n            previewMenuTones().forEachIndexed { index, tone ->\n                val label = \"Photo ${index + 1}\"\n                var open by rememberSaveable(index) { mutableStateOf(index == openIndex) }\n                PreviewMenu(\n                    open = open,\n                    onOpenChange = { open = it },\n                    trigger = {\n                        Box(\n                            Modifier\n                                .fillMaxSize()\n                                .clip(shape)\n                                .background(tone, shape)\n                                .semantics { contentDescription = label },\n                        )\n                    },\n                    modifier = Modifier.fillMaxWidth(0.31f).aspectRatio(1f),\n                ) {\n                    PreviewMenuItem(\"Copy\", onClick = { log = \"Copied $label\" }, icon = PhosphorIcons.Regular.Copy)\n                    PreviewMenuItem(\"Share\", onClick = { log = \"Shared $label\" }, icon = PhosphorIcons.Regular.ShareNetwork)\n                    PreviewMenuItem(\n                        \"Favorite\",\n                        onClick = { log = \"Favorited $label\" },\n                        icon = PhosphorIcons.Regular.Heart,\n                        enabled = !withDisabled,\n                    )\n                    PreviewMenuSeparator()\n                    PreviewMenuItem(\n                        \"Delete\",\n                        onClick = { log = \"Deleted $label\" },\n                        icon = PhosphorIcons.Regular.Trash,\n                        variant = MenuItemVariant.Destructive,\n                    )\n                }\n            }\n        }\n        Text(log, variant = TextVariant.Muted)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-preview-menu--disabled-item" />
 
 ### Custom preview
 
 Shows custom `preview` content with a `4 / 3` aspect ratio.
 
-<NativeExample id="interactions-preview-menu--custom-preview" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <PreviewMenu aspectRatio={4 / 3} defaultOpen={defaultOpen}>\n      <PreviewMenuTrigger className=\"flex-row items-center gap-3 rounded-xl bg-surface-secondary p-3\">\n        <View className=\"size-12 rounded-lg bg-blue\" />\n        <View>\n          <Text className=\"font-semibold\">Trip to the coast</Text>\n          <Text variant=\"muted\">48 photos</Text>\n        </View>\n      </PreviewMenuTrigger>\n      <PreviewMenuContent\n        preview={\n          <View className=\"h-full w-full justify-end bg-blue p-4\">\n            <Text className=\"text-lg font-semibold text-on-accent\">\n              Trip to the coast\n            </Text>\n            <Text className=\"text-sm text-on-accent\">\n              48 photos · Updated today\n            </Text>\n          </View>\n        }\n      >\n        <PreviewMenuItem>\n          Share album\n          <Icon as={ShareNetworkIcon} />\n        </PreviewMenuItem>\n        <PreviewMenuItem variant=\"destructive\">\n          Delete album\n          <Icon as={TrashIcon} />\n        </PreviewMenuItem>\n      </PreviewMenuContent>\n    </PreviewMenu>\n  )\n}\n\nexport function PreviewMenuCustomPreviewExample() {\n  return (\n    <AlbumPreview />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PreviewMenuAlbum: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    HStack(spacing: 12) {\n      RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)\n        .fill(Color.accent)\n        .frame(width: 48, height: 48)\n      VStack(alignment: .leading, spacing: 0) {\n        Text(\"Trip to the coast\")\n          .textStyle(.base, weight: .semibold)\n          .foregroundStyle(Color.label)\n        Text(\"48 photos\")\n          .textVariant(.muted)\n      }\n    }\n    .padding(12)\n    .frame(maxWidth: .infinity, alignment: .leading)\n    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n    .previewMenu(isPresented: $open, aspectRatio: 4 / 3) {\n      PreviewMenuItem(\"Share album\", icon: Ph.shareNetwork.regular) {}\n      PreviewMenuItem(\"Delete album\", icon: Ph.trash.regular, variant: .destructive) {}\n    } preview: {\n      VStack(alignment: .leading, spacing: 0) {\n        Text(\"Trip to the coast\")\n          .textStyle(.lg, weight: .semibold)\n        Text(\"48 photos · Updated today\")\n          .textStyle(.sm)\n      }\n      .foregroundStyle(Color.onAccent)\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)\n      .background(Color.accent)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.size\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ShareNetwork\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.PreviewMenu\nimport com.esuiss.ui.interactions.PreviewMenuItem\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PreviewMenuCustomPreviewExample() {\n    PreviewMenuAlbum(defaultOpen = false)\n}\n\n@Composable\nfun PreviewMenuAlbum(defaultOpen: Boolean) {\n    val colors = EsuissTheme.colors\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    PreviewMenu(\n        open = open,\n        onOpenChange = { open = it },\n        aspectRatio = 4f / 3f,\n        trigger = {\n            Row(\n                modifier = Modifier\n                    .fillMaxWidth()\n                    .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))\n                    .padding(12.dp),\n                horizontalArrangement = Arrangement.spacedBy(12.dp),\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                Box(Modifier.size(48.dp).background(colors.blue, RoundedCornerShape(Radius.lg)))\n                Column {\n                    Text(\"Trip to the coast\", style = Typography.base.copy(fontWeight = FontWeight.SemiBold))\n                    Text(\"48 photos\", variant = TextVariant.Muted)\n                }\n            }\n        },\n        preview = {\n            Column(\n                modifier = Modifier\n                    .fillMaxSize()\n                    .background(colors.blue)\n                    .padding(16.dp),\n                verticalArrangement = Arrangement.Bottom,\n            ) {\n                Text(\"Trip to the coast\", style = Typography.lg.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold))\n                Text(\"48 photos · Updated today\", style = Typography.sm.copy(color = colors.onAccent))\n            }\n        },\n    ) {\n        PreviewMenuItem(\"Share album\", onClick = {}, icon = PhosphorIcons.Regular.ShareNetwork)\n        PreviewMenuItem(\"Delete album\", onClick = {}, icon = PhosphorIcons.Regular.Trash, variant = MenuItemVariant.Destructive)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-preview-menu--custom-preview" />
 
 ### Custom preview open
 
 The custom preview, open on first render.
 
-<NativeExample id="interactions-preview-menu--custom-preview-open" width={880} height={1323} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ShareNetworkIcon, TrashIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { PreviewMenu, PreviewMenuContent, PreviewMenuItem, PreviewMenuTrigger } from \"@/components/interactions/preview-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nconst photos = [\n  \"bg-blue\",\n  \"bg-orange\",\n  \"bg-green\",\n  \"bg-indigo\",\n  \"bg-yellow\",\n  \"bg-pink\",\n  \"bg-teal\",\n  \"bg-purple\",\n  \"bg-mint\",\n]\n\nfunction AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <PreviewMenu aspectRatio={4 / 3} defaultOpen={defaultOpen}>\n      <PreviewMenuTrigger className=\"flex-row items-center gap-3 rounded-xl bg-surface-secondary p-3\">\n        <View className=\"size-12 rounded-lg bg-blue\" />\n        <View>\n          <Text className=\"font-semibold\">Trip to the coast</Text>\n          <Text variant=\"muted\">48 photos</Text>\n        </View>\n      </PreviewMenuTrigger>\n      <PreviewMenuContent\n        preview={\n          <View className=\"h-full w-full justify-end bg-blue p-4\">\n            <Text className=\"text-lg font-semibold text-on-accent\">\n              Trip to the coast\n            </Text>\n            <Text className=\"text-sm text-on-accent\">\n              48 photos · Updated today\n            </Text>\n          </View>\n        }\n      >\n        <PreviewMenuItem>\n          Share album\n          <Icon as={ShareNetworkIcon} />\n        </PreviewMenuItem>\n        <PreviewMenuItem variant=\"destructive\">\n          Delete album\n          <Icon as={TrashIcon} />\n        </PreviewMenuItem>\n      </PreviewMenuContent>\n    </PreviewMenu>\n  )\n}\n\nexport function PreviewMenuCustomPreviewOpenExample() {\n  return (\n    <AlbumPreview defaultOpen />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct PreviewMenuCustomPreviewOpenExample: View {\n  var body: some View {\n    PreviewMenuAlbum(open: true)\n  }\n}\n\nstruct PreviewMenuAlbum: View {\n  @State private var open: Bool\n\n  init(open: Bool = false) {\n    _open = State(initialValue: open)\n  }\n\n  var body: some View {\n    HStack(spacing: 12) {\n      RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)\n        .fill(Color.accent)\n        .frame(width: 48, height: 48)\n      VStack(alignment: .leading, spacing: 0) {\n        Text(\"Trip to the coast\")\n          .textStyle(.base, weight: .semibold)\n          .foregroundStyle(Color.label)\n        Text(\"48 photos\")\n          .textVariant(.muted)\n      }\n    }\n    .padding(12)\n    .frame(maxWidth: .infinity, alignment: .leading)\n    .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Radius.xl, style: .continuous))\n    .previewMenu(isPresented: $open, aspectRatio: 4 / 3) {\n      PreviewMenuItem(\"Share album\", icon: Ph.shareNetwork.regular) {}\n      PreviewMenuItem(\"Delete album\", icon: Ph.trash.regular, variant: .destructive) {}\n    } preview: {\n      VStack(alignment: .leading, spacing: 0) {\n        Text(\"Trip to the coast\")\n          .textStyle(.lg, weight: .semibold)\n        Text(\"48 photos · Updated today\")\n          .textStyle(.sm)\n      }\n      .foregroundStyle(Color.onAccent)\n      .padding(16)\n      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)\n      .background(Color.accent)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.aspectRatio\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.layout.size\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.text.font.FontWeight\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.ShareNetwork\nimport com.adamglin.phosphoricons.regular.Trash\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.components.TextVariant\nimport com.esuiss.ui.interactions.PreviewMenu\nimport com.esuiss.ui.interactions.PreviewMenuItem\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PreviewMenuCustomPreviewOpenExample() {\n    PreviewMenuAlbum(defaultOpen = true)\n}\n\n@Composable\nfun PreviewMenuAlbum(defaultOpen: Boolean) {\n    val colors = EsuissTheme.colors\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    PreviewMenu(\n        open = open,\n        onOpenChange = { open = it },\n        aspectRatio = 4f / 3f,\n        trigger = {\n            Row(\n                modifier = Modifier\n                    .fillMaxWidth()\n                    .background(colors.surfaceSecondary, RoundedCornerShape(Radius.xl))\n                    .padding(12.dp),\n                horizontalArrangement = Arrangement.spacedBy(12.dp),\n                verticalAlignment = Alignment.CenterVertically,\n            ) {\n                Box(Modifier.size(48.dp).background(colors.blue, RoundedCornerShape(Radius.lg)))\n                Column {\n                    Text(\"Trip to the coast\", style = Typography.base.copy(fontWeight = FontWeight.SemiBold))\n                    Text(\"48 photos\", variant = TextVariant.Muted)\n                }\n            }\n        },\n        preview = {\n            Column(\n                modifier = Modifier\n                    .fillMaxSize()\n                    .background(colors.blue)\n                    .padding(16.dp),\n                verticalArrangement = Arrangement.Bottom,\n            ) {\n                Text(\"Trip to the coast\", style = Typography.lg.copy(color = colors.onAccent, fontWeight = FontWeight.SemiBold))\n                Text(\"48 photos · Updated today\", style = Typography.sm.copy(color = colors.onAccent))\n            }\n        },\n    ) {\n        PreviewMenuItem(\"Share album\", onClick = {}, icon = PhosphorIcons.Regular.ShareNetwork)\n        PreviewMenuItem(\"Delete album\", onClick = {}, icon = PhosphorIcons.Regular.Trash, variant = MenuItemVariant.Destructive)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-preview-menu--custom-preview-open" />
 
 ## API Reference
 
@@ -390,7 +390,13 @@ The custom preview, open on first render.
 
 The root that owns the open state and preview size.
 
-<PropsTable props={[{"name":"open","type":"boolean","description":"Controls whether the preview is open."},{"name":"defaultOpen","type":"boolean","description":"Whether the preview starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the preview opens or closes."},{"name":"aspectRatio","type":"number","description":"Width-to-height ratio of the lifted preview."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Controls whether the preview is open. |
+| `defaultOpen` | `boolean` | - | Whether the preview starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the preview opens or closes. |
+| `aspectRatio` | `number` | - | Width-to-height ratio of the lifted preview. |
+| `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
 
@@ -400,7 +406,7 @@ The root that owns the open state and preview size.
 
 The element that opens the preview on long press.
 
-<PropsTable extends={["React.ComponentProps<typeof PreviewMenuPrimitive.Trigger>"]} />
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Trigger>`.
 
 </ApiPart>
 
@@ -410,7 +416,13 @@ The element that opens the preview on long press.
 
 The scrim, the lifted preview and the menu.
 
-<PropsTable extends={["React.ComponentProps<typeof PreviewMenuPrimitive.Popup>"]} props={[{"name":"preview","type":"React.ReactNode","description":"Content to show in the preview instead of the trigger's children."},{"name":"previewClassName","type":"string","description":"Classes for the preview container."},{"name":"portalHost","type":"string","description":"Name of a portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `preview` | `React.ReactNode` | - | Content to show in the preview instead of the trigger's children. |
+| `previewClassName` | `string` | - | Classes for the preview container. |
+| `portalHost` | `string` | - | Name of a portal host to render into. |
+
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Popup>`.
 
 </ApiPart>
 
@@ -420,7 +432,12 @@ The scrim, the lifted preview and the menu.
 
 A menu action.
 
-<PropsTable extends={["React.ComponentProps<typeof PreviewMenuPrimitive.Item>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`default` or `destructive`, which uses the danger color."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` | `default` or `destructive`, which uses the danger color. |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Item>`.
 
 </ApiPart>
 
@@ -430,7 +447,7 @@ A menu action.
 
 A thick divider between groups of items.
 
-<PropsTable extends={["React.ComponentProps<typeof PreviewMenuPrimitive.Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Separator>`.
 
 </ApiPart>
 

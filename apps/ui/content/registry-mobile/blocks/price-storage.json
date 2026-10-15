@@ -1,5 +1,0 @@
-{
-  "description": "A cloud storage plan picker with a monthly or yearly toggle and three plan cards with features.",
-  "overview": "A pricing screen with a `ToggleGroup` for the billing period and a `RadioGroup` of plan cards, each with a size, price and feature list. The selected card lifts slightly, and the most popular plan carries a label. Yearly prices show ten months of the monthly price. A `BottomBar` `Button` confirms the switch.",
-  "usage": "Replace `PLANS` with your plans. Wire `onSelectPlan` (receives the size and period) and `onPeriodChange` to your billing flow."
-}

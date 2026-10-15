@@ -3,16 +3,11 @@ title: Action Bar
 description: "A row of menus that renders as a menubar on desktop and a single More actions sheet on mobile."
 eyebrow: Pattern
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="pattern" name="action-bar" story="Default">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar>\n        <FileMenu />\n        <EditMenu />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-bar-demo" layout="padded" responsive />
 
 `ActionBar` groups several `ActionBarMenu`s, each with a `ActionBarTrigger` and `ActionBarContent`. On desktop it renders a `Menubar`: each menu is a `MenubarMenu`, and hovering another trigger while a menu is open switches menus.
 
@@ -22,27 +17,41 @@ Below the `48rem` breakpoint (`useIsMobile`), the bar collapses into a ghost ico
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns action-bar"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add patterns action-bar
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Menubar](/docs/components/menubar), `use-mobile`.
 
 3. Copy the source into `components/patterns/action-bar.tsx`:
 
-<SourceFile path="components/patterns/action-bar.tsx" />
+<ComponentSource path="components/patterns/action-bar.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBarLabel, ActionBarItem, ActionBarSeparator, ActionBarShortcut } from \"@/components/patterns/action-bar\""} />
+```tsx
+import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBarLabel, ActionBarItem, ActionBarSeparator, ActionBarShortcut } from "@/components/patterns/action-bar"
+```
 
-<Code lang="tsx" code={"<div className=\"min-h-96\">\n  <ActionBar>\n    <FileMenu />\n    <EditMenu />\n    <ViewMenu />\n  </ActionBar>\n</div>"} />
+```tsx
+<div className="min-h-96">
+  <ActionBar>
+    <FileMenu />
+    <EditMenu />
+    <ViewMenu />
+  </ActionBar>
+</div>
+```
 
 Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`; the bar uses the child index to pair the mobile row with its sheet. `open`, `defaultOpen` and `onOpenChange` on `ActionBar` control the mobile More actions drawer only; on desktop they have no effect. `ActionBarMenu` accepts its own `open`, `defaultOpen` and `onOpenChange` for an individual menu, which apply on desktop and to the mobile sheet. Use `ActionBarShortcut` with `mod` to prefix the platform modifier key.
 
@@ -52,51 +61,31 @@ Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBar
 
 Places an icon before each item in the Edit menu, including a destructive Delete item.
 
-<Example kind="pattern" name="action-bar" story="WithIcons">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarWithIconsExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar>\n        <FileMenu />\n        <EditMenu withIcons />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-bar-with-icons" layout="padded" responsive />
 
 ### By default
 
 Opens the File menu on first render using `defaultOpen` on the bar and the menu.
 
-<Example kind="pattern" name="action-bar" story="OpenByDefault">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarOpenByDefaultExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar defaultOpen>\n        <FileMenu defaultOpen />\n        <EditMenu />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-bar-open-by-default" layout="padded" responsive />
 
 ### Not dismissible
 
 Sets `dismissible` to `false` so mobile sheets close only through an action or Cancel.
 
-<Example kind="pattern" name="action-bar" story="NotDismissible">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarNotDismissibleExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar dismissible={false}>\n        <FileMenu />\n        <EditMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-bar-not-dismissible" layout="padded" responsive />
 
 ### Custom labels
 
 Renames the mobile More actions button and the sheet's Cancel button with `moreLabel` and `cancelLabel`.
 
-<Example kind="pattern" name="action-bar" story="CustomLabels">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarCustomLabelsExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar moreLabel=\"Document actions\" cancelLabel=\"Close\">\n        <FileMenu />\n        <EditMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-bar-custom-labels" layout="padded" responsive />
 
 ### Floating
 
 Detaches the mobile More actions drawer from the screen edges with `floating`.
 
-<Example kind="pattern" name="action-bar" story="Floating">
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarShortcut, ActionBarTrigger } from \"@/components/patterns/action-bar\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          New tab\n          <ActionBarShortcut mod>T</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          New window\n          <ActionBarShortcut mod>N</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>\n          Print\n          <ActionBarShortcut mod>P</ActionBarShortcut>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons && <ScissorsIcon />}\n          Cut\n          <ActionBarShortcut mod>X</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <CopyIcon />}\n          Copy\n          <ActionBarShortcut mod>C</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons && <ClipboardTextIcon />}\n          Paste\n          <ActionBarShortcut mod>V</ActionBarShortcut>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons && <TrashIcon />}\n          Delete\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarFloatingExample() {\n  return (\n    <div className=\"min-h-96\">\n      <ActionBar floating>\n        <FileMenu />\n        <EditMenu />\n        <ViewMenu />\n      </ActionBar>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="action-bar-floating" layout="padded" responsive />
 
 ## API Reference
 
@@ -106,7 +95,17 @@ Detaches the mobile More actions drawer from the screen edges with `floating`.
 
 The root that renders a `Menubar` on desktop and a More actions button with a `Drawer` on mobile.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"open","type":"boolean","description":"Controls whether the mobile More actions drawer is open."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the mobile More actions drawer starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the mobile More actions drawer opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."},{"name":"moreLabel","type":"string","default":"\"More actions\"","description":"Accessible label of the mobile More actions button and title of its drawer."},{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button appended to each mobile sheet."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Controls whether the mobile More actions drawer is open. |
+| `defaultOpen` | `boolean` | `false` | Whether the mobile More actions drawer starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the mobile More actions drawer opens or closes. |
+| `dismissible` | `boolean` | `true` | When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel. |
+| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
+| `moreLabel` | `string` | `"More actions"` | Accessible label of the mobile More actions button and title of its drawer. |
+| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button appended to each mobile sheet. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -116,7 +115,12 @@ The root that renders a `Menubar` on desktop and a More actions button with a `D
 
 One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.
 
-<PropsTable extends={["React.ComponentProps<typeof MenubarMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when this menu opens or closes."},{"name":"children","type":"React.ReactNode","description":"The menu's `ActionBarTrigger` and `ActionBarContent`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when this menu opens or closes. |
+| `children` | `React.ReactNode` | - | The menu's `ActionBarTrigger` and `ActionBarContent`. |
+
+Also accepts the props of `React.ComponentProps<typeof MenubarMenu>`.
 
 </ApiPart>
 
@@ -126,7 +130,7 @@ One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.
 
 The menu's button; a menubar trigger on desktop and a drawer row with a chevron on mobile.
 
-<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} />
+Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
 
 </ApiPart>
 
@@ -136,7 +140,7 @@ The menu's button; a menubar trigger on desktop and a drawer row with a chevron 
 
 The menu's items; a `MenubarContent` popup on desktop and an `AlertSheetContent` with a Cancel button on mobile.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof MenubarContent>"]} />
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentProps<typeof MenubarContent>`.
 
 </ApiPart>
 
@@ -146,7 +150,7 @@ The menu's items; a `MenubarContent` popup on desktop and an `AlertSheetContent`
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 </ApiPart>
 
@@ -156,7 +160,12 @@ A non-interactive heading; a menu label on desktop and the sheet title on mobile
 
 An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mobile.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
+| `disabled` | `boolean` | - | Prevents the item from being chosen. |
+
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 </ApiPart>
 
@@ -166,7 +175,7 @@ An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mob
 
 A divider between item groups, rendered on desktop only.
 
-<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 </ApiPart>
 
@@ -176,7 +185,7 @@ A divider between item groups, rendered on desktop only.
 
 A keyboard shortcut hint aligned to the end of an item, rendered on desktop only.
 
-<PropsTable extends={["React.ComponentProps<typeof MenubarShortcut>"]} />
+Also accepts the props of `React.ComponentProps<typeof MenubarShortcut>`.
 
 </ApiPart>
 
@@ -195,15 +204,7 @@ Parts carry `data-slot` values such as `action-bar`, `action-bar-menu`, `action-
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="patterns-action-bar--open-by-default" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarOpenByDefaultExample() {\n  return (\n    <ActionBar defaultOpen>\n      <FileMenu defaultOpen />\n      <EditMenu />\n      <ViewMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ActionBarOpenFileDemo: View {\n  @State private var file = true\n\n  var body: some View {\n    ActionBar {\n      ActionBarFileMenu(isPresented: $file)\n      ActionBarEditMenu()\n      ActionBarViewMenu()\n    }\n  }\n}\n\nstruct ActionBarFileMenu: View {\n  var isPresented: Binding<Bool>?\n\n  var body: some View {\n    ActionBarMenu(\"File\", isPresented: isPresented) {\n      ActionBarItem(\"New tab\") {}\n      ActionBarItem(\"New window\") {}\n      ActionBarItem(\"New incognito window\") {}.disabled(true)\n      ActionBarSeparator()\n      ActionBarItem(\"Print\") {}\n    }\n  }\n}\n\nstruct ActionBarEditMenu: View {\n  var withIcons = false\n\n  var body: some View {\n    ActionBarMenu(\"Edit\") {\n      if withIcons {\n        ActionBarItem(\"Cut\", icon: Ph.scissors.regular) {}\n        ActionBarItem(\"Copy\", icon: Ph.copy.regular) {}\n        ActionBarItem(\"Paste\", icon: Ph.clipboardText.regular) {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) {}\n      } else {\n        ActionBarItem(\"Cut\") {}\n        ActionBarItem(\"Copy\") {}\n        ActionBarItem(\"Paste\") {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", variant: .destructive) {}\n      }\n    }\n  }\n}\n\nstruct ActionBarViewMenu: View {\n  var body: some View {\n    ActionBarMenu(\"View\") {\n      ActionBarLabel(\"Appearance\")\n      ActionBarItem(\"Zoom in\") {}\n      ActionBarItem(\"Zoom out\") {}\n      ActionBarItem(\"Actual size\") {}\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarOpenByDefaultExample() {\n    ActionBarDemo(defaultOpen = true, fileOpen = true)\n}\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--open-by-default" />
 
 `ActionBar` groups several `ActionBarMenu`s, such as File, Edit and View, behind one ghost icon `Button`. Pressing it opens a `Drawer` that lists each menu's trigger as a row with a chevron.
 
@@ -213,19 +214,25 @@ Choosing a row closes the drawer and opens that menu's items in an `AlertSheet`,
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add action-bar"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add action-bar
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add action-bar --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add action-bar --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add action-bar --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add action-bar --platform kotlin
+```
 
 </Only>
 
@@ -241,13 +248,15 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/action-bar.tsx`:
 
-<SourceFile path="uniwind/components/patterns/action-bar.tsx" />
+<ComponentSource path="uniwind/components/patterns/action-bar.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -257,13 +266,15 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/action-bar.tsx`:
 
-<SourceFile path="nativewind/components/patterns/action-bar.tsx" />
+<ComponentSource path="nativewind/components/patterns/action-bar.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -273,13 +284,15 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/patterns/action-bar.tsx`:
 
-<SourceFile path="stylesheet/components/patterns/action-bar.tsx" />
+<ComponentSource path="stylesheet/components/patterns/action-bar.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -295,49 +308,51 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Patterns/ActionBar.swift" />
+<ComponentSource path="swift/Patterns/ActionBar.swift" />
 
-<SourceFile path="swift/Components/AlertSheet.swift" />
+<ComponentSource path="swift/Components/AlertSheet.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Dialog.swift" />
+<ComponentSource path="swift/Components/Dialog.swift" />
 
-<SourceFile path="swift/Components/Drawer.swift" />
+<ComponentSource path="swift/Components/Drawer.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/Sheet.swift" />
+<ComponentSource path="swift/Components/Sheet.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Patterns/ActionList.swift" />
+<ComponentSource path="swift/Patterns/ActionList.swift" />
 
-<SourceFile path="swift/Patterns/Adaptive.swift" />
+<ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 5. Add the files to your app target.
 
@@ -347,47 +362,52 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/patterns/ActionBar.kt" />
+<ComponentSource path="kotlin/patterns/ActionBar.kt" />
 
-<SourceFile path="kotlin/components/AlertSheet.kt" />
+<ComponentSource path="kotlin/components/AlertSheet.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Drawer.kt" />
+<ComponentSource path="kotlin/components/Drawer.kt" />
 
-<SourceFile path="kotlin/components/DropdownMenu.kt" />
+<ComponentSource path="kotlin/components/DropdownMenu.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
-<SourceFile path="kotlin/patterns/ActionList.kt" />
+<ComponentSource path="kotlin/patterns/ActionList.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -395,9 +415,17 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 ## Usage
 
-<Code lang="tsx" code={"import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBarLabel, ActionBarItem, ActionBarSeparator } from \"@/components/patterns/action-bar\""} />
+```tsx
+import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBarLabel, ActionBarItem, ActionBarSeparator } from "@/components/patterns/action-bar"
+```
 
-<Code lang="tsx" code={"<ActionBar defaultOpen>\n  <FileMenu defaultOpen />\n  <EditMenu />\n  <ViewMenu />\n</ActionBar>"} />
+```tsx
+<ActionBar defaultOpen>
+  <FileMenu defaultOpen />
+  <EditMenu />
+  <ViewMenu />
+</ActionBar>
+```
 
 Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`. The bar renders every child twice, once as a drawer row and once as a sheet, and pairs them by child index.
 
@@ -407,83 +435,37 @@ Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBar
 
 ### Default
 
-<NativeExample id="patterns-action-bar--default" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarExample() {\n  return (\n    <ActionBar>\n      <FileMenu />\n      <EditMenu />\n      <ViewMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ActionBarExample: View {\n  var body: some View {\n    ActionBarDemo {\n      ActionBarFileMenu()\n      ActionBarEditMenu()\n      ActionBarViewMenu()\n    }\n  }\n}\n\nstruct ActionBarDemo<Content: View>: View {\n  var dismissible = true\n  var moreLabel: LocalizedStringKey = \"More actions\"\n  var cancelLabel: LocalizedStringKey = \"Cancel\"\n  let content: Content\n\n  @State private var open: Bool\n\n  init(\n    open: Bool = false,\n    dismissible: Bool = true,\n    moreLabel: LocalizedStringKey = \"More actions\",\n    cancelLabel: LocalizedStringKey = \"Cancel\",\n    @ViewBuilder content: () -> Content\n  ) {\n    _open = State(initialValue: open)\n    self.dismissible = dismissible\n    self.moreLabel = moreLabel\n    self.cancelLabel = cancelLabel\n    self.content = content()\n  }\n\n  var body: some View {\n    ActionBar(isPresented: $open, dismissible: dismissible, moreLabel: moreLabel, cancelLabel: cancelLabel) {\n      content\n    }\n  }\n}\n\nstruct ActionBarFileMenu: View {\n  var isPresented: Binding<Bool>?\n\n  var body: some View {\n    ActionBarMenu(\"File\", isPresented: isPresented) {\n      ActionBarItem(\"New tab\") {}\n      ActionBarItem(\"New window\") {}\n      ActionBarItem(\"New incognito window\") {}.disabled(true)\n      ActionBarSeparator()\n      ActionBarItem(\"Print\") {}\n    }\n  }\n}\n\nstruct ActionBarEditMenu: View {\n  var withIcons = false\n\n  var body: some View {\n    ActionBarMenu(\"Edit\") {\n      if withIcons {\n        ActionBarItem(\"Cut\", icon: Ph.scissors.regular) {}\n        ActionBarItem(\"Copy\", icon: Ph.copy.regular) {}\n        ActionBarItem(\"Paste\", icon: Ph.clipboardText.regular) {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) {}\n      } else {\n        ActionBarItem(\"Cut\") {}\n        ActionBarItem(\"Copy\") {}\n        ActionBarItem(\"Paste\") {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", variant: .destructive) {}\n      }\n    }\n  }\n}\n\nstruct ActionBarViewMenu: View {\n  var body: some View {\n    ActionBarMenu(\"View\") {\n      ActionBarLabel(\"Appearance\")\n      ActionBarItem(\"Zoom in\") {}\n      ActionBarItem(\"Zoom out\") {}\n      ActionBarItem(\"Actual size\") {}\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--default" />
 
 ### Overflow
 
 Opens the More actions drawer on first render.
 
-<NativeExample id="patterns-action-bar--overflow" width={880} height={1751} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarOverflowExample() {\n  return (\n    <ActionBar defaultOpen>\n      <FileMenu />\n      <EditMenu />\n      <ViewMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ActionBarOverflowExample: View {\n  var body: some View {\n    ActionBarDemo(open: true) {\n      ActionBarFileMenu()\n      ActionBarEditMenu()\n      ActionBarViewMenu()\n    }\n  }\n}\n\nstruct ActionBarDemo<Content: View>: View {\n  var dismissible = true\n  var moreLabel: LocalizedStringKey = \"More actions\"\n  var cancelLabel: LocalizedStringKey = \"Cancel\"\n  let content: Content\n\n  @State private var open: Bool\n\n  init(\n    open: Bool = false,\n    dismissible: Bool = true,\n    moreLabel: LocalizedStringKey = \"More actions\",\n    cancelLabel: LocalizedStringKey = \"Cancel\",\n    @ViewBuilder content: () -> Content\n  ) {\n    _open = State(initialValue: open)\n    self.dismissible = dismissible\n    self.moreLabel = moreLabel\n    self.cancelLabel = cancelLabel\n    self.content = content()\n  }\n\n  var body: some View {\n    ActionBar(isPresented: $open, dismissible: dismissible, moreLabel: moreLabel, cancelLabel: cancelLabel) {\n      content\n    }\n  }\n}\n\nstruct ActionBarFileMenu: View {\n  var isPresented: Binding<Bool>?\n\n  var body: some View {\n    ActionBarMenu(\"File\", isPresented: isPresented) {\n      ActionBarItem(\"New tab\") {}\n      ActionBarItem(\"New window\") {}\n      ActionBarItem(\"New incognito window\") {}.disabled(true)\n      ActionBarSeparator()\n      ActionBarItem(\"Print\") {}\n    }\n  }\n}\n\nstruct ActionBarEditMenu: View {\n  var withIcons = false\n\n  var body: some View {\n    ActionBarMenu(\"Edit\") {\n      if withIcons {\n        ActionBarItem(\"Cut\", icon: Ph.scissors.regular) {}\n        ActionBarItem(\"Copy\", icon: Ph.copy.regular) {}\n        ActionBarItem(\"Paste\", icon: Ph.clipboardText.regular) {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) {}\n      } else {\n        ActionBarItem(\"Cut\") {}\n        ActionBarItem(\"Copy\") {}\n        ActionBarItem(\"Paste\") {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", variant: .destructive) {}\n      }\n    }\n  }\n}\n\nstruct ActionBarViewMenu: View {\n  var body: some View {\n    ActionBarMenu(\"View\") {\n      ActionBarLabel(\"Appearance\")\n      ActionBarItem(\"Zoom in\") {}\n      ActionBarItem(\"Zoom out\") {}\n      ActionBarItem(\"Actual size\") {}\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarOverflowExample() {\n    ActionBarDemo(defaultOpen = true)\n}\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--overflow" />
 
 ### With icons
 
 Places an icon before each item in the Edit menu.
 
-<NativeExample id="patterns-action-bar--with-icons" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarWithIconsExample() {\n  return (\n    <ActionBar>\n      <FileMenu />\n      <EditMenu withIcons />\n      <ViewMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ActionBarWithIconsExample: View {\n  var body: some View {\n    ActionBarDemo {\n      ActionBarFileMenu()\n      ActionBarEditMenu(withIcons: true)\n      ActionBarViewMenu()\n    }\n  }\n}\n\nstruct ActionBarDemo<Content: View>: View {\n  var dismissible = true\n  var moreLabel: LocalizedStringKey = \"More actions\"\n  var cancelLabel: LocalizedStringKey = \"Cancel\"\n  let content: Content\n\n  @State private var open: Bool\n\n  init(\n    open: Bool = false,\n    dismissible: Bool = true,\n    moreLabel: LocalizedStringKey = \"More actions\",\n    cancelLabel: LocalizedStringKey = \"Cancel\",\n    @ViewBuilder content: () -> Content\n  ) {\n    _open = State(initialValue: open)\n    self.dismissible = dismissible\n    self.moreLabel = moreLabel\n    self.cancelLabel = cancelLabel\n    self.content = content()\n  }\n\n  var body: some View {\n    ActionBar(isPresented: $open, dismissible: dismissible, moreLabel: moreLabel, cancelLabel: cancelLabel) {\n      content\n    }\n  }\n}\n\nstruct ActionBarFileMenu: View {\n  var isPresented: Binding<Bool>?\n\n  var body: some View {\n    ActionBarMenu(\"File\", isPresented: isPresented) {\n      ActionBarItem(\"New tab\") {}\n      ActionBarItem(\"New window\") {}\n      ActionBarItem(\"New incognito window\") {}.disabled(true)\n      ActionBarSeparator()\n      ActionBarItem(\"Print\") {}\n    }\n  }\n}\n\nstruct ActionBarEditMenu: View {\n  var withIcons = false\n\n  var body: some View {\n    ActionBarMenu(\"Edit\") {\n      if withIcons {\n        ActionBarItem(\"Cut\", icon: Ph.scissors.regular) {}\n        ActionBarItem(\"Copy\", icon: Ph.copy.regular) {}\n        ActionBarItem(\"Paste\", icon: Ph.clipboardText.regular) {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) {}\n      } else {\n        ActionBarItem(\"Cut\") {}\n        ActionBarItem(\"Copy\") {}\n        ActionBarItem(\"Paste\") {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", variant: .destructive) {}\n      }\n    }\n  }\n}\n\nstruct ActionBarViewMenu: View {\n  var body: some View {\n    ActionBarMenu(\"View\") {\n      ActionBarLabel(\"Appearance\")\n      ActionBarItem(\"Zoom in\") {}\n      ActionBarItem(\"Zoom out\") {}\n      ActionBarItem(\"Actual size\") {}\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarWithIconsExample() {\n    ActionBarDemo(withIcons = true)\n}\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--with-icons" />
 
 ### Not dismissible
 
 Sets `dismissible` to `false`, so sheets close only through an action or Cancel.
 
-<NativeExample id="patterns-action-bar--not-dismissible" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarNotDismissibleExample() {\n  return (\n    <ActionBar dismissible={false}>\n      <FileMenu />\n      <EditMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ActionBarNotDismissibleExample: View {\n  var body: some View {\n    ActionBarDemo(dismissible: false) {\n      ActionBarFileMenu()\n      ActionBarEditMenu()\n    }\n  }\n}\n\nstruct ActionBarDemo<Content: View>: View {\n  var dismissible = true\n  var moreLabel: LocalizedStringKey = \"More actions\"\n  var cancelLabel: LocalizedStringKey = \"Cancel\"\n  let content: Content\n\n  @State private var open: Bool\n\n  init(\n    open: Bool = false,\n    dismissible: Bool = true,\n    moreLabel: LocalizedStringKey = \"More actions\",\n    cancelLabel: LocalizedStringKey = \"Cancel\",\n    @ViewBuilder content: () -> Content\n  ) {\n    _open = State(initialValue: open)\n    self.dismissible = dismissible\n    self.moreLabel = moreLabel\n    self.cancelLabel = cancelLabel\n    self.content = content()\n  }\n\n  var body: some View {\n    ActionBar(isPresented: $open, dismissible: dismissible, moreLabel: moreLabel, cancelLabel: cancelLabel) {\n      content\n    }\n  }\n}\n\nstruct ActionBarFileMenu: View {\n  var isPresented: Binding<Bool>?\n\n  var body: some View {\n    ActionBarMenu(\"File\", isPresented: isPresented) {\n      ActionBarItem(\"New tab\") {}\n      ActionBarItem(\"New window\") {}\n      ActionBarItem(\"New incognito window\") {}.disabled(true)\n      ActionBarSeparator()\n      ActionBarItem(\"Print\") {}\n    }\n  }\n}\n\nstruct ActionBarEditMenu: View {\n  var withIcons = false\n\n  var body: some View {\n    ActionBarMenu(\"Edit\") {\n      if withIcons {\n        ActionBarItem(\"Cut\", icon: Ph.scissors.regular) {}\n        ActionBarItem(\"Copy\", icon: Ph.copy.regular) {}\n        ActionBarItem(\"Paste\", icon: Ph.clipboardText.regular) {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) {}\n      } else {\n        ActionBarItem(\"Cut\") {}\n        ActionBarItem(\"Copy\") {}\n        ActionBarItem(\"Paste\") {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", variant: .destructive) {}\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarNotDismissibleExample() {\n    ActionBarDemo(dismissible = false, view = false)\n}\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--not-dismissible" />
 
 ### Custom labels
 
 Renames the More actions button and the Cancel button with `moreLabel` and `cancelLabel`.
 
-<NativeExample id="patterns-action-bar--custom-labels" width={880} height={1788} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarCustomLabelsExample() {\n  return (\n    <ActionBar moreLabel=\"Document actions\" cancelLabel=\"Close\">\n      <FileMenu />\n      <EditMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct ActionBarCustomLabelsExample: View {\n  var body: some View {\n    ActionBarDemo(moreLabel: \"Document actions\", cancelLabel: \"Close\") {\n      ActionBarFileMenu()\n      ActionBarEditMenu()\n    }\n  }\n}\n\nstruct ActionBarDemo<Content: View>: View {\n  var dismissible = true\n  var moreLabel: LocalizedStringKey = \"More actions\"\n  var cancelLabel: LocalizedStringKey = \"Cancel\"\n  let content: Content\n\n  @State private var open: Bool\n\n  init(\n    open: Bool = false,\n    dismissible: Bool = true,\n    moreLabel: LocalizedStringKey = \"More actions\",\n    cancelLabel: LocalizedStringKey = \"Cancel\",\n    @ViewBuilder content: () -> Content\n  ) {\n    _open = State(initialValue: open)\n    self.dismissible = dismissible\n    self.moreLabel = moreLabel\n    self.cancelLabel = cancelLabel\n    self.content = content()\n  }\n\n  var body: some View {\n    ActionBar(isPresented: $open, dismissible: dismissible, moreLabel: moreLabel, cancelLabel: cancelLabel) {\n      content\n    }\n  }\n}\n\nstruct ActionBarFileMenu: View {\n  var isPresented: Binding<Bool>?\n\n  var body: some View {\n    ActionBarMenu(\"File\", isPresented: isPresented) {\n      ActionBarItem(\"New tab\") {}\n      ActionBarItem(\"New window\") {}\n      ActionBarItem(\"New incognito window\") {}.disabled(true)\n      ActionBarSeparator()\n      ActionBarItem(\"Print\") {}\n    }\n  }\n}\n\nstruct ActionBarEditMenu: View {\n  var withIcons = false\n\n  var body: some View {\n    ActionBarMenu(\"Edit\") {\n      if withIcons {\n        ActionBarItem(\"Cut\", icon: Ph.scissors.regular) {}\n        ActionBarItem(\"Copy\", icon: Ph.copy.regular) {}\n        ActionBarItem(\"Paste\", icon: Ph.clipboardText.regular) {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", icon: Ph.trash.regular, variant: .destructive) {}\n      } else {\n        ActionBarItem(\"Cut\") {}\n        ActionBarItem(\"Copy\") {}\n        ActionBarItem(\"Paste\") {}\n        ActionBarSeparator()\n        ActionBarItem(\"Delete\", variant: .destructive) {}\n      }\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarCustomLabelsExample() {\n    ActionBarDemo(view = false, moreLabel = \"Document actions\", cancelLabel = \"Close\")\n}\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--custom-labels" />
 
 ### Floating
 
 Detaches the drawer from the screen edges with `floating`.
 
-<NativeExample id="patterns-action-bar--floating" width={880} height={1720} platforms={["React Native","Compose"]}>
-
-<Code lang="tsx" code={"import { ClipboardTextIcon, CopyIcon, ScissorsIcon, TrashIcon } from \"phosphor-react-native\"\nimport { ActionBar, ActionBarContent, ActionBarItem, ActionBarLabel, ActionBarMenu, ActionBarSeparator, ActionBarTrigger } from \"@/components/patterns/action-bar\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction FileMenu({ defaultOpen }: { defaultOpen?: boolean }) {\n  return (\n    <ActionBarMenu defaultOpen={defaultOpen}>\n      <ActionBarTrigger>File</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>New tab</ActionBarItem>\n        <ActionBarItem>New window</ActionBarItem>\n        <ActionBarItem disabled>New incognito window</ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem>Print</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction EditMenu({ withIcons = false }: { withIcons?: boolean }) {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>Edit</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ScissorsIcon} /> : null}\n          <Text>Cut</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={CopyIcon} /> : null}\n          <Text>Copy</Text>\n        </ActionBarItem>\n        <ActionBarItem>\n          {withIcons ? <Icon as={ClipboardTextIcon} /> : null}\n          <Text>Paste</Text>\n        </ActionBarItem>\n        <ActionBarSeparator />\n        <ActionBarItem variant=\"destructive\">\n          {withIcons ? <Icon as={TrashIcon} /> : null}\n          <Text>Delete</Text>\n        </ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nfunction ViewMenu() {\n  return (\n    <ActionBarMenu>\n      <ActionBarTrigger>View</ActionBarTrigger>\n      <ActionBarContent>\n        <ActionBarLabel>Appearance</ActionBarLabel>\n        <ActionBarItem>Zoom in</ActionBarItem>\n        <ActionBarItem>Zoom out</ActionBarItem>\n        <ActionBarItem>Actual size</ActionBarItem>\n      </ActionBarContent>\n    </ActionBarMenu>\n  )\n}\n\nexport function ActionBarFloatingExample() {\n  return (\n    <ActionBar floating defaultOpen>\n      <FileMenu />\n      <EditMenu />\n      <ViewMenu />\n    </ActionBar>\n  )\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport com.esuiss.ui.patterns.ActionBar\n\n@Composable\nfun ActionBarFloatingExample() {\n    ActionBarDemo(defaultOpen = true, floating = true)\n}\n\n@Composable\nfun ActionBarDemo(\n    defaultOpen: Boolean = false,\n    fileOpen: Boolean = false,\n    withIcons: Boolean = false,\n    view: Boolean = true,\n    dismissible: Boolean = true,\n    floating: Boolean = false,\n    moreLabel: String = \"More actions\",\n    cancelLabel: String = \"Cancel\",\n) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    ActionBar(\n        open = open,\n        onOpenChange = { open = it },\n        modifier = Modifier.fillMaxWidth(),\n        dismissible = dismissible,\n        floating = floating,\n        moreLabel = moreLabel,\n        cancelLabel = cancelLabel,\n    ) {\n        actionBarFileMenu(fileOpen)\n        actionBarEditMenu(withIcons)\n        if (view) actionBarViewMenu()\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-action-bar--floating" />
 
 ## API Reference
 
@@ -493,7 +475,17 @@ Detaches the drawer from the screen edges with `floating`.
 
 The root that renders the More actions button, its drawer and each menu's sheet.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"open","type":"boolean","description":"Controls whether the More actions drawer is open."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the drawer starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the drawer opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `false`, sheets ignore outside presses and close only through an action or Cancel. Defaults to `true`."},{"name":"floating","type":"boolean","description":"Insets the drawer from the screen edges."},{"name":"moreLabel","type":"string","default":"\"More actions\"","description":"Accessibility label of the More actions button and drawer. Defaults to `More actions`."},{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button in each sheet. Defaults to `Cancel`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Controls whether the More actions drawer is open. |
+| `defaultOpen` | `boolean` | `false` | Whether the drawer starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the drawer opens or closes. |
+| `dismissible` | `boolean` | `true` | When `false`, sheets ignore outside presses and close only through an action or Cancel. Defaults to `true`. |
+| `floating` | `boolean` | - | Insets the drawer from the screen edges. |
+| `moreLabel` | `string` | `"More actions"` | Accessibility label of the More actions button and drawer. Defaults to `More actions`. |
+| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button in each sheet. Defaults to `Cancel`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -503,7 +495,12 @@ The root that renders the More actions button, its drawer and each menu's sheet.
 
 One menu; a row in the drawer and an `AlertSheet` for its items.
 
-<PropsTable props={[{"name":"open","type":"boolean","description":"Controls whether this menu's sheet is open."},{"name":"defaultOpen","type":"boolean","description":"Opens this menu's sheet on first render."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when this menu's sheet opens or closes."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Controls whether this menu's sheet is open. |
+| `defaultOpen` | `boolean` | - | Opens this menu's sheet on first render. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when this menu's sheet opens or closes. |
+| `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
 
@@ -513,7 +510,11 @@ One menu; a row in the drawer and an `AlertSheet` for its items.
 
 The drawer row that opens the menu's sheet, with a trailing chevron.
 
-<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
 
@@ -523,7 +524,7 @@ The drawer row that opens the menu's sheet, with a trailing chevron.
 
 The menu's items in an `AlertSheetContent`, followed by a Cancel button.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetContent>"]} />
+Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
 
 </ApiPart>
 
@@ -533,7 +534,7 @@ The menu's items in an `AlertSheetContent`, followed by a Cancel button.
 
 A title shown at the top of the sheet.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetTitle>"]} />
+Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
 
 </ApiPart>
 
@@ -543,7 +544,7 @@ A title shown at the top of the sheet.
 
 An actionable entry, rendered as an `AlertSheetAction`.
 
-<PropsTable extends={["React.ComponentProps<typeof AlertSheetAction>"]} />
+Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
 
 </ApiPart>
 
@@ -553,7 +554,9 @@ An actionable entry, rendered as an `AlertSheetAction`.
 
 Kept for API parity; renders nothing.
 
-<PropsTable props={[{"name":"className","type":"string"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - |  |
 
 </ApiPart>
 

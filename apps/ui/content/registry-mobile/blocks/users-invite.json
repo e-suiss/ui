@@ -1,5 +1,0 @@
-{
-  "description": "An invite screen for adding users by email with a role, a welcome email option and pending invitations.",
-  "overview": "Emails become `Chip`s as you type, and Backspace in an empty `Input` removes the last one. A `Picker` sets the role, a `Switch` toggles the welcome email, and the send `Button` adds the invites to the pending list. Pending invitations can be resent or cancelled, and sending or resending shows a toast through `Toaster`. The admin `TabBar` switches sections.",
-  "usage": "Replace `ROLES` and the initial pending invites with your data. Use `onInvite`, `onResend`, `onCancelInvite` and `onNavigate` to call your API."
-}

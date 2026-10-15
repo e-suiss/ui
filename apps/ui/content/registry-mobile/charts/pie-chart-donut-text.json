@@ -1,5 +1,0 @@
-{
-  "description": "A donut chart with the total user count shown in its center.",
-  "overview": "A `PieChart` donut with small gaps and rounded slice corners. `chartData` holds one record per device with a `users` count. The total is summed from `chartData` and drawn as `Text` layered over the ring. Pressing a slice shows a tooltip.",
-  "usage": "Replace `chartData` with your records; the center total recalculates from it. Update the `users` caption and `chartConfig` labels and colors to match. The component takes no props."
-}

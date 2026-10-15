@@ -1,5 +1,0 @@
-{
-  "description": "A three-quarter arc tracking progress toward a reading goal, with the count in the middle.",
-  "overview": "A `RadialBarChart` drawn from 225 to -45 degrees, with one value on a 0 to 100 `PolarAngleAxis` over a tinted track. The \"16 / 25\" count and caption are `Text` layered in the center. Nothing is interactive.",
-  "usage": "Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props."
-}

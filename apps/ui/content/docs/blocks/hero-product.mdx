@@ -3,16 +3,11 @@ title: Hero Product
 description: "A centered product launch hero with an eyebrow, headline, two actions, a wide image, and a pricing line."
 eyebrow: Block
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="block" name="hero-product">
-
-<SourceFile path="components/blocks/hero-product.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="block" name="hero-product" />
 
 A centered launch hero with an eyebrow, a large product name and tagline, Learn more and Buy buttons, a wide product image and a pricing line. Elements fade and rise in with a slight stagger on load. It is a static server component, ready for a product or feature launch page.
 
@@ -20,7 +15,9 @@ A centered launch hero with an eyebrow, a large product name and tagline, Learn 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add blocks hero-product"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add blocks hero-product
+```
 
 ### Manual
 
@@ -28,15 +25,19 @@ A centered launch hero with an eyebrow, a large product name and tagline, Learn 
 
 2. Copy the source into `components/blocks/hero-product.tsx`:
 
-<SourceFile path="components/blocks/hero-product.tsx" />
+<ComponentSource path="components/blocks/hero-product.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { HeroProduct } from \"@/components/blocks/hero-product\""} />
+```tsx
+import { HeroProduct } from "@/components/blocks/hero-product"
+```
 
-<Code lang="tsx" code={"<HeroProduct />"} />
+```tsx
+<HeroProduct />
+```
 
 Replace the copy inline and the image URL in the `image` constant. The buttons have no handlers, so wrap them in links to your learn-more and purchase pages, and update the pricing line.
 

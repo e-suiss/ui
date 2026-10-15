@@ -3,16 +3,11 @@ title: Spinner
 description: "An eight-spoke activity indicator that shows an indeterminate wait."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="spinner" story="Default">
-
-<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerExample() {\n  return (\n    <Spinner />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="spinner-demo" />
 
 `Spinner` is an SVG of eight fading spokes that rotates in steps, like the system activity indicator. It draws in `currentColor` and is `size-4` by default, so it inherits the surrounding text color.
 
@@ -22,25 +17,33 @@ Use it for short waits whose length is unknown, such as saving or loading more. 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add spinner"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add spinner
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Copy the source into `components/ui/spinner.tsx`:
 
-<SourceFile path="components/ui/spinner.tsx" />
+<ComponentSource path="components/ui/spinner.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\""} />
+```tsx
+import { Spinner } from "@/components/ui/spinner"
+```
 
-<Code lang="tsx" code={"<Spinner />"} />
+```tsx
+<Spinner />
+```
 
 Change the size with a `size-*` class and the color with a `text-*` class. Inside a `Button`, pair it with `disabled` and give it `data-icon="inline-start"` to place it before the label.
 
@@ -50,31 +53,19 @@ Change the size with a `size-*` class and the color with a `text-*` class. Insid
 
 Shows spinners from `size-3` to `size-8`.
 
-<Example kind="ui" name="spinner" story="Sizes">
-
-<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerSizesExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Spinner className=\"size-3\" />\n      <Spinner className=\"size-4\" />\n      <Spinner className=\"size-6\" />\n      <Spinner className=\"size-8\" />\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="spinner-sizes" />
 
 ### Colors
 
 Tints spinners with `text-*` color classes.
 
-<Example kind="ui" name="spinner" story="Colors">
-
-<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerColorsExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Spinner className=\"text-accent size-6\" />\n      <Spinner className=\"text-label-secondary size-6\" />\n      <Spinner className=\"text-danger size-6\" />\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="spinner-colors" />
 
 ### In button
 
 Places a spinner in disabled buttons that are busy.
 
-<Example kind="ui" name="spinner" story="InButton">
-
-<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerInButtonExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Button disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Saving\n      </Button>\n      <Button variant=\"outline\" disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Loading more\n      </Button>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="spinner-in-button" />
 
 ## API Reference
 
@@ -84,7 +75,7 @@ Places a spinner in disabled buttons that are busy.
 
 The animated activity indicator.
 
-<PropsTable extends={["React.ComponentProps<\"svg\">"]} />
+Also accepts the props of `React.ComponentProps<"svg">`.
 
 </ApiPart>
 
@@ -101,15 +92,7 @@ The animated activity indicator.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-spinner--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerExample() {\n  return (\n    <Spinner />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerExample: View {\n  var body: some View {\n    Spinner()\n      .foregroundStyle(Color.labelSecondary)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.runtime.Composable\nimport com.esuiss.ui.components.Spinner\n\n@Composable\nfun SpinnerExample() {\n    Spinner()\n}"} />
-
-</NativeExample>
+<NativeExample id="components-spinner--default" />
 
 `Spinner` wraps the native `ActivityIndicator` in a square `View`. The indicator is scaled from its native small size to the `size` you pass, so it can match text and icon sizes. Its color is set through a class.
 
@@ -117,19 +100,25 @@ The animated activity indicator.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add spinner"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add spinner
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add spinner --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add spinner --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add spinner --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add spinner --platform kotlin
+```
 
 </Only>
 
@@ -143,11 +132,13 @@ The animated activity indicator.
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn"} />
+```bash title="Terminal"
+npx expo install cn
+```
 
 2. Copy the source into `components/ui/spinner.tsx`:
 
-<SourceFile path="uniwind/components/ui/spinner.tsx" />
+<ComponentSource path="uniwind/components/ui/spinner.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -157,11 +148,13 @@ The animated activity indicator.
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind"} />
+```bash title="Terminal"
+npx expo install cn nativewind
+```
 
 2. Copy the source into `components/ui/spinner.tsx`:
 
-<SourceFile path="nativewind/components/ui/spinner.tsx" />
+<ComponentSource path="nativewind/components/ui/spinner.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -171,7 +164,7 @@ The animated activity indicator.
 
 1. Copy the source into `components/ui/spinner.tsx`:
 
-<SourceFile path="stylesheet/components/ui/spinner.tsx" />
+<ComponentSource path="stylesheet/components/ui/spinner.tsx" />
 
 2. Update the import paths to match your project.
 
@@ -187,13 +180,13 @@ The animated activity indicator.
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source:
 
-<SourceFile path="swift/Components/Spinner.swift" />
+<ComponentSource path="swift/Components/Spinner.swift" />
 
 4. Add the files to your app target.
 
@@ -203,21 +196,25 @@ The animated activity indicator.
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Spinner.kt" />
+<ComponentSource path="kotlin/components/Spinner.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -225,9 +222,13 @@ The animated activity indicator.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\""} />
+```tsx
+import { Spinner } from "@/components/ui/spinner"
+```
 
-<Code lang="tsx" code={"<Spinner />"} />
+```tsx
+<Spinner />
+```
 
 Set `size` in points (default `16`) and `colorClassName` with an `accent-*` class, such as `accent-accent` or `accent-danger`. Inside a button, use `accent-on-accent` on the `default` variant so the spinner matches the label.
 
@@ -237,43 +238,19 @@ Set `size` in points (default `16`) and `colorClassName` with an `accent-*` clas
 
 Spinners at 12, 16, 24 and 32 points.
 
-<NativeExample id="components-spinner--sizes" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerSizesExample() {\n  return (\n    <View className=\"flex-row items-center gap-6\">\n      <Spinner size={12} />\n      <Spinner />\n      <Spinner size={24} />\n      <Spinner size={32} />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerSizesExample: View {\n  var body: some View {\n    HStack(spacing: 24) {\n      Spinner(.sm)\n      Spinner()\n      Spinner(.lg)\n      Spinner(.xl)\n    }\n    .foregroundStyle(Color.labelSecondary)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Spinner\n\n@Composable\nfun SpinnerRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun SpinnerSizes() {\n    SpinnerRow {\n        Spinner(size = 12.dp)\n        Spinner()\n        Spinner(size = 24.dp)\n        Spinner(size = 32.dp)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-spinner--sizes" />
 
 ### Colors
 
 Spinners in the label, accent and danger colors.
 
-<NativeExample id="components-spinner--colors" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerColorsExample() {\n  return (\n    <View className=\"flex-row items-center gap-6\">\n      <Spinner size={24} colorClassName=\"accent-label\" />\n      <Spinner size={24} colorClassName=\"accent-accent\" />\n      <Spinner size={24} colorClassName=\"accent-danger\" />\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerColorsExample: View {\n  var body: some View {\n    HStack(spacing: 24) {\n      Spinner(.lg).foregroundStyle(Color.label)\n      Spinner(.lg).foregroundStyle(Color.accent)\n      Spinner(.lg).foregroundStyle(Color.danger)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Spinner\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun SpinnerRow(content: @Composable () -> Unit) {\n    Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {\n        content()\n    }\n}\n\n@Composable\nfun SpinnerColors() {\n    val colors = EsuissTheme.colors\n    SpinnerRow {\n        Spinner(size = 24.dp, color = colors.label)\n        Spinner(size = 24.dp, color = colors.accent)\n        Spinner(size = 24.dp, color = colors.danger)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-spinner--colors" />
 
 ### In button
 
 Spinners inside disabled buttons next to a label.
 
-<NativeExample id="components-spinner--in-button" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { Text } from \"@/components/ui/text\"\n\nexport function SpinnerInButtonExample() {\n  return (\n    <View className=\"items-start gap-3\">\n      <Button disabled>\n        <Spinner colorClassName=\"accent-on-accent\" />\n        <Text>Saving</Text>\n      </Button>\n      <Button variant=\"secondary\" disabled>\n        <Spinner />\n        <Text>Loading</Text>\n      </Button>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct SpinnerInButtonExample: View {\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      Button {} label: {\n        HStack(spacing: 6) {\n          Spinner().foregroundStyle(Color.onAccent)\n          Text(\"Saving\")\n        }\n      }\n      .buttonStyle(.variant())\n      Button {} label: {\n        HStack(spacing: 6) {\n          Spinner().foregroundStyle(Color.labelSecondary)\n          Text(\"Loading\")\n        }\n      }\n      .buttonStyle(.variant(.secondary))\n    }\n    .disabled(true)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Button\nimport com.esuiss.ui.components.ButtonVariant\nimport com.esuiss.ui.components.Spinner\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\n\n@Composable\nfun SpinnerInButton() {\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Button(onClick = {}, enabled = false) {\n            Spinner(color = EsuissTheme.colors.onAccent)\n            Text(\"Saving\")\n        }\n        Button(onClick = {}, variant = ButtonVariant.Secondary, enabled = false) {\n            Spinner()\n            Text(\"Loading\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-spinner--in-button" />
 
 ## API Reference
 
@@ -281,7 +258,12 @@ Spinners inside disabled buttons next to a label.
 
 ### Spinner
 
-<PropsTable extends={["React.ComponentProps<typeof ActivityIndicator>"]} props={[{"name":"size","type":"number","default":"16","description":"Width and height in points. Defaults to `16`."},{"name":"colorClassName","type":"string","default":"\"accent-label-secondary\"","description":"Class that sets the indicator color. Defaults to `accent-label-secondary`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `number` | `16` | Width and height in points. Defaults to `16`. |
+| `colorClassName` | `string` | `"accent-label-secondary"` | Class that sets the indicator color. Defaults to `accent-label-secondary`. |
+
+Also accepts the props of `React.ComponentProps<typeof ActivityIndicator>`.
 
 </ApiPart>
 

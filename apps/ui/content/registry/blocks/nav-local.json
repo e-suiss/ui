@@ -1,6 +1,0 @@
-{
-  "description": "A sticky product sub-navigation that highlights the section in view, shown on a dark product page.",
-  "overview": "A sticky product sub-navigation with the product name on the left and section links and a Buy button on the right, underlining the link for the section in view. The bar gains a blurred background once the page scrolls, and the links collapse into a full-screen menu when space runs out. It renders dark and comes with a sample page of three sections. Use it under a global nav on long product or feature pages.",
-  "usage": "Edit `sections`; each `id` must match an element on your page, because an `IntersectionObserver` picks the active link from the section in view. Replace the sample sections, `highlights` and `images` with your own content, and give Buy a handler.",
-  "notes": "Images are Unsplash placeholders."
-}

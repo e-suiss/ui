@@ -3,16 +3,11 @@ title: Stepper
 description: "A numeric field with minus and plus buttons that step the value, accelerating while held."
 eyebrow: Interaction
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="interaction" name="stepper" story="Default">
-
-<Code lang="tsx" code={"import { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\n\nexport function StepperExample() {\n  return (\n    <Stepper defaultValue={1} min={0} max={10}>\n      <StepperInput aria-label=\"Quantity\" />\n      <StepperGroup>\n        <StepperDecrement />\n        <StepperSeparator />\n        <StepperIncrement />\n      </StepperGroup>\n    </Stepper>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="stepper-demo" responsive />
 
 `Stepper` recreates the iOS stepper on top of the Base UI Number Field. It pairs an editable `StepperInput` with a segmented `StepperGroup` of `StepperDecrement` and `StepperIncrement` buttons. Each press changes the value by `step`; holding a button repeats the change after a short delay and speeds up over time. Each button disables itself when the value reaches `min` or `max`.
 
@@ -22,25 +17,40 @@ Use it for small, bounded quantities such as copies, servings, or scale, where p
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add interactions stepper"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add interactions stepper
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Copy the source into `components/interactions/stepper.tsx`:
 
-<SourceFile path="components/interactions/stepper.tsx" />
+<ComponentSource path="components/interactions/stepper.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from \"@/components/interactions/stepper\""} />
+```tsx
+import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from "@/components/interactions/stepper"
+```
 
-<Code lang="tsx" code={"<Stepper defaultValue={1} min={0} max={10}>\n  <StepperInput aria-label=\"Quantity\" />\n  <StepperGroup>\n    <StepperDecrement />\n    <StepperSeparator />\n    <StepperIncrement />\n  </StepperGroup>\n</Stepper>"} />
+```tsx
+<Stepper defaultValue={1} min={0} max={10}>
+  <StepperInput aria-label="Quantity" />
+  <StepperGroup>
+    <StepperDecrement />
+    <StepperSeparator />
+    <StepperIncrement />
+  </StepperGroup>
+</Stepper>
+```
 
 - Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator`, and `StepperIncrement` inside `Stepper`.
 - The value is uncontrolled by default; pass `value` and `onValueChange` to control it.
@@ -53,15 +63,20 @@ Use it for small, bounded quantities such as copies, servings, or scale, where p
 
 A print settings list with labelled steppers, a percent format with a step of `5`, and a disabled row.
 
-<Example kind="interaction" name="stepper" story="Print">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\n\nfunction StepperRow({\n  label,\n  ...props\n}: React.ComponentProps<typeof Stepper> & { label: string }) {\n  const labelId = React.useId()\n\n  return (\n    <div className=\"flex min-h-11 items-center justify-between gap-4 px-4 py-1.5\">\n      <span id={labelId} className=\"text-base\">\n        {label}\n      </span>\n      <Stepper {...props}>\n        <StepperInput aria-labelledby={labelId} />\n        <StepperGroup>\n          <StepperDecrement />\n          <StepperSeparator />\n          <StepperIncrement />\n        </StepperGroup>\n      </Stepper>\n    </div>\n  )\n}\n\nfunction PrintExample() {\n  const [copies, setCopies] = React.useState(1)\n  const [scale, setScale] = React.useState(100)\n\n  return (\n    <div className=\"mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3\">\n      <div className=\"divide-y divide-separator overflow-hidden rounded-2xl border\">\n        <StepperRow\n          label=\"Copies\"\n          value={copies}\n          onValueChange={setCopies}\n          min={1}\n          max={999}\n        />\n        <StepperRow\n          label=\"Scale\"\n          value={scale}\n          onValueChange={setScale}\n          min={25}\n          max={400}\n          step={5}\n          format={{ style: \"unit\", unit: \"percent\" }}\n        />\n        <StepperRow label=\"Pages per sheet\" defaultValue={1} disabled />\n      </div>\n      <p role=\"status\" className=\"text-sm text-label-secondary\">\n        {copies} {copies === 1 ? \"copy\" : \"copies\"} at {scale}%\n      </p>\n    </div>\n  )\n}\n\nexport function StepperPrintExample() {\n  return (\n    <PrintExample />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="stepper-print" responsive />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Stepper","href":"#stepper","children":[{"name":"StepperInput","href":"#stepperinput","children":[]},{"name":"StepperGroup","href":"#steppergroup","children":[{"name":"StepperDecrement","href":"#stepperdecrement","children":[]},{"name":"StepperSeparator","href":"#stepperseparator","children":[]},{"name":"StepperIncrement","href":"#stepperincrement","children":[]}]}]}]} />
+<Anatomy>
+
+- [Stepper](#stepper)
+  - [StepperInput](#stepperinput)
+  - [StepperGroup](#steppergroup)
+    - [StepperDecrement](#stepperdecrement)
+    - [StepperSeparator](#stepperseparator)
+    - [StepperIncrement](#stepperincrement)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -69,7 +84,14 @@ A print settings list with labelled steppers, a percent format with a step of `5
 
 The Number Field root that holds the value and its limits.
 
-<PropsTable extends={["NumberFieldPrimitive.Root.Props"]} props={[{"name":"step","type":"number","default":"1","description":"The amount each press adds or subtracts."},{"name":"value","type":"number","description":"The current value, for controlled use."},{"name":"defaultValue","type":"number","default":"0","description":"The initial value when uncontrolled."},{"name":"onValueChange","type":"(value: number) => void","description":"Called with the new value when it changes."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `step` | `number` | `1` | The amount each press adds or subtracts. |
+| `value` | `number` | - | The current value, for controlled use. |
+| `defaultValue` | `number` | `0` | The initial value when uncontrolled. |
+| `onValueChange` | `(value: number) => void` | - | Called with the new value when it changes. |
+
+Also accepts the props of `NumberFieldPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -79,7 +101,7 @@ The Number Field root that holds the value and its limits.
 
 The editable text field that shows the value.
 
-<PropsTable extends={["NumberFieldPrimitive.Input.Props"]} />
+Also accepts the props of `NumberFieldPrimitive.Input.Props`.
 
 </ApiPart>
 
@@ -89,7 +111,7 @@ The editable text field that shows the value.
 
 The segmented container for the decrement and increment buttons.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -99,7 +121,7 @@ The segmented container for the decrement and increment buttons.
 
 The button that decreases the value by one step.
 
-<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+Also accepts the props of `React.ComponentProps<"button">`.
 
 </ApiPart>
 
@@ -109,7 +131,7 @@ The button that decreases the value by one step.
 
 The button that increases the value by one step.
 
-<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+Also accepts the props of `React.ComponentProps<"button">`.
 
 </ApiPart>
 
@@ -119,7 +141,7 @@ The button that increases the value by one step.
 
 A thin divider between the two buttons.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -140,15 +162,7 @@ A thin divider between the two buttons.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="interactions-stepper--default" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\n\nexport function StepperExample() {\n  return (\n    <Stepper defaultValue={1} min={0} max={10}>\n      <StepperInput accessibilityLabel=\"Quantity\" />\n      <StepperGroup>\n        <StepperDecrement />\n        <StepperSeparator />\n        <StepperIncrement />\n      </StepperGroup>\n    </Stepper>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct StepperParts: View {\n  var body: some View {\n    StepperInput()\n    StepperGroup {\n      StepperDecrement()\n      StepperSeparator()\n      StepperIncrement()\n    }\n  }\n}\n\nstruct StepperQuantity: View {\n  @State private var value = 1\n\n  var body: some View {\n    ValueStepper(value: $value, in: 0...10) {\n      StepperParts()\n    }\n    .accessibilityLabel(Text(\"Quantity\"))\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Row\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableDoubleStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.esuiss.ui.interactions.Stepper\nimport com.esuiss.ui.interactions.StepperDecrement\nimport com.esuiss.ui.interactions.StepperGroup\nimport com.esuiss.ui.interactions.StepperIncrement\nimport com.esuiss.ui.interactions.StepperInput\nimport com.esuiss.ui.interactions.StepperSeparator\n\n@Composable\nfun StepperControls() {\n    StepperGroup {\n        StepperDecrement()\n        StepperSeparator()\n        StepperIncrement()\n    }\n}\n\n@Composable\nfun StepperDefault() {\n    var value by rememberSaveable { mutableDoubleStateOf(1.0) }\n    Row {\n        Stepper(value = value, onValueChange = { value = it }, min = 0.0, max = 10.0) {\n            StepperInput(contentDescription = \"Quantity\")\n            StepperControls()\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-stepper--default" />
 
 `Stepper` is a number field laid out as a right-aligned value followed by a field holding minus and plus buttons, inset from its edges. Each step snaps to `step` and stays within `min` and `max`, and a button that can go no further is shown as disabled.
 
@@ -158,19 +172,25 @@ Pressing and holding a button steps once, then repeats every 60 ms after 400 ms.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add stepper"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add stepper
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add stepper --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add stepper --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add stepper --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add stepper --platform kotlin
+```
 
 </Only>
 
@@ -186,13 +206,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), and the primitives `components/primitives/number-field.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/interactions/stepper.tsx`:
 
-<SourceFile path="uniwind/components/interactions/stepper.tsx" />
+<ComponentSource path="uniwind/components/interactions/stepper.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -202,13 +224,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn nativewind phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn nativewind phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), and the primitives `components/primitives/number-field.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/interactions/stepper.tsx`:
 
-<SourceFile path="nativewind/components/interactions/stepper.tsx" />
+<ComponentSource path="nativewind/components/interactions/stepper.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -218,13 +242,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), and the primitives `components/primitives/number-field.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/interactions/stepper.tsx`:
 
-<SourceFile path="stylesheet/components/interactions/stepper.tsx" />
+<ComponentSource path="stylesheet/components/interactions/stepper.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -240,27 +266,29 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Interactions/Stepper.swift" />
+<ComponentSource path="swift/Interactions/Stepper.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -270,25 +298,30 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/interactions/Stepper.kt" />
+<ComponentSource path="kotlin/interactions/Stepper.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -296,9 +329,20 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 ## Usage
 
-<Code lang="tsx" code={"import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from \"@/components/interactions/stepper\""} />
+```tsx
+import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from "@/components/interactions/stepper"
+```
 
-<Code lang="tsx" code={"<Stepper defaultValue={1} min={0} max={10}>\n  <StepperInput accessibilityLabel=\"Quantity\" />\n  <StepperGroup>\n    <StepperDecrement />\n    <StepperSeparator />\n    <StepperIncrement />\n  </StepperGroup>\n</Stepper>"} />
+```tsx
+<Stepper defaultValue={1} min={0} max={10}>
+  <StepperInput accessibilityLabel="Quantity" />
+  <StepperGroup>
+    <StepperDecrement />
+    <StepperSeparator />
+    <StepperIncrement />
+  </StepperGroup>
+</Stepper>
+```
 
 Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`.
 
@@ -310,15 +354,7 @@ Use it uncontrolled with `defaultValue` (`0` by default) or controlled with `val
 
 A print settings list with copies, a percentage scale stepping by 5, and a disabled row.
 
-<NativeExample id="interactions-stepper--print" width={880} height={412} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from \"@/components/interactions/stepper\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction StepperRow({\n  label,\n  ...props\n}: React.ComponentProps<typeof Stepper> & { label: string }) {\n  const labelId = React.useId()\n\n  return (\n    <View className=\"min-h-11 flex-row items-center justify-between gap-4 px-4 py-1.5\">\n      <Text nativeID={labelId} className=\"text-base\">\n        {label}\n      </Text>\n      <Stepper {...props}>\n        <StepperInput accessibilityLabelledBy={labelId} />\n        <StepperGroup>\n          <StepperDecrement />\n          <StepperSeparator />\n          <StepperIncrement />\n        </StepperGroup>\n      </Stepper>\n    </View>\n  )\n}\n\nfunction PrintExample() {\n  const [copies, setCopies] = React.useState(1)\n  const [scale, setScale] = React.useState(100)\n\n  return (\n    <View className=\"w-full gap-3\">\n      <View className=\"overflow-hidden rounded-2xl border border-separator\">\n        <StepperRow\n          label=\"Copies\"\n          value={copies}\n          onValueChange={setCopies}\n          min={1}\n          max={999}\n        />\n        <View className=\"h-px bg-separator\" />\n        <StepperRow\n          label=\"Scale\"\n          value={scale}\n          onValueChange={setScale}\n          min={25}\n          max={400}\n          step={5}\n          format={{ style: \"unit\", unit: \"percent\" }}\n        />\n        <View className=\"h-px bg-separator\" />\n        <StepperRow label=\"Pages per sheet\" defaultValue={1} disabled />\n      </View>\n      <Text\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {copies} {copies === 1 ? \"copy\" : \"copies\"} at {scale}%\n      </Text>\n    </View>\n  )\n}\n\nexport function StepperPrintExample() {\n  return (\n    <PrintExample />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct StepperParts: View {\n  var body: some View {\n    StepperInput()\n    StepperGroup {\n      StepperDecrement()\n      StepperSeparator()\n      StepperIncrement()\n    }\n  }\n}\n\nstruct StepperRow<Content: View>: View {\n  let label: LocalizedStringKey\n  @ViewBuilder let content: () -> Content\n\n  var body: some View {\n    HStack(spacing: 16) {\n      Text(label)\n        .textStyle(.base)\n        .foregroundStyle(Color.label)\n        .frame(maxWidth: .infinity, alignment: .leading)\n      content()\n        .accessibilityLabel(Text(label))\n    }\n    .padding(.horizontal, 16)\n    .padding(.vertical, 6)\n    .frame(minHeight: 44)\n  }\n}\n\nstruct StepperPrint: View {\n  @State private var copies = 1\n  @State private var scale = 100.0\n  @State private var pages = 1\n\n  var body: some View {\n    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)\n    VStack(alignment: .leading, spacing: 12) {\n      VStack(spacing: 0) {\n        StepperRow(label: \"Copies\") {\n          ValueStepper(value: $copies, in: 1...999) { StepperParts() }\n        }\n        Color.separator.frame(height: 1)\n        StepperRow(label: \"Scale\") {\n          ValueStepper(\n            value: $scale,\n            in: 25...400,\n            step: 5,\n            format: FloatingPointFormatStyle<Double>.Percent().scale(1)\n          ) { StepperParts() }\n        }\n        Color.separator.frame(height: 1)\n        StepperRow(label: \"Pages per sheet\") {\n          ValueStepper(value: $pages) { StepperParts() }\n            .disabled(true)\n        }\n      }\n      .clipShape(shape)\n      .overlay { shape.strokeBorder(Color.separator) }\n      Text(verbatim: \"\\(copies) \\(copies == 1 ? \"copy\" : \"copies\") at \\(Int(scale))%\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n        .accessibilityAddTraits(.updatesFrequently)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.background\nimport androidx.compose.foundation.border\nimport androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.Row\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.heightIn\nimport androidx.compose.foundation.layout.padding\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableDoubleStateOf\nimport androidx.compose.runtime.remember\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.interactions.Stepper\nimport com.esuiss.ui.interactions.StepperDecrement\nimport com.esuiss.ui.interactions.StepperGroup\nimport com.esuiss.ui.interactions.StepperIncrement\nimport com.esuiss.ui.interactions.StepperInput\nimport com.esuiss.ui.interactions.StepperSeparator\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\nimport java.text.DecimalFormat\nimport java.text.NumberFormat\n\n@Composable\nfun StepperControls() {\n    StepperGroup {\n        StepperDecrement()\n        StepperSeparator()\n        StepperIncrement()\n    }\n}\n\n@Composable\nfun StepperRow(\n    label: String,\n    value: Double,\n    onValueChange: (Double) -> Unit,\n    min: Double = Double.NEGATIVE_INFINITY,\n    max: Double = Double.POSITIVE_INFINITY,\n    step: Double = 1.0,\n    enabled: Boolean = true,\n    format: NumberFormat = remember { NumberFormat.getNumberInstance() },\n) {\n    Row(\n        modifier = Modifier\n            .fillMaxWidth()\n            .heightIn(min = 44.dp)\n            .padding(horizontal = 16.dp, vertical = 6.dp),\n        horizontalArrangement = Arrangement.spacedBy(16.dp),\n        verticalAlignment = Alignment.CenterVertically,\n    ) {\n        Text(label, modifier = Modifier.weight(1f), style = Typography.base)\n        Stepper(value = value, onValueChange = onValueChange, min = min, max = max, step = step, enabled = enabled, format = format) {\n            StepperInput(contentDescription = label)\n            StepperControls()\n        }\n    }\n}\n\n@Composable\nfun StepperPrint() {\n    val colors = EsuissTheme.colors\n    var copies by rememberSaveable { mutableDoubleStateOf(1.0) }\n    var scale by rememberSaveable { mutableDoubleStateOf(100.0) }\n    var pages by rememberSaveable { mutableDoubleStateOf(1.0) }\n    val percent = remember { DecimalFormat(\"0'%'\") }\n    val shape = RoundedCornerShape(Radius.xl2)\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Column(\n            Modifier\n                .fillMaxWidth()\n                .clip(shape)\n                .border(1.dp, colors.separator, shape),\n        ) {\n            StepperRow(\"Copies\", copies, { copies = it }, min = 1.0, max = 999.0)\n            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n            StepperRow(\"Scale\", scale, { scale = it }, min = 25.0, max = 400.0, step = 5.0, format = percent)\n            Box(Modifier.fillMaxWidth().height(1.dp).background(colors.separator))\n            StepperRow(\"Pages per sheet\", pages, { pages = it }, enabled = false)\n        }\n        Text(\n            \"${copies.toInt()} ${if (copies == 1.0) \"copy\" else \"copies\"} at ${scale.toInt()}%\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm.copy(color = colors.labelSecondary),\n        )\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="interactions-stepper--print" />
 
 ## API Reference
 
@@ -328,7 +364,13 @@ A print settings list with copies, a percentage scale stepping by 5, and a disab
 
 The root that holds the value and limits.
 
-<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Root>"]} props={[{"name":"value","type":"number","description":"The current value when controlled."},{"name":"defaultValue","type":"number","default":"0","description":"The initial value when uncontrolled. Defaults to `0`."},{"name":"onValueChange","type":"( value: number, eventDetails: NumberFieldPrimitive.ChangeEventDetails ) => void","description":"Called with the new number and change details."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | - | The current value when controlled. |
+| `defaultValue` | `number` | `0` | The initial value when uncontrolled. Defaults to `0`. |
+| `onValueChange` | `( value: number, eventDetails: NumberFieldPrimitive.ChangeEventDetails ) => void` | - | Called with the new number and change details. |
+
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Root>`.
 
 </ApiPart>
 
@@ -338,7 +380,7 @@ The root that holds the value and limits.
 
 The editable, right-aligned value.
 
-<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Input>"]} />
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Input>`.
 
 </ApiPart>
 
@@ -348,7 +390,7 @@ The editable, right-aligned value.
 
 The rounded field that holds the buttons.
 
-<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Group>"]} />
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Group>`.
 
 </ApiPart>
 
@@ -358,7 +400,7 @@ The rounded field that holds the buttons.
 
 The minus button.
 
-<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Decrement>"]} />
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Decrement>`.
 
 </ApiPart>
 
@@ -368,7 +410,7 @@ The minus button.
 
 The plus button.
 
-<PropsTable extends={["React.ComponentProps<typeof NumberFieldPrimitive.Increment>"]} />
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Increment>`.
 
 </ApiPart>
 
@@ -378,7 +420,7 @@ The plus button.
 
 A thin divider between the buttons.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 

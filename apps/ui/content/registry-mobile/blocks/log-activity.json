@@ -1,5 +1,0 @@
-{
-  "description": "An admin activity log grouped by day, with type filters, expandable before and after values and an Export button.",
-  "overview": "An admin screen with a collapsing `Header` and large title, a scrollable `ChipGroup` to filter by event type (Price, Content, Security, Order, User), and events grouped under day headings. Events that carry a change expand with `Collapsible` to show the before and after values. A `TabBar` at the bottom switches between Users, Roles, Activity and Settings; only Activity has content in the sample.",
-  "usage": "Replace `EVENTS` with your audit log and `KINDS` with your event types. Wire `onFilterChange`, `onExport` (receives the current filter) and `onNavigate` (receives the selected tab) to your app."
-}

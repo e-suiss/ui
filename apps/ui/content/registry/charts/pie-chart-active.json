@@ -1,6 +1,0 @@
-{
-  "description": "A donut where one slice is enlarged and outlined with an outer arc to highlight it.",
-  "overview": "A donut with one slice pulled outward and traced by a thin outer arc, so a single category stands out from the rest. Use it to call attention to the segment a page is about, such as the current plan or the user's own device.",
-  "usage": "Replace `chartData` with your categories, giving each a value and a `fill` that points at its color in `chartConfig`. Set `ACTIVE` to the index of the slice you want to emphasize, or drive it from state if it should follow a selection.",
-  "notes": "The highlight is fixed and does not follow hover; wire `ACTIVE` to state if you need that."
-}

@@ -3,16 +3,11 @@ title: Picker
 description: "A single-choice picker that renders a custom Select on desktop and a native select on mobile."
 eyebrow: Pattern
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="pattern" name="picker" story="Default">
-
-<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-demo" responsive />
 
 `Picker` lets the user choose one option from a short list. On desktop it renders a suiss/ui `Select` with a trigger, a popup list, labelled groups and separators. On mobile (below `48rem`, via `useIsMobile`) it renders a `NativeSelect`, so the platform's own picker wheel or sheet appears; groups become `optgroup` elements and separators are omitted.
 
@@ -22,7 +17,9 @@ You describe options once with `PickerItem`, `PickerGroup` and `PickerSeparator`
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns picker"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add patterns picker
+```
 
 ### Manual
 
@@ -30,15 +27,19 @@ You describe options once with `PickerItem`, `PickerGroup` and `PickerSeparator`
 
 2. Copy the source into `components/patterns/picker.tsx`:
 
-<SourceFile path="components/patterns/picker.tsx" />
+<ComponentSource path="components/patterns/picker.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\""} />
+```tsx
+import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
+```
 
-<Code lang="tsx" code={"<Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>"} />
+```tsx
+<Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48">{fruitItems}</Picker>
+```
 
 - The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it.
 - `Picker` collects the value and label of each `PickerItem` from its children so the desktop trigger can show the selected label. Pass `items` only when options are not rendered as direct or nested `PickerItem` elements.
@@ -51,65 +52,48 @@ You describe options once with `PickerItem`, `PickerGroup` and `PickerSeparator`
 
 Starts with an initial value through `defaultValue`.
 
-<Example kind="pattern" name="picker" story="WithValue">
-
-<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerWithValueExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" defaultValue=\"banana\">{fruitItems}</Picker>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-with-value" responsive />
 
 ### Sizes
 
 Shows the `sm` and `default` sizes side by side.
 
-<Example kind="pattern" name="picker" story="Sizes">
-
-<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" size=\"sm\">\n        {fruitItems}\n      </Picker>\n      <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-sizes" responsive />
 
 ### Grouped
 
 Organizes options under labelled groups with a separator and a disabled option.
 
-<Example kind="pattern" name="picker" story="Grouped">
-
-<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\"\n\nexport function PickerGroupedExample() {\n  return (\n    <Picker placeholder=\"Select a time zone\" aria-label=\"Time zone\" className=\"w-64\">\n      <PickerGroup label=\"North America\">\n        <PickerItem value=\"est\">Eastern Time</PickerItem>\n        <PickerItem value=\"cst\">Central Time</PickerItem>\n        <PickerItem value=\"pst\">Pacific Time</PickerItem>\n      </PickerGroup>\n      <PickerSeparator />\n      <PickerGroup label=\"Europe\">\n        <PickerItem value=\"gmt\">Greenwich Mean Time</PickerItem>\n        <PickerItem value=\"cet\">Central European Time</PickerItem>\n        <PickerItem value=\"trt\" disabled>\n          Turkey Time\n        </PickerItem>\n      </PickerGroup>\n    </Picker>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-grouped" responsive />
 
 ### Disabled
 
 Prevents opening and changing the value.
 
-<Example kind="pattern" name="picker" story="Disabled">
-
-<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerDisabledExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" disabled>{fruitItems}</Picker>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-disabled" responsive />
 
 ### Invalid
 
 Shows the invalid style through `aria-invalid`.
 
-<Example kind="pattern" name="picker" story="Invalid">
-
-<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerInvalidExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" aria-invalid>{fruitItems}</Picker>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-invalid" responsive />
 
 ### Controlled
 
 Owns the value in state with `value` and `onValueChange`.
 
-<Example kind="pattern" name="picker" story="Controlled">
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nfunction ControlledExample(args: React.ComponentProps<typeof Picker>) {\n  const [value, setValue] = React.useState(\"grapes\")\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <Picker {...args} value={value} onValueChange={setValue}>\n        {fruitItems}\n      </Picker>\n      <p className=\"text-sm text-label-secondary\">Selected: {value}</p>\n    </div>\n  )\n}\n\nexport function PickerControlledExample() {\n  return (\n    <ControlledExample placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" />\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="picker-controlled" responsive />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Picker","href":"#picker","children":[{"name":"PickerGroup","href":"#pickergroup","children":[{"name":"PickerItem","href":"#pickeritem","children":[]}]},{"name":"PickerSeparator","children":[]}]}]} />
+<Anatomy>
+
+- [Picker](#picker)
+  - [PickerGroup](#pickergroup)
+    - [PickerItem](#pickeritem)
+  - PickerSeparator
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -117,7 +101,23 @@ Owns the value in state with `value` and `onValueChange`.
 
 The root that renders the Select or native select and holds the value.
 
-<PropsTable props={[{"name":"value","type":"string","description":"The selected value when controlled."},{"name":"defaultValue","type":"string","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value when the user picks an option."},{"name":"placeholder","type":"string","description":"Text shown when no value is selected; on mobile it is a disabled first option."},{"name":"items","type":"PickerItemData[]","description":"Value and label pairs used to display the selected label; collected from `PickerItem` children when omitted."},{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"The control height."},{"name":"id","type":"string","description":"The ID of the trigger on desktop or the native select on mobile."},{"name":"name","type":"string","description":"The field name submitted with a form."},{"name":"disabled","type":"boolean","description":"Disables the picker."},{"name":"required","type":"boolean","description":"Marks the field as required for form validation."},{"name":"className","type":"string","description":"Classes applied to the trigger on desktop or the native select on mobile."},{"name":"children","type":"React.ReactNode","description":"The `PickerItem`, `PickerGroup` and `PickerSeparator` elements."},{"name":"aria-invalid","type":"boolean","description":"Marks the field as invalid and applies the error style."},{"name":"aria-label","type":"string","description":"The accessible name of the control."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the control."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | The selected value when controlled. |
+| `defaultValue` | `string` | - | The initially selected value when uncontrolled. |
+| `onValueChange` | `(value: string) => void` | - | Called with the new value when the user picks an option. |
+| `placeholder` | `string` | - | Text shown when no value is selected; on mobile it is a disabled first option. |
+| `items` | `PickerItemData[]` | - | Value and label pairs used to display the selected label; collected from `PickerItem` children when omitted. |
+| `size` | `"sm" \| "default"` | `"default"` | The control height. |
+| `id` | `string` | - | The ID of the trigger on desktop or the native select on mobile. |
+| `name` | `string` | - | The field name submitted with a form. |
+| `disabled` | `boolean` | - | Disables the picker. |
+| `required` | `boolean` | - | Marks the field as required for form validation. |
+| `className` | `string` | - | Classes applied to the trigger on desktop or the native select on mobile. |
+| `children` | `React.ReactNode` | - | The `PickerItem`, `PickerGroup` and `PickerSeparator` elements. |
+| `aria-invalid` | `boolean` | - | Marks the field as invalid and applies the error style. |
+| `aria-label` | `string` | - | The accessible name of the control. |
+| `aria-describedby` | `string` | - | The ID of an element that describes the control. |
 
 </ApiPart>
 
@@ -127,7 +127,10 @@ The root that renders the Select or native select and holds the value.
 
 Groups related options under an optional label.
 
-<PropsTable props={[{"name":"label","type":"string","description":"The group's heading; becomes the `optgroup` label on mobile."},{"name":"children","type":"React.ReactNode","description":"The options in the group."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | - | The group's heading; becomes the `optgroup` label on mobile. |
+| `children` | `React.ReactNode` | - | The options in the group. |
 
 </ApiPart>
 
@@ -137,7 +140,11 @@ Groups related options under an optional label.
 
 A selectable option.
 
-<PropsTable props={[{"name":"value","type":"string","required":true,"description":"The value selected by this option."},{"name":"disabled","type":"boolean","description":"Prevents selecting this option."},{"name":"children","type":"React.ReactNode","description":"The option's label."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | Required | The value selected by this option. |
+| `disabled` | `boolean` | - | Prevents selecting this option. |
+| `children` | `React.ReactNode` | - | The option's label. |
 
 </ApiPart>
 
@@ -156,15 +163,7 @@ Styling hooks: `data-slot="picker"`, `picker-group`, `picker-item` and `picker-s
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="patterns-picker--default" width={880} height={584} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction PickerDemo() {\n  const [value, setValue] = React.useState<string>()\n  return (\n    <View className=\"gap-2\">\n      <Picker\n        value={value}\n        onValueChange={setValue}\n        placeholder=\"Select a fruit\"\n        accessibilityLabel=\"Fruit\"\n        className=\"w-56\"\n      >\n        <PickerGroup label=\"Fruits\">\n          <PickerItem value=\"cherry\">Cherry</PickerItem>\n          <PickerItem value=\"banana\">Banana</PickerItem>\n          <PickerItem value=\"mango\">Mango</PickerItem>\n        </PickerGroup>\n        <PickerSeparator />\n        <PickerGroup label=\"Vegetables\">\n          <PickerItem value=\"carrot\">Carrot</PickerItem>\n          <PickerItem value=\"spinach\" disabled>\n            Spinach\n          </PickerItem>\n        </PickerGroup>\n      </Picker>\n      <Text className=\"text-sm text-label-secondary\">\n        Selected: {value ?? \"none\"}\n      </Text>\n    </View>\n  )\n}\n\nexport function PickerExample() {\n  return (\n    <PickerDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PickerDemo: View {\n  @State private var value: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 8) {\n      OptionPicker(selection: $value, placeholder: \"Select a fruit\") {\n        OptionPickerGroup(\"Fruits\") {\n          OptionPickerItem(\"Cherry\", value: \"cherry\")\n          OptionPickerItem(\"Banana\", value: \"banana\")\n          OptionPickerItem(\"Mango\", value: \"mango\")\n        }\n        OptionPickerSeparator()\n        OptionPickerGroup(\"Vegetables\") {\n          OptionPickerItem(\"Carrot\", value: \"carrot\")\n          OptionPickerItem(\"Spinach\", value: \"spinach\")\n            .disabled(true)\n        }\n      }\n      .frame(width: 224)\n      .accessibilityLabel(Text(\"Fruit\"))\n      Text(verbatim: \"Selected: \\(value ?? \"none\")\")\n        .textStyle(.sm)\n        .foregroundStyle(Color.labelSecondary)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.contentDescription\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.patterns.Picker\nimport com.esuiss.ui.patterns.PickerGroup\nimport com.esuiss.ui.patterns.PickerItem\nimport com.esuiss.ui.patterns.PickerSeparator\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun PickerDefault() {\n    var value by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {\n        Picker(\n            value = value,\n            onValueChange = { value = it },\n            modifier = Modifier.width(224.dp).semantics { contentDescription = \"Fruit\" },\n            placeholder = \"Select a fruit\",\n        ) {\n            PickerGroup(label = \"Fruits\") {\n                PickerItem(\"cherry\", \"Cherry\")\n                PickerItem(\"banana\", \"Banana\")\n                PickerItem(\"mango\", \"Mango\")\n            }\n            PickerSeparator()\n            PickerGroup(label = \"Vegetables\") {\n                PickerItem(\"carrot\", \"Carrot\")\n                PickerItem(\"spinach\", \"Spinach\", enabled = false)\n            }\n        }\n        Text(\"Selected: ${value ?: \"none\"}\", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-picker--default" />
 
 `Picker` composes `Select`: a `SelectTrigger` showing the current value and a `SelectContent` popup with the options. The selected option shows a check mark.
 
@@ -174,19 +173,25 @@ Use it to choose one value from a short or grouped list in a form.
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add picker"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add picker
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add picker --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add picker --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add picker --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add picker --platform kotlin
+```
 
 </Only>
 
@@ -204,7 +209,7 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 2. Copy the source into `components/patterns/picker.tsx`:
 
-<SourceFile path="uniwind/components/patterns/picker.tsx" />
+<ComponentSource path="uniwind/components/patterns/picker.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -216,7 +221,7 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 2. Copy the source into `components/patterns/picker.tsx`:
 
-<SourceFile path="nativewind/components/patterns/picker.tsx" />
+<ComponentSource path="nativewind/components/patterns/picker.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -228,7 +233,7 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 2. Copy the source into `components/patterns/picker.tsx`:
 
-<SourceFile path="stylesheet/components/patterns/picker.tsx" />
+<ComponentSource path="stylesheet/components/patterns/picker.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -244,39 +249,41 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Patterns/OptionPicker.swift" />
+<ComponentSource path="swift/Patterns/OptionPicker.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
-<SourceFile path="swift/Patterns/Adaptive.swift" />
+<ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 5. Add the files to your app target.
 
@@ -286,37 +293,42 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/patterns/Picker.kt" />
+<ComponentSource path="kotlin/patterns/Picker.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Select.kt" />
+<ComponentSource path="kotlin/components/Select.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -324,9 +336,13 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 ## Usage
 
-<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\""} />
+```tsx
+import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
+```
 
-<Code lang="tsx" code={"<PickerDemo />"} />
+```tsx
+<PickerDemo />
+```
 
 List `PickerItem`s as children, optionally inside `PickerGroup`s separated by `PickerSeparator`. The picker collects the items from its children to show the selected label, or you can pass `items` directly.
 
@@ -338,15 +354,7 @@ Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValue
 
 A small picker with a value, an invalid picker and a disabled picker.
 
-<NativeExample id="patterns-picker--states" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nexport function PickerStatesExample() {\n  return (\n    <View className=\"gap-3\">\n      <Picker defaultValue=\"banana\" size=\"sm\" className=\"w-56\">\n        <PickerItem value=\"cherry\">Cherry</PickerItem>\n        <PickerItem value=\"banana\">Banana</PickerItem>\n      </Picker>\n      <Picker placeholder=\"Invalid\" invalid className=\"w-56\">\n        <PickerItem value=\"cherry\">Cherry</PickerItem>\n      </Picker>\n      <Picker placeholder=\"Disabled\" disabled className=\"w-56\">\n        <PickerItem value=\"cherry\">Cherry</PickerItem>\n      </Picker>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct PickerStates: View {\n  @State private var small: String? = \"banana\"\n  @State private var invalid: String?\n  @State private var disabled: String?\n\n  var body: some View {\n    VStack(alignment: .leading, spacing: 12) {\n      OptionPicker(selection: $small, size: .sm) {\n        OptionPickerItem(\"Cherry\", value: \"cherry\")\n        OptionPickerItem(\"Banana\", value: \"banana\")\n      }\n      .frame(width: 224)\n      OptionPicker(selection: $invalid, placeholder: \"Invalid\") {\n        OptionPickerItem(\"Cherry\", value: \"cherry\")\n      }\n      .frame(width: 224)\n      .invalid()\n      OptionPicker(selection: $disabled, placeholder: \"Disabled\") {\n        OptionPickerItem(\"Cherry\", value: \"cherry\")\n      }\n      .frame(width: 224)\n      .disabled(true)\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.SelectSize\nimport com.esuiss.ui.patterns.Picker\nimport com.esuiss.ui.patterns.PickerItem\n\n@Composable\nfun PickerStates() {\n    var fruit by rememberSaveable { mutableStateOf<String?>(\"banana\") }\n    var invalid by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {\n        Picker(\n            value = fruit,\n            onValueChange = { fruit = it },\n            modifier = Modifier.width(224.dp),\n            size = SelectSize.Sm,\n        ) {\n            PickerItem(\"cherry\", \"Cherry\")\n            PickerItem(\"banana\", \"Banana\")\n        }\n        Picker(\n            value = invalid,\n            onValueChange = { invalid = it },\n            modifier = Modifier.width(224.dp),\n            placeholder = \"Invalid\",\n            invalid = true,\n        ) {\n            PickerItem(\"cherry\", \"Cherry\")\n        }\n        Picker(\n            value = null,\n            onValueChange = {},\n            modifier = Modifier.width(224.dp),\n            placeholder = \"Disabled\",\n            enabled = false,\n        ) {\n            PickerItem(\"cherry\", \"Cherry\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="patterns-picker--states" />
 
 ## API Reference
 
@@ -356,7 +364,20 @@ A small picker with a value, an invalid picker and a disabled picker.
 
 The root that renders the trigger and the options popup.
 
-<PropsTable props={[{"name":"value","type":"string","description":"The selected value when controlled."},{"name":"defaultValue","type":"string","description":"The initial value when uncontrolled."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value when an option is chosen."},{"name":"placeholder","type":"string","description":"Text shown when no value is selected."},{"name":"items","type":"PickerItemData[]","description":"`{ value, label }` pairs used to show the selected label; collected from children when omitted."},{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"Trigger height: `sm` or `default`."},{"name":"disabled","type":"boolean","description":"Prevents opening the list."},{"name":"invalid","type":"boolean","description":"Applies the error style to the trigger."},{"name":"className","type":"string"},{"name":"accessibilityLabel","type":"string","description":"Label for the trigger."},{"name":"accessibilityLabelledBy","type":"string","description":"Links the trigger to a visible label."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | The selected value when controlled. |
+| `defaultValue` | `string` | - | The initial value when uncontrolled. |
+| `onValueChange` | `(value: string) => void` | - | Called with the new value when an option is chosen. |
+| `placeholder` | `string` | - | Text shown when no value is selected. |
+| `items` | `PickerItemData[]` | - | `{ value, label }` pairs used to show the selected label; collected from children when omitted. |
+| `size` | `"sm" \| "default"` | `"default"` | Trigger height: `sm` or `default`. |
+| `disabled` | `boolean` | - | Prevents opening the list. |
+| `invalid` | `boolean` | - | Applies the error style to the trigger. |
+| `className` | `string` | - |  |
+| `accessibilityLabel` | `string` | - | Label for the trigger. |
+| `accessibilityLabelledBy` | `string` | - | Links the trigger to a visible label. |
+| `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
 
@@ -366,7 +387,10 @@ The root that renders the trigger and the options popup.
 
 Groups options under an optional label.
 
-<PropsTable props={[{"name":"label","type":"string","description":"Heading shown above the group."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | - | Heading shown above the group. |
+| `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
 
@@ -376,7 +400,11 @@ Groups options under an optional label.
 
 One selectable option.
 
-<PropsTable props={[{"name":"value","type":"string","required":true,"description":"The value this option selects."},{"name":"disabled","type":"boolean","description":"Prevents choosing this option."},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | Required | The value this option selects. |
+| `disabled` | `boolean` | - | Prevents choosing this option. |
+| `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
 

@@ -3,16 +3,11 @@ title: Context Menu
 description: "A menu of actions that opens at the pointer when people right-click an area."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="context-menu" story="Default">
-
-<Code lang="tsx" code={"import { ArrowClockwiseIcon, ArrowLeftIcon, ArrowRightIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from \"@/components/ui/context-menu\"\n\nexport function ContextMenuExample() {\n  return (\n    <ContextMenu>\n      <ContextMenuTrigger className=\"text-label-secondary flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm\">\n        Right click here\n      </ContextMenuTrigger>\n      <ContextMenuContent>\n        <ContextMenuGroup>\n          <ContextMenuItem>\n            <ArrowLeftIcon />\n            Back\n            <ContextMenuShortcut mod>[</ContextMenuShortcut>\n          </ContextMenuItem>\n          <ContextMenuItem disabled>\n            <ArrowRightIcon />\n            Forward\n            <ContextMenuShortcut mod>]</ContextMenuShortcut>\n          </ContextMenuItem>\n          <ContextMenuItem>\n            <ArrowClockwiseIcon />\n            Reload\n            <ContextMenuShortcut mod>R</ContextMenuShortcut>\n          </ContextMenuItem>\n        </ContextMenuGroup>\n        <ContextMenuSeparator />\n        <ContextMenuSub>\n          <ContextMenuSubTrigger>More tools</ContextMenuSubTrigger>\n          <ContextMenuSubContent>\n            <ContextMenuItem>Save page as...</ContextMenuItem>\n            <ContextMenuItem>Create shortcut...</ContextMenuItem>\n            <ContextMenuItem>Developer tools</ContextMenuItem>\n          </ContextMenuSubContent>\n        </ContextMenuSub>\n        <ContextMenuSeparator />\n        <ContextMenuGroup>\n          <ContextMenuCheckboxItem defaultChecked>\n            Show bookmarks bar\n          </ContextMenuCheckboxItem>\n          <ContextMenuCheckboxItem>Show full URLs</ContextMenuCheckboxItem>\n        </ContextMenuGroup>\n        <ContextMenuSeparator />\n        <ContextMenuRadioGroup defaultValue=\"ada\">\n          <ContextMenuLabel inset>People</ContextMenuLabel>\n          <ContextMenuRadioItem value=\"ada\">Ada Lovelace</ContextMenuRadioItem>\n          <ContextMenuRadioItem value=\"alan\">Alan Turing</ContextMenuRadioItem>\n        </ContextMenuRadioGroup>\n        <ContextMenuSeparator />\n        <ContextMenuItem variant=\"destructive\">\n          <TrashIcon />\n          Delete\n          <ContextMenuShortcut mod>⌫</ContextMenuShortcut>\n        </ContextMenuItem>\n      </ContextMenuContent>\n    </ContextMenu>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="context-menu-demo" />
 
 Context menu wraps the Base UI Context Menu. The `ContextMenu` root manages the open state and `ContextMenuTrigger` defines the area that opens the menu. `ContextMenuContent` renders the menu in a portal at the pointer position. Inside it, use `ContextMenuItem` for actions, `ContextMenuCheckboxItem` for toggles, and `ContextMenuRadioGroup` with `ContextMenuRadioItem` for a single choice. Organize items with `ContextMenuGroup`, `ContextMenuLabel` and `ContextMenuSeparator`, and nest a submenu with `ContextMenuSub`, `ContextMenuSubTrigger` and `ContextMenuSubContent`. `ContextMenuShortcut` displays a keyboard shortcut at the end of an item.
 
@@ -22,27 +17,86 @@ Use a context menu for secondary actions on an object. Because it is hidden unti
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-menu"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add context-menu
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+```bash title="Terminal"
+npm install @base-ui/react @phosphor-icons/react cn
+```
 
 2. Add the pieces it builds on: `use-platform`.
 
 3. Copy the source into `components/ui/context-menu.tsx`:
 
-<SourceFile path="components/ui/context-menu.tsx" />
+<ComponentSource path="components/ui/context-menu.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuItem, ContextMenuSub, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut } from \"@/components/ui/context-menu\""} />
+```tsx
+import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuItem, ContextMenuSub, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut } from "@/components/ui/context-menu"
+```
 
-<Code lang="tsx" code={"<ContextMenu>\n  <ContextMenuTrigger className=\"text-label-secondary flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm\">\n    Right click here\n  </ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuGroup>\n      <ContextMenuItem>\n        <ArrowLeftIcon />\n        Back\n        <ContextMenuShortcut mod>[</ContextMenuShortcut>\n      </ContextMenuItem>\n      <ContextMenuItem disabled>\n        <ArrowRightIcon />\n        Forward\n        <ContextMenuShortcut mod>]</ContextMenuShortcut>\n      </ContextMenuItem>\n      <ContextMenuItem>\n        <ArrowClockwiseIcon />\n        Reload\n        <ContextMenuShortcut mod>R</ContextMenuShortcut>\n      </ContextMenuItem>\n    </ContextMenuGroup>\n    <ContextMenuSeparator />\n    <ContextMenuSub>\n      <ContextMenuSubTrigger>More tools</ContextMenuSubTrigger>\n      <ContextMenuSubContent>\n        <ContextMenuItem>Save page as...</ContextMenuItem>\n        <ContextMenuItem>Create shortcut...</ContextMenuItem>\n        <ContextMenuItem>Developer tools</ContextMenuItem>\n      </ContextMenuSubContent>\n    </ContextMenuSub>\n    <ContextMenuSeparator />\n    <ContextMenuGroup>\n      <ContextMenuCheckboxItem defaultChecked>\n        Show bookmarks bar\n      </ContextMenuCheckboxItem>\n      <ContextMenuCheckboxItem>Show full URLs</ContextMenuCheckboxItem>\n    </ContextMenuGroup>\n    <ContextMenuSeparator />\n    <ContextMenuRadioGroup defaultValue=\"ada\">\n      <ContextMenuLabel inset>People</ContextMenuLabel>\n      <ContextMenuRadioItem value=\"ada\">Ada Lovelace</ContextMenuRadioItem>\n      <ContextMenuRadioItem value=\"alan\">Alan Turing</ContextMenuRadioItem>\n    </ContextMenuRadioGroup>\n    <ContextMenuSeparator />\n    <ContextMenuItem variant=\"destructive\">\n      <TrashIcon />\n      Delete\n      <ContextMenuShortcut mod>⌫</ContextMenuShortcut>\n    </ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>"} />
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger className="text-label-secondary flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
+    Right click here
+  </ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuGroup>
+      <ContextMenuItem>
+        <ArrowLeftIcon />
+        Back
+        <ContextMenuShortcut mod>[</ContextMenuShortcut>
+      </ContextMenuItem>
+      <ContextMenuItem disabled>
+        <ArrowRightIcon />
+        Forward
+        <ContextMenuShortcut mod>]</ContextMenuShortcut>
+      </ContextMenuItem>
+      <ContextMenuItem>
+        <ArrowClockwiseIcon />
+        Reload
+        <ContextMenuShortcut mod>R</ContextMenuShortcut>
+      </ContextMenuItem>
+    </ContextMenuGroup>
+    <ContextMenuSeparator />
+    <ContextMenuSub>
+      <ContextMenuSubTrigger>More tools</ContextMenuSubTrigger>
+      <ContextMenuSubContent>
+        <ContextMenuItem>Save page as...</ContextMenuItem>
+        <ContextMenuItem>Create shortcut...</ContextMenuItem>
+        <ContextMenuItem>Developer tools</ContextMenuItem>
+      </ContextMenuSubContent>
+    </ContextMenuSub>
+    <ContextMenuSeparator />
+    <ContextMenuGroup>
+      <ContextMenuCheckboxItem defaultChecked>
+        Show bookmarks bar
+      </ContextMenuCheckboxItem>
+      <ContextMenuCheckboxItem>Show full URLs</ContextMenuCheckboxItem>
+    </ContextMenuGroup>
+    <ContextMenuSeparator />
+    <ContextMenuRadioGroup defaultValue="ada">
+      <ContextMenuLabel inset>People</ContextMenuLabel>
+      <ContextMenuRadioItem value="ada">Ada Lovelace</ContextMenuRadioItem>
+      <ContextMenuRadioItem value="alan">Alan Turing</ContextMenuRadioItem>
+    </ContextMenuRadioGroup>
+    <ContextMenuSeparator />
+    <ContextMenuItem variant="destructive">
+      <TrashIcon />
+      Delete
+      <ContextMenuShortcut mod>⌫</ContextMenuShortcut>
+    </ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
 
 Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Respond to an action with the item's `onClick`. Selecting an item closes the menu.
 
@@ -54,15 +108,32 @@ Set `inset` on items and labels that have no icon so their text aligns with item
 
 A file menu where `inset` aligns a label and items without icons, ending with a destructive item.
 
-<Example kind="ui" name="context-menu" story="Inset">
-
-<Code lang="tsx" code={"import { ContextMenu, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuTrigger } from \"@/components/ui/context-menu\"\n\nexport function ContextMenuInsetExample() {\n  return (\n    <ContextMenu>\n      <ContextMenuTrigger className=\"text-label-secondary flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm\">\n        Right click a file\n      </ContextMenuTrigger>\n      <ContextMenuContent>\n        <ContextMenuGroup>\n          <ContextMenuLabel inset>report.pdf</ContextMenuLabel>\n          <ContextMenuItem inset>Open</ContextMenuItem>\n          <ContextMenuItem inset>Rename</ContextMenuItem>\n          <ContextMenuItem inset>Duplicate</ContextMenuItem>\n        </ContextMenuGroup>\n        <ContextMenuSeparator />\n        <ContextMenuItem inset variant=\"destructive\">\n          Move to trash\n        </ContextMenuItem>\n      </ContextMenuContent>\n    </ContextMenu>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="context-menu-inset" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"ContextMenu","href":"#contextmenu","children":[{"name":"ContextMenuTrigger","href":"#contextmenutrigger","children":[]},{"name":"ContextMenuContent","href":"#contextmenucontent","children":[{"name":"ContextMenuGroup","href":"#contextmenugroup","children":[{"name":"ContextMenuItem","href":"#contextmenuitem","children":[{"name":"ContextMenuShortcut","href":"#contextmenushortcut","children":[]}]},{"name":"ContextMenuCheckboxItem","href":"#contextmenucheckboxitem","children":[]},{"name":"ContextMenuLabel","href":"#contextmenulabel","children":[]}]},{"name":"ContextMenuSeparator","href":"#contextmenuseparator","children":[]},{"name":"ContextMenuSub","href":"#contextmenusub","children":[{"name":"ContextMenuSubTrigger","href":"#contextmenusubtrigger","children":[]},{"name":"ContextMenuSubContent","href":"#contextmenusubcontent","children":[{"name":"ContextMenuItem","href":"#contextmenuitem","children":[]}]}]},{"name":"ContextMenuRadioGroup","href":"#contextmenuradiogroup","children":[{"name":"ContextMenuLabel","href":"#contextmenulabel","children":[]},{"name":"ContextMenuRadioItem","href":"#contextmenuradioitem","children":[]}]},{"name":"ContextMenuItem","href":"#contextmenuitem","children":[{"name":"ContextMenuShortcut","href":"#contextmenushortcut","children":[]}]}]}]}]} />
+<Anatomy>
+
+- [ContextMenu](#contextmenu)
+  - [ContextMenuTrigger](#contextmenutrigger)
+  - [ContextMenuContent](#contextmenucontent)
+    - [ContextMenuGroup](#contextmenugroup)
+      - [ContextMenuItem](#contextmenuitem)
+        - [ContextMenuShortcut](#contextmenushortcut)
+      - [ContextMenuCheckboxItem](#contextmenucheckboxitem)
+      - [ContextMenuLabel](#contextmenulabel)
+    - [ContextMenuSeparator](#contextmenuseparator)
+    - [ContextMenuSub](#contextmenusub)
+      - [ContextMenuSubTrigger](#contextmenusubtrigger)
+      - [ContextMenuSubContent](#contextmenusubcontent)
+        - [ContextMenuItem](#contextmenuitem)
+    - [ContextMenuRadioGroup](#contextmenuradiogroup)
+      - [ContextMenuLabel](#contextmenulabel)
+      - [ContextMenuRadioItem](#contextmenuradioitem)
+    - [ContextMenuItem](#contextmenuitem)
+      - [ContextMenuShortcut](#contextmenushortcut)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -70,7 +141,7 @@ A file menu where `inset` aligns a label and items without icons, ending with a 
 
 The root that manages the menu's open state.
 
-<PropsTable extends={["ContextMenuPrimitive.Root.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Root.Props`.
 
 </ApiPart>
 
@@ -80,7 +151,7 @@ The root that manages the menu's open state.
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-<PropsTable extends={["ContextMenuPrimitive.Portal.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Portal.Props`.
 
 </ApiPart>
 
@@ -90,7 +161,7 @@ Renders its children into a portal outside the current DOM hierarchy.
 
 The area that opens the menu on right-click.
 
-<PropsTable extends={["ContextMenuPrimitive.Trigger.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Trigger.Props`.
 
 </ApiPart>
 
@@ -100,7 +171,7 @@ The area that opens the menu on right-click.
 
 The menu panel, rendered in a portal at the pointer position.
 
-<PropsTable extends={["ContextMenuPrimitive.Popup.Props","ContextMenuPrimitive.Positioner.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Popup.Props`, `ContextMenuPrimitive.Positioner.Props`.
 
 </ApiPart>
 
@@ -110,7 +181,7 @@ The menu panel, rendered in a portal at the pointer position.
 
 Groups related items.
 
-<PropsTable extends={["ContextMenuPrimitive.Group.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Group.Props`.
 
 </ApiPart>
 
@@ -120,7 +191,11 @@ Groups related items.
 
 A heading for a group of items.
 
-<PropsTable extends={["ContextMenuPrimitive.GroupLabel.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the label aligns with items that have an icon or indicator."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds leading padding so the label aligns with items that have an icon or indicator. |
+
+Also accepts the props of `ContextMenuPrimitive.GroupLabel.Props`.
 
 </ApiPart>
 
@@ -130,7 +205,12 @@ A heading for a group of items.
 
 An action in the menu.
 
-<PropsTable extends={["ContextMenuPrimitive.Item.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with items that have an icon or indicator."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`destructive` colors the item and its icon with the `danger` color."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
+| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `danger` color. |
+
+Also accepts the props of `ContextMenuPrimitive.Item.Props`.
 
 </ApiPart>
 
@@ -140,7 +220,7 @@ An action in the menu.
 
 The root of a nested submenu.
 
-<PropsTable extends={["ContextMenuPrimitive.SubmenuRoot.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.SubmenuRoot.Props`.
 
 </ApiPart>
 
@@ -150,7 +230,11 @@ The root of a nested submenu.
 
 The item that opens a submenu, shown with a trailing caret.
 
-<PropsTable extends={["ContextMenuPrimitive.SubmenuTrigger.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the trigger aligns with items that have an icon or indicator."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
+
+Also accepts the props of `ContextMenuPrimitive.SubmenuTrigger.Props`.
 
 </ApiPart>
 
@@ -160,7 +244,7 @@ The item that opens a submenu, shown with a trailing caret.
 
 The panel of a submenu, opened beside its trigger.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuContent>"]} />
+Also accepts the props of `React.ComponentProps<typeof ContextMenuContent>`.
 
 </ApiPart>
 
@@ -170,7 +254,11 @@ The panel of a submenu, opened beside its trigger.
 
 An item that toggles a setting on or off and shows a check mark when on.
 
-<PropsTable extends={["ContextMenuPrimitive.CheckboxItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
+
+Also accepts the props of `ContextMenuPrimitive.CheckboxItem.Props`.
 
 </ApiPart>
 
@@ -180,7 +268,7 @@ An item that toggles a setting on or off and shows a check mark when on.
 
 Groups radio items so that only one can be selected.
 
-<PropsTable extends={["ContextMenuPrimitive.RadioGroup.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.RadioGroup.Props`.
 
 </ApiPart>
 
@@ -190,7 +278,11 @@ Groups radio items so that only one can be selected.
 
 An item in a radio group that shows a check mark when selected.
 
-<PropsTable extends={["ContextMenuPrimitive.RadioItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
+
+Also accepts the props of `ContextMenuPrimitive.RadioItem.Props`.
 
 </ApiPart>
 
@@ -200,7 +292,7 @@ An item in a radio group that shows a check mark when selected.
 
 A divider between groups of items.
 
-<PropsTable extends={["ContextMenuPrimitive.Separator.Props"]} />
+Also accepts the props of `ContextMenuPrimitive.Separator.Props`.
 
 </ApiPart>
 
@@ -210,7 +302,11 @@ A divider between groups of items.
 
 Displays a keyboard shortcut at the end of an item.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"mod","type":"boolean","description":"Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `mod` | `boolean` | - | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -234,13 +330,7 @@ Displays a keyboard shortcut at the end of an item.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-context-menu--open-by-default" width={880} height={1167} platforms={["React Native","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from \"@/components/ui/context-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction TriggerArea() {\n  return (\n    <ContextMenuTrigger className=\"border-separator h-36 w-full items-center justify-center rounded-md border border-dashed\">\n      <Text className=\"text-sm text-label-secondary\">Long press here</Text>\n    </ContextMenuTrigger>\n  )\n}\n\nfunction ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  const [showBookmarks, setShowBookmarks] = React.useState(true)\n  const [showUrls, setShowUrls] = React.useState(false)\n  const [person, setPerson] = React.useState(\"pedro\")\n  return (\n    <ContextMenu defaultOpen={defaultOpen}>\n      <TriggerArea />\n      <ContextMenuContent className=\"w-64\">\n        <ContextMenuItem inset>\n          <Text>Back</Text>\n        </ContextMenuItem>\n        <ContextMenuItem inset disabled>\n          <Text>Forward</Text>\n        </ContextMenuItem>\n        <ContextMenuItem inset>\n          <Text>Reload</Text>\n        </ContextMenuItem>\n        <ContextMenuSub>\n          <ContextMenuSubTrigger inset>\n            <Text>More tools</Text>\n          </ContextMenuSubTrigger>\n          <ContextMenuSubContent className=\"w-48\">\n            <ContextMenuItem>\n              <Text>Save page</Text>\n            </ContextMenuItem>\n            <ContextMenuItem>\n              <Text>Create shortcut</Text>\n            </ContextMenuItem>\n            <ContextMenuSeparator />\n            <ContextMenuItem variant=\"destructive\">\n              <Text>Delete</Text>\n            </ContextMenuItem>\n          </ContextMenuSubContent>\n        </ContextMenuSub>\n        <ContextMenuSeparator />\n        <ContextMenuCheckboxItem\n          checked={showBookmarks}\n          onCheckedChange={setShowBookmarks}\n        >\n          <Text>Show bookmarks</Text>\n        </ContextMenuCheckboxItem>\n        <ContextMenuCheckboxItem\n          checked={showUrls}\n          onCheckedChange={setShowUrls}\n        >\n          <Text>Show full URLs</Text>\n        </ContextMenuCheckboxItem>\n        <ContextMenuSeparator />\n        <ContextMenuRadioGroup value={person} onValueChange={setPerson}>\n          <ContextMenuLabel inset>People</ContextMenuLabel>\n          <ContextMenuRadioItem value=\"pedro\">\n            <Text>Pedro Duarte</Text>\n          </ContextMenuRadioItem>\n          <ContextMenuRadioItem value=\"colm\">\n            <Text>Colm Tuite</Text>\n          </ContextMenuRadioItem>\n        </ContextMenuRadioGroup>\n      </ContextMenuContent>\n    </ContextMenu>\n  )\n}\n\nexport function ContextMenuOpenByDefaultExample() {\n  return (\n    <ContextMenuDemo defaultOpen />\n  )\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.drawBehind\nimport androidx.compose.ui.geometry.CornerRadius\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.geometry.Size\nimport androidx.compose.ui.graphics.PathEffect\nimport androidx.compose.ui.graphics.drawscope.Stroke\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ContextMenu\nimport com.esuiss.ui.components.DropdownMenuCheckboxItem\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuRadioGroup\nimport com.esuiss.ui.components.DropdownMenuRadioItem\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.DropdownMenuSub\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ContextMenuOpenByDefaultExample() {\n    ContextMenuDemo(defaultOpen = true)\n}\n\n@Composable\nfun ContextMenuTriggerArea() {\n    val color = EsuissTheme.colors.separator\n    Box(\n        modifier = Modifier\n            .fillMaxWidth()\n            .height(144.dp)\n            .drawBehind {\n                val stroke = 1.dp.toPx()\n                drawRoundRect(\n                    color = color,\n                    topLeft = Offset(stroke / 2, stroke / 2),\n                    size = Size(size.width - stroke, size.height - stroke),\n                    cornerRadius = CornerRadius(Radius.md.toPx()),\n                    style = Stroke(stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 3.dp.toPx()))),\n                )\n            },\n        contentAlignment = Alignment.Center,\n    ) {\n        Text(\"Long press here\", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))\n    }\n}\n\n@Composable\nfun ContextMenuDemo(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var showBookmarks by rememberSaveable { mutableStateOf(true) }\n    var showUrls by rememberSaveable { mutableStateOf(false) }\n    var person by rememberSaveable { mutableStateOf(\"pedro\") }\n    ContextMenu(\n        expanded = open,\n        onExpandedChange = { open = it },\n        trigger = { ContextMenuTriggerArea() },\n        modifier = Modifier.width(256.dp),\n    ) {\n        DropdownMenuItem(\"Back\", onClick = {}, inset = true)\n        DropdownMenuItem(\"Forward\", onClick = {}, inset = true, enabled = false)\n        DropdownMenuItem(\"Reload\", onClick = {}, inset = true)\n        DropdownMenuSub(\"More tools\", inset = true) {\n            Column(Modifier.width(192.dp)) {\n                DropdownMenuItem(\"Save page\", onClick = {})\n                DropdownMenuItem(\"Create shortcut\", onClick = {})\n                DropdownMenuSeparator()\n                DropdownMenuItem(\"Delete\", onClick = {}, variant = MenuItemVariant.Destructive)\n            }\n        }\n        DropdownMenuSeparator()\n        DropdownMenuCheckboxItem(\"Show bookmarks\", checked = showBookmarks, onCheckedChange = { showBookmarks = it })\n        DropdownMenuCheckboxItem(\"Show full URLs\", checked = showUrls, onCheckedChange = { showUrls = it })\n        DropdownMenuSeparator()\n        DropdownMenuRadioGroup(value = person, onValueChange = { person = it }) {\n            DropdownMenuLabel(\"People\", inset = true)\n            DropdownMenuRadioItem(\"pedro\", \"Pedro Duarte\")\n            DropdownMenuRadioItem(\"colm\", \"Colm Tuite\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-context-menu--open-by-default" />
 
 `ContextMenu` attaches a menu to a `ContextMenuTrigger` area. A long press opens `ContextMenuContent` at the position of the finger with a medium impact haptic. The content renders through a portal (inside a full-window overlay on iOS) as a raised, rounded card.
 
@@ -250,19 +340,25 @@ Items can be plain actions, checkbox items, radio items in a group, or a submenu
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-menu"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add context-menu
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-menu --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add context-menu --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add context-menu --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add context-menu --platform kotlin
+```
 
 </Only>
 
@@ -278,13 +374,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/context-menu.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/context-menu.tsx`:
 
-<SourceFile path="uniwind/components/ui/context-menu.tsx" />
+<ComponentSource path="uniwind/components/ui/context-menu.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -294,13 +392,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/context-menu.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/context-menu.tsx`:
 
-<SourceFile path="nativewind/components/ui/context-menu.tsx" />
+<ComponentSource path="nativewind/components/ui/context-menu.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -310,13 +410,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/context-menu.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/context-menu.tsx`:
 
-<SourceFile path="stylesheet/components/ui/context-menu.tsx" />
+<ComponentSource path="stylesheet/components/ui/context-menu.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -332,37 +434,39 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/ContextMenu.swift" />
+<ComponentSource path="swift/Components/ContextMenu.swift" />
 
-<SourceFile path="swift/Components/Button.swift" />
+<ComponentSource path="swift/Components/Button.swift" />
 
-<SourceFile path="swift/Components/ButtonGroup.swift" />
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/DropdownMenu.swift" />
+<ComponentSource path="swift/Components/DropdownMenu.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Overlay.swift" />
+<ComponentSource path="swift/Components/Overlay.swift" />
 
-<SourceFile path="swift/Components/Select.swift" />
+<ComponentSource path="swift/Components/Select.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -372,41 +476,46 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/ContextMenu.kt" />
+<ComponentSource path="kotlin/components/ContextMenu.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Checkbox.kt" />
+<ComponentSource path="kotlin/components/Checkbox.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/DropdownMenu.kt" />
+<ComponentSource path="kotlin/components/DropdownMenu.kt" />
 
-<SourceFile path="kotlin/components/Field.kt" />
+<ComponentSource path="kotlin/components/Field.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Label.kt" />
+<ComponentSource path="kotlin/components/Label.kt" />
 
-<SourceFile path="kotlin/components/Overlay.kt" />
+<ComponentSource path="kotlin/components/Overlay.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -414,9 +523,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { ContextMenuContent, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuItem, ContextMenuCheckboxItem, ContextMenuRadioItem, ContextMenuLabel, ContextMenuSeparator } from \"@/components/ui/context-menu\""} />
+```tsx
+import { ContextMenuContent, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuItem, ContextMenuCheckboxItem, ContextMenuRadioItem, ContextMenuLabel, ContextMenuSeparator } from "@/components/ui/context-menu"
+```
 
-<Code lang="tsx" code={"<ContextMenuDemo defaultOpen />"} />
+```tsx
+<ContextMenuDemo defaultOpen />
+```
 
 Wrap the long-pressable area in `ContextMenuTrigger` and list `ContextMenuItem`s in `ContextMenuContent`. Items close the menu when pressed unless `closeOnPress={false}`.
 
@@ -428,29 +541,13 @@ Set `variant="destructive"` on an item that deletes or removes. Use `inset` on i
 
 ### Default
 
-<NativeExample id="components-context-menu--default" width={880} height={1330} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from \"@/components/ui/context-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction TriggerArea() {\n  return (\n    <ContextMenuTrigger className=\"border-separator h-36 w-full items-center justify-center rounded-md border border-dashed\">\n      <Text className=\"text-sm text-label-secondary\">Long press here</Text>\n    </ContextMenuTrigger>\n  )\n}\n\nfunction ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {\n  const [showBookmarks, setShowBookmarks] = React.useState(true)\n  const [showUrls, setShowUrls] = React.useState(false)\n  const [person, setPerson] = React.useState(\"pedro\")\n  return (\n    <ContextMenu defaultOpen={defaultOpen}>\n      <TriggerArea />\n      <ContextMenuContent className=\"w-64\">\n        <ContextMenuItem inset>\n          <Text>Back</Text>\n        </ContextMenuItem>\n        <ContextMenuItem inset disabled>\n          <Text>Forward</Text>\n        </ContextMenuItem>\n        <ContextMenuItem inset>\n          <Text>Reload</Text>\n        </ContextMenuItem>\n        <ContextMenuSub>\n          <ContextMenuSubTrigger inset>\n            <Text>More tools</Text>\n          </ContextMenuSubTrigger>\n          <ContextMenuSubContent className=\"w-48\">\n            <ContextMenuItem>\n              <Text>Save page</Text>\n            </ContextMenuItem>\n            <ContextMenuItem>\n              <Text>Create shortcut</Text>\n            </ContextMenuItem>\n            <ContextMenuSeparator />\n            <ContextMenuItem variant=\"destructive\">\n              <Text>Delete</Text>\n            </ContextMenuItem>\n          </ContextMenuSubContent>\n        </ContextMenuSub>\n        <ContextMenuSeparator />\n        <ContextMenuCheckboxItem\n          checked={showBookmarks}\n          onCheckedChange={setShowBookmarks}\n        >\n          <Text>Show bookmarks</Text>\n        </ContextMenuCheckboxItem>\n        <ContextMenuCheckboxItem\n          checked={showUrls}\n          onCheckedChange={setShowUrls}\n        >\n          <Text>Show full URLs</Text>\n        </ContextMenuCheckboxItem>\n        <ContextMenuSeparator />\n        <ContextMenuRadioGroup value={person} onValueChange={setPerson}>\n          <ContextMenuLabel inset>People</ContextMenuLabel>\n          <ContextMenuRadioItem value=\"pedro\">\n            <Text>Pedro Duarte</Text>\n          </ContextMenuRadioItem>\n          <ContextMenuRadioItem value=\"colm\">\n            <Text>Colm Tuite</Text>\n          </ContextMenuRadioItem>\n        </ContextMenuRadioGroup>\n      </ContextMenuContent>\n    </ContextMenu>\n  )\n}\n\nexport function ContextMenuExample() {\n  return (\n    <ContextMenuDemo />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ContextMenuTriggerArea: View {\n  var body: some View {\n    Text(\"Long press here\")\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      .frame(maxWidth: .infinity)\n      .frame(height: 144)\n      .background(Color.surface, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.md, style: .continuous)\n          .strokeBorder(Color.separator, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))\n      }\n  }\n}\n\nstruct ContextMenuDemo: View {\n  @State private var showBookmarks = true\n  @State private var showUrls = false\n  @State private var person = \"pedro\"\n\n  var body: some View {\n    ContextMenuTriggerArea()\n      .contextMenu(previewRadius: Radius.md) {\n        ContextMenuItem(\"Back\", inset: true) {}\n        ContextMenuItem(\"Forward\", inset: true) {}\n          .disabled(true)\n        ContextMenuItem(\"Reload\", inset: true) {}\n        ContextMenuSub(\"More tools\", inset: true) {\n          ContextMenuItem(\"Save page\") {}\n          ContextMenuItem(\"Create shortcut\") {}\n          ContextMenuSeparator()\n          ContextMenuItem(\"Delete\", variant: .destructive) {}\n        }\n        ContextMenuSeparator()\n        ContextMenuCheckboxItem(\"Show bookmarks\", isOn: $showBookmarks)\n        ContextMenuCheckboxItem(\"Show full URLs\", isOn: $showUrls)\n        ContextMenuSeparator()\n        ContextMenuRadioGroup(selection: $person) {\n          ContextMenuLabel(\"People\", inset: true)\n          ContextMenuRadioItem(\"Pedro Duarte\", value: \"pedro\")\n          ContextMenuRadioItem(\"Colm Tuite\", value: \"colm\")\n        }\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.drawBehind\nimport androidx.compose.ui.geometry.CornerRadius\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.geometry.Size\nimport androidx.compose.ui.graphics.PathEffect\nimport androidx.compose.ui.graphics.drawscope.Stroke\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ContextMenu\nimport com.esuiss.ui.components.DropdownMenuCheckboxItem\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.DropdownMenuLabel\nimport com.esuiss.ui.components.DropdownMenuRadioGroup\nimport com.esuiss.ui.components.DropdownMenuRadioItem\nimport com.esuiss.ui.components.DropdownMenuSeparator\nimport com.esuiss.ui.components.DropdownMenuSub\nimport com.esuiss.ui.components.MenuItemVariant\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ContextMenuExample() {\n    ContextMenuDemo(defaultOpen = false)\n}\n\n@Composable\nfun ContextMenuTriggerArea() {\n    val color = EsuissTheme.colors.separator\n    Box(\n        modifier = Modifier\n            .fillMaxWidth()\n            .height(144.dp)\n            .drawBehind {\n                val stroke = 1.dp.toPx()\n                drawRoundRect(\n                    color = color,\n                    topLeft = Offset(stroke / 2, stroke / 2),\n                    size = Size(size.width - stroke, size.height - stroke),\n                    cornerRadius = CornerRadius(Radius.md.toPx()),\n                    style = Stroke(stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 3.dp.toPx()))),\n                )\n            },\n        contentAlignment = Alignment.Center,\n    ) {\n        Text(\"Long press here\", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))\n    }\n}\n\n@Composable\nfun ContextMenuDemo(defaultOpen: Boolean) {\n    var open by rememberSaveable { mutableStateOf(defaultOpen) }\n    var showBookmarks by rememberSaveable { mutableStateOf(true) }\n    var showUrls by rememberSaveable { mutableStateOf(false) }\n    var person by rememberSaveable { mutableStateOf(\"pedro\") }\n    ContextMenu(\n        expanded = open,\n        onExpandedChange = { open = it },\n        trigger = { ContextMenuTriggerArea() },\n        modifier = Modifier.width(256.dp),\n    ) {\n        DropdownMenuItem(\"Back\", onClick = {}, inset = true)\n        DropdownMenuItem(\"Forward\", onClick = {}, inset = true, enabled = false)\n        DropdownMenuItem(\"Reload\", onClick = {}, inset = true)\n        DropdownMenuSub(\"More tools\", inset = true) {\n            Column(Modifier.width(192.dp)) {\n                DropdownMenuItem(\"Save page\", onClick = {})\n                DropdownMenuItem(\"Create shortcut\", onClick = {})\n                DropdownMenuSeparator()\n                DropdownMenuItem(\"Delete\", onClick = {}, variant = MenuItemVariant.Destructive)\n            }\n        }\n        DropdownMenuSeparator()\n        DropdownMenuCheckboxItem(\"Show bookmarks\", checked = showBookmarks, onCheckedChange = { showBookmarks = it })\n        DropdownMenuCheckboxItem(\"Show full URLs\", checked = showUrls, onCheckedChange = { showUrls = it })\n        DropdownMenuSeparator()\n        DropdownMenuRadioGroup(value = person, onValueChange = { person = it }) {\n            DropdownMenuLabel(\"People\", inset = true)\n            DropdownMenuRadioItem(\"pedro\", \"Pedro Duarte\")\n            DropdownMenuRadioItem(\"colm\", \"Colm Tuite\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-context-menu--default" />
 
 ### Simple
 
 A short list of plain items.
 
-<NativeExample id="components-context-menu--simple" width={880} height={826} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { View } from \"react-native\"\nimport { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from \"@/components/ui/context-menu\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction TriggerArea() {\n  return (\n    <ContextMenuTrigger className=\"border-separator h-36 w-full items-center justify-center rounded-md border border-dashed\">\n      <Text className=\"text-sm text-label-secondary\">Long press here</Text>\n    </ContextMenuTrigger>\n  )\n}\n\nexport function ContextMenuSimpleExample() {\n  return (\n    <View>\n      <ContextMenu>\n        <TriggerArea />\n        <ContextMenuContent className=\"w-48\">\n          <ContextMenuItem>\n            <Text>Profile</Text>\n          </ContextMenuItem>\n          <ContextMenuItem>\n            <Text>Billing</Text>\n          </ContextMenuItem>\n          <ContextMenuItem>\n            <Text>Team</Text>\n          </ContextMenuItem>\n          <ContextMenuItem>\n            <Text>Subscription</Text>\n          </ContextMenuItem>\n        </ContextMenuContent>\n      </ContextMenu>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct ContextMenuSimpleExample: View {\n  var body: some View {\n    ContextMenuTriggerArea()\n      .contextMenu(previewRadius: Radius.md) {\n        ContextMenuItem(\"Profile\") {}\n        ContextMenuItem(\"Billing\") {}\n        ContextMenuItem(\"Team\") {}\n        ContextMenuItem(\"Subscription\") {}\n      }\n  }\n}\n\nstruct ContextMenuTriggerArea: View {\n  var body: some View {\n    Text(\"Long press here\")\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      .frame(maxWidth: .infinity)\n      .frame(height: 144)\n      .background(Color.surface, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))\n      .overlay {\n        RoundedRectangle(cornerRadius: Radius.md, style: .continuous)\n          .strokeBorder(Color.separator, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))\n      }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Box\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.height\nimport androidx.compose.foundation.layout.width\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.drawBehind\nimport androidx.compose.ui.geometry.CornerRadius\nimport androidx.compose.ui.geometry.Offset\nimport androidx.compose.ui.geometry.Size\nimport androidx.compose.ui.graphics.PathEffect\nimport androidx.compose.ui.graphics.drawscope.Stroke\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.ContextMenu\nimport com.esuiss.ui.components.DropdownMenuItem\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Radius\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun ContextMenuTriggerArea() {\n    val color = EsuissTheme.colors.separator\n    Box(\n        modifier = Modifier\n            .fillMaxWidth()\n            .height(144.dp)\n            .drawBehind {\n                val stroke = 1.dp.toPx()\n                drawRoundRect(\n                    color = color,\n                    topLeft = Offset(stroke / 2, stroke / 2),\n                    size = Size(size.width - stroke, size.height - stroke),\n                    cornerRadius = CornerRadius(Radius.md.toPx()),\n                    style = Stroke(stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 3.dp.toPx()))),\n                )\n            },\n        contentAlignment = Alignment.Center,\n    ) {\n        Text(\"Long press here\", style = Typography.sm.copy(color = EsuissTheme.colors.labelSecondary))\n    }\n}\n\n@Composable\nfun ContextMenuSimple() {\n    var open by rememberSaveable { mutableStateOf(false) }\n    ContextMenu(\n        expanded = open,\n        onExpandedChange = { open = it },\n        trigger = { ContextMenuTriggerArea() },\n        modifier = Modifier.width(192.dp),\n    ) {\n        DropdownMenuItem(\"Profile\", onClick = {})\n        DropdownMenuItem(\"Billing\", onClick = {})\n        DropdownMenuItem(\"Team\", onClick = {})\n        DropdownMenuItem(\"Subscription\", onClick = {})\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-context-menu--simple" />
 
 ## API Reference
 
@@ -460,7 +557,11 @@ A short list of plain items.
 
 Floating menu card.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.Popup>","PositionerProps"]} props={[{"name":"portalHost","type":"string","description":"Name of the portal host to render into."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `portalHost` | `string` | - | Name of the portal host to render into. |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popup>`, `PositionerProps`.
 
 </ApiPart>
 
@@ -470,7 +571,13 @@ Floating menu card.
 
 Row that expands the submenu.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.SubmenuTrigger>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"iconClassName","type":"string","description":"Extra classes for the caret icon."},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+| `iconClassName` | `string` | - | Extra classes for the caret icon. |
+| `inset` | `boolean` | - | Adds start padding. |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.SubmenuTrigger>`.
 
 </ApiPart>
 
@@ -480,7 +587,7 @@ Row that expands the submenu.
 
 Items of the submenu.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.Popup>"]} />
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popup>`.
 
 </ApiPart>
 
@@ -490,7 +597,12 @@ Items of the submenu.
 
 Action row.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.Item>"]} props={[{"name":"inset","type":"boolean","description":"Adds start padding to align with icon items."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`default` or `destructive`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds start padding to align with icon items. |
+| `variant` | `"default" \| "destructive"` | `"default"` | `default` or `destructive`. |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Item>`.
 
 </ApiPart>
 
@@ -500,7 +612,12 @@ Action row.
 
 Row with a check mark that toggles.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+| `inset` | `boolean` | - | Adds start padding. |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>`.
 
 </ApiPart>
 
@@ -510,7 +627,12 @@ Row with a check mark that toggles.
 
 Row that selects one value in its group.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>"]} props={[{"name":"children","type":"React.ReactNode"},{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - |  |
+| `inset` | `boolean` | - | Adds start padding. |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>`.
 
 </ApiPart>
 
@@ -520,7 +642,11 @@ Row that selects one value in its group.
 
 Heading for a group.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.GroupLabel>"]} props={[{"name":"inset","type":"boolean","description":"Adds start padding."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `boolean` | - | Adds start padding. |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.GroupLabel>`.
 
 </ApiPart>
 
@@ -530,7 +656,7 @@ Heading for a group.
 
 Line between sections.
 
-<PropsTable extends={["React.ComponentProps<typeof ContextMenuPrimitive.Separator>"]} />
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Separator>`.
 
 </ApiPart>
 

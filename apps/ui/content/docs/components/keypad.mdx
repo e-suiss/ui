@@ -3,20 +3,11 @@ title: Keypad
 description: "A numeric keypad with round digit keys, a delete key and an optional decimal or biometric key."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-keypad--default" width={880} height={839} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadExample() {\n  return (\n    <KeyLog />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct KeypadExample: View {\n  var body: some View {\n    KeypadLog(accessory: .none)\n  }\n}\n\nstruct KeypadLog: View {\n  let accessory: KeypadAccessory\n\n  @State private var last: KeypadKey?\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Group {\n        if let last {\n          Text(verbatim: \"Last key: \\(name(last))\")\n        } else {\n          Text(\"Press a key\")\n        }\n      }\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      .accessibilityAddTraits(.updatesFrequently)\n      Keypad(accessory: accessory) { key in\n        last = key\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n\n  func name(_ key: KeypadKey) -> String {\n    switch key {\n    case .digit(let value): \"\\(value)\"\n    case .decimal: \"decimal\"\n    case .delete: \"delete\"\n    case .biometric: \"biometric\"\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Keypad\nimport com.esuiss.ui.components.KeypadAccessory\nimport com.esuiss.ui.components.KeypadKey\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun KeypadExample() {\n    KeypadKeyLog(KeypadAccessory.None)\n}\n\nfun keypadKeyName(key: KeypadKey): String = when (key) {\n    is KeypadKey.Digit -> key.value.toString()\n    KeypadKey.Decimal -> \"decimal\"\n    KeypadKey.Biometric -> \"biometric\"\n    KeypadKey.Delete -> \"delete\"\n}\n\n@Composable\nfun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {\n    var last by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        Text(\n            last?.let { \"Last key: $it\" } ?: \"Press a key\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n        Keypad(onKeyPress = { last = keypadKeyName(it) }, accessory = accessory, enabled = enabled)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-keypad--default" />
 
 `Keypad` lays out digits 1 to 9 in three rows and a bottom row with an accessory key, `0` and a delete key. Each key is a `KeypadKey`, a round `Pressable` with the `button` role. Digit keys have a filled background; the accessory and delete keys use the `plain` variant with no fill.
 
@@ -26,19 +17,25 @@ Use it for PIN entry, amounts and other numeric input where the system keyboard 
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add keypad"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add keypad
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add keypad --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add keypad --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add keypad --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add keypad --platform kotlin
+```
 
 </Only>
 
@@ -54,13 +51,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/keypad.tsx`:
 
-<SourceFile path="uniwind/components/ui/keypad.tsx" />
+<ComponentSource path="uniwind/components/ui/keypad.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -70,13 +69,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install cn phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/keypad.tsx`:
 
-<SourceFile path="nativewind/components/ui/keypad.tsx" />
+<ComponentSource path="nativewind/components/ui/keypad.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -86,13 +87,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install phosphor-react-native react-native-svg"} />
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-svg
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
 3. Copy the source into `components/ui/keypad.tsx`:
 
-<SourceFile path="stylesheet/components/ui/keypad.tsx" />
+<ComponentSource path="stylesheet/components/ui/keypad.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -108,27 +111,29 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Add the Swift package to your app:
 
-<Code lang="swift" title="Package.swift" code={".package(url: \"https://github.com/phosphor-icons/swift\", from: \"2.1.0\")"} />
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
 
 3. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 4. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Keypad.swift" />
+<ComponentSource path="swift/Components/Keypad.swift" />
 
-<SourceFile path="swift/Components/Checkbox.swift" />
+<ComponentSource path="swift/Components/Checkbox.swift" />
 
-<SourceFile path="swift/Components/Field.swift" />
+<ComponentSource path="swift/Components/Field.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -138,27 +143,32 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")\nimplementation(\"com.adamglin:phosphor-icon-android:1.0.0\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Keypad.kt" />
+<ComponentSource path="kotlin/components/Keypad.kt" />
 
-<SourceFile path="kotlin/components/Button.kt" />
+<ComponentSource path="kotlin/components/Button.kt" />
 
-<SourceFile path="kotlin/components/ButtonGroup.kt" />
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -166,9 +176,13 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { KeypadKey, Keypad } from \"@/components/ui/keypad\""} />
+```tsx
+import { KeypadKey, Keypad } from "@/components/ui/keypad"
+```
 
-<Code lang="tsx" code={"<KeyLog />"} />
+```tsx
+<KeyLog />
+```
 
 Handle input in `onKeyPress`, which receives a digit string (`"0"` to `"9"`), `"decimal"`, `"delete"` or `"biometric"`. The keypad holds no value of its own.
 
@@ -182,43 +196,19 @@ Use `deleteDisabled` to turn off only the delete key, for example when the value
 
 A keypad with a decimal separator key.
 
-<NativeExample id="components-keypad--decimal" width={880} height={839} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadDecimalExample() {\n  return (\n    <KeyLog accessoryKey=\"decimal\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport SwiftUI\n\nstruct KeypadDecimalExample: View {\n  var body: some View {\n    KeypadLog(accessory: .decimal(\".\"))\n  }\n}\n\nstruct KeypadLog: View {\n  let accessory: KeypadAccessory\n\n  @State private var last: KeypadKey?\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Group {\n        if let last {\n          Text(verbatim: \"Last key: \\(name(last))\")\n        } else {\n          Text(\"Press a key\")\n        }\n      }\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      .accessibilityAddTraits(.updatesFrequently)\n      Keypad(accessory: accessory) { key in\n        last = key\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n\n  func name(_ key: KeypadKey) -> String {\n    switch key {\n    case .digit(let value): \"\\(value)\"\n    case .decimal: \"decimal\"\n    case .delete: \"delete\"\n    case .biometric: \"biometric\"\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Keypad\nimport com.esuiss.ui.components.KeypadAccessory\nimport com.esuiss.ui.components.KeypadKey\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun KeypadDecimalExample() {\n    KeypadKeyLog(KeypadAccessory.Decimal())\n}\n\nfun keypadKeyName(key: KeypadKey): String = when (key) {\n    is KeypadKey.Digit -> key.value.toString()\n    KeypadKey.Decimal -> \"decimal\"\n    KeypadKey.Biometric -> \"biometric\"\n    KeypadKey.Delete -> \"delete\"\n}\n\n@Composable\nfun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {\n    var last by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        Text(\n            last?.let { \"Last key: $it\" } ?: \"Press a key\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n        Keypad(onKeyPress = { last = keypadKeyName(it) }, accessory = accessory, enabled = enabled)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-keypad--decimal" />
 
 ### Biometric
 
 A keypad with a biometric key.
 
-<NativeExample id="components-keypad--biometric" width={880} height={839} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadBiometricExample() {\n  return (\n    <KeyLog accessoryKey=\"biometric\" />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct KeypadBiometricExample: View {\n  var body: some View {\n    KeypadLog(accessory: .biometric(Ph.fingerprint.regular))\n  }\n}\n\nstruct KeypadLog: View {\n  let accessory: KeypadAccessory\n\n  @State private var last: KeypadKey?\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Group {\n        if let last {\n          Text(verbatim: \"Last key: \\(name(last))\")\n        } else {\n          Text(\"Press a key\")\n        }\n      }\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      .accessibilityAddTraits(.updatesFrequently)\n      Keypad(accessory: accessory) { key in\n        last = key\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n\n  func name(_ key: KeypadKey) -> String {\n    switch key {\n    case .digit(let value): \"\\(value)\"\n    case .decimal: \"decimal\"\n    case .delete: \"delete\"\n    case .biometric: \"biometric\"\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Keypad\nimport com.esuiss.ui.components.KeypadAccessory\nimport com.esuiss.ui.components.KeypadKey\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun KeypadBiometricExample() {\n    KeypadKeyLog(KeypadAccessory.Biometric())\n}\n\nfun keypadKeyName(key: KeypadKey): String = when (key) {\n    is KeypadKey.Digit -> key.value.toString()\n    KeypadKey.Decimal -> \"decimal\"\n    KeypadKey.Biometric -> \"biometric\"\n    KeypadKey.Delete -> \"delete\"\n}\n\n@Composable\nfun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {\n    var last by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        Text(\n            last?.let { \"Last key: $it\" } ?: \"Press a key\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n        Keypad(onKeyPress = { last = keypadKeyName(it) }, accessory = accessory, enabled = enabled)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-keypad--biometric" />
 
 ### Disabled
 
 A fully disabled keypad.
 
-<NativeExample id="components-keypad--disabled" width={880} height={839} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import * as React from \"react\"\nimport { View } from \"react-native\"\nimport { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from \"@/components/ui/keypad\"\nimport { Text } from \"@/components/ui/text\"\n\nfunction KeyLog({\n  accessoryKey,\n  disabled,\n}: {\n  accessoryKey?: KeypadAccessoryKey\n  disabled?: boolean\n}) {\n  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)\n  return (\n    <View className=\"items-center gap-6\">\n      <Text\n        role=\"status\"\n        accessibilityLiveRegion=\"polite\"\n        className=\"text-sm text-label-secondary\"\n      >\n        {last ? `Last key: ${last}` : \"Press a key\"}\n      </Text>\n      <Keypad\n        accessoryKey={accessoryKey}\n        disabled={disabled}\n        onKeyPress={setLast}\n      />\n    </View>\n  )\n}\n\nexport function KeypadDisabledExample() {\n  return (\n    <KeyLog accessoryKey=\"biometric\" disabled />\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct KeypadDisabledExample: View {\n  var body: some View {\n    KeypadLog(accessory: .biometric(Ph.fingerprint.regular))\n      .disabled(true)\n  }\n}\n\nstruct KeypadLog: View {\n  let accessory: KeypadAccessory\n\n  @State private var last: KeypadKey?\n\n  var body: some View {\n    VStack(spacing: 24) {\n      Group {\n        if let last {\n          Text(verbatim: \"Last key: \\(name(last))\")\n        } else {\n          Text(\"Press a key\")\n        }\n      }\n      .textStyle(.sm)\n      .foregroundStyle(Color.labelSecondary)\n      .accessibilityAddTraits(.updatesFrequently)\n      Keypad(accessory: accessory) { key in\n        last = key\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n\n  func name(_ key: KeypadKey) -> String {\n    switch key {\n    case .digit(let value): \"\\(value)\"\n    case .decimal: \"decimal\"\n    case .delete: \"delete\"\n    case .biometric: \"biometric\"\n    }\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.semantics.LiveRegionMode\nimport androidx.compose.ui.semantics.liveRegion\nimport androidx.compose.ui.semantics.semantics\nimport androidx.compose.ui.unit.dp\nimport com.esuiss.ui.components.Keypad\nimport com.esuiss.ui.components.KeypadAccessory\nimport com.esuiss.ui.components.KeypadKey\nimport com.esuiss.ui.components.Text\nimport com.esuiss.ui.theme.EsuissTheme\nimport com.esuiss.ui.theme.Typography\n\n@Composable\nfun KeypadDisabledExample() {\n    KeypadKeyLog(KeypadAccessory.Biometric(), enabled = false)\n}\n\nfun keypadKeyName(key: KeypadKey): String = when (key) {\n    is KeypadKey.Digit -> key.value.toString()\n    KeypadKey.Decimal -> \"decimal\"\n    KeypadKey.Biometric -> \"biometric\"\n    KeypadKey.Delete -> \"delete\"\n}\n\n@Composable\nfun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {\n    var last by rememberSaveable { mutableStateOf<String?>(null) }\n    Column(\n        modifier = Modifier.fillMaxWidth(),\n        horizontalAlignment = Alignment.CenterHorizontally,\n        verticalArrangement = Arrangement.spacedBy(24.dp),\n    ) {\n        Text(\n            last?.let { \"Last key: $it\" } ?: \"Press a key\",\n            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },\n            style = Typography.sm,\n            color = EsuissTheme.colors.labelSecondary,\n        )\n        Keypad(onKeyPress = { last = keypadKeyName(it) }, accessory = accessory, enabled = enabled)\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-keypad--disabled" />
 
 ## API Reference
 
@@ -228,7 +218,13 @@ A fully disabled keypad.
 
 A single round key that passes text and icon styles to its children.
 
-<PropsTable extends={["React.ComponentProps<typeof Pressable>"]} props={[{"name":"variant","type":"\"default\" | \"plain\"","default":"\"default\"","description":"`default` with a filled background, or `plain` without one."},{"name":"className","type":"string"},{"name":"children","type":"React.ReactNode"}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "plain"` | `"default"` | `default` with a filled background, or `plain` without one. |
+| `className` | `string` | - |  |
+| `children` | `React.ReactNode` | - |  |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
 
@@ -238,7 +234,20 @@ A single round key that passes text and icon styles to its children.
 
 The full grid of keys.
 
-<PropsTable extends={["React.ComponentProps<typeof View>"]} props={[{"name":"onKeyPress","type":"(key: KeypadKeyValue) => void","description":"Called with the pressed key value."},{"name":"accessoryKey","type":"KeypadAccessoryKey","description":"Bottom-left key: `decimal` or `biometric`."},{"name":"decimalSeparator","type":"string","default":"\".\"","description":"Character shown on the decimal key. Defaults to `.`."},{"name":"biometricIcon","type":"PhosphorIcon","default":"FingerprintIcon","description":"Phosphor icon for the biometric key. Defaults to `FingerprintIcon`."},{"name":"biometricLabel","type":"string","default":"\"Use biometrics\"","description":"Accessibility label for the biometric key."},{"name":"decimalLabel","type":"string","default":"\"Decimal separator\"","description":"Accessibility label for the decimal key."},{"name":"deleteLabel","type":"string","default":"\"Delete\"","description":"Accessibility label for the delete key."},{"name":"disabled","type":"boolean","default":"false","description":"Disables every key."},{"name":"deleteDisabled","type":"boolean","default":"false","description":"Disables only the delete key."},{"name":"keyClassName","type":"string","description":"Extra classes applied to each key."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onKeyPress` | `(key: KeypadKeyValue) => void` | - | Called with the pressed key value. |
+| `accessoryKey` | `KeypadAccessoryKey` | - | Bottom-left key: `decimal` or `biometric`. |
+| `decimalSeparator` | `string` | `"."` | Character shown on the decimal key. Defaults to `.`. |
+| `biometricIcon` | `PhosphorIcon` | `FingerprintIcon` | Phosphor icon for the biometric key. Defaults to `FingerprintIcon`. |
+| `biometricLabel` | `string` | `"Use biometrics"` | Accessibility label for the biometric key. |
+| `decimalLabel` | `string` | `"Decimal separator"` | Accessibility label for the decimal key. |
+| `deleteLabel` | `string` | `"Delete"` | Accessibility label for the delete key. |
+| `disabled` | `boolean` | `false` | Disables every key. |
+| `deleteDisabled` | `boolean` | `false` | Disables only the delete key. |
+| `keyClassName` | `string` | - | Extra classes applied to each key. |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
 

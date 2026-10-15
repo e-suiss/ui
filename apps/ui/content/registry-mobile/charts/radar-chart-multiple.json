@@ -1,5 +1,0 @@
-{
-  "description": "A radar chart overlaying this month's and last month's training scores.",
-  "overview": "A `RadarChart` with two lightly filled `Radar` series drawn over a polygon grid. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip with both values.",
-  "usage": "Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props."
-}

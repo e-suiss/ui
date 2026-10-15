@@ -3,16 +3,11 @@ title: Marker
 description: "An inline annotation for timelines and conversations, such as a date divider or system event."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="marker" story="Default">
-
-<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerExample() {\n  return (\n    <div className=\"w-96\">\n      <Marker>\n        <MarkerContent>Conversation started</MarkerContent>\n      </Marker>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="marker-demo" />
 
 `Marker` displays a short line of secondary text, typically between messages or list entries. Put the text in `MarkerContent` and, optionally, a leading `MarkerIcon`.
 
@@ -22,25 +17,37 @@ The `variant` prop changes the treatment: plain text, text centered between two 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add marker"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add marker
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
 
 2. Copy the source into `components/ui/marker.tsx`:
 
-<SourceFile path="components/ui/marker.tsx" />
+<ComponentSource path="components/ui/marker.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Marker, MarkerIcon, MarkerContent } from \"@/components/ui/marker\""} />
+```tsx
+import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
+```
 
-<Code lang="tsx" code={"<div className=\"w-96\">\n  <Marker>\n    <MarkerContent>Conversation started</MarkerContent>\n  </Marker>\n</div>"} />
+```tsx
+<div className="w-96">
+  <Marker>
+    <MarkerContent>Conversation started</MarkerContent>
+  </Marker>
+</div>
+```
 
 `Marker` is built on Base UI's `useRender`, so it accepts a `render` prop to change the underlying element. Links inside the marker or its content are underlined automatically.
 
@@ -50,45 +57,35 @@ The `variant` prop changes the treatment: plain text, text centered between two 
 
 The `default`, `separator` and `border` variants stacked for comparison.
 
-<Example kind="ui" name="marker" story="Variants">
-
-<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerVariantsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-6\">\n        <Marker variant=\"default\">\n          <MarkerContent>Default</MarkerContent>\n        </Marker>\n        <Marker variant=\"separator\">\n          <MarkerContent>Today</MarkerContent>\n        </Marker>\n        <Marker variant=\"border\">\n          <MarkerContent>Earlier messages</MarkerContent>\n        </Marker>\n      </div>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="marker-variants" />
 
 ### Separator
 
 Text centered between two horizontal rules, as used for a date divider.
 
-<Example kind="ui" name="marker" story="Separator">
-
-<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerSeparatorExample() {\n  return (\n    <div className=\"w-96\">\n      <Marker variant=\"separator\">\n        <MarkerContent>Yesterday</MarkerContent>\n      </Marker>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="marker-separator" />
 
 ### With icon
 
 Markers with a leading decorative icon in the default and separator variants.
 
-<Example kind="ui" name="marker" story="WithIcon">
-
-<Code lang="tsx" code={"import { CalendarBlankIcon, InfoIcon } from \"@phosphor-icons/react\"\nimport { Marker, MarkerContent, MarkerIcon } from \"@/components/ui/marker\"\n\nexport function MarkerWithIconExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-6\">\n        <Marker>\n          <MarkerIcon>\n            <InfoIcon />\n          </MarkerIcon>\n          <MarkerContent>Maya joined the conversation</MarkerContent>\n        </Marker>\n        <Marker variant=\"separator\">\n          <MarkerIcon>\n            <CalendarBlankIcon />\n          </MarkerIcon>\n          <MarkerContent>March 12</MarkerContent>\n        </Marker>\n      </div>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="marker-with-icon" />
 
 ### With link
 
 A marker whose content includes an inline link.
 
-<Example kind="ui" name="marker" story="WithLink">
-
-<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerWithLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Marker>\n        <MarkerContent>\n          This chat was archived. <a href=\"#restore\">Restore it</a>\n        </MarkerContent>\n      </Marker>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="marker-with-link" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Marker","href":"#marker","children":[{"name":"MarkerContent","href":"#markercontent","children":[]},{"name":"MarkerIcon","href":"#markericon","children":[]}]}]} />
+<Anatomy>
+
+- [Marker](#marker)
+  - [MarkerContent](#markercontent)
+  - [MarkerIcon](#markericon)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -96,7 +93,11 @@ A marker whose content includes an inline link.
 
 The container row that applies the variant styling.
 
-<PropsTable extends={["useRender.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"separator\" | \"border\"","default":"\"default\"","description":"Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "separator" \| "border"` | `"default"` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
+
+Also accepts the props of `useRender.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -106,7 +107,7 @@ The container row that applies the variant styling.
 
 A decorative icon slot shown before the content and hidden from assistive technology.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -116,7 +117,7 @@ A decorative icon slot shown before the content and hidden from assistive techno
 
 Holds the marker text and any inline links.
 
-<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -134,15 +135,7 @@ Holds the marker text and any inline links.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-marker--variants" width={880} height={400} platforms={["React Native","SwiftUI","Compose"]}>
-
-<Code lang="tsx" code={"import { CalendarBlankIcon, InfoIcon } from \"phosphor-react-native\"\nimport { View } from \"react-native\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Marker, MarkerContent, MarkerIcon } from \"@/components/ui/marker\"\n\nexport function MarkerVariantsExample() {\n  return (\n    <View className=\"gap-8\">\n      <Marker>\n        <MarkerIcon>\n          <Icon as={InfoIcon} />\n        </MarkerIcon>\n        <MarkerContent>Messages are end-to-end encrypted.</MarkerContent>\n      </Marker>\n      <Marker variant=\"separator\">\n        <MarkerContent>Today</MarkerContent>\n      </Marker>\n      <Marker variant=\"border\">\n        <MarkerIcon>\n          <Icon as={CalendarBlankIcon} />\n        </MarkerIcon>\n        <MarkerContent>Upcoming</MarkerContent>\n      </Marker>\n    </View>\n  )\n}"} />
-
-<Code lang="swift" code={"import EsuissUI\nimport PhosphorSwift\nimport SwiftUI\n\nstruct MarkerVariantsExample: View {\n  var body: some View {\n    VStack(spacing: 32) {\n      Marker {\n        MarkerIcon { Ph.info.regular }\n        MarkerContent(\"Messages are end-to-end encrypted.\")\n      }\n      Marker(.separator) {\n        MarkerContent(\"Today\")\n      }\n      Marker(.border) {\n        MarkerIcon { Ph.calendarBlank.regular }\n        MarkerContent(\"Upcoming\")\n      }\n    }\n    .frame(maxWidth: .infinity)\n  }\n}"} />
-
-<Code lang="kotlin" code={"import androidx.compose.foundation.layout.Arrangement\nimport androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\nimport com.adamglin.PhosphorIcons\nimport com.adamglin.phosphoricons.Regular\nimport com.adamglin.phosphoricons.regular.CalendarBlank\nimport com.adamglin.phosphoricons.regular.Info\nimport com.esuiss.ui.components.Icon\nimport com.esuiss.ui.components.Marker\nimport com.esuiss.ui.components.MarkerContent\nimport com.esuiss.ui.components.MarkerIcon\nimport com.esuiss.ui.components.MarkerVariant\n\n@Composable\nfun MarkerVariants() {\n    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(32.dp)) {\n        Marker {\n            MarkerIcon { Icon(PhosphorIcons.Regular.Info, contentDescription = null) }\n            MarkerContent(\"Messages are end-to-end encrypted.\")\n        }\n        Marker(variant = MarkerVariant.Separator) {\n            MarkerContent(\"Today\")\n        }\n        Marker(variant = MarkerVariant.Border) {\n            MarkerIcon { Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null) }\n            MarkerContent(\"Upcoming\")\n        }\n    }\n}"} />
-
-</NativeExample>
+<NativeExample id="components-marker--variants" />
 
 `Marker` is a row of secondary text with an optional icon. It has three variants: `default` for a plain row, `separator` for centered text with a line on each side, and `border` for a row with a bottom border.
 
@@ -152,19 +145,25 @@ Use `separator` for date dividers in a chat or feed, `border` for section headin
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add marker"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add marker
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add marker --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add marker --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add marker --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add marker --platform kotlin
+```
 
 </Only>
 
@@ -180,13 +179,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/marker.tsx`:
 
-<SourceFile path="uniwind/components/ui/marker.tsx" />
+<ComponentSource path="uniwind/components/ui/marker.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -196,13 +197,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npx expo install class-variance-authority cn"} />
+```bash title="Terminal"
+npx expo install class-variance-authority cn
+```
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
 
 3. Copy the source into `components/ui/marker.tsx`:
 
-<SourceFile path="nativewind/components/ui/marker.tsx" />
+<ComponentSource path="nativewind/components/ui/marker.tsx" />
 
 4. Update the import paths to match your project.
 
@@ -214,7 +217,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the source into `components/ui/marker.tsx`:
 
-<SourceFile path="stylesheet/components/ui/marker.tsx" />
+<ComponentSource path="stylesheet/components/ui/marker.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -230,15 +233,15 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Components/Marker.swift" />
+<ComponentSource path="swift/Components/Marker.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -248,23 +251,27 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/components/Marker.kt" />
+<ComponentSource path="kotlin/components/Marker.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
-<SourceFile path="kotlin/components/Separator.kt" />
+<ComponentSource path="kotlin/components/Separator.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -272,9 +279,29 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 ## Usage
 
-<Code lang="tsx" code={"import { Marker, MarkerIcon, MarkerContent } from \"@/components/ui/marker\""} />
+```tsx
+import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
+```
 
-<Code lang="tsx" code={"<View className=\"gap-8\">\n  <Marker>\n    <MarkerIcon>\n      <Icon as={InfoIcon} />\n    </MarkerIcon>\n    <MarkerContent>Messages are end-to-end encrypted.</MarkerContent>\n  </Marker>\n  <Marker variant=\"separator\">\n    <MarkerContent>Today</MarkerContent>\n  </Marker>\n  <Marker variant=\"border\">\n    <MarkerIcon>\n      <Icon as={CalendarBlankIcon} />\n    </MarkerIcon>\n    <MarkerContent>Upcoming</MarkerContent>\n  </Marker>\n</View>"} />
+```tsx
+<View className="gap-8">
+  <Marker>
+    <MarkerIcon>
+      <Icon as={InfoIcon} />
+    </MarkerIcon>
+    <MarkerContent>Messages are end-to-end encrypted.</MarkerContent>
+  </Marker>
+  <Marker variant="separator">
+    <MarkerContent>Today</MarkerContent>
+  </Marker>
+  <Marker variant="border">
+    <MarkerIcon>
+      <Icon as={CalendarBlankIcon} />
+    </MarkerIcon>
+    <MarkerContent>Upcoming</MarkerContent>
+  </Marker>
+</View>
+```
 
 Put the text in `MarkerContent` and an `Icon` in `MarkerIcon`. Text and icons inside the marker pick up the secondary label color and size through context.
 
@@ -288,7 +315,12 @@ Pass a `render` element to `Marker` to render it as another component instead of
 
 Row that sets the variant and the text and icon styles.
 
-<PropsTable extends={["ViewProps"]} props={[{"name":"variant","type":"\"default\" | \"separator\" | \"border\"","default":"\"default\"","description":"`default`, `separator` or `border`."},{"name":"render","type":"RenderProp<Record<string, unknown>, Record<string, never>>","description":"Element to render in place of the default `View`."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "separator" \| "border"` | `"default"` | `default`, `separator` or `border`. |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Element to render in place of the default `View`. |
+
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -298,7 +330,7 @@ Row that sets the variant and the text and icon styles.
 
 Fixed-size slot for an icon.
 
-<PropsTable extends={["ViewProps"]} />
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -308,7 +340,7 @@ Fixed-size slot for an icon.
 
 Marker text, centered in the `separator` variant.
 
-<PropsTable extends={["React.ComponentProps<typeof Text>"]} />
+Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
 

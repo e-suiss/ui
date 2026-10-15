@@ -1,6 +1,0 @@
-{
-  "description": "A three-column mail client with mailboxes, a searchable message list, and a message reader with reply.",
-  "overview": "A three-pane mail client: mailboxes on the left, a searchable message list in the middle and the open message with a reply box on the right. On small screens the panes collapse into a single view with a back button. Start from it for any inbox-style screen, such as support tickets or notifications.",
-  "usage": "Replace `initialMail` with your messages, each with a sender, subject, body, time, avatar hue and unread and starred flags, and `mailboxes` with your folders. Only Starred actually filters the list, so load each folder from your mail backend. Archive and Delete both remove the message, the reply form only clears on submit, and New message has no handler.",
-  "notes": "Search runs in the browser over sender, subject and body, so move it server-side for real mailboxes. The reply box receives focus when it opens."
-}

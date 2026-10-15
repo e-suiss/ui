@@ -3,16 +3,11 @@ title: Bar Chart Active
 description: "A week of step counts where clicking a bar selects it, dims the others and updates the header."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="chart" name="bar-chart-active">
-
-<SourceFile path="components/charts/bar-chart-active.tsx" fold={false} />
-
-</Example>
+<ComponentPreview type="chart" name="bar-chart-active" />
 
 A week of step counts where one bar is selected at a time: the chosen day stays solid, the rest dim, and the header shows its value. Use it when a bar chart doubles as a picker for the detail shown above it.
 
@@ -20,27 +15,35 @@ A week of step counts where one bar is selected at a time: the chosen day stays 
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-active"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add charts bar-chart-active
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install recharts"} />
+```bash title="Terminal"
+npm install recharts
+```
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
 3. Copy the source into `components/charts/bar-chart-active.tsx`:
 
-<SourceFile path="components/charts/bar-chart-active.tsx" />
+<ComponentSource path="components/charts/bar-chart-active.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartActive } from \"@/components/charts/bar-chart-active\""} />
+```tsx
+import { BarChartActive } from "@/components/charts/bar-chart-active"
+```
 
-<Code lang="tsx" code={"<BarChartActive />"} />
+```tsx
+<BarChartActive />
+```
 
 Replace `chartData` with your own days and values, and rename `steps` in the data, the `Bar` and `chartConfig`. Set the initially selected bar through the `selected` state, and change the unit text and number format in the header. Lower or raise the opacity of the dimmed bars to tune the contrast.
 
@@ -52,13 +55,13 @@ Keyboard users move between bars with the arrow keys and select with Return or S
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="charts-bar--active" width={880} height={665} platforms={["React Native","SwiftUI","Compose"]}>
+<NativeExample id="charts-bar--active" platforms={["React Native","SwiftUI","Compose"]}>
 
-<SourceFile path="uniwind/components/charts/bar-chart-active.tsx" fold={false} />
+<ComponentSource path="uniwind/components/charts/bar-chart-active.tsx" fold={false} />
 
-<SourceFile path="swift/Charts/BarChartActive.swift" fold={false} />
+<ComponentSource path="swift/Charts/BarChartActive.swift" fold={false} />
 
-<SourceFile path="kotlin/charts/BarChartActive.kt" fold={false} />
+<ComponentSource path="kotlin/charts/BarChartActive.kt" fold={false} />
 
 </NativeExample>
 
@@ -68,19 +71,25 @@ Seven bars, one per day, with the selected bar at full opacity and the others di
 
 <Only platform="rn">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-active"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-active
+```
 
 </Only>
 
 <Only platform="swift">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-active --platform swift"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-active --platform swift
+```
 
 </Only>
 
 <Only platform="kotlin">
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bar-chart-active --platform kotlin"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add bar-chart-active --platform kotlin
+```
 
 </Only>
 
@@ -98,7 +107,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-active.tsx`:
 
-<SourceFile path="uniwind/components/charts/bar-chart-active.tsx" />
+<ComponentSource path="uniwind/components/charts/bar-chart-active.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -110,7 +119,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-active.tsx`:
 
-<SourceFile path="nativewind/components/charts/bar-chart-active.tsx" />
+<ComponentSource path="nativewind/components/charts/bar-chart-active.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -122,7 +131,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the source into `components/charts/bar-chart-active.tsx`:
 
-<SourceFile path="stylesheet/components/charts/bar-chart-active.tsx" />
+<ComponentSource path="stylesheet/components/charts/bar-chart-active.tsx" />
 
 3. Update the import paths to match your project.
 
@@ -138,25 +147,25 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="swift/Theme/Theme.swift" />
+<ComponentSource path="swift/Theme/Theme.swift" />
 
-<SourceFile path="swift/Theme/Tokens.swift" />
+<ComponentSource path="swift/Theme/Tokens.swift" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="swift/Charts/BarChartActive.swift" />
+<ComponentSource path="swift/Charts/BarChartActive.swift" />
 
-<SourceFile path="swift/Components/Card.swift" />
+<ComponentSource path="swift/Components/Card.swift" />
 
-<SourceFile path="swift/Components/Chart.swift" />
+<ComponentSource path="swift/Components/Chart.swift" />
 
-<SourceFile path="swift/Components/Haptics.swift" />
+<ComponentSource path="swift/Components/Haptics.swift" />
 
-<SourceFile path="swift/Components/Item.swift" />
+<ComponentSource path="swift/Components/Item.swift" />
 
-<SourceFile path="swift/Components/Separator.swift" />
+<ComponentSource path="swift/Components/Separator.swift" />
 
-<SourceFile path="swift/Components/TextVariant.swift" />
+<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -166,29 +175,33 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Set `minSdk` to 24 or higher and add the dependencies:
 
-<Code lang="kotlin" title="build.gradle.kts" code={"implementation(platform(\"androidx.compose:compose-bom:2026.09.00\"))\nimplementation(\"androidx.compose.foundation:foundation\")\nimplementation(\"androidx.compose.ui:ui\")"} />
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
 
 2. Copy the theme files every view uses:
 
-<SourceFile path="kotlin/theme/Theme.kt" />
+<ComponentSource path="kotlin/theme/Theme.kt" />
 
-<SourceFile path="kotlin/theme/Tokens.kt" />
+<ComponentSource path="kotlin/theme/Tokens.kt" />
 
 3. Copy the source and every file it uses:
 
-<SourceFile path="kotlin/charts/BarChartActive.kt" />
+<ComponentSource path="kotlin/charts/BarChartActive.kt" />
 
-<SourceFile path="kotlin/components/Card.kt" />
+<ComponentSource path="kotlin/components/Card.kt" />
 
-<SourceFile path="kotlin/components/Chart.kt" />
+<ComponentSource path="kotlin/components/Chart.kt" />
 
-<SourceFile path="kotlin/components/Content.kt" />
+<ComponentSource path="kotlin/components/Content.kt" />
 
-<SourceFile path="kotlin/components/FormSupport.kt" />
+<ComponentSource path="kotlin/components/FormSupport.kt" />
 
-<SourceFile path="kotlin/components/Haptics.kt" />
+<ComponentSource path="kotlin/components/Haptics.kt" />
 
-<SourceFile path="kotlin/components/Icon.kt" />
+<ComponentSource path="kotlin/components/Icon.kt" />
 
 4. Update the `com.esuiss.ui` package names to match your project.
 
@@ -196,9 +209,13 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 ## Usage
 
-<Code lang="tsx" code={"import { BarChartActive } from \"@/components/charts/bar-chart-active\""} />
+```tsx
+import { BarChartActive } from "@/components/charts/bar-chart-active"
+```
 
-<Code lang="tsx" code={"<BarChartActive />"} />
+```tsx
+<BarChartActive />
+```
 
 Replace `chartData` with your daily values and update the `day` and `steps` keys to match. The initial selection is set by the `useState` default. The component takes no props.
 

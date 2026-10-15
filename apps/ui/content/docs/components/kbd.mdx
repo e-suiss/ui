@@ -3,16 +3,11 @@ title: Kbd
 description: "Displays a keyboard key or shortcut, with a platform-aware modifier symbol."
 eyebrow: Component
 platforms: [web]
-generated: true
 ---
 
 <Only platform="web">
 
-<Example kind="ui" name="kbd" story="Default">
-
-<Code lang="tsx" code={"import { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdExample() {\n  return (\n    <Kbd mod>K</Kbd>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="kbd-demo" />
 
 `Kbd` renders a single key as a native `kbd` element in a small rounded capsule. Set `mod` to prepend the platform's primary modifier: `⌘` on Apple platforms, `Ctrl` elsewhere (`Ctrl+` when the key has children).
 
@@ -22,27 +17,35 @@ Wrap several keys in `KbdGroup` to present a key combination. Use `Kbd` inline i
 
 ### CLI
 
-<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add kbd"} />
+```bash title="Terminal"
+npx @esuiss/ui@latest add kbd
+```
 
 ### Manual
 
 1. Install the dependencies:
 
-<Code lang="bash" title="Terminal" code={"npm install cn"} />
+```bash title="Terminal"
+npm install cn
+```
 
 2. Add the pieces it builds on: `use-platform`.
 
 3. Copy the source into `components/ui/kbd.tsx`:
 
-<SourceFile path="components/ui/kbd.tsx" />
+<ComponentSource path="components/ui/kbd.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-<Code lang="tsx" code={"import { Kbd, KbdGroup } from \"@/components/ui/kbd\""} />
+```tsx
+import { Kbd, KbdGroup } from "@/components/ui/kbd"
+```
 
-<Code lang="tsx" code={"<Kbd mod>K</Kbd>"} />
+```tsx
+<Kbd mod>K</Kbd>
+```
 
 Pass the key label as children. Use `mod` instead of hard-coding `⌘` or `Ctrl` so the hint matches the user's platform. Icons placed inside `Kbd` are sized to `size-3` unless they set their own `size-*` class.
 
@@ -52,45 +55,35 @@ Pass the key label as children. Use `mod` instead of hard-coding `⌘` or `Ctrl`
 
 The platform modifier alongside common modifier and named keys such as Shift, Option, Control, Esc and Tab.
 
-<Example kind="ui" name="kbd" story="Modifiers">
-
-<Code lang="tsx" code={"import { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdModifiersExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2\">\n      <Kbd mod />\n      <Kbd>⇧</Kbd>\n      <Kbd>⌥</Kbd>\n      <Kbd>⌃</Kbd>\n      <Kbd>Esc</Kbd>\n      <Kbd>Tab</Kbd>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="kbd-modifiers" />
 
 ### Group
 
 Key combinations wrapped in `KbdGroup`, both inline in a sentence and on their own.
 
-<Example kind="ui" name="kbd" story="Group">
-
-<Code lang="tsx" code={"import { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nexport function KbdGroupExample() {\n  return (\n    <div className=\"text-label-secondary flex flex-col items-start gap-3 text-sm\">\n      <p>\n        Use{\" \"}\n        <KbdGroup>\n          <Kbd mod />\n          <span>+</span>\n          <Kbd>B</Kbd>\n        </KbdGroup>{\" \"}\n        to toggle the sidebar.\n      </p>\n      <KbdGroup>\n        <Kbd mod />\n        <Kbd>⇧</Kbd>\n        <Kbd>P</Kbd>\n      </KbdGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="kbd-group" />
 
 ### With icon
 
 Keys that use an icon instead of, or next to, a text label.
 
-<Example kind="ui" name="kbd" story="WithIcon">
-
-<Code lang="tsx" code={"import { ArrowElbowDownLeftIcon, CommandIcon } from \"@phosphor-icons/react\"\nimport { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdWithIconExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2\">\n      <Kbd>\n        <CommandIcon />K\n      </Kbd>\n      <Kbd>\n        <ArrowElbowDownLeftIcon />\n      </Kbd>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="kbd-with-icon" />
 
 ### In input group
 
 A shortcut hint placed in the trailing addon of a search input group.
 
-<Example kind="ui" name="kbd" story="InInputGroup">
-
-<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdInInputGroupExample() {\n  return (\n    <div className=\"w-80\">\n      <InputGroup>\n        <InputGroupInput placeholder=\"Search...\" />\n        <InputGroupAddon>\n          <MagnifyingGlassIcon />\n        </InputGroupAddon>\n        <InputGroupAddon align=\"inline-end\">\n          <Kbd mod>\n            K\n          </Kbd>\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
-
-</Example>
+<ComponentPreview name="kbd-in-input-group" />
 
 ## API Reference
 
-<Anatomy tree={[{"name":"Kbd","href":"#kbd","children":[]},{"name":"KbdGroup","href":"#kbdgroup","children":[{"name":"Kbd","href":"#kbd","children":[]}]}]} />
+<Anatomy>
+
+- [Kbd](#kbd)
+- [KbdGroup](#kbdgroup)
+  - [Kbd](#kbd)
+
+</Anatomy>
 
 <ApiPart index={1}>
 
@@ -98,7 +91,11 @@ A shortcut hint placed in the trailing addon of a search input group.
 
 Renders one key as a `kbd` element, optionally prefixed with the platform modifier.
 
-<PropsTable extends={["React.ComponentProps<\"kbd\">"]} props={[{"name":"mod","type":"boolean","description":"Prepends the platform's primary modifier key: `⌘` on macOS and iOS, `Ctrl` on other platforms."}]} />
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `mod` | `boolean` | - | Prepends the platform's primary modifier key: `⌘` on macOS and iOS, `Ctrl` on other platforms. |
+
+Also accepts the props of `React.ComponentProps<"kbd">`.
 
 </ApiPart>
 
@@ -108,7 +105,7 @@ Renders one key as a `kbd` element, optionally prefixed with the platform modifi
 
 Groups several keys into a single inline key combination.
 
-<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
