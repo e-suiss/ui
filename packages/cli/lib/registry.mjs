@@ -8,6 +8,7 @@ const BASE_FOLDER = /^bases\/[^/]+\//
 const INDEXES = {
   base: "registry/registry.json",
   radix: "registry/radix/registry.json",
+  aria: "registry/aria/registry.json",
 }
 
 export const BASES = Object.keys(INDEXES)

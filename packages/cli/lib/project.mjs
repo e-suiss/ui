@@ -17,6 +17,7 @@ const NEXT_STYLESHEETS = [
 ]
 export const VITE_STYLESHEET = "src/index.css"
 const RADIX_STYLE = /^(radix-.+|new-york|default)$/
+const ARIA_STYLE = /^aria-.+$/
 
 function readConfig(cwd) {
   const file = path.join(cwd, "components.json")
@@ -35,7 +36,10 @@ function configuredStylesheet(cwd) {
 
 export function detectBase(cwd) {
   const style = readConfig(cwd)?.style
-  return typeof style === "string" && RADIX_STYLE.test(style) ? "radix" : "base"
+  if (typeof style !== "string") return "base"
+  if (RADIX_STYLE.test(style)) return "radix"
+  if (ARIA_STYLE.test(style)) return "aria"
+  return "base"
 }
 
 export function findStylesheet(project) {

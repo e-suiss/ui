@@ -62,7 +62,7 @@ describe("esuiss-ui command", () => {
   it("requires a known primitive base after --base", () => {
     const result = run("add", "button", "--base", "other")
     expect(result.code).toBe(1)
-    expect(result.stderr).toContain("--base needs base or radix.")
+    expect(result.stderr).toContain("--base needs base, radix or aria.")
   })
 
   it("only takes --base for React projects", () => {

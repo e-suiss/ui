@@ -24,7 +24,8 @@ describe("detectBase", () => {
     ["new-york", "radix"],
     ["default", "radix"],
     ["base-nova", "base"],
-    ["aria-nova", "base"],
+    ["aria-nova", "aria"],
+    ["aria-vega", "aria"],
   ])("maps the %s style to the %s base", (style, base) => {
     expect(detectBase(createProject({ "components.json": { style } }))).toBe(
       base

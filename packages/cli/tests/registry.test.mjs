@@ -12,6 +12,7 @@ import {
 import { serveRegistry } from "./helpers.mjs"
 
 const RADIX_INDEX = /\/registry\/radix\/registry\.json$/
+const ARIA_INDEX = /\/registry\/aria\/registry\.json$/
 
 const item = (name, requires = []) => ({ name, requires })
 
@@ -159,6 +160,41 @@ describe("fetchRegistry for the second base", () => {
       },
     ])
     expect(fetch).toHaveBeenCalledWith(expect.stringMatching(RADIX_INDEX))
+  })
+})
+
+describe("fetchRegistry for the third base", () => {
+  it("reads its own index and installs twins into the usual folders", async () => {
+    const fetch = serveRegistry({
+      "registry/aria/registry.json": {
+        name: "esuiss",
+        homepage: "https://ui.suiss.app",
+        items: [
+          {
+            name: "dialog",
+            type: "registry:ui",
+            dependencies: ["react-aria-components"],
+            files: [
+              {
+                path: "bases/aria/components/ui/dialog.tsx",
+                type: "registry:ui",
+              },
+            ],
+          },
+        ],
+      },
+    })
+    expect((await fetchRegistry("aria")).items).toEqual([
+      {
+        name: "dialog",
+        scope: "ui",
+        requires: [],
+        dependencies: ["react-aria-components"],
+        files: ["components/ui/dialog.tsx"],
+        sources: ["bases/aria/components/ui/dialog.tsx"],
+      },
+    ])
+    expect(fetch).toHaveBeenCalledWith(expect.stringMatching(ARIA_INDEX))
   })
 })
 
