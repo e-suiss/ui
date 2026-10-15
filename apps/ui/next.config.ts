@@ -69,6 +69,10 @@ const nextConfig: NextConfig = {
   },
   headers() {
     return Promise.resolve([
+      {
+        source: "/:path*",
+        headers: [{ key: "X-Build", value: process.env.BUILD_SHA ?? "dev" }],
+      },
       { source: "/docs/:path*", headers: [{ key: "Vary", value: "Accept" }] },
     ])
   },

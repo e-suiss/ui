@@ -27,6 +27,8 @@ RUN pnpm install --frozen-lockfile --filter "./apps/${APP}..." --os=linux --cpu=
 COPY . .
 ARG SITE_URL=https://ui.suiss.app
 ENV NEXT_PUBLIC_SITE_URL=${SITE_URL}
+ARG BUILD_SHA=dev
+ENV BUILD_SHA=${BUILD_SHA}
 RUN pnpm --filter "./apps/${APP}" build
 RUN mkdir -p /out \
  && cp -r "apps/${APP}/.next/standalone/." /out/ \

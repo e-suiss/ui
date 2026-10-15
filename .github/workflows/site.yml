@@ -26,6 +26,8 @@ concurrency:
 jobs:
   image:
     runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -47,7 +49,8 @@ jobs:
             type=raw,value=latest
             type=sha
 
-      - uses: docker/build-push-action@v6
+      - id: build
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: apps/Dockerfile
@@ -55,5 +58,66 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: BUILD_SHA=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    needs: image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: e-suiss/infra
+          ssh-key: ${{ secrets.INFRA_DEPLOY_KEY }}
+          path: infra
+
+      - name: Roll out the image
+        working-directory: infra
+        env:
+          DIGEST: ${{ needs.image.outputs.digest }}
+        run: |
+          tag="sha-${GITHUB_SHA:0:7}"
+          image="ghcr.io/${GITHUB_REPOSITORY}:${tag}@${DIGEST}"
+          sed -i -E "s#image: ghcr.io/${GITHUB_REPOSITORY}:[^ ]+#image: ${image}#" kubernetes/docs/app/ui.yaml
+          if git diff --quiet; then
+            echo "Already on ${image}"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -qam "chore(docs): roll ui to ${tag}"
+          for attempt in 1 2 3; do
+            git pull -q --rebase && git push -q && exit 0
+            sleep 5
+          done
+          exit 1
+
+      - name: Wait for the new build to serve
+        run: |
+          for attempt in $(seq 1 90); do
+            build=$(curl -fsSI "https://ui.suiss.app/?deploy=${GITHUB_RUN_ID}-${attempt}" | tr -d '\r' | awk 'tolower($1) == "x-build:" { print $2 }')
+            if [ "$build" = "$GITHUB_SHA" ]; then
+              echo "Serving ${build}"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Timed out; still serving ${build:-unknown}"
+          exit 1
+
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: scripts
+          path: ui
+
+      - name: Purge the cache and notify IndexNow
+        working-directory: ui
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          node scripts/purge-cache.mjs
+          node scripts/indexnow.mjs
