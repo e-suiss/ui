@@ -1,2282 +1,572 @@
 {
-  "blocks-bag-checkout--default": [
-    880,
-    1720
-  ],
-  "blocks-bag-configure--default": [
-    880,
-    1720
-  ],
-  "blocks-bag-review--default": [
-    880,
-    1720
-  ],
-  "blocks-chat-conversations--default": [
-    880,
-    1720
-  ],
-  "blocks-chat-support--default": [
-    880,
-    1720
-  ],
-  "blocks-chat-thread--default": [
-    880,
-    1720
-  ],
-  "blocks-dash-analytics--default": [
-    880,
-    1720
-  ],
-  "blocks-dash-health--default": [
-    880,
-    1720
-  ],
-  "blocks-dash-store--default": [
-    880,
-    1720
-  ],
-  "blocks-empty-bag--default": [
-    880,
-    1720
-  ],
-  "blocks-empty-offline--default": [
-    880,
-    1720
-  ],
-  "blocks-empty-search--default": [
-    880,
-    1720
-  ],
-  "blocks-grid-accessories--default": [
-    880,
-    1720
-  ],
-  "blocks-grid-carousel--default": [
-    880,
-    1720
-  ],
-  "blocks-grid-lineup--default": [
-    880,
-    1720
-  ],
-  "blocks-inbox-categories--default": [
-    880,
-    1720
-  ],
-  "blocks-inbox-mail--default": [
-    880,
-    1720
-  ],
-  "blocks-inbox-support--default": [
-    880,
-    1720
-  ],
-  "blocks-log-activity--default": [
-    880,
-    1720
-  ],
-  "blocks-log-live--default": [
-    880,
-    1720
-  ],
-  "blocks-log-security--default": [
-    880,
-    1720
-  ],
-  "blocks-login-account--default": [
-    880,
-    1720
-  ],
-  "blocks-login-passkey--default": [
-    880,
-    1720
-  ],
-  "blocks-login-sheet--default": [
-    880,
-    1720
-  ],
-  "blocks-nav-categories--default": [
-    880,
-    1720
-  ],
-  "blocks-onboarding--default": [
-    880,
-    1720
-  ],
-  "blocks-permission-primer--default": [
-    880,
-    1720
-  ],
-  "blocks-price-bundle--default": [
-    880,
-    1720
-  ],
-  "blocks-price-care--default": [
-    880,
-    1720
-  ],
-  "blocks-price-storage--default": [
-    880,
-    1720
-  ],
-  "blocks-roles-editor--default": [
-    880,
-    1720
-  ],
-  "blocks-roles-requests--default": [
-    880,
-    1720
-  ],
-  "blocks-settings-account--default": [
-    880,
-    1720
-  ],
-  "blocks-settings-device--default": [
-    880,
-    1720
-  ],
-  "blocks-settings-notifications--default": [
-    880,
-    1720
-  ],
-  "blocks-signup-form--default": [
-    880,
-    1720
-  ],
-  "blocks-signup-steps--default": [
-    880,
-    1720
-  ],
-  "blocks-signup-trial--default": [
-    880,
-    1720
-  ],
-  "blocks-users-detail--default": [
-    880,
-    1720
-  ],
-  "blocks-users-invite--default": [
-    880,
-    1720
-  ],
-  "blocks-users-table--default": [
-    880,
-    1720
-  ],
-  "blocks-verify-code--default": [
-    880,
-    1720
-  ],
-  "blocks-verify-device--default": [
-    880,
-    1720
-  ],
-  "blocks-verify-email--default": [
-    880,
-    1720
-  ],
-  "charts-area--axes": [
-    880,
-    655
-  ],
-  "charts-area--default": [
-    880,
-    655
-  ],
-  "charts-area--gradient": [
-    880,
-    655
-  ],
-  "charts-area--interactive": [
-    880,
-    1241
-  ],
-  "charts-area--linear": [
-    880,
-    655
-  ],
-  "charts-area--range": [
-    880,
-    665
-  ],
-  "charts-area--sparkline": [
-    880,
-    781
-  ],
-  "charts-area--stacked": [
-    880,
-    655
-  ],
-  "charts-area--stacked-expand": [
-    880,
-    655
-  ],
-  "charts-area--step": [
-    880,
-    655
-  ],
-  "charts-bar--active": [
-    880,
-    665
-  ],
-  "charts-bar--default": [
-    880,
-    655
-  ],
-  "charts-bar--horizontal": [
-    880,
-    655
-  ],
-  "charts-bar--hourly": [
-    880,
-    665
-  ],
-  "charts-bar--interactive": [
-    880,
-    1579
-  ],
-  "charts-bar--labeled": [
-    880,
-    655
-  ],
-  "charts-bar--multiple": [
-    880,
-    655
-  ],
-  "charts-bar--negative": [
-    880,
-    655
-  ],
-  "charts-bar--range": [
-    880,
-    751
-  ],
-  "charts-bar--stacked": [
-    880,
-    719
-  ],
-  "charts-line--default": [
-    880,
-    655
-  ],
-  "charts-line--dots": [
-    880,
-    665
-  ],
-  "charts-line--forecast": [
-    880,
-    655
-  ],
-  "charts-line--goal": [
-    880,
-    655
-  ],
-  "charts-line--goal-dots": [
-    880,
-    665
-  ],
-  "charts-line--interactive": [
-    880,
-    1373
-  ],
-  "charts-line--labeled": [
-    880,
-    655
-  ],
-  "charts-line--linear": [
-    880,
-    655
-  ],
-  "charts-line--multiple": [
-    880,
-    719
-  ],
-  "charts-line--step": [
-    880,
-    655
-  ],
-  "charts-pie--active": [
-    880,
-    687
-  ],
-  "charts-pie--default": [
-    880,
-    687
-  ],
-  "charts-pie--donut": [
-    880,
-    687
-  ],
-  "charts-pie--donut-text": [
-    880,
-    687
-  ],
-  "charts-pie--half": [
-    880,
-    623
-  ],
-  "charts-pie--interactive": [
-    880,
-    1537
-  ],
-  "charts-pie--label": [
-    880,
-    687
-  ],
-  "charts-pie--legend": [
-    880,
-    751
-  ],
-  "charts-pie--nested": [
-    880,
-    687
-  ],
-  "charts-pie--separated": [
-    880,
-    687
-  ],
-  "charts-radar--default": [
-    880,
-    719
-  ],
-  "charts-radar--dots": [
-    880,
-    719
-  ],
-  "charts-radar--grid-circle": [
-    880,
-    719
-  ],
-  "charts-radar--grid-filled": [
-    880,
-    719
-  ],
-  "charts-radar--grid-none": [
-    880,
-    719
-  ],
-  "charts-radar--interactive": [
-    880,
-    1337
-  ],
-  "charts-radar--legend": [
-    880,
-    751
-  ],
-  "charts-radar--lines-only": [
-    880,
-    719
-  ],
-  "charts-radar--multiple": [
-    880,
-    719
-  ],
-  "charts-radar--radius-axis": [
-    880,
-    719
-  ],
-  "charts-radial--batteries": [
-    880,
-    575
-  ],
-  "charts-radial--default": [
-    880,
-    687
-  ],
-  "charts-radial--gauge": [
-    880,
-    687
-  ],
-  "charts-radial--interactive": [
-    880,
-    1635
-  ],
-  "charts-radial--label": [
-    880,
-    687
-  ],
-  "charts-radial--progress": [
-    880,
-    687
-  ],
-  "charts-radial--rings": [
-    880,
-    671
-  ],
-  "charts-radial--stacked": [
-    880,
-    623
-  ],
-  "charts-radial--text": [
-    880,
-    687
-  ],
-  "charts-radial--tinted": [
-    880,
-    687
-  ],
-  "components-accordion--default": [
-    880,
-    400
-  ],
-  "components-accordion--filled": [
-    880,
-    400
-  ],
-  "components-accordion--multiple": [
-    880,
-    448
-  ],
-  "components-accordion--open-by-default": [
-    880,
-    421
-  ],
-  "components-alert--default": [
-    880,
-    400
-  ],
-  "components-alert--destructive": [
-    880,
-    400
-  ],
-  "components-alert--title-only": [
-    880,
-    400
-  ],
-  "components-alert--with-action": [
-    880,
-    400
-  ],
-  "components-alert--without-icon": [
-    880,
-    400
-  ],
-  "components-alert-dialog--default": [
-    880,
-    1124
-  ],
-  "components-alert-dialog--destructive": [
-    880,
-    1103
-  ],
-  "components-alert-dialog--open-by-default": [
-    880,
-    1124
-  ],
-  "components-alert-dialog--small": [
-    880,
-    1084
-  ],
-  "components-alert-dialog--with-media": [
-    880,
-    1182
-  ],
-  "components-alert-sheet--default": [
-    880,
-    1767
-  ],
-  "components-alert-sheet--not-dismissible": [
-    880,
-    1767
-  ],
-  "components-alert-sheet--open-by-default": [
-    880,
-    1767
-  ],
-  "components-amount-input--controlled": [
-    880,
-    1024
-  ],
-  "components-amount-input--default": [
-    880,
-    961
-  ],
-  "components-amount-input--disabled": [
-    880,
-    961
-  ],
-  "components-amount-input--euro": [
-    880,
-    961
-  ],
-  "components-amount-input--filled": [
-    880,
-    961
-  ],
-  "components-amount-input--long-amount": [
-    880,
-    919
-  ],
-  "components-amount-input--turkish-lira": [
-    880,
-    961
-  ],
-  "components-amount-input--with-max": [
-    880,
-    961
-  ],
-  "components-amount-input--yen": [
-    880,
-    961
-  ],
-  "components-aspect-ratio--default": [
-    880,
-    539
-  ],
-  "components-aspect-ratio--placeholder": [
-    880,
-    539
-  ],
-  "components-aspect-ratio--portrait": [
-    880,
-    648
-  ],
-  "components-aspect-ratio--square": [
-    880,
-    463
-  ],
-  "components-attachment--default": [
-    880,
-    400
-  ],
-  "components-attachment--file-types": [
-    880,
-    857
-  ],
-  "components-attachment--group": [
-    880,
-    761
-  ],
-  "components-attachment--image": [
-    880,
-    400
-  ],
-  "components-attachment--pressable": [
-    880,
-    400
-  ],
-  "components-attachment--sizes": [
-    880,
-    453
-  ],
-  "components-attachment--states": [
-    880,
-    857
-  ],
-  "components-attachment--vertical": [
-    880,
-    410
-  ],
-  "components-avatar--default": [
-    880,
-    400
-  ],
-  "components-avatar--fallback": [
-    880,
-    400
-  ],
-  "components-avatar--group": [
-    880,
-    400
-  ],
-  "components-avatar--sizes": [
-    880,
-    400
-  ],
-  "components-avatar--with-badge": [
-    880,
-    400
-  ],
-  "components-badge--default": [
-    880,
-    400
-  ],
-  "components-badge--variants": [
-    880,
-    400
-  ],
-  "components-badge--with-icon": [
-    880,
-    400
-  ],
-  "components-bottom-bar--above-keyboard": [
-    880,
-    1675
-  ],
-  "components-bottom-bar--default": [
-    880,
-    1675
-  ],
-  "components-bottom-bar--side-by-side": [
-    880,
-    1675
-  ],
-  "components-bottom-bar--two-actions": [
-    880,
-    1645
-  ],
-  "components-bottom-bar--with-separator": [
-    880,
-    1675
-  ],
-  "components-bubble--conversation": [
-    880,
-    462
-  ],
-  "components-bubble--default": [
-    880,
-    400
-  ],
-  "components-bubble--interactive": [
-    880,
-    400
-  ],
-  "components-bubble--long-press-actions": [
-    880,
-    400
-  ],
-  "components-bubble--variants": [
-    880,
-    654
-  ],
-  "components-bubble--with-reactions": [
-    880,
-    449
-  ],
-  "components-button--block": [
-    880,
-    400
-  ],
-  "components-button--default": [
-    880,
-    400
-  ],
-  "components-button--disabled": [
-    880,
-    535
-  ],
-  "components-button--sizes": [
-    880,
-    439
-  ],
-  "components-button--variants": [
-    880,
-    919
-  ],
-  "components-button--with-icon": [
-    880,
-    400
-  ],
-  "components-button-group--default": [
-    880,
-    400
-  ],
-  "components-button-group--nested": [
-    880,
-    400
-  ],
-  "components-button-group--orientation": [
-    880,
-    400
-  ],
-  "components-button-group--outline": [
-    880,
-    400
-  ],
-  "components-button-group--pagination": [
-    880,
-    400
-  ],
-  "components-button-group--plain": [
-    880,
-    400
-  ],
-  "components-button-group--sizes": [
-    880,
-    400
-  ],
-  "components-button-group--split-button": [
-    880,
-    400
-  ],
-  "components-button-group--with-dropdown-menu": [
-    880,
-    400
-  ],
-  "components-button-group--with-input": [
-    880,
-    400
-  ],
-  "components-button-group--with-input-group": [
-    880,
-    400
-  ],
-  "components-button-group--with-popover": [
-    880,
-    400
-  ],
-  "components-button-group--with-select": [
-    880,
-    400
-  ],
-  "components-button-group--with-separator": [
-    880,
-    400
-  ],
-  "components-button-group--with-text": [
-    880,
-    400
-  ],
-  "components-calendar--button-variants": [
-    880,
-    1871
-  ],
-  "components-calendar--default": [
-    880,
-    653
-  ],
-  "components-calendar--disabled-days": [
-    880,
-    653
-  ],
-  "components-calendar--dropdown-caption": [
-    880,
-    653
-  ],
-  "components-calendar--locale": [
-    880,
-    653
-  ],
-  "components-calendar--multiple": [
-    880,
-    653
-  ],
-  "components-calendar--outside-days": [
-    880,
-    653
-  ],
-  "components-calendar--range": [
-    880,
-    1207
-  ],
-  "components-calendar--sizes": [
-    880,
-    1876
-  ],
-  "components-calendar--week-numbers": [
-    880,
-    653
-  ],
-  "components-card--default": [
-    880,
-    877
-  ],
-  "components-card--filled": [
-    880,
-    400
-  ],
-  "components-card--small": [
-    880,
-    400
-  ],
-  "components-card--with-action": [
-    880,
-    501
-  ],
-  "components-card--with-image": [
-    880,
-    871
-  ],
-  "components-carousel--autoplay": [
-    880,
-    771
-  ],
-  "components-carousel--default": [
-    880,
-    703
-  ],
-  "components-carousel--featured": [
-    880,
-    1064
-  ],
-  "components-carousel--loop": [
-    880,
-    703
-  ],
-  "components-carousel--multiple-items": [
-    880,
-    400
-  ],
-  "components-carousel--shelf": [
-    880,
-    523
-  ],
-  "components-carousel--spotlight": [
-    880,
-    771
-  ],
-  "components-carousel--vertical": [
-    880,
-    783
-  ],
-  "components-carousel--with-page-indicator": [
-    880,
-    1163
-  ],
-  "components-chart--tooltip-custom": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-dashed": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-dot": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-formatter": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-icons": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-interactive": [
-    880,
-    1193
-  ],
-  "components-chart--tooltip-label-formatter": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-line": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-no-indicator": [
-    880,
-    687
-  ],
-  "components-chart--tooltip-no-label": [
-    880,
-    687
-  ],
-  "components-checkbox--checked": [
-    880,
-    400
-  ],
-  "components-checkbox--default": [
-    880,
-    400
-  ],
-  "components-checkbox--disabled": [
-    880,
-    400
-  ],
-  "components-checkbox--indeterminate": [
-    880,
-    400
-  ],
-  "components-checkbox--invalid": [
-    880,
-    400
-  ],
-  "components-checkbox--with-description": [
-    880,
-    400
-  ],
-  "components-checkbox--with-label": [
-    880,
-    400
-  ],
-  "components-chip--controlled": [
-    880,
-    400
-  ],
-  "components-chip--default": [
-    880,
-    400
-  ],
-  "components-chip--group-disabled": [
-    880,
-    400
-  ],
-  "components-chip--group-multiple": [
-    880,
-    400
-  ],
-  "components-chip--group-scrollable": [
-    880,
-    400
-  ],
-  "components-chip--group-single": [
-    880,
-    400
-  ],
-  "components-chip--group-uncontrolled": [
-    880,
-    400
-  ],
-  "components-chip--removable": [
-    880,
-    400
-  ],
-  "components-chip--sizes": [
-    880,
-    400
-  ],
-  "components-chip--states": [
-    880,
-    503
-  ],
-  "components-chip--with-icon": [
-    880,
-    400
-  ],
-  "components-collapsible--default": [
-    880,
-    400
-  ],
-  "components-collapsible--disabled": [
-    880,
-    400
-  ],
-  "components-collapsible--open-by-default": [
-    880,
-    407
-  ],
-  "components-combobox--default": [
-    880,
-    819
-  ],
-  "components-combobox--disabled": [
-    880,
-    400
-  ],
-  "components-combobox--grouped": [
-    880,
-    400
-  ],
-  "components-combobox--invalid": [
-    880,
-    819
-  ],
-  "components-combobox--multiple": [
-    880,
-    819
-  ],
-  "components-combobox--open-by-default": [
-    880,
-    775
-  ],
-  "components-combobox--with-clear": [
-    880,
-    819
-  ],
-  "components-combobox--with-label": [
-    880,
-    879
-  ],
-  "components-combobox--with-value": [
-    880,
-    819
-  ],
-  "components-context-menu--default": [
-    880,
-    1330
-  ],
-  "components-context-menu--open-by-default": [
-    880,
-    1167
-  ],
-  "components-context-menu--simple": [
-    880,
-    826
-  ],
-  "components-dialog--default": [
-    880,
-    1339
-  ],
-  "components-dialog--destructive": [
-    880,
-    1151
-  ],
-  "components-dialog--open-by-default": [
-    880,
-    1289
-  ],
-  "components-dialog--with-close-label": [
-    880,
-    1047
-  ],
-  "components-dialog--without-close-button": [
-    880,
-    1151
-  ],
-  "components-drawer--default": [
-    880,
-    1788
-  ],
-  "components-drawer--floating": [
-    880,
-    400
-  ],
-  "components-drawer--open-by-default": [
-    880,
-    1720
-  ],
-  "components-drawer--sides": [
-    880,
-    439
-  ],
-  "components-drawer--snap-points": [
-    880,
-    1788
-  ],
-  "components-dropdown-menu--checkboxes": [
-    880,
-    533
-  ],
-  "components-dropdown-menu--default": [
-    880,
-    706
-  ],
-  "components-dropdown-menu--inset": [
-    880,
-    533
-  ],
-  "components-dropdown-menu--open-by-default": [
-    880,
-    706
-  ],
-  "components-dropdown-menu--radio-group": [
-    880,
-    533
-  ],
-  "components-empty--default": [
-    880,
-    1121
-  ],
-  "components-empty--muted": [
-    880,
-    1720
-  ],
-  "components-fab--controlled": [
-    880,
-    1720
-  ],
-  "components-fab--default": [
-    880,
-    1720
-  ],
-  "components-fab--extended": [
-    880,
-    1720
-  ],
-  "components-fab--large": [
-    880,
-    1720
-  ],
-  "components-fab--large-extended": [
-    880,
-    1720
-  ],
-  "components-fab--speed-dial-closed": [
-    880,
-    1720
-  ],
-  "components-fab--speed-dial-open": [
-    880,
-    1720
-  ],
-  "components-field--checkbox-group": [
-    880,
-    529
-  ],
-  "components-field--default": [
-    880,
-    400
-  ],
-  "components-field--disabled": [
-    880,
-    400
-  ],
-  "components-field--form": [
-    880,
-    631
-  ],
-  "components-field--horizontal": [
-    880,
-    400
-  ],
-  "components-field--inset": [
-    880,
-    400
-  ],
-  "components-field--invalid": [
-    880,
-    400
-  ],
-  "components-field--validation": [
-    880,
-    763
-  ],
-  "components-haptics--default": [
-    880,
-    693
-  ],
-  "components-haptics--disabled": [
-    880,
-    693
-  ],
-  "components-haptics--feedback": [
-    880,
-    631
-  ],
-  "components-haptics--reorder": [
-    880,
-    571
-  ],
-  "components-header--back-only": [
-    880,
-    400
-  ],
-  "components-header--compact-with-scroll": [
-    880,
-    1517
-  ],
-  "components-header--default": [
-    880,
-    400
-  ],
-  "components-header--large-title": [
-    880,
-    1619
-  ],
-  "components-header--large-title-with-subtitle": [
-    880,
-    1663
-  ],
-  "components-header--leading-actions": [
-    880,
-    400
-  ],
-  "components-header--subtitle": [
-    880,
-    400
-  ],
-  "components-icon--colors": [
-    880,
-    400
-  ],
-  "components-icon--default": [
-    880,
-    400
-  ],
-  "components-icon--sizes": [
-    880,
-    400
-  ],
-  "components-icon--weights": [
-    880,
-    400
-  ],
-  "components-input--controlled": [
-    880,
-    400
-  ],
-  "components-input--default": [
-    880,
-    400
-  ],
-  "components-input--disabled": [
-    880,
-    400
-  ],
-  "components-input--invalid": [
-    880,
-    400
-  ],
-  "components-input--sizes": [
-    880,
-    400
-  ],
-  "components-input--types": [
-    880,
-    615
-  ],
-  "components-input--with-label": [
-    880,
-    400
-  ],
-  "components-input--with-value": [
-    880,
-    400
-  ],
-  "components-input-accessory-bar--custom-labels": [
-    880,
-    1720
-  ],
-  "components-input-accessory-bar--default": [
-    880,
-    735
-  ],
-  "components-input-accessory-bar--focused": [
-    880,
-    1720
-  ],
-  "components-input-accessory-bar--with-textarea": [
-    880,
-    1720
-  ],
-  "components-input-group--block-start": [
-    880,
-    400
-  ],
-  "components-input-group--default": [
-    880,
-    767
-  ],
-  "components-input-group--with-textarea": [
-    880,
-    400
-  ],
-  "components-inputotp--alphanumeric": [
-    880,
-    400
-  ],
-  "components-inputotp--controlled": [
-    880,
-    400
-  ],
-  "components-inputotp--default": [
-    880,
-    400
-  ],
-  "components-inputotp--disabled": [
-    880,
-    400
-  ],
-  "components-inputotp--masked": [
-    880,
-    400
-  ],
-  "components-item--default": [
-    880,
-    599
-  ],
-  "components-item--inset-group": [
-    880,
-    400
-  ],
-  "components-keyboard-scroll-view--default": [
-    880,
-    1720
-  ],
-  "components-keyboard-scroll-view--focused": [
-    880,
-    1720
-  ],
-  "components-keyboard-scroll-view--larger-bottom-offset": [
-    880,
-    1720
-  ],
-  "components-keyboard-scroll-view--with-bottom-bar": [
-    880,
-    1675
-  ],
-  "components-keypad--biometric": [
-    880,
-    839
-  ],
-  "components-keypad--decimal": [
-    880,
-    839
-  ],
-  "components-keypad--default": [
-    880,
-    839
-  ],
-  "components-keypad--disabled": [
-    880,
-    839
-  ],
-  "components-label--default": [
-    880,
-    400
-  ],
-  "components-label--disabled": [
-    880,
-    400
-  ],
-  "components-label--with-checkbox": [
-    880,
-    400
-  ],
-  "components-label--with-input": [
-    880,
-    400
-  ],
-  "components-marker--variants": [
-    880,
-    400
-  ],
-  "components-message--align-end": [
-    880,
-    400
-  ],
-  "components-message--conversation": [
-    880,
-    400
-  ],
-  "components-message--default": [
-    880,
-    400
-  ],
-  "components-message--with-header-and-footer": [
-    880,
-    400
-  ],
-  "components-message-scroller--default": [
-    880,
-    1675
-  ],
-  "components-message-scroller--empty-thread": [
-    880,
-    1675
-  ],
-  "components-message-scroller--load-older": [
-    880,
-    1720
-  ],
-  "components-message-scroller--unread-while-scrolled-up": [
-    880,
-    1675
-  ],
-  "components-page-indicator--accent": [
-    880,
-    400
-  ],
-  "components-page-indicator--default": [
-    880,
-    400
-  ],
-  "components-page-indicator--interactive": [
-    880,
-    400
-  ],
-  "components-page-indicator--many-pages": [
-    880,
-    400
-  ],
-  "components-page-indicator--sizes": [
-    880,
-    400
-  ],
-  "components-pin-pad--biometric": [
-    880,
-    947
-  ],
-  "components-pin-pad--default": [
-    880,
-    859
-  ],
-  "components-pin-pad--disabled": [
-    880,
-    859
-  ],
-  "components-pin-pad--error-state": [
-    880,
-    859
-  ],
-  "components-pin-pad--face-biometric": [
-    880,
-    947
-  ],
-  "components-pin-pad--filled": [
-    880,
-    859
-  ],
-  "components-pin-pad--four-digits": [
-    880,
-    859
-  ],
-  "components-pin-pad--verify": [
-    880,
-    947
-  ],
-  "components-popover--default": [
-    880,
-    744
-  ],
-  "components-popover--detached-triggers": [
-    880,
-    488
-  ],
-  "components-popover--open-by-default": [
-    880,
-    744
-  ],
-  "components-popover--sides": [
-    880,
-    659
-  ],
-  "components-popover--simple": [
-    880,
-    400
-  ],
-  "components-progress--complete": [
-    880,
-    400
-  ],
-  "components-progress--default": [
-    880,
-    400
-  ],
-  "components-progress--values": [
-    880,
-    400
-  ],
-  "components-progress--with-label": [
-    880,
-    400
-  ],
-  "components-qr-scanner--default": [
-    880,
-    1637
-  ],
-  "components-qr-scanner--error-state": [
-    880,
-    1637
-  ],
-  "components-qr-scanner--success": [
-    880,
-    1637
-  ],
-  "components-qr-scanner--with-scan-line": [
-    880,
-    1637
-  ],
-  "components-qr-scanner--without-torch": [
-    880,
-    1196
-  ],
-  "components-questionnaire--default": [
-    880,
-    891
-  ],
-  "components-questionnaire--invalid": [
-    880,
-    971
-  ],
-  "components-questionnaire--mid-flow": [
-    880,
-    839
-  ],
-  "components-questionnaire--multiple-choice": [
-    880,
-    891
-  ],
-  "components-questionnaire--text-input": [
-    880,
-    523
-  ],
-  "components-questionnaire--with-choice-descriptions": [
-    880,
-    919
-  ],
-  "components-radio-group--default": [
-    880,
-    400
-  ],
-  "components-radio-group--disabled": [
-    880,
-    400
-  ],
-  "components-radio-group--disabled-item": [
-    880,
-    400
-  ],
-  "components-radio-group--invalid": [
-    880,
-    400
-  ],
-  "components-radio-group--with-descriptions": [
-    880,
-    416
-  ],
-  "components-screen--default": [
-    880,
-    789
-  ],
-  "components-screen--scrollable": [
-    880,
-    1699
-  ],
-  "components-screen--secondary": [
-    880,
-    583
-  ],
-  "components-screen--top-edge-only": [
-    880,
-    400
-  ],
-  "components-screen--with-bottom-bar": [
-    880,
-    1675
-  ],
-  "components-select--default": [
-    880,
-    669
-  ],
-  "components-select--disabled": [
-    880,
-    400
-  ],
-  "components-select--grouped": [
-    880,
-    840
-  ],
-  "components-select--invalid": [
-    880,
-    669
-  ],
-  "components-select--open-by-default": [
-    880,
-    696
-  ],
-  "components-select--small": [
-    880,
-    653
-  ],
-  "components-select--with-label": [
-    880,
-    729
-  ],
-  "components-select--with-value": [
-    880,
-    669
-  ],
-  "components-separator--default": [
-    880,
-    400
-  ],
-  "components-separator--horizontal": [
-    880,
-    400
-  ],
-  "components-separator--vertical": [
-    880,
-    400
-  ],
-  "components-sheet--default": [
-    880,
-    1775
-  ],
-  "components-sheet--open-by-default": [
-    880,
-    1775
-  ],
-  "components-sheet--sides": [
-    880,
-    904
-  ],
-  "components-sheet--with-close-label": [
-    880,
-    1775
-  ],
-  "components-signature-pad--controlled": [
-    880,
-    631
-  ],
-  "components-signature-pad--default": [
-    880,
-    463
-  ],
-  "components-signature-pad--disabled": [
-    880,
-    463
-  ],
-  "components-signature-pad--signed": [
-    880,
-    463
-  ],
-  "components-signature-pad--thick-stroke": [
-    880,
-    463
-  ],
-  "components-skeleton--card": [
-    880,
-    439
-  ],
-  "components-skeleton--default": [
-    880,
-    400
-  ],
-  "components-skeleton--list": [
-    880,
-    495
-  ],
-  "components-skeleton--profile": [
-    880,
-    400
-  ],
-  "components-slider--controlled": [
-    880,
-    400
-  ],
-  "components-slider--default": [
-    880,
-    400
-  ],
-  "components-slider--disabled": [
-    880,
-    400
-  ],
-  "components-slider--multiple-thumbs": [
-    880,
-    400
-  ],
-  "components-slider--range": [
-    880,
-    400
-  ],
-  "components-slider--step": [
-    880,
-    400
-  ],
-  "components-slider--vertical": [
-    880,
-    463
-  ],
-  "components-spinner--colors": [
-    880,
-    400
-  ],
-  "components-spinner--default": [
-    880,
-    400
-  ],
-  "components-spinner--in-button": [
-    880,
-    400
-  ],
-  "components-spinner--sizes": [
-    880,
-    400
-  ],
-  "components-switch--checked": [
-    880,
-    400
-  ],
-  "components-switch--default": [
-    880,
-    400
-  ],
-  "components-switch--disabled": [
-    880,
-    400
-  ],
-  "components-switch--invalid": [
-    880,
-    400
-  ],
-  "components-switch--sizes": [
-    880,
-    400
-  ],
-  "components-switch--with-description": [
-    880,
-    400
-  ],
-  "components-switch--with-label": [
-    880,
-    400
-  ],
-  "components-tab-bar--default": [
-    880,
-    1720
-  ],
-  "components-tab-bar--disabled-item": [
-    880,
-    1720
-  ],
-  "components-tab-bar--large-badge": [
-    880,
-    1720
-  ],
-  "components-tab-bar--without-badges": [
-    880,
-    1720
-  ],
-  "components-tabs--default": [
-    880,
-    893
-  ],
-  "components-tabs--disabled-tab": [
-    880,
-    400
-  ],
-  "components-tabs--disabled-tab-line": [
-    880,
-    400
-  ],
-  "components-tabs--line": [
-    880,
-    400
-  ],
-  "components-tabs--vertical": [
-    880,
-    400
-  ],
-  "components-tabs--vertical-line": [
-    880,
-    400
-  ],
-  "components-tabs--with-icons": [
-    880,
-    400
-  ],
-  "components-tabs--with-icons-line": [
-    880,
-    400
-  ],
-  "components-text--default": [
-    880,
-    400
-  ],
-  "components-text--headings": [
-    880,
-    429
-  ],
-  "components-text--typography": [
-    880,
-    1162
-  ],
-  "components-textarea--default": [
-    880,
-    400
-  ],
-  "components-textarea--disabled": [
-    880,
-    400
-  ],
-  "components-textarea--invalid": [
-    880,
-    400
-  ],
-  "components-textarea--with-label": [
-    880,
-    400
-  ],
-  "components-textarea--with-value": [
-    880,
-    400
-  ],
-  "components-toast--default": [
-    880,
-    1720
-  ],
-  "components-toast--show-on-load": [
-    880,
-    1720
-  ],
-  "components-toggle--default": [
-    880,
-    400
-  ],
-  "components-toggle--disabled": [
-    880,
-    400
-  ],
-  "components-toggle--pressed": [
-    880,
-    400
-  ],
-  "components-toggle--sizes": [
-    880,
-    400
-  ],
-  "components-toggle--variants": [
-    880,
-    400
-  ],
-  "components-toggle--with-text": [
-    880,
-    400
-  ],
-  "components-toggle-group--attached": [
-    880,
-    400
-  ],
-  "components-toggle-group--default": [
-    880,
-    400
-  ],
-  "components-toggle-group--disabled": [
-    880,
-    400
-  ],
-  "components-toggle-group--outline": [
-    880,
-    400
-  ],
-  "components-toggle-group--segmented": [
-    880,
-    400
-  ],
-  "components-toggle-group--segmented-multiple": [
-    880,
-    400
-  ],
-  "components-toggle-group--segmented-sizes": [
-    880,
-    400
-  ],
-  "components-toggle-group--segmented-vertical": [
-    880,
-    407
-  ],
-  "components-toggle-group--single-selection": [
-    880,
-    400
-  ],
-  "components-toggle-group--sizes": [
-    880,
-    400
-  ],
-  "components-toggle-group--vertical": [
-    880,
-    400
-  ],
-  "components-wheel-picker--date-time": [
-    880,
-    661
-  ],
-  "components-wheel-picker--default": [
-    880,
-    597
-  ],
-  "components-wheel-picker--disabled-items": [
-    880,
-    597
-  ],
-  "components-widget--auto": [
-    880,
-    463
-  ],
-  "components-widget--centered": [
-    880,
-    415
-  ],
-  "components-widget--controlled": [
-    880,
-    491
-  ],
-  "components-widget--dashboard": [
-    880,
-    783
-  ],
-  "components-widget--default": [
-    880,
-    415
-  ],
-  "components-widget--editing": [
-    880,
-    895
-  ],
-  "components-widget--inside-handle": [
-    880,
-    491
-  ],
-  "components-widget--limited-sizes": [
-    880,
-    496
-  ],
-  "components-widget--sizes": [
-    880,
-    415
-  ],
-  "interactions-card-stack--default": [
-    880,
-    1007
-  ],
-  "interactions-card-stack--disabled": [
-    880,
-    1007
-  ],
-  "interactions-card-stack--empty": [
-    880,
-    1007
-  ],
-  "interactions-card-stack--mid-swipe": [
-    880,
-    904
-  ],
-  "interactions-image-viewer--default": [
-    880,
-    696
-  ],
-  "interactions-image-viewer--open-by-default": [
-    880,
-    1173
-  ],
-  "interactions-island--compact": [
-    880,
-    1067
-  ],
-  "interactions-island--expanded": [
-    880,
-    1067
-  ],
-  "interactions-island--live-activity": [
-    880,
-    1175
-  ],
-  "interactions-island--minimal": [
-    880,
-    1067
-  ],
-  "interactions-island--notice": [
-    880,
-    1123
-  ],
-  "interactions-otp-autofill--default": [
-    880,
-    491
-  ],
-  "interactions-otp-autofill--four-digits": [
-    880,
-    400
-  ],
-  "interactions-otp-autofill--wrong-code": [
-    880,
-    491
-  ],
-  "interactions-preview-menu--custom-preview": [
-    880,
-    400
-  ],
-  "interactions-preview-menu--custom-preview-open": [
-    880,
-    1323
-  ],
-  "interactions-preview-menu--default": [
-    880,
-    930
-  ],
-  "interactions-preview-menu--disabled-item": [
-    880,
-    1511
-  ],
-  "interactions-preview-menu--open-by-default": [
-    880,
-    1510
-  ],
-  "interactions-pull-to-refresh--default": [
-    880,
-    603
-  ],
-  "interactions-pull-to-refresh--with-flat-list": [
-    880,
-    415
-  ],
-  "interactions-reorder-list--default": [
-    880,
-    720
-  ],
-  "interactions-reorder-list--inset": [
-    880,
-    720
-  ],
-  "interactions-reorder-list--leading-handle": [
-    880,
-    507
-  ],
-  "interactions-search-reveal--default": [
-    880,
-    1720
-  ],
-  "interactions-search-reveal--short-list": [
-    880,
-    1720
-  ],
-  "interactions-search-reveal--with-query": [
-    880,
-    1720
-  ],
-  "interactions-section-index--compact": [
-    880,
-    652
-  ],
-  "interactions-section-index--default": [
-    880,
-    1180
-  ],
-  "interactions-selection-list--default": [
-    880,
-    1079
-  ],
-  "interactions-selection-list--editing": [
-    880,
-    1720
-  ],
-  "interactions-selection-list--icon-actions": [
-    880,
-    1079
-  ],
-  "interactions-stepper--default": [
-    880,
-    400
-  ],
-  "interactions-stepper--print": [
-    880,
-    412
-  ],
-  "interactions-swipe-actions--default": [
-    880,
-    539
-  ],
-  "interactions-tip--card": [
-    880,
-    400
-  ],
-  "interactions-tip--default": [
-    880,
-    921
-  ],
-  "interactions-top-banner--default": [
-    880,
-    415
-  ],
-  "interactions-top-banner--showing": [
-    880,
-    415
-  ],
-  "interactions-top-banner--title-only": [
-    880,
-    415
-  ],
-  "interactions-top-banner--with-action": [
-    880,
-    415
-  ],
-  "interactions-top-banner--with-icon": [
-    880,
-    415
-  ],
-  "interactions-undo-bar--default": [
-    880,
-    673
-  ],
-  "interactions-undo-bar--longer-timeout": [
-    880,
-    673
-  ],
-  "interactions-undo-bar--showing": [
-    880,
-    1720
-  ],
-  "interactions-undo-bar--with-swipe-actions": [
-    880,
-    400
-  ],
-  "patterns-action-bar--custom-labels": [
-    880,
-    1788
-  ],
-  "patterns-action-bar--default": [
-    880,
-    1788
-  ],
-  "patterns-action-bar--floating": [
-    880,
-    1720
-  ],
-  "patterns-action-bar--not-dismissible": [
-    880,
-    1788
-  ],
-  "patterns-action-bar--open-by-default": [
-    880,
-    1751
-  ],
-  "patterns-action-bar--overflow": [
-    880,
-    1751
-  ],
-  "patterns-action-bar--with-icons": [
-    880,
-    1788
-  ],
-  "patterns-confirm--default": [
-    880,
-    1751
-  ],
-  "patterns-confirm--open-by-default": [
-    880,
-    1751
-  ],
-  "patterns-context-actions--default": [
-    880,
-    1751
-  ],
-  "patterns-context-actions--inline": [
-    880,
-    1751
-  ],
-  "patterns-date-picker--controlled": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--default": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--disabled": [
-    880,
-    400
-  ],
-  "patterns-date-picker--floating": [
-    880,
-    400
-  ],
-  "patterns-date-picker--invalid": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--locale": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--with-close-button": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--with-close-label": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--with-title": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--with-value": [
-    880,
-    1788
-  ],
-  "patterns-date-picker--year-range": [
-    880,
-    1788
-  ],
-  "patterns-paged-list--custom-labels": [
-    880,
-    1717
-  ],
-  "patterns-paged-list--default": [
-    880,
-    1717
-  ],
-  "patterns-paged-list--single-page": [
-    880,
-    957
-  ],
-  "patterns-paged-list--small-pages": [
-    880,
-    1717
-  ],
-  "patterns-picker--default": [
-    880,
-    584
-  ],
-  "patterns-picker--states": [
-    880,
-    400
-  ],
-  "patterns-preview--attached": [
-    880,
-    1720
-  ],
-  "patterns-preview--default": [
-    880,
-    924
-  ],
-  "patterns-preview--open-by-default": [
-    880,
-    1720
-  ],
-  "patterns-preview--with-close-button": [
-    880,
-    1720
-  ],
-  "patterns-preview--with-close-label": [
-    880,
-    1720
-  ],
-  "patterns-search-picker--controlled": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--default": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--disabled": [
-    880,
-    400
-  ],
-  "patterns-search-picker--floating": [
-    880,
-    400
-  ],
-  "patterns-search-picker--grouped": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--invalid": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--with-close-button": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--with-close-label": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--with-title": [
-    880,
-    1788
-  ],
-  "patterns-search-picker--with-value": [
-    880,
-    1788
-  ],
-  "patterns-split-view--default": [
-    880,
-    823
-  ],
-  "patterns-split-view--detail-column": [
-    880,
-    433
-  ],
-  "patterns-split-view--start-on-sidebar": [
-    880,
-    553
-  ],
-  "patterns-split-view--two-columns": [
-    880,
-    735
-  ],
-  "patterns-table-list--default": [
-    880,
-    891
-  ],
-  "patterns-table-list--with-flat-list": [
-    880,
-    762
-  ]
+  "blocks-bag-checkout--default": [880, 1720],
+  "blocks-bag-configure--default": [880, 1720],
+  "blocks-bag-review--default": [880, 1720],
+  "blocks-chat-conversations--default": [880, 1720],
+  "blocks-chat-support--default": [880, 1720],
+  "blocks-chat-thread--default": [880, 1720],
+  "blocks-dash-analytics--default": [880, 1720],
+  "blocks-dash-health--default": [880, 1720],
+  "blocks-dash-store--default": [880, 1720],
+  "blocks-empty-bag--default": [880, 1720],
+  "blocks-empty-offline--default": [880, 1720],
+  "blocks-empty-search--default": [880, 1720],
+  "blocks-grid-accessories--default": [880, 1720],
+  "blocks-grid-carousel--default": [880, 1720],
+  "blocks-grid-lineup--default": [880, 1720],
+  "blocks-inbox-categories--default": [880, 1720],
+  "blocks-inbox-mail--default": [880, 1720],
+  "blocks-inbox-support--default": [880, 1720],
+  "blocks-log-activity--default": [880, 1720],
+  "blocks-log-live--default": [880, 1720],
+  "blocks-log-security--default": [880, 1720],
+  "blocks-login-account--default": [880, 1720],
+  "blocks-login-passkey--default": [880, 1720],
+  "blocks-login-sheet--default": [880, 1720],
+  "blocks-nav-categories--default": [880, 1720],
+  "blocks-onboarding--default": [880, 1720],
+  "blocks-permission-primer--default": [880, 1720],
+  "blocks-price-bundle--default": [880, 1720],
+  "blocks-price-care--default": [880, 1720],
+  "blocks-price-storage--default": [880, 1720],
+  "blocks-roles-editor--default": [880, 1720],
+  "blocks-roles-requests--default": [880, 1720],
+  "blocks-settings-account--default": [880, 1720],
+  "blocks-settings-device--default": [880, 1720],
+  "blocks-settings-notifications--default": [880, 1720],
+  "blocks-signup-form--default": [880, 1720],
+  "blocks-signup-steps--default": [880, 1720],
+  "blocks-signup-trial--default": [880, 1720],
+  "blocks-users-detail--default": [880, 1720],
+  "blocks-users-invite--default": [880, 1720],
+  "blocks-users-table--default": [880, 1720],
+  "blocks-verify-code--default": [880, 1720],
+  "blocks-verify-device--default": [880, 1720],
+  "blocks-verify-email--default": [880, 1720],
+  "charts-area--axes": [880, 655],
+  "charts-area--default": [880, 655],
+  "charts-area--gradient": [880, 655],
+  "charts-area--interactive": [880, 1241],
+  "charts-area--linear": [880, 655],
+  "charts-area--range": [880, 665],
+  "charts-area--sparkline": [880, 781],
+  "charts-area--stacked": [880, 655],
+  "charts-area--stacked-expand": [880, 655],
+  "charts-area--step": [880, 655],
+  "charts-bar--active": [880, 665],
+  "charts-bar--default": [880, 655],
+  "charts-bar--horizontal": [880, 655],
+  "charts-bar--hourly": [880, 665],
+  "charts-bar--interactive": [880, 1579],
+  "charts-bar--labeled": [880, 655],
+  "charts-bar--multiple": [880, 655],
+  "charts-bar--negative": [880, 655],
+  "charts-bar--range": [880, 751],
+  "charts-bar--stacked": [880, 719],
+  "charts-line--default": [880, 655],
+  "charts-line--dots": [880, 665],
+  "charts-line--forecast": [880, 655],
+  "charts-line--goal": [880, 655],
+  "charts-line--goal-dots": [880, 665],
+  "charts-line--interactive": [880, 1373],
+  "charts-line--labeled": [880, 655],
+  "charts-line--linear": [880, 655],
+  "charts-line--multiple": [880, 719],
+  "charts-line--step": [880, 655],
+  "charts-pie--active": [880, 687],
+  "charts-pie--default": [880, 687],
+  "charts-pie--donut": [880, 687],
+  "charts-pie--donut-text": [880, 687],
+  "charts-pie--half": [880, 623],
+  "charts-pie--interactive": [880, 1537],
+  "charts-pie--label": [880, 687],
+  "charts-pie--legend": [880, 751],
+  "charts-pie--nested": [880, 687],
+  "charts-pie--separated": [880, 687],
+  "charts-radar--default": [880, 719],
+  "charts-radar--dots": [880, 719],
+  "charts-radar--grid-circle": [880, 719],
+  "charts-radar--grid-filled": [880, 719],
+  "charts-radar--grid-none": [880, 719],
+  "charts-radar--interactive": [880, 1337],
+  "charts-radar--legend": [880, 751],
+  "charts-radar--lines-only": [880, 719],
+  "charts-radar--multiple": [880, 719],
+  "charts-radar--radius-axis": [880, 719],
+  "charts-radial--batteries": [880, 575],
+  "charts-radial--default": [880, 687],
+  "charts-radial--gauge": [880, 687],
+  "charts-radial--interactive": [880, 1635],
+  "charts-radial--label": [880, 687],
+  "charts-radial--progress": [880, 687],
+  "charts-radial--rings": [880, 671],
+  "charts-radial--stacked": [880, 623],
+  "charts-radial--text": [880, 687],
+  "charts-radial--tinted": [880, 687],
+  "components-accordion--default": [880, 400],
+  "components-accordion--filled": [880, 400],
+  "components-accordion--multiple": [880, 448],
+  "components-accordion--open-by-default": [880, 421],
+  "components-alert--default": [880, 400],
+  "components-alert--destructive": [880, 400],
+  "components-alert--title-only": [880, 400],
+  "components-alert--with-action": [880, 400],
+  "components-alert--without-icon": [880, 400],
+  "components-alert-dialog--default": [880, 1124],
+  "components-alert-dialog--destructive": [880, 1103],
+  "components-alert-dialog--open-by-default": [880, 1124],
+  "components-alert-dialog--small": [880, 1084],
+  "components-alert-dialog--with-media": [880, 1182],
+  "components-alert-sheet--default": [880, 1767],
+  "components-alert-sheet--not-dismissible": [880, 1767],
+  "components-alert-sheet--open-by-default": [880, 1767],
+  "components-amount-input--controlled": [880, 1024],
+  "components-amount-input--default": [880, 961],
+  "components-amount-input--disabled": [880, 961],
+  "components-amount-input--euro": [880, 961],
+  "components-amount-input--filled": [880, 961],
+  "components-amount-input--long-amount": [880, 919],
+  "components-amount-input--turkish-lira": [880, 961],
+  "components-amount-input--with-max": [880, 961],
+  "components-amount-input--yen": [880, 961],
+  "components-aspect-ratio--default": [880, 539],
+  "components-aspect-ratio--placeholder": [880, 539],
+  "components-aspect-ratio--portrait": [880, 648],
+  "components-aspect-ratio--square": [880, 463],
+  "components-attachment--default": [880, 400],
+  "components-attachment--file-types": [880, 857],
+  "components-attachment--group": [880, 761],
+  "components-attachment--image": [880, 400],
+  "components-attachment--pressable": [880, 400],
+  "components-attachment--sizes": [880, 453],
+  "components-attachment--states": [880, 857],
+  "components-attachment--vertical": [880, 410],
+  "components-avatar--default": [880, 400],
+  "components-avatar--fallback": [880, 400],
+  "components-avatar--group": [880, 400],
+  "components-avatar--sizes": [880, 400],
+  "components-avatar--with-badge": [880, 400],
+  "components-badge--default": [880, 400],
+  "components-badge--variants": [880, 400],
+  "components-badge--with-icon": [880, 400],
+  "components-bottom-bar--above-keyboard": [880, 1675],
+  "components-bottom-bar--default": [880, 1675],
+  "components-bottom-bar--side-by-side": [880, 1675],
+  "components-bottom-bar--two-actions": [880, 1645],
+  "components-bottom-bar--with-separator": [880, 1675],
+  "components-bubble--conversation": [880, 462],
+  "components-bubble--default": [880, 400],
+  "components-bubble--interactive": [880, 400],
+  "components-bubble--long-press-actions": [880, 400],
+  "components-bubble--variants": [880, 654],
+  "components-bubble--with-reactions": [880, 449],
+  "components-button--block": [880, 400],
+  "components-button--default": [880, 400],
+  "components-button--disabled": [880, 535],
+  "components-button--sizes": [880, 439],
+  "components-button--variants": [880, 919],
+  "components-button--with-icon": [880, 400],
+  "components-button-group--default": [880, 400],
+  "components-button-group--nested": [880, 400],
+  "components-button-group--orientation": [880, 400],
+  "components-button-group--outline": [880, 400],
+  "components-button-group--pagination": [880, 400],
+  "components-button-group--plain": [880, 400],
+  "components-button-group--sizes": [880, 400],
+  "components-button-group--split-button": [880, 400],
+  "components-button-group--with-dropdown-menu": [880, 400],
+  "components-button-group--with-input": [880, 400],
+  "components-button-group--with-input-group": [880, 400],
+  "components-button-group--with-popover": [880, 400],
+  "components-button-group--with-select": [880, 400],
+  "components-button-group--with-separator": [880, 400],
+  "components-button-group--with-text": [880, 400],
+  "components-calendar--button-variants": [880, 1871],
+  "components-calendar--default": [880, 653],
+  "components-calendar--disabled-days": [880, 653],
+  "components-calendar--dropdown-caption": [880, 653],
+  "components-calendar--locale": [880, 653],
+  "components-calendar--multiple": [880, 653],
+  "components-calendar--outside-days": [880, 653],
+  "components-calendar--range": [880, 1207],
+  "components-calendar--sizes": [880, 1876],
+  "components-calendar--week-numbers": [880, 653],
+  "components-card--default": [880, 877],
+  "components-card--filled": [880, 400],
+  "components-card--small": [880, 400],
+  "components-card--with-action": [880, 501],
+  "components-card--with-image": [880, 871],
+  "components-carousel--autoplay": [880, 771],
+  "components-carousel--default": [880, 703],
+  "components-carousel--featured": [880, 1064],
+  "components-carousel--loop": [880, 703],
+  "components-carousel--multiple-items": [880, 400],
+  "components-carousel--shelf": [880, 523],
+  "components-carousel--spotlight": [880, 771],
+  "components-carousel--vertical": [880, 783],
+  "components-carousel--with-page-indicator": [880, 1163],
+  "components-chart--tooltip-custom": [880, 687],
+  "components-chart--tooltip-dashed": [880, 687],
+  "components-chart--tooltip-dot": [880, 687],
+  "components-chart--tooltip-formatter": [880, 687],
+  "components-chart--tooltip-icons": [880, 687],
+  "components-chart--tooltip-interactive": [880, 1193],
+  "components-chart--tooltip-label-formatter": [880, 687],
+  "components-chart--tooltip-line": [880, 687],
+  "components-chart--tooltip-no-indicator": [880, 687],
+  "components-chart--tooltip-no-label": [880, 687],
+  "components-checkbox--checked": [880, 400],
+  "components-checkbox--default": [880, 400],
+  "components-checkbox--disabled": [880, 400],
+  "components-checkbox--indeterminate": [880, 400],
+  "components-checkbox--invalid": [880, 400],
+  "components-checkbox--with-description": [880, 400],
+  "components-checkbox--with-label": [880, 400],
+  "components-chip--controlled": [880, 400],
+  "components-chip--default": [880, 400],
+  "components-chip--group-disabled": [880, 400],
+  "components-chip--group-multiple": [880, 400],
+  "components-chip--group-scrollable": [880, 400],
+  "components-chip--group-single": [880, 400],
+  "components-chip--group-uncontrolled": [880, 400],
+  "components-chip--removable": [880, 400],
+  "components-chip--sizes": [880, 400],
+  "components-chip--states": [880, 503],
+  "components-chip--with-icon": [880, 400],
+  "components-collapsible--default": [880, 400],
+  "components-collapsible--disabled": [880, 400],
+  "components-collapsible--open-by-default": [880, 407],
+  "components-combobox--default": [880, 819],
+  "components-combobox--disabled": [880, 400],
+  "components-combobox--grouped": [880, 400],
+  "components-combobox--invalid": [880, 819],
+  "components-combobox--multiple": [880, 819],
+  "components-combobox--open-by-default": [880, 775],
+  "components-combobox--with-clear": [880, 819],
+  "components-combobox--with-label": [880, 879],
+  "components-combobox--with-value": [880, 819],
+  "components-context-menu--default": [880, 1330],
+  "components-context-menu--open-by-default": [880, 1167],
+  "components-context-menu--simple": [880, 826],
+  "components-dialog--default": [880, 1339],
+  "components-dialog--destructive": [880, 1151],
+  "components-dialog--open-by-default": [880, 1289],
+  "components-dialog--with-close-label": [880, 1047],
+  "components-dialog--without-close-button": [880, 1151],
+  "components-drawer--default": [880, 1788],
+  "components-drawer--floating": [880, 400],
+  "components-drawer--open-by-default": [880, 1720],
+  "components-drawer--sides": [880, 439],
+  "components-drawer--snap-points": [880, 1788],
+  "components-dropdown-menu--checkboxes": [880, 533],
+  "components-dropdown-menu--default": [880, 706],
+  "components-dropdown-menu--inset": [880, 533],
+  "components-dropdown-menu--open-by-default": [880, 706],
+  "components-dropdown-menu--radio-group": [880, 533],
+  "components-empty--default": [880, 1121],
+  "components-empty--muted": [880, 1720],
+  "components-fab--controlled": [880, 1720],
+  "components-fab--default": [880, 1720],
+  "components-fab--extended": [880, 1720],
+  "components-fab--large": [880, 1720],
+  "components-fab--large-extended": [880, 1720],
+  "components-fab--speed-dial-closed": [880, 1720],
+  "components-fab--speed-dial-open": [880, 1720],
+  "components-field--checkbox-group": [880, 529],
+  "components-field--default": [880, 400],
+  "components-field--disabled": [880, 400],
+  "components-field--form": [880, 631],
+  "components-field--horizontal": [880, 400],
+  "components-field--inset": [880, 400],
+  "components-field--invalid": [880, 400],
+  "components-field--validation": [880, 763],
+  "components-haptics--default": [880, 693],
+  "components-haptics--disabled": [880, 693],
+  "components-haptics--feedback": [880, 631],
+  "components-haptics--reorder": [880, 571],
+  "components-header--back-only": [880, 400],
+  "components-header--compact-with-scroll": [880, 1517],
+  "components-header--default": [880, 400],
+  "components-header--large-title": [880, 1619],
+  "components-header--large-title-with-subtitle": [880, 1663],
+  "components-header--leading-actions": [880, 400],
+  "components-header--subtitle": [880, 400],
+  "components-icon--colors": [880, 400],
+  "components-icon--default": [880, 400],
+  "components-icon--sizes": [880, 400],
+  "components-icon--weights": [880, 400],
+  "components-input--controlled": [880, 400],
+  "components-input--default": [880, 400],
+  "components-input--disabled": [880, 400],
+  "components-input--invalid": [880, 400],
+  "components-input--sizes": [880, 400],
+  "components-input--types": [880, 615],
+  "components-input--with-label": [880, 400],
+  "components-input--with-value": [880, 400],
+  "components-input-accessory-bar--custom-labels": [880, 1720],
+  "components-input-accessory-bar--default": [880, 735],
+  "components-input-accessory-bar--focused": [880, 1720],
+  "components-input-accessory-bar--with-textarea": [880, 1720],
+  "components-input-group--block-start": [880, 400],
+  "components-input-group--default": [880, 767],
+  "components-input-group--with-textarea": [880, 400],
+  "components-inputotp--alphanumeric": [880, 400],
+  "components-inputotp--controlled": [880, 400],
+  "components-inputotp--default": [880, 400],
+  "components-inputotp--disabled": [880, 400],
+  "components-inputotp--masked": [880, 400],
+  "components-item--default": [880, 599],
+  "components-item--inset-group": [880, 400],
+  "components-keyboard-scroll-view--default": [880, 1720],
+  "components-keyboard-scroll-view--focused": [880, 1720],
+  "components-keyboard-scroll-view--larger-bottom-offset": [880, 1720],
+  "components-keyboard-scroll-view--with-bottom-bar": [880, 1675],
+  "components-keypad--biometric": [880, 839],
+  "components-keypad--decimal": [880, 839],
+  "components-keypad--default": [880, 839],
+  "components-keypad--disabled": [880, 839],
+  "components-label--default": [880, 400],
+  "components-label--disabled": [880, 400],
+  "components-label--with-checkbox": [880, 400],
+  "components-label--with-input": [880, 400],
+  "components-marker--variants": [880, 400],
+  "components-message--align-end": [880, 400],
+  "components-message--conversation": [880, 400],
+  "components-message--default": [880, 400],
+  "components-message--with-header-and-footer": [880, 400],
+  "components-message-scroller--default": [880, 1675],
+  "components-message-scroller--empty-thread": [880, 1675],
+  "components-message-scroller--load-older": [880, 1720],
+  "components-message-scroller--unread-while-scrolled-up": [880, 1675],
+  "components-page-indicator--accent": [880, 400],
+  "components-page-indicator--default": [880, 400],
+  "components-page-indicator--interactive": [880, 400],
+  "components-page-indicator--many-pages": [880, 400],
+  "components-page-indicator--sizes": [880, 400],
+  "components-pin-pad--biometric": [880, 947],
+  "components-pin-pad--default": [880, 859],
+  "components-pin-pad--disabled": [880, 859],
+  "components-pin-pad--error-state": [880, 859],
+  "components-pin-pad--face-biometric": [880, 947],
+  "components-pin-pad--filled": [880, 859],
+  "components-pin-pad--four-digits": [880, 859],
+  "components-pin-pad--verify": [880, 947],
+  "components-popover--default": [880, 744],
+  "components-popover--detached-triggers": [880, 488],
+  "components-popover--open-by-default": [880, 744],
+  "components-popover--sides": [880, 659],
+  "components-popover--simple": [880, 400],
+  "components-progress--complete": [880, 400],
+  "components-progress--default": [880, 400],
+  "components-progress--values": [880, 400],
+  "components-progress--with-label": [880, 400],
+  "components-qr-scanner--default": [880, 1637],
+  "components-qr-scanner--error-state": [880, 1637],
+  "components-qr-scanner--success": [880, 1637],
+  "components-qr-scanner--with-scan-line": [880, 1637],
+  "components-qr-scanner--without-torch": [880, 1196],
+  "components-questionnaire--default": [880, 891],
+  "components-questionnaire--invalid": [880, 971],
+  "components-questionnaire--mid-flow": [880, 839],
+  "components-questionnaire--multiple-choice": [880, 891],
+  "components-questionnaire--text-input": [880, 523],
+  "components-questionnaire--with-choice-descriptions": [880, 919],
+  "components-radio-group--default": [880, 400],
+  "components-radio-group--disabled": [880, 400],
+  "components-radio-group--disabled-item": [880, 400],
+  "components-radio-group--invalid": [880, 400],
+  "components-radio-group--with-descriptions": [880, 416],
+  "components-screen--default": [880, 789],
+  "components-screen--scrollable": [880, 1699],
+  "components-screen--secondary": [880, 583],
+  "components-screen--top-edge-only": [880, 400],
+  "components-screen--with-bottom-bar": [880, 1675],
+  "components-select--default": [880, 669],
+  "components-select--disabled": [880, 400],
+  "components-select--grouped": [880, 840],
+  "components-select--invalid": [880, 669],
+  "components-select--open-by-default": [880, 696],
+  "components-select--small": [880, 653],
+  "components-select--with-label": [880, 729],
+  "components-select--with-value": [880, 669],
+  "components-separator--default": [880, 400],
+  "components-separator--horizontal": [880, 400],
+  "components-separator--vertical": [880, 400],
+  "components-sheet--default": [880, 1775],
+  "components-sheet--open-by-default": [880, 1775],
+  "components-sheet--sides": [880, 904],
+  "components-sheet--with-close-label": [880, 1775],
+  "components-signature-pad--controlled": [880, 631],
+  "components-signature-pad--default": [880, 463],
+  "components-signature-pad--disabled": [880, 463],
+  "components-signature-pad--signed": [880, 463],
+  "components-signature-pad--thick-stroke": [880, 463],
+  "components-skeleton--card": [880, 439],
+  "components-skeleton--default": [880, 400],
+  "components-skeleton--list": [880, 495],
+  "components-skeleton--profile": [880, 400],
+  "components-slider--controlled": [880, 400],
+  "components-slider--default": [880, 400],
+  "components-slider--disabled": [880, 400],
+  "components-slider--multiple-thumbs": [880, 400],
+  "components-slider--range": [880, 400],
+  "components-slider--step": [880, 400],
+  "components-slider--vertical": [880, 463],
+  "components-spinner--colors": [880, 400],
+  "components-spinner--default": [880, 400],
+  "components-spinner--in-button": [880, 400],
+  "components-spinner--sizes": [880, 400],
+  "components-switch--checked": [880, 400],
+  "components-switch--default": [880, 400],
+  "components-switch--disabled": [880, 400],
+  "components-switch--invalid": [880, 400],
+  "components-switch--sizes": [880, 400],
+  "components-switch--with-description": [880, 400],
+  "components-switch--with-label": [880, 400],
+  "components-tab-bar--default": [880, 1720],
+  "components-tab-bar--disabled-item": [880, 1720],
+  "components-tab-bar--large-badge": [880, 1720],
+  "components-tab-bar--without-badges": [880, 1720],
+  "components-tabs--default": [880, 893],
+  "components-tabs--disabled-tab": [880, 400],
+  "components-tabs--disabled-tab-line": [880, 400],
+  "components-tabs--line": [880, 400],
+  "components-tabs--vertical": [880, 400],
+  "components-tabs--vertical-line": [880, 400],
+  "components-tabs--with-icons": [880, 400],
+  "components-tabs--with-icons-line": [880, 400],
+  "components-text--default": [880, 400],
+  "components-text--headings": [880, 429],
+  "components-text--typography": [880, 1162],
+  "components-textarea--default": [880, 400],
+  "components-textarea--disabled": [880, 400],
+  "components-textarea--invalid": [880, 400],
+  "components-textarea--with-label": [880, 400],
+  "components-textarea--with-value": [880, 400],
+  "components-toast--default": [880, 1720],
+  "components-toast--show-on-load": [880, 1720],
+  "components-toggle--default": [880, 400],
+  "components-toggle--disabled": [880, 400],
+  "components-toggle--pressed": [880, 400],
+  "components-toggle--sizes": [880, 400],
+  "components-toggle--variants": [880, 400],
+  "components-toggle--with-text": [880, 400],
+  "components-toggle-group--attached": [880, 400],
+  "components-toggle-group--default": [880, 400],
+  "components-toggle-group--disabled": [880, 400],
+  "components-toggle-group--outline": [880, 400],
+  "components-toggle-group--segmented": [880, 400],
+  "components-toggle-group--segmented-multiple": [880, 400],
+  "components-toggle-group--segmented-sizes": [880, 400],
+  "components-toggle-group--segmented-vertical": [880, 407],
+  "components-toggle-group--single-selection": [880, 400],
+  "components-toggle-group--sizes": [880, 400],
+  "components-toggle-group--vertical": [880, 400],
+  "components-wheel-picker--date-time": [880, 661],
+  "components-wheel-picker--default": [880, 597],
+  "components-wheel-picker--disabled-items": [880, 597],
+  "components-widget--auto": [880, 463],
+  "components-widget--centered": [880, 415],
+  "components-widget--controlled": [880, 491],
+  "components-widget--dashboard": [880, 783],
+  "components-widget--default": [880, 415],
+  "components-widget--editing": [880, 895],
+  "components-widget--inside-handle": [880, 491],
+  "components-widget--limited-sizes": [880, 496],
+  "components-widget--sizes": [880, 415],
+  "interactions-card-stack--default": [880, 1007],
+  "interactions-card-stack--disabled": [880, 1007],
+  "interactions-card-stack--empty": [880, 1007],
+  "interactions-card-stack--mid-swipe": [880, 904],
+  "interactions-image-viewer--default": [880, 696],
+  "interactions-image-viewer--open-by-default": [880, 1173],
+  "interactions-island--compact": [880, 1067],
+  "interactions-island--expanded": [880, 1067],
+  "interactions-island--live-activity": [880, 1175],
+  "interactions-island--minimal": [880, 1067],
+  "interactions-island--notice": [880, 1123],
+  "interactions-otp-autofill--default": [880, 491],
+  "interactions-otp-autofill--four-digits": [880, 400],
+  "interactions-otp-autofill--wrong-code": [880, 491],
+  "interactions-preview-menu--custom-preview": [880, 400],
+  "interactions-preview-menu--custom-preview-open": [880, 1323],
+  "interactions-preview-menu--default": [880, 930],
+  "interactions-preview-menu--disabled-item": [880, 1511],
+  "interactions-preview-menu--open-by-default": [880, 1510],
+  "interactions-pull-to-refresh--default": [880, 603],
+  "interactions-pull-to-refresh--with-flat-list": [880, 415],
+  "interactions-reorder-list--default": [880, 720],
+  "interactions-reorder-list--inset": [880, 720],
+  "interactions-reorder-list--leading-handle": [880, 507],
+  "interactions-search-reveal--default": [880, 1720],
+  "interactions-search-reveal--short-list": [880, 1720],
+  "interactions-search-reveal--with-query": [880, 1720],
+  "interactions-section-index--compact": [880, 652],
+  "interactions-section-index--default": [880, 1180],
+  "interactions-selection-list--default": [880, 1079],
+  "interactions-selection-list--editing": [880, 1720],
+  "interactions-selection-list--icon-actions": [880, 1079],
+  "interactions-stepper--default": [880, 400],
+  "interactions-stepper--print": [880, 412],
+  "interactions-swipe-actions--default": [880, 539],
+  "interactions-tip--card": [880, 400],
+  "interactions-tip--default": [880, 921],
+  "interactions-top-banner--default": [880, 415],
+  "interactions-top-banner--showing": [880, 415],
+  "interactions-top-banner--title-only": [880, 415],
+  "interactions-top-banner--with-action": [880, 415],
+  "interactions-top-banner--with-icon": [880, 415],
+  "interactions-undo-bar--default": [880, 673],
+  "interactions-undo-bar--longer-timeout": [880, 673],
+  "interactions-undo-bar--showing": [880, 1720],
+  "interactions-undo-bar--with-swipe-actions": [880, 400],
+  "patterns-action-bar--custom-labels": [880, 1788],
+  "patterns-action-bar--default": [880, 1788],
+  "patterns-action-bar--floating": [880, 1720],
+  "patterns-action-bar--not-dismissible": [880, 1788],
+  "patterns-action-bar--open-by-default": [880, 1751],
+  "patterns-action-bar--overflow": [880, 1751],
+  "patterns-action-bar--with-icons": [880, 1788],
+  "patterns-confirm--default": [880, 1751],
+  "patterns-confirm--open-by-default": [880, 1751],
+  "patterns-context-actions--default": [880, 1751],
+  "patterns-context-actions--inline": [880, 1751],
+  "patterns-date-picker--controlled": [880, 1788],
+  "patterns-date-picker--default": [880, 1788],
+  "patterns-date-picker--disabled": [880, 400],
+  "patterns-date-picker--floating": [880, 400],
+  "patterns-date-picker--invalid": [880, 1788],
+  "patterns-date-picker--locale": [880, 1788],
+  "patterns-date-picker--with-close-button": [880, 1788],
+  "patterns-date-picker--with-close-label": [880, 1788],
+  "patterns-date-picker--with-title": [880, 1788],
+  "patterns-date-picker--with-value": [880, 1788],
+  "patterns-date-picker--year-range": [880, 1788],
+  "patterns-paged-list--custom-labels": [880, 1717],
+  "patterns-paged-list--default": [880, 1717],
+  "patterns-paged-list--single-page": [880, 957],
+  "patterns-paged-list--small-pages": [880, 1717],
+  "patterns-picker--default": [880, 584],
+  "patterns-picker--states": [880, 400],
+  "patterns-preview--attached": [880, 1720],
+  "patterns-preview--default": [880, 924],
+  "patterns-preview--open-by-default": [880, 1720],
+  "patterns-preview--with-close-button": [880, 1720],
+  "patterns-preview--with-close-label": [880, 1720],
+  "patterns-search-picker--controlled": [880, 1788],
+  "patterns-search-picker--default": [880, 1788],
+  "patterns-search-picker--disabled": [880, 400],
+  "patterns-search-picker--floating": [880, 400],
+  "patterns-search-picker--grouped": [880, 1788],
+  "patterns-search-picker--invalid": [880, 1788],
+  "patterns-search-picker--with-close-button": [880, 1788],
+  "patterns-search-picker--with-close-label": [880, 1788],
+  "patterns-search-picker--with-title": [880, 1788],
+  "patterns-search-picker--with-value": [880, 1788],
+  "patterns-split-view--default": [880, 823],
+  "patterns-split-view--detail-column": [880, 433],
+  "patterns-split-view--start-on-sidebar": [880, 553],
+  "patterns-split-view--two-columns": [880, 735],
+  "patterns-table-list--default": [880, 891],
+  "patterns-table-list--with-flat-list": [880, 762]
 }

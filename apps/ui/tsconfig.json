@@ -21,7 +21,9 @@
     "paths": {
       "@/components/ui/*": ["../../packages/web/components/ui/*"],
       "@/components/patterns/*": ["../../packages/web/components/patterns/*"],
-      "@/components/interactions/*": ["../../packages/web/components/interactions/*"],
+      "@/components/interactions/*": [
+        "../../packages/web/components/interactions/*"
+      ],
       "@/components/charts/*": ["../../packages/web/components/charts/*"],
       "@/components/blocks/*": ["../../packages/web/components/blocks/*"],
       "@/hooks/*": ["../../packages/web/hooks/*"],

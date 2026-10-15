@@ -29,4 +29,4 @@ export const strings = {
   important: "Important",
   warning: "Warning",
   deprecated: "Deprecated",
-};
+}

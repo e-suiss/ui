@@ -1,85 +1,94 @@
-"use client";
+"use client"
 
-import { ArrowUpIcon } from "@phosphor-icons/react";
-import { cn } from "cn";
-import type { TableOfContents, TOCItemType } from "fumadocs-core/toc";
-import * as React from "react";
+import { ArrowUpIcon } from "@phosphor-icons/react"
+import { cn } from "cn"
+import type { TableOfContents, TOCItemType } from "fumadocs-core/toc"
+import * as React from "react"
 
-import { strings } from "@/lib/strings";
+import { strings } from "@/lib/strings"
 
-type Section = { item: TOCItemType; children: TOCItemType[] };
+type Section = { item: TOCItemType; children: TOCItemType[] }
 
-const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
-const pad = (value: number) => String(value).padStart(2, "0");
-const idOf = (item: TOCItemType) => decodeURIComponent(item.url.slice(1));
+const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
+const pad = (value: number) => String(value).padStart(2, "0")
+const idOf = (item: TOCItemType) => decodeURIComponent(item.url.slice(1))
 
 function sectionsOf(items: TableOfContents) {
-  const sections: Section[] = [];
+  const sections: Section[] = []
   for (const item of items) {
-    if (item.depth <= 2 || sections.length === 0) sections.push({ item, children: [] });
-    else sections.at(-1)?.children.push(item);
+    if (item.depth <= 2 || sections.length === 0)
+      sections.push({ item, children: [] })
+    else sections.at(-1)?.children.push(item)
   }
-  return sections;
+  return sections
 }
 
 function useActiveHeading(ids: string[]) {
-  const [active, setActive] = React.useState<string>();
+  const [active, setActive] = React.useState<string>()
 
   React.useEffect(() => {
-    let frame = 0;
+    let frame = 0
     const update = () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        const line = window.innerHeight * 0.25;
-        let current: string | undefined;
+        const line = window.innerHeight * 0.25
+        let current: string | undefined
         for (const id of ids) {
-          const heading = document.getElementById(id);
-          if (heading && heading.getBoundingClientRect().top <= line) current = id;
+          const heading = document.getElementById(id)
+          if (heading && heading.getBoundingClientRect().top <= line)
+            current = id
         }
-        const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-        setActive(atEnd ? ids.at(-1) : current);
-      });
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+        const atEnd =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 2
+        setActive(atEnd ? ids.at(-1) : current)
+      })
+    }
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [ids]);
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [ids])
 
-  return active;
+  return active
 }
 
 function useAtPageEnd() {
-  const [atEnd, setAtEnd] = React.useState(false);
+  const [atEnd, setAtEnd] = React.useState(false)
 
   React.useEffect(() => {
-    let frame = 0;
+    let frame = 0
     const update = () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        const scrollable = document.documentElement.scrollHeight > window.innerHeight + 2;
-        setAtEnd(scrollable && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2);
-      });
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+        const scrollable =
+          document.documentElement.scrollHeight > window.innerHeight + 2
+        setAtEnd(
+          scrollable &&
+            window.innerHeight + window.scrollY >=
+              document.documentElement.scrollHeight - 2
+        )
+      })
+    }
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [])
 
-  return atEnd;
+  return atEnd
 }
 
 function BackToTop() {
-  const visible = useAtPageEnd();
+  const visible = useAtPageEnd()
 
   return (
     <button
@@ -90,53 +99,71 @@ function BackToTop() {
       className={cn(
         "group flex h-8 w-fit items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-sm text-label outline-none transition-[opacity,translate,background-color] duration-500 hover:bg-label/15 focus-visible:focus-ring",
         ease,
-        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0",
+        visible
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none translate-y-2 opacity-0"
       )}
     >
       {strings.backToTop}
       <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
-        <ArrowUpIcon weight="bold" className={cn("size-3 transition-transform duration-500 group-hover:-translate-y-0.5", ease)} />
+        <ArrowUpIcon
+          weight="bold"
+          className={cn(
+            "size-3 transition-transform duration-500 group-hover:-translate-y-0.5",
+            ease
+          )}
+        />
       </span>
     </button>
-  );
+  )
 }
 
 function useShownHeadings(items: TableOfContents) {
-  const [hidden, setHidden] = React.useState<Set<string>>(() => new Set());
+  const [hidden, setHidden] = React.useState<Set<string>>(() => new Set())
 
   React.useEffect(() => {
     const update = () => {
-      const next = new Set<string>();
+      const next = new Set<string>()
       for (const item of items) {
-        const heading = document.getElementById(idOf(item));
-        if (heading && heading.offsetParent === null) next.add(idOf(item));
+        const heading = document.getElementById(idOf(item))
+        if (heading && heading.offsetParent === null) next.add(idOf(item))
       }
-      setHidden(next);
-    };
-    update();
-    window.addEventListener("platformchange", update);
-    return () => window.removeEventListener("platformchange", update);
-  }, [items]);
+      setHidden(next)
+    }
+    update()
+    window.addEventListener("platformchange", update)
+    return () => window.removeEventListener("platformchange", update)
+  }, [items])
 
-  return React.useMemo(() => items.filter((item) => !hidden.has(idOf(item))), [items, hidden]);
+  return React.useMemo(
+    () => items.filter((item) => !hidden.has(idOf(item))),
+    [items, hidden]
+  )
 }
 
 export function Toc({ items }: { items: TableOfContents }) {
-  const shown = useShownHeadings(items);
-  const headings = React.useMemo(() => shown.filter((item) => item.depth <= 3), [shown]);
-  const sections = React.useMemo(() => sectionsOf(headings), [headings]);
-  const ids = React.useMemo(() => headings.map(idOf), [headings]);
-  const active = useActiveHeading(ids);
+  const shown = useShownHeadings(items)
+  const headings = React.useMemo(
+    () => shown.filter((item) => item.depth <= 3),
+    [shown]
+  )
+  const sections = React.useMemo(() => sectionsOf(headings), [headings])
+  const ids = React.useMemo(() => headings.map(idOf), [headings])
+  const active = useActiveHeading(ids)
 
-  if (sections.length === 0) return null;
+  if (sections.length === 0) return null
   const current = sections.findIndex(
-    (section) => idOf(section.item) === active || section.children.some((child) => idOf(child) === active),
-  );
+    (section) =>
+      idOf(section.item) === active ||
+      section.children.some((child) => idOf(child) === active)
+  )
 
   return (
     <div className="flex flex-col gap-8">
       <nav aria-label={strings.onThisPage} className="flex flex-col gap-5">
-        <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">{strings.onThisPage}</p>
+        <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
+          {strings.onThisPage}
+        </p>
         <ol className="flex flex-col gap-1">
           {sections.map((section, index) => (
             <li key={section.item.url}>
@@ -144,7 +171,7 @@ export function Toc({ items }: { items: TableOfContents }) {
                 href={section.item.url}
                 className={cn(
                   "grid grid-cols-[2rem_1fr] items-baseline py-1.5 text-[14px] leading-[1.3] tracking-[-0.015em] transition-colors duration-300 hover:text-label",
-                  index === current ? "font-medium text-label" : "text-label/50",
+                  index === current ? "font-medium text-label" : "text-label/50"
                 )}
               >
                 <span className="font-mono text-[11px] font-normal tracking-[0.02em] text-label-tertiary">
@@ -164,7 +191,7 @@ export function Toc({ items }: { items: TableOfContents }) {
                         <span
                           className={cn(
                             "h-[1.5px] w-2.5 shrink-0 rounded-full bg-label/40 transition-[width,background-color] duration-500 group-hover:bg-label/70 group-data-active:w-4 group-data-active:bg-label",
-                            ease,
+                            ease
                           )}
                         />
                         {child.title}
@@ -179,5 +206,5 @@ export function Toc({ items }: { items: TableOfContents }) {
       </nav>
       <BackToTop />
     </div>
-  );
+  )
 }

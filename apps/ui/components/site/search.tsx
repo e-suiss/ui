@@ -1,21 +1,24 @@
-"use client";
+"use client"
 
 import {
   BookOpenTextIcon,
   ChartBarIcon,
   CubeIcon,
+  HandTapIcon,
   type Icon,
   LayoutIcon,
   MagnifyingGlassIcon,
   SquaresFourIcon,
-  HandTapIcon,
-} from "@phosphor-icons/react";
-import { cn } from "cn";
-import { useRouter } from "next/navigation";
-import * as React from "react";
+} from "@phosphor-icons/react"
+import { cn } from "cn"
+import { useRouter } from "next/navigation"
+import * as React from "react"
 
-import { CommandPalette, CommandPaletteContent } from "@/components/patterns/command-palette";
-import { Button } from "@/components/ui/button";
+import {
+  CommandPalette,
+  CommandPaletteContent,
+} from "@/components/patterns/command-palette"
+import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandDialog,
@@ -24,13 +27,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { isMacPlatform } from "@/hooks/use-platform";
-import { strings } from "@/lib/strings";
+} from "@/components/ui/command"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { isMacPlatform } from "@/hooks/use-platform"
+import { strings } from "@/lib/strings"
 
-type Entry = { title: string; description?: string; url: string };
-type Group = { name: string; pages: Entry[] };
+type Entry = { title: string; description?: string; url: string }
+type Group = { name: string; pages: Entry[] }
 
 const icons: Record<string, Icon> = {
   components: CubeIcon,
@@ -38,67 +41,71 @@ const icons: Record<string, Icon> = {
   interactions: HandTapIcon,
   charts: ChartBarIcon,
   blocks: LayoutIcon,
-};
+}
 
-let index: Promise<Group[]> | undefined;
+let index: Promise<Group[]> | undefined
 
 function loadIndex() {
   index ??= fetch("/api/search")
     .then((response) => {
-      if (!response.ok) throw new Error(response.statusText);
-      return response.json() as Promise<Group[]>;
+      if (!response.ok) throw new Error(response.statusText)
+      return response.json() as Promise<Group[]>
     })
     .catch((error) => {
-      index = undefined;
-      throw error;
-    });
-  return index;
+      index = undefined
+      throw error
+    })
+  return index
 }
 
 function useIndex(open: boolean) {
-  const [groups, setGroups] = React.useState<Group[]>();
+  const [groups, setGroups] = React.useState<Group[]>()
   React.useEffect(() => {
-    if (!open || groups) return;
-    let active = true;
+    if (!open || groups) return
+    let active = true
     loadIndex()
       .then((result) => active && setGroups(result))
-      .catch(() => {});
+      .catch(() => undefined)
     return () => {
-      active = false;
-    };
-  }, [open, groups]);
-  return groups;
+      active = false
+    }
+  }, [open, groups])
+  return groups
 }
 
-const MAX_RESULTS = 40;
+const MAX_RESULTS = 40
+const WORD_BREAK = /[\s-]+/
+const WHITESPACE = /\s+/
 
 function score(page: Entry, group: string, search: string) {
-  const query = search.trim().toLowerCase();
-  if (!query) return 0;
-  const title = page.title.toLowerCase();
-  if (title === query) return 1;
-  if (title.startsWith(query)) return 0.9;
-  if (title.split(/[\s-]+/).some((word) => word.startsWith(query))) return 0.8;
-  if (title.includes(query)) return 0.7;
-  const words = query.split(/\s+/);
-  const named = `${title} ${group.toLowerCase()}`;
-  if (words.every((word) => named.includes(word))) return 0.6;
-  const described = `${named} ${(page.description ?? "").toLowerCase()}`;
-  if (words.every((word) => described.includes(word))) return 0.3;
-  return 0;
+  const query = search.trim().toLowerCase()
+  if (!query) return 0
+  const title = page.title.toLowerCase()
+  if (title === query) return 1
+  if (title.startsWith(query)) return 0.9
+  if (title.split(WORD_BREAK).some((word) => word.startsWith(query))) return 0.8
+  if (title.includes(query)) return 0.7
+  const words = query.split(WHITESPACE)
+  const named = `${title} ${group.toLowerCase()}`
+  if (words.every((word) => named.includes(word))) return 0.6
+  const described = `${named} ${(page.description ?? "").toLowerCase()}`
+  if (words.every((word) => described.includes(word))) return 0.3
+  return 0
 }
 
 function Highlight({ text, query }: { text: string; query: string }) {
-  const at = query ? text.toLowerCase().indexOf(query.trim().toLowerCase()) : -1;
-  if (at < 0) return text;
-  const end = at + query.trim().length;
+  const at = query ? text.toLowerCase().indexOf(query.trim().toLowerCase()) : -1
+  if (at < 0) return text
+  const end = at + query.trim().length
   return (
     <>
       {text.slice(0, at)}
-      <mark className="bg-transparent font-semibold text-current">{text.slice(at, end)}</mark>
+      <mark className="bg-transparent font-semibold text-current">
+        {text.slice(at, end)}
+      </mark>
       {text.slice(end)}
     </>
-  );
+  )
 }
 
 function Result({
@@ -108,15 +115,19 @@ function Result({
   showGroup,
   onSelect,
 }: {
-  page: Entry;
-  group: string;
-  query: string;
-  showGroup?: boolean;
-  onSelect: (url: string) => void;
+  page: Entry
+  group: string
+  query: string
+  showGroup?: boolean
+  onSelect: (url: string) => void
 }) {
-  const GroupIcon = icons[group.toLowerCase()] ?? BookOpenTextIcon;
+  const GroupIcon = icons[group.toLowerCase()] ?? BookOpenTextIcon
   return (
-    <CommandItem value={page.url} onSelect={() => onSelect(page.url)} className="h-auto min-h-10 py-2">
+    <CommandItem
+      value={page.url}
+      onSelect={() => onSelect(page.url)}
+      className="h-auto min-h-10 py-2"
+    >
       <GroupIcon />
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate">
@@ -137,35 +148,66 @@ function Result({
         </span>
       )}
     </CommandItem>
-  );
+  )
 }
 
-function Results({ groups, query, onSelect }: { groups?: Group[]; query: string; onSelect: (url: string) => void }) {
+function Results({
+  groups,
+  query,
+  onSelect,
+}: {
+  groups?: Group[]
+  query: string
+  onSelect: (url: string) => void
+}) {
   const matches = React.useMemo(() => {
-    if (!groups || !query.trim()) return [];
+    if (!groups || !query.trim()) return []
     return groups
-      .flatMap((group) => group.pages.map((page) => ({ page, group: group.name, rank: score(page, group.name, query) })))
+      .flatMap((group) =>
+        group.pages.map((page) => ({
+          page,
+          group: group.name,
+          rank: score(page, group.name, query),
+        }))
+      )
       .filter((match) => match.rank > 0)
-      .sort((a, b) => b.rank - a.rank || a.page.title.length - b.page.title.length)
-      .slice(0, MAX_RESULTS);
-  }, [groups, query]);
+      .sort(
+        (a, b) => b.rank - a.rank || a.page.title.length - b.page.title.length
+      )
+      .slice(0, MAX_RESULTS)
+  }, [groups, query])
 
   return (
     <CommandList className="max-h-[min(26rem,60dvh)]">
-      <CommandEmpty>{groups ? strings.searchEmpty : strings.searching}</CommandEmpty>
+      <CommandEmpty>
+        {groups ? strings.searchEmpty : strings.searching}
+      </CommandEmpty>
       {query.trim()
         ? matches.map(({ page, group }) => (
-            <Result key={page.url} page={page} group={group} query={query} showGroup onSelect={onSelect} />
+            <Result
+              key={page.url}
+              page={page}
+              group={group}
+              query={query}
+              showGroup
+              onSelect={onSelect}
+            />
           ))
         : groups?.map((group) => (
             <CommandGroup key={group.name} heading={group.name}>
               {group.pages.map((page) => (
-                <Result key={page.url} page={page} group={group.name} query="" onSelect={onSelect} />
+                <Result
+                  key={page.url}
+                  page={page}
+                  group={group.name}
+                  query=""
+                  onSelect={onSelect}
+                />
               ))}
             </CommandGroup>
           ))}
     </CommandList>
-  );
+  )
 }
 
 function Keys() {
@@ -189,7 +231,7 @@ function Keys() {
         </span>
       ))}
     </div>
-  );
+  )
 }
 
 export function Search({
@@ -197,41 +239,44 @@ export function Search({
   variant = "icon",
   hotkey = true,
 }: {
-  className?: string;
-  variant?: "icon" | "field";
-  hotkey?: boolean;
+  className?: string
+  variant?: "icon" | "field"
+  hotkey?: boolean
 }) {
-  const router = useRouter();
-  const isMobile = useIsMobile();
-  const [open, setOpen] = React.useState(false);
-  const [query, setQuery] = React.useState("");
-  const groups = useIndex(open);
+  const router = useRouter()
+  const isMobile = useIsMobile()
+  const [open, setOpen] = React.useState(false)
+  const [query, setQuery] = React.useState("")
+  const groups = useIndex(open)
 
   React.useEffect(() => {
-    if (!hotkey) return;
+    if (!hotkey) return
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === "k" && (isMacPlatform() ? event.metaKey : event.ctrlKey)) {
-        event.preventDefault();
-        setOpen((current) => !current);
+      if (
+        event.key.toLowerCase() === "k" &&
+        (isMacPlatform() ? event.metaKey : event.ctrlKey)
+      ) {
+        event.preventDefault()
+        setOpen((current) => !current)
       }
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [hotkey]);
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [hotkey])
 
   const onOpenChange = (next: boolean) => {
-    setOpen(next);
-    if (!next) setQuery("");
-  };
+    setOpen(next)
+    if (!next) setQuery("")
+  }
 
   const select = (url: string) => {
-    onOpenChange(false);
-    router.push(url);
-  };
+    onOpenChange(false)
+    router.push(url)
+  }
 
   const prefetch = () => {
-    loadIndex().catch(() => {});
-  };
+    loadIndex().catch(() => undefined)
+  }
 
   const trigger =
     variant === "field" ? (
@@ -240,11 +285,16 @@ export function Search({
         onClick={() => setOpen(true)}
         onPointerEnter={prefetch}
         onFocus={prefetch}
-        className={cn("flex items-center gap-3 text-start outline-none focus-visible:focus-ring", className)}
+        className={cn(
+          "flex items-center gap-3 text-start outline-none focus-visible:focus-ring",
+          className
+        )}
       >
         <MagnifyingGlassIcon className="size-5 shrink-0" />
         <span className="flex-1 truncate">{strings.searchPlaceholder}</span>
-        <kbd className="shrink-0 rounded-md bg-current/10 px-2 py-0.5 font-sans text-xs font-medium">⌘K</kbd>
+        <kbd className="shrink-0 rounded-md bg-current/10 px-2 py-0.5 font-sans text-xs font-medium">
+          ⌘K
+        </kbd>
       </button>
     ) : (
       <Button
@@ -258,21 +308,29 @@ export function Search({
       >
         <MagnifyingGlassIcon className="size-4" />
       </Button>
-    );
+    )
 
   const body = (
     <>
-      <CommandInput value={query} onValueChange={setQuery} placeholder={strings.searchPlaceholder} />
+      <CommandInput
+        value={query}
+        onValueChange={setQuery}
+        placeholder={strings.searchPlaceholder}
+      />
       <Results groups={groups} query={query} onSelect={select} />
     </>
-  );
+  )
 
   return (
     <>
       {trigger}
       {isMobile ? (
         <CommandPalette open={open} onOpenChange={onOpenChange} hotkey={false}>
-          <CommandPaletteContent title={strings.search} description={strings.searchPlaceholder} shouldFilter={false}>
+          <CommandPaletteContent
+            title={strings.search}
+            description={strings.searchPlaceholder}
+            shouldFilter={false}
+          >
             {body}
           </CommandPaletteContent>
         </CommandPalette>
@@ -290,5 +348,5 @@ export function Search({
         </CommandDialog>
       )}
     </>
-  );
+  )
 }

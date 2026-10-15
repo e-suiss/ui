@@ -1,16 +1,16 @@
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
 
-import { Anchor } from "@/components/site/anchor";
-import items from "@/content/items.json";
+import { Anchor } from "@/components/site/anchor"
+import items from "@/content/items.json"
 
-type Item = { name: string; title: string; group: string | null };
+type Item = { name: string; title: string; group: string | null }
 
 export function RegistryIndex({ category }: { category: keyof typeof items }) {
-  const list = items[category] as Item[];
-  const groups = new Map<string, Item[]>();
+  const list = items[category] as Item[]
+  const groups = new Map<string, Item[]>()
   for (const item of list) {
-    const key = item.group ?? "";
-    groups.set(key, [...(groups.get(key) ?? []), item]);
+    const key = item.group ?? ""
+    groups.set(key, [...(groups.get(key) ?? []), item])
   }
 
   return (
@@ -24,7 +24,10 @@ export function RegistryIndex({ category }: { category: keyof typeof items }) {
           )}
           <ul className="grid border-t border-label/12 sm:grid-cols-2">
             {members.map((item) => (
-              <li key={item.name} className="border-b border-label/12 sm:odd:border-e sm:odd:pe-6 sm:even:ps-6">
+              <li
+                key={item.name}
+                className="border-b border-label/12 sm:odd:border-e sm:odd:pe-6 sm:even:ps-6"
+              >
                 <Anchor
                   href={`/docs/${category}/${item.name}`}
                   className="group flex items-center justify-between gap-4 py-3.5 text-[17px] tracking-[-0.02em] outline-none focus-visible:focus-ring"
@@ -40,5 +43,5 @@ export function RegistryIndex({ category }: { category: keyof typeof items }) {
         </section>
       ))}
     </div>
-  );
+  )
 }

@@ -1,41 +1,51 @@
-"use client";
+"use client"
 
-import { cn } from "cn";
-import type * as React from "react";
-import { Pie, PieChart } from "recharts";
+import { cn } from "cn"
+import type * as React from "react"
+import { Pie, PieChart } from "recharts"
 
-import { SegmentPicker, SegmentPickerItem } from "@/components/patterns/segment-picker";
-import { Avatar, AvatarFallback, AvatarGroup } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
-import { ThemeToggle } from "@/components/ui/theme";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  SegmentPicker,
+  SegmentPickerItem,
+} from "@/components/patterns/segment-picker"
+import { Avatar, AvatarFallback, AvatarGroup } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
+import { Input } from "@/components/ui/input"
+import { Slider } from "@/components/ui/slider"
+import { Switch } from "@/components/ui/switch"
+import { ThemeToggle } from "@/components/ui/theme"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 function Tile({
   file,
   className,
   children,
 }: {
-  file?: string;
-  className?: string;
-  children: React.ReactNode;
+  file?: string
+  className?: string
+  children: React.ReactNode
 }) {
   return (
     <li
       className={cn(
         "relative flex min-h-44 flex-col overflow-hidden rounded-[28px] bg-surface-secondary p-6 md:min-h-60 md:p-7",
-        className,
+        className
       )}
     >
       {file && (
-        <p className="font-mono text-[11px] tracking-[0.02em] text-label-secondary">{file}</p>
+        <p className="font-mono text-[11px] tracking-[0.02em] text-label-secondary">
+          {file}
+        </p>
       )}
       {children}
     </li>
-  );
+  )
 }
 
 const pieces = [
@@ -43,16 +53,26 @@ const pieces = [
   { kind: "charts", label: "Charts", count: 70, color: "var(--purple)" },
   { kind: "blocks", label: "Blocks", count: 54, color: "var(--orange)" },
   { kind: "patterns", label: "Patterns", count: 19, color: "var(--green)" },
-  { kind: "interactions", label: "Interactions", count: 11, color: "var(--pink)" },
+  {
+    kind: "interactions",
+    label: "Interactions",
+    count: 11,
+    color: "var(--pink)",
+  },
   { kind: "hooks", label: "Hooks", count: 4, color: "var(--teal)" },
-].map((piece) => ({ ...piece, fill: `var(--color-${piece.kind})` }));
+].map((piece) => ({ ...piece, fill: `var(--color-${piece.kind})` }))
 
 const chartConfig: ChartConfig = {
   count: { label: "Pieces" },
-  ...Object.fromEntries(pieces.map((piece) => [piece.kind, { label: piece.label, color: piece.color }])),
-};
+  ...Object.fromEntries(
+    pieces.map((piece) => [
+      piece.kind,
+      { label: piece.label, color: piece.color },
+    ])
+  ),
+}
 
-const total = pieces.reduce((sum, piece) => sum + piece.count, 0);
+const total = pieces.reduce((sum, piece) => sum + piece.count, 0)
 
 function ChartTile() {
   return (
@@ -63,14 +83,24 @@ function ChartTile() {
             <p className="text-[clamp(3.5rem,6vw,6rem)] leading-[0.85] font-semibold tracking-[-0.06em] tabular-nums">
               {total}
             </p>
-            <p className="mt-2 text-[17px] tracking-[-0.02em] text-label-secondary">pieces in the registry</p>
+            <p className="mt-2 text-[17px] tracking-[-0.02em] text-label-secondary">
+              pieces in the registry
+            </p>
           </div>
           <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
             {pieces.map((piece) => (
-              <li key={piece.kind} className="flex items-center gap-2.5 text-[15px]">
-                <span className="size-2.5 shrink-0 rounded-full" style={{ background: piece.color }} />
+              <li
+                key={piece.kind}
+                className="flex items-center gap-2.5 text-[15px]"
+              >
+                <span
+                  className="size-2.5 shrink-0 rounded-full"
+                  style={{ background: piece.color }}
+                />
                 <span className="flex-1">{piece.label}</span>
-                <span className="text-label-secondary tabular-nums">{piece.count}</span>
+                <span className="text-label-secondary tabular-nums">
+                  {piece.count}
+                </span>
               </li>
             ))}
           </ul>
@@ -99,31 +129,52 @@ function ChartTile() {
         </ChartContainer>
       </div>
     </Tile>
-  );
+  )
 }
 
 const avatars = [
-  { initials: "AM", tint: "from-[#5ac8fa] to-[#007aff] dark:from-[#5ac8fa] dark:to-[#007aff]" },
-  { initials: "JK", tint: "from-[#ffcc00] to-[#ff9500] dark:from-[#ffcc00] dark:to-[#ff9500]" },
-  { initials: "LS", tint: "from-[#34c759] to-[#248a3d] dark:from-[#34c759] dark:to-[#248a3d]" },
-  { initials: "TR", tint: "from-[#bf5af2] to-[#8944ab] dark:from-[#bf5af2] dark:to-[#8944ab]" },
-  { initials: "EP", tint: "from-[#ff6482] to-[#ff2d55] dark:from-[#ff6482] dark:to-[#ff2d55]" },
-];
+  {
+    initials: "AM",
+    tint: "from-[#5ac8fa] to-[#007aff] dark:from-[#5ac8fa] dark:to-[#007aff]",
+  },
+  {
+    initials: "JK",
+    tint: "from-[#ffcc00] to-[#ff9500] dark:from-[#ffcc00] dark:to-[#ff9500]",
+  },
+  {
+    initials: "LS",
+    tint: "from-[#34c759] to-[#248a3d] dark:from-[#34c759] dark:to-[#248a3d]",
+  },
+  {
+    initials: "TR",
+    tint: "from-[#bf5af2] to-[#8944ab] dark:from-[#bf5af2] dark:to-[#8944ab]",
+  },
+  {
+    initials: "EP",
+    tint: "from-[#ff6482] to-[#ff2d55] dark:from-[#ff6482] dark:to-[#ff2d55]",
+  },
+]
 
 function AppearanceTile() {
   return (
     <Tile file="theme.tsx" className="md:col-span-6">
       <div className="flex flex-1 items-center justify-between gap-6">
         <div className="flex flex-col gap-1">
-          <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">Light and dark.</p>
+          <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">
+            Light and dark.
+          </p>
           <p className="text-[15px] text-label-secondary">
             Every token has a dark twin. Try it: this switches the whole page.
           </p>
         </div>
-        <ThemeToggle effect="rectangle" origin="bottom-up" className="size-14 shrink-0" />
+        <ThemeToggle
+          effect="rectangle"
+          origin="bottom-up"
+          className="size-14 shrink-0"
+        />
       </div>
     </Tile>
-  );
+  )
 }
 
 export function Bento() {
@@ -139,7 +190,11 @@ export function Bento() {
 
       <Tile file="toggle-group.tsx" className="md:col-span-2">
         <div className="flex flex-1 items-center justify-center">
-          <ToggleGroup defaultValue={["bold"]} aria-label="Text style" size="lg">
+          <ToggleGroup
+            defaultValue={["bold"]}
+            aria-label="Text style"
+            size="lg"
+          >
             <ToggleGroupItem value="bold" className="font-bold">
               B
             </ToggleGroupItem>
@@ -169,7 +224,7 @@ export function Bento() {
                 <AvatarFallback
                   className={cn(
                     "group-data-[size=xl]/avatar:text-lg",
-                    avatar.tint,
+                    avatar.tint
                   )}
                 >
                   {avatar.initials}
@@ -204,11 +259,23 @@ export function Bento() {
 
       <Tile file="input.tsx" className="md:col-span-6">
         <div className="mt-6 flex flex-col gap-1">
-          <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">Get release notes.</p>
-          <p className="text-[15px] text-label-secondary">One email when a new version ships.</p>
+          <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">
+            Get release notes.
+          </p>
+          <p className="text-[15px] text-label-secondary">
+            One email when a new version ships.
+          </p>
         </div>
-        <form className="mt-auto flex gap-2 pt-6" onSubmit={(event) => event.preventDefault()}>
-          <Input type="email" placeholder="you@example.com" aria-label="Email" className="h-11 flex-1" />
+        <form
+          className="mt-auto flex gap-2 pt-6"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <Input
+            type="email"
+            placeholder="you@example.com"
+            aria-label="Email"
+            className="h-11 flex-1"
+          />
           <Button size="lg" type="submit" className="rounded-lg">
             Subscribe
           </Button>
@@ -217,5 +284,5 @@ export function Bento() {
 
       <AppearanceTile />
     </ul>
-  );
+  )
 }

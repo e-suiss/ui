@@ -1,10 +1,13 @@
-import { repository } from "@/lib/sections";
-import { strings } from "@/lib/strings";
+import { repository } from "@/lib/sections"
+import { strings } from "@/lib/strings"
 
 export const site = {
   name: strings.brand,
   alternateNames: ["suiss ui", "ui.suiss.app"],
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ui.suiss.app").replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ui.suiss.app").replace(
+    /\/$/,
+    ""
+  ),
   title: `${strings.brand} – Copy-paste components for React, React Native, SwiftUI and Jetpack Compose`,
   description: strings.heroSubtitle,
   summary:
@@ -41,9 +44,19 @@ export const site = {
     "iOS",
     "Android",
   ],
-  topics: ["React", "React Native", "SwiftUI", "Jetpack Compose", "Base UI", "Tailwind CSS", "TypeScript", "Accessibility"],
+  topics: [
+    "React",
+    "React Native",
+    "SwiftUI",
+    "Jetpack Compose",
+    "Base UI",
+    "Tailwind CSS",
+    "TypeScript",
+    "Accessibility",
+  ],
   platform: ["React", "React Native", "iOS", "Android"],
   languages: ["TypeScript", "Swift", "Kotlin"],
-};
+}
 
-export const absolute = (path: string) => `${site.url}${path === "/" ? "" : path}`;
+export const absolute = (path: string) =>
+  `${site.url}${path === "/" ? "" : path}`

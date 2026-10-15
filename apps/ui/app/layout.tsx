@@ -1,19 +1,19 @@
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
 
-import { Footer } from "@/components/site/footer";
-import { GlobalNav } from "@/components/site/global-nav";
-import { JsonLd } from "@/components/site/json-ld";
-import { platformScript } from "@/lib/platform";
-import { ThemeProvider, ThemeScript } from "@/components/ui/theme";
-import { absolute, site } from "@/lib/site";
-import { strings } from "@/lib/strings";
-import "./globals.css";
+import { Footer } from "@/components/site/footer"
+import { GlobalNav } from "@/components/site/global-nav"
+import { JsonLd } from "@/components/site/json-ld"
+import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
+import { platformScript } from "@/lib/platform"
+import { absolute, site } from "@/lib/site"
+import { strings } from "@/lib/strings"
+import "./globals.css"
 
 const fontInter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
-});
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     },
   },
   formatDetection: { telephone: false, email: false, address: false },
-};
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -64,7 +64,7 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
   colorScheme: "light dark",
-};
+}
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -102,14 +102,17 @@ const structuredData = {
       isAccessibleForFree: true,
     },
   ],
-};
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={fontInter.variable} suppressHydrationWarning>
       <head>
         <ThemeScript />
-        <script dangerouslySetInnerHTML={{ __html: platformScript }} suppressHydrationWarning />
+        <script
+          dangerouslySetInnerHTML={{ __html: platformScript }}
+          suppressHydrationWarning
+        />
         <JsonLd data={structuredData} />
       </head>
       <body className="flex min-h-svh flex-col bg-surface text-label antialiased">
@@ -120,5 +123,5 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

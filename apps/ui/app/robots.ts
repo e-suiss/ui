@@ -1,6 +1,6 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next"
 
-import { absolute, site } from "@/lib/site";
+import { absolute, site } from "@/lib/site"
 
 const aiCrawlers = [
   "GPTBot",
@@ -20,15 +20,19 @@ const aiCrawlers = [
   "DuckAssistBot",
   "MistralAI-User",
   "cohere-ai",
-];
+]
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       { userAgent: "*", allow: "/", disallow: ["/api/", "/source/"] },
-      { userAgent: aiCrawlers, allow: ["/", "/llms.txt", "/llms-full.txt", "/llms.mdx/"], disallow: ["/api/", "/source/"] },
+      {
+        userAgent: aiCrawlers,
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/llms.mdx/"],
+        disallow: ["/api/", "/source/"],
+      },
     ],
     sitemap: absolute("/sitemap.xml"),
     host: site.url,
-  };
+  }
 }

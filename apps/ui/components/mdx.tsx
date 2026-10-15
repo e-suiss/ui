@@ -1,24 +1,24 @@
-import type { MDXComponents } from "mdx/types";
-import type * as React from "react";
+import type { MDXComponents } from "mdx/types"
+import type * as React from "react"
 
-import { Anchor } from "@/components/site/anchor";
-import { Callout } from "@/components/site/callout";
-import { CodeBlock } from "@/components/site/code-block";
-import { Example } from "@/components/site/example";
-import { NativeExample } from "@/components/site/native-example";
-import { Only } from "@/components/site/platform";
-import { Tabs } from "@/components/site/tabs";
-import { Anatomy, ApiPart } from "@/components/site/api-reference";
-import { PropsTable } from "@/components/site/props-table";
-import { Code, SourceFile } from "@/components/site/source-file";
-import { RegistryIndex } from "@/components/site/registry-index";
+import { Anchor } from "@/components/site/anchor"
+import { Anatomy, ApiPart } from "@/components/site/api-reference"
+import { Callout } from "@/components/site/callout"
+import { CodeBlock } from "@/components/site/code-block"
+import { Example } from "@/components/site/example"
+import { NativeExample } from "@/components/site/native-example"
+import { Only } from "@/components/site/platform"
+import { PropsTable } from "@/components/site/props-table"
+import { RegistryIndex } from "@/components/site/registry-index"
+import { Code, SourceFile } from "@/components/site/source-file"
+import { Tabs } from "@/components/site/tabs"
 
 function Table(props: React.ComponentProps<"table">) {
   return (
     <div className="mt-[1.2em] overflow-x-auto">
       <table {...props} />
     </div>
-  );
+  )
 }
 
 export function getMDXComponents(components?: MDXComponents) {
@@ -38,9 +38,9 @@ export function getMDXComponents(components?: MDXComponents) {
     Code,
     RegistryIndex,
     ...components,
-  } satisfies MDXComponents;
+  } satisfies MDXComponents
 }
 
 declare global {
-  type MDXProvidedComponents = ReturnType<typeof getMDXComponents>;
+  type MDXProvidedComponents = ReturnType<typeof getMDXComponents>
 }

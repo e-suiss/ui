@@ -1,56 +1,63 @@
-"use client";
+"use client"
 
-import { PlusIcon } from "@phosphor-icons/react";
-import { cn } from "cn";
-import * as React from "react";
+import { PlusIcon } from "@phosphor-icons/react"
+import { cn } from "cn"
+import * as React from "react"
 
 export interface PropRow {
-  name: string;
-  type: string;
-  default?: string;
-  required?: boolean;
-  description?: string;
+  name: string
+  type: string
+  default?: string
+  required?: boolean
+  description?: string
 }
 
 function unionOf(type: string) {
-  const members: string[] = [];
-  let depth = 0;
-  let current = "";
+  const members: string[] = []
+  let depth = 0
+  let current = ""
   for (const char of type) {
-    if ("([{<".includes(char)) depth++;
-    if (")]}>".includes(char)) depth--;
+    if ("([{<".includes(char)) depth++
+    if (")]}>".includes(char)) depth--
     if (char === "|" && depth === 0) {
-      members.push(current.trim());
-      current = "";
-    } else current += char;
+      members.push(current.trim())
+      current = ""
+    } else current += char
   }
-  members.push(current.trim());
-  return members.filter(Boolean);
+  members.push(current.trim())
+  return members.filter(Boolean)
 }
 
+const ARROW = /=>/
+const CODE_SPAN = /(`[^`]+`)/
+
 function summaryOf(type: string) {
-  const members = unionOf(type);
-  if (members.length > 3) return `union (${members.length})`;
-  if (type.length > 28) return /=>/.test(type) ? "function" : `${type.slice(0, 26)}…`;
-  return type;
+  const members = unionOf(type)
+  if (members.length > 3) return `union (${members.length})`
+  if (type.length > 28)
+    return ARROW.test(type) ? "function" : `${type.slice(0, 26)}…`
+  return type
 }
 
 function Inline({ text }: { text: string }) {
-  return text.split(/(`[^`]+`)/).map((chunk, index) =>
+  return text.split(CODE_SPAN).map((chunk, index) =>
     chunk.startsWith("`") ? (
-      <code key={index} className="rounded-md bg-label/[0.06] px-1.5 py-0.5 font-mono text-[0.85em] whitespace-nowrap">
+      <code
+        key={index}
+        className="rounded-md bg-label/[0.06] px-1.5 py-0.5 font-mono text-[0.85em] whitespace-nowrap"
+      >
         {chunk.slice(1, -1)}
       </code>
     ) : (
       <React.Fragment key={index}>{chunk}</React.Fragment>
-    ),
-  );
+    )
+  )
 }
 
 function Row({ prop }: { prop: PropRow }) {
-  const [open, setOpen] = React.useState(false);
-  const id = React.useId();
-  const members = unionOf(prop.type);
+  const [open, setOpen] = React.useState(false)
+  const id = React.useId()
+  const members = unionOf(prop.type)
 
   return (
     <div className="border-t border-label/10 first:border-t-0">
@@ -64,13 +71,26 @@ function Row({ prop }: { prop: PropRow }) {
         <PlusIcon
           aria-hidden
           weight="bold"
-          className={cn("size-3.5 text-label-tertiary transition-transform duration-300", open && "rotate-45 text-label")}
+          className={cn(
+            "size-3.5 text-label-tertiary transition-transform duration-300",
+            open && "rotate-45 text-label"
+          )}
         />
         <span className="flex min-w-0 items-center gap-2 font-mono text-[13.5px] font-medium text-label">
           <span className="truncate">{prop.name}</span>
-          {prop.required && <span className="text-[11px] text-red-500" aria-label="required">*</span>}
+          {prop.required && (
+            <span
+              className="text-[11px] text-red-500"
+              role="img"
+              aria-label="required"
+            >
+              *
+            </span>
+          )}
         </span>
-        <span className="truncate font-mono text-[12.5px] text-accent">{summaryOf(prop.type)}</span>
+        <span className="truncate font-mono text-[12.5px] text-accent">
+          {summaryOf(prop.type)}
+        </span>
         <span className="hidden truncate font-mono text-[12.5px] text-label-secondary sm:block">
           {prop.default ?? (prop.required ? "required" : "—")}
         </span>
@@ -79,32 +99,43 @@ function Row({ prop }: { prop: PropRow }) {
         id={id}
         className={cn(
           "grid transition-[grid-template-rows] duration-300 ease-out",
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
       >
         <div className="overflow-hidden" inert={!open}>
           <dl className="ml-[2.75rem] mr-4 mb-4 grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-4 gap-y-2.5 border-l border-label/10 pl-4 text-[14px] leading-relaxed">
             {prop.description && (
               <>
-                <dt className="pt-0.5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase">About</dt>
+                <dt className="pt-0.5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase">
+                  About
+                </dt>
                 <dd className="text-label-secondary">
                   <Inline text={prop.description} />
                 </dd>
               </>
             )}
-            <dt className="pt-0.5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase">Type</dt>
+            <dt className="pt-0.5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase">
+              Type
+            </dt>
             <dd className="flex flex-wrap gap-1.5">
               {members.length > 1 ? (
                 members.map((member) => (
-                  <code key={member} className="rounded-md bg-accent/10 px-1.5 py-0.5 font-mono text-[12.5px] text-accent">
+                  <code
+                    key={member}
+                    className="rounded-md bg-accent/10 px-1.5 py-0.5 font-mono text-[12.5px] text-accent"
+                  >
                     {member}
                   </code>
                 ))
               ) : (
-                <code className="font-mono text-[12.5px] break-all text-accent">{prop.type}</code>
+                <code className="font-mono text-[12.5px] break-all text-accent">
+                  {prop.type}
+                </code>
               )}
             </dd>
-            <dt className="pt-0.5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase sm:hidden">Default</dt>
+            <dt className="pt-0.5 font-mono text-[11px] tracking-wider text-label-tertiary uppercase sm:hidden">
+              Default
+            </dt>
             <dd className="font-mono text-[12.5px] text-label-secondary sm:hidden">
               {prop.default ?? (prop.required ? "required" : "—")}
             </dd>
@@ -112,17 +143,37 @@ function Row({ prop }: { prop: PropRow }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export function PropsTable({ extends: bases = [], props = [] }: { extends?: string[]; props?: PropRow[] }) {
+export function PropsTable({
+  extends: bases = [],
+  props = [],
+}: {
+  extends?: string[]
+  props?: PropRow[]
+}) {
   return (
-    <div data-not-prose data-slot="props-table" className="mt-5 overflow-hidden rounded-2xl ring-1 ring-label/10">
+    <div
+      data-not-prose
+      data-slot="props-table"
+      className="mt-5 overflow-hidden rounded-2xl ring-1 ring-label/10"
+    >
       {bases.length > 0 && (
-        <div className={cn("flex flex-wrap items-center gap-2 px-4 py-2.5 text-[12.5px]", props.length && "border-b border-label/10 bg-label/[0.025]")}>
-          <span className="font-mono text-[11px] tracking-wider text-label-tertiary uppercase">Extends</span>
+        <div
+          className={cn(
+            "flex flex-wrap items-center gap-2 px-4 py-2.5 text-[12.5px]",
+            props.length && "border-b border-label/10 bg-label/[0.025]"
+          )}
+        >
+          <span className="font-mono text-[11px] tracking-wider text-label-tertiary uppercase">
+            Extends
+          </span>
           {bases.map((base) => (
-            <code key={base} className="rounded-md bg-label/[0.06] px-1.5 py-0.5 font-mono text-label">
+            <code
+              key={base}
+              className="rounded-md bg-label/[0.06] px-1.5 py-0.5 font-mono text-label"
+            >
               {base}
             </code>
           ))}
@@ -142,5 +193,5 @@ export function PropsTable({ extends: bases = [], props = [] }: { extends?: stri
         </>
       )}
     </div>
-  );
+  )
 }

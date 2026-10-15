@@ -1,16 +1,28 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
-import { CodeBlock, fetchSource, type Source } from "@/components/site/code-block";
-import { SourceCode } from "@/components/site/source-code";
+import {
+  CodeBlock,
+  fetchSource,
+  type Source,
+} from "@/components/site/code-block"
+import { SourceCode } from "@/components/site/source-code"
 
-export function LazySource({ src, title, children }: { src: string; title: string; children: React.ReactNode }) {
-  const [source, setSource] = React.useState<Source>();
+export function LazySource({
+  src,
+  title,
+  children,
+}: {
+  src: string
+  title: string
+  children: React.ReactNode
+}) {
+  const [source, setSource] = React.useState<Source>()
 
   const load = () => {
-    fetchSource(src).then(setSource, () => {});
-  };
+    fetchSource(src).then(setSource, () => undefined)
+  }
 
   return (
     <SourceCode onExpand={load}>
@@ -26,5 +38,5 @@ export function LazySource({ src, title, children }: { src: string; title: strin
         children
       )}
     </SourceCode>
-  );
+  )
 }

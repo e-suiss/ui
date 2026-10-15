@@ -1,63 +1,79 @@
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
-import { cn } from "cn";
-import type { Metadata } from "next";
-import type * as React from "react";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
+import { cn } from "cn"
+import type { Metadata } from "next"
+import type * as React from "react"
 
-import { Anchor } from "@/components/site/anchor";
-import { Gradient } from "@/components/site/gradient";
-import { InstallCommand } from "@/components/site/install-command";
-import { Bento } from "@/components/site/bento";
-import { Search } from "@/components/site/search";
-import { strings } from "@/lib/strings";
+import { Anchor } from "@/components/site/anchor"
+import { Bento } from "@/components/site/bento"
+import { Gradient } from "@/components/site/gradient"
+import { InstallCommand } from "@/components/site/install-command"
+import { Search } from "@/components/site/search"
+import { strings } from "@/lib/strings"
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-};
+}
 
-const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
-const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
+const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
+const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
 
 const collections = [
   {
     title: "Components",
     href: "/docs/components",
-    description: "From buttons and fields to sheets, keypads and dialogs, on every platform.",
+    description:
+      "From buttons and fields to sheets, keypads and dialogs, on every platform.",
   },
   {
     title: "Patterns",
     href: "/docs/patterns",
-    description: "Components composed into flows that adapt between desktop and mobile.",
+    description:
+      "Components composed into flows that adapt between desktop and mobile.",
   },
   {
     title: "Interactions",
     href: "/docs/interactions",
-    description: "Swipe actions, pull to refresh, undo and the small moments in between.",
+    description:
+      "Swipe actions, pull to refresh, undo and the small moments in between.",
   },
   {
     title: "Charts",
     href: "/docs/charts",
-    description: "Area, bar, line, pie, radar and radial charts styled by your theme.",
+    description:
+      "Area, bar, line, pie, radar and radial charts styled by your theme.",
   },
   {
     title: "Blocks",
     href: "/docs/blocks",
-    description: "Complete screens, from checkout and inbox to dashboards and settings.",
+    description:
+      "Complete screens, from checkout and inbox to dashboards and settings.",
   },
-];
+]
 
-function Label({ index, children }: { index: string; children: React.ReactNode }) {
+function Label({
+  index,
+  children,
+}: {
+  index: string
+  children: React.ReactNode
+}) {
   return (
     <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
       ({index}) {children}
     </p>
-  );
+  )
 }
 
 function Hero() {
   return (
     <section className="relative flex flex-col overflow-hidden text-[#1d1d1f]">
       <Gradient preset="Halo" />
-      <div className={cn(frame, "relative flex flex-col gap-10 pt-60 pb-12 md:pt-[26rem] md:pb-16")}>
+      <div
+        className={cn(
+          frame,
+          "relative flex flex-col gap-10 pt-60 pb-12 md:pt-[26rem] md:pb-16"
+        )}
+      >
         <div className="flex max-w-6xl flex-col gap-6">
           <h1 className="text-[clamp(3rem,8vw,8rem)] leading-[0.88] font-semibold tracking-[-0.055em] text-balance">
             Copy-paste components for web and mobile.
@@ -72,12 +88,14 @@ function Hero() {
         />
       </div>
     </section>
-  );
+  )
 }
 
 function Manifesto() {
   return (
-    <section className={cn(frame, "grid gap-10 py-24 md:grid-cols-[1fr_3fr] md:py-36")}>
+    <section
+      className={cn(frame, "grid gap-10 py-24 md:grid-cols-[1fr_3fr] md:py-36")}
+    >
       <Label index="01">Approach</Label>
       <p className="text-[clamp(2rem,4.4vw,4.5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance">
         Components you own.{" "}
@@ -85,24 +103,31 @@ function Manifesto() {
           Copy them into your project and change anything you like.
         </span>{" "}
         For React, React Native, SwiftUI and Jetpack Compose.{" "}
-        <span className="text-label-tertiary">One design, accessible, themeable and open source.</span>
+        <span className="text-label-tertiary">
+          One design, accessible, themeable and open source.
+        </span>
       </p>
     </section>
-  );
+  )
 }
 
 function Interface() {
   return (
     <section className="pb-32 md:pb-48">
-      <div className={cn(frame, "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]")}>
+      <div
+        className={cn(
+          frame,
+          "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]"
+        )}
+      >
         <Label index="02">Interface</Label>
         <div className="flex flex-col gap-6">
           <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
             Every piece is live.
           </h2>
           <p className="max-w-md text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-label-secondary">
-            No screenshots. These are the React components themselves, running on this page.
-            Try them.
+            No screenshots. These are the React components themselves, running
+            on this page. Try them.
           </p>
         </div>
       </div>
@@ -120,13 +145,18 @@ function Interface() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Library() {
   return (
     <section className="pb-32 md:pb-48">
-      <div className={cn(frame, "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]")}>
+      <div
+        className={cn(
+          frame,
+          "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]"
+        )}
+      >
         <Label index="03">Library</Label>
         <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
           Five collections.{" "}
@@ -135,18 +165,23 @@ function Library() {
       </div>
       <ul className={cn(frame, "flex flex-col")}>
         {collections.map((collection, index) => (
-          <li key={collection.href} className="border-t border-label/15 last:border-b">
+          <li
+            key={collection.href}
+            className="border-t border-label/15 last:border-b"
+          >
             <Anchor
               href={collection.href}
               className="group grid items-center gap-4 py-8 outline-none focus-visible:focus-ring md:grid-cols-[1fr_3fr] md:gap-6 md:py-10"
             >
-              <span className="font-mono text-xs text-label-secondary">{String(index + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-xs text-label-secondary">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               <span className="flex items-center justify-between gap-6">
                 <span className="flex flex-col gap-3">
                   <span
                     className={cn(
                       "text-[clamp(2rem,4vw,3.5rem)] leading-none font-semibold tracking-[-0.045em] transition-transform duration-700 group-hover:translate-x-2",
-                      ease,
+                      ease
                     )}
                   >
                     {collection.title}
@@ -158,7 +193,7 @@ function Library() {
                 <span
                   className={cn(
                     "hidden size-12 items-center justify-center rounded-full border border-label/15 transition-colors duration-500 group-hover:border-transparent group-hover:bg-label group-hover:text-surface md:flex",
-                    ease,
+                    ease
                   )}
                 >
                   <ArrowUpRightIcon className="size-4" />
@@ -169,7 +204,7 @@ function Library() {
         ))}
       </ul>
     </section>
-  );
+  )
 }
 
 export default function Home() {
@@ -180,5 +215,5 @@ export default function Home() {
       <Interface />
       <Library />
     </main>
-  );
+  )
 }

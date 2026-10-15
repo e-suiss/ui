@@ -1,6 +1,6 @@
-export type Section = { label: string; path: string };
+export type Section = { label: string; path: string }
 
-export const repository = "https://github.com/e-suiss/ui";
+export const repository = "https://github.com/e-suiss/ui"
 
 export const sections: Section[] = [
   { label: "Docs", path: "/docs" },
@@ -9,4 +9,4 @@ export const sections: Section[] = [
   { label: "Interactions", path: "/docs/interactions" },
   { label: "Charts", path: "/docs/charts" },
   { label: "Blocks", path: "/docs/blocks" },
-];
+]
