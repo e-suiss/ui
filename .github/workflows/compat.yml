@@ -1,0 +1,76 @@
+name: Compatibility
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/web/**"
+      - "packages/cli/**"
+      - "scripts/compat.mjs"
+      - "apps/ui/next.config.ts"
+      - ".github/workflows/compat.yml"
+  pull_request:
+    paths:
+      - "packages/web/**"
+      - "packages/cli/**"
+      - "scripts/compat.mjs"
+      - "apps/ui/next.config.ts"
+      - ".github/workflows/compat.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: compat-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - id: matrix
+        run: echo "matrix=$(node scripts/compat.mjs --matrix)" >> "$GITHUB_OUTPUT"
+
+  compat:
+    needs: matrix
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: compat-npm-${{ runner.os }}-${{ contains(matrix.args, 'vite') && 'vite' || 'next' }}-${{ hashFiles('scripts/compat.mjs') }}
+          restore-keys: compat-npm-${{ runner.os }}-${{ contains(matrix.args, 'vite') && 'vite' || 'next' }}-
+
+      - name: Install the registry tools
+        run: pnpm install --frozen-lockfile --ignore-scripts --filter @esuiss/web
+
+      - name: Install the items in a new app
+        env:
+          ARGS: ${{ matrix.args }}
+        run: |
+          read -ra args <<< "$ARGS"
+          node scripts/compat.mjs "${args[@]}"
