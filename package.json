@@ -16,6 +16,7 @@
     "format": "biome check --write .",
     "knip": "pnpm --filter @esuiss/mobile generate && knip",
     "release": "node scripts/release.mjs",
+    "compat": "node scripts/compat.mjs",
     "indexnow": "node scripts/indexnow.mjs",
     "purge-cache": "node --env-file-if-exists=.env.deploy scripts/purge-cache.mjs",
     "prepare": "lefthook install"
