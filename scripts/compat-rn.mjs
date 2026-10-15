@@ -15,7 +15,7 @@ import { tmpdir } from "node:os"
 import path from "node:path"
 
 const EXPO_APP = "create-expo-app@5.0.0"
-const EXPO_TEMPLATE = "blank-typescript@sdk-57"
+const EXPO_TEMPLATE = "blank-typescript@latest"
 const REGISTRY_CLI = "shadcn@4.21.4"
 const ROOT = path.resolve(import.meta.dirname, "..")
 const MOBILE = path.join(ROOT, "packages/mobile")
