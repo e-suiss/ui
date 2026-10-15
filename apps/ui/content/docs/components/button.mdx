@@ -106,14 +106,14 @@ Also accepts the props of `ButtonPrimitive.Props`.
 - Renders a native `button`, so `Enter` and `Space` activate it.
 - A disabled button is removed from the tab order.
 - Icon-only buttons need an `aria-label`.
-- Keyboard focus shows a focus ring; the `destructive` variant uses the danger color for it.
-- `aria-invalid` adds a danger-colored border, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
+- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant uses the danger color for it.
+- `aria-invalid` adds a danger-colored border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
 
 ## Notes
 
 - Styling hook: `data-slot="button"`.
 - Colors come from the `primary`, `secondary`, `accent` and `destructive` variables. Hover uses the same color with an opacity, such as `hover:bg-primary/80`, and disabled buttons use `opacity-50`.
-- The focus ring offset is set with `--focus-ring-offset`; groups and other containers override it.
+- Buttons in a group raise the focused one above its neighbors so the whole ring stays visible.
 
 </Only>
 

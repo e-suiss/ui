@@ -13,12 +13,17 @@ Your stylesheet holds the whole theme. `init` writes it to `app/globals.css` (Ne
 - The font, set as `--font-sans`.
 - An `@theme inline` block that maps each value to a Tailwind name, such as `--color-background: var(--background);`.
 
+It imports `tw-animate-css` for the enter and exit animations, and `shadcn/tailwind.css` for the shared variants (`data-open`, `data-checked` and the like), the accordion keyframes and the `no-scrollbar`, `scroll-fade-*` and `shimmer` utilities. Text sizes, shadows and spacing are the Tailwind defaults.
+
 The variable names are the common theme variables used across Tailwind component libraries, so a theme written for one of them works here, and ours works there. The values are our own: a white and true-black canvas, gray text in the system style and a blue primary color.
 
 ```css title="app/globals.css"
 @import "tailwindcss";
-@import "@esuiss/tailwind";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --radius: 0.625rem;
@@ -67,8 +72,8 @@ There is no separate variable per state. States use the same variables with an o
 | Hover on a transparent element | `hover:bg-accent hover:text-accent-foreground` |
 | Highlighted menu item | `focus:bg-accent focus:text-accent-foreground` |
 | Tinted background | `bg-primary/10`, `bg-destructive/10` |
-| Keyboard focus | the `focus-ring` utility, drawn with `--ring` |
-| Invalid | `aria-invalid:border-destructive` |
+| Keyboard focus | `focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50` |
+| Invalid | `aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20` |
 | Disabled | `disabled:opacity-50` or `data-disabled:opacity-50` |
 
 The `button` component uses them this way:
@@ -195,7 +200,7 @@ For a theme switch, add the `theme` component. It is not added by `add --all`, s
 npx @esuiss/ui add theme
 ```
 
-It gives you `ThemeProvider`, `useTheme`, `ThemeToggle` and `ThemeScript`. The provider remembers the choice (`light`, `dark` or `system`) and follows the system setting when it is `system`. `ThemeScript` sets the class before the page paints, so there is no flash of the wrong theme.
+It gives you `ThemeProvider`, `useTheme`, `ThemeToggle` and `ThemeScript`. `add theme` also appends the keyframes for the animated theme switch to your stylesheet. The provider remembers the choice (`light`, `dark` or `system`) and follows the system setting when it is `system`. `ThemeScript` sets the class before the page paints, so there is no flash of the wrong theme.
 
 ```tsx title="app/layout.tsx"
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme"

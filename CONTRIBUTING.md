@@ -26,11 +26,10 @@ pnpm --filter @esuiss/mobile start                        # the React Native Sto
 Layout:
 
 - `apps/ui`: the ui.suiss.app site, with a React, React Native, SwiftUI and Compose tab on every page. Every page is one hand-written MDX file in `content/docs`, and each section's sidebar order is its `meta.json`.
-- `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `examples/` has one example per file that the site previews and Vitest renders, `tests/` has the browser tests, and `registry.json` lists everything.
+- `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `styles/theme.css` holds the theme transition styles `add theme` appends to the user's stylesheet, `examples/` has one example per file that the site previews and Vitest renders, `tests/` has the browser tests, and `registry.json` lists everything.
 - `packages/mobile`: the mobile library: React Native components for Uniwind, NativeWind and StyleSheet, the SwiftUI and Jetpack Compose libraries with their catalog apps, stories and its own `registry.json`. See `packages/mobile/README.md`.
 - `packages/tokens`: the design tokens the mobile themes are generated from.
 - `packages/cli`: the `@esuiss/ui` command.
-- `packages/tailwind`: the `@esuiss/tailwind` stylesheet with variants, animations, and utilities.
 
 ## Adding a component
 
@@ -43,6 +42,14 @@ Layout:
    - `<NativeExample id="components-button--variants" />` for a mobile example. The id is the React Native Storybook id. The React Native, SwiftUI and Compose code is read from `packages/mobile/stories` and the catalog apps, and the preview from `apps/ui/public/previews/<id>.light.webp` and `.dark.webp` (or `.mp4`).
    - `<Only platform="web">` and `<Only platform="rn swift kotlin">` around the parts for each platform, with `platforms` in the frontmatter listing the tabs the page has.
    - Plain Markdown tables for the API reference, inside `<ApiPart index={1}>`, and `<Anatomy>` around a nested list of the parts.
+
+## Compatibility check
+
+`pnpm compat` checks that the components work in a project set up with the standard registry CLI. It creates a Next.js app in the system temp folder, runs the registry CLI `init` for Base UI with its defaults, adds a set of components, a chart, a block and `theme` with `packages/cli` from the local `packages/web` files, then runs `tsc --noEmit` and `next build`. It needs network access to npm, takes a few minutes, and deletes the app when it finishes or fails.
+
+```bash
+pnpm compat
+```
 
 ## Git hooks
 
@@ -65,10 +72,10 @@ To build it locally, run `docker build -f apps/Dockerfile .` from the repository
 
 ## Release
 
-Component, hook, and theme color changes, on the web and on mobile, reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` or `packages/tailwind` changes; both packages are released together with the same version:
+Component, hook, and theme color changes, on the web and on mobile, reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` changes:
 
 ```bash
 pnpm release patch   # or minor, major, or an exact version like 1.0.0
 ```
 
-This bumps both packages, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes them to npm, publishes `packages/mobile/swiftui` and `packages/mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.
+This bumps the CLI version, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes it to npm, publishes `packages/mobile/swiftui` and `packages/mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.
