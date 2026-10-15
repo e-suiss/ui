@@ -129,7 +129,7 @@ export function SignupSteps() {
             if (ready) go(1)
           }}
           style={{ "--from": `${direction * 40}px` } as React.CSSProperties}
-          className="flex flex-col gap-3.5 text-center transition-[opacity,translate] duration-[450ms,550ms] ease-[ease,cubic-bezier(0.32,0.72,0,1)] starting:translate-x-(--from) starting:opacity-0 motion-reduce:transition-none"
+          className="flex flex-col gap-3.5 text-center transition-[opacity,translate] duration-[450ms,550ms] ease-[ease,cubic-bezier(0.32,0.72,0,1)] starting:translate-x-(--from) starting:opacity-0 rtl:starting:-translate-x-(--from) motion-reduce:transition-none"
         >
           <p className="text-sm font-semibold text-muted-foreground">
             Step {index + 1} of {steps.length}

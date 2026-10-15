@@ -132,7 +132,7 @@ function DownloadActivity({
           className="h-1.5 overflow-hidden rounded-full bg-background/20 dark:bg-foreground/20"
         >
           <div
-            className="h-full origin-left rounded-full bg-primary transition-[scale] duration-300"
+            className="h-full origin-left rounded-full bg-primary transition-[scale] duration-300 rtl:origin-right"
             style={{ scale: `${progress} 1` }}
           />
         </div>
