@@ -14,6 +14,7 @@ import { renderExample } from "@/tests/render-example"
 const DISABLED = byBase({
   base: { name: "aria-disabled", value: "true" },
   radix: { name: "disabled", value: "" },
+  aria: { name: "aria-disabled", value: "true" },
 })
 
 const tabs = [
@@ -134,7 +135,11 @@ test("Disabled Tab", async () => {
     await expect(billing).toHaveAttribute("aria-selected", "false")
     await expect(
       canvas.getByRole("tab", {
-        name: byBase({ base: "Notifications", radix: "Account" }),
+        name: byBase({
+          base: "Notifications",
+          radix: "Account",
+          aria: "Account",
+        }),
       })
     ).toHaveAttribute("aria-selected", "true")
   })

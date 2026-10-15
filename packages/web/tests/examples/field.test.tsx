@@ -105,7 +105,7 @@ test("Horizontal", async () => {
 
     const marketing = canvas.getByRole("switch", { name: "Marketing emails" })
     await userEvent.click(canvas.getByText("Marketing emails"))
-    await expect(marketing).toHaveAttribute("aria-checked", "true")
+    await expect(marketing).toBeChecked()
   })
 })
 test("Choice Cards", async () => {
@@ -114,10 +114,10 @@ test("Choice Cards", async () => {
   const [starter, pro] = canvas.getAllByRole("radio")
 
   await step("selects a plan by clicking its card", async () => {
-    await expect(pro).toHaveAttribute("aria-checked", "true")
+    await expect(pro).toBeChecked()
     await userEvent.click(canvas.getByText("Starter"))
-    await expect(starter).toHaveAttribute("aria-checked", "true")
-    await expect(pro).toHaveAttribute("aria-checked", "false")
+    await expect(starter).toBeChecked()
+    await expect(pro).not.toBeChecked()
   })
 })
 test("Form", async () => {

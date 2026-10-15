@@ -10,7 +10,14 @@ import ButtonGroupWithInput from "@/examples/button-group-with-input"
 import ButtonGroupWithInputGroup from "@/examples/button-group-with-input-group"
 import ButtonGroupWithPopover from "@/examples/button-group-with-popover"
 import ButtonGroupWithSelect from "@/examples/button-group-with-select"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SELECT_TRIGGER = byBase<{ role: string; name: string | RegExp }>({
+  base: { role: "combobox", name: "Currency" },
+  radix: { role: "combobox", name: "Currency" },
+  aria: { role: "button", name: /Currency$/ },
+})
 
 test("Default", async () => {
   const { canvas, step } = await renderExample(<ButtonGroupDemo />)
@@ -30,7 +37,7 @@ test("Default", async () => {
     await expect(trigger).toHaveAttribute("aria-expanded", "true")
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
   })
 })
 test("Orientation", async () => {
@@ -134,7 +141,9 @@ test("With Dropdown Menu", async () => {
 test("With Select", async () => {
   const { canvas, step } = await renderExample(<ButtonGroupWithSelect />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Currency" })
+  const trigger = canvas.getByRole(SELECT_TRIGGER.role, {
+    name: SELECT_TRIGGER.name,
+  })
   const amount = canvas.getByRole("textbox", { name: "Amount" })
 
   await step("picks a currency from the select", async () => {
@@ -163,7 +172,7 @@ test("With Popover", async () => {
   await waitFor(() => expect(popover).toBeVisible())
   await userEvent.keyboard("{Escape}")
   await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
-  await expect(trigger).toHaveFocus()
+  await waitFor(() => expect(trigger).toHaveFocus())
 })
 test("Pagination", async () => {
   const { canvas } = await renderExample(<ButtonGroupPagination />)

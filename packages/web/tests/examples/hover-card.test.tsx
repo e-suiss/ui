@@ -11,7 +11,14 @@ import {
 } from "@/components/ui/hover-card"
 import HoverCardDemo from "@/examples/hover-card-demo"
 import HoverCardSides from "@/examples/hover-card-sides"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const SIDE = byBase({
+  base: "data-side",
+  radix: "data-side",
+  aria: "data-placement",
+})
 
 function HoverCardOpenByDefault() {
   return (
@@ -67,6 +74,10 @@ test("Default", async () => {
       { timeout: 3000 }
     )
     await userEvent.unhover(trigger)
+    await userEvent.pointer({
+      target: document.body,
+      coords: { clientX: 0, clientY: window.innerHeight - 1 },
+    })
     await waitFor(
       () => expect(screen.queryByText("Joined December 2021")).toBeNull(),
       { timeout: 3000 }
@@ -107,7 +118,7 @@ test("Sides", async () => {
       })
       await expect(
         screen.getByText(text).closest('[data-slot="hover-card-content"]')
-      ).toHaveAttribute("data-side", side)
+      ).toHaveAttribute(SIDE, side)
       await userEvent.unhover(trigger)
       await waitFor(() => expect(screen.queryByText(text)).toBeNull(), {
         timeout: 3000,

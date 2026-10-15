@@ -6,7 +6,10 @@ import PaginationCustomLabels from "@/examples/pagination-custom-labels"
 import PaginationDemo from "@/examples/pagination-demo"
 import PaginationRowsPerPage from "@/examples/pagination-rows-per-page"
 import PaginationWithEllipsis from "@/examples/pagination-with-ellipsis"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const ROWS_PER_PAGE = /Rows per page$/
 
 test("Default", async () => {
   const { canvas, step } = await renderExample(<PaginationDemo />)
@@ -72,7 +75,16 @@ test("Rows Per Page", async () => {
 
   await step("changes the page size from the select", async () => {
     await userEvent.click(
-      canvas.getByRole("combobox", { name: "Rows per page" })
+      canvas.getByRole(
+        byBase({ base: "combobox", radix: "combobox", aria: "button" }),
+        {
+          name: byBase<string | RegExp>({
+            base: "Rows per page",
+            radix: "Rows per page",
+            aria: ROWS_PER_PAGE,
+          }),
+        }
+      )
     )
     await userEvent.click(
       await screen.findByRole("option", { name: "10 rows" })

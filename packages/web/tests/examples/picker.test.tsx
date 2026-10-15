@@ -7,12 +7,23 @@ import PickerDisabled from "@/examples/picker-disabled"
 import PickerGrouped from "@/examples/picker-grouped"
 import PickerInvalid from "@/examples/picker-invalid"
 import PickerWithValue from "@/examples/picker-with-value"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const TRIGGER = byBase({ base: "combobox", radix: "combobox", aria: "button" })
+
+function named(label: string) {
+  return byBase<string | RegExp>({
+    base: label,
+    radix: label,
+    aria: new RegExp(`${label}$`),
+  })
+}
 
 test("Default", async () => {
   const { canvas, step } = await renderExample(<PickerDemo />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+  const trigger = canvas.getByRole(TRIGGER, { name: named("Fruit") })
 
   await step("shows the placeholder before a choice", async () => {
     await expect(trigger).toHaveTextContent("Select a fruit")
@@ -38,7 +49,7 @@ test("Default", async () => {
 test("With Value", async () => {
   const { canvas, step } = await renderExample(<PickerWithValue />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+  const trigger = canvas.getByRole(TRIGGER, { name: named("Fruit") })
 
   await step("shows the initial value and marks it in the list", async () => {
     await expect(trigger).toHaveTextContent("Banana")
@@ -56,7 +67,7 @@ test("With Value", async () => {
 test("Grouped", async () => {
   const { canvas, step } = await renderExample(<PickerGrouped />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Time zone" })
+  const trigger = canvas.getByRole(TRIGGER, { name: named("Time zone") })
 
   await step("lists labelled groups with a disabled option", async () => {
     await userEvent.click(trigger)
@@ -76,7 +87,7 @@ test("Disabled", async () => {
   const { canvas, step } = await renderExample(<PickerDisabled />)
 
   await step("does not open when disabled", async () => {
-    const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+    const trigger = canvas.getByRole(TRIGGER, { name: named("Fruit") })
     await expect(trigger).toBeDisabled()
     await userEvent.click(trigger, { pointerEventsCheck: 0 })
     await expect(screen.queryByRole("listbox")).toBeNull()
@@ -86,15 +97,20 @@ test("Invalid", async () => {
   const { canvas, step } = await renderExample(<PickerInvalid />)
 
   await step("exposes the invalid state", async () => {
-    await expect(
-      canvas.getByRole("combobox", { name: "Fruit" })
-    ).toHaveAttribute("aria-invalid", "true")
+    const trigger = canvas.getByRole(TRIGGER, { name: named("Fruit") })
+    if (byBase({ base: true, radix: true, aria: false }))
+      await expect(trigger).toHaveAttribute("aria-invalid", "true")
+    else
+      await expect(trigger.closest("[data-invalid]")).toHaveAttribute(
+        "data-invalid",
+        "true"
+      )
   })
 })
 test("Controlled", async () => {
   const { canvas, step } = await renderExample(<PickerControlled />)
 
-  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+  const trigger = canvas.getByRole(TRIGGER, { name: named("Fruit") })
 
   await step("starts with the controlled value", async () => {
     await expect(trigger).toHaveTextContent("Grapes")

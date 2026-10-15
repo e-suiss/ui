@@ -79,7 +79,7 @@ test("Default", async () => {
   await step("closes with Escape and returns focus", async () => {
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
     await expect(trigger).toHaveAttribute("aria-expanded", "false")
   })
 
@@ -132,7 +132,7 @@ test("Simple", async () => {
   await step("closes with Escape and returns focus", async () => {
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
   })
 
   await step("closes from the trigger", async () => {

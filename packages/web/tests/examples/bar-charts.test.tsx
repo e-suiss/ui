@@ -17,6 +17,7 @@ import { renderExample } from "@/tests/render-example"
 const SINGLE = byBase({
   base: { group: "group", role: "button", pressed: "aria-pressed" },
   radix: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
+  aria: { group: "radiogroup", role: "radio", pressed: "aria-checked" },
 } as const)
 
 const DRAWN_PATH = /^M\s?-?\d/

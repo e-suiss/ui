@@ -4,14 +4,21 @@ import { expect, test } from "vitest"
 import { LogActivity } from "@/components/blocks/log-activity"
 import { LogLive } from "@/components/blocks/log-live"
 import { LogSecurity } from "@/components/blocks/log-security"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
+
+const TYPE_TRIGGER = byBase<[string, { name: string | RegExp }]>({
+  base: ["combobox", { name: "Type" }],
+  radix: ["combobox", { name: "Type" }],
+  aria: ["button", { name: /Type$/ }],
+})
 
 test("Activity", async () => {
   const { canvas, step } = await renderExample(<LogActivity />)
 
   await step("filtering by type narrows the events", async () => {
     await expect(canvas.getByText("Price: Phone Pro")).toBeInTheDocument()
-    await userEvent.click(canvas.getByRole("combobox", { name: "Type" }))
+    await userEvent.click(canvas.getByRole(...TYPE_TRIGGER))
     await userEvent.click(await screen.findByRole("option", { name: "Order" }))
     await waitFor(() =>
       expect(canvas.queryByText("Price: Phone Pro")).toBeNull()

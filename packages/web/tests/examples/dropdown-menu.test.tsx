@@ -20,6 +20,7 @@ import DropdownMenuCheckboxes from "@/examples/dropdown-menu-checkboxes"
 import DropdownMenuDemo from "@/examples/dropdown-menu-demo"
 import DropdownMenuInset from "@/examples/dropdown-menu-inset"
 import DropdownMenuRadioGroupExample from "@/examples/dropdown-menu-radio-group"
+import { byBase } from "@/tests/base"
 import { renderExample } from "@/tests/render-example"
 
 const PROFILE = /^Profile/
@@ -104,7 +105,15 @@ function DropdownMenuOpenByDefault() {
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuItem disabled>API access</DropdownMenuItem>
+        <DropdownMenuItem
+          {...byBase<object>({
+            base: { disabled: true },
+            radix: { disabled: true },
+            aria: { isDisabled: true },
+          })}
+        >
+          API access
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive">
           <IconPlaceholder
@@ -173,7 +182,7 @@ test("Default", async () => {
   await step("closes with Escape and returns focus", async () => {
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
   })
 
   await step("closes after choosing an item", async () => {

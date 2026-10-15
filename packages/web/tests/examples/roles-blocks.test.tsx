@@ -19,7 +19,7 @@ test("Matrix", async () => {
       name: "Content Delete for Editor",
     })
     await userEvent.click(permission)
-    await expect(permission).toHaveAttribute("aria-checked", "true")
+    await expect(permission).toBeChecked()
     await waitFor(() => expect(save).toBeEnabled())
   })
 
@@ -36,7 +36,7 @@ test("Editor", async () => {
     await expect(canvas.queryByRole("button", { name: "Save" })).toBeNull()
     const permission = canvas.getByRole("switch", { name: "Delete" })
     await userEvent.click(permission)
-    await expect(permission).toHaveAttribute("aria-checked", "true")
+    await expect(permission).toBeChecked()
     await expect(
       await canvas.findByRole("button", { name: "Save" })
     ).toBeEnabled()
@@ -46,7 +46,7 @@ test("Editor", async () => {
     await userEvent.click(canvas.getByRole("button", { name: "Revert" }))
     await expect(
       canvas.getByRole("switch", { name: "Delete" })
-    ).toHaveAttribute("aria-checked", "false")
+    ).not.toBeChecked()
     await waitFor(() =>
       expect(canvas.queryByRole("button", { name: "Save" })).toBeNull()
     )
