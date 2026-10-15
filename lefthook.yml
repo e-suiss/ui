@@ -4,12 +4,10 @@ pre-commit:
       run: pnpm exec lint-staged
     web-registry:
       glob: "packages/web/{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,components/charts/*.tsx,components/blocks/*.tsx,hooks/*.ts}"
-      root: packages/web/
-      run: node scripts/build-registry.mjs && git add registry.json
+      run: node packages/web/scripts/build-registry.mjs && git add packages/web/registry.json
     mobile-registry:
       glob: "{packages/mobile/uniwind/components/**/*.tsx,packages/mobile/stylesheet/components/**/*.ts*,packages/mobile/styles/uniwind.css,packages/tokens/tokens.json,packages/mobile/swiftui/Sources/**/*.swift,packages/mobile/swiftui/Package.swift,packages/mobile/kotlin/ui/src/main/**/*.kt,packages/mobile/kotlin/ui/build.gradle.kts}"
-      root: packages/mobile/
-      run: node scripts/build-tokens.mjs && node scripts/build-nativewind.mjs && node scripts/build-registry.mjs && git add styles/uniwind.css stylesheet/components/ui/theme.ts swiftui/Sources/EsuissUI/Theme/Tokens.swift kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt nativewind styles/nativewind.css styles/nativewind.config.js registry.json
+      run: node packages/mobile/scripts/build-tokens.mjs && node packages/mobile/scripts/build-nativewind.mjs && node packages/mobile/scripts/build-registry.mjs && git add packages/mobile/styles/uniwind.css packages/mobile/stylesheet/components/ui/theme.ts packages/mobile/swiftui/Sources/EsuissUI/Theme/Tokens.swift packages/mobile/kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt packages/mobile/nativewind packages/mobile/styles/nativewind.css packages/mobile/styles/nativewind.config.js packages/mobile/registry.json
 
 pre-push:
   parallel: true

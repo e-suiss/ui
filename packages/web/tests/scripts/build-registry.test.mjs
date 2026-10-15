@@ -1,16 +1,45 @@
 import { execFileSync } from "node:child_process"
-import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import { createProject } from "../../../cli/tests/helpers.mjs"
 
-const script = new URL("../../scripts/build-registry.mjs", import.meta.url)
-  .pathname
 const repo = new URL("../..", import.meta.url).pathname
+const PACKAGE = "packages/web"
+const SCRIPTS = [
+  [
+    "packages/web/scripts/build-registry.mjs",
+    `${PACKAGE}/scripts/build-registry.mjs`,
+  ],
+  ["scripts/lib/registry.mjs", "scripts/lib/registry.mjs"],
+]
+
+function fakeRepo(files) {
+  const root = createProject(
+    Object.fromEntries(
+      Object.entries(files).map(([file, content]) => [
+        `${PACKAGE}/${file}`,
+        content,
+      ])
+    )
+  )
+  for (const [from, to] of SCRIPTS) {
+    mkdirSync(path.dirname(path.join(root, to)), { recursive: true })
+    copyFileSync(path.join(repo, "../..", from), path.join(root, to))
+  }
+  return path.join(root, PACKAGE)
+}
 
 function build(cwd, ...args) {
   try {
+    const script = path.join(cwd, "scripts/build-registry.mjs")
     const stdout = execFileSync("node", [script, ...args], {
       cwd,
       encoding: "utf8",
@@ -31,7 +60,7 @@ function registryOf(cwd) {
 }
 
 function project(files) {
-  return createProject({ "styles/globals.css": "", ...files })
+  return fakeRepo({ "styles/globals.css": "", ...files })
 }
 
 const item = (cwd, name) =>
@@ -191,7 +220,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
   })
 
   it("requires the shared stylesheet", () => {
-    const cwd = createProject({ "components/ui/button.tsx": "export {}" })
+    const cwd = fakeRepo({ "components/ui/button.tsx": "export {}" })
     const result = build(cwd)
     expect(result.code).toBe(1)
     expect(result.stderr).toContain("missing styles/globals.css")
