@@ -1,6 +1,6 @@
 {
-  "name": "esuiss-uim",
-  "homepage": "https://github.com/e-suiss/uim",
+  "name": "esuiss-ui-mobile",
+  "homepage": "https://ui.suiss.app",
   "styles": {
     "uniwind": {
       "stylesheet": "styles/uniwind.css",

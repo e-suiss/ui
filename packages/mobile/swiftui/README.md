@@ -1,9 +1,9 @@
-# suiss/uim for SwiftUI
+# suiss/ui for SwiftUI
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-uim.suiss.app-black)](https://uim.suiss.app)
+[![Documentation](https://img.shields.io/badge/docs-ui.suiss.app-black)](https://ui.suiss.app)
 
-**EsuissUI is the SwiftUI library of [suiss/uim](https://github.com/e-suiss/uim): mobile components with a clean, minimal design** that follow the React Native and Jetpack Compose versions: the same names, parts and tokens, with light and dark mode.
+**EsuissUI is the SwiftUI library of [suiss/ui](https://github.com/e-suiss/ui): mobile components with a clean, minimal design** that follow the React Native and Jetpack Compose versions: the same names, parts and tokens, with light and dark mode.
 
 ## Features
 
@@ -25,7 +25,7 @@ Or in `Package.swift`:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/e-suiss/uim-swift", from: "0.4.0")
+  .package(url: "https://github.com/e-suiss/uim-swift", from: "0.6.0")
 ],
 targets: [
   .target(name: "App", dependencies: [.product(name: "EsuissUI", package: "uim-swift")])
@@ -54,7 +54,7 @@ struct ContentView: View {
 
 ## Contributing
 
-This repository is published from [e-suiss/uim](https://github.com/e-suiss/uim) on every release. Please open issues and pull requests there.
+This repository is published from [e-suiss/ui](https://github.com/e-suiss/ui/tree/main/packages/mobile) on every release. Please open issues and pull requests there.
 
 ## License
 

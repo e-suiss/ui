@@ -493,7 +493,7 @@ private struct PreviewGallery: View {
           Text("Read the release notes for")
             .font(TextStyle.base.font())
             .foregroundStyle(Color.label)
-          Text("esuiss/uim")
+          Text("suiss/ui")
             .font(TextStyle.base.font())
             .foregroundStyle(Color.link)
           Spacer()
@@ -505,7 +505,7 @@ private struct PreviewGallery: View {
           HStack(spacing: 12) {
             Avatar(url: nil, initials: "EU")
             VStack(alignment: .leading, spacing: 2) {
-              Text("esuiss/uim").font(TextStyle.base.font(weight: .semibold)).foregroundStyle(Color.label)
+              Text("suiss/ui").font(TextStyle.base.font(weight: .semibold)).foregroundStyle(Color.label)
               Text("Mobile UI components with a clean, minimal design.")
                 .font(TextStyle.sm.font())
                 .foregroundStyle(Color.labelSecondary)
@@ -526,7 +526,7 @@ private struct PreviewGallery: View {
         Caption(text: "Regular · popover")
         PreviewContent {
           VStack(alignment: .leading, spacing: 2) {
-            Text("esuiss/uim").font(TextStyle.base.font(weight: .semibold))
+            Text("suiss/ui").font(TextStyle.base.font(weight: .semibold))
             Text("Mobile UI components with a clean, minimal design.")
               .font(TextStyle.sm.font())
               .foregroundStyle(Color.labelSecondary)

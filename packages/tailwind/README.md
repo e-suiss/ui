@@ -1,6 +1,6 @@
 # @esuiss/tailwind
 
-The type scale, shadows, Tailwind CSS variants, animations, utilities, and base styles used by esuiss-ui components. Installed by `npx @esuiss/ui@latest init`.
+The type scale, shadows, Tailwind CSS variants, animations, utilities, and base styles used by suiss/ui components. Installed by `npx @esuiss/ui@latest init`.
 
 ```css
 @import "tailwindcss";
