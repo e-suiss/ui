@@ -133,7 +133,7 @@ Your stylesheet holds the whole theme:
 .dark {
   --background: oklch(0 0 0);
   --foreground: oklch(0.9707 0.0026 286.29);
-  --primary: oklch(0.5629 0.1933 256.16);
+  --primary: oklch(0.669 0.1808 251.84);
   --primary-foreground: oklch(1 0 0);
 }
 
