@@ -2,14 +2,8 @@ import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { CliError, list, note, step } from "../output.mjs"
 import { isInteractive } from "../prompt.mjs"
-import {
-  availableNames,
-  fetchFiles,
-  pickNames,
-  reportFiles,
-  showDiff,
-  writeFiles,
-} from "./add.mjs"
+import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
+import { availableNames, fetchFiles, pickNames } from "./add.mjs"
 import { fetchRegistry } from "./registry.mjs"
 
 const ANDROID_PLUGIN =
@@ -193,8 +187,7 @@ export async function initNative(options) {
   reportFiles(
     writeFiles(
       project.cwd,
-      project.root,
-      await fetchFiles(entries(files)),
+      await fetchFiles(project.root, entries(files)),
       options.overwrite
     )
   )
@@ -261,10 +254,12 @@ export async function addNative(names, options) {
 
   const items = selected.map((name) => byName.get(name))
   if (options.diff) {
-    await showDiff(
+    printDiff(
       project.cwd,
-      project.root,
-      entries(items.map((item) => item[options.platform][0]))
+      await fetchFiles(
+        project.root,
+        entries(items.map((item) => item[options.platform][0]))
+      )
     )
     return
   }
@@ -273,8 +268,7 @@ export async function addNative(names, options) {
   reportFiles(
     writeFiles(
       project.cwd,
-      project.root,
-      await fetchFiles(entries(files)),
+      await fetchFiles(project.root, entries(files)),
       options.overwrite
     )
   )

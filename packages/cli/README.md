@@ -6,7 +6,7 @@ Copy-paste React components with a clean, minimal design, built on [Base UI](htt
 
 `@esuiss/ui` is a command-line tool. It does not ship components as a dependency. Instead, it copies their source into your project so you own the code and can change it however you like.
 
-- 61 accessible components and 3 hooks, from buttons and dialogs to sidebars, charts, and chat views
+- 66 accessible components and 5 hooks, from buttons and dialogs to sidebars, charts, and chat views
 - A refined color palette for light and dark mode, written in oklch
 - [Phosphor](https://phosphoricons.com) icons
 - Next.js and React (Vite) with TypeScript

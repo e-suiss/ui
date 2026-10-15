@@ -1,8 +1,8 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { existsSync } from "node:fs"
 import path from "node:path"
-import { formatDiff } from "../diff.mjs"
-import { CliError, color, list, note, step } from "../output.mjs"
+import { CliError, note } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
+import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
 import { ensureBabelPlugin } from "./babel.mjs"
 import { ensurePodDeploymentTarget } from "./ios.mjs"
 import {
@@ -20,14 +20,17 @@ import {
 
 const CONCURRENCY = 8
 
-export async function fetchFiles(entries) {
+export async function fetchFiles(root, entries) {
   const results = new Array(entries.length)
   let next = 0
   const worker = async () => {
     while (next < entries.length) {
       const index = next++
       const { file, source } = entries[index]
-      results[index] = { file, content: await fetchText(source) }
+      results[index] = {
+        target: path.join(root, file),
+        content: await fetchText(source),
+      }
     }
   }
   await Promise.all(
@@ -45,70 +48,6 @@ function itemEntries(registry, items, styling) {
   )
 }
 
-export function writeFiles(cwd, root, files, overwrite) {
-  const created = []
-  const updated = []
-  const skipped = []
-
-  for (const { file, content } of files) {
-    const target = path.join(root, file)
-    const relative = path.relative(cwd, target)
-    if (!existsSync(target)) {
-      mkdirSync(path.dirname(target), { recursive: true })
-      writeFileSync(target, content)
-      created.push(relative)
-    } else if (readFileSync(target, "utf8") !== content) {
-      if (overwrite) {
-        writeFileSync(target, content)
-        updated.push(relative)
-      } else {
-        skipped.push(relative)
-      }
-    }
-  }
-  return { created, updated, skipped }
-}
-
-export function reportFiles({ created, updated, skipped }, installed = []) {
-  if (created.length) {
-    step(`Created ${created.length} file${created.length === 1 ? "" : "s"}:`)
-    list(created)
-  }
-  if (updated.length) {
-    step(`Updated ${updated.length} file${updated.length === 1 ? "" : "s"}:`)
-    list(updated)
-  }
-  if (installed.length) step(`Installed ${installed.join(", ")}`)
-  if (skipped.length) {
-    note(
-      `Kept ${skipped.length} local file${skipped.length === 1 ? " that differs" : "s that differ"} from the registry. Review with --diff, replace with --overwrite:`
-    )
-    list(skipped)
-  }
-  if (!created.length && !updated.length && !skipped.length) {
-    step("Already up to date.")
-  }
-}
-
-export async function showDiff(cwd, root, entries) {
-  let changes = 0
-
-  for (const { file, content } of await fetchFiles(entries)) {
-    const target = path.join(root, file)
-    const relative = path.relative(cwd, target)
-    if (!existsSync(target)) {
-      note(`${relative} is not installed.`)
-      continue
-    }
-    const diff = formatDiff(readFileSync(target, "utf8"), content)
-    if (!diff) continue
-    changes++
-    console.log(`\n${color.bold(relative)}\n${diff}`)
-  }
-
-  if (!changes) step("No differences from the registry.")
-}
-
 export async function installItems(
   project,
   root,
@@ -119,8 +58,7 @@ export async function installItems(
   const items = resolveItems(registry, names)
   const result = writeFiles(
     project.cwd,
-    root,
-    await fetchFiles(itemEntries(registry, items, styling)),
+    await fetchFiles(root, itemEntries(registry, items, styling)),
     overwrite
   )
 
@@ -216,7 +154,10 @@ export async function add(names, options) {
     const items = resolveItems(registry, selected).filter((item) =>
       requested.has(item.name)
     )
-    await showDiff(project.cwd, root, itemEntries(registry, items, styling))
+    printDiff(
+      project.cwd,
+      await fetchFiles(root, itemEntries(registry, items, styling))
+    )
   } else {
     await installItems(project, root, registry, selected, {
       overwrite: options.overwrite,

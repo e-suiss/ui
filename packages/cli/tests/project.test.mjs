@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process"
 import path from "node:path"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-
+import { install as installMobile } from "../lib/mobile/project.mjs"
 import { CliError } from "../lib/output.mjs"
 import { detectProject, findAliasRoot, install } from "../lib/project.mjs"
 import { createProject } from "./helpers.mjs"
@@ -168,6 +168,47 @@ describe("install", () => {
     "refuses the invalid package name %s",
     (name) => {
       expect(() => install(project("npm"), [name])).toThrow(
+        `Refusing to install an invalid package name: ${name}`
+      )
+      expect(spawnSync).not.toHaveBeenCalled()
+    }
+  )
+})
+
+describe("mobile install", () => {
+  const project = (framework) => ({
+    cwd: "/project",
+    framework,
+    packageManager: "npm",
+    packages: {},
+  })
+
+  beforeEach(() => {
+    vi.mocked(spawnSync).mockClear()
+    vi.mocked(spawnSync).mockReturnValue({ status: 0 })
+  })
+
+  it("accepts version specs and reports the bare package names", () => {
+    const installed = installMobile(project("react-native"), [
+      "nativewind@^4.2.7",
+      "@scope/name@1.0.0",
+    ])
+    expect(installed).toEqual(["nativewind", "@scope/name"])
+    expect(spawnSync).toHaveBeenCalledWith(
+      "npm",
+      ["install", "nativewind@^4.2.7", "@scope/name@1.0.0"],
+      expect.anything()
+    )
+  })
+
+  it.each([
+    ["expo", "cmdk & calc", "cmdk & calc"],
+    ["react-native", "--registry=http://evil", "--registry=http://evil"],
+    ["react-native", "../local@1.0.0", "../local"],
+  ])(
+    "refuses an invalid package name in a %s project",
+    (framework, spec, name) => {
+      expect(() => installMobile(project(framework), [spec])).toThrow(
         `Refusing to install an invalid package name: ${name}`
       )
       expect(spawnSync).not.toHaveBeenCalled()
