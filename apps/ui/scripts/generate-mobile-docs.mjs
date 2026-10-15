@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { componentApi, storyExamples } from "./lib/extract-mobile.mjs";
@@ -46,24 +46,21 @@ function groupOf(item) {
   return undefined;
 }
 
-const sources = path.join(root, "registry");
-rmSync(sources, { recursive: true, force: true });
+const realPaths = new Map();
 
-function copySource(from, to) {
-  const source = path.join(uimRepo, from);
-  if (!existsSync(source)) return undefined;
-  mkdirSync(path.dirname(path.join(sources, to)), { recursive: true });
-  cpSync(source, path.join(sources, to));
+function sourceOf(from, to) {
+  if (!existsSync(path.join(uimRepo, from))) return undefined;
+  realPaths.set(to, path.join(uimRepo, from));
   return to;
 }
 
 function stylingFile(item, styling, file) {
   const from = item.overrides.includes(styling) ? path.join(styling, file) : file;
-  return copySource(from, path.join(styling, file));
+  return sourceOf(from, path.join(styling, file));
 }
 
 function platformFile(platform, file) {
-  return copySource(path.join(platforms[platform].directory, file), path.join(platform, file));
+  return sourceOf(path.join(platforms[platform].directory, file), path.join(platform, file));
 }
 
 const contentRoot = path.join(root, ".generated/mobile");
@@ -233,7 +230,7 @@ function page(item) {
 
   const examples = examplesOf(item);
   const uniwind = stylingFile(item, "uniwind", file);
-  const parts = visual || !uniwind ? [] : componentApi(file, readFileSync(path.join(sources, uniwind), "utf8"));
+  const parts = visual || !uniwind ? [] : componentApi(file, readFileSync(realPaths.get(uniwind), "utf8"));
   const main = pascal(item.name);
 
   const nativeFiles = Object.fromEntries(

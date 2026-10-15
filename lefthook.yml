@@ -6,9 +6,6 @@ pre-commit:
       glob: "packages/web/{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,components/charts/*.tsx,components/blocks/*.tsx,hooks/*.ts}"
       root: packages/web/
       run: node scripts/build-registry.mjs && git add registry.json
-    site-sync:
-      glob: "packages/web/{components/ui/*.tsx,components/patterns/*.tsx,components/interactions/*.tsx,components/charts/*.tsx,components/blocks/*.tsx,hooks/*.ts}"
-      run: node scripts/sync-site.mjs && git add apps/ui/components apps/ui/hooks
     mobile-registry:
       glob: "{packages/mobile/uniwind/components/**/*.tsx,packages/mobile/stylesheet/components/**/*.ts*,packages/mobile/styles/uniwind.css,packages/tokens/tokens.json,packages/mobile/swiftui/Sources/**/*.swift,packages/mobile/swiftui/Package.swift,packages/mobile/kotlin/ui/src/main/**/*.kt,packages/mobile/kotlin/ui/build.gradle.kts}"
       root: packages/mobile/
@@ -25,8 +22,6 @@ pre-push:
       run: pnpm typecheck
     registry:
       run: pnpm registry:check
-    site-sync:
-      run: node scripts/sync-site.mjs --check
     test:
       run: pnpm test
 

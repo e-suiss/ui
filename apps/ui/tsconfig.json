@@ -19,6 +19,12 @@
       }
     ],
     "paths": {
+      "@/components/ui/*": ["../../packages/web/components/ui/*"],
+      "@/components/patterns/*": ["../../packages/web/components/patterns/*"],
+      "@/components/interactions/*": ["../../packages/web/components/interactions/*"],
+      "@/components/charts/*": ["../../packages/web/components/charts/*"],
+      "@/components/blocks/*": ["../../packages/web/components/blocks/*"],
+      "@/hooks/*": ["../../packages/web/hooks/*"],
       "@/*": ["./*"],
       "storybook/test": ["./lib/storybook/test.ts"],
       "@storybook/react-vite": ["./lib/storybook/react-vite.ts"]
@@ -32,5 +38,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "registry"]
+  "exclude": ["node_modules"]
 }

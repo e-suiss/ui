@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   outputFileTracingIncludes: {
-    "/**": ["./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff", "./components/**/*", "./registry/**/*"],
+    "/**": ["./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff", "../../packages/web/components/**/*", "../../packages/web/hooks/**/*", "../../packages/mobile/components/**/*", "../../packages/mobile/uniwind/components/**/*", "../../packages/mobile/nativewind/components/**/*", "../../packages/mobile/stylesheet/components/**/*", "../../packages/mobile/swiftui/Sources/**/*", "../../packages/mobile/kotlin/ui/src/main/**/*"],
   },
   reactStrictMode: true,
   agentRules: false,
@@ -39,6 +39,7 @@ const nextConfig: NextConfig = {
     return [{ source: "/docs/:path*", headers: [{ key: "Vary", value: "Accept" }] }];
   },
   turbopack: {
+    root: path.join(import.meta.dirname, "../.."),
     resolveAlias: {
       "storybook/test": "./lib/storybook/test.ts",
       "@storybook/react-vite": "./lib/storybook/react-vite.ts",

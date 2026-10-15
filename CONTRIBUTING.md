@@ -19,7 +19,6 @@ pnpm format          # apply Biome fixes and formatting
 pnpm knip            # unused files, exports, and dependencies in every package
 pnpm registry        # regenerate the web and mobile registries and the site pages
 pnpm registry:check  # fail if a registry is out of date
-pnpm sync-site       # copy changed library components into the sites
 pnpm --filter @esuiss/web storybook     # web Storybook at http://localhost:6006
 pnpm --filter @esuiss/mobile start      # the React Native Storybook app
 ```
@@ -35,9 +34,9 @@ Layout:
 
 Git hooks are installed by `pnpm install`:
 
-- pre-commit: Biome fixes and checks the staged files (warnings fail too). Changed web components regenerate `packages/web/registry.json` and the copies in the sites; changed mobile components, the Uniwind stylesheet or the tokens regenerate the NativeWind files, the themes and `packages/mobile/registry.json`.
+- pre-commit: Biome fixes and checks the staged files (warnings fail too). Changed web components regenerate `packages/web/registry.json`; changed mobile components, the Uniwind stylesheet or the tokens regenerate the NativeWind files, the themes and `packages/mobile/registry.json`.
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
-- pre-push: Biome, Knip, typecheck, the registry checks, the site copy check, and the tests.
+- pre-push: Biome, Knip, typecheck, the registry checks and the tests.
 
 ## Deploy
 

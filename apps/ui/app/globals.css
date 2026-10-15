@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "@esuiss/tailwind";
 
+@source "../../../packages/web/components";
+@source "../../../packages/web/hooks";
+@source "../../../packages/web/stories";
+
 :root {
   --surface: oklch(1 0 0);
   --surface-secondary: oklch(0.9707 0.0026 286.29);

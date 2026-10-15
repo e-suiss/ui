@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { highlightHast } from "fumadocs-core/highlight";
@@ -39,14 +40,30 @@ export const tokenClasses = {
   },
 };
 
-const componentsRoot = path.join(process.cwd(), "components");
-const registryRoot = path.join(process.cwd(), "registry");
+const packages = path.join(process.cwd(), "../../packages");
+const webRoot = path.join(packages, "web");
+const mobileRoot = path.join(packages, "mobile");
+const nativeRoots: Record<string, string> = {
+  swift: path.join(mobileRoot, "swiftui/Sources/EsuissUI"),
+  kotlin: path.join(mobileRoot, "kotlin/ui/src/main/kotlin/com/esuiss/ui"),
+};
+const stylings = new Set(["uniwind", "nativewind", "stylesheet"]);
+
+function resolveSource(file: string) {
+  const [head = "", ...rest] = file.split("/");
+  const tail = rest.join("/");
+  if (head === "components" || head === "hooks") return { root: webRoot, resolved: path.join(webRoot, file) };
+  if (nativeRoots[head]) return { root: nativeRoots[head], resolved: path.join(nativeRoots[head], tail) };
+  if (stylings.has(head)) {
+    const own = path.join(mobileRoot, file);
+    return { root: mobileRoot, resolved: existsSync(own) ? own : path.join(mobileRoot, tail) };
+  }
+  return undefined;
+}
 
 export function sourcePath(file: string) {
-  const web = file.startsWith("components/");
-  const root = web ? componentsRoot : registryRoot;
-  const resolved = path.join(root, web ? path.relative("components", file) : file);
-  return resolved.startsWith(`${root}${path.sep}`) ? resolved : undefined;
+  const source = resolveSource(file);
+  return source?.resolved.startsWith(`${source.root}${path.sep}`) ? source.resolved : undefined;
 }
 
 export async function readSource(file: string) {
