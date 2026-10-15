@@ -2,7 +2,13 @@ import { existsSync } from "node:fs"
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 
-const ROOT = process.cwd()
+import {
+  collectImports,
+  packageName,
+  toTitle,
+} from "../../../scripts/lib/registry.mjs"
+
+const ROOT = path.resolve(import.meta.dirname, "..")
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
@@ -20,25 +26,6 @@ const sources = [
 ]
 
 const SOURCE_FILE = /\.(tsx?|jsx?)$/
-
-function toTitle(name) {
-  return name
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ")
-}
-
-function packageName(specifier) {
-  const parts = specifier.split("/")
-  return specifier.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0]
-}
-
-function collectImports(code) {
-  const specifiers = new Set()
-  const pattern = /(?:from\s+|import\s+)["']([^"']+)["']/g
-  for (const match of code.matchAll(pattern)) specifiers.add(match[1])
-  return [...specifiers]
-}
 
 async function buildItem(dir, type, file) {
   const filePath = path.posix.join(dir, file)

@@ -1,7 +1,11 @@
 import { existsSync } from "node:fs"
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
-
+import {
+  collectImports,
+  packageName,
+  toTitle,
+} from "../../../scripts/lib/registry.mjs"
 import {
   buildNativeGraph,
   nativeFileOf,
@@ -9,7 +13,9 @@ import {
   PLATFORMS,
 } from "./native-registry.mjs"
 
-const ROOT = process.cwd()
+const SCRIPT_EXTENSION = /\.(tsx?|jsx?)$/
+
+const ROOT = path.resolve(import.meta.dirname, "..")
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLES = {
   uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
@@ -40,25 +46,6 @@ const sources = [
   { dir: "components/blocks", type: "block" },
   { dir: "components/charts", type: "chart" },
 ]
-
-function toTitle(name) {
-  return name
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ")
-}
-
-function packageName(specifier) {
-  const parts = specifier.split("/")
-  return specifier.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0]
-}
-
-function collectImports(code) {
-  const specifiers = new Set()
-  const pattern = /(?:from\s+|import\s+)["']([^"']+)["']/g
-  for (const match of code.matchAll(pattern)) specifiers.add(match[1])
-  return [...specifiers]
-}
 
 async function analyze(filePath, name) {
   const code = await readFile(path.join(ROOT, filePath), "utf8")
@@ -156,12 +143,12 @@ for (const { dir, type } of sources) {
   const folder = path.join(ROOT, STYLES.uniwind.directory, dir)
   if (!existsSync(folder)) continue
   const files = (await readdir(folder))
-    .filter((file) => /\.(tsx?|jsx?)$/.test(file))
+    .filter((file) => SCRIPT_EXTENSION.test(file))
     .sort()
   for (const file of files) items.push(await buildItem(dir, type, file))
 }
 for (const file of (await readdir(path.join(ROOT, PRIMITIVES_DIR)))
-  .filter((entry) => /\.(tsx?|jsx?)$/.test(entry))
+  .filter((entry) => SCRIPT_EXTENSION.test(entry))
   .sort()) {
   items.push(await buildPrimitive(file))
 }
@@ -197,8 +184,8 @@ if (problems.length) {
 }
 
 const registry = {
-  name: "esuiss-uim",
-  homepage: "https://github.com/e-suiss/uim",
+  name: "esuiss-ui-mobile",
+  homepage: "https://ui.suiss.app",
   styles: STYLES,
   platforms,
   items,

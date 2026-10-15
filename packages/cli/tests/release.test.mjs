@@ -47,6 +47,11 @@ function repository({ cli = "0.9.0", tailwind = "0.9.0" } = {}) {
     registryScript,
     path.join(cwd, "packages/web/scripts/build-registry.mjs")
   )
+  mkdirSync(path.join(cwd, "scripts/lib"))
+  copyFileSync(
+    path.join(scripts, "lib/registry.mjs"),
+    path.join(cwd, "scripts/lib/registry.mjs")
+  )
   execFileSync("node", ["scripts/build-registry.mjs"], {
     cwd: path.join(cwd, "packages/web"),
     env,
