@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 9,
     paddingVertical: 2,
   },
-  badgeText: { ...fontSize["2xs"], fontWeight: "600" },
+  badgeText: { ...fontSize.xs, fontWeight: "600" },
 })
 
 function PlanCard({

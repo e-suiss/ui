@@ -257,7 +257,6 @@ public struct WheelPickerItem<Value: Hashable & Sendable, Label: View>: View {
   public var body: some View {
     label
       .font(TextStyle.xl.font())
-      .tracking(TextStyle.xl.letterSpacing)
       .monospacedDigit()
       .lineLimit(1)
       .fixedSize()

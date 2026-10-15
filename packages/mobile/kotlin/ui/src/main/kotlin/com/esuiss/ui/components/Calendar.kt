@@ -307,7 +307,7 @@ fun CalendarDayButton(
 private enum class DaySelection { None, Single, RangeStart, RangeMiddle, RangeEnd, RangeBoth }
 
 private fun dayTextStyle(size: CalendarSize): TextStyle = when (size) {
-    CalendarSize.Sm -> Typography.xs3
+    CalendarSize.Sm -> Typography.xs
     CalendarSize.Default -> Typography.sm
     CalendarSize.Lg -> Typography.lg
 }
@@ -497,7 +497,7 @@ private fun CalendarMonth(
     val weekdayFull = remember(locale) { android.icu.text.SimpleDateFormat("EEEE", locale) }
     val weekdayStyle = when (size) {
         CalendarSize.Lg -> Typography.xs
-        else -> Typography.xs3
+        else -> Typography.xs
     }.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold)
     val cell = size.cell
 

@@ -175,7 +175,7 @@ public struct SectionIndexBar: View {
     VStack(spacing: 0) {
       ForEach(items, id: \.key) { item in
         Text(verbatim: item.label)
-          .font(TextStyle.xs3.font(weight: .semibold))
+          .font(TextStyle.xs.font(weight: .semibold))
           .foregroundStyle(EsuissColor.primary)
           .frame(minWidth: 12, minHeight: SectionIndexMath.rowHeight, maxHeight: SectionIndexMath.rowHeight)
       }

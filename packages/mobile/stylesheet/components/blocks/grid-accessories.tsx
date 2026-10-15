@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   badgeText: {
-    ...fontSize["2xs"],
+    ...fontSize.xs,
     fontWeight: "600",
     fontVariant: ["tabular-nums"],
   },

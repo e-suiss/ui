@@ -312,7 +312,7 @@ public struct MessageScrollerButton: View {
     .overlay(alignment: .topTrailing) {
       if unread > 0 {
         Text(unread > 99 ? "99+" : "\(unread)")
-          .font(TextStyle.xs2.font(weight: .semibold))
+          .font(TextStyle.xs.font(weight: .semibold))
           .monospacedDigit()
           .lineLimit(1)
           .fixedSize()

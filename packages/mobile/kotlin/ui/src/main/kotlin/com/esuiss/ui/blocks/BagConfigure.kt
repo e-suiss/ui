@@ -211,7 +211,7 @@ fun BagConfigure(
                                 )
                                 BasicText(
                                     if (item.extra > 0) "+${configureMoney(item.extra, 0)}" else "Included",
-                                    style = Typography.xs2.copy(color = colors.mutedForeground),
+                                    style = Typography.xs.copy(color = colors.mutedForeground),
                                     maxLines = 1,
                                 )
                             }

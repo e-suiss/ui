@@ -153,7 +153,7 @@ public struct ChatSupport: View {
             Circle().frame(width: 6, height: 6)
             Text("Online")
           }
-          .scaledFont(.xs2)
+          .scaledFont(.xs)
           .foregroundStyle(Color.adaptive(light: Palette.green600, dark: Palette.green400))
         }
         .frame(maxWidth: .infinity, alignment: .leading)

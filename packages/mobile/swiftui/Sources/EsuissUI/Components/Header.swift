@@ -136,7 +136,7 @@ public struct HeaderTitle: View {
         .foregroundStyle(EsuissColor.foreground)
       if let subtitle {
         subtitle
-          .scaledFont(.xs2)
+          .scaledFont(.xs)
           .foregroundStyle(EsuissColor.mutedForeground)
       }
     }

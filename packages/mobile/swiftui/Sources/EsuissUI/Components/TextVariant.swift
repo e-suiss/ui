@@ -89,7 +89,6 @@ private struct ScaledTextStyleModifier: ViewModifier {
     let lineSpacing = max(0, style.lineHeight * scale - UIFont.systemFont(ofSize: size).lineHeight)
     content
       .font(.system(size: size, weight: weight))
-      .tracking(style.letterSpacing)
       .lineSpacing(lineSpacing)
       .padding(.vertical, lineSpacing / 2)
   }
@@ -114,6 +113,5 @@ private struct ScaledFontModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .font(.system(size: style.size * scale, weight: weight))
-      .tracking(style.letterSpacing)
   }
 }

@@ -41,7 +41,6 @@ public struct Card<Content: View>: View {
     .frame(maxWidth: .infinity, alignment: .leading)
     .environment(\.cardSpacing, size.spacing)
     .font(TextStyle.base.font())
-    .tracking(TextStyle.base.letterSpacing)
     .foregroundStyle(EsuissColor.foreground)
     .background(variant == .filled ? EsuissColor.muted : EsuissColor.card, in: shape)
     .clipShape(shape)

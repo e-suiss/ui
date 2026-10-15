@@ -90,7 +90,6 @@ struct MenuPanel<Content: View>: View {
       ScrollView { stack }
     }
     .font(TextStyle.base.font())
-    .tracking(TextStyle.base.letterSpacing)
     .foregroundStyle(EsuissColor.foreground)
     .environment(\.menuPresentation, .popup)
     .popupSurface(radius: Radius.xl)
@@ -316,7 +315,6 @@ public struct DropdownMenuLabel: View {
     } else {
       Text(title)
         .font(TextStyle.xs.font(weight: .semibold))
-        .tracking(TextStyle.xs.letterSpacing)
         .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.leading, inset ? 38 : 12)
         .padding(.trailing, 12)

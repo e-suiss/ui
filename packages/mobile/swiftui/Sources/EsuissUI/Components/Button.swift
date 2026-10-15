@@ -39,7 +39,7 @@ public struct VariantButtonStyle: ButtonStyle {
 
     var textStyle: TextStyle {
       switch self {
-      case .xs, .iconXs: .xs2
+      case .xs, .iconXs: .xs
       case .lg, .xl: .base
       default: .sm
       }
@@ -120,7 +120,6 @@ private struct StyledButton: View {
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: metrics?.spacing ?? size.spacing, iconSize: metrics?.iconSize ?? size.iconSize))
     .font((metrics?.textStyle ?? size.textStyle).font())
-    .tracking((metrics?.textStyle ?? size.textStyle).letterSpacing)
     .underline(variant == .link && pressed && isEnabled)
     .lineLimit(1)
     .foregroundStyle(foreground)

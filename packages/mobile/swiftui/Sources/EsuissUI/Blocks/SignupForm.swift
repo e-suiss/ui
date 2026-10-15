@@ -135,7 +135,7 @@ public struct SignupForm: View {
         section("suiss Account") {
           input(Text(verbatim: "name@example.com"), text: $form.email, field: .email, content: .emailAddress, keyboard: .emailAddress)
           Text("This will be your new suiss Account.")
-            .scaledTextStyle(.xs2)
+            .scaledTextStyle(.xs)
             .foregroundStyle(EsuissColor.mutedForeground)
         }
         section("Password") {

@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   titleText: { flexShrink: 1 },
   list: { gap: 4, paddingHorizontal: 10, paddingVertical: 16 },
   stamp: {
-    ...fontSize["2xs"],
+    ...fontSize.xs,
     marginTop: 4,
     marginBottom: 10,
     textAlign: "center",
@@ -451,7 +451,7 @@ function ChatConversations({
                 </Text>
                 <Text
                   accessibilityLiveRegion="polite"
-                  style={[fontSize["2xs"], { color: colors.mutedForeground }]}
+                  style={[fontSize.xs, { color: colors.mutedForeground }]}
                 >
                   {typing === thread.name ? "typing…" : "Message"}
                 </Text>

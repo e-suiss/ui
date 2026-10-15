@@ -19,9 +19,9 @@ const ROOT_SIZE: Record<AvatarSize, number> = {
 }
 
 const TEXT_SIZE: Record<AvatarSize, keyof typeof fontSize> = {
-  sm: "3xs",
+  sm: "xs",
   default: "xs",
-  lg: "md",
+  lg: "base",
   xl: "2xl",
 }
 

@@ -216,7 +216,7 @@ private fun TicketRow(ticket: SupportTicket, active: Boolean, onClick: () -> Uni
                     modifier = Modifier
                         .background(fill, RoundedCornerShape(Radius.md))
                         .padding(horizontal = 8.dp, vertical = 2.dp),
-                    style = Typography.xs3.copy(color = ink, fontWeight = FontWeight.SemiBold),
+                    style = Typography.xs.copy(color = ink, fontWeight = FontWeight.SemiBold),
                 )
             }
             BasicText(ticket.title, style = Typography.base.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold))

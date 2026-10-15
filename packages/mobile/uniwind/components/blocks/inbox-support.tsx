@@ -294,7 +294,7 @@ function InboxSupport({
                   </Text>
                   <View className={cn("rounded-md px-2 py-0.5", priority.box)}>
                     <Text
-                      className={cn("text-2xs font-semibold", priority.text)}
+                      className={cn("text-xs font-semibold", priority.text)}
                     >
                       {ticket.priority}
                     </Text>

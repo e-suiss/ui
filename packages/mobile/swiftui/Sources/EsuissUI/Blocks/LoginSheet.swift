@@ -101,7 +101,7 @@ struct LoginSheetPanel: View {
             .foregroundStyle(EsuissColor.mutedForeground)
           VStack(alignment: .leading, spacing: 0) {
             Text("Name")
-              .scaledFont(.xs2)
+              .scaledFont(.xs)
               .foregroundStyle(EsuissColor.mutedForeground)
             Text(verbatim: "Jamie Rivera")
               .scaledFont(.base)
@@ -157,7 +157,7 @@ struct LoginSheetPanel: View {
         Text(label)
           .scaledFont(.base)
         hint
-          .scaledFont(.xs2)
+          .scaledFont(.xs)
           .foregroundStyle(EsuissColor.mutedForeground)
       }
       .frame(maxWidth: .infinity, alignment: .leading)

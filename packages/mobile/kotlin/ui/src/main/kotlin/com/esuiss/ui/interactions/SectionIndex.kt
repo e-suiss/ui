@@ -236,7 +236,7 @@ fun SectionIndexBar(
                     Box(modifier = Modifier.height(RowHeight).widthIn(min = 12.dp), contentAlignment = Alignment.Center) {
                         BasicText(
                             label,
-                            style = Typography.xs3.copy(color = colors.primary, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+                            style = Typography.xs.copy(color = colors.primary, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
                         )
                     }
                 }

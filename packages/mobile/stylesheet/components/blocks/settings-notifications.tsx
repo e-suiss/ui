@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footnote: {
-    ...fontSize["2xs"],
+    ...fontSize.xs,
     position: "absolute",
     left: 0,
     right: 0,
@@ -207,7 +207,7 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
             <Text style={[fontSize.xs, { flex: 1, fontWeight: "600" }]}>
               Riley Morgan
             </Text>
-            <Text style={[fontSize["2xs"], { color: colors.mutedForeground }]}>
+            <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
               now
             </Text>
           </View>

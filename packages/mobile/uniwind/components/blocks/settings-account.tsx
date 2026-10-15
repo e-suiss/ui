@@ -113,7 +113,9 @@ function EditableCard({
             className={(state) =>
               cn(
                 "h-12 rounded-xl bg-background text-lg",
-                state.focused ? "border-ring" : "border-input"
+                state.focused
+                  ? "border-ring ring-3 ring-ring/50"
+                  : "border-input"
               )
             }
           />

@@ -142,7 +142,7 @@ public struct BagConfigure: View {
                         Text("Included")
                       }
                     }
-                    .scaledFont(.xs2)
+                    .scaledFont(.xs)
                     .foregroundStyle(EsuissColor.mutedForeground)
                   }
                   .lineLimit(1)

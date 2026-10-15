@@ -141,7 +141,7 @@ public struct ImageViewer: View {
         VStack {
           ZStack {
             Text("\(current + 1) of \(count)")
-              .scaledFont(.md, weight: .semibold)
+              .scaledFont(.base, weight: .semibold)
               .monospacedDigit()
               .foregroundStyle(EsuissColor.foreground)
             HStack {

@@ -47,7 +47,7 @@ public struct EmptyBag: View {
                   .overlay(alignment: .bottomTrailing) {
                     if count > 0 {
                       Text(verbatim: "\(count)")
-                        .font(.system(size: TextStyle.xs3.size, weight: .semibold))
+                        .font(.system(size: TextStyle.xs.size, weight: .semibold))
                         .monospacedDigit()
                         .foregroundStyle(EsuissColor.background)
                         .frame(width: 20, height: 20)

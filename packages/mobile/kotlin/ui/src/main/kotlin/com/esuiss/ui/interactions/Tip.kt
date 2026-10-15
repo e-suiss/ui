@@ -49,7 +49,6 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
@@ -339,8 +338,6 @@ fun TipAnchor(
 
 private val TipArrow = 8.dp
 
-private val TipShadow = Shadow(0.dp, 12.dp, 24.dp, Color.Black.copy(alpha = 0.14f))
-
 @Stable
 private class TipPlacement {
     var side by mutableStateOf(PopupSide.Bottom)
@@ -510,7 +507,7 @@ fun TipPopover(
                         TipSurface(
                             modifier = modifier
                                 .fillMaxWidth()
-                                .shadow(TipShadow.copy(color = colors.foreground.copy(alpha = 0.14f)), shape)
+                                .shadow(Shadow(0.dp, 12.dp, 24.dp, colors.foreground.copy(alpha = 0.14f)), shape)
                                 .background(colors.popover, shape)
                                 .border(0.5.dp, colors.input, shape)
                                 .padding(

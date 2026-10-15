@@ -272,7 +272,7 @@ private struct InboxSupportPriority: View {
     case .low: EsuissColor.mutedForeground
     }
     Text(LocalizedStringKey(priority.rawValue))
-      .scaledFont(.xs2, weight: .semibold)
+      .scaledFont(.xs, weight: .semibold)
       .foregroundStyle(tint)
       .padding(.horizontal, 8)
       .padding(.vertical, 2)

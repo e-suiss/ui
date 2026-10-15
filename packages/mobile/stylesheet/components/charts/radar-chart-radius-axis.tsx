@@ -34,7 +34,7 @@ const chartConfig = {
 
 export function RadarChartRadiusAxis() {
   const { colors } = useTheme()
-  const tickStyle = { ...fontSize["2xs"], color: colors.mutedForeground }
+  const tickStyle = { ...fontSize.xs, color: colors.mutedForeground }
   return (
     <Card variant="filled" size="sm">
       <CardHeader>

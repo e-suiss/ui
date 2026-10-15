@@ -246,7 +246,7 @@ private fun GradientAvatar(initials: String, modifier: Modifier, size: AvatarSiz
             ) {
                 BasicText(
                     initials,
-                    style = (if (size == AvatarSize.Sm) Typography.xs3 else Typography.xl3).copy(
+                    style = (if (size == AvatarSize.Sm) Typography.xs else Typography.xl3).copy(
                         color = colors.primaryForeground,
                         fontWeight = FontWeight.SemiBold,
                     ),

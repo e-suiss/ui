@@ -287,7 +287,7 @@ fun BoxScope.MessageScrollerButton(
             ) {
                 BasicText(
                     if (unread > 99) "99+" else unread.toString(),
-                    style = Typography.xs2.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
+                    style = Typography.xs.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
                     maxLines = 1,
                 )
             }

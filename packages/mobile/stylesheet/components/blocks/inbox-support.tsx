@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
   },
-  priorityText: { ...fontSize["2xs"], fontWeight: "600" },
+  priorityText: { ...fontSize.xs, fontWeight: "600" },
   ticketTitle: { ...fontSize.base, fontWeight: "600" },
   ticketFooter: {
     marginTop: 4,

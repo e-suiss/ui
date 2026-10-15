@@ -15,7 +15,6 @@ public struct PopoverContent<Content: View>: View {
       content
     }
     .font(TextStyle.base.font())
-    .tracking(TextStyle.base.letterSpacing)
     .foregroundStyle(EsuissColor.foreground)
     .padding(16)
     .frame(width: width, alignment: .leading)

@@ -84,7 +84,7 @@ public struct EmptySearch: View {
   private var suggested: some View {
     VStack(alignment: .leading, spacing: 4) {
       Text("Suggested")
-        .scaledFont(.xs2)
+        .scaledFont(.xs)
         .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.bottom, 6)
         .accessibilityAddTraits(.isHeader)

@@ -211,7 +211,7 @@ private fun AccessoryBag(count: Int) {
             ) {
                 BasicText(
                     count.toString(),
-                    style = Typography.xs3.copy(color = colors.background, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    style = Typography.xs.copy(color = colors.background, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                 )
             }
         }

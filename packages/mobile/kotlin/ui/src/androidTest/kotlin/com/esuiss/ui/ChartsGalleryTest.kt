@@ -228,7 +228,7 @@ private fun TooltipFormatter() {
                                     Modifier.alignByBaseline(),
                                     style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
-                                BasicText("kcal", Modifier.alignByBaseline(), style = Typography.xs2.copy(color = colors.mutedForeground))
+                                BasicText("kcal", Modifier.alignByBaseline(), style = Typography.xs.copy(color = colors.mutedForeground))
                             }
                         },
                     )
@@ -295,7 +295,7 @@ private fun TooltipCustom() {
                             .background(colors.card, shape)
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
-                        BasicText("TOTAL", style = Typography.xs2.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
+                        BasicText("TOTAL", style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold))
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             BasicText(
                                 number.format(entry.value),

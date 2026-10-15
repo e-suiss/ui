@@ -50,7 +50,7 @@ fun RadarChartRadiusAxis(modifier: Modifier = Modifier) {
             ) {
                 RadarChart(chartData, outerRadius = 0.7f, accessibilityLabel = "Value axis") {
                     ChartTooltip { ChartTooltipContent(indicator = ChartTooltipIndicator.Line) }
-                    PolarRadiusAxis(angle = 90f, domain = 0.0..100.0, tickStyle = Typography.xs2.copy(color = colors.mutedForeground))
+                    PolarRadiusAxis(angle = 90f, domain = 0.0..100.0, tickStyle = Typography.xs.copy(color = colors.mutedForeground))
                     PolarGrid(stroke = colors.border)
                     PolarAngleAxis(label = { it.skill })
                     Radar(

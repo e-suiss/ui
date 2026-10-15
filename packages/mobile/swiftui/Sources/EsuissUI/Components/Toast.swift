@@ -229,12 +229,10 @@ struct ToastCard: View {
       VStack(alignment: .leading, spacing: 4) {
         Text(item.title)
           .font(TextStyle.sm.font(weight: .semibold))
-          .tracking(TextStyle.sm.letterSpacing)
           .foregroundStyle(EsuissColor.foreground)
         if let description = item.description {
           Text(description)
             .font(TextStyle.sm.font())
-            .tracking(TextStyle.sm.letterSpacing)
             .foregroundStyle(EsuissColor.mutedForeground)
         }
       }

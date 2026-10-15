@@ -338,7 +338,7 @@ function FormatterDemo() {
                       <Text className="font-semibold text-foreground tabular-nums">
                         {formatNumber(Number(value))}
                       </Text>
-                      <Text className="text-2xs text-muted-foreground">
+                      <Text className="text-xs text-muted-foreground">
                         kcal
                       </Text>
                     </View>
@@ -459,7 +459,7 @@ function CustomDemo() {
                 if (!active || !entry) return null
                 return (
                   <View className="min-w-28 rounded-xl border border-foreground/5 bg-popover px-3 py-2 shadow-lg dark:border-foreground/10">
-                    <Text className="text-2xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <Text className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                       Total
                     </Text>
                     <View className="flex-row items-baseline gap-1">

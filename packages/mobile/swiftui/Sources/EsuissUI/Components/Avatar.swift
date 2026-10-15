@@ -18,9 +18,9 @@ public enum AvatarSize: CaseIterable, Sendable {
 
   var textStyle: TextStyle {
     switch self {
-    case .sm: .xs3
+    case .sm: .xs
     case .default: .xs
-    case .lg: .md
+    case .lg: .base
     case .xl: .xl2
     }
   }

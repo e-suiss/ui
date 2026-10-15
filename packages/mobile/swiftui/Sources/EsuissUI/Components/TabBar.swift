@@ -153,7 +153,7 @@ public struct TabBarItem: View {
             }
           }
         title
-          .scaledFont(.xs3, weight: .medium)
+          .scaledFont(.xs, weight: .medium)
           .lineLimit(1)
       }
       .foregroundStyle(active ? EsuissColor.primary : EsuissColor.mutedForeground)
@@ -200,7 +200,7 @@ private struct TabBarBadgeView: View {
     Group {
       if let label = badge.label {
         Text(verbatim: label)
-          .font(TextStyle.xs3.font(weight: .semibold))
+          .font(TextStyle.xs.font(weight: .semibold))
           .monospacedDigit()
           .foregroundStyle(EsuissColor.primaryForeground)
           .padding(.horizontal, 5)

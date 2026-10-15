@@ -97,7 +97,7 @@ public struct EmptyDescription: View {
 
   public var body: some View {
     text
-      .scaledTextStyle(TextStyle(size: TextStyle.sm.size, lineHeight: 24, letterSpacing: TextStyle.sm.letterSpacing))
+      .scaledTextStyle(TextStyle(size: TextStyle.sm.size, lineHeight: 24))
       .foregroundStyle(EsuissColor.mutedForeground)
       .tint(EsuissColor.primary)
       .fixedSize(horizontal: false, vertical: true)

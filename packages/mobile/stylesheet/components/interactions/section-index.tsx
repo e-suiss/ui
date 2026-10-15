@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     pointerEvents: "none",
   },
-  letterText: { ...fontSize["2xs"], fontWeight: "600" },
+  letterText: { ...fontSize.xs, fontWeight: "600" },
   bubble: {
     position: "absolute",
     end: "100%",

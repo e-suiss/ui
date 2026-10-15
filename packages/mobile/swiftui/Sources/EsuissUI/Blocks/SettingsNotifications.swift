@@ -223,7 +223,7 @@ public struct SettingsNotifications: View {
             .padding(.top, 8)
           VStack(spacing: 0) {
             Text("Tuesday, October 6")
-              .scaledFont(.xs2, weight: .semibold)
+              .scaledFont(.xs, weight: .semibold)
               .opacity(0.9)
             Text(verbatim: "9:41")
               .font(.system(size: 60, weight: .semibold))
@@ -243,7 +243,7 @@ public struct SettingsNotifications: View {
               .transition(reduceMotion ? .opacity : .move(edge: .top).combined(with: .opacity))
           }
           Text(footnote)
-            .scaledFont(.xs3)
+            .scaledFont(.xs)
             .opacity(0.85)
             .frame(maxHeight: .infinity, alignment: .bottom)
             .padding(.bottom, 14)
@@ -355,14 +355,14 @@ private struct SettingsNotificationsCard: View {
         VStack(alignment: .leading, spacing: 1) {
           HStack {
             Text(verbatim: "Riley Morgan")
-              .scaledFont(.xs2, weight: .semibold)
+              .scaledFont(.xs, weight: .semibold)
               .frame(maxWidth: .infinity, alignment: .leading)
             Text("now")
-              .scaledFont(.xs3)
+              .scaledFont(.xs)
               .foregroundStyle(Palette.black.opacity(0.55))
           }
           Text(message)
-            .scaledFont(.xs2)
+            .scaledFont(.xs)
             .fixedSize(horizontal: false, vertical: true)
         }
       }

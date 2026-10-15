@@ -130,7 +130,7 @@ function buttonTextStyle(
 ): TextStyle {
   let scale: TextStyle =
     size === "lg" || size === "xl" ? fontSize.base : fontSize.sm
-  if (size === "xs") scale = fontSize["2xs"]
+  if (size === "xs") scale = fontSize.xs
   return { ...scale, color: buttonTextColor(variant, colors) }
 }
 

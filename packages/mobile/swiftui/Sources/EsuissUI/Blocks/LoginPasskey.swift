@@ -83,7 +83,7 @@ public struct LoginPasskey: View {
             .buttonStyle(LoginPasskeyLinkStyle())
             .padding(.top, 10)
           Text("Passkeys are end-to-end encrypted and sync across all your devices with suiss Keychain.")
-            .scaledTextStyle(.xs2)
+            .scaledTextStyle(.xs)
             .foregroundStyle(EsuissColor.mutedForeground)
             .padding(.top, 40)
         }
@@ -100,7 +100,7 @@ public struct LoginPasskey: View {
   private var account: some View {
     HStack(spacing: 10) {
       Avatar(size: .sm) {
-        LoginPasskeyInitials(style: .xs3)
+        LoginPasskeyInitials(style: .xs)
       }
       .frame(width: 28, height: 28)
       Text(verbatim: "jamie@suiss.com")

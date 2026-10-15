@@ -233,7 +233,7 @@ private fun StorageCard(plan: StoragePlan, yearly: Boolean, selected: Boolean, o
                     .offset(x = 18.dp, y = (-9).dp)
                     .background(colors.primary, CircleShape)
                     .padding(horizontal = 9.dp, vertical = 2.dp),
-                style = Typography.xs2.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
+                style = Typography.xs.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold),
             )
         }
     }

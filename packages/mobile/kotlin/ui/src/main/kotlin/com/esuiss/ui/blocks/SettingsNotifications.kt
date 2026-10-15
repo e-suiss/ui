@@ -453,7 +453,7 @@ private fun LockScreenPreview(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 14.dp),
-            style = Typography.xs3.copy(color = Palette.white.copy(alpha = 0.85f), textAlign = TextAlign.Center),
+            style = Typography.xs.copy(color = Palette.white.copy(alpha = 0.85f), textAlign = TextAlign.Center),
         )
     }
 }
@@ -495,7 +495,7 @@ private fun Notification(body: String, stacked: Boolean) {
                         modifier = Modifier.weight(1f),
                         style = Typography.xs.copy(color = ink.copy(alpha = 0.88f), fontWeight = FontWeight.SemiBold),
                     )
-                    BasicText("now", style = Typography.xs2.copy(color = ink.copy(alpha = 0.55f)))
+                    BasicText("now", style = Typography.xs.copy(color = ink.copy(alpha = 0.55f)))
                 }
                 BasicText(body, style = Typography.xs.copy(color = ink.copy(alpha = 0.88f)))
             }

@@ -180,7 +180,7 @@ private fun CountBadge(count: Int, modifier: Modifier) {
         ) {
             BasicText(
                 count.toString(),
-                style = Typography.xs3.copy(color = colors.background, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                style = Typography.xs.copy(color = colors.background, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
             )
         }
     }
