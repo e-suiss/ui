@@ -43,7 +43,7 @@ const RADIX_STYLE = /^(radix-.+|new-york|default)$/
 const ICON_PACKAGES = {
   lucide: "lucide-react",
   tabler: "@tabler/icons-react",
-  hugeicons: "@hugeicons/react",
+  hugeicons: "@hugeicons/react @hugeicons/core-free-icons",
   phosphor: "@phosphor-icons/react",
   remixicon: "@remixicon/react",
 }
@@ -351,7 +351,7 @@ async function runRegistry(base, app, origin) {
   await run(
     `Install ${ICON_PACKAGES[ICON_LIBRARY]} (${base})`,
     "npm",
-    ["install", ICON_PACKAGES[ICON_LIBRARY]],
+    ["install", ...ICON_PACKAGES[ICON_LIBRARY].split(" ")],
     { cwd: app }
   )
   await run(
