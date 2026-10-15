@@ -64,7 +64,7 @@ export function Example() {
 3. Installs and wires up Tailwind CSS if needed (`postcss.config.mjs` for Next.js, `vite.config.ts` for Vite).
 4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
 5. Sets up the font: text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
-6. Installs [`@esuiss/tailwind`](https://www.npmjs.com/package/@esuiss/tailwind), which provides the variants, animations, and utilities the components rely on.
+6. Installs `tw-animate-css` and `shadcn`, whose stylesheets provide the animations, variants, and utilities the components rely on.
 7. Adds the `button` component.
 
 ## Commands
@@ -119,8 +119,11 @@ Your stylesheet holds the whole theme:
 
 ```css
 @import "tailwindcss";
-@import "@esuiss/tailwind";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --radius: 0.625rem;

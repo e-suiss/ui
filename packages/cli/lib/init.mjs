@@ -3,18 +3,17 @@ import path from "node:path"
 
 import { installItems } from "./add.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
-import { detectProject, findAliasRoot, install } from "./project.mjs"
+import {
+  detectProject,
+  findAliasRoot,
+  findStylesheet,
+  install,
+  VITE_STYLESHEET,
+} from "./project.mjs"
 import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
 import { ensureAlias, relative } from "./shared/project.mjs"
 
-const NEXT_STYLESHEETS = [
-  "src/app/globals.css",
-  "app/globals.css",
-  "src/styles/globals.css",
-  "styles/globals.css",
-]
 const NEXT_APP_DIRS = ["src/app", "app"]
-const VITE_STYLESHEET = "src/index.css"
 const VITE_CONFIGS = [
   "vite.config.ts",
   "vite.config.mts",
@@ -71,12 +70,10 @@ const SEMICOLON_IMPORT = /from\s+["'][^"']+["'];/
 const NEXT_FONT_IMPORT =
   /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
 
-function findStylesheet(project) {
+function stylesheetPath(project) {
   if (project.framework === "vite")
     return path.join(project.cwd, VITE_STYLESHEET)
-  const existing = NEXT_STYLESHEETS.map((file) =>
-    path.join(project.cwd, file)
-  ).find(existsSync)
+  const existing = findStylesheet(project)
   if (existing) return existing
   const appDir = NEXT_APP_DIRS.map((dir) => path.join(project.cwd, dir)).find(
     existsSync
@@ -266,7 +263,7 @@ export async function init(options) {
     throw new CliError("Expected a src/ directory in this Vite project.")
   }
 
-  const stylesheet = findStylesheet(project)
+  const stylesheet = stylesheetPath(project)
   const stylesheetExists = existsSync(stylesheet)
   if (
     stylesheetExists &&

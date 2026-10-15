@@ -41,6 +41,7 @@ const registry = {
       requires: [],
       dependencies: [],
       files: ["components/ui/theme.tsx"],
+      css: "styles/theme.css",
     },
     {
       name: "date-picker",
@@ -57,6 +58,8 @@ const files = {
   "components/ui/button.tsx": "export function Button() {}\n",
   "components/ui/dialog.tsx": "export function Dialog() {}\n",
   "components/ui/theme.tsx": "export function Theme() {}\n",
+  "styles/theme.css":
+    "@keyframes theme-reveal {\n  to {\n    opacity: 1;\n  }\n}\n",
   "components/patterns/date-picker.tsx": "export function DatePicker() {}\n",
 }
 
@@ -110,6 +113,40 @@ describe("add", () => {
     expect(read(cwd, "src/components/ui/button.tsx")).toBe(
       files["components/ui/button.tsx"]
     )
+  })
+
+  it("adds the styles an item needs to the stylesheet once", async () => {
+    const cwd = viteProject({ "src/index.css": '@import "tailwindcss";\n' })
+    await add(["theme"], { cwd })
+    await add(["theme"], { cwd, overwrite: true })
+    expect(read(cwd, "src/index.css")).toBe(
+      `@import "tailwindcss";\n\n${files["styles/theme.css"]}`
+    )
+    expect(output()).toContain("Added the styles for theme to src/index.css")
+  })
+
+  it("uses the stylesheet named in components.json", async () => {
+    const cwd = viteProject({
+      "components.json": { tailwind: { css: "src/styles/app.css" } },
+      "src/styles/app.css": '@import "tailwindcss";\n',
+    })
+    await add(["theme"], { cwd })
+    expect(read(cwd, "src/styles/app.css")).toContain("@keyframes theme-reveal")
+  })
+
+  it("explains where the styles go when there is no stylesheet", async () => {
+    const cwd = viteProject()
+    await add(["theme"], { cwd })
+    expect(existsSync(path.join(cwd, "src/index.css"))).toBe(false)
+    expect(output()).toContain(
+      "Add the styles for theme to your stylesheet: styles/theme.css in the registry."
+    )
+  })
+
+  it("leaves the stylesheet alone for items without styles", async () => {
+    const cwd = viteProject({ "src/index.css": '@import "tailwindcss";\n' })
+    await add(["dialog"], { cwd })
+    expect(read(cwd, "src/index.css")).toBe('@import "tailwindcss";\n')
   })
 
   it("reports when everything is already up to date", async () => {

@@ -120,6 +120,19 @@ describe("init in a Vite project", () => {
     expect(output()).toContain("Import src/index.css in src/main.tsx.")
   })
 
+  it("installs the animation and variant packages the stylesheet imports", async () => {
+    serveRegistry({
+      ...files,
+      "styles/globals.css": `@import "tailwindcss";\n@import "tw-animate-css";\n@import "shadcn/tailwind.css";\n`,
+    })
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true })
+    const commands = vi
+      .mocked(spawnSync)
+      .mock.calls.map(([, args]) => args.join(" "))
+    expect(commands).toContain("install tw-animate-css shadcn")
+  })
+
   it("installs the tooling and the packages the stylesheet imports", async () => {
     const cwd = viteProject({ "vite.config.ts": viteConfig })
     await init({ cwd, yes: true })

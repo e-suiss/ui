@@ -1,3 +1,6 @@
+import { existsSync, readFileSync } from "node:fs"
+import path from "node:path"
+
 import {
   assertPackageNames,
   detectProject as detect,
@@ -5,6 +8,36 @@ import {
 } from "./shared/project.mjs"
 
 export { findAliasRoot } from "./shared/project.mjs"
+
+const NEXT_STYLESHEETS = [
+  "src/app/globals.css",
+  "app/globals.css",
+  "src/styles/globals.css",
+  "styles/globals.css",
+]
+export const VITE_STYLESHEET = "src/index.css"
+
+function configuredStylesheet(cwd) {
+  const file = path.join(cwd, "components.json")
+  if (!existsSync(file)) return null
+  try {
+    const css = JSON.parse(readFileSync(file, "utf8")).tailwind?.css
+    return typeof css === "string" && css ? path.join(cwd, css) : null
+  } catch {
+    return null
+  }
+}
+
+export function findStylesheet(project) {
+  const candidates =
+    project.framework === "vite" ? [VITE_STYLESHEET] : NEXT_STYLESHEETS
+  return (
+    [
+      configuredStylesheet(project.cwd),
+      ...candidates.map((file) => path.join(project.cwd, file)),
+    ].find((file) => file && existsSync(file)) ?? null
+  )
+}
 
 function frameworkOf(packages) {
   if (packages.next) return "next"

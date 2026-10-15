@@ -1,7 +1,13 @@
+import { readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
-import { CliError } from "./output.mjs"
-import { detectProject, findAliasRoot, install } from "./project.mjs"
+import { CliError, note, step } from "./output.mjs"
+import {
+  detectProject,
+  findAliasRoot,
+  findStylesheet,
+  install,
+} from "./project.mjs"
 import { choose, isInteractive } from "./prompt.mjs"
 import {
   fetchRegistry,
@@ -11,6 +17,7 @@ import {
   scopeOf,
 } from "./registry.mjs"
 import { printDiff, reportFiles, writeFiles } from "./shared/files.mjs"
+import { relative } from "./shared/project.mjs"
 
 function targetFor(root, file) {
   const target = path.resolve(root, file)
@@ -37,6 +44,27 @@ function fetchFiles(root, items) {
   )
 }
 
+async function addStyles(project, items) {
+  const styled = items.filter((item) => item.css)
+  if (!styled.length) return
+  const names = styled.map((item) => item.name).join(", ")
+  const file = findStylesheet(project)
+  if (!file) {
+    note(
+      `Add the styles for ${names} to your stylesheet: ${styled.map((item) => item.css).join(", ")} in the registry.`
+    )
+    return
+  }
+  const rules = await Promise.all(styled.map((item) => fetchText(item.css)))
+  const current = readFileSync(file, "utf8")
+  const missing = rules
+    .map((rule) => rule.trim())
+    .filter((rule) => !current.includes(rule))
+  if (!missing.length) return
+  writeFileSync(file, `${current.trimEnd()}\n\n${missing.join("\n\n")}\n`)
+  step(`Added the styles for ${names} to ${relative(project, file)}`)
+}
+
 export async function installItems(
   project,
   root,
@@ -55,6 +83,7 @@ export async function installItems(
     items.flatMap((item) => item.dependencies)
   )
   reportFiles(result, installed)
+  await addStyles(project, items)
 }
 
 async function showDiff(project, root, registry, names) {
