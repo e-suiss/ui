@@ -34,6 +34,12 @@ const PATTERNS = ["date-picker"]
 const CHARTS = ["area-chart-default"]
 const BLOCKS = ["login-account"]
 const THEME = "theme-suiss"
+const PRIMITIVES = { base: "@base-ui/react", radix: "radix-ui" }
+const TWINS = {
+  base: { patterns: [], blocks: [] },
+  radix: { patterns: ["flyout"], blocks: ["login-passkey"] },
+}
+const RADIX_STYLE = /^(radix-.+|new-york|default)$/
 const ICON_PACKAGES = {
   lucide: "lucide-react",
   tabler: "@tabler/icons-react",
@@ -46,19 +52,65 @@ const ICON_LIBRARY =
 if (!(ICON_LIBRARY in ICON_PACKAGES)) {
   throw new Error(`Unknown icon library: ${ICON_LIBRARY}`)
 }
-const REGISTRY_ITEMS = [
-  ...COMPONENTS,
-  ...PATTERNS,
-  ...CHARTS,
-  ...BLOCKS,
-  THEME,
-].map((name) => `@esuiss/${name}`)
+const BASE =
+  process.argv.find((arg) => arg.startsWith("--base="))?.slice(7) ?? "all"
+if (!(BASE === "all" || BASE in PRIMITIVES)) {
+  throw new Error(`Unknown base: ${BASE}`)
+}
+const SELECTED = BASE === "all" ? Object.keys(PRIMITIVES) : [BASE]
 
-const PAGE = `"use client"
+function registryItems(base) {
+  return [
+    ...COMPONENTS,
+    ...PATTERNS,
+    ...TWINS[base].patterns,
+    ...CHARTS,
+    ...BLOCKS,
+    ...TWINS[base].blocks,
+    THEME,
+  ].map((name) => `@esuiss/${name}`)
+}
+
+const TRIGGERS = {
+  base: `<DialogTrigger render={<Button variant="outline" />}>
+              Open
+            </DialogTrigger>`,
+  radix: `<DialogTrigger asChild>
+              <Button variant="outline">Open</Button>
+            </DialogTrigger>`,
+}
+
+const TWIN_IMPORTS = {
+  base: "",
+  radix: `import { LoginPasskey } from "@/components/blocks/login-passkey"
+import {
+  Flyout,
+  FlyoutContent,
+  FlyoutTitle,
+  FlyoutTrigger,
+} from "@/components/patterns/flyout"
+`,
+}
+
+const TWIN_USAGE = {
+  base: "",
+  radix: `
+          <Flyout>
+            <FlyoutTrigger asChild>
+              <Button variant="outline">Flyout</Button>
+            </FlyoutTrigger>
+            <FlyoutContent>
+              <FlyoutTitle>Flyout</FlyoutTitle>
+            </FlyoutContent>
+          </Flyout>
+          <LoginPasskey />`,
+}
+
+const page = (base) => `"use client"
 
 import { AreaChartDefault } from "@/components/charts/area-chart-default"
 import { LoginAccount } from "@/components/blocks/login-account"
-import { DatePicker } from "@/components/patterns/date-picker"
+${TWIN_IMPORTS[base]}import { DatePicker } from "@/components/patterns/date-picker"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -106,9 +158,7 @@ export default function Page() {
           <ThemeToggle />
           <Button>Button</Button>
           <Dialog>
-            <DialogTrigger render={<Button variant="outline" />}>
-              Open
-            </DialogTrigger>
+            ${TRIGGERS[base]}
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Title</DialogTitle>
@@ -136,7 +186,7 @@ export default function Page() {
             <TabsContent value="two">Two</TabsContent>
           </Tabs>
           <AreaChartDefault />
-          <LoginAccount />
+          <LoginAccount />${TWIN_USAGE[base]}
         </SidebarInset>
       </SidebarProvider>
     </ThemeProvider>
@@ -149,13 +199,19 @@ const CONTENT_TYPES = {
   ".css": "text/css",
 }
 
-const STYLED_ITEM = /^\/r\/[^/]+\/([^/]+)$/
+const STYLED_ITEM = /^\/r\/([^/]+)\/([^/]+)$/
+
+function route(pathname) {
+  const match = pathname.match(STYLED_ITEM)
+  if (!match || match[1] in PRIMITIVES) return pathname
+  return `/r/${RADIX_STYLE.test(match[1]) ? "radix" : "base"}/${match[2]}`
+}
 
 function serve(dir) {
   const server = createServer((request, response) => {
-    const pathname = decodeURIComponent(
-      new URL(request.url, "http://localhost").pathname
-    ).replace(STYLED_ITEM, "/r/$1")
+    const pathname = route(
+      decodeURIComponent(new URL(request.url, "http://localhost").pathname)
+    )
     const file = path.join(dir, pathname)
     if (
       !file.startsWith(dir + path.sep) ||
@@ -205,8 +261,19 @@ function expectStyles(app, expected) {
   }
 }
 
-async function check(label, app) {
-  writeFileSync(path.join(app, "app/page.tsx"), PAGE)
+function expectPrimitives(app, base) {
+  const files = [
+    "components/ui/dialog.tsx",
+    ...TWINS[base].patterns.map((name) => `components/patterns/${name}.tsx`),
+  ]
+  for (const file of files) {
+    if (!readFileSync(path.join(app, file), "utf8").includes(PRIMITIVES[base]))
+      throw new Error(`${file} does not import ${PRIMITIVES[base]}`)
+  }
+}
+
+async function check(label, app, base) {
+  writeFileSync(path.join(app, "app/page.tsx"), page(base))
   if (
     !readFileSync(path.join(app, "next.config.ts"), "utf8").includes(
       "cacheComponents: true"
@@ -219,9 +286,7 @@ async function check(label, app) {
 }
 
 const workspace = mkdtempSync(path.join(tmpdir(), "esuiss-compat-"))
-const base = path.join(workspace, "base")
-const cliApp = path.join(workspace, "cli")
-const registryApp = path.join(workspace, "registry")
+const fresh = path.join(workspace, "next")
 const output = path.join(workspace, "public")
 const cleanup = () => rmSync(workspace, { recursive: true, force: true })
 for (const signal of ["SIGINT", "SIGTERM"]) {
@@ -238,11 +303,84 @@ async function serveDirectory(dir) {
   return `http://127.0.0.1:${server.address().port}`
 }
 
+const REGISTRY_FILES = {
+  base: "registry/registry.json",
+  radix: "registry/radix/registry.json",
+}
+
+async function runCli(base, app, env) {
+  await run(
+    `Add components with the suiss/ui CLI (${base})`,
+    "node",
+    [CLI, "add", ...COMPONENTS, "--yes", "--overwrite", "--cwd", app],
+    { env }
+  )
+  for (const [scope, names] of [
+    ["patterns", [...PATTERNS, ...TWINS[base].patterns]],
+    ["charts", CHARTS],
+    ["blocks", [...BLOCKS, ...TWINS[base].blocks]],
+  ]) {
+    await run(
+      `Add ${scope} with the suiss/ui CLI (${base})`,
+      "node",
+      [CLI, "add", scope, ...names, "--yes", "--cwd", app],
+      { env }
+    )
+  }
+  expectStyles(app, ["@keyframes theme-reveal"])
+  expectPrimitives(app, base)
+  await check(`suiss/ui CLI, ${base}`, app, base)
+}
+
+async function runRegistry(base, app, origin) {
+  const config = path.join(app, "components.json")
+  const current = JSON.parse(readFileSync(config, "utf8"))
+  console.log(`\n${base}: components.json style is ${current.style}`)
+  writeFileSync(
+    config,
+    `${JSON.stringify(
+      {
+        ...current,
+        iconLibrary: ICON_LIBRARY,
+        registries: { "@esuiss": `${origin}/r/{style}/{name}.json` },
+      },
+      null,
+      2
+    )}\n`
+  )
+  await run(
+    `Install ${ICON_PACKAGES[ICON_LIBRARY]} (${base})`,
+    "npm",
+    ["install", ICON_PACKAGES[ICON_LIBRARY]],
+    { cwd: app }
+  )
+  await run(
+    `Add items with the registry CLI (${base}, ${ICON_LIBRARY} icons)`,
+    "npx",
+    [
+      "--yes",
+      REGISTRY_CLI,
+      "add",
+      ...registryItems(base),
+      "--yes",
+      "--overwrite",
+    ],
+    { cwd: app }
+  )
+  expectStyles(app, [
+    "@keyframes theme-reveal",
+    "oklch(0.5629 0.1933 256.16)",
+    "@fontsource-variable/inter",
+  ])
+  expectPrimitives(app, base)
+  await check(`registry CLI, ${base}`, app, base)
+}
+
 try {
   await run("Create a Next.js app", "npx", [
     "--yes",
     NEXT_APP,
-    base,
+    fresh,
     "--ts",
     "--tailwind",
     "--app",
@@ -257,94 +395,59 @@ try {
     "--no-agent-feedback",
     "--yes",
   ])
-  await run(
-    "Initialize the registry CLI for Base UI",
-    "npx",
-    [
-      "--yes",
-      REGISTRY_CLI,
-      "init",
-      "--base",
-      "base",
-      "--defaults",
-      "--yes",
-      "--no-monorepo",
-    ],
-    { cwd: base }
-  )
-  cpSync(base, cliApp, { recursive: true, verbatimSymlinks: true })
-  cpSync(base, registryApp, { recursive: true, verbatimSymlinks: true })
-  rmSync(base, { recursive: true, force: true })
 
-  const env = { ESUISS_REGISTRY: await serveDirectory(WEB) }
-  await run(
-    "Add components with the suiss/ui CLI",
-    "node",
-    [CLI, "add", ...COMPONENTS, "--yes", "--overwrite", "--cwd", cliApp],
-    { env }
-  )
-  for (const [scope, names] of [
-    ["patterns", PATTERNS],
-    ["charts", CHARTS],
-    ["blocks", BLOCKS],
-  ]) {
+  for (const base of SELECTED) {
     await run(
-      `Add ${scope} with the suiss/ui CLI`,
+      `Build the registry (${base})`,
       "node",
-      [CLI, "add", scope, ...names, "--yes", "--cwd", cliApp],
-      { env }
+      [
+        REGISTRY_BIN,
+        "build",
+        REGISTRY_FILES[base],
+        "--output",
+        path.join(output, "r", base),
+      ],
+      { cwd: WEB }
     )
   }
-  expectStyles(cliApp, ["@keyframes theme-reveal"])
-  await check("suiss/ui CLI", cliApp)
-
-  await run(
-    "Build the registry",
-    "node",
-    [
-      REGISTRY_BIN,
-      "build",
-      "registry/registry.json",
-      "--output",
-      path.join(output, "r"),
-    ],
-    { cwd: WEB }
-  )
   const origin = await serveDirectory(output)
-  const config = path.join(registryApp, "components.json")
-  writeFileSync(
-    config,
-    `${JSON.stringify(
-      {
-        ...JSON.parse(readFileSync(config, "utf8")),
-        iconLibrary: ICON_LIBRARY,
-        registries: { "@esuiss": `${origin}/r/{style}/{name}.json` },
-      },
-      null,
-      2
-    )}\n`
-  )
-  await run(
-    `Install ${ICON_PACKAGES[ICON_LIBRARY]}`,
-    "npm",
-    ["install", ICON_PACKAGES[ICON_LIBRARY]],
-    { cwd: registryApp }
-  )
-  await run(
-    `Add items with the registry CLI (${ICON_LIBRARY} icons)`,
-    "npx",
-    ["--yes", REGISTRY_CLI, "add", ...REGISTRY_ITEMS, "--yes", "--overwrite"],
-    { cwd: registryApp }
-  )
-  expectStyles(registryApp, [
-    "@keyframes theme-reveal",
-    "oklch(0.5629 0.1933 256.16)",
-    "@fontsource-variable/inter",
-  ])
-  await check("registry CLI", registryApp)
+  const env = { ESUISS_REGISTRY: await serveDirectory(WEB) }
+
+  for (const base of SELECTED) {
+    const initialized = path.join(workspace, base)
+    cpSync(fresh, initialized, { recursive: true, verbatimSymlinks: true })
+    await run(
+      `Initialize the registry CLI (${base})`,
+      "npx",
+      [
+        "--yes",
+        REGISTRY_CLI,
+        "init",
+        "--base",
+        base,
+        "--defaults",
+        "--yes",
+        "--no-monorepo",
+      ],
+      { cwd: initialized }
+    )
+    const cliApp = path.join(workspace, `${base}-cli`)
+    const registryApp = path.join(workspace, `${base}-registry`)
+    cpSync(initialized, cliApp, { recursive: true, verbatimSymlinks: true })
+    cpSync(initialized, registryApp, {
+      recursive: true,
+      verbatimSymlinks: true,
+    })
+    rmSync(initialized, { recursive: true, force: true })
+
+    await runCli(base, cliApp, env)
+    rmSync(cliApp, { recursive: true, force: true })
+    await runRegistry(base, registryApp, origin)
+    rmSync(registryApp, { recursive: true, force: true })
+  }
 
   console.log(
-    "\nCompatible: the items install through both CLIs, type-check and build."
+    `\nCompatible (${SELECTED.join(", ")}): the items install through both CLIs, type-check and build.`
   )
 } catch (error) {
   console.error(`\n${error.message}`)

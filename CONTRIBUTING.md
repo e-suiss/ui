@@ -45,7 +45,7 @@ Layout:
 
 ## Compatibility check
 
-`pnpm compat` checks that the components work in a project set up with the standard registry CLI. It creates a Next.js app in the system temp folder, runs the registry CLI `init` for Base UI with its defaults, adds a set of components, a chart, a block and `theme` with `packages/cli` from the local `packages/web` files, then runs `tsc --noEmit` and `next build`. It needs network access to npm, takes a few minutes, and deletes the app when it finishes or fails.
+`pnpm compat` checks that the components work in a project set up with the standard registry CLI. It creates a Next.js app in the system temp folder and, for each primitive base, runs the registry CLI `init` with `--base base` or `--base radix` and its defaults. It adds a set of components, patterns, a chart, blocks and `theme` once with `packages/cli` from the local `packages/web` files and once with the registry CLI from a local build of the registry, then runs `tsc --noEmit` and `next build` for each app. `--base=base` or `--base=radix` runs one base, and `--icons=<library>` picks the icon library for the registry CLI (`lucide` by default). It needs network access to npm, takes several minutes, and deletes the apps when it finishes or fails.
 
 ```bash
 pnpm compat
