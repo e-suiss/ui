@@ -2,7 +2,7 @@
 
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 const toggleVariants = cva(
   "inline-flex items-center justify-center gap-1 rounded-lg text-sm whitespace-nowrap transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] outline-none active:scale-96 motion-reduce:active:scale-100 hover:bg-accent hover:text-accent-foreground focus-visible:focus-ring disabled:pointer-events-none aria-invalid:border-destructive aria-pressed:bg-accent aria-pressed:text-primary aria-pressed:hover:bg-accent aria-pressed:hover:text-primary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 disabled:opacity-50",

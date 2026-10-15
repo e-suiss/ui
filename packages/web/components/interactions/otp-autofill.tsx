@@ -1,11 +1,10 @@
 "use client"
 
 import { ChatCircleTextIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import { InputOTP } from "@/components/ui/input-otp"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type OtpAutofillState =
   | "idle"

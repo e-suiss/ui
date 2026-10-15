@@ -1,10 +1,9 @@
 "use client"
 
 import { CheckIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type SelectionListContextProps = {
   editing: boolean

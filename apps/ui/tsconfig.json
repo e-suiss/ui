@@ -27,6 +27,7 @@
       "@/components/charts/*": ["../../packages/web/components/charts/*"],
       "@/components/blocks/*": ["../../packages/web/components/blocks/*"],
       "@/hooks/*": ["../../packages/web/hooks/*"],
+      "@/lib/utils": ["../../packages/web/lib/utils"],
       "@/examples/*": ["../../packages/web/examples/*"],
       "@/*": ["./*"]
     }

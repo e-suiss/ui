@@ -1,9 +1,7 @@
 "use client"
 
 import { CaretUpDownIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Combobox,
   ComboboxCollection,
@@ -32,6 +30,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type SearchPickerItem = {
   value: string

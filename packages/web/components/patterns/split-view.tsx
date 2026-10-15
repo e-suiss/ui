@@ -3,15 +3,14 @@
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type SplitViewColumn = "sidebar" | "list" | "detail"
 

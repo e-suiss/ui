@@ -1,10 +1,8 @@
 "use client"
 
 import { ArrowUpRightIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import { usePathname } from "next/navigation"
 import * as React from "react"
-
 import { Anchor } from "@/components/site/anchor"
 import { useActiveSection } from "@/components/site/local-nav"
 import { Logo } from "@/components/site/logo"
@@ -12,6 +10,7 @@ import { Search } from "@/components/site/search"
 import { ThemeToggle } from "@/components/ui/theme"
 import { repository, sections } from "@/lib/sections"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
 const MENU_EXIT = 500

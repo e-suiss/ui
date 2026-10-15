@@ -1,9 +1,7 @@
 "use client"
 
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   Drawer,
   DrawerClose,
@@ -22,6 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type FlyoutContextProps = {
   isMobile: boolean

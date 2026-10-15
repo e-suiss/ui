@@ -13,6 +13,7 @@
         "components/charts/*.tsx",
         "components/blocks/*.tsx",
         "hooks/*.ts",
+        "lib/*.ts",
         "scripts/*.mjs",
         "tests/*-setup.ts",
         "examples/*.tsx"
@@ -20,6 +21,7 @@
       "project": [
         "components/**/*.{ts,tsx}",
         "hooks/**/*.ts",
+        "lib/**/*.ts",
         "scripts/**/*.mjs",
         "styles/**/*.css",
         "examples/*.tsx",

@@ -1,9 +1,8 @@
 "use client"
 
-import { cn } from "cn"
 import type * as React from "react"
-
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 type CalloutType = "note" | "tip" | "important" | "warning" | "deprecated"
 

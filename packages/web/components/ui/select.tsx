@@ -7,8 +7,8 @@ import {
   CaretUpIcon,
   CheckIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
 import type * as React from "react"
+import { cn } from "@/lib/utils"
 
 const Select = SelectPrimitive.Root
 

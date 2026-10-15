@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import {
   HoverCard,
@@ -10,6 +8,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type PreviewContextProps = {
   isMobile: boolean

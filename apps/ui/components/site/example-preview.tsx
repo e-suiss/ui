@@ -1,11 +1,10 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { loadPreview } from "@/lib/load-preview"
 import type { PreviewLayout, PreviewType } from "@/lib/previews"
+import { cn } from "@/lib/utils"
 
 class Boundary extends React.Component<
   { children: React.ReactNode },

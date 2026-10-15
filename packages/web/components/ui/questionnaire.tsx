@@ -3,7 +3,6 @@
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { CheckIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
 import { type Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -24,6 +23,7 @@ import {
   useQuestionnaireItem,
   useQuestionnaireItemContext,
 } from "@/hooks/use-questionnaire"
+import { cn } from "@/lib/utils"
 
 type QuestionnaireInputType =
   | "date"

@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { Button } from "@/components/ui/button"
 import {
   Pagination,
@@ -14,6 +12,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 function pageRange(page: number, pageCount: number) {
   const pages: (number | "ellipsis")[] = []

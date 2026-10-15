@@ -1,11 +1,9 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr"
-import { cn } from "cn"
 import { getBreadcrumbItems } from "fumadocs-core/breadcrumb"
 import { findNeighbour } from "fumadocs-core/page-tree"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import * as React from "react"
-
 import { getMDXComponents } from "@/components/mdx"
 import { Anchor } from "@/components/site/anchor"
 import { JsonLd } from "@/components/site/json-ld"
@@ -18,6 +16,7 @@ import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
 import { strings } from "@/lib/strings"
 import { pageSummary } from "@/lib/summary"
+import { cn } from "@/lib/utils"
 
 const WIDE_PAGE = /^\/docs\/(patterns|interactions|blocks)(\/|$)/
 

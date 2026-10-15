@@ -15,8 +15,8 @@
     "@fontsource/inter": "^5.3.0",
     "@phosphor-icons/react": "catalog:",
     "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
     "cmdk": "catalog:",
-    "cn": "catalog:",
     "embla-carousel-react": "catalog:",
     "fumadocs-core": "^16.16.2",
     "fumadocs-mdx": "^15.4.6",
@@ -27,6 +27,7 @@
     "react-dom": "catalog:",
     "react-resizable-panels": "catalog:",
     "recharts": "catalog:",
+    "tailwind-merge": "catalog:",
     "zod": "^4.6.5"
   },
   "devDependencies": {

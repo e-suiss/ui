@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       "./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff",
       "../../packages/web/components/**/*",
       "../../packages/web/hooks/**/*",
+      "../../packages/web/lib/**/*",
       "../../packages/web/examples/**/*",
       "../../packages/mobile/components/**/*",
       "../../packages/mobile/uniwind/components/**/*",

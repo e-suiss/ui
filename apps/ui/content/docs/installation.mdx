@@ -30,7 +30,7 @@ npx @esuiss/ui@latest init
 4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
 5. Sets up the font. Text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
 6. Installs [`@esuiss/tailwind`](https://www.npmjs.com/package/@esuiss/tailwind), which provides the variants, animations and utilities the components rely on.
-7. Adds the `button` component.
+7. Adds the `button` component and the [`cn` helper](#the-cn-helper) it uses.
 
 ## Add components
 
@@ -57,6 +57,12 @@ export function Example() {
   return <Button>Continue</Button>
 }
 ```
+
+## The cn helper
+
+Components merge class names with `cn`, imported from `@/lib/utils`. `init` and `add` write it to `lib/utils.ts` under your `@/*` alias root when it is missing. To add it by hand, install `clsx` and `tailwind-merge` and create the file:
+
+<ComponentSource path="lib/utils.ts" fold={false} />
 
 ## Update components
 

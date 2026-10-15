@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { ExamplePreview } from "@/components/site/example-preview"
 import {
   ResponsivePreview,
@@ -11,6 +9,7 @@ import {
 } from "@/components/site/responsive-preview"
 import { SourceCode } from "@/components/site/source-code"
 import type { Preview } from "@/lib/previews"
+import { cn } from "@/lib/utils"
 
 export function Example({
   preview: { type, name, layout, responsive },

@@ -1,8 +1,6 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
-
 import { Command } from "@/components/ui/command"
 import {
   Dialog,
@@ -22,6 +20,7 @@ import {
 } from "@/components/ui/drawer"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { isMacPlatform } from "@/hooks/use-platform"
+import { cn } from "@/lib/utils"
 
 type CommandPaletteContextProps = {
   isMobile: boolean

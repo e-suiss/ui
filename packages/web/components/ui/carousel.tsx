@@ -6,13 +6,13 @@ import {
   PauseIcon,
   PlayIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
+import { cn } from "@/lib/utils"
 
 type CarouselApi = UseEmblaCarouselType[1]
 

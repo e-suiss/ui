@@ -1,8 +1,7 @@
 "use client"
 
-import { cn } from "cn"
-
 import { useModifierKey } from "@/hooks/use-platform"
+import { cn } from "@/lib/utils"
 
 function Kbd({
   className,

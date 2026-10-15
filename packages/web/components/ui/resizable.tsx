@@ -1,8 +1,8 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
 import * as ResizablePrimitive from "react-resizable-panels"
+import { cn } from "@/lib/utils"
 
 function animateJumps(
   group: HTMLElement | null,

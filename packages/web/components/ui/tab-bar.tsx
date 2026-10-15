@@ -3,11 +3,10 @@
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { ListIcon, XIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
 import { flushSync } from "react-dom"
-
 import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type TabBarProps = {
   open?: boolean

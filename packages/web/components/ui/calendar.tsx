@@ -5,7 +5,6 @@ import {
   CaretLeftIcon,
   CaretRightIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
 import {
   type ChevronProps,
@@ -18,6 +17,7 @@ import {
 } from "react-day-picker"
 import { enUS } from "react-day-picker/locale"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 function Calendar({
   className,

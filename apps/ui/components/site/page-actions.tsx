@@ -1,8 +1,8 @@
 "use client"
 
 import { ArrowUpRightIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
+import { cn } from "@/lib/utils"
 
 const RESET_AFTER = 1500
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"

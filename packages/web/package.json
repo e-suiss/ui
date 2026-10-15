@@ -27,15 +27,16 @@
     "@base-ui/react": "catalog:",
     "@phosphor-icons/react": "catalog:",
     "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
     "cmdk": "catalog:",
-    "cn": "catalog:",
     "embla-carousel-react": "catalog:",
     "input-otp": "catalog:",
     "react": "catalog:",
     "react-day-picker": "catalog:",
     "react-dom": "catalog:",
     "react-resizable-panels": "catalog:",
-    "recharts": "catalog:"
+    "recharts": "catalog:",
+    "tailwind-merge": "catalog:"
   },
   "devDependencies": {
     "@esuiss/tailwind": "workspace:*",

@@ -191,7 +191,7 @@ describe("release", () => {
     const { cwd } = repository()
     writeFileSync(
       path.join(cwd, "packages/web/components/ui/button.tsx"),
-      'import { cn } from "cn"'
+      'import { clsx } from "clsx"'
     )
     git(cwd, "commit", "-am", "change button")
     git(cwd, "push")

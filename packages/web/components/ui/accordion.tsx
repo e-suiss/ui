@@ -3,7 +3,7 @@
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 const accordionVariants = cva("flex w-full flex-col", {
   variants: {

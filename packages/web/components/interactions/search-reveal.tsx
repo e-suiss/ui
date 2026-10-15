@@ -1,8 +1,8 @@
 "use client"
 
 import { MagnifyingGlassIcon, XCircleIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
+import { cn } from "@/lib/utils"
 
 const SETTLE_DELAY = 140
 

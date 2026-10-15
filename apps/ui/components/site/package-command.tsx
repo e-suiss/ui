@@ -1,11 +1,10 @@
 "use client"
 
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import { CodeScroll } from "@/components/site/code-scroll"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 const managers = ["pnpm", "npm", "yarn", "bun"] as const
 type Manager = (typeof managers)[number]

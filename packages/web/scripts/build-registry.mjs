@@ -14,7 +14,7 @@ const STYLESHEET = "styles/globals.css"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
 const OPT_IN = new Set(["theme"])
 const LOCAL_IMPORT =
-  /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks)\/([\w-]+)$/
+  /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks|lib)\/([\w-]+)$/
 
 const sources = [
   { dir: "components/ui", type: "ui" },
@@ -23,6 +23,7 @@ const sources = [
   { dir: "components/charts", type: "chart" },
   { dir: "components/blocks", type: "block" },
   { dir: "hooks", type: "hook" },
+  { dir: "lib", type: "lib" },
 ]
 
 const SOURCE_FILE = /\.(tsx?|jsx?)$/

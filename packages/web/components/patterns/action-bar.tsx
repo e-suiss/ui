@@ -2,9 +2,7 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import {
   AlertSheet,
   AlertSheetAction,
@@ -34,6 +32,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 type ActionBarContextProps = {
   isMobile: boolean

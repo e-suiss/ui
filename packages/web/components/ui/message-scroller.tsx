@@ -4,7 +4,6 @@ import { mergeProps } from "@base-ui/react/merge-props"
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
 import { useRender } from "@base-ui/react/use-render"
 import { ArrowDownIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { ScrollBar } from "@/components/ui/scroll-area"
@@ -23,6 +22,7 @@ import {
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,
 } from "@/hooks/use-message-scroller"
+import { cn } from "@/lib/utils"
 
 function MessageScrollerProvider({
   children,

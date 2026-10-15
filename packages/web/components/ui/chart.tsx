@@ -1,9 +1,9 @@
 "use client"
 
-import { cn } from "cn"
 import * as React from "react"
 import type { TooltipValueType } from "recharts"
 import * as RechartsPrimitive from "recharts"
+import { cn } from "@/lib/utils"
 
 const THEMES = { light: "", dark: ".dark" } as const
 

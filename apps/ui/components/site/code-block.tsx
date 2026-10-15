@@ -1,15 +1,14 @@
 "use client"
 
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
-
 import { CodeScroll } from "@/components/site/code-scroll"
 import {
   isPackageCommand,
   PackageCommand,
 } from "@/components/site/package-command"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 const RESET_AFTER = 1500
 

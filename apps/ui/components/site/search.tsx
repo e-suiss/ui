@@ -10,10 +10,8 @@ import {
   MagnifyingGlassIcon,
   SquaresFourIcon,
 } from "@phosphor-icons/react"
-import { cn } from "cn"
 import { useRouter } from "next/navigation"
 import * as React from "react"
-
 import {
   CommandPalette,
   CommandPaletteContent,
@@ -31,6 +29,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile"
 import { isMacPlatform } from "@/hooks/use-platform"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 type Entry = { title: string; description?: string; url: string }
 type Group = { name: string; pages: Entry[] }

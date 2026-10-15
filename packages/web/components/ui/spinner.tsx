@@ -1,4 +1,4 @@
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 const spokes = Array.from({ length: 8 }, (_, index) => ({
   angle: index * 45,

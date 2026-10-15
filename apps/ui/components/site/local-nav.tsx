@@ -1,9 +1,7 @@
 "use client"
 
 import { ArrowUpRightIcon, SidebarIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import { usePathname } from "next/navigation"
-
 import { Anchor } from "@/components/site/anchor"
 import { Logo } from "@/components/site/logo"
 import { Search } from "@/components/site/search"
@@ -11,6 +9,7 @@ import { useSidebar } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/ui/theme"
 import { repository, sections } from "@/lib/sections"
 import { strings } from "@/lib/strings"
+import { cn } from "@/lib/utils"
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
 

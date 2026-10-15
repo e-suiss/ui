@@ -2,10 +2,10 @@
 
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
 import { XIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { useScrollbarGap } from "@/hooks/use-scrollbar-gap"
+import { cn } from "@/lib/utils"
 
 type DrawerContextProps = {
   floating: boolean
