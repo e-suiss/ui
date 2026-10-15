@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/app/(create)/components/icon-placeholder": [
-        "../../packages/web/app/(create)/components/icon-placeholder"
+        "./components/site/icon-placeholder"
       ],
       "@/components/ui/*": ["../../packages/web/components/ui/*"],
       "@/components/patterns/*": ["../../packages/web/components/patterns/*"],

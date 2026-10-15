@@ -1,9 +1,11 @@
-import { Code, ComponentSource } from "@/components/site/component-source"
+import {
+  ComponentSource,
+  ExampleSource,
+} from "@/components/site/component-source"
 import { Example } from "@/components/site/example"
-import { exampleSource } from "@/lib/highlight"
 import { type PreviewLayout, type PreviewType, previewOf } from "@/lib/previews"
 
-export async function ComponentPreview(props: {
+export function ComponentPreview(props: {
   name: string
   type?: PreviewType
   layout?: PreviewLayout
@@ -13,7 +15,7 @@ export async function ComponentPreview(props: {
   return (
     <Example preview={preview}>
       {preview.type === "example" ? (
-        <Code code={await exampleSource(preview.name)} />
+        <ExampleSource name={preview.name} />
       ) : (
         <ComponentSource
           path={`components/${preview.type}s/${preview.name}.tsx`}

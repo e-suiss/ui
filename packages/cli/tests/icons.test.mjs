@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest"
 
-import { toPhosphorIcons, usesIconPlaceholders } from "../lib/icons.mjs"
+import {
+  toIcons,
+  toPhosphorIcons,
+  usesIconPlaceholders,
+} from "../lib/icons.mjs"
 
 const component = `"use client"
 
@@ -124,5 +128,33 @@ ${names.map((name) => `  <IconPlaceholder lucide="${name}Icon" tabler="Icon${nam
     const code = `import { XIcon } from "@phosphor-icons/react"\n\nexport const x = <XIcon />\n`
     expect(usesIconPlaceholders(code)).toBe(false)
     expect(toPhosphorIcons(code)).toBe(code)
+  })
+})
+
+describe("toIcons", () => {
+  it("writes the icons of another library", () => {
+    expect(toIcons(component, "lucide")).toContain(
+      'import { CheckIcon, MinusIcon } from "lucide-react"'
+    )
+    expect(toIcons(component, "remixicon")).toContain("<RiCheckLine />")
+  })
+
+  it("wraps HugeIcons icons in their component", () => {
+    const code = toIcons(component, "hugeicons")
+    expect(
+      code
+    ).toContain(`import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
+import { MinusSignIcon, Tick02Icon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { cva } from "class-variance-authority"`)
+    expect(code).toContain(
+      "<HugeiconsIcon icon={Tick02Icon} strokeWidth={2} />"
+    )
+    expect(code).toContain(`<HugeiconsIcon
+        icon={MinusSignIcon}
+        strokeWidth={2}
+        className={cn("size-3.5", visible && "block")}
+        data-slot="checkbox-icon"
+      />`)
   })
 })
