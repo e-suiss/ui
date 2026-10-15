@@ -29,6 +29,14 @@ function daysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate()
 }
 
+function yearRange(fromYear: number | undefined, toYear: number | undefined) {
+  if (fromYear !== undefined && toYear !== undefined) {
+    return { fromYear, toYear }
+  }
+  const year = new Date().getFullYear()
+  return { fromYear: fromYear ?? year - 100, toYear: toYear ?? year + 10 }
+}
+
 function partOrder(locale: string | undefined): DatePart[] {
   const order = new Intl.DateTimeFormat(locale, { dateStyle: "short" })
     .formatToParts(new Date(2000, 11, 31))
@@ -60,8 +68,8 @@ function DatePicker({
   onValueChange,
   placeholder = "Pick a date",
   locale,
-  fromYear = new Date().getFullYear() - 100,
-  toYear = new Date().getFullYear() + 10,
+  fromYear,
+  toYear,
   title,
   disabled,
   floating,
@@ -187,7 +195,7 @@ function DatePicker({
             <DrawerTitle>{title ?? ariaLabel ?? placeholder}</DrawerTitle>
           </DrawerHeader>
           <DateWheels
-            value={value ?? new Date()}
+            value={value}
             onValueChange={select}
             locale={locale}
             fromYear={fromYear}
@@ -207,16 +215,13 @@ function DatePicker({
         align="start"
         className="w-auto p-0"
       >
-        <Calendar
-          mode="single"
-          selected={value ?? undefined}
-          defaultMonth={value ?? undefined}
+        <DateCalendar
+          value={value}
+          fromYear={fromYear}
+          toYear={toYear}
           weekStartsOn={calendarLocale.weekStartsOn}
           formatters={calendarLocale.formatters}
           labels={calendarLocale.labels}
-          className="bg-transparent"
-          startMonth={new Date(fromYear, 0)}
-          endMonth={new Date(toYear, 11)}
           onSelect={(next) => {
             select(next ?? null)
             setOpen(false)
@@ -227,21 +232,53 @@ function DatePicker({
   )
 }
 
-function DateWheels({
+function DateCalendar({
   value,
-  onValueChange,
-  locale,
   fromYear,
   toYear,
+  onSelect,
+  ...props
+}: Pick<
+  React.ComponentProps<typeof Calendar>,
+  "weekStartsOn" | "formatters" | "labels"
+> & {
+  value: Date | null
+  fromYear?: number
+  toYear?: number
+  onSelect: (value: Date | undefined) => void
+}) {
+  const range = yearRange(fromYear, toYear)
+  return (
+    <Calendar
+      mode="single"
+      selected={value ?? undefined}
+      defaultMonth={value ?? undefined}
+      className="bg-transparent"
+      startMonth={new Date(range.fromYear, 0)}
+      endMonth={new Date(range.toYear, 11)}
+      onSelect={onSelect}
+      {...props}
+    />
+  )
+}
+
+function DateWheels({
+  value: valueProp,
+  onValueChange,
+  locale,
+  fromYear: fromYearProp,
+  toYear: toYearProp,
   className,
 }: {
   className?: string
-  value: Date
+  value: Date | null
   onValueChange: (value: Date) => void
   locale?: string
-  fromYear: number
-  toYear: number
+  fromYear?: number
+  toYear?: number
 }) {
+  const value = valueProp ?? new Date()
+  const { fromYear, toYear } = yearRange(fromYearProp, toYearProp)
   const year = value.getFullYear()
   const month = value.getMonth()
   const day = value.getDate()
