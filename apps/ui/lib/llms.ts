@@ -1,8 +1,7 @@
-import { readFile } from "node:fs/promises"
 import path from "node:path"
 import type * as PageTree from "fumadocs-core/page-tree"
 
-import { exampleSource, sourcePath } from "@/lib/highlight"
+import { exampleSource, readSource } from "@/lib/highlight"
 import { nativeCode, nativePreview } from "@/lib/native"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
@@ -32,8 +31,7 @@ const NATIVE_OPEN = /^<NativeExample id="([^"]+)"/
 const ANATOMY_ITEM = /^(\s*)[-*] (?:\[([^\]]+)\]\([^)]*\)|(.+))$/
 
 async function fileText(file: string) {
-  const resolved = sourcePath(file)
-  return resolved ? await readFile(resolved, "utf8").catch(() => "") : ""
+  return (await readSource(file).catch(() => undefined)) ?? ""
 }
 
 async function replaceAsync(

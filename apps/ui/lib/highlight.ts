@@ -3,6 +3,8 @@ import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import { highlightHast } from "fumadocs-core/highlight"
 
+import { toPhosphorIcons } from "../../../packages/cli/lib/icons.mjs"
+
 const palettes: Record<
   string,
   { prefix: string; base: string; colors: string[] }
@@ -104,9 +106,11 @@ export function sourcePath(file: string) {
     : undefined
 }
 
-export function readSource(file: string) {
+export async function readSource(file: string) {
   const resolved = sourcePath(file)
-  return resolved ? readFile(resolved, "utf8") : Promise.resolve(undefined)
+  return resolved
+    ? toPhosphorIcons(await readFile(resolved, "utf8"))
+    : undefined
 }
 
 export async function exampleSource(name: string) {
