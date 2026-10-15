@@ -282,8 +282,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle,${TRIGGERS[base].includes("<DialogTrigger") ? "\n  DialogTrigger," : ""}
 } from "@/components/ui/dialog"
 import {
   DropdownMenu,
