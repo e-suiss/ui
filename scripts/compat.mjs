@@ -34,12 +34,18 @@ const PATTERNS = ["date-picker"]
 const CHARTS = ["area-chart-default"]
 const BLOCKS = ["login-account"]
 const THEME = "theme-suiss"
-const PRIMITIVES = { base: "@base-ui/react", radix: "radix-ui" }
+const PRIMITIVES = {
+  base: "@base-ui/react",
+  radix: "radix-ui",
+  aria: "react-aria-components",
+}
 const TWINS = {
   base: { patterns: [], blocks: [] },
   radix: { patterns: ["flyout"], blocks: ["login-passkey"] },
+  aria: { patterns: ["flyout"], blocks: ["login-passkey"] },
 }
 const RADIX_STYLE = /^(radix-.+|new-york|default)$/
+const ARIA_STYLE = /^aria-.+$/
 const ICON_PACKAGES = {
   lucide: "lucide-react",
   tabler: "@tabler/icons-react",
@@ -78,10 +84,22 @@ const TRIGGERS = {
   radix: `<DialogTrigger asChild>
               <Button variant="outline">Open</Button>
             </DialogTrigger>`,
+  aria: `<Button variant="outline">Open</Button>`,
+}
+
+const SELECT_PROPS = { base: "", radix: "", aria: ' aria-label="Fruit"' }
+
+const TAB_PROPS = {
+  base: { root: "defaultValue", item: "value" },
+  radix: { root: "defaultValue", item: "value" },
+  aria: { root: "defaultSelectedKey", item: "id" },
 }
 
 const TWIN_IMPORTS = {
   base: "",
+  aria: `import { LoginPasskey } from "@/components/blocks/login-passkey"
+import { Flyout, FlyoutContent, FlyoutTitle } from "@/components/patterns/flyout"
+`,
   radix: `import { LoginPasskey } from "@/components/blocks/login-passkey"
 import {
   Flyout,
@@ -94,6 +112,14 @@ import {
 
 const TWIN_USAGE = {
   base: "",
+  aria: `
+          <Flyout>
+            <Button variant="outline">Flyout</Button>
+            <FlyoutContent>
+              <FlyoutTitle>Flyout</FlyoutTitle>
+            </FlyoutContent>
+          </Flyout>
+          <LoginPasskey />`,
   radix: `
           <Flyout>
             <FlyoutTrigger asChild>
@@ -166,7 +192,7 @@ export default function Page() {
               </DialogHeader>
             </DialogContent>
           </Dialog>
-          <Select>
+          <Select${SELECT_PROPS[base]}>
             <SelectTrigger>
               <SelectValue placeholder="Fruit" />
             </SelectTrigger>
@@ -177,13 +203,13 @@ export default function Page() {
           <DatePicker aria-label="Date" />
           <Checkbox />
           <Switch />
-          <Tabs defaultValue="one">
+          <Tabs ${TAB_PROPS[base].root}="one">
             <TabsList>
-              <TabsTrigger value="one">One</TabsTrigger>
-              <TabsTrigger value="two">Two</TabsTrigger>
+              <TabsTrigger ${TAB_PROPS[base].item}="one">One</TabsTrigger>
+              <TabsTrigger ${TAB_PROPS[base].item}="two">Two</TabsTrigger>
             </TabsList>
-            <TabsContent value="one">One</TabsContent>
-            <TabsContent value="two">Two</TabsContent>
+            <TabsContent ${TAB_PROPS[base].item}="one">One</TabsContent>
+            <TabsContent ${TAB_PROPS[base].item}="two">Two</TabsContent>
           </Tabs>
           <AreaChartDefault />
           <LoginAccount />${TWIN_USAGE[base]}
@@ -204,7 +230,9 @@ const STYLED_ITEM = /^\/r\/([^/]+)\/([^/]+)$/
 function route(pathname) {
   const match = pathname.match(STYLED_ITEM)
   if (!match || match[1] in PRIMITIVES) return pathname
-  return `/r/${RADIX_STYLE.test(match[1]) ? "radix" : "base"}/${match[2]}`
+  if (RADIX_STYLE.test(match[1])) return `/r/radix/${match[2]}`
+  if (ARIA_STYLE.test(match[1])) return `/r/aria/${match[2]}`
+  return `/r/base/${match[2]}`
 }
 
 function serve(dir) {
@@ -306,6 +334,7 @@ async function serveDirectory(dir) {
 const REGISTRY_FILES = {
   base: "registry/registry.json",
   radix: "registry/radix/registry.json",
+  aria: "registry/aria/registry.json",
 }
 
 async function runCli(base, app, env) {
