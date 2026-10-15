@@ -1,7 +1,5 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor, within } from "storybook/test"
 
 import {
   TabBar,
@@ -13,6 +11,14 @@ import {
   TabBarSectionTitle,
   TabBarTrigger,
 } from "@/components/ui/tab-bar"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const defaultItems = ["Home", "Nominees", "Directory", "Collections"]
 

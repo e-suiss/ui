@@ -1,7 +1,4 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
-
 import {
   Table,
   TableBody,
@@ -12,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { expect, type Meta, type StoryObj } from "@/tests/story-kit"
 
 const invoices = [
   { id: "INV-001", status: "Paid", method: "Credit card", amount: 250 },

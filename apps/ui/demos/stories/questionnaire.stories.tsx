@@ -1,7 +1,4 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
-
 import {
   Questionnaire,
   QuestionnaireActions,
@@ -19,6 +16,13 @@ import {
   QuestionnaireSubmit,
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const STARTER = /^Starter/
 const TEAM = /^Team/

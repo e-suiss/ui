@@ -1,12 +1,10 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
-
 import {
   Progress,
   ProgressLabel,
   ProgressValue,
 } from "@/components/ui/progress"
+import { expect, type Meta, type StoryObj } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Progress",

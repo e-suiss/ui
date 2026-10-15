@@ -7,8 +7,6 @@ import {
   SmileyIcon,
   UserIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   CommandPalette,
@@ -27,6 +25,15 @@ import {
 } from "@/components/ui/command"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { isMacPlatform } from "@/hooks/use-platform"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 function PaletteItems() {
   return (

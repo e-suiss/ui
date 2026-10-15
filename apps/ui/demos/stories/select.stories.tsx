@@ -1,8 +1,6 @@
 // @ts-nocheck
 import { GlobeIcon, MoonIcon, SunIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Fragment } from "react"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   Select,
@@ -14,6 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const fruits = [
   { value: "apple", label: "Apple" },

@@ -1,7 +1,4 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, within } from "storybook/test"
-
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -20,6 +17,13 @@ import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Field",

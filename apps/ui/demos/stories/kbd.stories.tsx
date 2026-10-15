@@ -4,8 +4,6 @@ import {
   CommandIcon,
   MagnifyingGlassIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent } from "storybook/test"
 
 import {
   InputGroup,
@@ -13,6 +11,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Kbd",

@@ -7,9 +7,7 @@ import {
   SmileyIcon,
   UserIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,6 +21,14 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 function CommandItems() {
   return (

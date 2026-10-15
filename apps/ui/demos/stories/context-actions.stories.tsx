@@ -5,8 +5,6 @@ import {
   ShareIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   ContextActions,
@@ -16,6 +14,14 @@ import {
   ContextActionsSeparator,
   ContextActionsTrigger,
 } from "@/components/patterns/context-actions"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Patterns/Context Actions",

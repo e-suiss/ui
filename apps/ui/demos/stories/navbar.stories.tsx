@@ -7,11 +7,17 @@ import {
   LightningIcon,
   ShieldCheckIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const items: NavbarItem[] = [
   {

@@ -1,7 +1,4 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
-
 import {
   AlertSheet,
   AlertSheetAction,
@@ -14,6 +11,14 @@ import {
   AlertSheetTrigger,
 } from "@/components/ui/alert-sheet"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Alert Sheet",

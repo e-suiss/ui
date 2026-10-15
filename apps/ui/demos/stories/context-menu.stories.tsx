@@ -5,8 +5,6 @@ import {
   ArrowRightIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   ContextMenu,
@@ -24,6 +22,14 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const FORWARD = /^Forward/
 const RELOAD = /^Reload/

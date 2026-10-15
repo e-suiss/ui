@@ -1,9 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
-
 import { NavCategories } from "@/components/blocks/nav-categories"
 import { NavGlobal } from "@/components/blocks/nav-global"
 import { NavLocal } from "@/components/blocks/nav-local"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Navigation",

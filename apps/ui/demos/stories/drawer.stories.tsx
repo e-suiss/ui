@@ -1,8 +1,6 @@
 // @ts-nocheck
 import { PlusIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -20,6 +18,14 @@ import {
 } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Drawer",

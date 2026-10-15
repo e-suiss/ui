@@ -4,9 +4,7 @@ import {
   PushPinIcon,
   ShareNetworkIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   resetTips,
@@ -22,6 +20,14 @@ import {
   TipTitle,
 } from "@/components/interactions/tip"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const notes = [
   { id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee" },

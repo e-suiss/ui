@@ -1,8 +1,7 @@
 import { CalendarBlankIcon, InfoIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent } from "storybook/test"
 
 import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Marker",

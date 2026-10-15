@@ -1,7 +1,4 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import {
@@ -12,6 +9,7 @@ import {
   MessageGroup,
   MessageHeader,
 } from "@/components/ui/message"
+import { expect, type Meta, type StoryObj } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Message",

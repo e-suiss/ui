@@ -1,6 +1,4 @@
 import { CaretRightIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -14,6 +12,13 @@ import {
   CarouselPlayButton,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const slides = [1, 2, 3, 4, 5]
 

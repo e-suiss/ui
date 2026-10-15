@@ -5,10 +5,8 @@ import {
   ShareNetworkIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { cn } from "cn"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   PreviewMenu,
@@ -17,6 +15,14 @@ import {
   PreviewMenuSeparator,
   PreviewMenuTrigger,
 } from "@/components/interactions/preview-menu"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const photos = [
   "from-blue to-purple",

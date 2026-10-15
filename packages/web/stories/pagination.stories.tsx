@@ -1,6 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, within } from "storybook/test"
 
 import {
   Pagination,
@@ -31,6 +29,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Pagination",

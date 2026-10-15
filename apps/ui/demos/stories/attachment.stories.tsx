@@ -7,8 +7,6 @@ import {
   UploadSimpleIcon,
   XIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent } from "storybook/test"
 
 import {
   Attachment,
@@ -24,6 +22,7 @@ import {
   AttachmentTrigger,
 } from "@/components/ui/attachment"
 import { Spinner } from "@/components/ui/spinner"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const imageUrl =
   "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"

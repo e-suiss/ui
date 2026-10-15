@@ -1,8 +1,6 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import type * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   InputOTP,
@@ -10,6 +8,13 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 type InputOTPArgs = Pick<
   React.ComponentProps<typeof InputOTP>,

@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { BarChartActive } from "@/components/charts/bar-chart-active"
 import { BarChartDefault } from "@/components/charts/bar-chart-default"
 import { BarChartHorizontal } from "@/components/charts/bar-chart-horizontal"
@@ -11,6 +8,14 @@ import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
 import { BarChartNegative } from "@/components/charts/bar-chart-negative"
 import { BarChartRange } from "@/components/charts/bar-chart-range"
 import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Bar",

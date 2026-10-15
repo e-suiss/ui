@@ -1,7 +1,5 @@
 // @ts-nocheck
 import { CaretUpDownIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -9,6 +7,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
 

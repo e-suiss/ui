@@ -1,6 +1,4 @@
 import { CalendarBlankIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   Preview,
@@ -8,6 +6,14 @@ import {
   PreviewTrigger,
 } from "@/components/patterns/preview"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 function ProfileCard() {
   return (

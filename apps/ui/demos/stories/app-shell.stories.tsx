@@ -9,9 +9,7 @@ import {
   TrayIcon,
   UsersIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   AppShell,
@@ -24,6 +22,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { isMacPlatform } from "@/hooks/use-platform"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const items: AppShellItem[] = [
   {

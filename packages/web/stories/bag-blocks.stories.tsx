@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { BagCheckout } from "@/components/blocks/bag-checkout"
 import { BagConfigure } from "@/components/blocks/bag-configure"
 import { BagReview } from "@/components/blocks/bag-review"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Bag",

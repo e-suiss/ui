@@ -6,9 +6,7 @@ import {
   FlagIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor, within } from "storybook/test"
 
 import {
   SwipeAction,
@@ -17,6 +15,14 @@ import {
   SwipeActionsContent,
 } from "@/components/interactions/swipe-actions"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 import { MOUSE_POINTER_ID } from "./pointer"
 
 const initialMessages = [

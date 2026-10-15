@@ -1,6 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   OtpAutofill,
@@ -14,6 +12,13 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const CODE = "482913"
 const SUGGESTION = /From Messages/

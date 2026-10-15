@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-const STORYBOOK = new Set(["storybook/test", "@storybook/react-vite"]);
+const STORY_KIT = "@/tests/story-kit";
 const OPEN_ARGS = new Set(["defaultOpen", "open"]);
 
 function parse(file, source) {
@@ -90,7 +90,7 @@ export function storyExamples(file, source, { itemName, overlay }) {
   for (const statement of tree.statements) {
     if (ts.isImportDeclaration(statement)) {
       const from = statement.moduleSpecifier.text;
-      if (!STORYBOOK.has(from)) imports.push(statement);
+      if (from !== STORY_KIT) imports.push(statement);
       continue;
     }
     if (ts.isVariableStatement(statement)) {

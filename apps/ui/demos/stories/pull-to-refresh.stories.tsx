@@ -1,9 +1,14 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, waitFor, within } from "storybook/test"
 
 import { PullToRefresh } from "@/components/interactions/pull-to-refresh"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const senders: [from: string, subject: string][] = [
   ["Acme Store", "Your order has shipped"],

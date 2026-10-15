@@ -4,9 +4,7 @@ import {
   FolderSimpleIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   SelectionList,
@@ -17,6 +15,13 @@ import {
   useSelectionList,
 } from "@/components/interactions/selection-list"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const initialNotes = [
   { id: "groceries", title: "Groceries", preview: "Milk, eggs, bread, coffee" },

@@ -10,14 +10,6 @@ allowBuilds:
   unrs-resolver: false
 
 minimumReleaseAgeExclude:
-  - '@storybook/addon-a11y@10.6.1'
-  - '@storybook/addon-docs@10.6.1'
-  - '@storybook/addon-themes@10.6.1'
-  - '@storybook/builder-vite@10.6.1'
-  - '@storybook/react-dom-shim@10.6.1'
-  - '@storybook/react-vite@10.6.1'
-  - '@storybook/react@10.6.1'
-  - storybook@10.6.1
   - lefthook-darwin-arm64@2.1.15
   - lefthook-darwin-x64@2.1.15
   - lefthook-freebsd-arm64@2.1.15

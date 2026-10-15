@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { SettingsAccount } from "@/components/blocks/settings-account"
 import { SettingsDevice } from "@/components/blocks/settings-device"
 import { SettingsNotifications } from "@/components/blocks/settings-notifications"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Settings",

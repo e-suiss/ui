@@ -1,8 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent } from "storybook/test"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Input",

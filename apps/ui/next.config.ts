@@ -40,8 +40,7 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     resolveAlias: {
-      "storybook/test": "./lib/storybook/test.ts",
-      "@storybook/react-vite": "./lib/storybook/react-vite.ts",
+      "@/tests/story-kit": "./lib/story-kit.ts",
     },
     rules: {
       "*.css": {

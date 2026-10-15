@@ -1,10 +1,15 @@
 // @ts-nocheck
 import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import { cn } from "cn"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const tabs = [
   {

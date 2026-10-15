@@ -6,8 +6,7 @@ import { settle } from "./settle"
 vi.useFakeTimers({ toFake: ["Date"], shouldAdvanceTime: true })
 vi.setSystemTime(new Date(2026, 0, 15, 9, 41))
 
-const RTL =
-  (globalThis as { storybookDirection?: string }).storybookDirection === "rtl"
+const RTL = (globalThis as { storyDirection?: string }).storyDirection === "rtl"
 const THEMES = RTL ? (["light"] as const) : (["light", "dark"] as const)
 const SUFFIX = RTL ? "-rtl" : ""
 

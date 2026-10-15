@@ -1,12 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent } from "storybook/test"
 
 import {
   WheelPicker,
   WheelPickerColumn,
   WheelPickerItem,
 } from "@/components/ui/wheel-picker"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Wheel Picker",

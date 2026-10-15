@@ -1,7 +1,5 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, within } from "storybook/test"
 
 import {
   Stepper,
@@ -11,6 +9,13 @@ import {
   StepperInput,
   StepperSeparator,
 } from "@/components/interactions/stepper"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  within,
+} from "@/tests/story-kit"
 
 function StepperRow({
   label,

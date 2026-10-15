@@ -1,5 +1,4 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   Area,
   AreaChart,
@@ -12,7 +11,6 @@ import {
   PieChart,
   XAxis,
 } from "recharts"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
 
 import {
   type ChartConfig,
@@ -22,6 +20,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const visitors = [
   { month: "January", desktop: 186, mobile: 80 },

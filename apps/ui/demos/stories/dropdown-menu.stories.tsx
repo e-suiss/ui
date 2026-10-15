@@ -9,9 +9,7 @@ import {
   UserIcon,
   UserPlusIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -30,6 +28,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const PROFILE = /^Profile/
 const BILLING = /^Billing/

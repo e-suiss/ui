@@ -1,13 +1,12 @@
 // @ts-nocheck
 import { ListIcon, SquaresFourIcon, TableIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent } from "storybook/test"
 
 import {
   SegmentPicker,
   SegmentPickerItem,
 } from "@/components/patterns/segment-picker"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const periods = (
   <>

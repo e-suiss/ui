@@ -1,13 +1,18 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, screen, userEvent, waitFor } from "storybook/test"
-
 import { Button } from "@/components/ui/button"
 import {
   createToastManager,
   Toaster,
   useToastManager,
 } from "@/components/ui/toast"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))

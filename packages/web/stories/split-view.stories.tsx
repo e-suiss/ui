@@ -1,6 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   SplitView,
@@ -9,6 +7,13 @@ import {
   SplitViewList,
   SplitViewSidebar,
 } from "@/components/patterns/split-view"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const JORDAN = /Jordan Lee/
 const CLOUD = /Cloud Drive/

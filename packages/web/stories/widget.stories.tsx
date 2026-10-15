@@ -12,9 +12,7 @@ import {
   SunIcon,
   TriangleIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, waitFor } from "storybook/test"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -28,6 +26,7 @@ import {
   WidgetTitle,
   WidgetValue,
 } from "@/components/ui/widget"
+import { expect, type Meta, type StoryObj, waitFor } from "@/tests/story-kit"
 import { MOUSE_POINTER_ID } from "./pointer"
 
 const meta = {

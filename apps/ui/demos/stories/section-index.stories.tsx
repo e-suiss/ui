@@ -1,7 +1,5 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   SectionIndex,
@@ -10,6 +8,13 @@ import {
   SectionIndexSection,
 } from "@/components/interactions/section-index"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 import { MOUSE_POINTER_ID } from "./pointer"
 
 const UPPERCASE = /[A-Z]/

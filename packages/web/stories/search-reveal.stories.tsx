@@ -1,12 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import {
   SearchReveal,
   SearchRevealContent,
   SearchRevealField,
 } from "@/components/interactions/search-reveal"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const allNotes = [
   { id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee" },

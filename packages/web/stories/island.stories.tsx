@@ -5,9 +5,7 @@ import {
   DownloadSimpleIcon,
   FileZipIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, type screen, userEvent, waitFor } from "storybook/test"
 
 import {
   Island,
@@ -18,6 +16,14 @@ import {
   useIsland,
 } from "@/components/interactions/island"
 import { Button } from "@/components/ui/button"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  type screen,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const SIZE = 120
 const JORDAN = /Jordan Lee/

@@ -1,9 +1,7 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent } from "storybook/test"
-
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Switch",

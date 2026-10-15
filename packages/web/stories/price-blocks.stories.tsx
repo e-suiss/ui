@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { PriceBundle } from "@/components/blocks/price-bundle"
 import { PriceCare } from "@/components/blocks/price-care"
 import { PriceStorage } from "@/components/blocks/price-storage"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Pricing",

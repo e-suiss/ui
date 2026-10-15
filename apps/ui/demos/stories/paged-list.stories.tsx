@@ -1,8 +1,6 @@
 // @ts-nocheck
 import { ChatCircleIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor } from "storybook/test"
 
 import { PagedList } from "@/components/patterns/paged-list"
 import {
@@ -12,6 +10,13 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 type Topic = { id: number; title: string; replies: number }
 

@@ -1,9 +1,15 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent, waitFor, within } from "storybook/test"
 
 import { Trail, type TrailItem } from "@/components/patterns/trail"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const article: TrailItem[] = [
   { label: "Support", href: "#support" },

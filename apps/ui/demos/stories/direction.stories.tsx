@@ -1,7 +1,5 @@
 // @ts-nocheck
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect } from "storybook/test"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { DirectionProvider, useDirection } from "@/components/ui/direction"
+import { expect, type Meta, type StoryObj } from "@/tests/story-kit"
 
 function DirectionPreview() {
   const direction = useDirection()

@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { RadialChartBatteries } from "@/components/charts/radial-chart-batteries"
 import { RadialChartDefault } from "@/components/charts/radial-chart-default"
 import { RadialChartGauge } from "@/components/charts/radial-chart-gauge"
@@ -11,6 +8,14 @@ import { RadialChartRings } from "@/components/charts/radial-chart-rings"
 import { RadialChartStacked } from "@/components/charts/radial-chart-stacked"
 import { RadialChartText } from "@/components/charts/radial-chart-text"
 import { RadialChartTinted } from "@/components/charts/radial-chart-tinted"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Charts/Radial",

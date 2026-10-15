@@ -1,9 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor } from "storybook/test"
-
 import { DashAnalytics } from "@/components/blocks/dash-analytics"
 import { DashHealth } from "@/components/blocks/dash-health"
 import { DashStore } from "@/components/blocks/dash-store"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Dashboard",

@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, waitFor, within } from "storybook/test"
-
 import { GridAccessories } from "@/components/blocks/grid-accessories"
 import { GridCarousel } from "@/components/blocks/grid-carousel"
 import { GridLineup } from "@/components/blocks/grid-lineup"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const meta = {
   title: "Blocks/Grid",

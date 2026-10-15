@@ -7,9 +7,7 @@ import {
   PaperclipIcon,
   XCircleIcon,
 } from "@phosphor-icons/react"
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, userEvent } from "storybook/test"
 
 import {
   InputGroup,
@@ -20,6 +18,7 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
+import { expect, type Meta, type StoryObj, userEvent } from "@/tests/story-kit"
 
 const meta = {
   title: "Components/Input Group",

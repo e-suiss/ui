@@ -4,7 +4,7 @@ import { commands } from "vitest/browser"
 import { findLayoutIssues } from "./layout"
 import { settle } from "./settle"
 
-Object.assign(globalThis, { storybookDirection: "rtl" })
+Object.assign(globalThis, { storyDirection: "rtl" })
 
 afterEach(async ({ task }) => {
   await settle()

@@ -1,7 +1,5 @@
 // @ts-nocheck
-import type { Meta, StoryObj } from "@storybook/react-vite"
 import * as React from "react"
-import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 
 import {
   FullscreenMenu,
@@ -12,6 +10,15 @@ import {
   FullscreenMenuTitle,
   FullscreenMenuTrigger,
 } from "@/components/ui/fullscreen-menu"
+import {
+  expect,
+  type Meta,
+  type StoryObj,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/tests/story-kit"
 
 const primary = ["Store", "Products", "Services", "Company", "Support"]
 
