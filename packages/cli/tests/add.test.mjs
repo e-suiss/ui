@@ -101,6 +101,50 @@ describe("add", () => {
     )
   })
 
+  it("installs icon placeholders as Phosphor icons", async () => {
+    serveRegistry({
+      ...files,
+      "registry.json": {
+        ...registry,
+        items: [
+          ...registry.items,
+          {
+            name: "accordion",
+            type: "ui",
+            icons: true,
+            requires: [],
+            dependencies: ["@base-ui/react"],
+            files: ["components/ui/accordion.tsx"],
+          },
+        ],
+      },
+      "components/ui/accordion.tsx": `import { Accordion } from "@base-ui/react/accordion"
+
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+
+export const Icon = () => (
+  <IconPlaceholder lucide="ChevronDownIcon" tabler="IconChevronDown" hugeicons="ArrowDown01Icon" phosphor="CaretDownIcon" remixicon="RiArrowDownSLine" />
+)
+`,
+    })
+    const cwd = viteProject()
+    await add(["accordion"], { cwd })
+    expect(read(cwd, "src/components/ui/accordion.tsx")).toBe(
+      `import { Accordion } from "@base-ui/react/accordion"
+import { CaretDownIcon } from "@phosphor-icons/react"
+
+export const Icon = () => (
+  <CaretDownIcon />
+)
+`
+    )
+    expect(spawnSync).toHaveBeenCalledWith(
+      "npm",
+      ["install", "@base-ui/react", "@phosphor-icons/react"],
+      expect.objectContaining({ cwd })
+    )
+  })
+
   it("keeps local edits unless asked to overwrite", async () => {
     const cwd = viteProject({
       "src/components/ui/button.tsx": "export function Button() { edited }\n",

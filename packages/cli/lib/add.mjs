@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
+import { ICON_PACKAGE, toPhosphorIcons } from "./icons.mjs"
 import { CliError, note, step } from "./output.mjs"
 import {
   detectProject,
@@ -39,7 +40,7 @@ function fetchFiles(root, items) {
   return Promise.all(
     files.map(async (entry) => ({
       ...entry,
-      content: await fetchText(entry.file),
+      content: toPhosphorIcons(await fetchText(entry.file)),
     }))
   )
 }
@@ -80,7 +81,10 @@ export async function installItems(
   )
   const installed = install(
     project,
-    items.flatMap((item) => item.dependencies)
+    items.flatMap((item) => [
+      ...item.dependencies,
+      ...(item.icons ? [ICON_PACKAGE] : []),
+    ])
   )
   reportFiles(result, installed)
   await addStyles(project, items)
