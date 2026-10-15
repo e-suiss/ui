@@ -529,19 +529,7 @@ function keyOf(source, node) {
   return node.name.getText(source).replace(QUOTES, "")
 }
 
-function inCompoundVariants(node) {
-  for (let parent = node.parent; parent; parent = parent.parent) {
-    if (
-      ts.isPropertyAssignment(parent) &&
-      parent.name.getText() === "compoundVariants"
-    ) {
-      return true
-    }
-  }
-  return false
-}
-
-function classStrings(file, { compound = true } = {}) {
+function classStrings(file) {
   const source = ts.createSourceFile(
     file,
     readFileSync(file, "utf8"),
@@ -557,7 +545,6 @@ function classStrings(file, { compound = true } = {}) {
       const key = keyOf(source, node)
       if (key === "defaultVariants") return
       if (key === "compoundVariants") {
-        if (!compound) return
         for (const property of descendants(node.initializer)) {
           if (
             ts.isPropertyAssignment(property) &&
@@ -613,8 +600,7 @@ function classStrings(file, { compound = true } = {}) {
       collect(node)
     } else if (
       ts.isPropertyAssignment(node) &&
-      keyOf(source, node) === "className" &&
-      (compound || !inCompoundVariants(node))
+      keyOf(source, node) === "className"
     ) {
       collect(node.initializer)
     }
@@ -622,10 +608,10 @@ function classStrings(file, { compound = true } = {}) {
   return found
 }
 
-function classNames(file, options) {
+function classNames(file) {
   return [
     ...new Set(
-      classStrings(file, options).flatMap((value) =>
+      classStrings(file).flatMap((value) =>
         value.split(WHITESPACE).filter(Boolean)
       )
     ),
@@ -761,22 +747,15 @@ const EXPECTATIONS = [
       if (applied.length > 0) {
         fail(`the stylesheet applies unprefixed classes: ${applied.join(" ")}`)
       }
-      const unprefixed = (file, options) =>
-        classNames(file, options).filter(
-          (name) => !name.startsWith(`${SETTINGS.prefix}:`)
-        )
       expectNone(
         app,
         files,
-        (file) => unprefixed(file, { compound: false }),
+        (file) =>
+          classNames(file).filter(
+            (name) => !name.startsWith(`${SETTINGS.prefix}:`)
+          ),
         "files have unprefixed classes"
       )
-      const compound = files.filter((file) => unprefixed(file).length > 0)
-      if (compound.length > 0) {
-        console.log(
-          `\n${REGISTRY_CLI} leaves the compoundVariants classes of cva() unprefixed in ${compound.map((file) => path.relative(app, file)).join(", ")}`
-        )
-      }
     },
   },
   {

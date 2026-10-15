@@ -78,12 +78,11 @@ Some behaviour of the registry CLI (version pinned in `scripts/compat.mjs`) is n
 
 - With a custom `utils` alias the CLI still writes the helper to `<lib alias>/utils.ts`. The check moves it to the alias, as a user would.
 - With `rsc` false, the CLI removes `"use client"` from every other file only. The check requires that it removed some.
-- With a prefix, the CLI does not prefix the `compoundVariants` classes of `cva()` (the `block` sizes of the button).
 - With `cssVariables` false, the CLI writes the base colors as classes such as `bg-oklch(0.205 0 0)`, which Tailwind CSS v4 does not generate.
 - Tailwind CSS v4 writes a prefix as `prefix(tw)` and `tw:flex`, so `--prefix` takes letters only.
 - Hugeicons needs `@hugeicons/core-free-icons` next to `@hugeicons/react`, which `init` installs for that library.
 
-The prefix and the right-to-left transforms only reach class strings in `className`, `cva()` and `cn()` (and, for right-to-left, the `className` of `mergeProps()`). Keep component classes there, and use a ternary rather than `&&` inside a `classNames` prop.
+The prefix and the right-to-left transforms only reach class strings in `className`, `cva()` and `cn()` (and, for right-to-left, the `className` of `mergeProps()`). Keep component classes there, use a ternary rather than `&&` inside a `classNames` prop, and leave out `compoundVariants`, which the prefix transform skips.
 
 GitHub Actions runs the matrix in `.github/workflows/compat.yml` on pushes to `main` and pull requests that change `packages/web`, `packages/cli`, `scripts/compat.mjs` or `apps/ui/next.config.ts`. `node scripts/compat.mjs --matrix` prints its jobs: the default options, Vite, right-to-left and the prefix for every base in `PRIMITIVES`, and each other option once on the first base. A new base added to `PRIMITIVES` gets its jobs without changing the workflow.
 
