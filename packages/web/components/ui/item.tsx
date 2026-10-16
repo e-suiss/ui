@@ -15,7 +15,7 @@ function ItemGroup({
       data-slot="item-group"
       data-variant={variant}
       className={cn(
-        "flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
+        "flex w-full flex-col gap-4 has-[[data-slot=item][data-size=sm]]:gap-2.5 has-[[data-slot=item][data-size=xs]]:gap-2",
         "data-[variant=inset]:gap-0 data-[variant=inset]:overflow-hidden data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-muted data-[variant=inset]:**:data-[slot=item]:rounded-none data-[variant=inset]:**:data-[slot=item]:focus-visible:ring-inset data-[variant=inset]:**:data-[slot=item]:focus-visible:rounded-2xl data-[variant=inset]:**:data-[slot=item-separator]:my-0 data-[variant=inset]:**:data-[slot=item-separator]:ms-4 data-[variant=inset]:**:data-[slot=item-separator]:w-auto",
         className
       )}

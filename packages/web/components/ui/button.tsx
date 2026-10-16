@@ -95,6 +95,8 @@ function Button({
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-variant={variant ?? "default"}
+      data-size={size ?? "default"}
       className={cn(buttonVariants({ variant, size, block, className }))}
       {...props}
     />

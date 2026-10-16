@@ -4,6 +4,7 @@ import { expect, test } from "vitest"
 import ButtonGroupDemo from "@/examples/button-group-demo"
 import ButtonGroupOrientation from "@/examples/button-group-orientation"
 import ButtonGroupPagination from "@/examples/button-group-pagination"
+import ButtonGroupPlain from "@/examples/button-group-plain"
 import ButtonGroupSplitButton from "@/examples/button-group-split-button"
 import ButtonGroupWithDropdownMenu from "@/examples/button-group-with-dropdown-menu"
 import ButtonGroupWithInput from "@/examples/button-group-with-input"
@@ -182,4 +183,20 @@ test("Pagination", async () => {
     "aria-current",
     "page"
   )
+})
+
+test("Plain", async () => {
+  const { canvas, step } = await renderExample(<ButtonGroupPlain />)
+
+  await step("rounds the plain buttons fully", async () => {
+    const back = canvas.getByRole("button", { name: "Back" })
+    await expect(back).toHaveAttribute("data-variant", "plain")
+    await expect(back).toHaveAttribute("data-size", "default")
+    await expect(getComputedStyle(back).borderStartStartRadius).toBe(
+      getComputedStyle(back).borderEndEndRadius
+    )
+    await expect(
+      Number.parseFloat(getComputedStyle(back).borderEndEndRadius)
+    ).toBeGreaterThan(0)
+  })
 })
