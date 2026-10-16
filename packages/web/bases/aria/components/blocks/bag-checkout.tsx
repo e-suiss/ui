@@ -185,7 +185,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="standard"
-                className="size-5 focus-visible:ring-0"
+                className="size-5 data-focus-visible:ring-0"
               />
               <span className="flex-1">Standard · 3–5 business days</span>
               <span>Free</span>
@@ -193,7 +193,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="express"
-                className="size-5 focus-visible:ring-0"
+                className="size-5 data-focus-visible:ring-0"
               />
               <span className="flex-1">Express · Tomorrow</span>
               <span>$19</span>
@@ -219,7 +219,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="card"
-                className="size-5 focus-visible:ring-0"
+                className="size-5 data-focus-visible:ring-0"
               />
               <IconPlaceholder
                 lucide="CreditCardIcon"
@@ -234,7 +234,7 @@ export function BagCheckout() {
             <Label className={choiceClass}>
               <RadioGroupItem
                 value="pay"
-                className="size-5 focus-visible:ring-0"
+                className="size-5 data-focus-visible:ring-0"
               />
               <IconPlaceholder
                 lucide="WalletIcon"

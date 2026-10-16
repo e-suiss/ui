@@ -102,7 +102,7 @@ export function PriceStorage() {
               <RadioGroupItem
                 value={plan.size}
                 aria-label={plan.size}
-                className="size-5 focus-visible:ring-0"
+                className="size-5 data-focus-visible:ring-0"
               />
             </span>
             <span>
