@@ -153,7 +153,7 @@ export default defineConfig({
           maxWorkers: 4,
           sequence: { groupOrder: 1 },
           include: ["tests/{hooks,components,blocks}/**/*.test.tsx"],
-          setupFiles: ["tests/setup.ts"],
+          setupFiles: ["tests/setup.ts", "tests/examples-setup.ts"],
           browser: browser("browser"),
         },
       },
