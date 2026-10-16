@@ -164,7 +164,7 @@ function DatePicker({
       disabled={disabled}
       aria-invalid={ariaInvalid}
       id={id}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ? `${ariaLabel}, ${label}` : undefined}
       aria-describedby={ariaDescribedBy}
       data-placeholder={value ? undefined : ""}
       className={cn(

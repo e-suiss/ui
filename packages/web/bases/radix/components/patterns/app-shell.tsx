@@ -83,6 +83,7 @@ function AppShellLayout({
   side,
   rail = true,
   moreLabel = "More",
+  label = "Main",
   render = <AppShellLink />,
   className,
   children,
@@ -101,6 +102,7 @@ function AppShellLayout({
   open?: boolean
   onOpenChange?: (open: boolean) => void
   moreLabel?: string
+  label?: string
   render?: React.ReactElement
   className?: string
   children?: React.ReactNode
@@ -138,6 +140,7 @@ function AppShellLayout({
           value={value}
           onSelect={select}
           moreLabel={moreLabel}
+          label={label}
           render={render}
         />
       </div>
@@ -208,16 +211,18 @@ function AppShellTabBar({
   value,
   onSelect,
   moreLabel,
+  label,
   render,
 }: {
   items: AppShellItem[]
   value: string | undefined
   onSelect: (value: string) => void
   moreLabel: string
+  label: string
   render: React.ReactElement
 }) {
   return (
-    <TabBar aria-label={moreLabel}>
+    <TabBar aria-label={label}>
       <TabBarList>
         {items.map((item) => (
           <TabBarItem

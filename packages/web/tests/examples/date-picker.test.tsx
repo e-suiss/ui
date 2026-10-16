@@ -9,6 +9,8 @@ import DatePickerWithValue from "@/examples/date-picker-with-value"
 import DatePickerYearRange from "@/examples/date-picker-year-range"
 import { renderExample } from "@/tests/render-example"
 
+const DATE = /^Date,/
+
 const DAY_15 = /\b15(th)?\b/
 const DAY_1 = /\b1(st)?\b/
 const DAY_10 = /\b10(th)?\b/
@@ -35,7 +37,7 @@ async function pickDay(grid: HTMLElement, name: RegExp) {
 test("Default", async () => {
   const { canvas, step } = await renderExample(<DatePickerDemo />)
 
-  const trigger = canvas.getByRole("button", { name: "Date" })
+  const trigger = canvas.getByRole("button", { name: DATE })
   const today = new Date()
 
   await step("shows the placeholder before a date is picked", async () => {
@@ -60,7 +62,7 @@ test("Default", async () => {
 test("With Value", async () => {
   const { canvas, step } = await renderExample(<DatePickerWithValue />)
 
-  const trigger = canvas.getByRole("button", { name: "Date" })
+  const trigger = canvas.getByRole("button", { name: DATE })
 
   await step("opens on the month of the current value", async () => {
     await expect(trigger).toHaveTextContent(formatDate(new Date(2026, 9, 4)))
@@ -80,7 +82,7 @@ test("With Value", async () => {
 test("Locale", async () => {
   const { canvas, step } = await renderExample(<DatePickerLocale />)
 
-  const trigger = canvas.getByRole("button", { name: "Date" })
+  const trigger = canvas.getByRole("button", { name: DATE })
 
   await step("formats the trigger and calendar in Turkish", async () => {
     await expect(trigger).toHaveTextContent(
@@ -104,7 +106,7 @@ test("Locale", async () => {
 test("Year Range", async () => {
   const { canvas, step } = await renderExample(<DatePickerYearRange />)
 
-  const trigger = canvas.getByRole("button", { name: "Date" })
+  const trigger = canvas.getByRole("button", { name: DATE })
 
   await step("picks a day in a past year", async () => {
     const grid = await openCalendar(trigger)
@@ -117,7 +119,7 @@ test("Disabled", async () => {
   const { canvas, step } = await renderExample(<DatePickerDisabled />)
 
   await step("does not open when clicked", async () => {
-    const trigger = canvas.getByRole("button", { name: "Date" })
+    const trigger = canvas.getByRole("button", { name: DATE })
     await expect(trigger).toBeDisabled()
     await userEvent.click(trigger, { pointerEventsCheck: 0 })
     await expect(screen.queryByRole("grid")).toBeNull()
@@ -130,9 +132,7 @@ test("Controlled", async () => {
     await expect(
       canvas.getByText(`Selected: ${new Date(2026, 9, 4).toDateString()}`)
     ).toBeVisible()
-    const grid = await openCalendar(
-      canvas.getByRole("button", { name: "Date" })
-    )
+    const grid = await openCalendar(canvas.getByRole("button", { name: DATE }))
     await pickDay(grid, DAY_20)
     await expect(
       canvas.getByText(`Selected: ${new Date(2026, 9, 20).toDateString()}`)

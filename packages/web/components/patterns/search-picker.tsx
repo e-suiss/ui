@@ -124,7 +124,11 @@ function SearchPicker({
           disabled={disabled}
           id={id}
           aria-invalid={ariaInvalid}
-          aria-label={ariaLabel}
+          aria-label={
+            ariaLabel
+              ? `${ariaLabel}, ${selected?.label ?? placeholder}`
+              : undefined
+          }
           aria-describedby={ariaDescribedBy}
           data-placeholder={selected ? undefined : ""}
           className={cn(

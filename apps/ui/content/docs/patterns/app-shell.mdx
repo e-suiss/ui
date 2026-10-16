@@ -51,7 +51,7 @@ import { AppShell, AppShellTrigger } from "@/components/patterns/app-shell"
 
 Each `AppShellItem` has a `value`, `label` and `icon`, plus optional `href`, `badge`, `group` and `disabled`. Items with the same `group` render under a shared `SidebarGroupLabel`. The selected item is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`; it defaults to the first item. Items with an `href` render through `render`, which defaults to a plain anchor, so you can pass your router's link component.
 
-The sidebar accepts `variant` (`sidebar`, `floating` or `inset`), `collapsible` (`icon` by default, `offcanvas` or `none`), `side`, `rail`, and `open`, `defaultOpen` and `onOpenChange` for its expanded state. `moreLabel` sets the tab bar's More trigger text. Place `AppShellTrigger` in your page header to toggle the sidebar.
+The sidebar accepts `variant` (`sidebar`, `floating` or `inset`), `collapsible` (`icon` by default, `offcanvas` or `none`), `side`, `rail`, and `open`, `defaultOpen` and `onOpenChange` for its expanded state. `moreLabel` sets the tab bar's More trigger text and `label` names the navigation landmark (`Main` by default). Place `AppShellTrigger` in your page header to toggle the sidebar.
 
 ## Examples
 

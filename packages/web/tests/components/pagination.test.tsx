@@ -147,8 +147,12 @@ describe("Pagination", () => {
     const ellipsis = document.querySelector<HTMLElement>(
       "[data-slot=pagination-ellipsis]"
     )
-    expect(ellipsis?.getAttribute("aria-hidden")).toBe("true")
+    expect(ellipsis?.hasAttribute("aria-hidden")).toBe(false)
+    expect(ellipsis?.querySelector("svg")?.getAttribute("aria-hidden")).toBe(
+      "true"
+    )
     expect(ellipsis?.textContent).toBe("More pages")
+    await expect.element(page.getByText("More pages")).toBeInTheDocument()
   })
 
   it("renders first, last, summary, group and input reachable by role", async () => {

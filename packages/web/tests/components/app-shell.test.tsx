@@ -453,7 +453,7 @@ describe("AppShell on mobile", () => {
     await page.viewport(390, 844)
     await render(<Shell />)
     await expect
-      .element(page.getByRole("navigation", { name: "More" }))
+      .element(page.getByRole("navigation", { name: "Main" }))
       .toBeVisible()
     await expect.poll(tabs).toEqual(["Home", "Inbox", "Calendar", "Settings"])
     expect(current()).toEqual(["Home"])
@@ -481,11 +481,12 @@ describe("AppShell on mobile", () => {
       <Shell
         items={manyItems}
         moreLabel="All pages"
+        label="Sections"
         onValueChange={onValueChange}
       />
     )
     await expect
-      .element(page.getByRole("navigation", { name: "All pages" }))
+      .element(page.getByRole("navigation", { name: "Sections" }))
       .toBeVisible()
     const more = page.getByRole("button", { name: "All pages" })
     await expect.element(more).toHaveAttribute("aria-expanded", "false")

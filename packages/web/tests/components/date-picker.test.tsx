@@ -4,6 +4,8 @@ import { render } from "vitest-browser-react"
 
 import { DatePicker } from "@/components/patterns/date-picker"
 
+const DATE = /^Date,/
+
 afterEach(async () => {
   await page.viewport(1280, 800)
 })
@@ -13,7 +15,7 @@ const octoberTwentieth = /October 20/
 const previousMonth = /previous month/i
 const nextMonth = /next month/i
 
-const trigger = () => page.getByRole("button", { name: "Date" })
+const trigger = () => page.getByRole("button", { name: DATE })
 const dialog = () => page.getByRole("dialog")
 const wheel = (name: string) => page.getByRole("listbox", { name })
 
@@ -70,6 +72,17 @@ describe("DatePicker on desktop", () => {
     await render(<DatePicker aria-label="Date" placeholder="Pick a date" />)
     await expect.element(trigger()).toHaveTextContent("Pick a date")
     await expect.element(trigger()).toHaveAttribute("data-placeholder", "")
+  })
+
+  it("names the trigger with its label and the chosen date", async () => {
+    await render(
+      <DatePicker
+        aria-label="Date"
+        locale="en-US"
+        defaultValue={new Date(2026, 9, 4)}
+      />
+    )
+    await expect.element(trigger()).toHaveAccessibleName("Date, Oct 4, 2026")
   })
 
   it("lets the popover's rounded surface show behind the calendar", async () => {

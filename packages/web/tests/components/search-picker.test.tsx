@@ -62,7 +62,8 @@ const input = () => page.getByRole("combobox", { name: "Framework" })
 const listbox = () => page.getByRole("listbox")
 const option = (name: string) => page.getByRole("option", { name })
 const showOptions = () => page.getByRole("button", { name: "Show options" })
-const trigger = (name = "Framework") => page.getByRole("button", { name })
+const trigger = (name = "Framework") =>
+  page.getByRole("button", { name: new RegExp(`^${name},`) })
 const drawer = () => page.getByRole("dialog")
 const search = () => page.getByPlaceholder("Search frameworks...")
 
