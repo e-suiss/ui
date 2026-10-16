@@ -51,8 +51,10 @@ function useControllableState<
       if (Object.is(next, current)) return false
       handleChange(next, details)
       if (details.isCanceled) return false
-      valueRef.current = next
-      if (!isControlled) setUncontrolled(next)
+      if (!isControlled) {
+        valueRef.current = next
+        setUncontrolled(next)
+      }
       return true
     },
     [isControlled, handleChange]

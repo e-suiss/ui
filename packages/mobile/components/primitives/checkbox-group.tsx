@@ -92,15 +92,13 @@ function useCheckboxGroupItem({
       disabled: groupDisabled,
       onCheckedChange: (checked, eventDetails) => {
         const disabledStates = group.disabledStatesRef.current
-        const next = checked
-          ? [
-              ...group.value,
-              ...group.allValues.filter(
-                (item) =>
-                  !group.value.includes(item) && !disabledStates.get(item)
-              ),
-            ]
-          : group.value.filter((item) => disabledStates.get(item))
+        const addable = group.allValues.filter(
+          (item) => !group.value.includes(item) && !disabledStates.get(item)
+        )
+        const next =
+          checked && addable.length > 0
+            ? [...group.value, ...addable]
+            : group.value.filter((item) => disabledStates.get(item))
         group.setValue(next, toDetails(eventDetails))
       },
     }

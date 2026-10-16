@@ -516,6 +516,8 @@ function Viewport({
 
 Viewport.displayName = "CarouselViewport"
 
+const MOMENTUM_GRACE = 100
+
 function Content({
   children,
   onLayout,
@@ -523,6 +525,7 @@ function Content({
   onScroll,
   onScrollBeginDrag,
   onScrollEndDrag,
+  onMomentumScrollBegin,
   onMomentumScrollEnd,
   ...props
 }: ContentProps) {
@@ -537,6 +540,14 @@ function Content({
     setDragging,
   } = useRootContext("Carousel.Content")
   const horizontal = orientation === "horizontal"
+  const releaseRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const cancelRelease = React.useCallback(() => {
+    if (releaseRef.current) clearTimeout(releaseRef.current)
+    releaseRef.current = null
+  }, [])
+
+  React.useEffect(() => cancelRelease, [cancelRelease])
 
   const readOffset = (event: NativeSyntheticEvent<NativeScrollEvent>) =>
     horizontal
@@ -578,14 +589,25 @@ function Content({
         onScroll?.(event)
       }}
       onScrollBeginDrag={(event) => {
+        cancelRelease()
         setDragging(true)
         onScrollBeginDrag?.(event)
       }}
       onScrollEndDrag={(event) => {
         onOffset(readOffset(event))
+        cancelRelease()
+        releaseRef.current = setTimeout(() => {
+          releaseRef.current = null
+          setDragging(false)
+        }, MOMENTUM_GRACE)
         onScrollEndDrag?.(event)
       }}
+      onMomentumScrollBegin={(event) => {
+        cancelRelease()
+        onMomentumScrollBegin?.(event)
+      }}
       onMomentumScrollEnd={(event) => {
+        cancelRelease()
         setDragging(false)
         onOffset(readOffset(event))
         onMomentumScrollEnd?.(event)

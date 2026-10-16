@@ -69,6 +69,17 @@ function mergeStyles(ours: unknown, theirs: unknown): unknown {
   return joinStyles(ours, theirs)
 }
 
+function isPlainObject(value: unknown): value is AnyProps {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+}
+
+function mergeObjects(ours: unknown, theirs: unknown): unknown {
+  if (isPlainObject(ours) && isPlainObject(theirs)) {
+    return { ...ours, ...theirs }
+  }
+  return theirs === undefined ? ours : theirs
+}
+
 function mutablyMergeInto(merged: AnyProps, input: object): AnyProps {
   const external = input as AnyProps
   for (const key of Object.keys(external)) {
@@ -82,6 +93,13 @@ function mutablyMergeInto(merged: AnyProps, input: object): AnyProps {
       )
     } else if (isEventHandler(key, value)) {
       merged[key] = mergeEventHandlers(merged[key], value)
+    } else if (key === "accessibilityState") {
+      merged.accessibilityState = mergeObjects(merged.accessibilityState, value)
+    } else if (key === "role" || key === "accessibilityRole") {
+      if (value !== undefined) {
+        delete merged[key === "role" ? "accessibilityRole" : "role"]
+      }
+      merged[key] = value
     } else {
       merged[key] = value
     }
