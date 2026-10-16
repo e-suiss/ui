@@ -1,3 +1,4 @@
+import { withBase } from "@/lib/base-path"
 export const ICON_LABELS = {
   lucide: "Lucide",
   tabler: "Tabler",
@@ -59,11 +60,7 @@ export function codeOptions(
 }
 
 export function sourceUrl(file: string, options: Partial<CodeOptions> = {}) {
-  const params = new URLSearchParams()
-  if (options.icons && options.icons !== DEFAULT_ICONS)
-    params.set("icons", options.icons)
-  if (options.base && options.base !== DEFAULT_BASE)
-    params.set("base", options.base)
-  const query = params.toString()
-  return `/source/${file}${query ? `?${query}` : ""}`
+  const icons = options.icons ?? DEFAULT_ICONS
+  const base = options.base ?? DEFAULT_BASE
+  return withBase(`/source/${base}/${icons}/${file}`)
 }

@@ -7,7 +7,8 @@
   "packageManager": "pnpm@11.24.0",
   "scripts": {
     "dev": "turbo run dev --filter=./apps/*",
-    "build": "turbo run build --filter=./apps/*",
+    "build": "turbo run build --filter=./apps/* && node scripts/site.mjs",
+    "deploy": "wrangler deploy",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "registry": "turbo run registry",
@@ -19,7 +20,6 @@
     "compat": "node scripts/compat.mjs",
     "compat:rn": "node scripts/compat-rn.mjs",
     "indexnow": "node scripts/indexnow.mjs",
-    "purge-cache": "node --env-file-if-exists=.env.deploy scripts/purge-cache.mjs",
     "prepare": "lefthook install"
   },
   "devDependencies": {
@@ -29,7 +29,8 @@
     "knip": "6.38.0",
     "lefthook": "2.1.15",
     "lint-staged": "17.6.0",
-    "turbo": "^2.11.7"
+    "turbo": "^2.11.7",
+    "wrangler": "4.146.0"
   },
   "lint-staged": {
     "*.{js,mjs,ts,tsx,json,jsonc,css}": "biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true"

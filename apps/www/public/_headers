@@ -1,4 +1,37 @@
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /icon
   Content-Type: image/png
 /apple-icon
+  Content-Type: image/png
+
+/ui/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/ui/source/*
+  Content-Type: application/json
+  X-Robots-Tag: noindex
+
+/ui/api/search
+  Content-Type: application/json
+
+/ui/docs.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex
+
+/ui/docs/*.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex
+
+/ui/live/*
+  X-Robots-Tag: noindex
+
+/ui/icon
+  Content-Type: image/png
+
+/ui/apple-icon
+  Content-Type: image/png
+
+/ui/opengraph-image
   Content-Type: image/png

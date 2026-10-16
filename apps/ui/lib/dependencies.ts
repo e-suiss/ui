@@ -27,7 +27,6 @@ type Item = {
 type Entry = { packages: string[]; pieces: string[] }
 
 async function registryMap(base: string) {
-  "use cache"
   const { items } = JSON.parse(await readFile(registryFile(base), "utf8")) as {
     items: Item[]
   }

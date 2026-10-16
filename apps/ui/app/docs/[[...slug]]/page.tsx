@@ -11,6 +11,7 @@ import { JsonLd } from "@/components/site/json-ld"
 import { PageActions } from "@/components/site/page-actions"
 import { PlatformScope, PlatformSwitcher } from "@/components/site/platform"
 import { Toc } from "@/components/site/toc"
+import { withBase } from "@/lib/base-path"
 import { contentDates } from "@/lib/dates"
 import { baseItems } from "@/lib/dependencies"
 import { markdownUrl } from "@/lib/llms"
@@ -171,7 +172,7 @@ async function DocPage(props: {
               {strings.brand}
               {kind && <span className="text-muted-foreground"> · {kind}</span>}
             </p>
-            <PageActions markdownUrl={`/llms.mdx${page.url}`} />
+            <PageActions markdownUrl={withBase(markdownUrl(page.url))} />
           </div>
           <h1 className="text-[clamp(3rem,6vw,5.5rem)] leading-[0.9] font-semibold tracking-[-0.055em] text-balance">
             {page.data.title}

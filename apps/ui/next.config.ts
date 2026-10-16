@@ -1,7 +1,9 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs"
+import { existsSync, readdirSync } from "node:fs"
 import path from "node:path"
 import { createMDX } from "fumadocs-mdx/next"
 import type { NextConfig } from "next"
+
+import { basePath } from "./lib/base-path"
 
 const bases = path.join(import.meta.dirname, "../../packages/web/bases")
 const primitiveBases = readdirSync(bases, { withFileTypes: true })
@@ -16,146 +18,45 @@ const primitiveBases = readdirSync(bases, { withFileTypes: true })
       Number(b === "radix") - Number(a === "radix") || a.localeCompare(b)
   )
 
-const PREVIEW_TAG = /<ComponentPreview\b([^>]*?)\/>/g
-const FRAMED = /\btype="block"|\bresponsive\b/
-const NAME = /\bname="([^"]+)"/
-
-const content = path.join(import.meta.dirname, "content")
-const framedPreviews = new Set(
-  readdirSync(content, { recursive: true, encoding: "utf8" })
-    .filter((file) => file.endsWith(".mdx"))
-    .flatMap((file) => [
-      ...readFileSync(path.join(content, file), "utf8").matchAll(PREVIEW_TAG),
-    ])
-    .map(([, tag = ""]) => tag)
-    .filter((tag) => FRAMED.test(tag))
-    .map((tag) => tag.match(NAME)?.[1])
-    .filter(Boolean)
-)
-
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: "export",
+  basePath,
+  images: { unoptimized: true },
   env: {
     PRIMITIVE_BASES: primitiveBases.join(","),
-    FRAMED_PREVIEWS: [...framedPreviews].sort().join(","),
-  },
-  outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
-  outputFileTracingIncludes: {
-    "/**": [
-      "./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff",
-      "./content-dates.json",
-      "../../packages/web/components/**/*",
-      "../../packages/web/hooks/**/*",
-      "../../packages/web/lib/**/*",
-      "../../packages/web/examples/**/*",
-      "../../packages/web/bases/**/*",
-      "../../packages/web/registry/**/*.json",
-      "../../packages/mobile/components/**/*",
-      "../../packages/mobile/uniwind/components/**/*",
-      "../../packages/mobile/nativewind/components/**/*",
-      "../../packages/mobile/stylesheet/components/**/*",
-      "../../packages/mobile/swiftui/Sources/**/*",
-      "../../packages/mobile/kotlin/ui/src/main/**/*",
-      "../../packages/mobile/stories/**/*",
-      "../../packages/mobile/swiftui/Catalog/Catalog/Stories/**/*",
-      "../../packages/mobile/kotlin/catalog/src/main/kotlin/com/esuiss/catalog/stories/**/*",
-    ],
   },
   reactStrictMode: true,
   agentRules: false,
-  cacheComponents: true,
-  cacheLife: {
-    default: {
-      stale: 300,
-      revalidate: 60 * 60 * 24 * 30,
-      expire: 60 * 60 * 24 * 365,
-    },
-  },
-  partialPrefetching: true,
-  redirects() {
-    return Promise.resolve([
-      { source: "/docs/ui", destination: "/docs", permanent: true },
-      {
-        source: "/docs/ui/:path*",
-        destination: "/docs/:path*",
-        permanent: true,
-      },
-      {
-        source: "/docs/:product(uim|access|relay|work|one)/:path*",
-        destination: "/docs",
-        permanent: true,
-      },
-    ])
-  },
-  rewrites() {
-    const markdown = [
-      {
-        type: "header" as const,
-        key: "accept",
-        value: "(.*)text/markdown(.*)",
-      },
-    ]
-    return Promise.resolve({
-      beforeFiles: [
-        { source: "/docs.md", destination: "/llms.mdx/docs" },
-        { source: "/docs/:path*.md", destination: "/llms.mdx/docs/:path*" },
-        { source: "/docs", has: markdown, destination: "/llms.mdx/docs" },
-        {
-          source: "/docs/:path*",
-          has: markdown,
-          destination: "/llms.mdx/docs/:path*",
-        },
-        {
-          source: "/r/:style(radix-[^/]+|new-york|default)/:file",
-          destination: "/r/radix/:file",
-        },
-        {
-          source: "/r/:style(aria-[^/]+)/:file",
-          destination: "/r/aria/:file",
-        },
-        {
-          source: "/r/:style((?!(?:base|radix|aria|rn-[^/]+)/)[^/]+)/:file",
-          destination: "/r/base/:file",
-        },
-        {
-          source: "/r/:file((?!(?:base|radix|aria)$)[^/]+)",
-          destination: "/r/base/:file",
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    })
-  },
-  headers() {
-    return Promise.resolve([
-      {
-        source: "/:path*",
-        headers: [{ key: "X-Build", value: process.env.BUILD_SHA ?? "dev" }],
-      },
-      { source: "/docs", headers: [{ key: "Vary", value: "Accept" }] },
-      { source: "/docs/:path*", headers: [{ key: "Vary", value: "Accept" }] },
-      ...[
-        "/docs.md",
-        "/docs/:path*.md",
-        "/llms.mdx/:path*",
-        "/live/:path*",
-      ].map((source) => ({
-        source,
-        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
-      })),
-      {
-        source: "/r/:path*",
-        headers: [
-          { key: "Access-Control-Allow-Origin", value: "*" },
+  ...(process.env.NODE_ENV === "development" && {
+    rewrites: () =>
+      Promise.resolve({
+        beforeFiles: [
+          { source: "/docs.md", destination: "/llms.mdx/docs.md" },
           {
-            key: "Cache-Control",
-            value: "public, max-age=3600, s-maxage=86400",
+            source: "/docs/:path*.md",
+            destination: "/llms.mdx/docs/:path*.md",
           },
-          { key: "X-Robots-Tag", value: "noindex" },
+          {
+            source: "/r/:style(radix-[^/]+|new-york|default)/:file",
+            destination: "/r/radix/:file",
+          },
+          {
+            source: "/r/:style(aria-[^/]+)/:file",
+            destination: "/r/aria/:file",
+          },
+          {
+            source: "/r/:style((?!(?:base|radix|aria|rn-[^/]+)/)[^/]+)/:file",
+            destination: "/r/base/:file",
+          },
+          {
+            source: "/r/:file((?!(?:base|radix|aria)$)[^/]+)",
+            destination: "/r/base/:file",
+          },
         ],
-      },
-    ])
-  },
+        afterFiles: [],
+        fallback: [],
+      }),
+  }),
   turbopack: {
     root: path.join(import.meta.dirname, "../.."),
     rules: {

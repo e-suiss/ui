@@ -1,7 +1,6 @@
 import { llmsIndex, pageGroups, pageMarkdown, sharedSources } from "@/lib/llms"
 
 async function fullText() {
-  "use cache"
   const sections = [llmsIndex()]
   const shared = new Map<string, string>()
   for (const pages of pageGroups().values()) {
@@ -16,3 +15,5 @@ export async function GET() {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   })
 }
+
+export const dynamic = "force-static"

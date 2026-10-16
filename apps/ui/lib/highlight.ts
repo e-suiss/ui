@@ -176,7 +176,6 @@ export async function contentPages() {
 }
 
 export async function sourceFiles() {
-  "use cache"
   const found = new Set<string>()
   for (const page of await contentPages()) {
     for (const [, source] of page.matchAll(/<ComponentSource path="([^"]+)"/g))

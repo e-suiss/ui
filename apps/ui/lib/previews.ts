@@ -36,7 +36,6 @@ export function previewOf({
 }
 
 export async function framedPreviews() {
-  "use cache"
   const found = new Map<string, Preview>()
   for (const page of await contentPages()) {
     for (const [, tag = ""] of page.matchAll(PREVIEW_TAG)) {

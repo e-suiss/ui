@@ -5,6 +5,7 @@ import * as React from "react"
 import { useActivePlatform } from "@/components/site/platform"
 import { SourceCode } from "@/components/site/source-code"
 import { useTheme } from "@/components/ui/theme"
+import { basePath } from "@/lib/base-path"
 import type { Platform } from "@/lib/platform"
 import { cn } from "@/lib/utils"
 
@@ -54,7 +55,7 @@ function LiveFrame({
   return (
     <iframe
       ref={ref}
-      src={`/live/index.html?file=${file}&story=${story}&theme=${initial}`}
+      src={`${basePath}/live/index.html?file=${file}&story=${story}&theme=${initial}`}
       title={previewAlt(id, initial)}
       loading="lazy"
       onLoad={() =>
@@ -155,8 +156,8 @@ export function NativeExampleView({
                   video ? (
                     <video
                       key={scheme}
-                      src={`/previews/${id}.${scheme}.mp4`}
-                      poster={`/previews/${id}.${scheme}.webp`}
+                      src={`${basePath}/previews/${id}.${scheme}.mp4`}
+                      poster={`${basePath}/previews/${id}.${scheme}.webp`}
                       width={width}
                       height={height}
                       aria-label={previewAlt(id, scheme)}
@@ -174,7 +175,7 @@ export function NativeExampleView({
                     <Image
                       key={scheme}
                       unoptimized
-                      src={`/previews/${id}.${scheme}.webp`}
+                      src={`${basePath}/previews/${id}.${scheme}.webp`}
                       width={width}
                       height={height}
                       alt={previewAlt(id, scheme)}

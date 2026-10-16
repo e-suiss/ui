@@ -8,6 +8,7 @@ import {
   useResponsivePreview,
 } from "@/components/site/responsive-preview"
 import { SourceCode } from "@/components/site/source-code"
+import { withBase } from "@/lib/base-path"
 import type { Preview } from "@/lib/previews"
 import { cn } from "@/lib/utils"
 
@@ -20,7 +21,7 @@ export function Example({
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">("preview")
   const state = useResponsivePreview()
-  const src = `/preview/${name}`
+  const src = withBase(`/preview/${name}`)
 
   return (
     <div data-not-prose className="mt-[1.2em]">

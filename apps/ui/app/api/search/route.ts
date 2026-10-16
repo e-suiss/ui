@@ -48,3 +48,5 @@ export function GET() {
 
   return Response.json(groups.filter((group) => group.pages.length > 0))
 }
+
+export const dynamic = "force-static"

@@ -6,3 +6,5 @@ export const contentType = "image/png"
 export default function AppleIcon() {
   return iconImage(180)
 }
+
+export const dynamic = "force-static"

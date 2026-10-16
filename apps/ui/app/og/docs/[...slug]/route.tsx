@@ -24,3 +24,5 @@ export function generateStaticParams() {
     .getPages()
     .map((page) => ({ slug: [...page.slugs, "image.png"] }))
 }
+
+export const dynamic = "force-static"

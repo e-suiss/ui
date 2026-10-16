@@ -5,3 +5,5 @@ export function GET() {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   })
 }
+
+export const dynamic = "force-static"

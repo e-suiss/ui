@@ -11,3 +11,5 @@ export default function OpengraphImage() {
     description: site.description,
   })
 }
+
+export const dynamic = "force-static"

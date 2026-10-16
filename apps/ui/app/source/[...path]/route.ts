@@ -1,35 +1,54 @@
 import path from "node:path"
 import { notFound } from "next/navigation"
 
-import { type CodeOptions, codeOptions } from "@/lib/code-options"
-import { highlightCode, readSource, sourceFiles } from "@/lib/highlight"
+import {
+  DEFAULT_BASE,
+  DEFAULT_ICONS,
+  ICON_LIBRARIES,
+  isBase,
+  isIconLibrary,
+} from "@/lib/code-options"
+import {
+  highlightCode,
+  readSource,
+  sourceFiles,
+  sourceVariants,
+} from "@/lib/highlight"
 
-async function load(file: string, icons: CodeOptions["icons"], base: string) {
-  "use cache"
+export async function GET(
+  _request: Request,
+  context: RouteContext<"/source/[...path]">
+) {
+  const [base, icons, ...rest] = (await context.params).path
+  const file = rest.join("/")
+  if (!(isBase(base) && isIconLibrary(icons))) notFound()
+  if (!(await sourceFiles()).includes(file)) notFound()
   const code = (
     await readSource(file, { icons, base }).catch(() => undefined)
   )?.trimEnd()
-  if (code === undefined) return undefined
-  return {
+  if (code === undefined) notFound()
+
+  return Response.json({
     ...(await highlightCode(code, path.extname(file).slice(1) || "tsx")),
     raw: code,
-  }
-}
-
-export async function GET(
-  request: Request,
-  context: RouteContext<"/source/[...path]">
-) {
-  const file = (await context.params).path.join("/")
-  if (!(await sourceFiles()).includes(file)) notFound()
-  const { icons, base } = codeOptions(new URL(request.url).searchParams)
-  const source = await load(file, icons, base)
-  if (!source) notFound()
-
-  return Response.json(source, {
-    headers: {
-      "Cache-Control": "public, max-age=3600, s-maxage=86400",
-      "X-Robots-Tag": "noindex",
-    },
   })
 }
+
+export async function generateStaticParams() {
+  const files = await sourceFiles()
+  const params = await Promise.all(
+    files.map(async (file) => {
+      const variants = await sourceVariants(file)
+      const bases = [DEFAULT_BASE, ...variants.bases]
+      const icons = variants.icons ? ICON_LIBRARIES : [DEFAULT_ICONS]
+      return bases.flatMap((base) =>
+        icons.map((library) => ({
+          path: [base, library, ...file.split("/")],
+        }))
+      )
+    })
+  )
+  return params.flat()
+}
+
+export const dynamic = "force-static"

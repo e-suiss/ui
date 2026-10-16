@@ -1,13 +1,17 @@
+import { basePath } from "@/lib/base-path"
 import { repository } from "@/lib/sections"
 import { strings } from "@/lib/strings"
 
+const TRAILING_SLASH = /\/$/
+
+const origin = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://suiss.app"
+).replace(TRAILING_SLASH, "")
+
 export const site = {
   name: strings.brand,
-  alternateNames: ["suiss ui", "ui.suiss.app"],
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ui.suiss.app").replace(
-    /\/$/,
-    ""
-  ),
+  alternateNames: ["suiss ui", "suiss.app/ui"],
+  url: `${origin}${basePath}`,
   title: `${strings.brand} – Copy-paste components for React, React Native, SwiftUI and Jetpack Compose`,
   description: strings.heroSubtitle,
   summary:

@@ -261,7 +261,7 @@ function cleanMarkdown(body: string) {
   return output.join("\n").replace(/\n{3,}/g, "\n\n")
 }
 
-export const markdownUrl = (url: string) => `/llms.mdx${url}`
+export const markdownUrl = (url: string) => `${url}.md`
 
 export async function pageMarkdown(page: Page, shared?: Map<string, string>) {
   const body = cleanMarkdown(

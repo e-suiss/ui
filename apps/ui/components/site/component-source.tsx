@@ -21,7 +21,6 @@ async function highlighted(
   title?: string,
   src?: string
 ) {
-  "use cache"
   const { className, style, html } = await highlightCode(code.trimEnd(), lang)
   return (
     <CodeBlock
@@ -48,7 +47,6 @@ export function Code({
 }
 
 async function preview(file: string) {
-  "use cache"
   const code = ((await readSource(file)) ?? "").trimEnd()
   const lines = code.split("\n")
   const long = lines.length > PREVIEW_LINES
@@ -89,7 +87,6 @@ export async function ComponentSource({
 }
 
 async function example(name: string) {
-  "use cache"
   const file = exampleFile(name)
   return {
     file,

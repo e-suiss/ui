@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm build:registry && next dev --port 3000",
-    "build": "pnpm build:registry && node scripts/content-dates.mjs && next build",
+    "build": "pnpm build:registry && node scripts/content-dates.mjs && next build && node scripts/markdown-files.mjs",
     "start": "next start",
     "typecheck": "node scripts/preview-icons.mjs --check && next typegen && tsc --noEmit",
     "icons": "node scripts/preview-icons.mjs",

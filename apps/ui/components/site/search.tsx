@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/command"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { isMacPlatform } from "@/hooks/use-platform"
+import { withBase } from "@/lib/base-path"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
@@ -45,7 +46,7 @@ const icons: Record<string, Icon> = {
 let index: Promise<Group[]> | undefined
 
 function loadIndex() {
-  index ??= fetch("/api/search")
+  index ??= fetch(withBase("/api/search"))
     .then((response) => {
       if (!response.ok) throw new Error(response.statusText)
       return response.json() as Promise<Group[]>
