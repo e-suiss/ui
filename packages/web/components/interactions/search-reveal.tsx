@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils"
 
 const SETTLE_DELAY = 140
 
+function scrollBehavior(): ScrollBehavior {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth"
+}
+
 function fieldOf(root: HTMLElement | null) {
   return root?.querySelector<HTMLElement>("[data-slot=search-reveal-field]")
 }
@@ -40,7 +46,7 @@ function SearchReveal({
       if (touching || top <= 0 || top >= size) return
       root.scrollTo({
         top: top < size / 2 || hasQuery() ? 0 : size,
-        behavior: "smooth",
+        behavior: scrollBehavior(),
       })
     }
 
@@ -97,6 +103,7 @@ function SearchRevealField({
   placeholder = "Search",
   className,
   onFocus,
+  onChange,
   ref,
   ...props
 }: Omit<React.ComponentProps<"input">, "value" | "type"> & {
@@ -131,11 +138,14 @@ function SearchRevealField({
           value={value}
           placeholder={placeholder}
           aria-label={placeholder}
-          onChange={(event) => onValueChange(event.target.value)}
+          onChange={(event) => {
+            onChange?.(event)
+            onValueChange(event.target.value)
+          }}
           onFocus={(event) => {
             event.currentTarget
               .closest("[data-slot=search-reveal]")
-              ?.scrollTo({ top: 0, behavior: "smooth" })
+              ?.scrollTo({ top: 0, behavior: scrollBehavior() })
             onFocus?.(event)
           }}
           className={cn(

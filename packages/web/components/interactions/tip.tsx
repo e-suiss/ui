@@ -180,7 +180,12 @@ function TipCard({
   )
 }
 
-function TipAnchor({ className, ref, ...props }: React.ComponentProps<"span">) {
+function TipAnchor({
+  className,
+  ref,
+  onClickCapture,
+  ...props
+}: React.ComponentProps<"span">) {
   const { anchorRef, visible, dismiss } = useTip()
 
   return (
@@ -191,7 +196,8 @@ function TipAnchor({ className, ref, ...props }: React.ComponentProps<"span">) {
         if (ref) ref.current = node
       }}
       data-slot="tip-anchor"
-      onClickCapture={() => {
+      onClickCapture={(event) => {
+        onClickCapture?.(event)
         if (visible) dismiss()
       }}
       className={cn("inline-flex", className)}

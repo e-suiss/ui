@@ -221,6 +221,7 @@ function Island({
 function IslandCompact({
   className,
   children,
+  onClick,
   ...props
 }: React.ComponentProps<"button">) {
   const { view, setExpanded, registerCompact } = useIsland()
@@ -236,6 +237,8 @@ function IslandCompact({
       aria-expanded={view === "expanded"}
       tabIndex={view === "compact" ? 0 : -1}
       onClick={(event) => {
+        onClick?.(event)
+        if (event.defaultPrevented) return
         const root = event.currentTarget.parentElement
         setExpanded(true)
         requestAnimationFrame(() =>

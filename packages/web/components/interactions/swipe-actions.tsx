@@ -77,6 +77,9 @@ function SwipeActions({
   className,
   children,
   ref,
+  onKeyDown,
+  onFocus,
+  onBlur,
   ...props
 }: React.ComponentProps<"div">) {
   const rootRef = React.useRef<HTMLDivElement>(null)
@@ -259,12 +262,15 @@ function SwipeActions({
           className
         )}
         onKeyDown={(event) => {
+          onKeyDown?.(event)
+          if (event.defaultPrevented) return
           if (event.key === "Escape" && offsetRef.current !== 0) {
             event.stopPropagation()
             close()
           }
         }}
         onFocus={(event) => {
+          onFocus?.(event)
           const actions = (event.target as HTMLElement).closest<HTMLElement>(
             "[data-slot=swipe-actions-actions]"
           )
@@ -272,6 +278,7 @@ function SwipeActions({
           if (side && rootRef.current?.dataset.open !== side) open(side)
         }}
         onBlur={(event) => {
+          onBlur?.(event)
           if (!event.currentTarget.contains(event.relatedTarget as Node)) {
             close()
           }
@@ -286,6 +293,8 @@ function SwipeActions({
 
 function SwipeActionsContent({
   className,
+  onPointerDown,
+  onClickCapture,
   ...props
 }: React.ComponentProps<"div">) {
   const { onContentPointerDown, onContentClickCapture } = useSwipeActions()
@@ -297,8 +306,14 @@ function SwipeActionsContent({
         "relative z-10 translate-x-(--swipe-actions-offset) touch-pan-y bg-background select-none group-data-animating/swipe-actions:transition-transform group-data-animating/swipe-actions:duration-300 group-data-animating/swipe-actions:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
         className
       )}
-      onPointerDown={onContentPointerDown}
-      onClickCapture={onContentClickCapture}
+      onPointerDown={(event) => {
+        onPointerDown?.(event)
+        if (!event.defaultPrevented) onContentPointerDown(event)
+      }}
+      onClickCapture={(event) => {
+        onContentClickCapture(event)
+        if (!event.isPropagationStopped()) onClickCapture?.(event)
+      }}
       {...props}
     />
   )

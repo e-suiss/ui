@@ -142,6 +142,7 @@ function SelectionList({
 function SelectionListTrigger({
   className,
   children,
+  onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { editing, setEditing } = useSelectionList()
@@ -151,7 +152,10 @@ function SelectionListTrigger({
       variant="plain"
       data-slot="selection-list-trigger"
       aria-pressed={editing}
-      onClick={() => setEditing(!editing)}
+      onClick={(event) => {
+        onClick?.(event)
+        if (!event.defaultPrevented) setEditing(!editing)
+      }}
       className={cn("font-semibold aria-pressed:bg-transparent", className)}
       {...props}
     >
