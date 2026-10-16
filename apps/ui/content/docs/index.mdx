@@ -19,7 +19,7 @@ npx @esuiss/ui@latest add button dialog sheet
 
 | Platform | Projects | Built with |
 | --- | --- | --- |
-| React | Next.js or React with Vite, TypeScript | [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) 4.2 or later |
+| React | Next.js or React with Vite, TypeScript | One of three primitive bases, [Base UI](https://base-ui.com) by default, and [Tailwind CSS](https://tailwindcss.com) 4.2 or later |
 | React Native | Expo or React Native, TypeScript | Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) or plain StyleSheet, with the same API |
 | SwiftUI | Xcode projects and Swift packages, iOS 17 or later | SwiftUI and Swift Charts |
 | Jetpack Compose | Android Gradle modules, `minSdk` 24 or higher | Compose Foundation and UI, without Material |
@@ -38,9 +38,11 @@ The CLI is never installed in your project. It runs with `npx`, so there is no r
 
 Every color has a light and a dark value, and every platform uses the same values, so a web app, an Expo app and a native app look like one product. On the web, colors use the common theme variables, such as `background`, `foreground`, `primary` and `border`, so themes written with the same names drop in. See [Theming](/docs/theming).
 
-### Phosphor icons
+### Icons and primitives
 
-Components use [Phosphor](https://phosphoricons.com) icons on every platform. On the web, the source names each icon in five libraries (Lucide, Tabler, Hugeicons, Phosphor and Remix Icon) with an `IconPlaceholder` element. The CLI turns every placeholder into a Phosphor import when it copies a file, and the code on this site shows the same Phosphor imports. The registry CLI uses the icon library set in your `components.json` instead.
+On the web, a component's source names each icon in five libraries (Lucide, Tabler, Hugeicons, Phosphor and Remix Icon) with an `IconPlaceholder` element. When a file is copied, every placeholder becomes an import from one library: the registry CLI uses the icon library set in your `components.json`, and the suiss/ui CLI uses [Phosphor](https://phosphoricons.com). React Native, SwiftUI and Compose use Phosphor.
+
+Web components also come in three primitive bases, picked when you set up a project. Code on this site shows Phosphor icons and the default base; choose another icon library or base under code options in the header to see the code you will get. See [Installation](/docs/installation#choose-the-primitive-base).
 
 ## Beyond components
 
