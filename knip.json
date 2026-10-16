@@ -66,9 +66,20 @@
           "./stylesheet/components/*"
         ]
       },
-      "ignoreDependencies": ["expo-updates"],
-      "metro": false
+      "metro": false,
+      "ignoreDependencies": ["expo-updates"]
+    },
+    "apps/ui": {
+      "entry": ["components/site/icon-placeholder.tsx", "scripts/*.mjs"],
+      "ignore": ["public/**"],
+      "ignoreDependencies": ["@esuiss/web", "@fontsource/inter"]
     }
   },
-  "ignoreWorkspaces": ["apps/*", "packages/tokens"]
+  "ignoreWorkspaces": ["packages/tokens"],
+  "ignoreIssues": {
+    "apps/ui/components/site/platform.tsx": ["exports"],
+    "apps/ui/lib/code-options.ts": ["exports"],
+    "apps/ui/lib/highlight.ts": ["exports"],
+    "apps/ui/lib/dependencies.ts": ["types"]
+  }
 }
