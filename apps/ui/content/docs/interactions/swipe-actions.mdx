@@ -185,7 +185,7 @@ npx @esuiss/ui@latest add swipe-actions --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -201,13 +201,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/swipe-actions.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/swipe-actions.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/swipe-actions.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -219,13 +223,17 @@ npx expo install class-variance-authority cn react-native-gesture-handler react-
 npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/swipe-actions.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/swipe-actions.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/swipe-actions.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -237,13 +245,17 @@ npx expo install class-variance-authority cn react-native-gesture-handler react-
 npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/swipe-actions.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/swipe-actions.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/swipe-actions.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
