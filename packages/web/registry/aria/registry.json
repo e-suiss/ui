@@ -4490,7 +4490,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/bag-review.tsx",
+          "path": "components/blocks/bag-review.tsx",
           "type": "registry:component",
           "target": "@components/blocks/bag-review.tsx"
         }

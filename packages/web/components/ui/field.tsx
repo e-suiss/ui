@@ -152,7 +152,7 @@ function FieldLabel({
     <Label
       data-slot="field-label"
       className={cn(
-        "group/field-label flex w-fit gap-2 has-[>[data-slot=field]]:has-data-checked:border-primary has-[>[data-slot=field]]:has-data-checked:ring-1 has-[>[data-slot=field]]:has-data-checked:ring-primary has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-accent has-[>[data-slot=field]]:has-focus-visible:border-ring has-[>[data-slot=field]]:has-focus-visible:ring-3 has-[>[data-slot=field]]:has-focus-visible:ring-ring/50 *:data-[slot=field]:p-4 has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:text-accent-foreground group-data-[disabled=true]/field:opacity-50",
+        "group/field-label flex w-fit gap-2 has-[>[data-slot=field]]:has-data-checked:border-primary has-[>[data-slot=field]]:has-data-checked:ring-1 has-[>[data-slot=field]]:has-data-checked:ring-primary has-[>[data-slot=field]]:has-data-selected:border-primary has-[>[data-slot=field]]:has-data-selected:ring-1 has-[>[data-slot=field]]:has-data-selected:ring-primary has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-accent has-[>[data-slot=field]]:has-focus-visible:border-ring has-[>[data-slot=field]]:has-focus-visible:ring-3 has-[>[data-slot=field]]:has-focus-visible:ring-ring/50 *:data-[slot=field]:p-4 has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:text-accent-foreground group-data-[disabled=true]/field:opacity-50",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
         className
       )}

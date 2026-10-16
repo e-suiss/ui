@@ -35,7 +35,7 @@ const money = (value: number) =>
   value.toLocaleString("en-US", { style: "currency", currency: "USD" })
 
 const choiceClass =
-  "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
+  "flex cursor-pointer items-center gap-3 rounded-[0.875rem] px-4 py-3.5 text-base font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-selected:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
 
 function stepState(index: number, current: number) {
   if (current > index) return "done"
