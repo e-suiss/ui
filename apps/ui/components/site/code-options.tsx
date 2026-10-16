@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover"
 import {
   BASES,
+  CODE_OPTIONS_KEY,
   type CodeOptions,
   codeOptions,
   DEFAULT_OPTIONS,
@@ -21,18 +22,22 @@ import {
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
-const KEY = "suiss-code"
-
 const listeners = new Set<() => void>()
 let current: CodeOptions | null = null
 
 function readStored(): CodeOptions {
   try {
-    const stored = JSON.parse(window.localStorage.getItem(KEY) ?? "{}")
+    const stored = JSON.parse(
+      window.localStorage.getItem(CODE_OPTIONS_KEY) ?? "{}"
+    )
     return codeOptions(new URLSearchParams(window.location.search), stored)
   } catch {
     return DEFAULT_OPTIONS
   }
+}
+
+function apply(options: CodeOptions) {
+  document.documentElement.dataset.base = options.base
 }
 
 function snapshot() {
@@ -42,8 +47,9 @@ function snapshot() {
 
 function subscribe(listener: () => void) {
   const sync = (event: StorageEvent) => {
-    if (event.key !== KEY) return
+    if (event.key !== CODE_OPTIONS_KEY) return
     current = readStored()
+    apply(current)
     listener()
   }
   listeners.add(listener)
@@ -56,7 +62,7 @@ function subscribe(listener: () => void) {
 
 function persist(options: CodeOptions) {
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(options))
+    window.localStorage.setItem(CODE_OPTIONS_KEY, JSON.stringify(options))
     const url = new URL(window.location.href)
     for (const [name, value] of Object.entries(options))
       if (url.searchParams.has(name)) url.searchParams.set(name, value)
@@ -70,6 +76,7 @@ function persist(options: CodeOptions) {
 function select(options: Partial<CodeOptions>) {
   current = { ...snapshot(), ...options }
   persist(current)
+  apply(current)
   for (const listener of listeners) listener()
 }
 

@@ -8,6 +8,7 @@ import { CodeBlock } from "@/components/site/code-block"
 import { ComponentPreview } from "@/components/site/component-preview"
 import { ComponentSource } from "@/components/site/component-source"
 import { NativeExample } from "@/components/site/native-example"
+import { OnlyBase } from "@/components/site/only-base"
 import { PiecesStep, Steps } from "@/components/site/pieces-step"
 import { Only } from "@/components/site/platform"
 import { RegistryIndex } from "@/components/site/registry-index"
@@ -88,6 +89,7 @@ export function getMDXComponents(components?: MDXComponents) {
     ComponentPreview,
     NativeExample,
     Only,
+    OnlyBase,
     Tabs,
     Anatomy,
     ApiPart,
