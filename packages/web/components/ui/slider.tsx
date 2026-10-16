@@ -7,7 +7,7 @@ function thumbCount(
 ) {
   if (Array.isArray(value)) return value.length
   if (Array.isArray(defaultValue)) return defaultValue.length
-  return 2
+  return 1
 }
 
 function Slider({
