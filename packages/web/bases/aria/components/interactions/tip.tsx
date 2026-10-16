@@ -254,15 +254,36 @@ function TipPopover({
   sideOffset?: number
 }) {
   const { visible, dismiss, anchorRef, titleId, descriptionId } = useTip()
+  const popoverRef = React.useRef<HTMLElement>(null)
+
+  React.useEffect(() => {
+    if (!visible) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") dismiss()
+    }
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as Node
+      if (
+        popoverRef.current?.contains(target) ||
+        anchorRef.current?.contains(target)
+      )
+        return
+      dismiss()
+    }
+    document.addEventListener("keydown", onKeyDown, true)
+    document.addEventListener("pointerdown", onPointerDown, true)
+    return () => {
+      document.removeEventListener("keydown", onKeyDown, true)
+      document.removeEventListener("pointerdown", onPointerDown, true)
+    }
+  }, [visible, dismiss, anchorRef])
 
   return (
     <PopoverPrimitive
+      ref={popoverRef}
       triggerRef={anchorRef}
       isOpen={visible}
       isNonModal
-      onOpenChange={(open) => {
-        if (!open) dismiss()
-      }}
       placement={toPlacement(side, align)}
       offset={sideOffset}
       containerPadding={16}

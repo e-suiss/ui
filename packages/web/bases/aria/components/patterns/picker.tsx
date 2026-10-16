@@ -45,6 +45,7 @@ function Picker({
   defaultValue,
   onValueChange,
   placeholder,
+  items,
   size = "default",
   id,
   name,
@@ -73,6 +74,9 @@ function Picker({
   "aria-describedby"?: string
 }) {
   const isMobile = useIsMobile()
+  const [uncontrolled, setUncontrolled] = React.useState(defaultValue)
+  const current = value ?? uncontrolled
+  const label = items?.find((item) => item.value === current)?.label
 
   return (
     <PickerContext.Provider value={{ isMobile }}>
@@ -111,11 +115,18 @@ function Picker({
           value={value}
           defaultValue={defaultValue}
           onChange={(next) => {
-            if (typeof next === "string") onValueChange?.(next)
+            if (typeof next !== "string") return
+            setUncontrolled(next)
+            onValueChange?.(next)
           }}
         >
           <SelectTrigger id={id} size={size} className={className}>
-            <SelectValue placeholder={placeholder} />
+            <SelectValue placeholder={placeholder}>
+              {label === undefined
+                ? undefined
+                : ({ isPlaceholder, defaultChildren }) =>
+                    isPlaceholder ? (placeholder ?? defaultChildren) : label}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>{children}</SelectContent>
         </Select>

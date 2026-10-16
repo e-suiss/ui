@@ -42,16 +42,16 @@ function useCommandPalette() {
 }
 
 function CommandPalette({
-  isOpen: openProp,
+  open: openProp,
   defaultOpen = false,
   onOpenChange,
   hotkey = "k",
   floating,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   hotkey?: string | false
   floating?: boolean
   children?: React.ReactNode
@@ -110,16 +110,36 @@ function CommandPalette({
   )
 }
 
-function CommandPaletteTrigger(props: {
+function CommandPaletteTrigger({
+  render,
+  ...props
+}: {
+  render?: React.ReactElement
   className?: string
   children?: React.ReactNode
   id?: string
   "aria-label"?: string
 }) {
   const { isMobile } = useCommandPalette()
-  const Trigger = isMobile ? DrawerTrigger : DialogTrigger
 
-  return <Trigger data-slot="command-palette-trigger" {...props} />
+  if (isMobile)
+    return (
+      <DrawerTrigger
+        data-slot="command-palette-trigger"
+        render={render}
+        {...props}
+      />
+    )
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "command-palette-trigger",
+        ...props,
+      }
+    )
+
+  return <DialogTrigger data-slot="command-palette-trigger" {...props} />
 }
 
 function CommandPaletteContent({

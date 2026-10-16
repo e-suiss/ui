@@ -96,11 +96,14 @@ function Button({
   variant,
   size,
   block,
+  disabled,
+  isDisabled = disabled,
   ...props
 }: Omit<ButtonPrimitiveProps, "className"> &
   React.RefAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     className?: string
+    disabled?: boolean
   }) {
   return (
     <ButtonPrimitive
@@ -109,6 +112,7 @@ function Button({
       data-size={size ?? "default"}
       className={cn(buttonVariants({ variant, size, block, className }))}
       {...props}
+      isDisabled={isDisabled}
     />
   )
 }

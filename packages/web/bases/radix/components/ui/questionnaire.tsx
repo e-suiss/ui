@@ -314,8 +314,10 @@ function QuestionnaireChoice({
   disabled = false,
   onChange,
   value,
+  asChild = false,
   ...props
 }: Omit<React.ComponentProps<"label">, "onChange"> & {
+  asChild?: boolean
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
@@ -336,18 +338,12 @@ function QuestionnaireChoice({
     [descriptionId]
   )
   const attributes = stateAttributes(state, checkedAttributes)
-
-  return (
-    <label
-      {...attributes}
-      data-slot="questionnaire-choice"
-      className={cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-border px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary hover:text-accent-foreground",
-        "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    >
+  const element =
+    asChild && React.isValidElement<{ children?: React.ReactNode }>(children)
+      ? children
+      : null
+  const content = (label: React.ReactNode) => (
+    <>
       <input
         {...attributes}
         {...inputProps}
@@ -379,7 +375,7 @@ function QuestionnaireChoice({
         className="flex min-w-0 flex-1 flex-col gap-1"
       >
         <QuestionnaireChoiceContext.Provider value={choice}>
-          {children}
+          {label}
         </QuestionnaireChoiceContext.Provider>
       </span>
       <span
@@ -391,7 +387,29 @@ function QuestionnaireChoice({
       >
         {state.shortcut}
       </span>
-    </label>
+    </>
+  )
+  const Comp = asChild ? Slot.Root : "label"
+
+  return (
+    <Comp
+      {...attributes}
+      data-slot="questionnaire-choice"
+      className={cn(
+        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-border px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary hover:text-accent-foreground",
+        "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      {element
+        ? React.cloneElement(
+            element,
+            undefined,
+            content(element.props.children)
+          )
+        : content(children)}
+    </Comp>
   )
 }
 

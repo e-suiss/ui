@@ -42,15 +42,15 @@ function useFlyout() {
 }
 
 function Flyout({
-  isOpen,
+  open: isOpen,
   defaultOpen,
   onOpenChange,
   floating,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   floating?: boolean
   children?: React.ReactNode
 }) {
@@ -84,17 +84,30 @@ function Flyout({
 }
 
 type FlyoutButtonProps = {
+  render?: React.ReactElement
   className?: string
   children?: React.ReactNode
   id?: string
   "aria-label"?: string
 }
 
-function FlyoutTrigger(props: FlyoutButtonProps) {
+function FlyoutTrigger({ render, ...props }: FlyoutButtonProps) {
   const { isMobile } = useFlyout()
-  const Trigger = isMobile ? DrawerTrigger : PopoverTrigger
 
-  return <Trigger data-slot="flyout-trigger" {...props} />
+  if (isMobile)
+    return (
+      <DrawerTrigger data-slot="flyout-trigger" render={render} {...props} />
+    )
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "flyout-trigger",
+        ...props,
+      }
+    )
+
+  return <PopoverTrigger data-slot="flyout-trigger" {...props} />
 }
 
 function FlyoutContent({
@@ -184,11 +197,21 @@ function FlyoutBody({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function FlyoutClose(props: FlyoutButtonProps) {
+function FlyoutClose({ render, ...props }: FlyoutButtonProps) {
   const { isMobile } = useFlyout()
   const state = React.useContext(OverlayTriggerStateContext)
 
-  if (isMobile) return <DrawerClose data-slot="flyout-close" {...props} />
+  if (isMobile)
+    return <DrawerClose data-slot="flyout-close" render={render} {...props} />
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "flyout-close",
+        onPress: () => state?.close(),
+        ...props,
+      }
+    )
 
   return (
     <ButtonPrimitive

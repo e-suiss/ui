@@ -17,7 +17,7 @@ export default function FieldChoiceCards() {
         <FieldDescription>
           Select the plan that fits your team.
         </FieldDescription>
-        <RadioGroup defaultValue="pro">
+        <RadioGroup defaultValue="pro" aria-label="Plan">
           <FieldLabel htmlFor="plan-starter">
             <Field orientation="horizontal">
               <FieldContent>

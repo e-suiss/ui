@@ -1,7 +1,7 @@
 "use client"
 
 import { ScrollArea as ScrollAreaPrimitive } from "radix-ui"
-import type * as React from "react"
+import * as React from "react"
 import { cn } from "@/lib/utils"
 
 function ScrollArea({
@@ -9,6 +9,24 @@ function ScrollArea({
   children,
   ...props
 }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
+  const viewportRef = React.useRef<HTMLDivElement>(null)
+  const [scrollable, setScrollable] = React.useState(false)
+
+  React.useLayoutEffect(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return
+    const measure = () =>
+      setScrollable(
+        viewport.scrollHeight > viewport.clientHeight ||
+          viewport.scrollWidth > viewport.clientWidth
+      )
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(viewport)
+    for (const child of viewport.children) observer.observe(child)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
@@ -17,7 +35,8 @@ function ScrollArea({
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        tabIndex={0}
+        ref={viewportRef}
+        tabIndex={scrollable ? 0 : -1}
         className="size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1"
       >
         {children}

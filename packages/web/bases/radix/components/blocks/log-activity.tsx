@@ -345,7 +345,7 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
           hugeicons="ArrowRight01Icon"
           phosphor="CaretRightIcon"
           remixicon="RiArrowRightSLine"
-          className="size-3 text-muted-foreground transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] rtl:rotate-180 group-data-panel-open/event:rotate-90"
+          className="size-3 text-muted-foreground transition-[rotate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] rtl:rotate-180 group-data-open/event:rotate-90"
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="overflow-hidden duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:animate-collapsible-down data-closed:animate-collapsible-up motion-reduce:animate-none">

@@ -418,7 +418,8 @@
       "title": "Combobox",
       "description": "A text input with a filterable list of options, for choosing one or more values by typing.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority"
       ],
       "registryDependencies": [
         "@esuiss/button",
@@ -4490,7 +4491,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/bag-review.tsx",
+          "path": "components/blocks/bag-review.tsx",
           "type": "registry:component",
           "target": "@components/blocks/bag-review.tsx"
         }
@@ -4593,7 +4594,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/chat-conversations.tsx",
+          "path": "components/blocks/chat-conversations.tsx",
           "type": "registry:component",
           "target": "@components/blocks/chat-conversations.tsx"
         }
@@ -4622,7 +4623,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/chat-support.tsx",
+          "path": "components/blocks/chat-support.tsx",
           "type": "registry:component",
           "target": "@components/blocks/chat-support.tsx"
         }
@@ -4795,7 +4796,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/empty-offline.tsx",
+          "path": "components/blocks/empty-offline.tsx",
           "type": "registry:component",
           "target": "@components/blocks/empty-offline.tsx"
         }
@@ -4847,7 +4848,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/footer-compact.tsx",
+          "path": "components/blocks/footer-compact.tsx",
           "type": "registry:component",
           "target": "@components/blocks/footer-compact.tsx"
         }
@@ -4873,7 +4874,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/footer-directory.tsx",
+          "path": "components/blocks/footer-directory.tsx",
           "type": "registry:component",
           "target": "@components/blocks/footer-directory.tsx"
         }
@@ -5110,7 +5111,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/inbox-mail.tsx",
+          "path": "components/blocks/inbox-mail.tsx",
           "type": "registry:component",
           "target": "@components/blocks/inbox-mail.tsx"
         }
@@ -5251,7 +5252,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/login-account.tsx",
+          "path": "components/blocks/login-account.tsx",
           "type": "registry:component",
           "target": "@components/blocks/login-account.tsx"
         }
@@ -5693,7 +5694,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/signup-steps.tsx",
+          "path": "components/blocks/signup-steps.tsx",
           "type": "registry:component",
           "target": "@components/blocks/signup-steps.tsx"
         }
@@ -5890,7 +5891,7 @@
       ],
       "files": [
         {
-          "path": "bases/aria/components/blocks/verify-email.tsx",
+          "path": "components/blocks/verify-email.tsx",
           "type": "registry:component",
           "target": "@components/blocks/verify-email.tsx"
         }

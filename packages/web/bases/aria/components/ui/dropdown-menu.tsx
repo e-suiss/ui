@@ -81,6 +81,8 @@ function DropdownMenuContent({
   )
 }
 
+const CheckboxGroupContext = React.createContext(false)
+
 function useCheckboxSelection(children: React.ReactNode) {
   const prefix = React.useId()
   const nodes = React.Children.toArray(children)
@@ -133,11 +135,13 @@ function DropdownMenuGroup({
   const selection = useCheckboxSelection(children)
 
   return (
-    <MenuSectionPrimitive
-      data-slot="dropdown-menu-group"
-      {...selection}
-      {...props}
-    />
+    <CheckboxGroupContext.Provider value={"selectionMode" in selection}>
+      <MenuSectionPrimitive
+        data-slot="dropdown-menu-group"
+        {...selection}
+        {...props}
+      />
+    </CheckboxGroupContext.Provider>
   )
 }
 
@@ -299,7 +303,44 @@ type CheckboxItemProps = Omit<
   onChange?: (isSelected: boolean) => void
 }
 
-function DropdownMenuCheckboxItem({
+function DropdownMenuCheckboxItem(props: CheckboxItemProps) {
+  const grouped = React.useContext(CheckboxGroupContext)
+
+  return grouped ? (
+    <CheckboxMenuItem {...props} />
+  ) : (
+    <StandaloneCheckboxItem {...props} />
+  )
+}
+
+function StandaloneCheckboxItem({
+  id,
+  isSelected,
+  defaultSelected = false,
+  onChange,
+  ...props
+}: CheckboxItemProps) {
+  const fallbackId = React.useId()
+  const key = String(id ?? fallbackId)
+  const [uncontrolled, setUncontrolled] = React.useState(defaultSelected)
+  const selected = isSelected ?? uncontrolled
+
+  return (
+    <MenuSectionPrimitive
+      selectionMode="multiple"
+      selectedKeys={selected ? [key] : []}
+      onSelectionChange={(keys) => {
+        const next = keys === "all" || keys.has(key)
+        setUncontrolled(next)
+        onChange?.(next)
+      }}
+    >
+      <CheckboxMenuItem {...props} id={key} />
+    </MenuSectionPrimitive>
+  )
+}
+
+function CheckboxMenuItem({
   className,
   children,
   inset,
@@ -311,6 +352,7 @@ function DropdownMenuCheckboxItem({
 }: CheckboxItemProps) {
   return (
     <MenuItemPrimitive
+      shouldCloseOnSelect={false}
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
@@ -384,6 +426,7 @@ function DropdownMenuRadioItem({
   return (
     <MenuItemPrimitive
       id={value}
+      shouldCloseOnSelect={false}
       data-slot="dropdown-menu-radio-item"
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}

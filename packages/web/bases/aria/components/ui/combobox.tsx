@@ -1,6 +1,7 @@
 "use client"
 
 import { Combobox as ComboboxPrimitive } from "@base-ui/react"
+import { cva } from "class-variance-authority"
 import * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { buttonVariants } from "@/components/ui/button"
@@ -11,8 +12,7 @@ import {
 } from "@/components/ui/input-group"
 import { cn } from "@/lib/utils"
 
-const inputGroupIconButton = cn(
-  buttonVariants({ variant: "ghost" }),
+const inputGroupIconButtonVariants = cva(
   "flex items-center gap-2 rounded-full text-sm shadow-none size-6 p-0 has-[>svg]:p-0"
 )
 
@@ -52,7 +52,11 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
       data-slot="combobox-clear"
       aria-label="Clear"
       data-size="icon-xs"
-      className={cn(inputGroupIconButton, className)}
+      className={cn(
+        buttonVariants({ variant: "ghost" }),
+        inputGroupIconButtonVariants(),
+        className
+      )}
       {...props}
     >
       <IconPlaceholder
@@ -91,7 +95,8 @@ function ComboboxInput({
             data-slot="input-group-button"
             data-size="icon-xs"
             className={cn(
-              inputGroupIconButton,
+              buttonVariants({ variant: "ghost" }),
+              inputGroupIconButtonVariants(),
               "group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent"
             )}
             disabled={disabled}

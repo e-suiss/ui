@@ -49,7 +49,7 @@ const storage: [StorageOption, ...StorageOption[]] = [
 ]
 
 const choiceClass =
-  "cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-checked:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
+  "cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-selected:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
 
 const money = (value: number, digits = 2) =>
   value.toLocaleString("en-US", {

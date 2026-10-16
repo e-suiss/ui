@@ -84,6 +84,7 @@ function SegmentPicker({
         <>
           {name && <input type="hidden" name={name} value={value ?? ""} />}
           <ToggleGroup
+            {...{ id }}
             data-slot="segment-picker"
             variant={variant}
             size={size}

@@ -118,12 +118,17 @@ function TooltipContent({
     >
       {children}
       <OverlayArrow
-        className="z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-xs bg-foreground fill-foreground data-[placement=bottom]:top-1 data-[placement=left]:top-1/2! data-[placement=left]:-right-1 data-[placement=left]:translate-x-[-1.5px] rtl:data-[placement=left]:translate-x-[1.5px] data-[placement=left]:-translate-y-1/2 data-[placement=right]:top-1/2! data-[placement=right]:-left-1 data-[placement=right]:translate-x-[1.5px] rtl:data-[placement=right]:translate-x-[-1.5px] data-[placement=right]:-translate-y-1/2 data-[placement=top]:-bottom-2.5"
+        className="z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-xs bg-foreground fill-foreground data-[placement=bottom]:top-1 data-[placement=bottom]:-translate-x-1/2 data-[placement=left]:top-1/2! data-[placement=left]:-right-1 data-[placement=left]:translate-x-[-1.5px] rtl:data-[placement=left]:translate-x-[1.5px] data-[placement=left]:-translate-y-1/2 data-[placement=right]:top-1/2! data-[placement=right]:-left-1 data-[placement=right]:translate-x-[1.5px] rtl:data-[placement=right]:translate-x-[-1.5px] data-[placement=right]:-translate-y-1/2 data-[placement=top]:-bottom-2.5 data-[placement=top]:-translate-x-1/2"
         style={({ placement, defaultStyle }) => {
           const { top, bottom, left, right, transform, ...style } = defaultStyle
-          return placement === "top" || placement === "bottom"
-            ? { ...style, left, transform }
-            : { ...style, top }
+          if (placement === "top" || placement === "bottom")
+            return { ...style, left, transform: "none" }
+          return {
+            ...style,
+            top,
+            transform: "none",
+            ...(placement === "left" ? { left: "auto" } : { right: "auto" }),
+          }
         }}
       />
     </TooltipPrimitive>

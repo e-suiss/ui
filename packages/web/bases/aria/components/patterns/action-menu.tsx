@@ -42,15 +42,15 @@ function useActionMenu() {
 }
 
 function ActionMenu({
-  isOpen,
+  open: isOpen,
   defaultOpen,
   onOpenChange,
   dismissible = true,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   dismissible?: boolean
   children?: React.ReactNode
 }) {
@@ -165,7 +165,7 @@ function ActionMenuLabel({
 
 function ActionMenuItem({
   variant,
-  isDisabled,
+  disabled: isDisabled,
   onAction,
   ...props
 }: {
@@ -174,7 +174,7 @@ function ActionMenuItem({
   id?: string
   "aria-label"?: string
   variant?: "default" | "destructive"
-  isDisabled?: boolean
+  disabled?: boolean
   onAction?: () => void
 }) {
   const { isMobile } = useActionMenu()
