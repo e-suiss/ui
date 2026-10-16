@@ -31,11 +31,13 @@ const chartConfig = {
   tablet: { label: "Tablet", color: "var(--chart-3)" },
   watch: { label: "Watch", color: "var(--chart-4)" },
   other: { label: "Other", color: "var(--chart-5)" },
+  personal: { label: "Phones and laptops", color: "var(--chart-1)" },
+  companion: { label: "Tablets, watches and other", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 const groups = [
-  { device: "phone", users: 475, fill: "var(--color-phone)" },
-  { device: "watch", users: 450, fill: "var(--color-watch)" },
+  { device: "personal", users: 475, fill: "var(--color-personal)" },
+  { device: "companion", users: 450, fill: "var(--color-companion)" },
 ]
 
 export function PieChartNested() {

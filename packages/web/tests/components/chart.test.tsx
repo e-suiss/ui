@@ -1,5 +1,6 @@
 import { Bar, BarChart, XAxis } from "recharts"
 import { afterEach, describe, expect, it, vi } from "vitest"
+import { userEvent } from "vitest/browser"
 import { render, renderHook } from "vitest-browser-react"
 
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
@@ -177,6 +178,40 @@ describe("ChartContainer", () => {
     await expect
       .poll(() => getComputedStyle(bar("mobile") as Element).fill)
       .toBe("rgb(48, 209, 88)")
+  })
+
+  it("names the chart from its series or an explicit label", async () => {
+    const surface = () =>
+      document.querySelector<SVGSVGElement>(".recharts-surface[tabindex='0']")
+    const screen = await render(<Chart />)
+    await expect
+      .poll(() => surface()?.getAttribute("aria-label"))
+      .toBe("Chart of Desktop, Mobile")
+    await screen.rerender(
+      <div style={{ width: 480 }}>
+        <ChartContainer config={config} aria-label="Monthly visitors">
+          <BarChart data={data} accessibilityLayer>
+            <Bar dataKey="desktop" />
+          </BarChart>
+        </ChartContainer>
+      </div>
+    )
+    await expect
+      .poll(() => surface()?.getAttribute("aria-label"))
+      .toBe("Monthly visitors")
+  })
+
+  it("shows a focus ring on the chart surface", async () => {
+    await render(<Chart />)
+    await expect
+      .poll(() => document.querySelector(".recharts-surface[tabindex='0']"))
+      .not.toBeNull()
+    await userEvent.keyboard("{Tab}")
+    const surface = document.activeElement as SVGSVGElement
+    expect(surface.classList.contains("recharts-surface")).toBe(true)
+    const style = getComputedStyle(surface)
+    expect(style.outlineStyle).not.toBe("none")
+    expect(Number.parseFloat(style.outlineWidth)).toBeGreaterThan(2)
   })
 
   it("only lets its parts render inside a container", async () => {

@@ -227,7 +227,10 @@ test("Nested", async () => {
   })
 
   await step("names the hovered group in the tooltip", async () => {
-    await hoverSector(canvasElement, 1, ["Watch", (450).toLocaleString()])
+    await hoverSector(canvasElement, 1, [
+      "Tablets, watches and other",
+      (450).toLocaleString(),
+    ])
   })
 
   await step("names the hovered detail in the tooltip", async () => {

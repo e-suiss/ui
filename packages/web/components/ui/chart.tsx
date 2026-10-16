@@ -45,6 +45,7 @@ function ChartContainer({
   children,
   config,
   initialDimension = INITIAL_DIMENSION,
+  "aria-label": ariaLabel,
   ...props
 }: React.ComponentProps<"div"> & {
   config: ChartConfig
@@ -58,6 +59,16 @@ function ChartContainer({
 }) {
   const uniqueId = React.useId()
   const chartId = `chart-${(id ?? uniqueId).replace(UNSAFE_IDENTIFIER_CHARACTERS, "")}`
+  const series = Object.values(config).flatMap((item) =>
+    typeof item.label === "string" ? [item.label] : []
+  )
+  const label =
+    ariaLabel ?? (series.length > 0 ? `Chart of ${series.join(", ")}` : "Chart")
+  const chart =
+    React.isValidElement<{ "aria-label"?: string }>(children) &&
+    children.props["aria-label"] === undefined
+      ? React.cloneElement(children, { "aria-label": label })
+      : children
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -65,7 +76,7 @@ function ChartContainer({
         data-slot="chart"
         data-chart={chartId}
         className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector[fill='#eee']]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden [&_.recharts-surface]:select-none **:[[tabindex='-1']]:outline-hidden",
+          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector[fill='#eee']]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden [&_.recharts-surface]:select-none [&_.recharts-surface:focus-visible]:rounded-md [&_.recharts-surface:focus-visible]:outline-3 [&_.recharts-surface:focus-visible]:outline-solid [&_.recharts-surface:focus-visible]:outline-offset-2 [&_.recharts-surface:focus-visible]:outline-ring/50 **:[[tabindex='-1']]:outline-hidden",
           className
         )}
         {...props}
@@ -74,7 +85,7 @@ function ChartContainer({
         <RechartsPrimitive.ResponsiveContainer
           initialDimension={initialDimension}
         >
-          {children}
+          {chart}
         </RechartsPrimitive.ResponsiveContainer>
       </div>
     </ChartContext.Provider>

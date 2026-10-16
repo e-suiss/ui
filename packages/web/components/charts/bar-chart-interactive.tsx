@@ -98,25 +98,44 @@ function noise(seed: number) {
   return (state - 1) / 2147483646
 }
 
+function distribute(amount: number, weights: number[]) {
+  const sum = weights.reduce((total, weight) => total + weight, 0)
+  const exact = weights.map((weight) => (sum ? (amount * weight) / sum : 0))
+  const parts = exact.map(Math.floor)
+  let rest = amount - parts.reduce((total, part) => total + part, 0)
+  const order = exact
+    .map((value, index) => ({ index, remainder: value - Math.floor(value) }))
+    .sort((a, b) => b.remainder - a.remainder)
+  for (const { index } of order) {
+    if (rest <= 0) break
+    parts[index] = (parts[index] ?? 0) + 1
+    rest -= 1
+  }
+  return parts
+}
+
 function hourly(day: number) {
-  const profileTotal = PROFILE.reduce((sum, value) => sum + value, 0)
   const categories = WEEK[day]
   if (!categories) return []
-  return PROFILE.map((weight, hour) => {
-    const share =
-      (weight / profileTotal) * (0.75 + noise(hour + 7 * (day + 1)) * 0.5)
-    return {
-      label: String(hour),
-      index: hour,
-      social: Math.round(categories.social * share),
-      productivity: Math.round(
-        categories.productivity * share * (hour > 8 && hour < 18 ? 1.6 : 0.4)
-      ),
-      entertainment: Math.round(
-        categories.entertainment * share * (hour > 18 ? 1.8 : 0.5)
-      ),
-    }
-  })
+  const base = PROFILE.map(
+    (weight, hour) => weight * (0.75 + noise(hour + 7 * (day + 1)) * 0.5)
+  )
+  const social = distribute(categories.social, base)
+  const productivity = distribute(
+    categories.productivity,
+    base.map((weight, hour) => weight * (hour > 8 && hour < 18 ? 1.6 : 0.4))
+  )
+  const entertainment = distribute(
+    categories.entertainment,
+    base.map((weight, hour) => weight * (hour > 18 ? 1.8 : 0.5))
+  )
+  return PROFILE.map((_, hour) => ({
+    label: String(hour),
+    index: hour,
+    social: social[hour] ?? 0,
+    productivity: productivity[hour] ?? 0,
+    entertainment: entertainment[hour] ?? 0,
+  }))
 }
 
 function KeyboardPoint({
