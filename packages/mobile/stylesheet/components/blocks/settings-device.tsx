@@ -202,7 +202,7 @@ function SettingsDevice({
               returnKeyType="search"
               autoCorrect={false}
               clearButtonMode="while-editing"
-              style={fontSize.lg}
+              style={{ fontSize: fontSize.lg.fontSize }}
             />
           </InputGroup>
           {query ? null : (

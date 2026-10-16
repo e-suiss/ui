@@ -186,7 +186,7 @@ function SearchRevealField({
           autoCapitalize="none"
           returnKeyType="search"
           className={cn(
-            "h-full min-w-0 flex-1 py-0 text-base text-foreground",
+            "h-full min-w-0 flex-1 py-0 text-[16px] text-foreground",
             className
           )}
           placeholderClassName="text-muted-foreground"

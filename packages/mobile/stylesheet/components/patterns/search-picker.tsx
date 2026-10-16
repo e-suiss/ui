@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
     flex: 1,
     paddingVertical: 0,
-    ...fontSize.xl,
+    fontSize: fontSize.xl.fontSize,
   },
   list: { padding: 6 },
   empty: { paddingVertical: 40, textAlign: "center", ...fontSize.base },

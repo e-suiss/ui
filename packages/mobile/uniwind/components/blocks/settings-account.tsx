@@ -112,7 +112,7 @@ function EditableCard({
             onSubmitEditing={() => onSave(draft)}
             className={(state) =>
               cn(
-                "h-12 rounded-xl bg-background text-lg",
+                "h-12 rounded-xl bg-background text-[18px]",
                 state.focused
                   ? "border-ring ring-3 ring-ring/50"
                   : "border-input"

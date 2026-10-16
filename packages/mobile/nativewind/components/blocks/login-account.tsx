@@ -224,7 +224,7 @@ function LoginAccount({
                 returnKeyType="next"
                 submitBehavior="submit"
                 onSubmitEditing={submit}
-                className="h-14 flex-1 rounded-none border-transparent bg-transparent px-4 text-lg"
+                className="h-14 flex-1 rounded-none border-transparent bg-transparent px-4 text-[18px]"
               />
               {step === "email" ? (
                 <SubmitArrow ready={!!email} busy={busy} onPress={submit} />
@@ -252,7 +252,7 @@ function LoginAccount({
                   returnKeyType="go"
                   submitBehavior="submit"
                   onSubmitEditing={submit}
-                  className="h-14 flex-1 rounded-none border-transparent bg-transparent px-4 text-lg"
+                  className="h-14 flex-1 rounded-none border-transparent bg-transparent px-4 text-[18px]"
                 />
                 <SubmitArrow ready={!!password} busy={busy} onPress={submit} />
               </AnimatedView>

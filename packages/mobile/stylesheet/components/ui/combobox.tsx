@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 6,
     paddingVertical: 4,
-    ...fontSize.base,
+    fontSize: fontSize.base.fontSize,
   },
   content: {
     position: "relative",
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 4,
     paddingVertical: 0,
-    ...fontSize.base,
+    fontSize: fontSize.base.fontSize,
   },
 })
 

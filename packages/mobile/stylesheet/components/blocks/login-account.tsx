@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: "row", alignItems: "center" },
   input: {
-    ...fontSize.lg,
+    fontSize: fontSize.lg.fontSize,
     height: 56,
     flex: 1,
     borderRadius: 0,

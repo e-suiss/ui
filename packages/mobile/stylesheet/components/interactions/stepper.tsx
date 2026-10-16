@@ -23,7 +23,7 @@ import {
 const styles = StyleSheet.create({
   root: { flexDirection: "row", alignItems: "center", gap: 12 },
   input: {
-    ...fontSize.base,
+    fontSize: fontSize.base.fontSize,
     height: 32,
     width: 64,
     minWidth: 0,

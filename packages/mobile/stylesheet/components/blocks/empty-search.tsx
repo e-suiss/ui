@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   input: {
-    ...fontSize["2xl"],
+    fontSize: fontSize["2xl"].fontSize,
     height: 48,
     minWidth: 0,
     flex: 1,

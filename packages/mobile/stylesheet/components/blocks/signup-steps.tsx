@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   input: {
-    ...fontSize.lg,
+    fontSize: fontSize.lg.fontSize,
     height: 52,
     borderRadius: 0,
     borderColor: "transparent",

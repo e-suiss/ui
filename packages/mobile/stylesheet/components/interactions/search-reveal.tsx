@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
     flex: 1,
     paddingVertical: 0,
-    ...fontSize.base,
+    fontSize: fontSize.base.fontSize,
   },
   clear: {
     marginEnd: -4,

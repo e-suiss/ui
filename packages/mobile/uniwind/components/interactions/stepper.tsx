@@ -50,7 +50,7 @@ function StepperInput({
     <NumberFieldPrimitive.Input
       className={(state) =>
         cn(
-          "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 py-0 text-right text-base text-foreground tabular-nums",
+          "h-8 w-16 min-w-0 rounded-md bg-transparent px-1 py-0 text-right text-[16px] text-foreground tabular-nums",
           state.disabled && "opacity-50",
           resolveClassName(className, state)
         )

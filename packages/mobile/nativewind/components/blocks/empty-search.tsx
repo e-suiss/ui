@@ -56,7 +56,7 @@ function EmptySearch() {
             accessibilityLabel="Search suiss"
             returnKeyType="search"
             autoCorrect={false}
-            className="h-12 min-w-0 flex-1 rounded-none border-transparent bg-transparent px-0 text-2xl font-semibold"
+            className="h-12 min-w-0 flex-1 rounded-none border-transparent bg-transparent px-0 text-[24px] font-semibold"
           />
           {query ? (
             <Button

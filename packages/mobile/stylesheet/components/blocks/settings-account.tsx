@@ -56,7 +56,11 @@ const styles = StyleSheet.create({
   cardText: { flex: 1, gap: 3 },
   cardTitle: { ...fontSize.lg, fontWeight: "600" },
   editor: { gap: 12, paddingTop: 14 },
-  input: { ...fontSize.lg, height: 48, borderRadius: radius.xl },
+  input: {
+    fontSize: fontSize.lg.fontSize,
+    height: 48,
+    borderRadius: radius.xl,
+  },
   buttons: { flexDirection: "row", gap: 10 },
   status: { minHeight: 24, flexDirection: "row", alignItems: "center" },
   saved: { flexDirection: "row", alignItems: "center", gap: 6 },

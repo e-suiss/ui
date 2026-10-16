@@ -40,9 +40,9 @@ function Input({
     <InputPrimitive.Root
       className={(state) =>
         cn(
-          "h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary px-3 py-1 text-base text-secondary-foreground",
-          size === "md" && "h-9 text-sm",
-          size === "sm" && "h-8 rounded-md px-2.5 text-sm",
+          "h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary px-3 py-1 text-[16px] text-secondary-foreground",
+          size === "md" && "h-9 text-[14px]",
+          size === "sm" && "h-8 rounded-md px-2.5 text-[14px]",
           state.focused && "border-ring ring ring-ring-50",
           state.invalid &&
             "border-destructive bg-destructive-5 dark:bg-destructive-10",

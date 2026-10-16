@@ -14,7 +14,7 @@ function withAlpha(color: string, alpha: number) {
 
 const styles = StyleSheet.create({
   root: {
-    ...fontSize.base,
+    fontSize: fontSize.base.fontSize,
     height: 44,
     width: "100%",
     minWidth: 0,
@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 4,
   },
-  md: { ...fontSize.sm, height: 36 },
+  md: { fontSize: fontSize.sm.fontSize, height: 36 },
   sm: {
-    ...fontSize.sm,
+    fontSize: fontSize.sm.fontSize,
     height: 32,
     borderRadius: radius.md,
     paddingHorizontal: 10,

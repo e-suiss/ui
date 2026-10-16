@@ -214,7 +214,7 @@ function SignupSteps({
               onSubmitEditing={() => {
                 if (ready) go(1)
               }}
-              className="h-[3.25rem] rounded-none border-transparent bg-transparent px-4 text-lg"
+              className="h-[3.25rem] rounded-none border-transparent bg-transparent px-4 text-[18px]"
             />
           </View>
           {step.key === "password" && value ? (

@@ -174,7 +174,7 @@ function SettingsDevice({
               returnKeyType="search"
               autoCorrect={false}
               clearButtonMode="while-editing"
-              className="text-lg"
+              className="text-[18px]"
             />
           </InputGroup>
           {query ? null : (

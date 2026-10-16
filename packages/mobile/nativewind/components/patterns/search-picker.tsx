@@ -195,7 +195,7 @@ function SearchPicker({
               autoCorrect={false}
               autoCapitalize="none"
               returnKeyType="search"
-              className="h-full min-w-0 flex-1 py-0 text-xl text-foreground"
+              className="h-full min-w-0 flex-1 py-0 text-[20px] text-foreground"
               placeholderClassName="text-muted-foreground"
               cursorColorClassName="text-primary"
               selectionColorClassName="text-primary"

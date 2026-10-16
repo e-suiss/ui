@@ -155,7 +155,7 @@ function ComboboxInput({
       <ComboboxPrimitive.Input
         disabled={disabled}
         className={cn(
-          "h-full min-w-0 flex-1 py-1 pr-1.5 pl-3 text-base text-foreground"
+          "h-full min-w-0 flex-1 py-1 pr-1.5 pl-3 text-[16px] text-foreground"
         )}
         placeholderClassName="text-muted-foreground"
         cursorColorClassName="text-primary"
@@ -430,7 +430,7 @@ function ComboboxChipsInput({
     <ComboboxPrimitive.Input
       className={(state) =>
         cn(
-          "h-6 min-w-16 flex-1 px-1 py-0 text-base text-foreground",
+          "h-6 min-w-16 flex-1 px-1 py-0 text-[16px] text-foreground",
           resolveClassName(className, state)
         )
       }
