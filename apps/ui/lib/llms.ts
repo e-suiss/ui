@@ -1,7 +1,7 @@
 import path from "node:path"
 import type * as PageTree from "fumadocs-core/page-tree"
 
-import { exampleSource, readSource } from "@/lib/highlight"
+import { exampleSource, readSource, sourcePath } from "@/lib/highlight"
 import { nativeCode, nativePreview } from "@/lib/native"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
@@ -13,6 +13,7 @@ const BLOCK_OPEN = /^<(NativeExample|ApiPart|Callout|Anatomy)\b([^>]*)>$/
 const FIRST_CHAR = /^./
 const BLOCK_CLOSE = /^<\/(NativeExample|ApiPart|Callout|Anatomy)>$/
 const HEADING_ANCHOR = /^(#{1,6} .*?) \[#[^\]]+\]$/
+const RELATIVE_LINK = /\]\((\/[^)\s]*)\)/g
 
 type Page = NonNullable<ReturnType<typeof source.getPage>>
 
@@ -29,6 +30,69 @@ const COMPONENT_PREVIEW = /^<ComponentPreview\b([^>]*?)\/>$/gm
 const NATIVE_EXAMPLE = /^<NativeExample id="([^"]+)"[^>]*\/>$/gm
 const NATIVE_OPEN = /^<NativeExample id="([^"]+)"/
 const ANATOMY_ITEM = /^(\s*)[-*] (?:\[([^\]]+)\]\([^)]*\)|(.+))$/
+
+const repositoryRoot = path.join(process.cwd(), "../..")
+
+const sourceKey = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, "")
+
+const fileKey = (file: string) =>
+  sourceKey(path.basename(file, path.extname(file)))
+
+function ownerPage(file: string) {
+  const key = fileKey(file)
+  return source
+    .getPages()
+    .find(
+      (page) =>
+        page.slugs.length === 2 && sourceKey(page.slugs[1] ?? "") === key
+    )
+}
+
+function repositoryUrl(file: string) {
+  const resolved = sourcePath(file)
+  return resolved
+    ? `${site.repository}/blob/main/${path.relative(repositoryRoot, resolved).split(path.sep).join("/")}`
+    : undefined
+}
+
+export type MarkdownContext = {
+  page: Page
+  seen: Set<string>
+  shared?: Map<string, string>
+}
+
+async function sourceBlock(file: string, context: MarkdownContext) {
+  const own = fileKey(file) === sourceKey(context.page.slugs.at(-1) ?? "")
+  if (context.seen.has(file)) return `- \`${file}\`: shown above`
+  if (own) {
+    context.seen.add(file)
+    return fence(
+      await fileText(file),
+      path.extname(file).slice(1) || "tsx",
+      file
+    )
+  }
+  const owner = ownerPage(file)
+  if (owner && owner.url !== context.page.url)
+    return `- \`${file}\`: see [${owner.data.title}](${absolute(context.shared ? owner.url : `${owner.url}.md`)})`
+  if (context.shared) {
+    if (!context.shared.has(file))
+      context.shared.set(file, await fileText(file))
+    return `- \`${file}\`: see Shared source files`
+  }
+  const url = repositoryUrl(file)
+  return `- \`${file}\`${url ? `: [source](${url})` : ""}`
+}
+
+export function sharedSources(shared: Map<string, string>) {
+  return [
+    "# Shared source files",
+    "Files that several items build on, included once.",
+    ...[...shared].map(([file, code]) =>
+      fence(code, path.extname(file).slice(1) || "tsx", file)
+    ),
+  ].join("\n\n")
+}
 
 async function fileText(file: string) {
   return (await readSource(file).catch(() => undefined)) ?? ""
@@ -52,12 +116,9 @@ function previewImage(id: string) {
     : ""
 }
 
-async function toMarkdown(body: string) {
-  let text = await replaceAsync(
-    body,
-    COMPONENT_SOURCE,
-    async (_match, file = "") =>
-      fence(await fileText(file), path.extname(file).slice(1) || "tsx", file)
+async function toMarkdown(body: string, context: MarkdownContext) {
+  let text = await replaceAsync(body, COMPONENT_SOURCE, (_match, file = "") =>
+    sourceBlock(file, context)
   )
   text = await replaceAsync(
     text,
@@ -174,16 +235,28 @@ function cleanMarkdown(body: string) {
       output.push(`${item[1]}- \`${(item[2] ?? item[3] ?? "").trim()}\``)
     else if (trimmed.startsWith("<RegistryIndex"))
       output.push(registryIndex(trimmed))
-    else output.push(line.replace(HEADING_ANCHOR, "$1"))
+    else
+      output.push(
+        line
+          .replace(HEADING_ANCHOR, "$1")
+          .replace(
+            RELATIVE_LINK,
+            (_match, url: string) => `](${absolute(url)})`
+          )
+      )
   }
   return output.join("\n").replace(/\n{3,}/g, "\n\n")
 }
 
 export const markdownUrl = (url: string) => `/llms.mdx${url}`
 
-export async function pageMarkdown(page: Page) {
+export async function pageMarkdown(page: Page, shared?: Map<string, string>) {
   const body = cleanMarkdown(
-    await toMarkdown(await page.data.getText("processed"))
+    await toMarkdown(await page.data.getText("processed"), {
+      page,
+      seen: new Set(),
+      shared,
+    })
   )
   return [
     `# ${page.data.title}`,
