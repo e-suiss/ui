@@ -66,7 +66,7 @@ function ResizablePanelGroup({
       data-slot="resizable-panel-group"
       data-variant={variant}
       className={cn(
-        "group/resizable flex h-full w-full aria-[orientation=vertical]:flex-col data-[variant=cards]:*:data-[slot=resizable-panel]:rounded-2xl data-[variant=cards]:*:data-[slot=resizable-panel]:bg-muted",
+        "group/resizable flex h-full w-full data-[variant=cards]:*:data-[slot=resizable-panel]:rounded-2xl data-[variant=cards]:*:data-[slot=resizable-panel]:bg-muted",
         className
       )}
       elementRef={(node: HTMLDivElement | null) => {

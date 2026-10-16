@@ -2,7 +2,7 @@ import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
 
-const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
+const repositories = ["acme/ui", "acme/docs", "acme/cli"]
 
 export default function CollapsibleOpenByDefault() {
   return (

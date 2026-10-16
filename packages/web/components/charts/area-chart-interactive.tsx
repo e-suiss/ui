@@ -221,6 +221,11 @@ function useMorph(target: number[]) {
 
   React.useEffect(() => {
     const from = valuesRef.current
+    if (
+      target.length === from.length &&
+      target.every((value, index) => value === from[index])
+    )
+      return
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setValues(target)
       return

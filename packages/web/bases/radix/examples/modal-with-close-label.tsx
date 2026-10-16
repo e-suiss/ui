@@ -29,7 +29,7 @@ export default function ModalWithCloseLabel() {
             <Input
               readOnly
               aria-label="Project link"
-              defaultValue="https://esuiss.dev/p/1042"
+              defaultValue="https://example.com/p/1042"
             />
           </ModalBody>
           <ModalFooter>

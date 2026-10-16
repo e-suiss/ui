@@ -6,7 +6,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 
-const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
+const repositories = ["acme/ui", "acme/docs", "acme/cli"]
 
 export default function CollapsibleDemo() {
   return (

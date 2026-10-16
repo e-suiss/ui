@@ -74,7 +74,7 @@ test("With Buttons", async () => {
       await expect(canvas.getByRole("button", { name: "Copy" })).toBeVisible()
       await expect(canvas.getByRole("button", { name: "Info" })).toBeVisible()
       await expect(
-        canvas.getByDisplayValue("https://esuiss.dev/invite/x7k2")
+        canvas.getByDisplayValue("https://example.com/invite/x7k2")
       ).toHaveAttribute("readonly")
     }
   )

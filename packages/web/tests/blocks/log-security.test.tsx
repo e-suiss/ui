@@ -127,7 +127,12 @@ describe("LogSecurity", () => {
 
   it("celebrates when every alert is resolved", async () => {
     await render(<LogSecurity />)
-    for (const title of Object.values(alerts)) {
+    const titles = Object.values(alerts)
+    for (const title of titles.slice(0, -1)) {
+      await resolve(title).click()
+    }
+    await expect.poll(summary).toBe("1 open alert")
+    for (const title of titles.slice(-1)) {
       await resolve(title).click()
     }
     await expect.poll(score).toBe(100)

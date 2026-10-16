@@ -104,7 +104,7 @@ test("With Close Button", async () => {
     const modal = await screen.findByRole("dialog", { name: "Share project" })
     await expect(
       screen.getByRole("textbox", { name: "Project link" })
-    ).toHaveValue("https://esuiss.dev/p/1042")
+    ).toHaveValue("https://example.com/p/1042")
     await userEvent.click(within(modal).getByRole("button", { name: "Close" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
   })
@@ -117,7 +117,7 @@ test("With Close Label", async () => {
     const modal = await screen.findByRole("dialog", { name: "Share project" })
     await expect(
       screen.getByRole("textbox", { name: "Project link" })
-    ).toHaveValue("https://esuiss.dev/p/1042")
+    ).toHaveValue("https://example.com/p/1042")
     await userEvent.click(within(modal).getByRole("button", { name: "Close" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
   })

@@ -12,7 +12,7 @@ export default function InputGroupWithButtons() {
       <div className="flex flex-col gap-4">
         <InputGroup>
           <InputGroupInput
-            defaultValue="https://esuiss.dev/invite/x7k2"
+            defaultValue="https://example.com/invite/x7k2"
             aria-label="Invite link"
             readOnly
           />

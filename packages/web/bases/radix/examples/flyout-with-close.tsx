@@ -29,7 +29,7 @@ export default function FlyoutWithClose() {
             <Input
               readOnly
               aria-label="Project link"
-              defaultValue="https://esuiss.dev/p/1042"
+              defaultValue="https://example.com/p/1042"
             />
             <FlyoutClose asChild>
               <Button>Copy link</Button>

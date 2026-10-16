@@ -305,7 +305,9 @@ export function LogSecurity() {
                 Security
               </h1>
               <p className="text-sm text-muted-foreground" aria-live="polite">
-                {open.length ? `${open.length} open alerts` : "No open alerts"}
+                {open.length
+                  ? `${open.length} open ${open.length === 1 ? "alert" : "alerts"}`
+                  : "No open alerts"}
               </p>
             </div>
           </div>

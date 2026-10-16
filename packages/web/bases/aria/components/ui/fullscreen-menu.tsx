@@ -257,5 +257,4 @@ export {
   FullscreenMenuLink,
   FullscreenMenuTitle,
   FullscreenMenuTrigger,
-  useFullscreenMenu,
 }

@@ -29,6 +29,9 @@ const chartData = [
   { day: "Sun", hours: 7.2 },
 ]
 
+const AVERAGE =
+  chartData.reduce((sum, item) => sum + item.hours, 0) / chartData.length
+
 const chartConfig = {
   hours: { label: "Sleep", color: "var(--chart-3)" },
 } satisfies ChartConfig
@@ -47,7 +50,7 @@ export function LineChartGoalDots() {
         </p>
         <p className="flex items-baseline gap-1">
           <span className="text-3xl font-semibold tracking-tight tabular-nums">
-            7h 9m
+            {formatHours(AVERAGE)}
           </span>
         </p>
         <p className="text-sm text-muted-foreground">
