@@ -16,3 +16,4 @@ next-env.d.ts
 npm-debug.log*
 .pnpm-debug.log*
 apps/ui/public/r
+apps/ui/content-dates.json

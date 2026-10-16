@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": [
       "./node_modules/@fontsource/inter/files/inter-latin-*-normal.woff",
+      "./content-dates.json",
       "../../packages/web/components/**/*",
       "../../packages/web/hooks/**/*",
       "../../packages/web/lib/**/*",
