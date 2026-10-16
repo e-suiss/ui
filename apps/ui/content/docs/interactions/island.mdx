@@ -143,7 +143,7 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 
 - `IslandCompact` is a button with `aria-expanded` reflecting the expanded state; give it an `aria-label` that describes the activity.
 - Expanding moves focus to the first enabled button, link, or input inside `IslandExpanded`, which has `role="group"` and is `inert` while not shown.
-- `Escape` or a pointer press outside collapses the expanded view; when focus was inside, it returns to the compact button.
+- `Escape` or a pointer press outside collapses the expanded view. After `Escape`, focus returns to the compact button if it was inside the island.
 - Notices render as a button that dismisses on press, and their title and description are announced through a polite live region.
 - Inactive parts are removed from the tab order. `IslandRing` is `aria-hidden`.
 

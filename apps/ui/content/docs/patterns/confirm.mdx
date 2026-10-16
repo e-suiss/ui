@@ -184,7 +184,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
 
 ## Accessibility
 
-- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`.
+- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`. On mobile with `dismissible` set, it has the `dialog` role instead.
 - Opening moves focus into the dialog, and closing returns it to the trigger.
 - On desktop, pressing outside does not close the dialog; `Escape`, Cancel or an action does.
 

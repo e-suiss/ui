@@ -9,7 +9,7 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-pin-pad--default" />
 
-`PinPad` combines a row of dots that fill as digits are entered with a `Keypad` for input. The length is between 4 and 8 digits. Each key press plays a selection haptic, and switching to the error state turns the dots red, plays an error haptic and shakes the row with Reanimated.
+`PinPad` combines a row of dots that fill as digits are entered with a `Keypad` for input. The length is between 4 and 8 digits. Each key press plays a selection haptic, and switching to the error state turns the dots red, plays an error haptic and shakes the row with Reanimated. Haptics play when a haptics adapter is provided through `HapticsContext`.
 
 An optional biometric key appears in the bottom-left corner of the keypad when `onBiometric` is set, and the delete key is disabled while nothing is entered.
 

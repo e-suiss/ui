@@ -423,7 +423,7 @@ import { TabBar, TabBarList, TabBarItem } from "@/components/ui/tab-bar"
 
 Put `TabBarItem` entries inside a `TabBarList`, inside `TabBar`. Give each item a `value`, an `icon` and a label as children. Control the active tab with `value` and `onValueChange`, or set `defaultValue`.
 
-The `badge` prop shows a count, text or a dot: numbers above 99 show as `99+`, `0` and empty strings show nothing, and `true` shows a small dot. A selection haptic plays whenever the tab changes.
+The `badge` prop shows a count, text or a dot: numbers above 99 show as `99+`, `0` and empty strings show nothing, and `true` shows a small dot. A selection haptic plays whenever the tab changes, when a haptics adapter is provided through `HapticsContext`.
 
 The `TabBarBadgeValue` type is also exported.
 

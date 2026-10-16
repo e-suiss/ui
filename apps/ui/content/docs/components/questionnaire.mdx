@@ -181,7 +181,7 @@ Also accepts the props of `React.ComponentProps<"form">`.
 
 ### QuestionnaireProgress
 
-Shows the position, such as `Question 2 of 3`, as a progress bar.
+Shows the position as text, such as `Question 2 of 3`, and exposes it to assistive technology with the `progressbar` role.
 
 Also accepts the props of `useRender.ComponentProps<"div", QuestionnaireState>`.
 
@@ -783,7 +783,7 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 ## Notes
 
-- Selecting a choice plays a selection haptic.
+- Selecting a choice plays a selection haptic when a haptics adapter is provided through `HapticsContext`.
 - Selected choices use `border-primary` and `bg-primary`; invalid items use `border-destructive`.
 - The slide direction flips for right-to-left layouts.
 - Light and dark colors follow the system appearance.

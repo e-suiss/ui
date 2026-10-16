@@ -290,7 +290,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 - The dimmed surround and brackets are hidden from VoiceOver and TalkBack.
 - The overlay is a polite live region, so changes to the title and description are announced on Android.
 - The flashlight button has the `button` role, uses `torchLabel` as its label and reports `torch` as its selected state.
-- State changes to `success` and `error` play a matching haptic notification.
+- State changes to `success` and `error` play a matching haptic notification when a haptics adapter is provided through `HapticsContext`.
 - The shake and scan-line animations respect the system reduce motion setting, and the success scale is skipped when reduce motion is on.
 
 ## Notes

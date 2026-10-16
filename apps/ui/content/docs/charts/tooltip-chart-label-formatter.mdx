@@ -51,10 +51,10 @@ import { TooltipChartLabelFormatter } from "@/components/charts/tooltip-chart-la
 <TooltipChartLabelFormatter />
 ```
 
-Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. Adjust the date format there to add the month or year if your range spans more than one month.
+Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. Adjust the date format there, for example to add the year when your range spans more than one year.
 
 ## Notes
 
-The demo format shows the day number and weekday but not the month, which can be ambiguous across month boundaries.
+The demo format shows the weekday, month and day, so ranges that cross a month boundary stay clear. It leaves out the year.
 
 </Only>

@@ -51,7 +51,7 @@ import { VerifyEmail } from "@/components/blocks/verify-email"
 <VerifyEmail />
 ```
 
-Pass the real address in place of the `EMAIL` constant. In the demo, Open Mail marks the email as verified, but in production verification happens when the user follows the link, so point that button at a mail app or remove it. Connect Resend to your email service and `#change` to your account settings.
+The address comes from the `EMAIL` constant at the top of the file; replace it with the signed-in user's address, for example by turning it into a prop. In the demo, Open Mail marks the email as verified, but in production verification happens when the user follows the link, so point that button at a mail app or remove it. Connect Resend to your email service and `#change` to your account settings.
 
 </Only>
 

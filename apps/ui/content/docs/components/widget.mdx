@@ -263,7 +263,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 `Widget` is a `View` with a rounded, filled surface. It comes in four fixed sizes, `small` (168×168), `medium` (352×168), `large` (352×352) and `extra-large` (720×352), or `auto`, which fills its parent. Fixed sizes animate with Reanimated when the size changes.
 
-With `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap, and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align="center"` to center the content, which also hides `WidgetAction`.
+With `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap (when a haptics adapter is provided through `HapticsContext`), and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align="center"` to center the content, which also hides `WidgetAction`.
 
 ## Installation
 
