@@ -261,9 +261,27 @@ With Vite, wrap your app in `ThemeProvider` and put the same script in `index.ht
 <ThemeToggle effect="rectangle" origin="bottom-up" blur />
 ```
 
+<ComponentPreview name="theme-circle" layout="fullscreen" responsive />
+
+With `blur`, the revealing edge is soft:
+
+<ComponentPreview name="theme-blurred" layout="fullscreen" responsive />
+
+`ThemeToggle` is an `icon-lg` icon button by default; pass any icon button `size` to change it:
+
+<ComponentPreview name="theme-sizes" layout="fullscreen" responsive />
+
 To build your own control, use `setTheme` from `useTheme`. Pass a transition as the second argument to animate it, or leave it out to switch instantly. Browsers without View Transitions, and visitors who prefer reduced motion, switch instantly either way.
 
 ```tsx
 const { theme, setTheme } = useTheme()
 setTheme("system", { effect: "circle", origin: "top-center" })
 ```
+
+A custom button that calls `setTheme` without a transition switches instantly:
+
+<ComponentPreview name="theme-without-transition" layout="fullscreen" responsive />
+
+`useTheme` also returns `resolvedTheme`, the appearance actually shown when the choice is `system`:
+
+<ComponentPreview name="theme-status" layout="fullscreen" responsive />
