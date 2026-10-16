@@ -32,6 +32,21 @@ test("Default", async () => {
     await expect(products).toHaveAttribute("aria-expanded", "false")
   })
 
+  await step(
+    "stays closed while the pointer rests on the trigger",
+    async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      await expect(products).toHaveAttribute("aria-expanded", "false")
+      await userEvent.click(products)
+      await waitFor(() =>
+        expect(products).toHaveAttribute("aria-expanded", "true")
+      )
+      await userEvent.click(products)
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      await expect(products).toHaveAttribute("aria-expanded", "false")
+    }
+  )
+
   await step("keeps plain items as direct links", async () => {
     await expect(canvas.getByRole("link", { name: "Pricing" })).toHaveAttribute(
       "href",

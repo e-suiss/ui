@@ -16,6 +16,9 @@ function NavigationMenu({
   value,
   defaultValue,
   onValueChange,
+  onPointerOver,
+  onPointerDown,
+  onKeyDown,
   className,
   children,
   ...props
@@ -26,6 +29,7 @@ function NavigationMenu({
 }) {
   const [uncontrolled, setUncontrolled] = React.useState(defaultValue ?? "")
   const current = value ?? uncontrolled
+  const dismissed = React.useRef(false)
 
   return (
     <NavigationMenuContext.Provider value={{ open: current !== "" }}>
@@ -34,8 +38,27 @@ function NavigationMenu({
         data-layout={layout}
         value={current}
         onValueChange={(next) => {
+          if (next !== "" && dismissed.current) return
+          dismissed.current = next === ""
           setUncontrolled(next)
           onValueChange?.(next)
+        }}
+        onPointerOver={(event) => {
+          const trigger = (event.target as Element).closest(
+            '[data-slot="navigation-menu-trigger"]'
+          )
+          if (trigger && !trigger.contains(event.relatedTarget as Node)) {
+            dismissed.current = false
+          }
+          onPointerOver?.(event)
+        }}
+        onPointerDown={(event) => {
+          dismissed.current = false
+          onPointerDown?.(event)
+        }}
+        onKeyDown={(event) => {
+          if (event.key !== "Escape") dismissed.current = false
+          onKeyDown?.(event)
         }}
         className={cn(
           "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center",
