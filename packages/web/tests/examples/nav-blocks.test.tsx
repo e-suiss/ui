@@ -5,6 +5,7 @@ import { NavCategories } from "@/components/blocks/nav-categories"
 import { NavGlobal } from "@/components/blocks/nav-global"
 import { NavLocal } from "@/components/blocks/nav-local"
 import { renderExample } from "@/tests/render-example"
+import { transitionsDone } from "@/tests/settle"
 
 test("Global", async () => {
   const { canvas, step } = await renderExample(<NavGlobal />)
@@ -17,6 +18,7 @@ test("Global", async () => {
       await screen.findByRole("link", { name: "Phone Pro" })
     ).toHaveAttribute("href", "#phone-pro")
     await expect(phone).toHaveAttribute("aria-expanded", "true")
+    await transitionsDone()
   })
 
   await step("Escape closes the panel", async () => {
