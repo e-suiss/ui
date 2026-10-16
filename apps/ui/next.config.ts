@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from "node:fs"
+import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { createMDX } from "fumadocs-mdx/next"
 import type { NextConfig } from "next"
@@ -16,9 +16,29 @@ const primitiveBases = readdirSync(bases, { withFileTypes: true })
       Number(b === "radix") - Number(a === "radix") || a.localeCompare(b)
   )
 
+const PREVIEW_TAG = /<ComponentPreview\b([^>]*?)\/>/g
+const FRAMED = /\btype="block"|\bresponsive\b/
+const NAME = /\bname="([^"]+)"/
+
+const content = path.join(import.meta.dirname, "content")
+const framedPreviews = new Set(
+  readdirSync(content, { recursive: true, encoding: "utf8" })
+    .filter((file) => file.endsWith(".mdx"))
+    .flatMap((file) => [
+      ...readFileSync(path.join(content, file), "utf8").matchAll(PREVIEW_TAG),
+    ])
+    .map(([, tag = ""]) => tag)
+    .filter((tag) => FRAMED.test(tag))
+    .map((tag) => tag.match(NAME)?.[1])
+    .filter(Boolean)
+)
+
 const nextConfig: NextConfig = {
   output: "standalone",
-  env: { PRIMITIVE_BASES: primitiveBases.join(",") },
+  env: {
+    PRIMITIVE_BASES: primitiveBases.join(","),
+    FRAMED_PREVIEWS: [...framedPreviews].sort().join(","),
+  },
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   outputFileTracingIncludes: {
     "/**": [
@@ -112,7 +132,17 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: [{ key: "X-Build", value: process.env.BUILD_SHA ?? "dev" }],
       },
+      { source: "/docs", headers: [{ key: "Vary", value: "Accept" }] },
       { source: "/docs/:path*", headers: [{ key: "Vary", value: "Accept" }] },
+      ...[
+        "/docs.md",
+        "/docs/:path*.md",
+        "/llms.mdx/:path*",
+        "/live/:path*",
+      ].map((source) => ({
+        source,
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      })),
       {
         source: "/r/:path*",
         headers: [
