@@ -116,18 +116,29 @@ Marks the trigger with `aria-invalid` to show an error state.
 
 <Anatomy>
 
-- [SelectTrigger](#selecttrigger)
-  - [SelectValue](#selectvalue)
-- [SelectContent](#selectcontent)
-  - [SelectGroup](#selectgroup)
+- [Select](#select)
+  - [SelectTrigger](#selecttrigger)
+    - [SelectValue](#selectvalue)
+  - [SelectContent](#selectcontent)
+    - [SelectGroup](#selectgroup)
+      - [SelectItem](#selectitem)
+      - [SelectLabel](#selectlabel)
     - [SelectItem](#selectitem)
-    - [SelectLabel](#selectlabel)
-  - [SelectItem](#selectitem)
-  - [SelectSeparator](#selectseparator)
+    - [SelectSeparator](#selectseparator)
 
 </Anatomy>
 
 <ApiPart index={1}>
+
+### Select
+
+The root that holds the selected value and the open state.
+
+Also accepts the props of the primitive part it wraps.
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SelectGroup
 
@@ -137,7 +148,7 @@ Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### SelectValue
 
@@ -147,7 +158,7 @@ Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### SelectTrigger
 
@@ -161,7 +172,7 @@ Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### SelectContent
 
@@ -171,7 +182,7 @@ Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### SelectLabel
 
@@ -181,7 +192,7 @@ Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### SelectItem
 
@@ -191,7 +202,7 @@ Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### SelectSeparator
 
@@ -201,7 +212,7 @@ Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### SelectScrollUpButton
 
@@ -211,7 +222,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollUpA
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### SelectScrollDownButton
 
@@ -503,6 +514,28 @@ The invalid state with an error message.
 
 <ApiPart index={1}>
 
+### Select
+
+The root that holds the selected value and the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `SelectItems` | - | Value and label pairs used to show the selected label. |
+| `value` | `Value \| Value[] \| null` | - | The selected value, for controlled use. |
+| `defaultValue` | `Value \| Value[] \| null` | - | The initial value when uncontrolled. |
+| `onValueChange` | `(value, details) => void` | - | Called when the selection changes. |
+| `multiple` | `boolean` | `false` | Allows several values to be selected. |
+| `open` | `boolean` | - | Whether the popup is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the popup starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the popup opens or closes. |
+| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
+| `disabled` | `boolean` | `false` | Disables the select. |
+| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### SelectGroup
 
 Groups related items.
@@ -511,7 +544,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Group>`.
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### SelectValue
 
@@ -521,7 +554,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Value>`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### SelectTrigger
 
@@ -537,7 +570,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### SelectContent
 
@@ -551,7 +584,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Popup>`, 
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### SelectLabel
 
@@ -561,7 +594,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.GroupLabe
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### SelectItem
 
@@ -575,7 +608,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Item>`.
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### SelectSeparator
 

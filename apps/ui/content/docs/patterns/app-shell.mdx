@@ -111,6 +111,24 @@ Places the sidebar on the right with `side`.
 
 The root layout that renders the sidebar or tab bar from `items` and wraps the page content.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `AppShellItem[]` | Required | The destinations, each with a `value`, `label` and `icon`. |
+| `value` | `string` | - | The selected item, for controlled use. |
+| `defaultValue` | `string` | First item | The initially selected item when uncontrolled. |
+| `onValueChange` | `(value: string) => void` | - | Called when an item is chosen. |
+| `header` | `React.ReactNode` | - | Content at the top of the sidebar. |
+| `footer` | `React.ReactNode` | - | Content at the bottom of the sidebar. |
+| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | The sidebar style. |
+| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"icon"` | How the sidebar collapses. |
+| `side` | `"left" \| "right"` | `"left"` | The side the sidebar sits on. |
+| `rail` | `boolean` | `true` | Shows a rail along the sidebar edge that toggles it. |
+| `open` | `boolean` | - | Whether the sidebar is expanded, for controlled use. |
+| `defaultOpen` | `boolean` | `true` | Whether the sidebar starts expanded when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the sidebar expands or collapses. |
+| `moreLabel` | `string` | `"More"` | Text of the More tab on mobile. |
+| `render` | `React.ReactElement` | `<AppShellLink />` | The element items with an `href` render as, such as your router's link. |
+
 Also accepts the props of `React.ComponentProps<typeof AppShellLayout>`.
 
 </ApiPart>

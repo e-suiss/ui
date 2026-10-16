@@ -602,6 +602,14 @@ A required question answered with `QuestionnaireInput`.
 
 Root that holds the state and the active question.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `QuestionnaireItemDefinition[]` | - | The questions in order, each with a `name` and optional `required` and `disabled`. |
+| `item` | `string` | - | The name of the current question, for controlled use. |
+| `defaultItem` | `string` | - | The question to start on when uncontrolled. |
+| `onItemChange` | `(item: string) => void` | - | Called when the current question changes. |
+| `onSubmit` | `(values: QuestionnaireValues) => void` | - | Called with the answers when the last question is submitted. |
+
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`, `UseQuestionnaireParameters`.
 
 </ApiPart>

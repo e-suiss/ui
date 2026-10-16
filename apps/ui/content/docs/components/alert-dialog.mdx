@@ -535,6 +535,20 @@ A destructive action button for an irreversible confirmation.
 
 <ApiPart index={1}>
 
+### AlertDialog
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the dialog is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the dialog starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the dialog opens or closes. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### AlertDialogOverlay
 
 Dimmed scrim behind the dialog.
@@ -543,7 +557,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Back
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### AlertDialogContent
 
@@ -558,7 +572,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Popu
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### AlertDialogHeader
 
@@ -568,7 +582,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### AlertDialogFooter
 
@@ -578,7 +592,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### AlertDialogMedia
 
@@ -588,7 +602,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### AlertDialogTitle
 
@@ -598,7 +612,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Titl
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### AlertDialogDescription
 
@@ -608,7 +622,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Desc
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### AlertDialogAction
 
@@ -618,7 +632,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Clos
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### AlertDialogCancel
 

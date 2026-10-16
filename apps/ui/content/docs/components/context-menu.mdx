@@ -587,6 +587,21 @@ A short list of plain items.
 
 <ApiPart index={1}>
 
+### ContextMenu
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the menu opens or closes. |
+| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### ContextMenuContent
 
 Floating menu card.
@@ -599,7 +614,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popu
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### ContextMenuSubTrigger
 
@@ -615,7 +630,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Subm
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### ContextMenuSubContent
 
@@ -625,7 +640,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popu
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### ContextMenuItem
 
@@ -640,7 +655,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Item
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### ContextMenuCheckboxItem
 
@@ -655,7 +670,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Chec
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### ContextMenuRadioItem
 
@@ -670,7 +685,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Radi
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### ContextMenuLabel
 
@@ -684,7 +699,7 @@ Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Grou
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### ContextMenuSeparator
 

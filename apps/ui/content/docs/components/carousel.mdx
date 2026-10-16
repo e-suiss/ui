@@ -173,6 +173,14 @@ Testimonials advancing every six seconds.
 
 The root region that owns the Embla instance, keyboard handling and autoplay state.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `opts` | `CarouselOptions` | - | Options passed to Embla Carousel. |
+| `plugins` | `CarouselPlugin` | - | Embla Carousel plugins. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | The scroll direction. |
+| `setApi` | `(api: CarouselApi) => void` | - | Receives the Embla Carousel API once it is ready. |
+| `autoplay` | `boolean \| number` | `false` | Advances the slides automatically; a number sets the delay in milliseconds. |
+
 Also accepts the props of `React.ComponentProps<"div">`, `CarouselProps`.
 
 </ApiPart>

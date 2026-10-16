@@ -787,6 +787,22 @@ Items aligned with `inset`.
 
 <ApiPart index={1}>
 
+### DropdownMenu
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the menu opens or closes. |
+| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
+| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### DropdownMenuContent
 
 Floating menu card.
@@ -799,7 +815,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`, `P
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### DropdownMenuSubTrigger
 
@@ -815,7 +831,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.SubmenuTrig
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### DropdownMenuSubContent
 
@@ -825,7 +841,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### DropdownMenuItem
 
@@ -840,7 +856,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Item>`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### DropdownMenuCheckboxItem
 
@@ -855,7 +871,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.CheckboxIte
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### DropdownMenuRadioItem
 
@@ -870,7 +886,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.RadioItem>`
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### DropdownMenuLabel
 
@@ -884,7 +900,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.GroupLabel>
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### DropdownMenuSeparator
 

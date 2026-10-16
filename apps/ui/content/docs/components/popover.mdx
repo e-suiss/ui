@@ -552,6 +552,21 @@ Several triggers sharing one popover through a handle, each passing its own payl
 
 <ApiPart index={1}>
 
+### Popover
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the popover is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the popover starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the popover opens or closes. |
+| `modal` | `boolean` | `false` | Blocks interaction with the rest of the screen while open. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### PopoverContent
 
 Animated panel rendered in a portal and positioned next to the trigger.
@@ -564,7 +579,7 @@ Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`,
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### PopoverHeader
 
@@ -574,7 +589,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### PopoverTitle
 
@@ -584,7 +599,7 @@ Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Title>`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### PopoverDescription
 

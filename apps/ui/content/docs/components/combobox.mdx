@@ -110,20 +110,31 @@ Multiple selection shown as removable chips, with Backspace removing the last ch
 
 <Anatomy>
 
-- [ComboboxInput](#comboboxinput)
-- [ComboboxContent](#comboboxcontent)
-  - [ComboboxEmpty](#comboboxempty)
-  - [ComboboxList](#comboboxlist)
-    - [ComboboxItem](#comboboxitem)
-    - [ComboboxGroup](#comboboxgroup)
-      - [ComboboxSeparator](#comboboxseparator)
-      - [ComboboxLabel](#comboboxlabel)
-      - [ComboboxCollection](#comboboxcollection)
-        - [ComboboxItem](#comboboxitem)
+- [Combobox](#combobox)
+  - [ComboboxInput](#comboboxinput)
+  - [ComboboxContent](#comboboxcontent)
+    - [ComboboxEmpty](#comboboxempty)
+    - [ComboboxList](#comboboxlist)
+      - [ComboboxItem](#comboboxitem)
+      - [ComboboxGroup](#comboboxgroup)
+        - [ComboboxSeparator](#comboboxseparator)
+        - [ComboboxLabel](#comboboxlabel)
+        - [ComboboxCollection](#comboboxcollection)
+          - [ComboboxItem](#comboboxitem)
 
 </Anatomy>
 
 <ApiPart index={1}>
+
+### Combobox
+
+The root that holds the items, the selected value and the open state.
+
+Also accepts the props of `ComboboxPrimitive.Root`.
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ComboboxValue
 
@@ -133,7 +144,7 @@ Also accepts the props of `ComboboxPrimitive.Value.Props`.
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### ComboboxTrigger
 
@@ -143,7 +154,7 @@ Also accepts the props of `ComboboxPrimitive.Trigger.Props`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### ComboboxInput
 
@@ -158,7 +169,7 @@ Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### ComboboxContent
 
@@ -168,7 +179,7 @@ Also accepts the props of `ComboboxPrimitive.Popup.Props`, `ComboboxPrimitive.Po
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### ComboboxList
 
@@ -178,7 +189,7 @@ Also accepts the props of `ComboboxPrimitive.List.Props`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### ComboboxItem
 
@@ -188,7 +199,7 @@ Also accepts the props of `ComboboxPrimitive.Item.Props`.
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### ComboboxGroup
 
@@ -198,7 +209,7 @@ Also accepts the props of `ComboboxPrimitive.Group.Props`.
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### ComboboxLabel
 
@@ -208,7 +219,7 @@ Also accepts the props of `ComboboxPrimitive.GroupLabel.Props`.
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### ComboboxCollection
 
@@ -218,7 +229,7 @@ Also accepts the props of `ComboboxPrimitive.Collection.Props`.
 
 </ApiPart>
 
-<ApiPart index={10}>
+<ApiPart index={11}>
 
 ### ComboboxEmpty
 
@@ -228,7 +239,7 @@ Also accepts the props of `ComboboxPrimitive.Empty.Props`.
 
 </ApiPart>
 
-<ApiPart index={11}>
+<ApiPart index={12}>
 
 ### ComboboxSeparator
 
@@ -238,7 +249,7 @@ Also accepts the props of `ComboboxPrimitive.Separator.Props`.
 
 </ApiPart>
 
-<ApiPart index={12}>
+<ApiPart index={13}>
 
 ### ComboboxChips
 
@@ -248,7 +259,7 @@ Also accepts the props of `React.ComponentPropsWithRef<typeof ComboboxPrimitive.
 
 </ApiPart>
 
-<ApiPart index={13}>
+<ApiPart index={14}>
 
 ### ComboboxChip
 
@@ -262,7 +273,7 @@ Also accepts the props of `ComboboxPrimitive.Chip.Props`.
 
 </ApiPart>
 
-<ApiPart index={14}>
+<ApiPart index={15}>
 
 ### ComboboxChipsInput
 
@@ -578,6 +589,33 @@ The `invalid` style with an error message.
 
 <ApiPart index={1}>
 
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `Item[] \| ComboboxItemGroup<Item>[]` | - | The items to filter, flat or grouped. |
+| `value` | `Value \| Value[] \| null` | - | The selected value, for controlled use. |
+| `defaultValue` | `Value \| Value[] \| null` | - | The initial value when uncontrolled. |
+| `onValueChange` | `(value, details) => void` | - | Called when the selection changes. |
+| `multiple` | `boolean` | `false` | Allows several values to be selected. |
+| `inputValue` | `string` | - | The typed text, for controlled use. |
+| `onInputValueChange` | `(inputValue: string, details) => void` | - | Called when the typed text changes. |
+| `filter` | `ComboboxFilter<Item> \| null` | - | Custom filter function; `null` turns filtering off. |
+| `limit` | `number` | - | The maximum number of items shown. |
+| `itemToStringLabel` | `(itemValue: Value) => string` | - | Returns the label shown for an item value. |
+| `openOnInputClick` | `boolean` | `true` | Opens the list when the input is pressed. |
+| `open` | `boolean` | - | Whether the list is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the list starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the list opens or closes. |
+| `disabled` | `boolean` | `false` | Disables the combobox. |
+| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### ComboboxTrigger
 
 Round button that opens the list.
@@ -590,7 +628,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Trigger
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### ComboboxInput
 
@@ -608,7 +646,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### ComboboxContent
 
@@ -622,7 +660,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Popup>`
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### ComboboxList
 
@@ -632,7 +670,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.List>`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### ComboboxItem
 
@@ -646,7 +684,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Item>`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### ComboboxGroup
 
@@ -656,7 +694,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Group>`
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### ComboboxLabel
 
@@ -666,7 +704,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.GroupLa
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### ComboboxEmpty
 
@@ -676,7 +714,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Empty>`
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### ComboboxSeparator
 
@@ -686,7 +724,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Separat
 
 </ApiPart>
 
-<ApiPart index={10}>
+<ApiPart index={11}>
 
 ### ComboboxChips
 
@@ -700,7 +738,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chips>`
 
 </ApiPart>
 
-<ApiPart index={11}>
+<ApiPart index={12}>
 
 ### ComboboxChip
 
@@ -714,7 +752,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chip>`.
 
 </ApiPart>
 
-<ApiPart index={12}>
+<ApiPart index={13}>
 
 ### ComboboxChipsInput
 

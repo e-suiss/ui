@@ -566,6 +566,22 @@ A text close button through `closeLabel`.
 
 <ApiPart index={1}>
 
+### Dialog
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the dialog is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the dialog starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the dialog opens or closes. |
+| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
+| `disablePointerDismissal` | `boolean` | `false` | Keeps the dialog open when the overlay is tapped. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### DialogOverlay
 
 Dimmed scrim that closes the dialog when tapped.
@@ -574,7 +590,7 @@ Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Backdrop>
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### DialogContent
 
@@ -590,7 +606,7 @@ Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Popup>`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### DialogHeader
 
@@ -600,7 +616,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### DialogFooter
 
@@ -614,7 +630,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### DialogTitle
 
@@ -624,7 +640,7 @@ Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Title>`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### DialogDescription
 

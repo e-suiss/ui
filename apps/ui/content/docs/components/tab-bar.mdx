@@ -125,6 +125,12 @@ Disables one item in the list.
 
 The floating `nav` container that holds the open state.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the More panel is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the More panel starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the More panel opens or closes. |
+
 Also accepts the props of `React.ComponentProps<"nav">`, `TabBarProps`.
 
 </ApiPart>

@@ -97,6 +97,12 @@ A menu whose close button shows the text `Done` instead of an icon.
 
 The root that manages the menu's open state.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu opens or closes. |
+
 Also accepts the props of the primitive part it wraps, plus `FullscreenMenuProps`.
 
 </ApiPart>
