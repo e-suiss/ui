@@ -106,7 +106,7 @@ public struct ChatThread: View {
         switch entry {
         case .day:
           Text("Today 9:30 AM")
-            .scaledFont(.xs2)
+            .scaledFont(.xs)
             .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity)
             .padding(.top, 4)

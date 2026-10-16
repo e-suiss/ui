@@ -18,7 +18,7 @@ function Input({
           "h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary px-3 py-1 text-base text-secondary-foreground",
           size === "md" && "h-9 text-sm",
           size === "sm" && "h-8 rounded-md px-2.5 text-sm",
-          state.focused && "border-ring",
+          state.focused && "border-ring ring-3 ring-ring/50",
           state.invalid &&
             "border-destructive bg-destructive/5 dark:bg-destructive/10",
           state.disabled && "opacity-50",

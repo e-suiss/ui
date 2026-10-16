@@ -17,7 +17,6 @@ public struct Badge<Label: View>: View {
     label
       .labelStyle(ButtonLabelStyle(spacing: 4, iconSize: 12))
       .font(TextStyle.xs.font(weight: .semibold))
-      .tracking(TextStyle.xs.letterSpacing)
       .lineLimit(1)
       .foregroundStyle(foreground)
       .padding(.horizontal, padded ? 8 : 0)

@@ -257,7 +257,7 @@ private fun ColumnScope.SupportPanel(
                         .size(6.dp)
                         .background(Palette.green500, CircleShape),
                 )
-                BasicText("Online", style = Typography.xs2.copy(color = if (colors.isDark) Palette.green400 else Palette.green600))
+                BasicText("Online", style = Typography.xs.copy(color = if (colors.isDark) Palette.green400 else Palette.green600))
             }
         }
         Button(onClick = onClose, variant = ButtonVariant.Secondary, size = ButtonSize.IconSm) {

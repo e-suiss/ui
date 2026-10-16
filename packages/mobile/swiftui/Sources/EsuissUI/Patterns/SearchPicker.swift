@@ -119,7 +119,6 @@ public struct SearchPicker: View {
           }
         }
         .font(TextStyle.base.font())
-        .tracking(TextStyle.base.letterSpacing)
         .lineLimit(1)
         .foregroundStyle(selected == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -207,7 +206,6 @@ struct SearchPickerPanel: View {
           .textInputAutocapitalization(.never)
           .autocorrectionDisabled()
           .font(TextStyle.xl.font())
-          .tracking(TextStyle.xl.letterSpacing)
           .foregroundStyle(EsuissColor.foreground)
           .tint(EsuissColor.primary)
       }
@@ -222,7 +220,6 @@ struct SearchPickerPanel: View {
           if groups.isEmpty {
             Text(emptyText)
               .font(TextStyle.base.font())
-              .tracking(TextStyle.base.letterSpacing)
               .foregroundStyle(EsuissColor.mutedForeground)
               .multilineTextAlignment(.center)
               .frame(maxWidth: .infinity)
@@ -233,7 +230,6 @@ struct SearchPickerPanel: View {
               if !group.name.isEmpty {
                 Text(verbatim: group.name)
                   .font(TextStyle.xs.font(weight: .semibold))
-                  .tracking(TextStyle.xs.letterSpacing)
                   .foregroundStyle(EsuissColor.mutedForeground)
                   .padding(.horizontal, 12)
                   .padding(.top, 4)
@@ -281,7 +277,6 @@ struct SearchPickerRowStyle: ButtonStyle {
     HStack(spacing: 12) {
       configuration.label
         .font(TextStyle.base.font())
-        .tracking(TextStyle.base.letterSpacing)
         .lineLimit(1)
         .frame(maxWidth: .infinity, alignment: .leading)
       if checked {

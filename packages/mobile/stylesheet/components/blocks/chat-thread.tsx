@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 24,
   },
-  stampText: { ...fontSize["2xs"], textAlign: "center" },
+  stampText: { ...fontSize.xs, textAlign: "center" },
 })
 
 function TypingDot({ index }: { index: number }) {

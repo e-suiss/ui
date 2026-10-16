@@ -68,7 +68,7 @@ fun RadialChartLabel(modifier: Modifier = Modifier) {
                         labelList = ChartLabelList(
                             ChartLabelPosition.InsideStart,
                             color = colors.primaryForeground,
-                            fontSize = Typography.xs2.fontSize,
+                            fontSize = Typography.xs.fontSize,
                             formatter = { index, _ -> chartConfig[chartData[index].device]?.label ?: "" },
                         ),
                     )

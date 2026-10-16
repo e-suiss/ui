@@ -178,6 +178,17 @@ React Native, SwiftUI and Compose use the same variables with the same light and
 
 Pressed elements fade to 80% opacity and disabled elements to 50%, on every platform.
 
+Text sizes and shadows are the Tailwind defaults on every platform: `xs` is 12 points on a 16-point line, up to `3xl` at 30 on 36, and `shadow-md` and `shadow-lg` keep both of their layers. SwiftUI and Compose name `2xl` and `3xl` as `xl2` and `xl3`.
+
+| Platform | Text size | Shadow |
+| --- | --- | --- |
+| Uniwind and NativeWind | `text-sm` | `shadow-md` |
+| StyleSheet | `fontSize.sm` | `shadow.md` |
+| SwiftUI | `.textStyle(.sm)` | `.shadow(.md)` |
+| Compose | `EsuissTheme.typography.sm` | `Modifier.shadow(EsuissTheme.shadows.md, shape)` |
+
+Focused fields in Uniwind and NativeWind draw the same `border-ring ring-3 ring-ring/50` ring as the web. SwiftUI and Compose keep the system focus.
+
 ## Radius
 
 `--radius` is `0.625rem` by default. Every rounded component scales from it.

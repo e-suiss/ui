@@ -337,7 +337,6 @@ public struct SwipeAction<Label: View>: View {
         label
           .labelStyle(SwipeActionLabelStyle())
           .font(TextStyle.xs.font(weight: .medium))
-          .tracking(TextStyle.xs.letterSpacing)
           .multilineTextAlignment(.center)
           .foregroundStyle(EsuissColor.primaryForeground)
           .environment(\.layoutDirection, context.direction)

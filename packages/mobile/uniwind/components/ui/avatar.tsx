@@ -20,9 +20,9 @@ const ROOT_SIZE: Record<AvatarSize, string> = {
 }
 
 const FALLBACK_TEXT: Record<AvatarSize, string> = {
-  sm: "text-3xs",
+  sm: "text-xs",
   default: "text-xs",
-  lg: "text-md",
+  lg: "text-base",
   xl: "text-2xl",
 }
 

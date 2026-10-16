@@ -289,7 +289,7 @@ fun ReorderListItem(
             .then(
                 if (lift > 0f) {
                     Modifier
-                        .shadow(shadow.copy(color = shadow.color.copy(alpha = shadow.color.alpha * lift)), shape)
+                        .shadow(shadow.alpha(lift), shape)
                         .background(colors.card.copy(alpha = lift), shape)
                 } else {
                     Modifier

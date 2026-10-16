@@ -125,14 +125,14 @@ public struct DateCalendar: View {
 
     var day: TextStyle {
       switch self {
-      case .sm: .xs3
+      case .sm: .xs
       case .default: .sm
       case .lg: .lg
       }
     }
 
     var weekday: TextStyle {
-      self == .lg ? .xs : .xs3
+      .xs
     }
   }
 
@@ -374,7 +374,6 @@ public struct DateCalendar: View {
     case .label:
       Text(verbatim: captionText(month))
         .font(size.caption.font(weight: .semibold))
-        .tracking(size.caption.letterSpacing)
         .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
     case .dropdown:
@@ -461,7 +460,6 @@ public struct DateCalendar: View {
     HStack(spacing: 4) {
       Text(verbatim: text)
         .font(size.caption.font(weight: .semibold))
-        .tracking(size.caption.letterSpacing)
         .foregroundStyle(EsuissColor.foreground)
       Ph.caretDown.regular
         .frame(width: 14, height: 14)
@@ -487,7 +485,6 @@ public struct DateCalendar: View {
       ForEach(Array(symbols.enumerated()), id: \.offset) { _, symbol in
         Text(verbatim: size == .sm ? symbol : symbol.uppercased(with: locale))
           .font(size.weekday.font(weight: .semibold))
-          .tracking(size.weekday.letterSpacing)
           .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
           .frame(maxWidth: .infinity)
@@ -501,7 +498,6 @@ public struct DateCalendar: View {
       if showWeekNumber, let first = week.first {
         Text(verbatim: String(calendar.component(.weekOfYear, from: first)))
           .font(TextStyle.xs.font())
-          .tracking(TextStyle.xs.letterSpacing)
           .foregroundStyle(EsuissColor.mutedForeground)
           .frame(width: size.cell, height: size.cell)
       }
@@ -674,7 +670,6 @@ public struct CalendarDayButton: View {
     let cell = size.cell
     return Text(verbatim: String(calendar.component(.day, from: date)))
       .font(style.font(weight: bold ? .semibold : .regular))
-      .tracking(style.letterSpacing)
       .monospacedDigit()
       .foregroundStyle(foreground)
       .frame(width: cell, height: cell)

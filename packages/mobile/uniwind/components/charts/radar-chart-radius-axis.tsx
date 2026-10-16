@@ -50,7 +50,7 @@ export function RadarChartRadiusAxis() {
               angle={90}
               domain={[0, 100]}
               tickCount={5}
-              tickClassName="text-2xs text-muted-foreground"
+              tickClassName="text-xs text-muted-foreground"
             />
             <PolarGrid />
             <PolarAngleAxis dataKey="skill" />

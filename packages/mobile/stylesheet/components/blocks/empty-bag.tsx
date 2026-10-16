@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
   },
   badgeText: {
-    ...fontSize["2xs"],
+    ...fontSize.xs,
     fontWeight: "600",
     fontVariant: ["tabular-nums"],
   },

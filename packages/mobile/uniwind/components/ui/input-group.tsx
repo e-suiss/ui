@@ -88,7 +88,7 @@ function InputGroup({
           "relative h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary",
           (block || multiline) && "h-auto rounded-xl",
           block && "flex-col items-stretch",
-          focused && "border-ring",
+          focused && "border-ring ring-3 ring-ring/50",
           isInvalid &&
             "border-destructive bg-destructive/5 dark:bg-destructive/10",
           isDisabled && "opacity-50",

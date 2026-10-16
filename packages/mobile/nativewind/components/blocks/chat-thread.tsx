@@ -453,10 +453,10 @@ function ChatThread({
                 return (
                   <MessageScrollerItem>
                     <View className="mt-1 mb-2.5 items-center gap-1 px-6">
-                      <Text className="text-center text-2xs text-muted-foreground">
+                      <Text className="text-center text-xs text-muted-foreground">
                         Today 9:30 AM
                       </Text>
-                      <Text className="text-center text-2xs text-muted-foreground">
+                      <Text className="text-center text-xs text-muted-foreground">
                         Double-tap a bubble to add a heart. Send a message and
                         you'll get a reply.
                       </Text>

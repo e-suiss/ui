@@ -349,7 +349,7 @@ private fun ConversationInitials(thread: Conversation, size: Dp) {
     ) {
         BasicText(
             thread.name.split(" ").mapNotNull { it.firstOrNull() }.joinToString("").take(2),
-            style = (if (size > 36.dp) Typography.base else Typography.xs2).copy(color = Palette.white, fontWeight = FontWeight.Medium),
+            style = (if (size > 36.dp) Typography.base else Typography.xs).copy(color = Palette.white, fontWeight = FontWeight.Medium),
         )
     }
 }
@@ -403,7 +403,7 @@ private fun ConversationDetail(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 4.dp, bottom = 10.dp),
-                    style = Typography.xs2.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
+                    style = Typography.xs.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 )
                 ConversationTyping -> ConversationTypingBubble()
                 else -> thread.lines.firstOrNull { it.id == id }?.let { ConversationBubble(it) }

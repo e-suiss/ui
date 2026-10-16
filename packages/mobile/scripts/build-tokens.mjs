@@ -21,6 +21,7 @@ const IDENTIFIER = /^[a-z]\w*$/i
 const NUMBERED_NAME = /^(\d+)(\w+)$/
 const COLOR_VALUE = /(?:oklch|rgb)\([^)]*\)|#[\da-f]{6}\b/i
 const WHITESPACE = /\s+/
+const SHADOW_LAYER = /,(?![^(]*\))/
 
 const ROOT = path.resolve(import.meta.dirname, "..")
 const REPO = path.join(ROOT, "../..")
@@ -59,16 +60,16 @@ function double(value) {
 }
 
 function parseShadow(value) {
-  const color = value.match(COLOR_VALUE)
-  if (!color || value.includes(",")) {
-    throw new Error(`Unsupported shadow value "${value}"`)
-  }
-  const [x = 0, y = 0, blur = 0] = value
-    .replace(color[0], "")
-    .trim()
-    .split(WHITESPACE)
-    .map((part) => Number.parseFloat(part))
-  return { x, y, blur, ...toRgba(color[0]) }
+  return value.split(SHADOW_LAYER).map((layer) => {
+    const color = layer.match(COLOR_VALUE)
+    if (!color) throw new Error(`Unsupported shadow value "${value}"`)
+    const [x = 0, y = 0, blur = 0, spread = 0] = layer
+      .replace(color[0], "")
+      .trim()
+      .split(WHITESPACE)
+      .map((part) => Number.parseFloat(part))
+    return { x, y, blur, spread, ...toRgba(color[0]) }
+  })
 }
 
 function buildCss(tokens) {
@@ -79,7 +80,7 @@ function buildCss(tokens) {
   const text = Object.entries(tokens.text)
     .map(
       ([name, size]) =>
-        `  --text-${name}: ${size.fontSize};\n  --text-${name}--line-height: ${size.lineHeight};\n  --text-${name}--letter-spacing: ${size.letterSpacing};`
+        `  --text-${name}: ${size.fontSize};\n  --text-${name}--line-height: ${size.lineHeight};`
     )
     .join("\n")
   const shadow = Object.entries(tokens.shadow)
@@ -126,7 +127,7 @@ function buildTheme(theme) {
   const fontSize = Object.entries(theme.text)
     .map(
       ([name, size]) =>
-        `  ${key(name)}: { fontSize: ${size.fontSize}, lineHeight: ${size.lineHeight}, letterSpacing: ${size.letterSpacing} },`
+        `  ${key(name)}: { fontSize: ${size.fontSize}, lineHeight: ${size.lineHeight} },`
     )
     .join("\n")
   const shadows = { ...DEFAULT_SHADOWS, ...theme.shadow }
@@ -925,17 +926,19 @@ function buildSwift(theme) {
   const text = Object.entries(theme.text)
     .map(
       ([name, size]) =>
-        `  public static let ${nativeName(name)} = TextStyle(size: ${size.fontSize}, lineHeight: ${size.lineHeight}, letterSpacing: ${size.letterSpacing})`
+        `  public static let ${nativeName(name)} = TextStyle(size: ${size.fontSize}, lineHeight: ${size.lineHeight})`
     )
     .join("\n")
   const shadow = Object.entries(theme.shadow)
     .map(([name, value]) => {
-      const parsed = parseShadow(value)
-      const offsets = [
-        parsed.x !== 0 ? `, x: ${parsed.x}` : "",
-        parsed.y !== 0 ? `, y: ${parsed.y}` : "",
-      ].join("")
-      return `  public static let ${nativeName(name)} = Shadow(color: ${swiftShadowColor(parsed)}, radius: ${parsed.blur / 2}${offsets})`
+      const layers = parseShadow(value).map((layer) => {
+        const offsets = [
+          layer.x !== 0 ? `, x: ${layer.x}` : "",
+          layer.y !== 0 ? `, y: ${layer.y}` : "",
+        ].join("")
+        return `.init(color: ${swiftShadowColor(layer)}, radius: ${layer.blur / 2}${offsets})`
+      })
+      return `  public static let ${nativeName(name)} = Shadow(${layers.join(", ")})`
     })
     .join("\n")
 
@@ -977,6 +980,10 @@ function kotlinShadowColor({ channels, alpha }) {
   return `${color}.copy(alpha = ${alpha}f)`
 }
 
+function dp(value) {
+  return value < 0 ? `(${value}).dp` : `${value}.dp`
+}
+
 function kotlinColors(colors, isDark) {
   return `${Object.entries(colors)
     .map(([name, value]) => `    ${camelCase(name)} = ${kotlinColor(value)},`)
@@ -994,7 +1001,7 @@ function buildKotlin(theme) {
   const text = Object.entries(theme.text)
     .map(
       ([name, size]) =>
-        `    val ${nativeName(name)} = textStyle(${double(size.fontSize)}, ${double(size.lineHeight)}, ${double(size.tracking)})`
+        `    val ${nativeName(name)} = textStyle(${double(size.fontSize)}, ${double(size.lineHeight)})`
     )
     .join("\n")
   const palette = Object.entries(theme.palette)
@@ -1004,8 +1011,11 @@ function buildKotlin(theme) {
     .join("\n")
   const shadow = Object.entries(theme.shadow)
     .map(([name, value]) => {
-      const parsed = parseShadow(value)
-      return `    val ${nativeName(name)} = Shadow(${parsed.x}.dp, ${parsed.y}.dp, ${parsed.blur}.dp, ${kotlinShadowColor(parsed)})`
+      const layers = parseShadow(value).map(
+        (layer) =>
+          `ShadowLayer(${dp(layer.x)}, ${dp(layer.y)}, ${dp(layer.blur)}, ${dp(layer.spread)}, ${kotlinShadowColor(layer)})`
+      )
+      return `    val ${nativeName(name)} = Shadow(${layers.join(", ")})`
     })
     .join("\n")
 

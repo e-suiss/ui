@@ -148,7 +148,6 @@ public struct StepperInput: View {
       .keyboardType(.decimalPad)
       .multilineTextAlignment(.trailing)
       .font(TextStyle.base.font())
-      .tracking(TextStyle.base.letterSpacing)
       .monospacedDigit()
       .foregroundStyle(EsuissColor.foreground)
       .tint(EsuissColor.primary)

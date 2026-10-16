@@ -66,7 +66,6 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
         HStack(spacing: 6) {
           (valueText ?? Text(placeholder))
             .font(TextStyle.base.font())
-            .tracking(TextStyle.base.letterSpacing)
             .lineLimit(1)
             .foregroundStyle(valueText == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -138,7 +137,6 @@ struct SelectPanel<Content: View>: View {
       ScrollView { stack }
     }
     .font(TextStyle.base.font())
-    .tracking(TextStyle.base.letterSpacing)
     .foregroundStyle(EsuissColor.foreground)
     .popupSurface(radius: Radius.xl)
     .accessibilityElement(children: .contain)
@@ -217,7 +215,6 @@ public struct SelectLabel: View {
     if !select.registering {
       Text(title)
         .font(TextStyle.xs.font(weight: .semibold))
-        .tracking(TextStyle.xs.letterSpacing)
         .foregroundStyle(EsuissColor.mutedForeground)
         .padding(.horizontal, 12)
         .padding(.vertical, 10)

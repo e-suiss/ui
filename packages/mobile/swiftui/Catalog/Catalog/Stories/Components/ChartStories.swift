@@ -245,7 +245,7 @@ private struct ChartFormatterDemo: View {
                     .monospacedDigit()
                     .foregroundStyle(EsuissColor.foreground)
                   Text("kcal")
-                    .font(TextStyle.xs2.font())
+                    .font(TextStyle.xs.font())
                     .foregroundStyle(EsuissColor.mutedForeground)
                 }
               }
@@ -299,7 +299,7 @@ private struct ChartCustomDemo: View {
             ) { payload in
               VStack(alignment: .leading, spacing: 0) {
                 Text("TOTAL")
-                  .font(TextStyle.xs2.font(weight: .semibold))
+                  .font(TextStyle.xs.font(weight: .semibold))
                   .tracking(0.5)
                   .foregroundStyle(EsuissColor.mutedForeground)
                 HStack(alignment: .firstTextBaseline, spacing: 4) {

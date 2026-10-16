@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
     paddingVertical: 6,
   },
-  label: { ...fontSize["3xs"], fontWeight: "500" },
+  label: { ...fontSize.xs, fontWeight: "500" },
   iconWrap: { position: "relative" },
   dot: {
     position: "absolute",
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingHorizontal: 4,
   },
-  badgeText: { ...fontSize["3xs"], fontWeight: "600" },
+  badgeText: { ...fontSize.xs, fontWeight: "600" },
 })
 
 function withAlpha(hex: string, alpha: number) {

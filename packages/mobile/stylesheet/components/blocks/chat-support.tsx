@@ -443,9 +443,7 @@ function ChatSupport({
                         { backgroundColor: palette.green500 },
                       ]}
                     />
-                    <Text
-                      style={[fontSize["2xs"], { color: palette.green500 }]}
-                    >
+                    <Text style={[fontSize.xs, { color: palette.green500 }]}>
                       Online
                     </Text>
                   </View>

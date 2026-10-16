@@ -212,7 +212,7 @@ fun ChatThread(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 4.dp, bottom = 10.dp),
-                        style = Typography.xs2.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
+                        style = Typography.xs.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                     )
                     ThreadTyping -> ThreadTypingBubble()
                     is ThreadText -> ThreadBubble(row.line) { toggleLike(row.line.id) }

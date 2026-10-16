@@ -534,7 +534,7 @@ private struct ChatHeader: View {
     HStack(spacing: 10) {
       Avatar(url: nil, initials: "JL")
       VStack(alignment: .leading, spacing: 0) {
-        Text(verbatim: title).font(TextStyle.md.font(weight: .semibold)).foregroundStyle(EsuissColor.foreground)
+        Text(verbatim: title).font(TextStyle.base.font(weight: .semibold)).foregroundStyle(EsuissColor.foreground)
         Text(verbatim: "Online").font(TextStyle.xs.font()).foregroundStyle(EsuissColor.mutedForeground)
       }
       Spacer(minLength: 0)

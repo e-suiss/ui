@@ -68,21 +68,18 @@ public enum Radius {
 }
 
 extension TextStyle {
-  public static let xs3 = TextStyle(size: 11, lineHeight: 13, letterSpacing: 0.066)
-  public static let xs2 = TextStyle(size: 12, lineHeight: 16, letterSpacing: 0)
-  public static let xs = TextStyle(size: 13, lineHeight: 18, letterSpacing: -0.078)
-  public static let sm = TextStyle(size: 15, lineHeight: 20, letterSpacing: -0.24)
-  public static let md = TextStyle(size: 16, lineHeight: 21, letterSpacing: -0.32)
-  public static let base = TextStyle(size: 17, lineHeight: 22, letterSpacing: -0.442)
-  public static let lg = TextStyle(size: 20, lineHeight: 25, letterSpacing: -0.46)
-  public static let xl = TextStyle(size: 22, lineHeight: 28, letterSpacing: -0.264)
-  public static let xl2 = TextStyle(size: 28, lineHeight: 34, letterSpacing: 0.392)
-  public static let xl3 = TextStyle(size: 34, lineHeight: 41, letterSpacing: 0.408)
+  public static let xs = TextStyle(size: 12, lineHeight: 16)
+  public static let sm = TextStyle(size: 14, lineHeight: 20)
+  public static let base = TextStyle(size: 16, lineHeight: 24)
+  public static let lg = TextStyle(size: 18, lineHeight: 28)
+  public static let xl = TextStyle(size: 20, lineHeight: 28)
+  public static let xl2 = TextStyle(size: 24, lineHeight: 32)
+  public static let xl3 = TextStyle(size: 30, lineHeight: 36)
 
-  public static let allCases: [TextStyle] = [.xs3, .xs2, .xs, .sm, .md, .base, .lg, .xl, .xl2, .xl3]
+  public static let allCases: [TextStyle] = [.xs, .sm, .base, .lg, .xl, .xl2, .xl3]
 }
 
 extension Shadow {
-  public static let md = Shadow(color: .black.opacity(0.08), radius: 6, x: 2, y: 4)
-  public static let lg = Shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+  public static let md = Shadow(.init(color: .black.opacity(0.1), radius: 3, y: 4), .init(color: .black.opacity(0.1), radius: 2, y: 2))
+  public static let lg = Shadow(.init(color: .black.opacity(0.1), radius: 7.5, y: 10), .init(color: .black.opacity(0.1), radius: 3, y: 4))
 }

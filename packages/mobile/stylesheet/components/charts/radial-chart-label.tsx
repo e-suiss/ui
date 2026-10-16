@@ -74,7 +74,7 @@ export function RadialChartLabel() {
                 dataKey="device"
                 position="insideStart"
                 style={{
-                  ...fontSize["2xs"],
+                  ...fontSize.xs,
                   fontWeight: "600",
                   color: colors.primaryForeground,
                 }}

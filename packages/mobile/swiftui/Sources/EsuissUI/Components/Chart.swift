@@ -1152,7 +1152,7 @@ public struct RadialBarChart<Tooltip: View>: View {
             ForEach(bars.indices, id: \.self) { index in
               ForEach(layout.glyphs(String(localized: String.LocalizationValue(config.label(bars[index].key))), ring: index), id: \.offset) { glyph in
                 Text(verbatim: glyph.text)
-                  .font(TextStyle.xs2.font(weight: .semibold))
+                  .font(TextStyle.xs.font(weight: .semibold))
                   .foregroundStyle(EsuissColor.primaryForeground)
                   .fixedSize()
                   .rotationEffect(glyph.rotation)
@@ -1273,7 +1273,7 @@ struct RadialBarLayout {
 
   func glyphs(_ label: String, ring index: Int) -> [Glyph] {
     let middle = max(ring(index).middle, 1)
-    let font = UIFont.systemFont(ofSize: TextStyle.xs2.size, weight: .semibold)
+    let font = UIFont.systemFont(ofSize: TextStyle.xs.size, weight: .semibold)
     let direction: Double = end.degrees >= start.degrees ? 1 : -1
     var distance = 5 + thickness / 2
     return Array(label).enumerated().map { offset, character in
@@ -1572,7 +1572,7 @@ public struct RadarChart<Tooltip: View>: View {
             ChartPointLayout(placements: layout.radiusTicks(radiusAxis)) {
               ForEach(layout.radiusValues(radiusAxis), id: \.self) { value in
                 Text(verbatim: value.formatted())
-                  .font(TextStyle.xs2.font())
+                  .font(TextStyle.xs.font())
                   .foregroundStyle(EsuissColor.mutedForeground)
                   .fixedSize()
               }

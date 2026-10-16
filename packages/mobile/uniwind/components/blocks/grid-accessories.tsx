@@ -218,7 +218,7 @@ function GridAccessories({
                 )}
                 className="absolute -end-2 -bottom-1 h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1"
               >
-                <Text className="text-2xs font-semibold text-background tabular-nums">
+                <Text className="text-xs font-semibold text-background tabular-nums">
                   {bag.length}
                 </Text>
               </AnimatedView>

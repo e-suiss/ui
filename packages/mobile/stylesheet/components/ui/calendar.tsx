@@ -52,14 +52,14 @@ const CAPTION_TEXT: Record<CalendarSize, TextStyle> = {
 }
 
 const DAY_TEXT: Record<CalendarSize, TextStyle> = {
-  sm: fontSize["3xs"],
+  sm: fontSize.xs,
   default: fontSize.sm,
   lg: fontSize.lg,
 }
 
 const WEEKDAY_TEXT: Record<CalendarSize, TextStyle> = {
-  sm: fontSize["3xs"],
-  default: { ...fontSize["3xs"], textTransform: "uppercase" },
+  sm: fontSize.xs,
+  default: { ...fontSize.xs, textTransform: "uppercase" },
   lg: { ...fontSize.xs, textTransform: "uppercase" },
 }
 

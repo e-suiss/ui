@@ -242,7 +242,7 @@ private struct InboxMailHeading: View {
           .accessibilityAddTraits(.isHeader)
       }
       Text(unread > 0 ? "\(unread) unread" : "All read")
-        .scaledFont(.xs2)
+        .scaledFont(.xs)
         .foregroundStyle(EsuissColor.mutedForeground)
     }
     .foregroundStyle(EsuissColor.foreground)

@@ -50,14 +50,14 @@ const CAPTION_TEXT: Record<CalendarSize, string> = {
 }
 
 const DAY_TEXT: Record<CalendarSize, string> = {
-  sm: "text-3xs",
+  sm: "text-xs",
   default: "text-sm",
   lg: "text-lg",
 }
 
 const WEEKDAY_TEXT: Record<CalendarSize, string> = {
-  sm: "text-3xs",
-  default: "text-3xs uppercase",
+  sm: "text-xs",
+  default: "text-xs uppercase",
   lg: "text-xs uppercase",
 }
 

@@ -228,7 +228,7 @@ private fun ChartFormatter() {
                                     Modifier.alignByBaseline(),
                                     style = Typography.xs.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
                                 )
-                                Text("kcal", Modifier.alignByBaseline(), style = Typography.xs2.copy(color = colors.mutedForeground))
+                                Text("kcal", Modifier.alignByBaseline(), style = Typography.xs.copy(color = colors.mutedForeground))
                             }
                         },
                     )
@@ -277,7 +277,7 @@ private fun ChartCustom() {
                     ) {
                         Text(
                             "TOTAL",
-                            style = Typography.xs2.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
+                            style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
                         )
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(

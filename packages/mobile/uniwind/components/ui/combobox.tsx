@@ -121,7 +121,7 @@ function ComboboxInput({
         "h-11 w-full min-w-0 flex-row items-center gap-1 rounded-lg border border-transparent bg-secondary pr-2",
         isInvalid &&
           "border-destructive bg-destructive/5 dark:bg-destructive/10",
-        focused && !inPopup && "border-ring",
+        focused && !inPopup && "border-ring ring-3 ring-ring/50",
         inPopup && "m-1.5 mb-0 h-8 w-auto border-border/30",
         isDisabled && "opacity-50",
         className

@@ -58,7 +58,7 @@ enum class ButtonSize(
 
     val textStyle: TextStyle
         get() = when (this) {
-            Xs, IconXs -> Typography.xs2
+            Xs, IconXs -> Typography.xs
             Lg, Xl -> Typography.base
             else -> Typography.sm
         }

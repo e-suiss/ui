@@ -183,7 +183,7 @@ private struct PriceStorageCard: View {
     .overlay(alignment: .topLeading) {
       if plan.popular {
         Text("Most popular")
-          .scaledFont(.xs3, weight: .semibold)
+          .scaledFont(.xs, weight: .semibold)
           .foregroundStyle(EsuissColor.primaryForeground)
           .padding(.horizontal, 9)
           .padding(.vertical, 2)

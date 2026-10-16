@@ -42,9 +42,9 @@ enum class AvatarSize(
 
     internal val textStyle: TextStyle
         get() = when (this) {
-            Sm -> Typography.xs3
+            Sm -> Typography.xs
             Default -> Typography.xs
-            Lg -> Typography.md
+            Lg -> Typography.base
             Xl -> Typography.xl2
         }
 }
@@ -151,7 +151,7 @@ fun AvatarBadge(
     ) {
         if (size != AvatarSize.Sm) {
             CompositionLocalProvider(
-                LocalContentStyle provides Typography.xs3.copy(color = colors.primaryForeground),
+                LocalContentStyle provides Typography.xs.copy(color = colors.primaryForeground),
                 LocalContentColor provides colors.primaryForeground,
                 LocalIconSize provides size.badgeIconSize,
             ) {

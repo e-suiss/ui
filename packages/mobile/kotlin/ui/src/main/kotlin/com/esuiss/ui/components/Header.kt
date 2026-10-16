@@ -176,7 +176,7 @@ fun HeaderTitle(
         if (subtitle != null) {
             BasicText(
                 subtitle,
-                style = Typography.xs2.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
+                style = Typography.xs.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

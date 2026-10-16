@@ -102,7 +102,6 @@ public struct Combobox<Item: Hashable & Sendable>: View {
           }
         }
         .font(TextStyle.base.font())
-        .tracking(TextStyle.base.letterSpacing)
         .lineLimit(1)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(.leading, 12)
@@ -151,7 +150,6 @@ public struct Combobox<Item: Hashable & Sendable>: View {
       if values.isEmpty {
         Text(placeholder)
           .font(TextStyle.base.font())
-          .tracking(TextStyle.base.letterSpacing)
           .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
       }
@@ -226,7 +224,6 @@ private struct ComboboxChip: View {
     HStack(spacing: 2) {
       Text(verbatim: text)
         .font(TextStyle.xs.font())
-        .tracking(TextStyle.xs.letterSpacing)
         .lineLimit(1)
       Button(action: remove) {
         Ph.x.regular
@@ -323,7 +320,6 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
       if filtered.isEmpty {
         Text(emptyText)
           .font(TextStyle.sm.font())
-          .tracking(TextStyle.sm.letterSpacing)
           .foregroundStyle(EsuissColor.mutedForeground)
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity)
@@ -356,7 +352,6 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
       }
     }
     .font(TextStyle.base.font())
-    .tracking(TextStyle.base.letterSpacing)
     .foregroundStyle(EsuissColor.foreground)
     .popupSurface(radius: Radius.xl)
     .accessibilityElement(children: .contain)

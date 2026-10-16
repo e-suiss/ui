@@ -13,7 +13,7 @@ function Textarea({
       className={(state) =>
         cn(
           "min-h-16 w-full flex-row rounded-xl border border-transparent bg-secondary px-3 py-3 text-base text-secondary-foreground",
-          state.focused && "border-ring",
+          state.focused && "border-ring ring-3 ring-ring/50",
           state.invalid &&
             "border-destructive bg-destructive/5 dark:bg-destructive/10",
           state.disabled && "opacity-50",

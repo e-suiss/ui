@@ -542,9 +542,7 @@ function InboxMail({
             {wide ? (
               <View style={styles.fill}>
                 <Text style={styles.mailboxTitle}>{mailbox}</Text>
-                <Text
-                  style={[fontSize["2xs"], { color: colors.mutedForeground }]}
-                >
+                <Text style={[fontSize.xs, { color: colors.mutedForeground }]}>
                   {unread ? `${unread} unread` : "All read"}
                 </Text>
               </View>

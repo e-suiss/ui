@@ -184,7 +184,7 @@ public struct ChatConversations: View {
               .scaledFont(.sm, weight: .semibold)
               .foregroundStyle(EsuissColor.foreground)
             Text(typing ? "typing…" : "Message")
-              .scaledFont(.xs2)
+              .scaledFont(.xs)
               .foregroundStyle(EsuissColor.mutedForeground)
               .contentTransition(.opacity)
           }
@@ -219,7 +219,7 @@ public struct ChatConversations: View {
         switch entry {
         case .day:
           Text("Today 9:30 AM")
-            .scaledFont(.xs2)
+            .scaledFont(.xs)
             .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity)
             .padding(.top, 4)

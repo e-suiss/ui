@@ -114,7 +114,7 @@ private struct TooltipFormatterCase: View {
                   .font(TextStyle.xs.font(weight: .semibold))
                   .monospacedDigit()
                 Text("kcal")
-                  .font(TextStyle.xs2.font())
+                  .font(TextStyle.xs.font())
                   .foregroundStyle(EsuissColor.mutedForeground)
               }
             }
@@ -202,7 +202,7 @@ private struct TooltipCustomCase: View {
           ) { payload in
             VStack(alignment: .leading, spacing: 0) {
               Text("TOTAL")
-                .font(TextStyle.xs2.font(weight: .semibold))
+                .font(TextStyle.xs.font(weight: .semibold))
                 .foregroundStyle(EsuissColor.mutedForeground)
               HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text(payload.total, format: .number)

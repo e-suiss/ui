@@ -136,16 +136,13 @@ const radius = {
 }
 
 const fontSize = {
-  "3xs": { fontSize: 11, lineHeight: 13, letterSpacing: 0.066 },
-  "2xs": { fontSize: 12, lineHeight: 16, letterSpacing: 0 },
-  xs: { fontSize: 13, lineHeight: 18, letterSpacing: -0.078 },
-  sm: { fontSize: 15, lineHeight: 20, letterSpacing: -0.24 },
-  md: { fontSize: 16, lineHeight: 21, letterSpacing: -0.32 },
-  base: { fontSize: 17, lineHeight: 22, letterSpacing: -0.442 },
-  lg: { fontSize: 20, lineHeight: 25, letterSpacing: -0.46 },
-  xl: { fontSize: 22, lineHeight: 28, letterSpacing: -0.264 },
-  "2xl": { fontSize: 28, lineHeight: 34, letterSpacing: 0.392 },
-  "3xl": { fontSize: 34, lineHeight: 41, letterSpacing: 0.408 },
+  xs: { fontSize: 12, lineHeight: 16 },
+  sm: { fontSize: 14, lineHeight: 20 },
+  base: { fontSize: 16, lineHeight: 24 },
+  lg: { fontSize: 18, lineHeight: 28 },
+  xl: { fontSize: 20, lineHeight: 28 },
+  "2xl": { fontSize: 24, lineHeight: 32 },
+  "3xl": { fontSize: 30, lineHeight: 36 },
 }
 
 const shadow = {
@@ -154,8 +151,14 @@ const shadow = {
     boxShadow:
       "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
   },
-  md: { boxShadow: "2px 4px 12px rgba(0, 0, 0, 0.08)" },
-  lg: { boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)" },
+  md: {
+    boxShadow:
+      "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+  },
+  lg: {
+    boxShadow:
+      "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
+  },
   xl: {
     boxShadow:
       "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",

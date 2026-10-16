@@ -144,21 +144,18 @@ object Radius {
 }
 
 object Typography {
-    val xs3 = textStyle(11.0, 13.0, 0.006)
-    val xs2 = textStyle(12.0, 16.0, 0.0)
-    val xs = textStyle(13.0, 18.0, -0.006)
-    val sm = textStyle(15.0, 20.0, -0.016)
-    val md = textStyle(16.0, 21.0, -0.02)
-    val base = textStyle(17.0, 22.0, -0.026)
-    val lg = textStyle(20.0, 25.0, -0.023)
-    val xl = textStyle(22.0, 28.0, -0.012)
-    val xl2 = textStyle(28.0, 34.0, 0.014)
-    val xl3 = textStyle(34.0, 41.0, 0.012)
+    val xs = textStyle(12.0, 16.0)
+    val sm = textStyle(14.0, 20.0)
+    val base = textStyle(16.0, 24.0)
+    val lg = textStyle(18.0, 28.0)
+    val xl = textStyle(20.0, 28.0)
+    val xl2 = textStyle(24.0, 32.0)
+    val xl3 = textStyle(30.0, 36.0)
 
-    val all = listOf(xs3, xs2, xs, sm, md, base, lg, xl, xl2, xl3)
+    val all = listOf(xs, sm, base, lg, xl, xl2, xl3)
 }
 
 object Shadows {
-    val md = Shadow(2.dp, 4.dp, 12.dp, Color.Black.copy(alpha = 0.08f))
-    val lg = Shadow(0.dp, 4.dp, 24.dp, Color.Black.copy(alpha = 0.12f))
+    val md = Shadow(ShadowLayer(0.dp, 4.dp, 6.dp, (-1).dp, Color.Black.copy(alpha = 0.1f)), ShadowLayer(0.dp, 2.dp, 4.dp, (-2).dp, Color.Black.copy(alpha = 0.1f)))
+    val lg = Shadow(ShadowLayer(0.dp, 10.dp, 15.dp, (-3).dp, Color.Black.copy(alpha = 0.1f)), ShadowLayer(0.dp, 4.dp, 6.dp, (-4).dp, Color.Black.copy(alpha = 0.1f)))
 }

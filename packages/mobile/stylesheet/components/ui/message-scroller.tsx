@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
     paddingHorizontal: 6,
   },
-  badgeText: { ...fontSize["2xs"], fontWeight: "600" },
+  badgeText: { ...fontSize.xs, fontWeight: "600" },
 })
 
 const VIEW_POSITION: Record<MessageScrollerScrollAlign, number> = {

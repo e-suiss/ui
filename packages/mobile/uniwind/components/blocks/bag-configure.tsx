@@ -252,7 +252,7 @@ function BagConfigure({
                 </Text>
                 <Text
                   numberOfLines={1}
-                  className="text-2xs text-muted-foreground"
+                  className="text-xs text-muted-foreground"
                 >
                   {item.extra ? `+${money(item.extra, 0)}` : "Included"}
                 </Text>

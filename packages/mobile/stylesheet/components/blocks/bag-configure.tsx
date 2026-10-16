@@ -333,7 +333,7 @@ function BagConfigure({
                 </Text>
                 <Text
                   numberOfLines={1}
-                  style={[fontSize["2xs"], { color: colors.mutedForeground }]}
+                  style={[fontSize.xs, { color: colors.mutedForeground }]}
                 >
                   {item.extra ? `+${money(item.extra, 0)}` : "Included"}
                 </Text>

@@ -211,7 +211,7 @@ public struct OtpAutofillSuggestion: View {
         .buttonStyle(PressReader { pressed in
           VStack(spacing: 0) {
             Text(source)
-              .scaledFont(.xs2)
+              .scaledFont(.xs)
               .foregroundStyle(EsuissColor.mutedForeground)
             Text(verbatim: code)
               .scaledFont(.base, weight: .semibold)

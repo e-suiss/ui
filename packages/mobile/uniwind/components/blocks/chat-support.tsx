@@ -344,7 +344,7 @@ function ChatSupport({
                   </Text>
                   <View className="flex-row items-center gap-1">
                     <View className="size-1.5 rounded-full bg-green-500" />
-                    <Text className="text-2xs text-green-500">Online</Text>
+                    <Text className="text-xs text-green-500">Online</Text>
                   </View>
                 </View>
                 <Button

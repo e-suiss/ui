@@ -449,7 +449,7 @@ function InboxMail({
             {wide ? (
               <View className="flex-1">
                 <Text className="text-lg font-semibold">{mailbox}</Text>
-                <Text className="text-2xs text-muted-foreground">
+                <Text className="text-xs text-muted-foreground">
                   {unread ? `${unread} unread` : "All read"}
                 </Text>
               </View>

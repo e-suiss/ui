@@ -61,7 +61,7 @@ function EmptyBag() {
                   )}
                   className="absolute -end-1.5 -bottom-0.5 size-5 items-center justify-center rounded-full bg-foreground"
                 >
-                  <Text className="text-2xs font-semibold text-background tabular-nums">
+                  <Text className="text-xs font-semibold text-background tabular-nums">
                     {count}
                   </Text>
                 </AnimatedView>

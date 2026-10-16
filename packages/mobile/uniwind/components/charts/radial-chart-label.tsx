@@ -71,7 +71,7 @@ export function RadialChartLabel() {
               <LabelList
                 dataKey="device"
                 position="insideStart"
-                className="text-2xs font-semibold text-primary-foreground"
+                className="text-xs font-semibold text-primary-foreground"
                 formatter={(value) => chartConfig[value as Device]?.label}
               />
             </RadialBar>

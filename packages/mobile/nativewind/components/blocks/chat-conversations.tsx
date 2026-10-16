@@ -383,7 +383,7 @@ function ChatConversations({
                 </Text>
                 <Text
                   accessibilityLiveRegion="polite"
-                  className="text-2xs text-muted-foreground"
+                  className="text-xs text-muted-foreground"
                 >
                   {typing === thread.name ? "typing…" : "Message"}
                 </Text>
@@ -418,7 +418,7 @@ function ChatConversations({
                 if (item.kind === "stamp") {
                   return (
                     <MessageScrollerItem>
-                      <Text className="mt-1 mb-2.5 text-center text-2xs text-muted-foreground">
+                      <Text className="mt-1 mb-2.5 text-center text-xs text-muted-foreground">
                         Today 9:30 AM
                       </Text>
                     </MessageScrollerItem>

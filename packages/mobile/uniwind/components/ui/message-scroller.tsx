@@ -493,7 +493,7 @@ function MessageScrollerButton({
         )}
         {count > 0 ? (
           <View className="absolute -end-1.5 -top-1.5 h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5">
-            <Text className="text-2xs font-semibold text-primary-foreground">
+            <Text className="text-xs font-semibold text-primary-foreground">
               {count > 99 ? "99+" : count}
             </Text>
           </View>

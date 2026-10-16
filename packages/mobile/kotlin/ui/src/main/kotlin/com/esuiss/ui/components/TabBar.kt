@@ -200,7 +200,7 @@ fun RowScope.TabBarItem(
         }
         BasicText(
             label,
-            style = Typography.xs3.copy(color = foreground, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center),
+            style = Typography.xs.copy(color = foreground, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -232,7 +232,7 @@ private fun TabBarBadge(text: String, modifier: Modifier) {
     ) {
         BasicText(
             text,
-            style = Typography.xs3.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
+            style = Typography.xs.copy(color = colors.primaryForeground, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center),
             maxLines = 1,
         )
     }

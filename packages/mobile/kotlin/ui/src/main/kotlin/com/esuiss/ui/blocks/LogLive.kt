@@ -306,7 +306,7 @@ private fun LiveRow(entry: LiveEntry) {
                 ) {
                     BasicText(
                         event.actor.split(" ").mapNotNull { it.firstOrNull() }.joinToString(""),
-                        style = Typography.xs3.copy(color = Palette.white, fontWeight = FontWeight.Medium),
+                        style = Typography.xs.copy(color = Palette.white, fontWeight = FontWeight.Medium),
                     )
                 }
             } else {

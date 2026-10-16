@@ -165,7 +165,7 @@ private struct CarouselPickCard: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {
       Text(verbatim: pick.eyebrow.uppercased())
-        .textStyle(.xs2, weight: .semibold)
+        .textStyle(.xs, weight: .semibold)
       Text(verbatim: pick.title)
         .textStyle(.xl2, weight: .bold)
     }
