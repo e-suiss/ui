@@ -165,7 +165,7 @@ export function CodeOptionsMenu() {
         <p className="text-[13px] leading-[1.45] tracking-[-0.01em] text-muted-foreground">
           {strings.codeOptionsHint}{" "}
           <Anchor
-            href="/docs/installation#choose-the-primitive-base"
+            href="/docs/installation?platform=web#choose-the-primitive-base"
             className="text-foreground underline-offset-4 hover:underline"
           >
             {strings.codeOptionsLink}
