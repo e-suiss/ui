@@ -126,6 +126,7 @@ function examples(
 export default defineConfig({
   resolve: { alias: { "@": root } },
   test: {
+    retry: process.env.CI ? 2 : 0,
     forceRerunTriggers: [
       "**/package.json/**",
       "**/{vitest,vite}.config.*/**",

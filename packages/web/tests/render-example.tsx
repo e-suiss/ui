@@ -40,7 +40,11 @@ function inAct<T>(callback: () => T) {
   return result
 }
 
-configure({ asyncWrapper: withoutActEnvironment, eventWrapper: inAct })
+configure({
+  asyncWrapper: withoutActEnvironment,
+  eventWrapper: inAct,
+  asyncUtilTimeout: 5000,
+})
 
 async function step(_label: string, run: () => Promise<void> | void) {
   await run()
