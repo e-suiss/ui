@@ -27,6 +27,12 @@ const FIRST_TICK = 180
 const MIN_TICK = 35
 const ACCELERATION = 0.86
 
+function decimals(number: number) {
+  const [mantissa, exponent = "0"] = String(number).toLowerCase().split("e")
+  const fraction = mantissa.split(".")[1]?.length ?? 0
+  return Math.max(0, fraction - Number(exponent))
+}
+
 function Stepper({
   value: valueProp,
   defaultValue = 0,
@@ -35,6 +41,7 @@ function Stepper({
   max = Number.POSITIVE_INFINITY,
   step = 1,
   disabled = false,
+  readOnly = false,
   className,
   ...props
 }: Omit<
@@ -63,14 +70,15 @@ function Stepper({
   const canChange = React.useCallback(
     (direction: 1 | -1) =>
       !disabled &&
+      !readOnly &&
       (direction === 1 ? valueRef.current < max : valueRef.current > min),
-    [disabled, min, max]
+    [disabled, readOnly, min, max]
   )
 
   const change = React.useCallback(
     (direction: 1 | -1) => {
       if (!canChange(direction)) return false
-      const precision = Math.max(0, -Math.floor(Math.log10(step)))
+      const precision = Math.max(decimals(step), decimals(valueRef.current))
       const next = Number(
         (valueRef.current + direction * step).toFixed(precision)
       )
@@ -92,6 +100,7 @@ function Stepper({
         max={max}
         step={step}
         disabled={disabled}
+        readOnly={readOnly}
         className={cn("flex items-center gap-3", className)}
         {...props}
       />

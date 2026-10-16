@@ -221,6 +221,30 @@ describe("Stepper", () => {
     await expect.poll(current).toMatch(POINT_THREE)
   })
 
+  it("keeps the precision of a value finer than the step", async () => {
+    const onValueChange = vi.fn()
+    await render(
+      <Quantity defaultValue={1.25} step={1} onValueChange={onValueChange} />
+    )
+    pointer(increment(), "pointerdown")
+    pointer(increment(), "pointerup")
+    await expect.poll(() => onValueChange.mock.calls).toEqual([[2.25]])
+  })
+
+  it("does not step when read only", async () => {
+    const onValueChange = vi.fn()
+    await render(
+      <Quantity defaultValue={3} readOnly onValueChange={onValueChange} />
+    )
+    expect(increment().disabled).toBe(true)
+    expect(decrement().disabled).toBe(true)
+    pointer(increment(), "pointerdown")
+    pointer(increment(), "pointerup")
+    await wait(100)
+    expect(current()).toBe("3")
+    expect(onValueChange).not.toHaveBeenCalled()
+  })
+
   it("steps on keyboard activation of the buttons", async () => {
     const onValueChange = vi.fn()
     await render(<Quantity defaultValue={5} onValueChange={onValueChange} />)
