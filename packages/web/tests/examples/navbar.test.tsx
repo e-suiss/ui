@@ -7,6 +7,7 @@ import NavbarLinksOnly from "@/examples/navbar-links-only"
 import NavbarMegaPanel from "@/examples/navbar-mega-panel"
 import NavbarWithActions from "@/examples/navbar-with-actions"
 import { renderExample } from "@/tests/render-example"
+import { transitionsDone } from "@/tests/settle"
 
 const analyticsLink = /Analytics/
 
@@ -96,6 +97,7 @@ test("Mega Panel", async () => {
     await waitFor(() =>
       expect(screen.getByRole("link", { name: "Documentation" })).toBeVisible()
     )
+    await transitionsDone()
   })
 
   await step("closes the panel with Escape", async () => {
