@@ -437,6 +437,7 @@ export function InboxCategories() {
       <SplitViewDetail title={current?.subject} className="[&>h2]:sr-only">
         {current ? (
           <Reader
+            key={current.id}
             mail={current}
             onStar={() => update(current.id, { starred: !current.starred })}
             onRemove={() => remove(current.id)}

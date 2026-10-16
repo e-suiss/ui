@@ -19,8 +19,11 @@ import {
 } from "@/components/ui/input-group"
 import { Textarea } from "@/components/ui/textarea"
 
+type Box = "Inbox" | "Sent" | "Archive" | "Trash"
+
 type Mail = {
   id: number
+  box: Box
   from: string
   subject: string
   body: string
@@ -33,6 +36,7 @@ type Mail = {
 const initialMail: Mail[] = [
   {
     id: 0,
+    box: "Inbox",
     from: "suiss",
     subject: "Your order has shipped",
     body: "Order #W1048 is on its way and arrives tomorrow. A signature is required on delivery.",
@@ -43,6 +47,7 @@ const initialMail: Mail[] = [
   },
   {
     id: 1,
+    box: "Inbox",
     from: "Morgan Lee",
     subject: "Tomorrow's meeting",
     body: "Does 10:00 tomorrow work? The Q4 budget and the campaign calendar are on the agenda. I'll share the deck tonight.",
@@ -53,6 +58,7 @@ const initialMail: Mail[] = [
   },
   {
     id: 2,
+    box: "Inbox",
     from: "suiss Cloud",
     subject: "Your storage is almost full",
     body: "90% of your Cloud storage is used. Upgrade your plan to keep your backups running.",
@@ -63,6 +69,7 @@ const initialMail: Mail[] = [
   },
   {
     id: 3,
+    box: "Inbox",
     from: "Riley Chen",
     subject: "Coast trip photos",
     body: "I added the photos to the shared album. The ones from the boat tour came out great.",
@@ -73,6 +80,7 @@ const initialMail: Mail[] = [
   },
   {
     id: 4,
+    box: "Inbox",
     from: "suiss Store",
     subject: "Just for you: a Trade In offer",
     body: "Bring in your old phone and get up to $650 off a new one.",
@@ -83,11 +91,23 @@ const initialMail: Mail[] = [
   },
   {
     id: 5,
+    box: "Inbox",
     from: "App Store",
     subject: "Your receipt",
     body: "Your Studio Pro subscription renewed. Total: $4.99.",
     time: "Monday",
     hue: 0,
+    unread: false,
+    starred: false,
+  },
+  {
+    id: 6,
+    box: "Sent",
+    from: "Riley Chen",
+    subject: "Re: Coast trip photos",
+    body: "These came out great. Can you send the full-size one from the boat tour?",
+    time: "Yesterday",
+    hue: 150,
     unread: false,
     starred: false,
   },
@@ -188,11 +208,13 @@ function SenderAvatar({ mail, className }: { mail: Mail; className?: string }) {
 function Reader({
   mail,
   onStar,
-  onRemove,
+  onArchive,
+  onDelete,
 }: {
   mail: Mail
   onStar: () => void
-  onRemove: () => void
+  onArchive: () => void
+  onDelete: () => void
 }) {
   const [replying, setReplying] = React.useState(false)
   const [reply, setReply] = React.useState("")
@@ -239,7 +261,7 @@ function Reader({
           className="size-4.5"
         />
       ),
-      onClick: onRemove,
+      onClick: onArchive,
     },
     {
       label: "Delete",
@@ -253,7 +275,7 @@ function Reader({
           className="size-4.5"
         />
       ),
-      onClick: onRemove,
+      onClick: onDelete,
     },
   ]
 
@@ -332,17 +354,23 @@ export function InboxMail() {
   const [mailbox, setMailbox] = React.useState("Inbox")
   const [selected, setSelected] = React.useState<number | null>(0)
   const [query, setQuery] = React.useState("")
-  const unread = mail.filter((item) => item.unread).length
-  const starred = mail.filter((item) => item.starred).length
-  const counts: Record<string, number> = { Inbox: unread, Starred: starred }
-  const list = mail.filter(
-    (item) =>
-      (mailbox !== "Starred" || item.starred) &&
-      (!query ||
-        `${item.from} ${item.subject} ${item.body}`
-          .toLowerCase()
-          .includes(query.toLowerCase()))
-  )
+  const inMailbox = (item: Mail, box: string) =>
+    box === "Starred" ? item.starred && item.box !== "Trash" : item.box === box
+  const counts: Record<string, number> = {
+    Inbox: mail.filter((item) => item.box === "Inbox" && item.unread).length,
+    Starred: mail.filter((item) => inMailbox(item, "Starred")).length,
+  }
+  const visible = (items: Mail[]) =>
+    items.filter(
+      (item) =>
+        inMailbox(item, mailbox) &&
+        (!query ||
+          `${item.from} ${item.subject} ${item.body}`
+            .toLowerCase()
+            .includes(query.toLowerCase()))
+    )
+  const list = visible(mail)
+  const unread = list.filter((item) => item.unread).length
   const current = mail.find((item) => item.id === selected)
 
   const update = (id: number, patch: Partial<Mail>) =>
@@ -350,10 +378,22 @@ export function InboxMail() {
       items.map((item) => (item.id === id ? { ...item, ...patch } : item))
     )
 
-  const remove = (id: number) => {
-    const rest = mail.filter((item) => item.id !== id)
+  const move = (id: number, box: Box) => {
+    const target = mail.find((item) => item.id === id)
+    if (!target || (target.box === box && box !== "Trash")) return
+    const rest =
+      target.box === "Trash"
+        ? mail.filter((item) => item.id !== id)
+        : mail.map((item) => (item.id === id ? { ...item, box } : item))
+    const index = list.findIndex((item) => item.id === id)
+    const remaining = visible(rest)
     setMail(rest)
-    setSelected(rest[0]?.id ?? null)
+    if (remaining.some((item) => item.id === id)) return
+    const next = list
+      .slice(index + 1)
+      .concat(list.slice(0, Math.max(index, 0)).reverse())
+      .find((item) => remaining.some((other) => other.id === item.id))
+    setSelected(next?.id ?? null)
   }
 
   return (
@@ -473,9 +513,11 @@ export function InboxMail() {
       <SplitViewDetail title={current?.subject} className="[&>h2]:sr-only">
         {current ? (
           <Reader
+            key={current.id}
             mail={current}
             onStar={() => update(current.id, { starred: !current.starred })}
-            onRemove={() => remove(current.id)}
+            onArchive={() => move(current.id, "Archive")}
+            onDelete={() => move(current.id, "Trash")}
           />
         ) : (
           <p className="m-auto text-muted-foreground">No Message Selected</p>

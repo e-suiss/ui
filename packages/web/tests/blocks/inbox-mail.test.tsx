@@ -33,6 +33,7 @@ const subjects: Record<string, string> = {
   "Morgan Lee": "Tomorrow's meeting",
   "suiss Cloud": "Your storage is almost full",
   "Riley Chen": "Coast trip photos",
+  "suiss Store": "Just for you: a Trade In offer",
 }
 const row = (from: string) =>
   page.getByRole("button").filter({ hasText: subjects[from] })
@@ -133,7 +134,7 @@ describe("InboxMail", () => {
   })
 
   it.each(["Archive", "Delete"])(
-    "%s removes the open message and opens the first remaining one",
+    "%s removes the open message and opens the next one",
     async (name) => {
       await render(<InboxMail />)
       await row("suiss Cloud").click()
@@ -147,10 +148,41 @@ describe("InboxMail", () => {
           "suiss Store",
           "App Store",
         ])
-      expect(reader()).toBe("Your order has shipped")
+      expect(reader()).toBe("Coast trip photos")
       expect(count("Inbox")).toBe("2")
     }
   )
+
+  it("files messages into their own mailboxes", async () => {
+    await render(<InboxMail />)
+    await mailbox("Sent").click()
+    await expect.poll(rows).toEqual(["Riley Chen"])
+    await mailbox("Archive").click()
+    await expect.poll(rows).toEqual([])
+    await mailbox("Inbox").click()
+    await row("Riley Chen").click()
+    await action("Archive").click()
+    await expect.poll(reader).toBe("Just for you: a Trade In offer")
+    await row("suiss Store").click()
+    await action("Delete").click()
+    await mailbox("Archive").click()
+    await expect.poll(rows).toEqual(["Riley Chen"])
+    await mailbox("Trash").click()
+    await expect.poll(rows).toEqual(["suiss Store"])
+    await mailbox("Starred").click()
+    await expect.poll(rows).toEqual(["Riley Chen"])
+  })
+
+  it("clears a draft reply when another message opens", async () => {
+    await render(<InboxMail />)
+    await action("Reply").click()
+    await userEvent.keyboard("Draft")
+    await row("Morgan Lee").click()
+    await expect.poll(reader).toBe("Tomorrow's meeting")
+    await expect
+      .element(page.getByRole("textbox", { name: "Reply to Morgan Lee" }))
+      .not.toBeInTheDocument()
+  })
 
   it("shows an empty reader once every message is removed", async () => {
     await render(<InboxMail />)
