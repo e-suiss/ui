@@ -37,6 +37,28 @@ describe("esuiss-ui command", () => {
     }
   )
 
+  it.each([["--help"], ["-h"]])("prints the add usage for add %s", (flag) => {
+    const result = run("add", "button", flag)
+    expect(result.code).toBe(0)
+    expect(result.stdout).toContain("npx @esuiss/ui add patterns <pattern...>")
+    expect(result.stdout).toContain("--diff")
+    expect(result.stdout).not.toContain("init [options]")
+  })
+
+  it("prints the init usage for init --help", () => {
+    const result = run("init", "--help")
+    expect(result.code).toBe(0)
+    expect(result.stdout).toContain("npx @esuiss/ui init [options]")
+    expect(result.stdout).not.toContain("--diff")
+  })
+
+  it.each([
+    ["add", "-v"],
+    ["init", "--version"],
+  ])("prints the version for %s %s", (command, flag) => {
+    expect(run(command, flag).stdout.trim()).toBe(version)
+  })
+
   it("prints the package version", () => {
     expect(run("--version").stdout.trim()).toBe(version)
   })

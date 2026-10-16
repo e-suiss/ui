@@ -7,7 +7,6 @@ import {
   fetchStylesheet,
   fetchText,
   resolveItems,
-  scopeOf,
   toCss,
 } from "../lib/registry.mjs"
 import { serveRegistry } from "./helpers.mjs"
@@ -20,17 +19,6 @@ const item = (name, requires = []) => ({ name, requires })
 afterEach(() => {
   vi.unstubAllGlobals()
   vi.unstubAllEnvs()
-})
-
-describe("scopeOf", () => {
-  it("returns the scope of a fetched item", () => {
-    expect(scopeOf({ scope: "chart" })).toBe("chart")
-    expect(scopeOf({ scope: "block" })).toBe("block")
-  })
-
-  it("falls back to ui for items without a scope", () => {
-    expect(scopeOf({})).toBe("ui")
-  })
 })
 
 describe("resolveItems", () => {

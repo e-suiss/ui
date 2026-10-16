@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
-import { CliError, choose, confirm, note, step } from "../output.mjs"
+import { CliError, confirm, note, step } from "../output.mjs"
+import { choose, isInteractive } from "../prompt.mjs"
 import { ensureAlias, relative } from "../shared/project.mjs"
 import { installItems } from "./add.mjs"
 import { configureNativewindBabel, ensureBabelPlugin } from "./babel.mjs"
@@ -246,21 +247,17 @@ async function writeTailwindConfig(project, registry, options) {
   step(`Wrote ${relative(project, file)}`)
 }
 
-const STYLING_CHOICES = {
-  Uniwind: "uniwind",
-  "NativeWind v4": "nativewind",
-  "React Native StyleSheet": "stylesheet",
-}
+const STYLING_CHOICES = [
+  { value: "uniwind", label: "Uniwind" },
+  { value: "nativewind", label: "NativeWind v4" },
+  { value: "stylesheet", label: "React Native StyleSheet" },
+]
 
-async function pickStyling(project, options) {
+function pickStyling(project, options) {
   const detected = detectStyling(project, options.styling)
   if (detected) return detected
-  if (options.yes) return STYLINGS[0]
-  const answer = await choose(
-    "How should components be styled?",
-    Object.keys(STYLING_CHOICES)
-  )
-  return STYLING_CHOICES[answer]
+  if (options.yes || !isInteractive()) return STYLINGS[0]
+  return choose("How should components be styled?", STYLING_CHOICES)
 }
 
 async function writeTheme(project, registry, root) {
@@ -360,7 +357,7 @@ export async function init(options) {
     css
       ? ["button", "primitives/portal"]
       : ["button", "primitives/hooks", "primitives/portal"],
-    { styling: project.styling }
+    { styling: project.styling, overwrite: options.overwrite }
   )
 
   if (project.styling === "uniwind") {

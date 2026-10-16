@@ -89,10 +89,6 @@ export async function fetchRegistry(base = "base") {
   return { items: items.filter((item) => item.files?.length).map(toItem) }
 }
 
-export function scopeOf(item) {
-  return item.scope ?? "ui"
-}
-
 export function fetchStylesheet() {
   return fetchText(STYLESHEET)
 }

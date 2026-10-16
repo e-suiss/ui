@@ -1,9 +1,10 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { CliError, list, note, step } from "../output.mjs"
-import { isInteractive } from "../prompt.mjs"
+import { choose, isInteractive } from "../prompt.mjs"
 import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
-import { availableNames, fetchFiles, pickNames } from "./add.mjs"
+import { chooseNames } from "../shared/select.mjs"
+import { fetchFiles, scopeOf } from "./add.mjs"
 import { fetchRegistry } from "./registry.mjs"
 
 const ANDROID_PLUGIN =
@@ -54,21 +55,37 @@ export function detectNativePlatforms(cwd) {
   ]
 }
 
-function detectXcode(cwd, target) {
+async function swiftRoot(cwd, project, options) {
+  if (options.path) return path.resolve(cwd, options.path)
+  const targets = directories(path.join(cwd, "Sources"))
+  if (project || !targets.length) return path.join(cwd, "EsuissUI")
+  const rootOf = (target) => path.join(cwd, "Sources", target, "EsuissUI")
+  if (targets.length === 1) return rootOf(targets[0])
+  const used = targets.filter((target) => existsSync(rootOf(target)))
+  if (used.length === 1) return rootOf(used[0])
+  if (options.yes || !isInteractive()) {
+    throw new CliError(
+      `This Swift package has ${targets.length} targets: ${targets.join(", ")}. Pick one with --path Sources/<target>/EsuissUI.`
+    )
+  }
+  return rootOf(
+    await choose(
+      "Which target should get the SwiftUI files?",
+      targets.map((target) => ({ value: target, label: target }))
+    )
+  )
+}
+
+async function detectXcode(cwd, options) {
   const { project, manifest } = xcodeEntries(cwd)
   if (!project && !manifest) {
     throw new CliError(
       `No Xcode project or Package.swift found in ${cwd}. Run this in your app folder or pass --cwd.`
     )
   }
-  const targets = directories(path.join(cwd, "Sources"))
-  const fallback =
-    !project && targets.length === 1
-      ? path.join("Sources", targets[0], "EsuissUI")
-      : "EsuissUI"
   return {
     cwd,
-    root: path.resolve(cwd, target ?? fallback),
+    root: await swiftRoot(cwd, project, options),
     xcode: Boolean(project),
     settings: [
       readText(path.join(cwd, "Package.swift")),
@@ -77,7 +94,7 @@ function detectXcode(cwd, target) {
   }
 }
 
-function detectGradle(cwd, target) {
+function detectGradle(cwd, { path: target }) {
   const module = gradleModule(cwd)
   if (!module) {
     throw new CliError(
@@ -158,7 +175,7 @@ const PLATFORMS = {
 
 async function setup(options) {
   const platform = PLATFORMS[options.platform]
-  const project = platform.detect(options.cwd, options.path)
+  const project = await platform.detect(options.cwd, options)
   const registry = await fetchRegistry()
   const spec = registry.platforms?.[options.platform]
   if (!spec) {
@@ -166,6 +183,9 @@ async function setup(options) {
   }
   const entries = (files) =>
     files.map((file) => ({ file, source: `${spec.directory}/${file}` }))
+  step(
+    `${platform.title} files go to ${path.relative(project.cwd, project.root) || "."}`
+  )
   return { platform, project, registry, spec, entries }
 }
 
@@ -214,23 +234,8 @@ export async function addNative(names, options) {
 
   const byName = new Map(registry.items.map((item) => [item.name, item]))
   const platformItems = registry.items.filter((item) => item[options.platform])
-  const available = platformItems.map((item) => item.name)
-  const picking = !names.length && !options.all && isInteractive()
-  const chosen = picking ? await pickNames(platformItems) : names
-  const selected = options.all ? available : chosen
-  if (!selected.length) {
-    throw new CliError(
-      `Name at least one component, e.g. npx @esuiss/ui add button --platform ${options.platform}\nAvailable: ${availableNames(platformItems)}`
-    )
-  }
-  const unknown = selected.filter((name) => !byName.has(name))
-  if (unknown.length) {
-    throw new CliError(
-      `Unknown component: ${unknown.join(", ")}.\nAvailable for ${platform.title}: ${available.join(", ")}`
-    )
-  }
-  const unavailable = selected.filter(
-    (name) => !byName.get(name)[options.platform]
+  const unavailable = names.filter(
+    (name) => byName.has(name) && !byName.get(name)[options.platform]
   )
   if (unavailable.length) {
     const platformsOf = (name) =>
@@ -252,25 +257,22 @@ export async function addNative(names, options) {
     )
   }
 
-  const items = selected.map((name) => byName.get(name))
+  const selected = await chooseNames(registry.items, names, options, {
+    scopeOf,
+    pickFrom: platformItems,
+    include: (item) => item[options.platform],
+    suffix: ` --platform ${options.platform}`,
+    title: platform.title,
+  })
+
+  const files = [
+    ...new Set(selected.flatMap((name) => byName.get(name)[options.platform])),
+  ]
+  const downloaded = await fetchFiles(project.root, entries(files))
   if (options.diff) {
-    printDiff(
-      project.cwd,
-      await fetchFiles(
-        project.root,
-        entries(items.map((item) => item[options.platform][0]))
-      )
-    )
+    printDiff(project.cwd, downloaded)
     return
   }
-
-  const files = [...new Set(items.flatMap((item) => item[options.platform]))]
-  reportFiles(
-    writeFiles(
-      project.cwd,
-      await fetchFiles(project.root, entries(files)),
-      options.overwrite
-    )
-  )
+  reportFiles(writeFiles(project.cwd, downloaded, options.overwrite))
   printRequirements(context)
 }

@@ -21,8 +21,8 @@ const webRegistry = {
 }
 
 const mobileRegistry = {
-  name: "esuiss-uim",
-  homepage: "https://github.com/e-suiss/uim",
+  name: "esuiss-ui-mobile",
+  homepage: "https://ui.suiss.app",
   styles: {
     uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
     stylesheet: {
@@ -169,6 +169,21 @@ describe("platform routing", () => {
     expect(result.code).toBe(0)
     expect(read(cwd, "components/ui/button.tsx")).toBe(
       files["/mobile/uniwind/components/ui/button.tsx"]
+    )
+  })
+
+  it.each([
+    ["an Expo project", () => expoProject(), ""],
+    [
+      "an Xcode project",
+      () => xcodeProject({ "EsuissUI/Theme/Theme.swift": "" }),
+      " --platform swift",
+    ],
+  ])("passes the group to %s", async (_title, project, suffix) => {
+    const result = await run("add", "patterns", "button", "--cwd", project())
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain(
+      `"button" is a component. Run npx @esuiss/ui add button${suffix}`
     )
   })
 
