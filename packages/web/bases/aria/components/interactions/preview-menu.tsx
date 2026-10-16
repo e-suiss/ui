@@ -274,6 +274,12 @@ function PreviewMenuContent({
         document.body
       )}
       <PopoverPrimitive
+        {...{
+          getTargetRect: () =>
+            frame
+              ? new DOMRect(frame.left, frame.top, frame.width, frame.height)
+              : null,
+        }}
         triggerRef={previewRef}
         placement="bottom"
         offset={12}
