@@ -111,6 +111,18 @@ describe("release", () => {
     expect(git(cwd, "status", "--porcelain")).toBe("")
   })
 
+  it("tags the registry that the released CLI downloads", () => {
+    const { cwd } = repository()
+    expect(release(cwd, "patch").code).toBe(0)
+    expect(
+      JSON.parse(git(cwd, "show", "v0.9.1:packages/cli/package.json")).version
+    ).toBe("0.9.1")
+    expect(
+      JSON.parse(git(cwd, "show", "v0.9.1:packages/web/registry/registry.json"))
+        .items.length
+    ).toBeGreaterThan(0)
+  })
+
   it.each([[], ["next"], ["1.0"], ["v1.0.0"]])(
     "prints the usage for %j",
     (...args) => {

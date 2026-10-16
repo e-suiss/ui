@@ -105,9 +105,13 @@ describe("mobile add", () => {
       "class-variance-authority": "0.7.1",
     })
     await add(["button"], { cwd })
-    expect(fetch).toHaveBeenCalledWith(`${MOBILE_REGISTRY}/registry.json`)
     expect(fetch).toHaveBeenCalledWith(
-      `${MOBILE_REGISTRY}/uniwind/components/ui/button.tsx`
+      `${MOBILE_REGISTRY}/registry.json`,
+      expect.anything()
+    )
+    expect(fetch).toHaveBeenCalledWith(
+      `${MOBILE_REGISTRY}/uniwind/components/ui/button.tsx`,
+      expect.anything()
     )
   })
 

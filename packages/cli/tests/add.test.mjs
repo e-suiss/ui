@@ -202,7 +202,10 @@ export const Icon = () => (
       const fetch = serveRegistry(radix)
       const cwd = viteProject({ "components.json": { style: "radix-nova" } })
       await add(["dialog"], { cwd })
-      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(RADIX_INDEX))
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching(RADIX_INDEX),
+        expect.anything()
+      )
       expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
         radix["bases/radix/components/ui/dialog.tsx"]
       )
@@ -260,7 +263,10 @@ export const Icon = () => (
       const fetch = serveRegistry(aria)
       const cwd = viteProject({ "components.json": { style: "aria-nova" } })
       await add(["dialog"], { cwd })
-      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(ARIA_INDEX))
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching(ARIA_INDEX),
+        expect.anything()
+      )
       expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
         aria["bases/aria/components/ui/dialog.tsx"]
       )
