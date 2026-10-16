@@ -78,7 +78,14 @@ let failed = false
 const byHost = new Map()
 
 for (const sitemap of sitemaps) {
-  const response = await fetch(sitemap)
+  const response = await fetch(sitemap).catch((error) => {
+    console.error(`${sitemap}: ${error.cause?.message ?? error.message}`)
+    return undefined
+  })
+  if (!response) {
+    failed = true
+    continue
+  }
   if (!response.ok) {
     console.error(
       `${sitemap}: returned ${response.status} ${response.statusText}`
