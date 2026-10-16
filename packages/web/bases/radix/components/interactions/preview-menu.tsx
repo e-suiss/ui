@@ -162,6 +162,7 @@ function PreviewMenuTrigger({
   onPointerUp,
   onPointerCancel,
   onPointerLeave,
+  ref,
   ...props
 }: React.ComponentProps<"div">) {
   const { open, setOpen, lifted, triggerRef, contentRef } = usePreviewMenu()
@@ -178,7 +179,11 @@ function PreviewMenuTrigger({
 
   return (
     <div
-      ref={triggerRef as React.Ref<HTMLDivElement>}
+      ref={(node) => {
+        triggerRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       data-slot="preview-menu-trigger"
       className={cn(
         "touch-manipulation select-none [-webkit-touch-callout:none] data-lifted:invisible",

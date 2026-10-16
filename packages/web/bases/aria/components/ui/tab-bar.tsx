@@ -62,6 +62,7 @@ function TabBar({
   onOpenChange,
   className,
   style,
+  ref: forwardedRef,
   ...props
 }: React.ComponentProps<"nav"> & TabBarProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
@@ -148,7 +149,11 @@ function TabBar({
   return (
     <TabBarContext.Provider value={contextValue}>
       <nav
-        ref={ref}
+        ref={(node) => {
+          ref.current = node
+          if (typeof forwardedRef === "function") return forwardedRef(node)
+          if (forwardedRef) forwardedRef.current = node
+        }}
         data-slot="tab-bar"
         data-open={open ? "" : undefined}
         data-overflowing={overflow.length > 0 ? "" : undefined}
@@ -173,6 +178,7 @@ function TabBar({
 function TabBarList({
   className,
   children,
+  ref: forwardedRef,
   ...props
 }: React.ComponentProps<"div">) {
   const { open, present, setOverflow } = useTabBar()
@@ -242,7 +248,11 @@ function TabBarList({
 
   return (
     <div
-      ref={ref}
+      ref={(node) => {
+        ref.current = node
+        if (typeof forwardedRef === "function") return forwardedRef(node)
+        if (forwardedRef) forwardedRef.current = node
+      }}
       data-slot="tab-bar-list"
       inert={open || undefined}
       className={cn(
@@ -311,6 +321,7 @@ function TabBarTrigger({
   className,
   children,
   onClick,
+  ref,
   ...props
 }: Omit<React.ComponentProps<typeof Button>, "children"> & {
   children?: React.ReactNode
@@ -322,7 +333,11 @@ function TabBarTrigger({
 
   return (
     <Button
-      ref={triggerRef}
+      ref={(node) => {
+        triggerRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       data-slot="tab-bar-trigger"
       data-idle={idle ? "" : undefined}
       aria-hidden={idle || undefined}

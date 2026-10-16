@@ -26,6 +26,7 @@ function ToggleGroup({
   spacing = 2,
   orientation = "horizontal",
   children,
+  ref: forwardedRef,
   ...props
 }: ToggleGroupPrimitive.Props &
   VariantProps<typeof toggleVariants> & {
@@ -80,7 +81,11 @@ function ToggleGroup({
 
   return (
     <ToggleGroupPrimitive
-      ref={ref}
+      ref={(node) => {
+        ref.current = node
+        if (typeof forwardedRef === "function") return forwardedRef(node)
+        if (forwardedRef) forwardedRef.current = node
+      }}
       data-slot="toggle-group"
       data-variant={variant}
       data-size={size}

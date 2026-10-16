@@ -86,6 +86,7 @@ function OtpAutofill({
   onVerify,
   webOtp = true,
   className,
+  ref,
   ...props
 }: React.ComponentProps<"div"> & {
   maxLength: number
@@ -181,7 +182,11 @@ function OtpAutofill({
       }}
     >
       <div
-        ref={rootRef}
+        ref={(node) => {
+          rootRef.current = node
+          if (typeof ref === "function") return ref(node)
+          if (ref) ref.current = node
+        }}
         data-slot="otp-autofill"
         data-state={state}
         className={cn(
@@ -199,6 +204,7 @@ function OtpAutofillInput({
   onFocus,
   onBlur,
   children,
+  ref,
   ...props
 }: Omit<
   React.ComponentProps<"input">,
@@ -214,7 +220,11 @@ function OtpAutofillInput({
 
   return (
     <InputOTP
-      ref={inputRef}
+      ref={(node) => {
+        inputRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       data-slot="otp-autofill-input"
       maxLength={maxLength}
       value={value}

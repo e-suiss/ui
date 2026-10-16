@@ -80,6 +80,7 @@ function SplitView({
   onColumnChange,
   className,
   children,
+  ref: forwardedRef,
   ...props
 }: React.ComponentProps<"div"> & {
   column?: SplitViewColumn
@@ -125,7 +126,11 @@ function SplitView({
     return (
       <SplitViewContext.Provider value={contextValue}>
         <div
-          ref={ref}
+          ref={(node) => {
+            ref.current = node
+            if (typeof forwardedRef === "function") return forwardedRef(node)
+            if (forwardedRef) forwardedRef.current = node
+          }}
           data-slot="split-view"
           data-column={column}
           className={cn("flex flex-col", className)}
@@ -140,7 +145,11 @@ function SplitView({
   return (
     <SplitViewContext.Provider value={contextValue}>
       <div
-        ref={ref}
+        ref={(node) => {
+          ref.current = node
+          if (typeof forwardedRef === "function") return forwardedRef(node)
+          if (forwardedRef) forwardedRef.current = node
+        }}
         data-slot="split-view"
         className={cn("overflow-hidden rounded-2xl border", className)}
         {...props}

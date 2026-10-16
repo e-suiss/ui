@@ -44,6 +44,7 @@ function SelectionList({
   defaultValue = [],
   onValueChange,
   className,
+  ref,
   ...props
 }: Omit<React.ComponentProps<"div">, "defaultValue"> & {
   editing?: boolean
@@ -124,7 +125,11 @@ function SelectionList({
       }}
     >
       <div
-        ref={rootRef}
+        ref={(node) => {
+          rootRef.current = node
+          if (typeof ref === "function") return ref(node)
+          if (ref) ref.current = node
+        }}
         data-slot="selection-list"
         data-editing={editing ? "" : undefined}
         className={cn("group/selection-list", className)}

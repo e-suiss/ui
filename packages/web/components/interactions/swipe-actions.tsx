@@ -76,6 +76,7 @@ function applyOffset(
 function SwipeActions({
   className,
   children,
+  ref,
   ...props
 }: React.ComponentProps<"div">) {
   const rootRef = React.useRef<HTMLDivElement>(null)
@@ -246,7 +247,11 @@ function SwipeActions({
       value={{ close, onContentPointerDown, onContentClickCapture }}
     >
       <div
-        ref={rootRef}
+        ref={(node) => {
+          rootRef.current = node
+          if (typeof ref === "function") return ref(node)
+          if (ref) ref.current = node
+        }}
         role="group"
         data-slot="swipe-actions"
         className={cn(

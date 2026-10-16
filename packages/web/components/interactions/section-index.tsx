@@ -77,6 +77,7 @@ function SectionIndexBar({
   letters = LETTERS,
   onValueChange,
   className,
+  ref: forwardedRef,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
   letters?: string[]
@@ -165,7 +166,11 @@ function SectionIndexBar({
 
   return (
     <div
-      ref={ref}
+      ref={(node) => {
+        ref.current = node
+        if (typeof forwardedRef === "function") return forwardedRef(node)
+        if (forwardedRef) forwardedRef.current = node
+      }}
       role="slider"
       tabIndex={0}
       data-slot="section-index-bar"

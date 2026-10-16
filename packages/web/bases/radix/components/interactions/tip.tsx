@@ -180,12 +180,16 @@ function TipCard({
   )
 }
 
-function TipAnchor({ className, ...props }: React.ComponentProps<"span">) {
+function TipAnchor({ className, ref, ...props }: React.ComponentProps<"span">) {
   const { anchorRef, visible, dismiss } = useTip()
 
   return (
     <span
-      ref={anchorRef}
+      ref={(node) => {
+        anchorRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       data-slot="tip-anchor"
       onClickCapture={() => {
         if (visible) dismiss()

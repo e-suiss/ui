@@ -43,6 +43,7 @@ function TabsList({
   className,
   variant = "default",
   children,
+  ref: forwardedRef,
   ...props
 }: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -124,7 +125,11 @@ function TabsList({
 
   return (
     <TabsPrimitive.List
-      ref={ref}
+      ref={(node) => {
+        ref.current = node
+        if (typeof forwardedRef === "function") return forwardedRef(node)
+        if (forwardedRef) forwardedRef.current = node
+      }}
       data-slot="tabs-list"
       data-variant={variant}
       className="no-scrollbar relative flex max-w-full overflow-x-auto overscroll-x-contain group-data-vertical/tabs:w-fit group-data-horizontal/tabs:data-[variant=line]:-mb-1.25 max-md:group-data-horizontal/tabs:-ms-(--tabs-list-bleed-start) max-md:group-data-horizontal/tabs:-me-(--tabs-list-bleed-end) max-md:group-data-horizontal/tabs:max-w-[calc(100%+var(--tabs-list-bleed-start,0px)+var(--tabs-list-bleed-end,0px))] max-md:group-data-horizontal/tabs:ps-(--tabs-list-bleed-start) max-md:group-data-horizontal/tabs:pe-(--tabs-list-bleed-end)"

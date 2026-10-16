@@ -10,7 +10,11 @@ function fieldOf(root: HTMLElement | null) {
   return root?.querySelector<HTMLElement>("[data-slot=search-reveal-field]")
 }
 
-function SearchReveal({ className, ...props }: React.ComponentProps<"div">) {
+function SearchReveal({
+  className,
+  ref: forwardedRef,
+  ...props
+}: React.ComponentProps<"div">) {
   const ref = React.useRef<HTMLDivElement>(null)
 
   React.useLayoutEffect(() => {
@@ -72,7 +76,11 @@ function SearchReveal({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <div
-      ref={ref}
+      ref={(node) => {
+        ref.current = node
+        if (typeof forwardedRef === "function") return forwardedRef(node)
+        if (forwardedRef) forwardedRef.current = node
+      }}
       data-slot="search-reveal"
       className={cn(
         "overflow-y-auto overscroll-y-contain [--search-reveal:0]",
@@ -89,6 +97,7 @@ function SearchRevealField({
   placeholder = "Search",
   className,
   onFocus,
+  ref,
   ...props
 }: Omit<React.ComponentProps<"input">, "value" | "type"> & {
   value: string
@@ -112,7 +121,11 @@ function SearchRevealField({
           className="size-4.5 shrink-0"
         />
         <input
-          ref={inputRef}
+          ref={(node) => {
+            inputRef.current = node
+            if (typeof ref === "function") return ref(node)
+            if (ref) ref.current = node
+          }}
           type="search"
           data-slot="search-reveal-input"
           value={value}

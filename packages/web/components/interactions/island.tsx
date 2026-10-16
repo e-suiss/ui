@@ -107,6 +107,7 @@ function IslandProvider({ children }: { children?: React.ReactNode }) {
 function Island({
   className,
   children,
+  ref: forwardedRef,
   ...props
 }: React.ComponentProps<"div">) {
   const { view, notice, setExpanded, dismiss } = useIsland()
@@ -161,7 +162,11 @@ function Island({
   return (
     <>
       <div
-        ref={ref}
+        ref={(node) => {
+          ref.current = node
+          if (typeof forwardedRef === "function") return forwardedRef(node)
+          if (forwardedRef) forwardedRef.current = node
+        }}
         data-slot="island"
         data-view={view}
         style={size}

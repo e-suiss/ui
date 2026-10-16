@@ -169,6 +169,7 @@ function Navbar({
   layout = "popover",
   render = <NavbarAnchor />,
   className,
+  ref,
   ...props
 }: React.ComponentProps<"header"> & {
   items: NavbarItem[]
@@ -218,7 +219,11 @@ function Navbar({
 
   return (
     <header
-      ref={headerRef}
+      ref={(node) => {
+        headerRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       data-slot="navbar"
       data-layout={layout}
       data-compact={compact ? "" : undefined}

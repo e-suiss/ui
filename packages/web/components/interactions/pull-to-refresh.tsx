@@ -32,6 +32,7 @@ function PullToRefresh({
   onRefresh,
   className,
   children,
+  ref,
   ...props
 }: React.ComponentProps<"div"> & {
   onRefresh: () => Promise<unknown> | unknown
@@ -165,7 +166,11 @@ function PullToRefresh({
 
   return (
     <div
-      ref={rootRef}
+      ref={(node) => {
+        rootRef.current = node
+        if (typeof ref === "function") return ref(node)
+        if (ref) ref.current = node
+      }}
       data-slot="pull-to-refresh"
       data-phase={phase}
       aria-busy={phase === "refreshing"}

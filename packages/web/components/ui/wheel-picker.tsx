@@ -114,6 +114,7 @@ function WheelPickerColumn({
   onValueChange,
   className,
   children,
+  ref,
   ...props
 }: React.ComponentProps<"div"> & WheelPickerColumnProps) {
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue)
@@ -371,7 +372,11 @@ function WheelPickerColumn({
   return (
     <WheelPickerColumnContext.Provider value={{ value, select, getItemId }}>
       <div
-        ref={columnRef}
+        ref={(node) => {
+          columnRef.current = node
+          if (typeof ref === "function") return ref(node)
+          if (ref) ref.current = node
+        }}
         data-slot="wheel-picker-column"
         role="listbox"
         tabIndex={0}
