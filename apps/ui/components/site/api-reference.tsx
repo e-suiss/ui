@@ -87,17 +87,23 @@ function textOf(node: React.ReactNode): string {
     .join("")
 }
 
+function tagOf(element: React.ReactElement) {
+  return typeof element.type === "string"
+    ? element.type
+    : (element.type as { tag?: string }).tag
+}
+
 function treeOf(node: React.ReactNode): AnatomyNode[] {
   const nodes: AnatomyNode[] = []
   for (const element of elements(node)) {
-    if (element.type === "ul") {
+    if (tagOf(element) === "ul") {
       nodes.push(...treeOf(element.props.children))
       continue
     }
-    if (element.type !== "li") continue
+    if (tagOf(element) !== "li") continue
     const parts = React.Children.toArray(element.props.children)
     const link = elements(parts).find((part) => part.props.href)
-    const nested = elements(parts).find((part) => part.type === "ul")
+    const nested = elements(parts).find((part) => tagOf(part) === "ul")
     nodes.push({
       name: (link
         ? textOf(link.props.children)

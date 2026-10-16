@@ -59,6 +59,8 @@ function ListItem(props: React.ComponentProps<"li">) {
   )
 }
 
+ListItem.tag = "li"
+
 function OrderedList({ start, ...props }: React.ComponentProps<"ol">) {
   return start === undefined ? (
     <ol {...props} />
