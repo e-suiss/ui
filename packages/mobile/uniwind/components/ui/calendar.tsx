@@ -61,6 +61,12 @@ const WEEKDAY_TEXT: Record<CalendarSize, string> = {
   lg: "text-xs uppercase",
 }
 
+const WEEKDAY_FORMAT: Record<CalendarSize, "narrow" | "short"> = {
+  sm: "narrow",
+  default: "short",
+  lg: "short",
+}
+
 const CalendarContext = React.createContext<{ size: CalendarSize }>({
   size: "default",
 })
@@ -322,12 +328,13 @@ function CalendarMonth({
               className={cn("items-center", CELL_WIDTH[size])}
             >
               <Text
+                numberOfLines={1}
                 className={cn(
                   "font-semibold text-muted-foreground",
                   WEEKDAY_TEXT[size]
                 )}
               >
-                {calendar.formatWeekday(weekday, "short")}
+                {calendar.formatWeekday(weekday, WEEKDAY_FORMAT[size])}
               </Text>
             </View>
           ))}

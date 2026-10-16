@@ -63,6 +63,12 @@ const WEEKDAY_TEXT: Record<CalendarSize, TextStyle> = {
   lg: { ...fontSize.xs, textTransform: "uppercase" },
 }
 
+const WEEKDAY_FORMAT: Record<CalendarSize, "narrow" | "short"> = {
+  sm: "narrow",
+  default: "short",
+  lg: "short",
+}
+
 const styles = StyleSheet.create({
   root: { alignSelf: "flex-start" },
   months: { gap: 16 },
@@ -371,13 +377,14 @@ function CalendarMonth({
               style={[styles.weekday, { width: cell }]}
             >
               <Text
+                numberOfLines={1}
                 style={[
                   styles.weekdayText,
                   WEEKDAY_TEXT[size],
                   { color: colors.mutedForeground },
                 ]}
               >
-                {calendar.formatWeekday(weekday, "short")}
+                {calendar.formatWeekday(weekday, WEEKDAY_FORMAT[size])}
               </Text>
             </View>
           ))}

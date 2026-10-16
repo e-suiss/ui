@@ -180,7 +180,7 @@ interface RootContextValue {
   ) => void
   selectDay: (day: CalendarDay, event?: ChangeEvent) => void
   formatCaption: (month: Date) => string
-  formatWeekday: (date: Date, width: "short" | "long") => string
+  formatWeekday: (date: Date, width: "narrow" | "short" | "long") => string
   formatMonth: (month: Date, width: "short" | "long") => string
   labelDay: (day: CalendarDay) => string
 }
@@ -576,7 +576,7 @@ function Root({
     [captionFormat]
   )
   const formatWeekday = React.useCallback(
-    (date: Date, width: "short" | "long") =>
+    (date: Date, width: "narrow" | "short" | "long") =>
       new Intl.DateTimeFormat(locale, { weekday: width }).format(date),
     [locale]
   )
