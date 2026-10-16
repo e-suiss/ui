@@ -762,7 +762,7 @@
     {
       "name": "fab",
       "type": "registry:ui",
-      "title": "Fab",
+      "title": "FAB",
       "description": "A floating action button pinned to the bottom corner, with an optional label and speed-dial actions.",
       "dependencies": [
         "cn",
@@ -975,7 +975,7 @@
     {
       "name": "input-otp",
       "type": "registry:ui",
-      "title": "Input Otp",
+      "title": "Input OTP",
       "description": "A segmented field for entering one-time passcodes, one character per slot.",
       "dependencies": [
         "cn",
@@ -1325,7 +1325,7 @@
     {
       "name": "qr-scanner",
       "type": "registry:ui",
-      "title": "Qr Scanner",
+      "title": "QR Scanner",
       "description": "A camera overlay with a rounded cut-out scan frame, rounded corner brackets, an optional scan line and an optional flashlight toggle.",
       "dependencies": [
         "cn",
@@ -2297,7 +2297,7 @@
     {
       "name": "otp-autofill",
       "type": "registry:component",
-      "title": "Otp Autofill",
+      "title": "OTP Autofill",
       "description": "A one-time code field that offers an incoming code, fills it digit by digit, and verifies it automatically.",
       "dependencies": [
         "cn",
@@ -2360,7 +2360,7 @@
     {
       "name": "pull-to-refresh",
       "type": "registry:component",
-      "title": "Pull To Refresh",
+      "title": "Pull to Refresh",
       "description": "A scroll container that refreshes its content when the user pulls down from the top.",
       "dependencies": [
         "cn",
@@ -5195,7 +5195,7 @@
       "name": "pie-chart-default",
       "type": "registry:block",
       "title": "Pie Chart Default",
-      "description": "A full pie split into five device slices, separated by thin surface-colored borders.",
+      "description": "A full pie split into five device slices, separated by thin card-colored borders.",
       "registryDependencies": [
         "@esuiss-rn/card",
         "@esuiss-rn/chart"
@@ -5514,7 +5514,7 @@
       "name": "radar-chart-grid-filled",
       "type": "registry:block",
       "title": "Radar Chart Grid Filled",
-      "description": "A borderless radar shape over shaded circular rings separated by surface-colored lines.",
+      "description": "A borderless radar shape over shaded circular rings separated by card-colored lines.",
       "registryDependencies": [
         "@esuiss-rn/card",
         "@esuiss-rn/chart"
@@ -6493,7 +6493,7 @@
     {
       "name": "primitives-otp-field",
       "type": "registry:component",
-      "title": "Otp Field Primitive",
+      "title": "OTP Field Primitive",
       "description": "The headless otp field behavior the components build on.",
       "registryDependencies": [
         "@esuiss-rn/primitives-event-details",

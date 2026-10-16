@@ -7,6 +7,7 @@ import Ajv from "ajv"
 import postcss from "postcss"
 import {
   collectImports,
+  frontmatterValue,
   packageName,
   SCHEMA_URL,
   schemaProblems,
@@ -28,7 +29,6 @@ const COMPANIONS = {
 const LOCAL_IMPORT =
   /^@\/components\/(ui|patterns|interactions|blocks|charts|primitives)\/([\w-]+)$/
 const FRONTMATTER = /^---\n([\s\S]*?)\n---/
-const DESCRIPTION = /^description:\s*(.+)$/m
 const PLATFORMS = /^platforms:\s*\[([^\]]*)\]/m
 
 export const STANDARD_STYLINGS = ["uniwind", "nativewind", "stylesheet"]
@@ -78,10 +78,10 @@ async function docsPage(kind, name) {
   if (!existsSync(file)) return undefined
   const frontmatter = (await readFile(file, "utf8")).match(FRONTMATTER)?.[1]
   if (!frontmatter?.match(PLATFORMS)?.[1].includes("rn")) return undefined
-  const description = frontmatter.match(DESCRIPTION)?.[1]
   return {
     url: `${SITE}/docs/${kind.docs}/${name}`,
-    description: description && JSON.parse(description),
+    title: frontmatterValue(frontmatter, "title"),
+    description: frontmatterValue(frontmatter, "description"),
   }
 }
 
@@ -132,7 +132,7 @@ async function toStandard(root, item, styling) {
     for (const required of analysis.requires) requires.add(required)
   }
   const page = await docsPage(kind, item.name)
-  const title = toTitle(path.posix.basename(item.name))
+  const title = page?.title ?? toTitle(path.posix.basename(item.name))
   return {
     name,
     type: kind.type,

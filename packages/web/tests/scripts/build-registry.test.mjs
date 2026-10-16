@@ -30,6 +30,7 @@ const DOCS = {
   "components/blocks": "blocks",
 }
 const SOURCE = /^(components\/\w+)\/([\w-]+)\.tsx$/
+const DOC_TITLES = { "qr-scanner": "QR Code Scanner" }
 
 function docsPages(files) {
   return Object.keys(files).flatMap((file) => {
@@ -39,7 +40,7 @@ function docsPages(files) {
       ? [
           [
             `apps/ui/content/docs/${docs}/${match[2]}.mdx`,
-            `---\ntitle: Page\ndescription: "About ${match[2]}."\n---\n`,
+            `---\n${DOC_TITLES[match[2]] ? `title: ${DOC_TITLES[match[2]]}\n` : ""}description: "About ${match[2]}."\n---\n`,
           ],
         ]
       : []
@@ -447,8 +448,14 @@ import { Dialog } from "@base-ui/react/dialog"
   })
 
   it("takes titles, descriptions and links from the docs", () => {
-    const cwd = project({ "components/ui/alert-dialog.tsx": "export {}" })
+    const cwd = project({
+      "components/ui/alert-dialog.tsx": "export {}",
+      "components/ui/qr-scanner.tsx": "export {}",
+      "components/ui/input-otp.tsx": "export {}",
+    })
     expect(build(cwd).code).toBe(0)
+    expect(standardItem(cwd, "qr-scanner").title).toBe("QR Code Scanner")
+    expect(standardItem(cwd, "input-otp").title).toBe("Input OTP")
     expect(standardItem(cwd, "alert-dialog")).toMatchObject({
       title: "Alert Dialog",
       description: "About alert-dialog.",

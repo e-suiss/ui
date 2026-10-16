@@ -1386,7 +1386,7 @@
     {
       "name": "fab",
       "type": "ui",
-      "title": "Fab",
+      "title": "FAB",
       "dependencies": {
         "uniwind": [
           "cn",
@@ -1748,7 +1748,7 @@
     {
       "name": "input-otp",
       "type": "ui",
-      "title": "Input Otp",
+      "title": "Input OTP",
       "dependencies": {
         "uniwind": [
           "cn",
@@ -2343,7 +2343,7 @@
     {
       "name": "qr-scanner",
       "type": "ui",
-      "title": "Qr Scanner",
+      "title": "QR Scanner",
       "dependencies": {
         "uniwind": [
           "cn",
@@ -4181,7 +4181,7 @@
     {
       "name": "otp-autofill",
       "type": "interaction",
-      "title": "Otp Autofill",
+      "title": "OTP Autofill",
       "dependencies": {
         "uniwind": [
           "cn",
@@ -4307,7 +4307,7 @@
     {
       "name": "pull-to-refresh",
       "type": "interaction",
-      "title": "Pull To Refresh",
+      "title": "Pull to Refresh",
       "dependencies": {
         "uniwind": [
           "cn",
@@ -11134,7 +11134,7 @@
     {
       "name": "primitives/otp-field",
       "type": "primitive",
-      "title": "Otp Field",
+      "title": "OTP Field",
       "dependencies": {
         "uniwind": [],
         "nativewind": [],

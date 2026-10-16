@@ -6,6 +6,7 @@ import postcss from "postcss"
 
 import {
   collectImports,
+  frontmatterValue,
   normalize,
   packageName,
   SCHEMA_URL,
@@ -31,7 +32,6 @@ const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks|lib)\/([\w-]+)$/
 const SOURCE_FILE = /\.(tsx?|jsx?)$/
 const FRONTMATTER = /^---\n([\s\S]*?)\n---/
-const DESCRIPTION = /^description:\s*(.+)$/m
 
 const THEME = {
   name: "theme-suiss",
@@ -103,10 +103,10 @@ async function docsPage(source, name) {
   const file = path.join(DOCS, source.docs, `${name}.mdx`)
   if (!existsSync(file)) return undefined
   const frontmatter = (await readFile(file, "utf8")).match(FRONTMATTER)?.[1]
-  const description = frontmatter?.match(DESCRIPTION)?.[1]
   return {
     url: `/docs/${source.docs}/${name}`,
-    description: description && JSON.parse(description),
+    title: frontmatterValue(frontmatter, "title"),
+    description: frontmatterValue(frontmatter, "description"),
   }
 }
 
@@ -167,7 +167,7 @@ function toLegacy(entry) {
   return {
     name: entry.name,
     type: entry.source.legacy,
-    title: toTitle(entry.name),
+    title: entry.page?.title ?? toTitle(entry.name),
     dependencies: entry.dependencies,
     requires: entry.requires,
     files: [entry.file],
@@ -239,7 +239,7 @@ async function toStandard(entry) {
   return {
     name: entry.name,
     type: source.type,
-    title: toTitle(entry.name),
+    title: entry.page?.title ?? toTitle(entry.name),
     description: entry.page?.description ?? DESCRIPTIONS[entry.name],
     ...(entry.dependencies.length && { dependencies: entry.dependencies }),
     ...(registryDependencies.length && { registryDependencies }),

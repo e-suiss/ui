@@ -705,7 +705,7 @@
     {
       "name": "input-otp",
       "type": "registry:ui",
-      "title": "Input Otp",
+      "title": "Input OTP",
       "description": "A segmented field for entering one-time passcodes, one character per slot.",
       "dependencies": [
         "input-otp"
@@ -2140,7 +2140,7 @@
     {
       "name": "otp-autofill",
       "type": "registry:component",
-      "title": "Otp Autofill",
+      "title": "OTP Autofill",
       "description": "A one-time code field that offers an incoming code, fills it digit by digit, and verifies it automatically.",
       "registryDependencies": [
         "@esuiss/input-otp",
@@ -2193,7 +2193,7 @@
     {
       "name": "pull-to-refresh",
       "type": "registry:component",
-      "title": "Pull To Refresh",
+      "title": "Pull to Refresh",
       "description": "A scroll container that refreshes its content when the user pulls down from the top.",
       "registryDependencies": [
         "@esuiss/spinner",

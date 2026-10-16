@@ -460,7 +460,7 @@
     {
       "name": "input-otp",
       "type": "ui",
-      "title": "Input Otp",
+      "title": "Input OTP",
       "dependencies": [
         "input-otp"
       ],
@@ -1311,7 +1311,7 @@
     {
       "name": "otp-autofill",
       "type": "interaction",
-      "title": "Otp Autofill",
+      "title": "OTP Autofill",
       "dependencies": [],
       "requires": [
         "input-otp",
@@ -1340,7 +1340,7 @@
     {
       "name": "pull-to-refresh",
       "type": "interaction",
-      "title": "Pull To Refresh",
+      "title": "Pull to Refresh",
       "dependencies": [],
       "requires": [
         "spinner",

@@ -1,8 +1,21 @@
+const ACRONYMS = new Set(["fab", "otp", "qr"])
+const MINOR_WORDS = new Set(["a", "and", "of", "to"])
+
 export function toTitle(name) {
   return name
     .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((part, index) => {
+      if (ACRONYMS.has(part)) return part.toUpperCase()
+      if (index > 0 && MINOR_WORDS.has(part)) return part
+      return part.charAt(0).toUpperCase() + part.slice(1)
+    })
     .join(" ")
+}
+
+export function frontmatterValue(frontmatter, key) {
+  const value = frontmatter?.match(new RegExp(`^${key}:\\s*(.+)$`, "m"))?.[1]
+  if (!value) return undefined
+  return value.startsWith('"') ? JSON.parse(value) : value.trim()
 }
 
 export function packageName(specifier) {
