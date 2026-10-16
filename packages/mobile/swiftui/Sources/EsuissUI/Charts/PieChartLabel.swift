@@ -49,7 +49,7 @@ public struct PieChartLabel: View {
                   }
                   .stroke(EsuissColor.input, lineWidth: 1)
                   Text(LocalizedStringKey(chartConfig.label(chartData[index].device)))
-                    .font(TextStyle.xs.font(weight: .semibold))
+                    .scaledFont(TextStyle.xs, weight: .semibold)
                     .foregroundStyle(EsuissColor.foreground)
                     .fixedSize()
                     .frame(width: 0, height: 0, alignment: sin(angle) >= 0 ? .leading : .trailing)

@@ -62,7 +62,7 @@ public struct LineChartDots: View {
             ) { payload in
               ChartTooltipContent(payload, hideIndicator: true) { item in
                 Text("\(item.value, format: .number) kg")
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

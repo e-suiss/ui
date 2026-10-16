@@ -151,8 +151,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Dialog.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "components/AlertDialog.kt",
@@ -212,8 +211,7 @@
         "Components/AlertSheet.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "components/AlertSheet.kt",
@@ -258,8 +256,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Components/Alert.swift",
-        "Components/TextVariant.swift"
+        "Components/Alert.swift"
       ],
       "kotlin": [
         "components/Alert.kt",
@@ -308,8 +305,7 @@
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Keypad.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/AmountInput.kt",
@@ -411,8 +407,7 @@
         "Components/Attachment.swift",
         "Components/Avatar.swift",
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "components/Attachment.kt",
@@ -450,8 +445,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Components/Avatar.swift",
-        "Components/TextVariant.swift"
+        "Components/Avatar.swift"
       ],
       "kotlin": [
         "components/Avatar.kt",
@@ -490,8 +484,7 @@
       "swift": [
         "Components/Badge.swift",
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "components/Badge.kt",
@@ -583,8 +576,7 @@
         "Components/Bubble.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Message.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "components/Bubble.kt",
@@ -631,8 +623,7 @@
       ],
       "swift": [
         "Components/ButtonGroup.swift",
-        "Components/Button.swift",
-        "Components/TextVariant.swift"
+        "Components/Button.swift"
       ],
       "kotlin": [
         "components/ButtonGroup.kt",
@@ -668,8 +659,7 @@
       ],
       "swift": [
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "components/Button.kt",
@@ -721,8 +711,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Calendar.kt",
@@ -816,8 +805,7 @@
       "swift": [
         "Components/Carousel.swift",
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "components/Carousel.kt",
@@ -864,8 +852,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Chart.kt",
@@ -913,8 +900,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Checkbox.kt",
@@ -976,8 +962,7 @@
         "Components/Item.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Chip.kt",
@@ -1081,8 +1066,7 @@
         "Components/Item.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Combobox.kt",
@@ -1153,8 +1137,7 @@
         "Components/Field.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/ContextMenu.kt",
@@ -1221,8 +1204,7 @@
         "Components/Dialog.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "components/Dialog.kt",
@@ -1286,8 +1268,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Dialog.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "components/Drawer.kt",
@@ -1349,8 +1330,7 @@
         "Components/Field.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/DropdownMenu.kt",
@@ -1395,8 +1375,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Components/Empty.swift",
-        "Components/TextVariant.swift"
+        "Components/Empty.swift"
       ],
       "kotlin": [
         "components/Empty.kt",
@@ -1453,8 +1432,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Fab.kt",
@@ -1494,8 +1472,7 @@
       ],
       "swift": [
         "Components/Field.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Field.kt",
@@ -1613,8 +1590,7 @@
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Header.kt",
@@ -1705,8 +1681,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/InputAccessoryBar.kt",
@@ -1756,8 +1731,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/InputGroup.kt",
@@ -1814,8 +1788,7 @@
       "swift": [
         "Components/InputOTP.swift",
         "Components/Field.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/InputOTP.kt",
@@ -1858,8 +1831,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Field.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Input.kt",
@@ -1902,8 +1874,7 @@
       ],
       "swift": [
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Item.kt",
@@ -1985,8 +1956,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Keypad.kt",
@@ -2025,8 +1995,7 @@
       "swift": [
         "Components/Label.swift",
         "Components/Field.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Label.kt",
@@ -2063,8 +2032,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Components/Marker.swift",
-        "Components/TextVariant.swift"
+        "Components/Marker.swift"
       ],
       "kotlin": [
         "components/Marker.kt",
@@ -2157,8 +2125,7 @@
         "Components/Message.swift",
         "Components/Bubble.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "components/Message.kt",
@@ -2209,8 +2176,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Carousel.swift",
-        "Components/Haptics.swift",
-        "Components/TextVariant.swift"
+        "Components/Haptics.swift"
       ],
       "kotlin": [
         "components/PageIndicator.kt",
@@ -2268,8 +2234,7 @@
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Keypad.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/PinPad.kt",
@@ -2325,8 +2290,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Dialog.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "components/Popover.kt",
@@ -2370,8 +2334,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Components/Progress.swift",
-        "Components/TextVariant.swift"
+        "Components/Progress.swift"
       ],
       "kotlin": [
         "components/Progress.kt"
@@ -2431,7 +2394,6 @@
         "Components/Overlay.swift",
         "Components/Popover.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift",
         "Patterns/Preview.swift"
       ],
@@ -2499,8 +2461,7 @@
         "Components/ButtonGroup.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Questionnaire.kt",
@@ -2554,8 +2515,7 @@
         "Components/Label.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/RadioGroup.kt",
@@ -2659,8 +2619,7 @@
         "Components/DropdownMenu.swift",
         "Components/Field.swift",
         "Components/Overlay.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Select.kt",
@@ -2760,8 +2719,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Dialog.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "components/Sheet.kt",
@@ -2812,8 +2770,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Field.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/SignaturePad.kt",
@@ -2968,8 +2925,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Switch.kt",
@@ -3029,8 +2985,7 @@
         "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/TabBar.kt",
@@ -3085,8 +3040,7 @@
         "Components/Field.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Tabs.kt",
@@ -3160,8 +3114,7 @@
         "Components/ButtonGroup.swift",
         "Components/Field.swift",
         "Components/Input.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Textarea.kt",
@@ -3207,8 +3160,7 @@
       ],
       "swift": [
         "Components/ThemeProvider.swift",
-        "Components/Haptics.swift",
-        "Components/TextVariant.swift"
+        "Components/Haptics.swift"
       ],
       "kotlin": [
         "components/Theme.kt",
@@ -3279,8 +3231,7 @@
       "swift": [
         "Components/Toast.swift",
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "components/Toast.kt",
@@ -3337,7 +3288,6 @@
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift"
       ],
       "kotlin": [
@@ -3389,8 +3339,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/Toggle.kt",
@@ -3439,8 +3388,7 @@
         "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "components/WheelPicker.kt",
@@ -3501,7 +3449,6 @@
         "Components/Haptics.swift",
         "Components/Overlay.swift",
         "Components/Popover.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift",
         "Patterns/Preview.swift"
       ],
@@ -3560,7 +3507,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/Sheet.swift",
-        "Components/TextVariant.swift",
         "Patterns/ActionList.swift",
         "Patterns/Adaptive.swift"
       ],
@@ -3615,7 +3561,6 @@
         "Components/ButtonGroup.swift",
         "Components/Dialog.swift",
         "Components/Overlay.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift"
       ],
       "kotlin": [
@@ -3663,7 +3608,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/Sheet.swift",
-        "Components/TextVariant.swift",
         "Patterns/ActionList.swift",
         "Patterns/Adaptive.swift"
       ],
@@ -3733,7 +3677,6 @@
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/WheelPicker.swift",
         "Patterns/Adaptive.swift"
       ],
@@ -3784,8 +3727,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "patterns/PagedList.kt",
@@ -3824,7 +3766,6 @@
         "Components/Overlay.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift"
       ],
       "kotlin": [
@@ -3875,7 +3816,6 @@
         "Components/Drawer.swift",
         "Components/Overlay.swift",
         "Components/Popover.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift"
       ],
       "kotlin": [
@@ -3932,7 +3872,6 @@
         "Components/Field.swift",
         "Components/Overlay.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift"
       ],
       "kotlin": [
@@ -4001,8 +3940,7 @@
         "Components/Field.swift",
         "Components/Overlay.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "patterns/SplitView.kt",
@@ -4038,8 +3976,7 @@
       "swift": [
         "Patterns/TableList.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "patterns/TableList.kt",
@@ -4102,8 +4039,7 @@
         "Components/Card.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "interactions/CardStack.kt",
@@ -4163,8 +4099,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Carousel.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "interactions/ImageViewer.kt",
@@ -4277,8 +4212,7 @@
         "Components/Haptics.swift",
         "Components/InputOTP.swift",
         "Components/Keypad.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "interactions/OtpAutofill.kt",
@@ -4341,8 +4275,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/Haptics.swift",
-        "Components/Overlay.swift",
-        "Components/TextVariant.swift"
+        "Components/Overlay.swift"
       ],
       "kotlin": [
         "interactions/PreviewMenu.kt",
@@ -4445,8 +4378,7 @@
         "Interactions/ReorderList.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "interactions/ReorderList.kt",
@@ -4499,8 +4431,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Interactions/SearchReveal.swift",
-        "Components/TextVariant.swift"
+        "Interactions/SearchReveal.swift"
       ],
       "kotlin": [
         "interactions/SearchReveal.kt",
@@ -4552,8 +4483,7 @@
         "Components/Header.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "interactions/SectionIndex.kt",
@@ -4608,8 +4538,7 @@
       "swift": [
         "Interactions/SelectionList.swift",
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "interactions/SelectionList.kt",
@@ -4660,8 +4589,7 @@
         "Components/Checkbox.swift",
         "Components/Field.swift",
         "Components/Haptics.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "interactions/Stepper.kt",
@@ -4768,8 +4696,7 @@
         "stylesheet"
       ],
       "swift": [
-        "Interactions/Tip.swift",
-        "Components/TextVariant.swift"
+        "Interactions/Tip.swift"
       ],
       "kotlin": [
         "interactions/Tip.kt",
@@ -4831,8 +4758,7 @@
       "swift": [
         "Interactions/TopBanner.swift",
         "Components/Button.swift",
-        "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift"
+        "Components/ButtonGroup.swift"
       ],
       "kotlin": [
         "interactions/TopBanner.kt",
@@ -4884,7 +4810,6 @@
         "Interactions/UndoBar.swift",
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
-        "Components/TextVariant.swift",
         "Interactions/SelectionList.swift"
       ],
       "kotlin": [
@@ -4957,8 +4882,7 @@
         "Components/RadioGroup.swift",
         "Components/Screen.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/BagCheckout.kt",
@@ -5021,8 +4945,7 @@
         "Components/ButtonGroup.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/BagConfigure.kt",
@@ -5080,7 +5003,6 @@
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Interactions/Stepper.swift"
       ],
       "kotlin": [
@@ -5159,7 +5081,6 @@
         "Components/MessageScroller.swift",
         "Components/Screen.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Interactions/SwipeActions.swift"
       ],
       "kotlin": [
@@ -5244,8 +5165,7 @@
         "Components/Message.swift",
         "Components/MessageScroller.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/ChatSupport.kt",
@@ -5328,8 +5248,7 @@
         "Components/Message.swift",
         "Components/MessageScroller.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/ChatThread.kt",
@@ -5410,7 +5329,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/TabBar.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -5493,8 +5411,7 @@
         "Components/Item.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/DashHealth.kt",
@@ -5574,7 +5491,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/TabBar.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -5651,8 +5567,7 @@
         "Components/ButtonGroup.swift",
         "Components/Empty.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/EmptyBag.kt",
@@ -5712,8 +5627,7 @@
         "Components/Empty.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Spinner.swift",
-        "Components/TextVariant.swift"
+        "Components/Spinner.swift"
       ],
       "kotlin": [
         "blocks/EmptyOffline.kt",
@@ -5782,8 +5696,7 @@
         "Components/Overlay.swift",
         "Components/Screen.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/EmptySearch.kt",
@@ -5853,8 +5766,7 @@
         "Components/Overlay.swift",
         "Components/Screen.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/GridAccessories.kt",
@@ -5912,8 +5824,7 @@
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/PageIndicator.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/GridCarousel.kt",
@@ -5968,8 +5879,7 @@
         "Components/ButtonGroup.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/GridLineup.kt",
@@ -6040,7 +5950,6 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Textarea.swift",
         "Interactions/SwipeActions.swift",
         "Patterns/SplitView.swift"
@@ -6123,7 +6032,6 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Textarea.swift",
         "Interactions/SwipeActions.swift",
         "Patterns/SplitView.swift"
@@ -6205,7 +6113,6 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Textarea.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift",
@@ -6296,8 +6203,7 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TabBar.swift",
-        "Components/TextVariant.swift"
+        "Components/TabBar.swift"
       ],
       "kotlin": [
         "blocks/LogActivity.kt",
@@ -6379,8 +6285,7 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TabBar.swift",
-        "Components/TextVariant.swift"
+        "Components/TabBar.swift"
       ],
       "kotlin": [
         "blocks/LogLive.kt",
@@ -6458,8 +6363,7 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TabBar.swift",
-        "Components/TextVariant.swift"
+        "Components/TabBar.swift"
       ],
       "kotlin": [
         "blocks/LogSecurity.kt",
@@ -6538,8 +6442,7 @@
         "Components/Keypad.swift",
         "Components/Screen.swift",
         "Components/Separator.swift",
-        "Components/Spinner.swift",
-        "Components/TextVariant.swift"
+        "Components/Spinner.swift"
       ],
       "kotlin": [
         "blocks/LoginAccount.kt",
@@ -6608,8 +6511,7 @@
         "Components/Dialog.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Overlay.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/LoginPasskey.kt",
@@ -6679,8 +6581,7 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/Spinner.swift",
-        "Components/TextVariant.swift"
+        "Components/Spinner.swift"
       ],
       "kotlin": [
         "blocks/LoginSheet.kt",
@@ -6750,8 +6651,7 @@
         "Components/Overlay.swift",
         "Components/Screen.swift",
         "Components/Select.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/NavCategories.kt",
@@ -6815,8 +6715,7 @@
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
         "Components/PageIndicator.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/Onboarding.kt",
@@ -6870,8 +6769,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/PermissionPrimer.kt",
@@ -6932,8 +6830,7 @@
         "Components/ButtonGroup.swift",
         "Components/Haptics.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/PriceBundle.kt",
@@ -7001,7 +6898,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/Switch.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -7085,7 +6981,6 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -7167,7 +7062,6 @@
         "Components/Separator.swift",
         "Components/Switch.swift",
         "Components/TabBar.swift",
-        "Components/TextVariant.swift",
         "Patterns/SplitView.swift"
       ],
       "kotlin": [
@@ -7254,7 +7148,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/TabBar.swift",
-        "Components/TextVariant.swift",
         "Interactions/SwipeActions.swift",
         "Patterns/Adaptive.swift",
         "Patterns/OptionPicker.swift"
@@ -7341,8 +7234,7 @@
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
         "Components/Separator.swift",
-        "Components/Switch.swift",
-        "Components/TextVariant.swift"
+        "Components/Switch.swift"
       ],
       "kotlin": [
         "blocks/SettingsAccount.kt",
@@ -7416,8 +7308,7 @@
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
         "Components/Separator.swift",
-        "Components/Switch.swift",
-        "Components/TextVariant.swift"
+        "Components/Switch.swift"
       ],
       "kotlin": [
         "blocks/SettingsDevice.kt",
@@ -7498,7 +7389,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/Switch.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift",
         "Patterns/Adaptive.swift",
@@ -7591,7 +7481,6 @@
         "Components/Screen.swift",
         "Components/Select.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Patterns/Adaptive.swift",
         "Patterns/Confirm.swift",
         "Patterns/OptionPicker.swift"
@@ -7665,8 +7554,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/SignupSteps.kt",
@@ -7739,8 +7627,7 @@
         "Components/InputAccessoryBar.swift",
         "Components/KeyboardScrollView.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/SignupTrial.kt",
@@ -7824,7 +7711,6 @@
         "Components/Switch.swift",
         "Components/TabBar.swift",
         "Components/Tabs.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift",
         "Patterns/Adaptive.swift",
@@ -7924,7 +7810,6 @@
         "Components/Separator.swift",
         "Components/Switch.swift",
         "Components/TabBar.swift",
-        "Components/TextVariant.swift",
         "Components/Toast.swift",
         "Patterns/Adaptive.swift",
         "Patterns/OptionPicker.swift"
@@ -8016,7 +7901,6 @@
         "Components/Select.swift",
         "Components/Separator.swift",
         "Components/TabBar.swift",
-        "Components/TextVariant.swift",
         "Interactions/SelectionList.swift"
       ],
       "kotlin": [
@@ -8093,8 +7977,7 @@
         "Components/KeyboardScrollView.swift",
         "Components/Keypad.swift",
         "Components/Screen.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "blocks/VerifyCode.kt",
@@ -8167,8 +8050,7 @@
         "Components/Keypad.swift",
         "Components/Screen.swift",
         "Components/Separator.swift",
-        "Components/Spinner.swift",
-        "Components/TextVariant.swift"
+        "Components/Spinner.swift"
       ],
       "kotlin": [
         "blocks/VerifyDevice.kt",
@@ -8235,8 +8117,7 @@
         "Components/Button.swift",
         "Components/ButtonGroup.swift",
         "Components/KeyboardScrollView.swift",
-        "Components/Screen.swift",
-        "Components/TextVariant.swift"
+        "Components/Screen.swift"
       ],
       "kotlin": [
         "blocks/VerifyEmail.kt",
@@ -8275,8 +8156,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartAxes.kt",
@@ -8315,8 +8195,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartDefault.kt",
@@ -8355,8 +8234,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartGradient.kt",
@@ -8406,7 +8284,6 @@
         "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -8453,8 +8330,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartLinear.kt",
@@ -8494,8 +8370,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartRange.kt",
@@ -8539,8 +8414,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartSparkline.kt",
@@ -8580,8 +8454,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartStackedExpand.kt",
@@ -8620,8 +8493,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartStacked.kt",
@@ -8660,8 +8532,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/AreaChartStep.kt",
@@ -8701,8 +8572,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartActive.kt",
@@ -8741,8 +8611,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartDefault.kt",
@@ -8781,8 +8650,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartHorizontal.kt",
@@ -8822,8 +8690,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartHourly.kt",
@@ -8873,7 +8740,6 @@
         "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -8920,8 +8786,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartLabeled.kt",
@@ -8960,8 +8825,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartMultiple.kt",
@@ -9000,8 +8864,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartNegative.kt",
@@ -9041,8 +8904,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartRange.kt",
@@ -9081,8 +8943,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/BarChartStacked.kt",
@@ -9121,8 +8982,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartDefault.kt",
@@ -9162,8 +9022,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartDots.kt",
@@ -9202,8 +9061,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartForecast.kt",
@@ -9243,8 +9101,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartGoalDots.kt",
@@ -9284,8 +9141,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartGoal.kt",
@@ -9336,7 +9192,6 @@
         "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -9383,8 +9238,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartLabeled.kt",
@@ -9423,8 +9277,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartLinear.kt",
@@ -9463,8 +9316,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartMultiple.kt",
@@ -9503,8 +9355,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/LineChartStep.kt",
@@ -9543,8 +9394,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartActive.kt",
@@ -9583,8 +9433,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartDefault.kt",
@@ -9624,8 +9473,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartDonutText.kt",
@@ -9664,8 +9512,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartDonut.kt",
@@ -9705,8 +9552,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartHalf.kt",
@@ -9756,7 +9602,6 @@
         "Components/Haptics.swift",
         "Components/Item.swift",
         "Components/Separator.swift",
-        "Components/TextVariant.swift",
         "Components/Toggle.swift",
         "Components/ToggleGroup.swift"
       ],
@@ -9803,8 +9648,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartLabel.kt",
@@ -9843,8 +9687,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartLegend.kt",
@@ -9883,8 +9726,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartNested.kt",
@@ -9923,8 +9765,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/PieChartSeparated.kt",
@@ -9963,8 +9804,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartDefault.kt",
@@ -10003,8 +9843,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartDots.kt",
@@ -10043,8 +9882,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartGridCircle.kt",
@@ -10083,8 +9921,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartGridFilled.kt",
@@ -10123,8 +9960,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartGridNone.kt",
@@ -10171,8 +10007,7 @@
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartInteractive.kt",
@@ -10211,8 +10046,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartLegend.kt",
@@ -10251,8 +10085,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartLinesOnly.kt",
@@ -10291,8 +10124,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartMultiple.kt",
@@ -10331,8 +10163,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadarChartRadiusAxis.kt",
@@ -10372,8 +10203,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartBatteries.kt",
@@ -10414,8 +10244,7 @@
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartDefault.kt",
@@ -10455,8 +10284,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartGauge.kt",
@@ -10542,8 +10370,7 @@
         "Components/Field.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartLabel.kt",
@@ -10583,8 +10410,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartProgress.kt",
@@ -10661,8 +10487,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartStacked.kt",
@@ -10702,8 +10527,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartText.kt",
@@ -10742,8 +10566,7 @@
         "Components/Chart.swift",
         "Components/Haptics.swift",
         "Components/Item.swift",
-        "Components/Separator.swift",
-        "Components/TextVariant.swift"
+        "Components/Separator.swift"
       ],
       "kotlin": [
         "charts/RadialChartTinted.kt",

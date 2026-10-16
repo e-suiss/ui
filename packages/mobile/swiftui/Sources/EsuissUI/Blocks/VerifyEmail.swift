@@ -2,7 +2,7 @@ import PhosphorSwift
 import SwiftUI
 
 public struct VerifyEmail: View {
-  static let email = "jamie@suiss.com"
+  static let email = "jamie@example.com"
 
   private var onChangeAddress: (() -> Void)?
   private var onOpenMail: (() -> Void)?

@@ -47,6 +47,7 @@ public struct ChatSupport: View {
   @State private var lines: [Line]
   @State private var typing: Bool
   @State private var draft: String
+  @State private var replyTasks: [Task<Void, Never>] = []
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   public init(
@@ -102,6 +103,10 @@ public struct ChatSupport: View {
       }
       .animation(reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.72), value: open)
       .onChange(of: open) { _, value in onOpenChange?(value) }
+    }
+    .onDisappear {
+      replyTasks.forEach { $0.cancel() }
+      replyTasks.removeAll()
     }
   }
 
@@ -256,13 +261,13 @@ public struct ChatSupport: View {
       lines.append(Line(id: String(lines.count), fromMe: true, text: question))
     }
     typing = true
-    Task {
-      try? await Task.sleep(for: .milliseconds(1200))
+    replyTasks.append(Task {
+      guard (try? await Task.sleep(for: .milliseconds(1200))) != nil else { return }
       typing = false
       withAnimation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.7)) {
         lines.append(Line(id: String(lines.count), fromMe: false, text: Self.answers[question] ?? Self.fallback))
       }
-    }
+    })
   }
 }
 

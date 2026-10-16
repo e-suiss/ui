@@ -203,7 +203,9 @@ private struct LogLiveRow: View {
       Group {
         if let tint = event.tint {
           Text(verbatim: event.actor.split(separator: " ").compactMap(\.first).map(String.init).joined())
-            .font(.system(size: 11, weight: .semibold))
+            .scaledFont(.xs, weight: .semibold)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
             .foregroundStyle(EsuissColor.primaryForeground)
             .frame(width: 28, height: 28)
             .background(tint, in: Circle())
@@ -217,7 +219,7 @@ private struct LogLiveRow: View {
       }
       .accessibilityHidden(true)
       VStack(alignment: .leading, spacing: 1) {
-        (Text(verbatim: event.actor).fontWeight(.semibold) + Text(verbatim: " ") + Text(LocalizedStringKey(event.action)))
+        Text("\(Text(verbatim: event.actor).fontWeight(.semibold)) \(Text(LocalizedStringKey(event.action)))")
           .scaledFont(.sm)
           .lineLimit(1)
         Text(verbatim: event.detail)

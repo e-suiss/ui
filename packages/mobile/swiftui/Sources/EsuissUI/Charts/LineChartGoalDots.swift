@@ -73,7 +73,7 @@ public struct LineChartGoalDots: View {
             ) { payload in
               ChartTooltipContent(payload, hideIndicator: true) { item in
                 Text(verbatim: formatHours(item.value))
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

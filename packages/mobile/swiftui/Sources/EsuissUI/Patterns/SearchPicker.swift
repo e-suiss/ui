@@ -118,7 +118,7 @@ public struct SearchPicker: View {
             Text(verbatim: "")
           }
         }
-        .font(TextStyle.base.font())
+        .scaledFont(TextStyle.base)
         .lineLimit(1)
         .foregroundStyle(selected == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -205,7 +205,7 @@ struct SearchPickerPanel: View {
           .focused($focused)
           .textInputAutocapitalization(.never)
           .autocorrectionDisabled()
-          .font(TextStyle.xl.font())
+          .scaledFont(TextStyle.xl)
           .foregroundStyle(EsuissColor.foreground)
           .tint(EsuissColor.primary)
       }
@@ -219,7 +219,7 @@ struct SearchPickerPanel: View {
         LazyVStack(alignment: .leading, spacing: 0) {
           if groups.isEmpty {
             Text(emptyText)
-              .font(TextStyle.base.font())
+              .scaledFont(TextStyle.base)
               .foregroundStyle(EsuissColor.mutedForeground)
               .multilineTextAlignment(.center)
               .frame(maxWidth: .infinity)
@@ -229,7 +229,7 @@ struct SearchPickerPanel: View {
             VStack(alignment: .leading, spacing: 0) {
               if !group.name.isEmpty {
                 Text(verbatim: group.name)
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .foregroundStyle(EsuissColor.mutedForeground)
                   .padding(.horizontal, 12)
                   .padding(.top, 4)
@@ -276,7 +276,7 @@ struct SearchPickerRowStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     HStack(spacing: 12) {
       configuration.label
-        .font(TextStyle.base.font())
+        .scaledFont(TextStyle.base)
         .lineLimit(1)
         .frame(maxWidth: .infinity, alignment: .leading)
       if checked {

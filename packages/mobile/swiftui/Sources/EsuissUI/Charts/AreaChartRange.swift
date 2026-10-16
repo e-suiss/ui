@@ -85,7 +85,7 @@ public struct AreaChartRange: View {
                 Text(verbatim: item.key == "range"
                   ? "\(Int(readings[payload.index].low))–\(Int(readings[payload.index].high)) BPM"
                   : "\(Int(item.value)) BPM")
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

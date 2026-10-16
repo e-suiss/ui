@@ -224,7 +224,7 @@ public struct Widget<Content: View>: View {
     )
     .frame(width: frame?.width, height: frame?.height, alignment: center ? .center : .topLeading)
     .multilineTextAlignment(center ? .center : .leading)
-    .font(TextStyle.base.font())
+    .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
     .background(EsuissColor.muted, in: shape)
     .clipShape(shape)

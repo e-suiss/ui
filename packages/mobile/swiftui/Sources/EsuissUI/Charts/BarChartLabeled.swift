@@ -32,7 +32,7 @@ public struct BarChartLabeled: View {
                   .foregroundStyle(chartConfig.color("desktop"))
                   .annotation(position: .top, spacing: 8) {
                     Text(chartData[index].desktop, format: .number)
-                      .font(TextStyle.xs.font(weight: .semibold))
+                      .scaledFont(TextStyle.xs, weight: .semibold)
                       .foregroundStyle(EsuissColor.foreground)
                       .opacity(progress < 1 ? 0 : 1)
                   }

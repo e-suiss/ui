@@ -101,9 +101,9 @@ final class BlocksGalleryTests: XCTestCase {
   func testRendersLoginAccount() throws {
     try snapshot([
       Shot("Email") { LoginAccount() },
-      Shot("Password step") { LoginAccount(step: .password, email: "jamie@suiss.com", password: "secret") },
+      Shot("Password step") { LoginAccount(step: .password, email: "jamie@example.com", password: "secret") },
       Shot("Invalid") { LoginAccount(step: .email, email: "jamie", error: "Enter a valid suiss Account.") },
-      Shot("Signed in") { LoginAccount(step: .password, email: "jamie@suiss.com", signedIn: true) },
+      Shot("Signed in") { LoginAccount(step: .password, email: "jamie@example.com", signedIn: true) },
     ], name: "blocks-login-account")
   }
 
@@ -144,7 +144,7 @@ final class BlocksGalleryTests: XCTestCase {
     filled.first = "Jamie"
     filled.last = "Rivera"
     filled.birthday = "04/12/1994"
-    filled.email = "jamie@suiss.com"
+    filled.email = "jamie@example.com"
     filled.password = "Trail2024"
     filled.confirm = "Trail2025"
     var done = filled
@@ -160,17 +160,17 @@ final class BlocksGalleryTests: XCTestCase {
     try snapshot([
       Shot("Step 1") { SignupSteps() },
       Shot("Step 2") { SignupSteps(index: 1, values: ["Jamie Rivera", "jamie@suiss", ""]) },
-      Shot("Step 3 rules") { SignupSteps(index: 2, values: ["Jamie Rivera", "jamie@suiss.com", "trail2024"]) },
-      Shot("Done") { SignupSteps(index: 2, values: ["Jamie Rivera", "jamie@suiss.com", "Trail2024"], done: true) },
+      Shot("Step 3 rules") { SignupSteps(index: 2, values: ["Jamie Rivera", "jamie@example.com", "trail2024"]) },
+      Shot("Done") { SignupSteps(index: 2, values: ["Jamie Rivera", "jamie@example.com", "Trail2024"], done: true) },
     ], name: "blocks-signup-steps")
   }
 
   func testRendersSignupTrial() throws {
     try snapshot([
       Shot("Default") { SignupTrial() },
-      Shot("Filled") { SignupTrial(email: "jamie@suiss.com", password: "Trail2024", terms: true) },
-      Shot("Weak") { SignupTrial(email: "jamie@suiss.com", password: "trail", terms: false) },
-      Shot("Started") { SignupTrial(email: "jamie@suiss.com", password: "Trail2024", terms: true, done: true) },
+      Shot("Filled") { SignupTrial(email: "jamie@example.com", password: "Trail2024", terms: true) },
+      Shot("Weak") { SignupTrial(email: "jamie@example.com", password: "trail", terms: false) },
+      Shot("Started") { SignupTrial(email: "jamie@example.com", password: "Trail2024", terms: true, done: true) },
     ], name: "blocks-signup-trial")
   }
 
@@ -279,7 +279,7 @@ final class BlocksGalleryTests: XCTestCase {
     XCTAssertFalse(SignupSteps.steps[0].valid("J"))
     XCTAssertTrue(SignupSteps.steps[0].valid("Jamie"))
     XCTAssertFalse(SignupSteps.steps[1].valid("jamie@suiss"))
-    XCTAssertTrue(SignupSteps.steps[1].valid("jamie@suiss.com"))
+    XCTAssertTrue(SignupSteps.steps[1].valid("jamie@example.com"))
     XCTAssertFalse(SignupSteps.steps[2].valid("trail2024"))
     XCTAssertTrue(SignupSteps.steps[2].valid("Trail2024"))
   }

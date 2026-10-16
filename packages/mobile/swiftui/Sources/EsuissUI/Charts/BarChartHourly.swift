@@ -61,7 +61,7 @@ public struct BarChartHourly: View {
                 Text(verbatim: payload.label)
               } formatter: { item in
                 Text("\(Int(item.value)) min")
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

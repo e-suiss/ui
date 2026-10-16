@@ -226,8 +226,7 @@ public struct SettingsNotifications: View {
               .scaledFont(.xs, weight: .semibold)
               .opacity(0.9)
             Text(verbatim: "9:41")
-              .font(.system(size: 60, weight: .semibold))
-              .tracking(-2)
+              .scaledFont(.xl3, weight: .semibold)
           }
           .padding(.top, 50)
           if allow && enabled.contains(.lock) {

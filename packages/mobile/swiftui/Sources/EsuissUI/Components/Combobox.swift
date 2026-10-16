@@ -101,7 +101,7 @@ public struct Combobox<Item: Hashable & Sendable>: View {
               .foregroundStyle(EsuissColor.mutedForeground)
           }
         }
-        .font(TextStyle.base.font())
+        .scaledFont(TextStyle.base)
         .lineLimit(1)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(.leading, 12)
@@ -149,7 +149,7 @@ public struct Combobox<Item: Hashable & Sendable>: View {
       }
       if values.isEmpty {
         Text(placeholder)
-          .font(TextStyle.base.font())
+          .scaledFont(TextStyle.base)
           .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
       }
@@ -223,7 +223,7 @@ private struct ComboboxChip: View {
   var body: some View {
     HStack(spacing: 2) {
       Text(verbatim: text)
-        .font(TextStyle.xs.font())
+        .scaledFont(TextStyle.xs)
         .lineLimit(1)
       Button(action: remove) {
         Ph.x.regular
@@ -319,7 +319,7 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
     let list = VStack(alignment: .leading, spacing: 0) {
       if filtered.isEmpty {
         Text(emptyText)
-          .font(TextStyle.sm.font())
+          .scaledFont(TextStyle.sm)
           .foregroundStyle(EsuissColor.mutedForeground)
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity)
@@ -335,7 +335,7 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
         .focused($focused)
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled()
-        .font(TextStyle.base.font())
+        .scaledFont(TextStyle.base)
         .foregroundStyle(EsuissColor.foreground)
         .tint(EsuissColor.primary)
         .padding(.horizontal, 12)
@@ -351,7 +351,7 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
         ScrollView { list }
       }
     }
-    .font(TextStyle.base.font())
+    .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
     .popupSurface(radius: Radius.xl)
     .accessibilityElement(children: .contain)

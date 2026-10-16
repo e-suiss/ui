@@ -6,9 +6,9 @@ public enum SwipeActionVariant: CaseIterable, Sendable {
   var color: Color {
     switch self {
     case .default: EsuissColor.primary
-    case .destructive: .adaptive(light: .init(0xD0000A), dark: .init(0xB33B32))
-    case .archive: .adaptive(light: .init(0x994AC1), dark: .init(0x863FA9))
-    case .neutral: .adaptive(light: .init(0x66666A), dark: .init(0x555558))
+    case .destructive: EsuissColor.destructive
+    case .archive: Palette.purple500
+    case .neutral: Palette.zinc500
     }
   }
 }
@@ -336,7 +336,7 @@ public struct SwipeAction<Label: View>: View {
       } label: {
         label
           .labelStyle(SwipeActionLabelStyle())
-          .font(TextStyle.xs.font(weight: .medium))
+          .scaledFont(TextStyle.xs, weight: .medium)
           .multilineTextAlignment(.center)
           .foregroundStyle(EsuissColor.primaryForeground)
           .environment(\.layoutDirection, context.direction)

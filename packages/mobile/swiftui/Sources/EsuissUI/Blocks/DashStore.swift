@@ -268,7 +268,7 @@ public struct DashStore: View {
               let item = Self.week[index]
               BarMark(x: .value("Day", item.day), y: .value("Sales", key == "online" ? item.online : item.store), width: .fixed(12))
                 .position(by: .value("Channel", key), span: .fixed(27))
-                .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: Radius.xs, style: .continuous))
                 .foregroundStyle(chartConfig.color(key).opacity(active == nil || active == index ? 1 : 0.35))
             }
           }
@@ -303,7 +303,9 @@ public struct DashStore: View {
     Item(size: .sm, action: { onOrderPress?(order.id) }) {
       ItemMedia {
         Text(verbatim: order.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
-          .font(.system(size: 14, weight: .semibold))
+          .scaledFont(.xs, weight: .semibold)
+          .lineLimit(1)
+          .minimumScaleFactor(0.5)
           .foregroundStyle(EsuissColor.primaryForeground)
           .frame(width: 32, height: 32)
           .background(order.tint, in: Circle())

@@ -314,7 +314,7 @@ struct OverlayCloseButton: View {
       Button {
         dismiss?()
       } label: {
-        Text(label).font(TextStyle.base.font())
+        Text(label).scaledFont(TextStyle.base)
       }
       .buttonStyle(.variant(.plain, size: .sm))
     } else {

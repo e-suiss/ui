@@ -51,7 +51,7 @@ public struct TextStyle: Sendable, Hashable {
   }
 
   public func font(weight: Font.Weight = .regular) -> Font {
-    .system(size: size, weight: weight)
+    .system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
   }
 
   public var lineSpacing: CGFloat {
@@ -59,27 +59,44 @@ public struct TextStyle: Sendable, Hashable {
   }
 }
 
-extension Hashable where Self == Font {
-  public static func textStyle(_ style: TextStyle, weight: Font.Weight = .regular) -> Font {
-    style.font(weight: weight)
-  }
-}
-
 private struct TextStyleModifier: ViewModifier {
   let style: TextStyle
   let weight: Font.Weight
 
+  @ScaledMetric(relativeTo: .body) private var scale: CGFloat = 1
+
   func body(content: Content) -> some View {
+    let size = style.size * scale
+    let lineSpacing = max(0, style.lineHeight * scale - UIFont.systemFont(ofSize: size).lineHeight)
     content
-      .font(style.font(weight: weight))
-      .lineSpacing(style.lineSpacing)
-      .padding(.vertical, style.lineSpacing / 2)
+      .font(.system(size: size, weight: weight))
+      .lineSpacing(lineSpacing)
+      .padding(.vertical, lineSpacing / 2)
+  }
+}
+
+private struct FontStyleModifier: ViewModifier {
+  let style: TextStyle
+  let weight: Font.Weight
+
+  @ScaledMetric(relativeTo: .body) private var scale: CGFloat = 1
+
+  func body(content: Content) -> some View {
+    content.font(.system(size: style.size * scale, weight: weight))
   }
 }
 
 extension View {
   public func textStyle(_ style: TextStyle, weight: Font.Weight = .regular) -> some View {
     modifier(TextStyleModifier(style: style, weight: weight))
+  }
+
+  func scaledTextStyle(_ style: TextStyle, weight: Font.Weight = .regular) -> some View {
+    modifier(TextStyleModifier(style: style, weight: weight))
+  }
+
+  public func scaledFont(_ style: TextStyle, weight: Font.Weight = .regular) -> some View {
+    modifier(FontStyleModifier(style: style, weight: weight))
   }
 }
 

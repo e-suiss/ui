@@ -40,7 +40,7 @@ public struct Card<Content: View>: View {
     .padding(.vertical, size.spacing)
     .frame(maxWidth: .infinity, alignment: .leading)
     .environment(\.cardSpacing, size.spacing)
-    .font(TextStyle.base.font())
+    .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
     .background(variant == .filled ? EsuissColor.muted : EsuissColor.card, in: shape)
     .clipShape(shape)

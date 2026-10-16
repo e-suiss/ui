@@ -373,7 +373,7 @@ public struct DateCalendar: View {
     switch captionLayout {
     case .label:
       Text(verbatim: captionText(month))
-        .font(size.caption.font(weight: .semibold))
+        .scaledFont(size.caption, weight: .semibold)
         .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)
     case .dropdown:
@@ -385,13 +385,13 @@ public struct DateCalendar: View {
       HStack(spacing: 6) {
         monthMenu(month)
         Text(verbatim: String(calendar.component(.year, from: month)))
-          .font(size.caption.font(weight: .semibold))
+          .scaledFont(size.caption, weight: .semibold)
           .foregroundStyle(EsuissColor.foreground)
       }
     case .dropdownYears:
       HStack(spacing: 6) {
         Text(verbatim: monthSymbol(month, short: false))
-          .font(size.caption.font(weight: .semibold))
+          .scaledFont(size.caption, weight: .semibold)
           .foregroundStyle(EsuissColor.foreground)
         yearMenu(month)
       }
@@ -459,7 +459,7 @@ public struct DateCalendar: View {
   private func dropdownLabel(_ text: String) -> some View {
     HStack(spacing: 4) {
       Text(verbatim: text)
-        .font(size.caption.font(weight: .semibold))
+        .scaledFont(size.caption, weight: .semibold)
         .foregroundStyle(EsuissColor.foreground)
       Ph.caretDown.regular
         .frame(width: 14, height: 14)
@@ -484,7 +484,7 @@ public struct DateCalendar: View {
       }
       ForEach(Array(symbols.enumerated()), id: \.offset) { _, symbol in
         Text(verbatim: size == .sm ? symbol : symbol.uppercased(with: locale))
-          .font(size.weekday.font(weight: .semibold))
+          .scaledFont(size.weekday, weight: .semibold)
           .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)
           .frame(maxWidth: .infinity)
@@ -497,7 +497,7 @@ public struct DateCalendar: View {
     HStack(spacing: 0) {
       if showWeekNumber, let first = week.first {
         Text(verbatim: String(calendar.component(.weekOfYear, from: first)))
-          .font(TextStyle.xs.font())
+          .scaledFont(TextStyle.xs)
           .foregroundStyle(EsuissColor.mutedForeground)
           .frame(width: size.cell, height: size.cell)
       }
@@ -669,7 +669,7 @@ public struct CalendarDayButton: View {
     let style = size.day
     let cell = size.cell
     return Text(verbatim: String(calendar.component(.day, from: date)))
-      .font(style.font(weight: bold ? .semibold : .regular))
+      .scaledFont(style, weight: bold ? .semibold : .regular)
       .monospacedDigit()
       .foregroundStyle(foreground)
       .frame(width: cell, height: cell)

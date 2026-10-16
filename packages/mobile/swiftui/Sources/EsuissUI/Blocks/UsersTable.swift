@@ -17,12 +17,12 @@ public struct UsersTable: View {
 
   static var initialUsers: [User] {
     [
-      User(name: "Jamie Rivera", email: "jamie@company.com", role: "Admin", status: "Active", seen: "2 min ago", tint: Palette.indigo500),
-      User(name: "Morgan Lee", email: "morgan@company.com", role: "Editor", status: "Active", seen: "1 hr ago", tint: Palette.orange500),
-      User(name: "Riley Chen", email: "riley@company.com", role: "Support", status: "Active", seen: "Yesterday", tint: Palette.green500),
-      User(name: "Taylor Kim", email: "taylor@company.com", role: "Viewer", status: "Suspended", seen: "3 days ago", tint: Palette.blue500),
-      User(name: "Avery Brooks", email: "avery@company.com", role: "Editor", status: "Invited", seen: "—", tint: Palette.pink500),
-      User(name: "Jordan Park", email: "jordan@company.com", role: "Support", status: "Active", seen: "5 hr ago", tint: Palette.teal400),
+      User(name: "Jamie Rivera", email: "jamie@example.com", role: "Admin", status: "Active", seen: "2 min ago", tint: Palette.indigo500),
+      User(name: "Morgan Lee", email: "morgan@example.com", role: "Editor", status: "Active", seen: "1 hr ago", tint: Palette.orange500),
+      User(name: "Riley Chen", email: "riley@example.com", role: "Support", status: "Active", seen: "Yesterday", tint: Palette.green500),
+      User(name: "Taylor Kim", email: "taylor@example.com", role: "Viewer", status: "Suspended", seen: "3 days ago", tint: Palette.blue500),
+      User(name: "Avery Brooks", email: "avery@example.com", role: "Editor", status: "Invited", seen: "—", tint: Palette.pink500),
+      User(name: "Jordan Park", email: "jordan@example.com", role: "Support", status: "Active", seen: "5 hr ago", tint: Palette.teal400),
     ]
   }
 
@@ -204,7 +204,9 @@ private struct UsersTableRow: View {
   var body: some View {
     HStack(spacing: 10) {
       Text(verbatim: user.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
-        .font(.system(size: 12, weight: .semibold))
+        .scaledFont(.xs, weight: .semibold)
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
         .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 32, height: 32)
         .background(user.tint, in: Circle())

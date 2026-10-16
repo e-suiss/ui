@@ -71,6 +71,7 @@ struct LoginSheetPanel: View {
 
   @State private var email = "hide"
   @State private var busy = false
+  @State private var task: Task<Void, Never>?
   @Environment(\.overlayDismiss) private var dismiss
 
   var body: some View {
@@ -114,7 +115,7 @@ struct LoginSheetPanel: View {
         EsuissColor.border.frame(height: 1).padding(.leading, 46)
         RadioGroup(selection: $email) {
           VStack(spacing: 0) {
-            option("share", label: "Share My Email", hint: Text(verbatim: "jamie@suiss.com"), icon: true)
+            option("share", label: "Share My Email", hint: Text(verbatim: "jamie@example.com"), icon: true)
             EsuissColor.border.frame(height: 1).padding(.leading, 46)
             option("hide", label: "Hide My Email", hint: Text("A unique address that forwards to you"), icon: false)
           }
@@ -124,8 +125,9 @@ struct LoginSheetPanel: View {
       Button {
         onContinue?(email == "share")
         busy = true
-        Task {
-          try? await Task.sleep(for: .milliseconds(1000))
+        task?.cancel()
+        task = Task {
+          guard (try? await Task.sleep(for: .milliseconds(1000))) != nil else { return }
           busy = false
           onComplete()
         }
@@ -144,6 +146,7 @@ struct LoginSheetPanel: View {
     .padding(.top, 14)
     .padding(.bottom, 16)
     .background(EsuissColor.popover)
+    .onDisappear { task?.cancel() }
   }
 
   private func option(_ value: String, label: LocalizedStringKey, hint: Text, icon: Bool) -> some View {

@@ -25,18 +25,18 @@ public struct ToastItem: Identifiable, Sendable {
   public var duration: Duration?
 }
 
-@Observable
-public final class ToastManager: @unchecked Sendable {
-  public static let shared = ToastManager()
+@MainActor @Observable
+public final class ToastManager {
+  public nonisolated static let shared = ToastManager()
 
   public private(set) var toasts: [ToastItem] = []
   public var limit = 3
 
   @ObservationIgnored private var timers: [UUID: Task<Void, Never>] = [:]
 
-  public init() {}
+  public nonisolated init() {}
 
-  @MainActor @discardableResult
+  @discardableResult
   public func show(
     _ title: LocalizedStringResource,
     description: LocalizedStringResource? = nil,
@@ -58,32 +58,31 @@ public final class ToastManager: @unchecked Sendable {
     return item.id
   }
 
-  @MainActor @discardableResult
+  @discardableResult
   public func success(_ title: LocalizedStringResource, description: LocalizedStringResource? = nil, action: ToastAction? = nil) -> UUID {
     show(title, description: description, type: .success, action: action)
   }
 
-  @MainActor @discardableResult
+  @discardableResult
   public func info(_ title: LocalizedStringResource, description: LocalizedStringResource? = nil, action: ToastAction? = nil) -> UUID {
     show(title, description: description, type: .info, action: action)
   }
 
-  @MainActor @discardableResult
+  @discardableResult
   public func warning(_ title: LocalizedStringResource, description: LocalizedStringResource? = nil, action: ToastAction? = nil) -> UUID {
     show(title, description: description, type: .warning, action: action)
   }
 
-  @MainActor @discardableResult
+  @discardableResult
   public func error(_ title: LocalizedStringResource, description: LocalizedStringResource? = nil, action: ToastAction? = nil) -> UUID {
     show(title, description: description, type: .error, action: action)
   }
 
-  @MainActor @discardableResult
+  @discardableResult
   public func loading(_ title: LocalizedStringResource, description: LocalizedStringResource? = nil) -> UUID {
     show(title, description: description, type: .loading)
   }
 
-  @MainActor
   public func update(
     _ id: UUID,
     title: LocalizedStringResource? = nil,
@@ -100,21 +99,18 @@ public final class ToastManager: @unchecked Sendable {
     announce(toasts[index])
   }
 
-  @MainActor
   public func dismiss(_ id: UUID) {
     timers[id]?.cancel()
     timers[id] = nil
     toasts.removeAll { $0.id == id }
   }
 
-  @MainActor
   public func dismissAll() {
     timers.values.forEach { $0.cancel() }
     timers.removeAll()
     toasts.removeAll()
   }
 
-  @MainActor
   private func schedule(_ item: ToastItem) {
     timers[item.id]?.cancel()
     guard let duration = item.duration else {
@@ -129,7 +125,6 @@ public final class ToastManager: @unchecked Sendable {
     }
   }
 
-  @MainActor
   private func announce(_ item: ToastItem) {
     var text = String(localized: item.title)
     if let description = item.description {
@@ -183,6 +178,7 @@ struct ToastStack: View {
           .offset(y: offset)
           .opacity(index >= manager.limit ? 0 : 1)
           .allowsHitTesting(index < manager.limit)
+          .accessibilityHidden(index >= manager.limit)
           .zIndex(Double(-index))
           .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
         }
@@ -228,11 +224,11 @@ struct ToastCard: View {
       ToastIcon(type: item.type)
       VStack(alignment: .leading, spacing: 4) {
         Text(item.title)
-          .font(TextStyle.sm.font(weight: .semibold))
+          .scaledFont(TextStyle.sm, weight: .semibold)
           .foregroundStyle(EsuissColor.foreground)
         if let description = item.description {
           Text(description)
-            .font(TextStyle.sm.font())
+            .scaledFont(TextStyle.sm)
             .foregroundStyle(EsuissColor.mutedForeground)
         }
       }
