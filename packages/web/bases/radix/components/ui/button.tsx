@@ -92,6 +92,7 @@ function Button({
   size,
   block,
   asChild = false,
+  type,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -104,6 +105,7 @@ function Button({
       data-slot="button"
       className={cn(buttonVariants({ variant, size, block, className }))}
       {...props}
+      type={asChild ? undefined : (type ?? "button")}
     />
   )
 }
