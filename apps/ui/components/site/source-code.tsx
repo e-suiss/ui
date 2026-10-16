@@ -4,23 +4,31 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const FOLDED = 320
+const LINE_HEIGHT = 25
+const CHROME = 72
+
+const isLong = (height: number) => height > FOLDED + 40
 
 export function SourceCode({
   children,
+  lines,
   onExpand,
 }: {
   children: React.ReactNode
+  lines?: number
   onExpand?: () => void
 }) {
   const [open, setOpen] = React.useState(false)
-  const [long, setLong] = React.useState(true)
+  const [long, setLong] = React.useState(
+    lines === undefined || isLong(lines * LINE_HEIGHT + CHROME)
+  )
   const ref = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     const content = ref.current
     if (!content) return
     const measure = () => {
-      if (content.scrollHeight > 0) setLong(content.scrollHeight > FOLDED + 40)
+      if (content.scrollHeight > 0) setLong(isLong(content.scrollHeight))
     }
     const observer = new ResizeObserver(measure)
     observer.observe(content)

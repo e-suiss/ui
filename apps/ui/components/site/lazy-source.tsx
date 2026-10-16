@@ -17,6 +17,7 @@ export function LazySource({
   variants,
   title,
   long = false,
+  lines,
   fold = true,
   children,
 }: {
@@ -24,6 +25,7 @@ export function LazySource({
   variants: Variants
   title?: string
   long?: boolean
+  lines?: number
   fold?: boolean
   children: React.ReactNode
 }) {
@@ -64,7 +66,9 @@ export function LazySource({
   )
 
   return fold ? (
-    <SourceCode onExpand={() => setExpanded(true)}>{block}</SourceCode>
+    <SourceCode lines={lines} onExpand={() => setExpanded(true)}>
+      {block}
+    </SourceCode>
   ) : (
     block
   )

@@ -58,7 +58,12 @@ async function preview(file: string) {
     file,
     long ? sourceUrl(file) : undefined
   )
-  return { block, long, variants: await sourceVariants(file) }
+  return {
+    block,
+    long,
+    lines: Math.min(lines.length, PREVIEW_LINES),
+    variants: await sourceVariants(file),
+  }
 }
 
 export async function ComponentSource({
@@ -68,13 +73,14 @@ export async function ComponentSource({
   path: string
   fold?: boolean
 }) {
-  const { block, long, variants } = await preview(file)
+  const { block, long, lines, variants } = await preview(file)
   return (
     <LazySource
       file={file}
       variants={variants}
       title={file}
       long={long}
+      lines={lines}
       fold={fold || long}
     >
       {block}
