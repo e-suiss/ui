@@ -247,19 +247,21 @@ The menu is uncontrolled by default; set `defaultOpen` to start open, or control
 
 Selecting a regular item closes the menu.
 
+Checkbox and radio items keep the menu open so several choices can be made in a row.
+
 <OnlyBase base="base radix">
 
-Checkbox and radio items keep the menu open so several choices can be made in a row.
+Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Checkbox items keep the menu open so several can be toggled in a row; choosing a radio item closes it.
+Checkbox items are uncontrolled with `defaultSelected`, or controlled with `isSelected` and `onChange`. Radio groups take `defaultValue`, or `value` and `onChange`, and each radio item needs a `value`.
 
 </OnlyBase>
 
-Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Set `inset` on items and labels without an icon to align their text with items that have one, and set `variant="destructive"` on items that delete or remove something.
+Set `inset` on items and labels without an icon to align their text with items that have one, and set `variant="destructive"` on items that delete or remove something.
 
 ## Examples
 

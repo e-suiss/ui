@@ -33,7 +33,7 @@ Every item is published for three primitive bases under the same name. The regis
 | `radix-nova`, `radix-vega` and any other `radix-*` style, `new-york`, `default` | The second base |
 | `aria-nova`, `aria-vega` and any other `aria-*` style | The third base |
 
-All three install the same files into the same folders, with the same component names and styles. They differ in how a part takes a custom element: the default base passes it to `render`, the second base wraps it with `asChild`, and in the third base the pressable element itself is the trigger, with state props such as `isOpen` and `isDisabled`.
+All three install the same files into the same folders, with the same component names and styles. They differ in how a part takes a custom element: the default base passes it to `render`, the second base wraps it with `asChild`, and in the third base the pressable element itself is the trigger, with state props such as `isOpen` and `isDisabled`. Patterns, `Button`, `Checkbox` and `AccordionItem` on the third base also take the default base's prop names, such as `open`, `disabled`, `checked` and, on pattern triggers, `render`.
 
 ```tsx
 <DialogTrigger render={<Button variant="outline" />}>Open</DialogTrigger>
