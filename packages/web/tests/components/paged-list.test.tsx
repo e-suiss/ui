@@ -1,6 +1,6 @@
 import type * as React from "react"
 import { afterEach, describe, expect, it, vi } from "vitest"
-import { page } from "vitest/browser"
+import { page, userEvent } from "vitest/browser"
 import { render } from "vitest-browser-react"
 
 import { PagedList } from "@/components/patterns/paged-list"
@@ -182,6 +182,16 @@ describe("PagedList", () => {
     await expect.element(control("Older")).toHaveAttribute("href", "#page-2")
     await expect.element(control("Older")).toHaveTextContent("Older")
     await expect.element(control("Newer")).toHaveTextContent("Newer")
+  })
+
+  it("does not follow a disabled link from the keyboard", async () => {
+    window.location.hash = ""
+    await render(
+      <List count={30} getPageHref={(target) => `#page-${target}`} />
+    )
+    previous().element().focus()
+    await userEvent.keyboard("{Enter}")
+    expect(window.location.hash).toBe("")
   })
 
   it("loads more items instead of paginating on mobile", async () => {

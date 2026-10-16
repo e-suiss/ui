@@ -359,4 +359,23 @@ describe("DatePicker on mobile", () => {
     await press("Year", "{ArrowDown}")
     expect(onValueChange).toHaveBeenCalledTimes(1)
   })
+
+  it("starts the wheels inside the year range without a value", async () => {
+    await page.viewport(390, 844)
+    await render(
+      <DatePicker
+        aria-label="Date"
+        locale="en-US"
+        fromYear={1990}
+        toYear={1995}
+      />
+    )
+    await trigger().click()
+    await expect.element(wheel("Year")).toBeVisible()
+    await expect
+      .poll(() => wheel("Year").element().getAttribute("aria-activedescendant"))
+      .not.toBeNull()
+    const active = wheel("Year").element().getAttribute("aria-activedescendant")
+    expect(document.getElementById(active ?? "")?.textContent).toBe("1995")
+  })
 })

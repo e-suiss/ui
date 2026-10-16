@@ -84,6 +84,15 @@ function UndoBarProvider({
     setVisible(true)
   }, [])
 
+  React.useEffect(
+    () => () => {
+      const current = entryRef.current
+      entryRef.current = null
+      current?.onCommit?.()
+    },
+    []
+  )
+
   const undo = React.useCallback(() => settle(true), [settle])
   const dismiss = React.useCallback(() => settle(false), [settle])
 

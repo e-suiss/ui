@@ -93,7 +93,8 @@ function PagedList<T>({
   const link = (target: number) => ({
     href: getPageHref?.(target) ?? "#",
     onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!getPageHref) event.preventDefault()
+      if (!getPageHref || target < 1 || target > pageCount)
+        event.preventDefault()
       setPage(target)
     },
   })

@@ -29,6 +29,17 @@ function daysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate()
 }
 
+function fallbackDate(fromYear: number, toYear: number) {
+  const today = new Date()
+  const year = Math.min(Math.max(today.getFullYear(), fromYear), toYear)
+  if (year === today.getFullYear()) return today
+  return new Date(
+    year,
+    today.getMonth(),
+    Math.min(today.getDate(), daysInMonth(year, today.getMonth()))
+  )
+}
+
 function yearRange(fromYear: number | undefined, toYear: number | undefined) {
   if (fromYear !== undefined && toYear !== undefined) {
     return { fromYear, toYear }
@@ -277,8 +288,8 @@ function DateWheels({
   fromYear?: number
   toYear?: number
 }) {
-  const value = valueProp ?? new Date()
   const { fromYear, toYear } = yearRange(fromYearProp, toYearProp)
+  const value = valueProp ?? fallbackDate(fromYear, toYear)
   const year = value.getFullYear()
   const month = value.getMonth()
   const day = value.getDate()

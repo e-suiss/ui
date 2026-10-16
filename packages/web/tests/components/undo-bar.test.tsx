@@ -199,6 +199,16 @@ describe("UndoBar", () => {
     expect(onCommit).toHaveBeenCalledTimes(1)
   })
 
+  it("commits a pending entry when the provider unmounts", async () => {
+    const { harness, onUndo, onCommit } = setup({ timeout: 5000 })
+    const screen = await render(harness)
+    await page.getByRole("button", { name: "Delete Groceries" }).click()
+    await expect.poll(title).toBe("Groceries deleted")
+    screen.unmount()
+    expect(onCommit).toHaveBeenCalledExactlyOnceWith("Groceries")
+    expect(onUndo).not.toHaveBeenCalled()
+  })
+
   it("restarts the countdown for the newer entry", async () => {
     const { harness, onCommit } = setup({ timeout: 600 })
     await render(harness)
