@@ -9,7 +9,7 @@ export type Swap<T> = { from: string[]; bases: Record<string, T[]> }
 export type Piece = { name: string; title?: string; href?: string }
 
 export type BaseItems = {
-  packages?: Swap<string>
+  packages?: Swap<string> & { command?: string }
   pieces?: Swap<Piece> & { step?: number }
 }
 
@@ -65,6 +65,13 @@ function piece(name: string): Piece {
   return page ? { name, title: page.data.title, href: page.url } : { name }
 }
 
+const INSTALL_COMMAND =
+  /^\d+\. Install the dependencies and add the [^\n]*\n+```bash title="Terminal"\n(npm install[^\n]*)$/m
+
+async function installCommand(text: () => Promise<string>) {
+  return (await text()).match(INSTALL_COMMAND)?.[1]
+}
+
 async function piecesStep(text: () => Promise<string>) {
   const match = (await text()).match(
     new RegExp(`^(\\d+)\\. ${strings.piecesLead}`, "m")
@@ -89,7 +96,11 @@ export async function baseItems(
   }
   const result: BaseItems = {
     ...(Object.keys(packages).length > 0 && {
-      packages: { from: own.packages, bases: packages },
+      packages: {
+        from: own.packages,
+        bases: packages,
+        command: await installCommand(text),
+      },
     }),
     ...(Object.keys(pieces).length > 0 && {
       pieces: {

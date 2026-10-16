@@ -5,6 +5,7 @@ import * as React from "react"
 import { useBaseItems } from "@/components/site/base-items"
 import { useCodeOptions } from "@/components/site/code-options"
 import { CodeScroll } from "@/components/site/code-scroll"
+import { copyText } from "@/lib/clipboard"
 import { ICON_PACKAGES, type IconLibrary } from "@/lib/code-options"
 import type { Swap } from "@/lib/dependencies"
 import { strings } from "@/lib/strings"
@@ -71,6 +72,26 @@ function convertLine(line: string, manager: Manager) {
   return line
 }
 
+const hasPackages = (line: string) =>
+  !NPM_INSTALL.test(line) ||
+  line
+    .replace(NPM_INSTALL, "")
+    .trim()
+    .split(" ")
+    .some((word) => word && !word.startsWith("-"))
+
+export function usePackageLines(command: string) {
+  const { icons, base } = useCodeOptions()
+  const { packages } = useBaseItems()
+  return command
+    .trim()
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => withIcons(withBase(line, base, packages), icons))
+    .filter(hasPackages)
+}
+
 export function isPackageCommand(text: string) {
   return text
     .split("\n")
@@ -132,9 +153,11 @@ function CopyButton({ text }: { text: string }) {
     <button
       type="button"
       aria-label={copied ? strings.copied : strings.copy}
-      onClick={async () => {
-        await navigator.clipboard.writeText(text)
-        setCopied(true)
+      onClick={() => {
+        copyText(text).then(
+          () => setCopied(true),
+          () => undefined
+        )
       }}
       className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foreground text-background outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50"
     >
@@ -162,16 +185,10 @@ function Line({ line }: { line: string }) {
 
 export function PackageCommand({ command }: { command: string }) {
   const [manager, choose] = useManager()
-  const { icons, base } = useCodeOptions()
-  const { packages } = useBaseItems()
-  const lines = command
-    .trim()
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) =>
-      convertLine(withIcons(withBase(line, base, packages), icons), manager)
-    )
+  const lines = usePackageLines(command).map((line) =>
+    convertLine(line, manager)
+  )
+  if (lines.length === 0) return null
 
   return (
     <figure
@@ -196,7 +213,7 @@ export function PackageCommand({ command }: { command: string }) {
                 "flex cursor-pointer items-center gap-2 py-0.5 font-mono text-[11px] tracking-[0.02em] uppercase outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50",
                 active
                   ? "text-foreground"
-                  : "text-muted-foreground hover:text-muted-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               <span
