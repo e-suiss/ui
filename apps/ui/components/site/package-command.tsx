@@ -2,10 +2,11 @@
 
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { useBaseItems } from "@/components/site/base-items"
 import { useCodeOptions } from "@/components/site/code-options"
 import { CodeScroll } from "@/components/site/code-scroll"
 import { ICON_PACKAGES, type IconLibrary } from "@/lib/code-options"
-import type { BaseDependencies } from "@/lib/dependencies"
+import type { Swap } from "@/lib/dependencies"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
@@ -20,39 +21,21 @@ const NPX = /^npx\s+(?!expo\s)/
 const NPM_INSTALL = /^npm\s+(?:install|i)(?=\s|$)/
 const SAVE_DEV = /\s--save-dev\b/
 
-const DependenciesContext = React.createContext<BaseDependencies | undefined>(
-  undefined
-)
-
-export function InstallDependencies({
-  value,
-  children,
-}: {
-  value: BaseDependencies | undefined
-  children: React.ReactNode
-}) {
-  return (
-    <DependenciesContext.Provider value={value}>
-      {children}
-    </DependenciesContext.Provider>
-  )
-}
-
 function withBase(
   line: string,
   base: string,
-  dependencies: BaseDependencies | undefined
+  packages: Swap<string> | undefined
 ) {
-  const own = dependencies?.bases[base]
-  if (!dependencies || !own || !NPM_INSTALL.test(line)) return line
+  const own = packages?.bases[base]
+  if (!packages || !own || !NPM_INSTALL.test(line)) return line
   const words = line.replace(NPM_INSTALL, "").trim().split(" ")
   const flags = words.filter((word) => word.startsWith("-"))
   const names = words.filter((word) => !word.startsWith("-"))
   const icons = names.filter((name) => name === ICON_PACKAGES.phosphor)
   const rest = names.filter((name) => name !== ICON_PACKAGES.phosphor)
   const matches =
-    rest.length === dependencies.dependencies.length &&
-    rest.every((name) => dependencies.dependencies.includes(name))
+    rest.length === packages.from.length &&
+    rest.every((name) => packages.from.includes(name))
   if (!matches) return line
   return ["npm install", ...own, ...icons, ...flags].join(" ")
 }
@@ -180,14 +163,14 @@ function Line({ line }: { line: string }) {
 export function PackageCommand({ command }: { command: string }) {
   const [manager, choose] = useManager()
   const { icons, base } = useCodeOptions()
-  const dependencies = React.useContext(DependenciesContext)
+  const { packages } = useBaseItems()
   const lines = command
     .trim()
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) =>
-      convertLine(withIcons(withBase(line, base, dependencies), icons), manager)
+      convertLine(withIcons(withBase(line, base, packages), icons), manager)
     )
 
   return (

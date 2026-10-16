@@ -14,6 +14,7 @@ export const strings = {
   documentation: "Documentation",
   getStarted: "Get started",
   github: "GitHub",
+  piecesLead: "Add the pieces it builds on:",
   copyright: "Copyright © 2026 suiss. All rights reserved.",
   license: "Released under open-source licenses.",
   heroLead:

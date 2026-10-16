@@ -109,6 +109,10 @@ export function PlatformSwitcher({ platforms }: { platforms: Platform[] }) {
   )
 }
 
+const SectionContext = React.createContext<string | undefined>(undefined)
+
+export const usePlatformSection = () => React.useContext(SectionContext)
+
 export function Only({
   platform,
   children,
@@ -117,8 +121,10 @@ export function Only({
   children: React.ReactNode
 }) {
   return (
-    <div data-only={platform} className="contents">
-      {children}
-    </div>
+    <SectionContext.Provider value={platform}>
+      <div data-only={platform} className="contents">
+        {children}
+      </div>
+    </SectionContext.Provider>
   )
 }
