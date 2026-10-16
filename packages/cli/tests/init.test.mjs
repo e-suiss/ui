@@ -215,7 +215,7 @@ describe("init options", () => {
     const cwd = viteProject()
     await init({ cwd, yes: true, base: "radix" })
     const config = JSON.parse(read(cwd, "components.json"))
-    expect(config.style).toBe("radix-nova")
+    expect(config.style).toBe("radix-suiss")
     expect(config.tailwind.css).toBe("src/index.css")
     expect(config.rsc).toBe(false)
     expect(read(cwd, "src/components/ui/button.tsx")).toBe(

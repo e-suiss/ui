@@ -24,7 +24,6 @@ const BASES = path.join(ROOT, "bases")
 const STYLESHEET = "styles/globals.css"
 const NAMESPACE = "@esuiss"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
-const BUILT_IN = new Set(["utils"])
 const OPT_IN = new Set(["theme"])
 const ITEM_CSS = new Map([["theme", "styles/theme.css"]])
 const ICON_PLACEHOLDER = "@/app/(create)/components/icon-placeholder"
@@ -230,8 +229,8 @@ async function toStandard(entry) {
     type: nested ? "registry:component" : source.type,
     ...(nested && { target: `@${entry.file}` }),
   }
-  const registryDependencies = entry.requires.map((name) =>
-    BUILT_IN.has(name) ? name : `${NAMESPACE}/${name}`
+  const registryDependencies = entry.requires.map(
+    (name) => `${NAMESPACE}/${name}`
   )
   const docs = entry.page?.url ?? DOC_PAGES[entry.name]
   const css = ITEM_CSS.get(entry.name)

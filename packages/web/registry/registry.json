@@ -13,7 +13,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -38,7 +38,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/use-scrollbar-gap",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -63,7 +63,7 @@
       ],
       "registryDependencies": [
         "@esuiss/use-scrollbar-gap",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -86,7 +86,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -106,7 +106,7 @@
       "title": "Aspect Ratio",
       "description": "A container that keeps its content at a fixed width-to-height ratio.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -131,7 +131,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -154,7 +154,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -178,7 +178,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -201,7 +201,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -225,7 +225,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -250,7 +250,7 @@
       ],
       "registryDependencies": [
         "@esuiss/separator",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -274,7 +274,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -298,7 +298,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -318,7 +318,7 @@
       "title": "Card",
       "description": "A raised container that groups related content and actions about a single subject.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -343,7 +343,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/direction",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -366,7 +366,7 @@
         "recharts"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -389,7 +389,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -434,7 +434,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/input-group",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -459,7 +459,7 @@
       "registryDependencies": [
         "@esuiss/dialog",
         "@esuiss/use-platform",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -483,7 +483,7 @@
       ],
       "registryDependencies": [
         "@esuiss/use-platform",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -508,7 +508,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/use-scrollbar-gap",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -553,7 +553,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/use-scrollbar-gap",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -577,7 +577,7 @@
       ],
       "registryDependencies": [
         "@esuiss/use-platform",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -600,7 +600,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -625,7 +625,7 @@
       "registryDependencies": [
         "@esuiss/label",
         "@esuiss/separator",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -649,7 +649,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -672,7 +672,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -698,7 +698,7 @@
         "@esuiss/button",
         "@esuiss/input",
         "@esuiss/textarea",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -721,7 +721,7 @@
         "input-otp"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -744,7 +744,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -768,7 +768,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -789,7 +789,7 @@
       "description": "Displays a keyboard key or shortcut, with a platform-aware modifier symbol.",
       "registryDependencies": [
         "@esuiss/use-platform",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -809,7 +809,7 @@
       "title": "Label",
       "description": "An accessible text label that names a form control.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -833,7 +833,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -857,7 +857,7 @@
       ],
       "registryDependencies": [
         "@esuiss/dropdown-menu",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -883,7 +883,7 @@
         "@esuiss/button",
         "@esuiss/scroll-area",
         "@esuiss/use-message-scroller",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -903,7 +903,7 @@
       "title": "Message",
       "description": "Lays out a single chat message with an optional avatar, header and footer.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -923,7 +923,7 @@
       "title": "Native Select",
       "description": "A styled native select element for choosing one option from a list.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -947,7 +947,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -971,7 +971,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -994,7 +994,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1017,7 +1017,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1042,7 +1042,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/use-questionnaire",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1065,7 +1065,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1088,7 +1088,7 @@
         "react-resizable-panels"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1111,7 +1111,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1134,7 +1134,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1157,7 +1157,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1182,7 +1182,7 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/use-scrollbar-gap",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1215,7 +1215,7 @@
         "@esuiss/tooltip",
         "@esuiss/use-mobile",
         "@esuiss/use-platform",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1235,7 +1235,7 @@
       "title": "Skeleton",
       "description": "A pulsing placeholder block that stands in for content while it loads.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1258,7 +1258,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1278,7 +1278,7 @@
       "title": "Spinner",
       "description": "An eight-spoke activity indicator that shows an indeterminate wait.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1301,7 +1301,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1325,7 +1325,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1345,7 +1345,7 @@
       "title": "Table",
       "description": "Styled native table elements for displaying rows of structured data.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1369,7 +1369,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1389,7 +1389,7 @@
       "title": "Textarea",
       "description": "A multi-line text field that grows with its content, with an optional resize handle.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1410,7 +1410,7 @@
       "description": "A theme provider with a light, dark and system toggle and an animated switch between them.",
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1492,7 +1492,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1517,7 +1517,7 @@
       ],
       "registryDependencies": [
         "@esuiss/toggle",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1541,7 +1541,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1564,7 +1564,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1584,7 +1584,7 @@
       "title": "Wheel Picker",
       "description": "A scrolling, 3D-curved wheel of options, like the iOS picker, for choosing values such as dates and times.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1604,7 +1604,7 @@
       "title": "Widget",
       "description": "A rounded card in the style of home screen widgets, with fixed sizes and optional drag-to-resize.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1632,7 +1632,7 @@
         "@esuiss/drawer",
         "@esuiss/menubar",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1684,7 +1684,7 @@
       "registryDependencies": [
         "@esuiss/sidebar",
         "@esuiss/tab-bar",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1713,7 +1713,7 @@
         "@esuiss/drawer",
         "@esuiss/use-mobile",
         "@esuiss/use-platform",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1769,7 +1769,7 @@
         "@esuiss/alert-sheet",
         "@esuiss/context-menu",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1797,7 +1797,7 @@
         "@esuiss/drawer",
         "@esuiss/popover",
         "@esuiss/use-mobile",
-        "utils",
+        "@esuiss/utils",
         "@esuiss/wheel-picker"
       ],
       "files": [
@@ -1828,7 +1828,7 @@
         "@esuiss/drawer",
         "@esuiss/popover",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1855,7 +1855,7 @@
         "@esuiss/dialog",
         "@esuiss/drawer",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1882,7 +1882,7 @@
         "@esuiss/fullscreen-menu",
         "@esuiss/navigation-menu",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1909,7 +1909,7 @@
         "@esuiss/button",
         "@esuiss/pagination",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1936,7 +1936,7 @@
         "@esuiss/drawer",
         "@esuiss/sheet",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -1989,7 +1989,7 @@
         "@esuiss/drawer",
         "@esuiss/hover-card",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2017,7 +2017,7 @@
         "@esuiss/command",
         "@esuiss/drawer",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2072,7 +2072,7 @@
       "registryDependencies": [
         "@esuiss/resizable",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2098,7 +2098,7 @@
       "registryDependencies": [
         "@esuiss/table",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2127,7 +2127,7 @@
       "registryDependencies": [
         "@esuiss/breadcrumb",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2151,7 +2151,7 @@
       "title": "Island",
       "description": "A floating pill at the top of the screen that shows live activities and brief notifications, like the Dynamic Island.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2177,7 +2177,7 @@
       "registryDependencies": [
         "@esuiss/input-otp",
         "@esuiss/use-mobile",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2204,7 +2204,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2229,7 +2229,7 @@
       "description": "A scroll container that refreshes its content when the user pulls down from the top.",
       "registryDependencies": [
         "@esuiss/spinner",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2253,7 +2253,7 @@
       "title": "Search Reveal",
       "description": "A scrolling list with a search field tucked above it that appears when the user scrolls up.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2277,7 +2277,7 @@
       "title": "Section Index",
       "description": "An A to Z index bar for jumping between sections of a long list by tapping, dragging, or typing.",
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2302,7 +2302,7 @@
       "description": "A list with an edit mode for selecting multiple rows and acting on them from a floating toolbar.",
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2329,7 +2329,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2356,7 +2356,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2383,7 +2383,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -2408,7 +2408,7 @@
       "description": "A floating bar that offers to undo the last action for a few seconds before committing it.",
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -5081,7 +5081,7 @@
       "description": "A pair of promotional hero tiles, each with a title, tagline, two actions, and a product image.",
       "registryDependencies": [
         "@esuiss/button",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {
@@ -5441,7 +5441,7 @@
         "@esuiss/button",
         "@esuiss/label",
         "@esuiss/radio-group",
-        "utils"
+        "@esuiss/utils"
       ],
       "files": [
         {

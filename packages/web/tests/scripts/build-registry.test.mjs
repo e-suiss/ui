@@ -439,7 +439,9 @@ import { Dialog } from "@base-ui/react/dialog"
       "lib/utils.ts": 'export { cn } from "cn"',
     })
     expect(build(cwd).code).toBe(0)
-    expect(standardItem(cwd, "button").registryDependencies).toEqual(["utils"])
+    expect(standardItem(cwd, "button").registryDependencies).toEqual([
+      "@esuiss/utils",
+    ])
     expect(standardItem(cwd, "dialog")).toMatchObject({
       dependencies: ["@base-ui/react"],
       registryDependencies: ["@esuiss/button"],
@@ -651,9 +653,7 @@ describe("the published registry", () => {
         )
         .map((file) => `${entry.name}: ${file.path}`),
       ...(entry.registryDependencies ?? [])
-        .filter(
-          (name) => name !== "utils" && !names.has(name.replace("@esuiss/", ""))
-        )
+        .filter((name) => !names.has(name.replace("@esuiss/", "")))
         .map((name) => `${entry.name}: ${name}`),
     ])
     expect(problems).toEqual([])

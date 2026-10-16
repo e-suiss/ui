@@ -281,7 +281,7 @@ function rememberBase(project, base, stylesheet) {
   if (!saved) return []
   if (saved.invalid) {
     return [
-      `Could not read ${relative(project, saved.file)}. Set its style to ${base}-nova so add keeps using the ${base} base.`,
+      `Could not read ${relative(project, saved.file)}. Set its style to ${base}-suiss so add keeps using the ${base} base.`,
     ]
   }
   step(

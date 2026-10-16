@@ -19,7 +19,7 @@ export const VITE_STYLESHEET = "src/index.css"
 const RADIX_STYLE = /^(radix-.+|new-york|default)$/
 const ARIA_STYLE = /^aria-.+$/
 const STYLE_PREFIX = /^(base|radix|aria)-/
-const DEFAULT_STYLE = "nova"
+const DEFAULT_STYLE = "suiss"
 const CONFIG_FILE = "components.json"
 
 function readConfig(cwd) {
