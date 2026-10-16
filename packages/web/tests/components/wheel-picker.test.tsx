@@ -159,6 +159,16 @@ describe("WheelPicker", () => {
     expect(selected()).toEqual([])
   })
 
+  it("selects the first item with ArrowDown when nothing is selected", async () => {
+    const onValueChange = vi.fn()
+    await render(<Fruits defaultValue="Kiwi" onValueChange={onValueChange} />)
+    await expect.poll(centered).toBe("Apple")
+    await settled()
+    column().focus()
+    await userEvent.keyboard("{ArrowDown}")
+    expect(onValueChange).toHaveBeenLastCalledWith("Apple")
+  })
+
   it("steps through items with the arrow keys", async () => {
     const onValueChange = vi.fn()
     await render(<Fruits onValueChange={onValueChange} />)

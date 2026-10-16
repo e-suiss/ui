@@ -1024,7 +1024,9 @@ function useMessageScrollerController(options: MessageScrollerOptions) {
   const [controller] = React.useState(
     () => new MessageScrollerController(resolvedOptions)
   )
-  controller.updateOptions(resolvedOptions)
+  React.useInsertionEffect(() => {
+    controller.updateOptions(resolvedOptions)
+  })
 
   React.useLayoutEffect(() => {
     controller.settleDefaultScrollPosition()

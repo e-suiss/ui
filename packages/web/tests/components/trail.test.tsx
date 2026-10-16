@@ -135,6 +135,7 @@ describe("Trail on desktop", () => {
   })
 
   it.each([
+    [1, ["More", "Download an invoice"]],
     [2, ["Support", "More", "Download an invoice"]],
     [3, ["Support", "More", "Invoices", "Download an invoice"]],
     [

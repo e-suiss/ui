@@ -255,12 +255,13 @@ function WheelPickerColumn({
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       const items = getItems()
-      const current = Math.max(getIndex(valueRef.current), 0)
+      const index = getIndex(valueRef.current)
+      const current = Math.max(index, 0)
       const last = items.length - 1
       let target: number
 
       if (event.key === "ArrowDown") {
-        target = enabledIndex(items, current + 1, 1)
+        target = enabledIndex(items, index < 0 ? 0 : current + 1, 1)
       } else if (event.key === "ArrowUp") {
         target = enabledIndex(items, current - 1, -1)
       } else if (event.key === "PageDown") {

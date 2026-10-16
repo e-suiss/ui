@@ -31,12 +31,16 @@ function TrailAnchor(props: React.ComponentProps<"a">) {
 function collapse(items: TrailItem[], maxItems: number | undefined) {
   const [first] = items
   if (!first || !maxItems || items.length <= maxItems) {
-    return { items, hidden: 0 }
+    return { items, hidden: 0, ellipsisAt: -1 }
   }
-  const tail = Math.max(maxItems - 1, 1)
+  if (maxItems === 1) {
+    return { items: items.slice(-1), hidden: items.length - 1, ellipsisAt: 0 }
+  }
+  const tail = maxItems - 1
   return {
     items: [first, ...items.slice(items.length - tail)],
     hidden: items.length - tail - 1,
+    ellipsisAt: 1,
   }
 }
 
@@ -216,7 +220,7 @@ function Trail({
     )
   }
 
-  const { items: shown, hidden } = collapse(items, maxItems)
+  const { items: shown, hidden, ellipsisAt } = collapse(items, maxItems)
 
   return (
     <Breadcrumb data-slot="trail" className={className} {...props}>
@@ -226,7 +230,7 @@ function Trail({
           return (
             <React.Fragment key={item.href ?? item.label}>
               {index > 0 && <BreadcrumbSeparator />}
-              {index === 1 && hidden > 0 && (
+              {index === ellipsisAt && hidden > 0 && (
                 <>
                   <BreadcrumbItem>
                     <BreadcrumbEllipsis>{ellipsisLabel}</BreadcrumbEllipsis>

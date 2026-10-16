@@ -56,8 +56,10 @@ function PullToRefresh({
     let wheelAtTop = false
     let wheelTimer = 0
     let settleTimer = 0
+    let disposed = false
 
     const enter = (next: PullToRefreshPhase) => {
+      if (disposed) return
       current = next
       root.dataset.phase = next
       setPhase(next)
@@ -88,6 +90,7 @@ function PullToRefresh({
       await new Promise((resolve) =>
         setTimeout(resolve, Math.max(0, MIN_REFRESH - elapsed))
       )
+      if (disposed) return
       enter("settling")
       setPull(0)
       settleTimer = window.setTimeout(() => enter("idle"), SETTLE)
@@ -152,6 +155,7 @@ function PullToRefresh({
     root.addEventListener("touchcancel", onTouchEnd)
     root.addEventListener("wheel", onWheel, { passive: false })
     return () => {
+      disposed = true
       window.clearTimeout(wheelTimer)
       window.clearTimeout(settleTimer)
       root.removeEventListener("touchstart", onTouchStart)
