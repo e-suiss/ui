@@ -74,8 +74,17 @@ manifest.version = version
 writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`)
 git("add", MANIFEST)
 git("commit", "-m", `chore(release): ${tag}`)
-git("tag", "-a", tag, "-m", tag)
-execFileSync("git", ["push", "origin", BRANCH, tag], { stdio: "inherit" })
+const commit = git("rev-parse", "HEAD")
+const released = JSON.parse(git("show", `${commit}:${MANIFEST}`)).version
+if (released !== version) {
+  fail(`The release commit has ${MANIFEST} at ${released}, not ${version}.`)
+}
+git("tag", "-a", tag, "-m", tag, commit)
+execFileSync(
+  "git",
+  ["push", "--atomic", "origin", `${commit}:refs/heads/${BRANCH}`, tag],
+  { stdio: "inherit" }
+)
 
 console.log(
   `Pushed ${tag}. GitHub Actions publishes it to npm and creates the release.`

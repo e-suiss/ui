@@ -4,37 +4,76 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to release again, e.g. v1.2.3
+        required: true
+        type: string
 
 permissions:
   contents: write
   id-token: write
 
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
+      - name: Check the tag
+        run: |
+          if ! [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::$TAG is not a release tag such as v1.2.3."
+            exit 1
+          fi
+
+      - name: Check the mirror deploy keys
+        env:
+          SWIFT_MIRROR_KEY: ${{ secrets.SWIFT_MIRROR_KEY }}
+          KOTLIN_MIRROR_KEY: ${{ secrets.KOTLIN_MIRROR_KEY }}
+        run: |
+          missing=0
+          check() {
+            if [ -z "$1" ]; then
+              echo "::error title=Missing secret $2::$2 is not set, so e-suiss/$3 cannot be published. Create a deploy key with write access in e-suiss/$3 (Settings > Deploy keys), add its private key as the $2 secret in e-suiss/ui (Settings > Secrets and variables > Actions), then run the Release workflow again with tag $TAG (Actions > Release > Run workflow)."
+              missing=1
+            fi
+          }
+          check "$SWIFT_MIRROR_KEY" SWIFT_MIRROR_KEY uim-swift
+          check "$KOTLIN_MIRROR_KEY" KOTLIN_MIRROR_KEY uim-kotlin
+          exit "$missing"
+
       - uses: actions/checkout@v7
         with:
+          ref: refs/tags/${{ env.TAG }}
           fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v7
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+          cache: pnpm
 
       - name: Check versions
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${TAG#v}"
           PACKAGE_VERSION=$(node -p "require('./packages/cli/package.json').version")
           if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match packages/cli version $PACKAGE_VERSION." >&2
+            echo "::error::Tag $TAG does not match packages/cli version $PACKAGE_VERSION."
             exit 1
           fi
 
       - name: Install the registry tools
-        run: |
-          npm install --global pnpm@$(node -p "require('./package.json').packageManager.split('@')[1]")
-          pnpm install --frozen-lockfile --ignore-scripts --filter @esuiss/web --filter @esuiss/mobile
+        run: pnpm install --frozen-lockfile --ignore-scripts --filter @esuiss/web --filter @esuiss/mobile
 
       - name: Check registries
         run: |
@@ -43,7 +82,7 @@ jobs:
 
       - name: Publish to npm
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${TAG#v}"
           NAME=$(node -p "require('./packages/cli/package.json').name")
           if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
             echo "$NAME@$VERSION is already published."
@@ -67,26 +106,30 @@ jobs:
           SWIFT_MIRROR_KEY: ${{ secrets.SWIFT_MIRROR_KEY }}
           KOTLIN_MIRROR_KEY: ${{ secrets.KOTLIN_MIRROR_KEY }}
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts 2> /dev/null
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           publish() {
-            if [ -z "$2" ]; then
-              echo "::warning::No deploy key for e-suiss/$3; it was not updated."
-              return
+            local source="$1" key="$2" repo="$3"
+            local dir="$RUNNER_TEMP/$repo" remote="git@github.com:e-suiss/$repo.git"
+            printf '%s\n' "$key" > ~/.ssh/"$repo"
+            chmod 600 ~/.ssh/"$repo"
+            export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/$repo -o IdentitiesOnly=yes"
+            if [ -n "$(git ls-remote --tags "$remote" "refs/tags/$TAG")" ]; then
+              echo "e-suiss/$repo already has $TAG."
+            else
+              rm -rf "$dir"
+              git clone --quiet "$remote" "$dir"
+              find "$dir" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+              cp -R "$source/." "$dir/"
+              git -C "$dir" add -A
+              git -C "$dir" diff --cached --quiet || git -C "$dir" commit --quiet -m "chore(release): $TAG"
+              git -C "$dir" tag -f "$TAG"
+              git -C "$dir" push --quiet --atomic origin HEAD:main "+refs/tags/$TAG:refs/tags/$TAG"
+              echo "Published e-suiss/$repo at $TAG."
             fi
-            echo "$2" > ~/.ssh/$3
-            chmod 600 ~/.ssh/$3
-            export GIT_SSH_COMMAND="ssh -i ~/.ssh/$3 -o IdentitiesOnly=yes"
-            rm -rf "/tmp/$3"
-            git clone --quiet "git@github.com:e-suiss/$3.git" "/tmp/$3"
-            find "/tmp/$3" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-            cp -R "$1/." "/tmp/$3/"
-            git -C "/tmp/$3" add -A
-            git -C "/tmp/$3" diff --cached --quiet || git -C "/tmp/$3" commit --quiet -m "chore(release): $GITHUB_REF_NAME"
-            git -C "/tmp/$3" tag "$GITHUB_REF_NAME"
-            git -C "/tmp/$3" push --quiet origin HEAD:main "refs/tags/$GITHUB_REF_NAME"
             unset GIT_SSH_COMMAND
           }
           publish packages/mobile/swiftui "$SWIFT_MIRROR_KEY" uim-swift
@@ -96,8 +139,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          PREVIOUS=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2> /dev/null || true)
-          RANGE="${PREVIOUS:+$PREVIOUS..}$GITHUB_REF_NAME"
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "The $TAG release already exists."
+            exit 0
+          fi
+          PREVIOUS=$(git describe --tags --abbrev=0 "$TAG^" 2> /dev/null || true)
+          RANGE="${PREVIOUS:+$PREVIOUS..}$TAG"
           {
             echo "## Changes"
             echo
@@ -106,7 +153,7 @@ jobs:
             echo "## Install"
             echo
             echo '```bash'
-            echo "npx @esuiss/ui@${GITHUB_REF_NAME#v} init"
+            echo "npx @esuiss/ui@${TAG#v} init"
             echo '```'
           } > notes.md
-          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag
+          gh release create "$TAG" --title "$TAG" --notes-file notes.md --verify-tag
