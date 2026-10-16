@@ -1,36 +1,50 @@
-"use client";
+"use client"
 
-import { ArrowUpIcon } from "@phosphor-icons/react";
-import { cn } from "cn";
+import { ArrowUpIcon } from "@phosphor-icons/react"
+import { cn } from "cn"
 
-import { Anchor } from "@/components/anchor";
-import { ease } from "@/components/arrow";
-import { FitWord } from "@/components/fit-word";
-import { ThemeToggle } from "@/components/theme";
+import { Anchor } from "@/components/anchor"
+import { ease } from "@/components/arrow"
+import { FitWord } from "@/components/fit-word"
+import { ThemeToggle } from "@/components/theme"
 
-const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
+const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
 
-type Column = { title: string; links: { label: string; href: string }[] };
+type Column = { title: string; links: { label: string; href: string }[] }
 
 export function Footer({
   columns,
   labels,
   themeLabels,
 }: {
-  columns: Column[];
-  labels: { copyright: string; backToTop: string };
-  themeLabels: { system: string; light: string; dark: string };
+  columns: Column[]
+  labels: { copyright: string; backToTop: string }
+  themeLabels: { system: string; light: string; dark: string }
 }) {
   return (
     <footer className="dark overflow-hidden bg-surface text-label dark:border-t dark:border-label/15">
-      <div className={cn(frame, "grid grid-cols-2 gap-x-6 gap-y-10 py-20 md:grid-cols-4 md:py-28")}>
+      <div
+        className={cn(
+          frame,
+          "grid grid-cols-2 gap-x-6 gap-y-10 py-20 md:grid-cols-4 md:py-28"
+        )}
+      >
         {columns.map((column) => (
-          <nav key={column.title} aria-label={column.title} className="flex flex-col gap-4">
-            <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">{column.title}</p>
+          <nav
+            key={column.title}
+            aria-label={column.title}
+            className="flex flex-col gap-4"
+          >
+            <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+              {column.title}
+            </p>
             <ul className="flex flex-col gap-2.5">
               {column.links.map((link) => (
                 <li key={link.href + link.label}>
-                  <Anchor href={link.href} className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label">
+                  <Anchor
+                    href={link.href}
+                    className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label"
+                  >
                     {link.label}
                   </Anchor>
                 </li>
@@ -40,9 +54,17 @@ export function Footer({
         ))}
       </div>
 
-      <div className={cn(frame, "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary")}>
+      <div
+        className={cn(
+          frame,
+          "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary"
+        )}
+      >
         <span>{labels.copyright}</span>
-        <ThemeToggle labels={themeLabels} className="ms-auto size-8 bg-label/10 text-label hover:bg-label/15" />
+        <ThemeToggle
+          labels={themeLabels}
+          className="ms-auto size-8 bg-label/10 text-label hover:bg-label/15"
+        />
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -50,14 +72,22 @@ export function Footer({
         >
           {labels.backToTop}
           <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
-            <ArrowUpIcon weight="bold" className={cn("size-3 transition-transform duration-500 group-hover:-translate-y-0.5", ease)} />
+            <ArrowUpIcon
+              weight="bold"
+              className={cn(
+                "size-3 transition-transform duration-500 group-hover:-translate-y-0.5",
+                ease
+              )}
+            />
           </span>
         </button>
       </div>
 
       <div aria-hidden className={cn(frame, "mb-[-4.5vw] select-none")}>
-        <FitWord className="pe-[0.075em] leading-[0.8] font-semibold tracking-[-0.075em]">suiss</FitWord>
+        <FitWord className="pe-[0.075em] leading-[0.8] font-semibold tracking-[-0.075em]">
+          suiss
+        </FitWord>
       </div>
     </footer>
-  );
+  )
 }

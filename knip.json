@@ -69,6 +69,17 @@
       "metro": false,
       "ignoreDependencies": ["expo-updates"]
     },
+    "apps/www": {
+      "entry": ["scripts/*.mjs"],
+      "ignoreDependencies": [
+        "@fontsource/inter",
+        "@react-three/fiber",
+        "@types/three",
+        "camera-controls",
+        "three",
+        "three-stdlib"
+      ]
+    },
     "apps/ui": {
       "entry": ["components/site/icon-placeholder.tsx", "scripts/*.mjs"],
       "ignore": ["public/**"],

@@ -1,6 +1,11 @@
-"use client";
+"use client"
 
-import { type GradientT, presetsArray, ShaderGradient, ShaderGradientCanvas } from "@shadergradient/react";
+import {
+  type GradientT,
+  presetsArray,
+  ShaderGradient,
+  ShaderGradientCanvas,
+} from "@shadergradient/react"
 
 export type GradientPreset =
   | "Halo"
@@ -9,14 +14,20 @@ export type GradientPreset =
   | "Mint"
   | "Interstella"
   | "Nighty night"
-  | "Sunset";
+  | "Sunset"
 
 const overrides: Partial<Record<GradientPreset, Partial<GradientT>>> = {
   Halo: { cDistance: 2.6 },
-};
+}
 
-export default function ShaderGradientBackground({ preset }: { preset: GradientPreset }) {
-  const props = presetsArray.find((item) => item.title === preset)?.props as GradientT | undefined;
+export default function ShaderGradientBackground({
+  preset,
+}: {
+  preset: GradientPreset
+}) {
+  const props = presetsArray.find((item) => item.title === preset)?.props as
+    | GradientT
+    | undefined
 
   return (
     <ShaderGradientCanvas
@@ -26,5 +37,5 @@ export default function ShaderGradientBackground({ preset }: { preset: GradientP
     >
       <ShaderGradient control="props" {...props} {...overrides[preset]} />
     </ShaderGradientCanvas>
-  );
+  )
 }

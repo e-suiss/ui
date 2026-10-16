@@ -1,20 +1,20 @@
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import { notFound } from "next/navigation";
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
+import { notFound } from "next/navigation"
 
-import { Footer } from "@/components/footer";
-import { GlobalNav } from "@/components/global-nav";
-import { JsonLd } from "@/components/json-ld";
-import { ThemeScript } from "@/components/theme";
-import { getDictionary, isLocale, localePath, locales } from "@/lib/i18n";
-import { libraries, products } from "@/lib/products";
-import { absolute, site } from "@/lib/site";
-import "../globals.css";
+import { Footer } from "@/components/footer"
+import { GlobalNav } from "@/components/global-nav"
+import { JsonLd } from "@/components/json-ld"
+import { ThemeScript } from "@/components/theme"
+import { getDictionary, isLocale, localePath, locales } from "@/lib/i18n"
+import { libraries, products } from "@/lib/products"
+import { absolute, site } from "@/lib/site"
+import "../globals.css"
 
 const fontInter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
-});
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -26,10 +26,16 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   formatDetection: { telephone: false, email: false, address: false },
-};
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -37,26 +43,39 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
   colorScheme: "light dark",
-};
-
-export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }));
 }
 
-export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
-  const { lang } = await params;
-  if (!isLocale(lang)) notFound();
-  const dictionary = getDictionary(lang);
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
+}
 
-  const themeLabels = { system: dictionary.themeSystem, light: dictionary.themeLight, dark: dictionary.themeDark };
-  const items = products.map((product) => ({ label: product.name, href: localePath(lang, `/${product.slug}`) }));
+export default async function RootLayout({
+  children,
+  params,
+}: LayoutProps<"/[lang]">) {
+  const { lang } = await params
+  if (!isLocale(lang)) notFound()
+  const dictionary = getDictionary(lang)
+
+  const themeLabels = {
+    system: dictionary.themeSystem,
+    light: dictionary.themeLight,
+    dark: dictionary.themeDark,
+  }
+  const items = products.map((product) => ({
+    label: product.name,
+    href: localePath(lang, `/${product.slug}`),
+  }))
   const columns = [
     { title: dictionary.products, links: items.slice(0, 4) },
     { title: " ", links: items.slice(4) },
     {
       title: dictionary.developers,
       links: [
-        ...libraries.map((library) => ({ label: library.name, href: library.url })),
+        ...libraries.map((library) => ({
+          label: library.name,
+          href: library.url,
+        })),
         { label: dictionary.github, href: site.github },
       ],
     },
@@ -64,10 +83,13 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       title: dictionary.company,
       links: [
         { label: dictionary.allProducts, href: localePath(lang, "/#products") },
-        { label: dictionary.switchLanguage, href: localePath(lang === "en" ? "tr" : "en", "/") },
+        {
+          label: dictionary.switchLanguage,
+          href: localePath(lang === "en" ? "tr" : "en", "/"),
+        },
       ],
     },
-  ];
+  ]
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -90,10 +112,14 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         publisher: { "@id": absolute("/#organization") },
       },
     ],
-  };
+  }
 
   return (
-    <html lang={dictionary.htmlLang} className={fontInter.variable} suppressHydrationWarning>
+    <html
+      lang={dictionary.htmlLang}
+      className={fontInter.variable}
+      suppressHydrationWarning
+    >
       <head>
         <ThemeScript />
         <JsonLd data={structuredData} />
@@ -111,8 +137,15 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
           themeLabels={themeLabels}
         />
         <div className="flex flex-1 flex-col">{children}</div>
-        <Footer columns={columns} labels={{ copyright: dictionary.copyright, backToTop: dictionary.backToTop }} themeLabels={themeLabels} />
+        <Footer
+          columns={columns}
+          labels={{
+            copyright: dictionary.copyright,
+            backToTop: dictionary.backToTop,
+          }}
+          themeLabels={themeLabels}
+        />
       </body>
     </html>
-  );
+  )
 }

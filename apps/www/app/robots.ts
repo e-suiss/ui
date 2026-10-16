@@ -1,6 +1,6 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next"
 
-import { absolute, site } from "@/lib/site";
+import { absolute, site } from "@/lib/site"
 
 const aiCrawlers = [
   "GPTBot",
@@ -20,7 +20,7 @@ const aiCrawlers = [
   "DuckAssistBot",
   "MistralAI-User",
   "cohere-ai",
-];
+]
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -30,5 +30,7 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: absolute("/sitemap.xml"),
     host: site.url,
-  };
+  }
 }
+
+export const dynamic = "force-static"

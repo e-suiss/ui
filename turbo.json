@@ -5,7 +5,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "public/r/**"]
+      "outputs": [".next/**", "!.next/cache/**", "out/**", "public/r/**"]
     },
     "@esuiss/site#build": {
       "dependsOn": ["^build"],

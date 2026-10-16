@@ -1,8 +1,10 @@
-import { iconImage } from "@/lib/og";
+import { iconImage } from "@/lib/og"
 
-export const size = { width: 180, height: 180 };
-export const contentType = "image/png";
+export const size = { width: 180, height: 180 }
+export const contentType = "image/png"
 
-export default async function AppleIcon() {
-  return iconImage(180);
+export default function AppleIcon() {
+  return iconImage(180)
 }
+
+export const dynamic = "force-static"
