@@ -34,6 +34,7 @@ type CarouselAutoplay = {
   playing: boolean
   running: boolean
   setPlaying: (playing: boolean) => void
+  elapsed: () => number
 }
 
 type CarouselContextProps = {
@@ -61,6 +62,9 @@ function useCarousel() {
 
   return context
 }
+
+const INTERACTIVE =
+  "input, textarea, select, [contenteditable]:not([contenteditable=false]), [role=slider], [role=radio], [role=spinbutton], [role=listbox], [role=combobox], [role=textbox], [role=tablist], [role=menu], [role=grid]"
 
 function keepControlFocus(
   root: HTMLDivElement | null,
@@ -138,6 +142,8 @@ function Carousel({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.target instanceof Element && event.target.closest(INTERACTIVE))
+        return
       const [back, forward] =
         STEP_KEYS[orientation === "vertical" ? "vertical" : direction]
       if (event.key === back) {
@@ -163,6 +169,13 @@ function Carousel({
   }, [autoplay])
 
   const remaining = React.useRef({ index: 0, time: delay })
+  const elapsed = React.useCallback(
+    () =>
+      remaining.current.index === selectedIndex
+        ? delay - remaining.current.time
+        : 0,
+    [selectedIndex, delay]
+  )
 
   React.useEffect(() => {
     if (!api || !running) return
@@ -224,6 +237,7 @@ function Carousel({
           playing,
           running,
           setPlaying,
+          elapsed,
         },
       }}
     >
@@ -339,7 +353,11 @@ function CarouselPrevious({
         hugeicons="ArrowLeft01Icon"
         phosphor="CaretLeftIcon"
         remixicon="RiArrowLeftSLine"
-        className="rtl:rotate-180"
+        className={
+          orientation === "horizontal"
+            ? "rtl:rotate-180"
+            : "rtl:in-data-[slot=carousel-controls]:rotate-180"
+        }
       />
       <span className="sr-only">Previous slide</span>
     </Button>
@@ -376,7 +394,11 @@ function CarouselNext({
         hugeicons="ArrowRight01Icon"
         phosphor="CaretRightIcon"
         remixicon="RiArrowRightSLine"
-        className="rtl:rotate-180"
+        className={
+          orientation === "horizontal"
+            ? "rtl:rotate-180"
+            : "rtl:in-data-[slot=carousel-controls]:rotate-180"
+        }
       />
       <span className="sr-only">Next slide</span>
     </Button>
@@ -428,9 +450,16 @@ function CarouselDots({
       [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
       { duration: autoplay.delay, easing: "linear", fill: "forwards" }
     )
+    animation.currentTime = autoplay.elapsed()
     setProgress(animation)
     return () => animation.cancel()
-  }, [fill, autoplay.enabled, autoplay.playing, autoplay.delay])
+  }, [
+    fill,
+    autoplay.enabled,
+    autoplay.playing,
+    autoplay.delay,
+    autoplay.elapsed,
+  ])
 
   React.useEffect(() => {
     if (

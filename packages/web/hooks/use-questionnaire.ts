@@ -531,7 +531,12 @@ function useQuestionnaire({
     ) {
       event.preventDefault()
       if (event.repeat) return
-      if (event.key === "ArrowLeft") {
+      const back =
+        target instanceof Element &&
+        getComputedStyle(target).direction === "rtl"
+          ? "ArrowRight"
+          : "ArrowLeft"
+      if (event.key === back) {
         goPrevious()
       } else if (activeItem.status !== "unanswered") {
         goNext()

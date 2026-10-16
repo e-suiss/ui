@@ -205,6 +205,32 @@ describe("Carousel navigation", () => {
     await expect.poll(shown).toBe("Breakfast")
   })
 
+  it("leaves arrow keys to fields inside a slide", async () => {
+    await render(
+      <div className="mx-12 w-72">
+        <Carousel aria-label="Menu">
+          <CarouselContent>
+            {SLIDES.map((slide) => (
+              <CarouselItem key={slide} aria-label={slide}>
+                <input aria-label={`${slide} note`} defaultValue="ab" />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselControls>
+            <CarouselDots />
+          </CarouselControls>
+        </Carousel>
+      </div>
+    )
+    const field = page.getByRole("textbox", { name: "Breakfast note" })
+    await field.click()
+    await userEvent.keyboard("{ArrowLeft}")
+    expect((field.element() as HTMLInputElement).selectionStart).toBe(1)
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}")
+    await wait(300)
+    expect(current()).toBe(1)
+  })
+
   it("renders a dot per slide that reflects and sets the selection", async () => {
     await renderSlides()
     await expect.element(dot(1)).toHaveAttribute("aria-current", "true")
@@ -328,6 +354,18 @@ describe("Carousel autoplay", () => {
       .toBeVisible()
     await expect.element(carousel()).toHaveAttribute("data-playing")
     await expect.poll(current).not.toBe(paused)
+  })
+
+  it("resumes the progress where the pause left it", async () => {
+    await renderSlides(3000)
+    await wait(1000)
+    await page.getByRole("button", { name: "Pause slideshow" }).click()
+    await wait(300)
+    await page.getByRole("button", { name: "Play slideshow" }).click()
+    const progress = document
+      .getAnimations()
+      .find((animation) => animation.effect?.getTiming().duration === 3000)
+    expect(Number(progress?.currentTime)).toBeGreaterThan(700)
   })
 
   it("lets the play button start a reduced-motion carousel", async () => {

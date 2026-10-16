@@ -197,4 +197,22 @@ describe("Questionnaire", () => {
     await userEvent.keyboard("{ArrowLeft}")
     await expect.element(progress()).toHaveTextContent("Question 1 of 3")
   })
+
+  it("goes back with the right arrow key in a right-to-left layout", async () => {
+    await render(
+      <div dir="rtl">
+        <Survey />
+      </div>
+    )
+    await page.getByRole("radio", { name: "Design" }).click()
+    await button("Next").click()
+    await page.getByRole("checkbox", { name: "Figma" }).click()
+    await userEvent.keyboard("{ArrowLeft}")
+    await expect.element(progress()).toHaveTextContent("Question 3 of 3")
+    await page.getByRole("textbox", { name: "Company" }).click()
+    await button("Previous").click()
+    await page.getByRole("checkbox", { name: "Figma" }).click()
+    await userEvent.keyboard("{ArrowRight}")
+    await expect.element(progress()).toHaveTextContent("Question 1 of 3")
+  })
 })
