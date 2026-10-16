@@ -221,6 +221,7 @@ function Root({
   const index = Math.min(selectedIndex, lastIndex)
   const canScrollPrev = loop ? snaps.length > 1 : index > 0
   const canScrollNext = loop ? snaps.length > 1 : index < lastIndex
+  const scrollable = snaps.length > 1
 
   const stateRef = React.useRef({ snaps, index, canScrollPrev, canScrollNext })
   stateRef.current = { snaps, index, canScrollPrev, canScrollNext }
@@ -342,7 +343,7 @@ function Root({
   const remainingRef = React.useRef({ index: 0, time: delay })
 
   React.useEffect(() => {
-    if (!running || stateRef.current.snaps.length < 2) return
+    if (!running || !scrollable) return
     const current = index
     if (remainingRef.current.index !== current) {
       remainingRef.current = { index: current, time: delay }
@@ -363,7 +364,7 @@ function Root({
         )
       }
     }
-  }, [running, index, delay, scrollNext, scrollTo])
+  }, [running, scrollable, index, delay, scrollNext, scrollTo])
 
   const setViewportSize = React.useCallback((size: number) => {
     setViewportSizeState((current) => (current === size ? current : size))
