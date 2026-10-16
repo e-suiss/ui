@@ -111,8 +111,8 @@ export function ChatThread() {
                         >
                           <BubbleContent
                             onDoubleClick={() => toggleLike(line.id)}
-                            onKeyDown={(event) => {
-                              if (event.key === "Enter") toggleLike(line.id)
+                            onClick={(event) => {
+                              if (event.detail === 0) toggleLike(line.id)
                             }}
                             aria-label={`${line.text}${line.liked ? ", liked" : ""}. Double-click to ${line.liked ? "remove the" : "add a"} heart.`}
                             className="select-none"

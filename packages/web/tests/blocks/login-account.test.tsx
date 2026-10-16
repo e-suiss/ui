@@ -120,4 +120,15 @@ describe("LoginAccount", () => {
     await remember.click()
     await expect.element(remember).not.toBeChecked()
   })
+
+  it("keeps the collapsed password row out of the tab order", async () => {
+    await render(<LoginAccount />)
+    expect(password().element().closest("[inert]")).not.toBeNull()
+    await reachPassword()
+    expect(password().element().closest("[inert]")).toBeNull()
+    await password().fill("secret")
+    await email().fill("riley@suiss.com")
+    await expect.element(password()).toHaveAttribute("tabindex", "-1")
+    expect(password().element().closest("[inert]")).not.toBeNull()
+  })
 })

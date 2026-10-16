@@ -127,7 +127,10 @@ export function BagConfigure() {
           selectedKeys={[finish]}
           onSelectionChange={(keys) => {
             const value = [...keys] as string[]
-            if (value[0]) setFinish(value[0])
+            if (value[0]) {
+              setFinish(value[0])
+              setAdded(false)
+            }
           }}
           aria-label="Finish"
           spacing={3.5}

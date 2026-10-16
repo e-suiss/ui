@@ -43,10 +43,15 @@ export function ChatSupport() {
   const [typing, setTyping] = React.useState(false)
   const [draft, setDraft] = React.useState("")
   const launcherRef = React.useRef<HTMLButtonElement>(null)
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const wasOpenRef = React.useRef(open)
   const ready = draft.trim().length > 0
 
   React.useEffect(() => {
-    if (!open) launcherRef.current?.focus()
+    if (wasOpenRef.current === open) return
+    wasOpenRef.current = open
+    if (open) inputRef.current?.focus()
+    else launcherRef.current?.focus()
   }, [open])
 
   const ask = (question: string) => {
@@ -209,6 +214,7 @@ export function ChatSupport() {
           </Button>
           <div className="flex min-h-8.5 flex-1 items-center rounded-full border border-input ps-3.5 pe-0.75 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
             <Input
+              ref={inputRef}
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Type your question"

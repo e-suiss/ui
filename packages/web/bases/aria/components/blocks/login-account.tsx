@@ -142,7 +142,10 @@ export function LoginAccount() {
             data-open={step === "password" ? "" : undefined}
             className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-450 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:grid-rows-[1fr] motion-reduce:transition-none"
           >
-            <div className="min-h-0 overflow-hidden">
+            <div
+              inert={step !== "password"}
+              className="min-h-0 overflow-hidden"
+            >
               <div className="flex items-center border-t border-input">
                 <Input
                   ref={passwordRef}

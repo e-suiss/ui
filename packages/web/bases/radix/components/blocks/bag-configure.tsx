@@ -126,7 +126,10 @@ export function BagConfigure() {
           type="single"
           value={finish}
           onValueChange={(value: string) => {
-            if (value) setFinish(value)
+            if (value) {
+              setFinish(value)
+              setAdded(false)
+            }
           }}
           aria-label="Finish"
           spacing={3.5}

@@ -112,6 +112,9 @@ describe("ChatSupport", () => {
     await launcher().click()
     await expect.element(dialog()).toHaveAttribute("data-open", "")
     expect(dialog().element().hasAttribute("inert")).toBe(false)
+    await expect
+      .element(page.getByRole("textbox", { name: "Type your question" }))
+      .toHaveFocus()
     await expect.poll(lines, { timeout: 3000 }).toHaveLength(3)
     expect(lines()[1]).toBe("me:I want to return something")
   })

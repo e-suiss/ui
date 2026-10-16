@@ -72,6 +72,8 @@ describe("ChatThread", () => {
       .toHaveAccessibleName(
         "Yes! We leave Friday evening, liked. Double-click to remove the heart."
       )
+    await userEvent.keyboard(" ")
+    await expect.poll(hearts).toBe(0)
   })
 
   it("sends a trimmed message and gets replies in turn", async () => {
