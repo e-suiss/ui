@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 
-import { absolute, site } from "@/lib/site"
+import { absolute } from "@/lib/site"
 
 const aiCrawlers = [
   "GPTBot",
@@ -33,6 +33,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: absolute("/sitemap.xml"),
-    host: site.url,
   }
 }

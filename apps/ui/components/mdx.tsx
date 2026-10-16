@@ -7,6 +7,7 @@ import { Callout } from "@/components/site/callout"
 import { CodeBlock } from "@/components/site/code-block"
 import { ComponentPreview } from "@/components/site/component-preview"
 import { ComponentSource } from "@/components/site/component-source"
+import { InstallStep } from "@/components/site/install-step"
 import { NativeExample } from "@/components/site/native-example"
 import { PiecesStep, Steps } from "@/components/site/pieces-step"
 import { Only } from "@/components/site/platform"
@@ -48,9 +49,36 @@ function pieceNames(node: React.ReactNode): string[] {
   return pieceNames(node.props.children)
 }
 
+const INSTALL_LEAD = "Install the dependencies and add the "
+
+function withoutInstall(node: React.ReactNode): React.ReactNode {
+  if (typeof node === "string")
+    return node.startsWith(INSTALL_LEAD)
+      ? `Add the ${node.slice(INSTALL_LEAD.length)}`
+      : node
+  if (Array.isArray(node)) return node.map(withoutInstall)
+  if (
+    React.isValidElement<{ children?: React.ReactNode }>(node) &&
+    node.type === "p"
+  )
+    return React.cloneElement(
+      node,
+      undefined,
+      withoutInstall(node.props.children)
+    )
+  return node
+}
+
 function ListItem(props: React.ComponentProps<"li">) {
-  if (!textOf(props.children).trim().startsWith(strings.piecesLead))
-    return <li {...props} />
+  const text = textOf(props.children).trim()
+  if (text.startsWith(INSTALL_LEAD))
+    return (
+      <InstallStep
+        {...props}
+        bare={withoutInstall(React.Children.toArray(props.children))}
+      />
+    )
+  if (!text.startsWith(strings.piecesLead)) return <li {...props} />
   const loose = React.Children.toArray(props.children).some(
     (child) => React.isValidElement(child) && child.type === "p"
   )

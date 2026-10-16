@@ -2,6 +2,7 @@
 
 import { ArrowUpRightIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { copyText } from "@/lib/clipboard"
 import { cn } from "@/lib/utils"
 
 const RESET_AFTER = 1500
@@ -26,7 +27,7 @@ function External({ label, onClick }: { label: string; onClick: () => void }) {
 
 export function PageActions({ markdownUrl }: { markdownUrl: string }) {
   const [copied, setCopied] = React.useState(false)
-  const cache = React.useRef<string | undefined>(undefined)
+  const cache = React.useRef<Promise<string> | undefined>(undefined)
 
   React.useEffect(() => {
     if (!copied) return
@@ -34,13 +35,22 @@ export function PageActions({ markdownUrl }: { markdownUrl: string }) {
     return () => clearTimeout(timeout)
   }, [copied])
 
-  const copy = async () => {
-    const text: string =
-      cache.current ??
-      (await fetch(markdownUrl).then((response) => response.text()))
-    cache.current = text
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
+  const load = () => {
+    cache.current ??= fetch(markdownUrl).then((response) => {
+      if (!response.ok) throw new Error(response.statusText)
+      return response.text()
+    })
+    cache.current.catch(() => {
+      cache.current = undefined
+    })
+    return cache.current
+  }
+
+  const copy = () => {
+    copyText(load()).then(
+      () => setCopied(true),
+      () => undefined
+    )
   }
 
   const prompt = () =>
@@ -55,6 +65,8 @@ export function PageActions({ markdownUrl }: { markdownUrl: string }) {
       <button
         type="button"
         onClick={copy}
+        onPointerEnter={load}
+        onFocus={load}
         className={cn(item, copied && "text-foreground")}
       >
         {copied ? "Copied" : "Copy page"}

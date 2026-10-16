@@ -2,6 +2,7 @@
 
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { copyText } from "@/lib/clipboard"
 
 const RESET_AFTER = 1500
 
@@ -17,9 +18,11 @@ export function InstallCommand({ command }: { command: string }) {
   return (
     <button
       type="button"
-      onClick={async () => {
-        await navigator.clipboard.writeText(command)
-        setCopied(true)
+      onClick={() => {
+        copyText(command).then(
+          () => setCopied(true),
+          () => undefined
+        )
       }}
       className="group flex w-full items-center justify-between gap-6 border-y border-foreground/15 py-8 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:py-12"
     >

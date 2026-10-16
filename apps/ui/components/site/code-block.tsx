@@ -7,6 +7,7 @@ import {
   isPackageCommand,
   PackageCommand,
 } from "@/components/site/package-command"
+import { copyText } from "@/lib/clipboard"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
@@ -83,12 +84,14 @@ export function CodeBlock({
     return () => clearTimeout(timeout)
   }, [copied])
 
-  const copy = async () => {
+  const copy = () => {
     const text = src
-      ? await fetchSource(src).then((source) => source.raw)
+      ? fetchSource(src).then((source) => source.raw)
       : (ref.current?.textContent ?? "")
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
+    copyText(text).then(
+      () => setCopied(true),
+      () => undefined
+    )
   }
 
   if (terminal && isPackageCommand(command))
