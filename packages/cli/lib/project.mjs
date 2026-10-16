@@ -70,7 +70,7 @@ function newConfig(project, style, stylesheet) {
       hooks: "@/hooks",
     },
     registries: {
-      "@esuiss": "https://ui.suiss.app/r/{style}/{name}.json",
+      "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json",
     },
   }
 }

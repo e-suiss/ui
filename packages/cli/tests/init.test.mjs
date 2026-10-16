@@ -29,7 +29,7 @@ const stylesheet = `@import "tailwindcss";
 const files = {
   "registry/registry.json": {
     name: "esuiss",
-    homepage: "https://ui.suiss.app",
+    homepage: "https://suiss.app/ui",
     items: [
       {
         name: "button",
@@ -41,7 +41,7 @@ const files = {
   },
   "registry/radix/registry.json": {
     name: "esuiss",
-    homepage: "https://ui.suiss.app",
+    homepage: "https://suiss.app/ui",
     items: [
       {
         name: "button",

@@ -2,7 +2,7 @@
 
 Copy-paste React components with a clean, minimal design, built with [Tailwind CSS](https://tailwindcss.com) v4 on your choice of three primitive bases, [Base UI](https://base-ui.com) by default.
 
-**[Documentation](https://ui.suiss.app/docs)** · [Components](https://ui.suiss.app/docs/components) · [CLI reference](https://ui.suiss.app/docs/cli) · [GitHub](https://github.com/e-suiss/ui)
+**[Documentation](https://suiss.app/ui/docs)** · [Components](https://suiss.app/ui/docs/components) · [CLI reference](https://suiss.app/ui/docs/cli) · [GitHub](https://github.com/e-suiss/ui)
 
 `@esuiss/ui` is a command-line tool. It does not ship components as a dependency. Instead, it copies their source into your project so you own the code and can change it however you like.
 
@@ -71,7 +71,7 @@ Until the namespace is listed in the public registry directory, register it once
 ```json
 {
   "registries": {
-    "@esuiss": "https://ui.suiss.app/r/{style}/{name}.json"
+    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
   }
 }
 ```

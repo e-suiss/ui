@@ -209,7 +209,7 @@ if (problems.length) {
 
 const registry = {
   name: "esuiss-ui-mobile",
-  homepage: "https://ui.suiss.app",
+  homepage: "https://suiss.app/ui",
   styles: STYLES,
   platforms,
   items,

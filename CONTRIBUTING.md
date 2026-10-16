@@ -10,7 +10,7 @@ This repository is a pnpm workspace. One install at the root sets up everything:
 
 ```bash
 pnpm install
-pnpm dev             # the ui.suiss.app site on :3000
+pnpm dev             # the suiss.app/ui site on :3000
 pnpm build           # build the site
 pnpm typecheck       # every package and site
 pnpm test            # web component tests and CLI tests
@@ -25,7 +25,7 @@ pnpm --filter @esuiss/mobile start                        # the React Native Sto
 
 Layout:
 
-- `apps/ui`: the ui.suiss.app site, with a React, React Native, SwiftUI and Compose tab on every page. Every page is one hand-written MDX file in `content/docs`, and each section's sidebar order is its `meta.json`.
+- `apps/ui`: the suiss.app/ui site, with a React, React Native, SwiftUI and Compose tab on every page. Every page is one hand-written MDX file in `content/docs`, and each section's sidebar order is its `meta.json`.
 - `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `styles/theme.css` holds the theme transition styles `add theme` appends to the user's stylesheet, `examples/` has one example per file that the site previews and Vitest renders, `tests/` has the browser tests, `bases/` holds the components for the other primitive bases, and `registry/registry.json` with one `registry/<base>/registry.json` per other base lists everything.
 - `packages/mobile`: the mobile library: React Native components for Uniwind, NativeWind and StyleSheet, the SwiftUI and Jetpack Compose libraries with their catalog apps, stories and its own `registry.json`. See `packages/mobile/README.md`.
 - `packages/tokens`: the design tokens the mobile themes are generated from.
@@ -102,7 +102,7 @@ Every push to `main` that changes the site runs `.github/workflows/site.yml`:
 
 1. It builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui`, tagged `latest` and `sha-<short commit>`.
 2. It writes the image as `ghcr.io/e-suiss/ui:sha-<short commit>@<digest>` to `kubernetes/docs/app/ui.yaml` in [e-suiss/infra](https://github.com/e-suiss/infra) and commits it. Argo CD rolls the new image out to the cluster.
-3. It waits until `https://ui.suiss.app` answers with the new commit in the `X-Build` header ten times in a row, three seconds apart, so that every replica serves the new build.
+3. It waits until `https://suiss.app/ui` answers with the new commit in the `X-Build` header ten times in a row, three seconds apart, so that every replica serves the new build.
 4. It purges the Cloudflare cache, submits the docs pages changed by the push to IndexNow, and purges the cache again a minute later.
 
 The workflow needs these repository secrets:

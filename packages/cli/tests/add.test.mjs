@@ -29,7 +29,7 @@ const ui = (name, extra = {}) => ({
 
 const registry = {
   name: "esuiss",
-  homepage: "https://ui.suiss.app",
+  homepage: "https://suiss.app/ui",
   items: [
     ui("button", { dependencies: ["@base-ui/react"] }),
     ui("dialog", {

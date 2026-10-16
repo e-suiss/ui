@@ -24,7 +24,7 @@ const SWIFT_SOURCES = "swiftui/Sources/EsuissUI"
 
 const registry = {
   name: "esuiss-ui-mobile",
-  homepage: "https://ui.suiss.app",
+  homepage: "https://suiss.app/ui",
   styles: {},
   platforms: {
     swift: {

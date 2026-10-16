@@ -1,7 +1,7 @@
 # suiss/ui for Jetpack Compose
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-ui.suiss.app-black)](https://ui.suiss.app)
+[![Documentation](https://img.shields.io/badge/docs-suiss.app%2Fui-black)](https://suiss.app/ui)
 
 **The Jetpack Compose library of [suiss/ui](https://github.com/e-suiss/ui): mobile components with a clean, minimal design** that follow the React Native and SwiftUI versions: the same names, parts and tokens, with light and dark mode. Built on Compose Foundation only.
 

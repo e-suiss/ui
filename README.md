@@ -6,7 +6,7 @@ Accessible and customizable components that you copy into your apps, for React w
 
 ## Documentation
 
-Visit [ui.suiss.app/docs](https://ui.suiss.app/docs) to view the documentation.
+Visit [suiss.app/ui/docs](https://suiss.app/ui/docs) to view the documentation.
 
 ## Contributing
 

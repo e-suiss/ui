@@ -17,7 +17,7 @@ import {
 
 const ROOT = path.resolve(import.meta.dirname, "..")
 const DOCS = path.resolve(ROOT, "../../apps/ui/content/docs")
-const SITE = "https://ui.suiss.app"
+const SITE = "https://suiss.app/ui"
 const LEGACY_OUTPUT = path.join(ROOT, "registry.json")
 const OUTPUT = path.join(ROOT, "registry/registry.json")
 const BASES = path.join(ROOT, "bases")

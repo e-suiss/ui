@@ -15,7 +15,7 @@ import {
   toTitle,
 } from "../../../scripts/lib/registry.mjs"
 
-const SITE = "https://ui.suiss.app"
+const SITE = "https://suiss.app/ui"
 const NAMESPACE = "@esuiss-rn"
 const DOCS = path.resolve(import.meta.dirname, "../../../apps/ui/content/docs")
 const THEME = "theme-suiss"

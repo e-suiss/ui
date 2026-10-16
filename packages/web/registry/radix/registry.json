@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "esuiss",
-  "homepage": "https://ui.suiss.app",
+  "homepage": "https://suiss.app/ui",
   "items": [
     {
       "name": "accordion",
@@ -23,7 +23,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/accordion"
+          "docs": "https://suiss.app/ui/docs/components/accordion"
         }
       }
     },
@@ -47,7 +47,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/alert-dialog"
+          "docs": "https://suiss.app/ui/docs/components/alert-dialog"
         }
       }
     },
@@ -71,7 +71,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/alert-sheet"
+          "docs": "https://suiss.app/ui/docs/components/alert-sheet"
         }
       }
     },
@@ -94,7 +94,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/alert"
+          "docs": "https://suiss.app/ui/docs/components/alert"
         }
       }
     },
@@ -114,7 +114,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/aspect-ratio"
+          "docs": "https://suiss.app/ui/docs/components/aspect-ratio"
         }
       }
     },
@@ -139,7 +139,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/attachment"
+          "docs": "https://suiss.app/ui/docs/components/attachment"
         }
       }
     },
@@ -162,7 +162,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/avatar"
+          "docs": "https://suiss.app/ui/docs/components/avatar"
         }
       }
     },
@@ -186,7 +186,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/badge"
+          "docs": "https://suiss.app/ui/docs/components/badge"
         }
       }
     },
@@ -209,7 +209,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/breadcrumb"
+          "docs": "https://suiss.app/ui/docs/components/breadcrumb"
         }
       }
     },
@@ -233,7 +233,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/bubble"
+          "docs": "https://suiss.app/ui/docs/components/bubble"
         }
       }
     },
@@ -258,7 +258,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/button-group"
+          "docs": "https://suiss.app/ui/docs/components/button-group"
         }
       }
     },
@@ -282,7 +282,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/button"
+          "docs": "https://suiss.app/ui/docs/components/button"
         }
       }
     },
@@ -306,7 +306,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/calendar"
+          "docs": "https://suiss.app/ui/docs/components/calendar"
         }
       }
     },
@@ -326,7 +326,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/card"
+          "docs": "https://suiss.app/ui/docs/components/card"
         }
       }
     },
@@ -351,7 +351,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/carousel"
+          "docs": "https://suiss.app/ui/docs/components/carousel"
         }
       }
     },
@@ -374,7 +374,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/chart"
+          "docs": "https://suiss.app/ui/docs/components/chart"
         }
       }
     },
@@ -397,7 +397,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/checkbox"
+          "docs": "https://suiss.app/ui/docs/components/checkbox"
         }
       }
     },
@@ -417,7 +417,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/collapsible"
+          "docs": "https://suiss.app/ui/docs/components/collapsible"
         }
       }
     },
@@ -442,7 +442,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/combobox"
+          "docs": "https://suiss.app/ui/docs/components/combobox"
         }
       }
     },
@@ -467,7 +467,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/command"
+          "docs": "https://suiss.app/ui/docs/components/command"
         }
       }
     },
@@ -491,7 +491,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/context-menu"
+          "docs": "https://suiss.app/ui/docs/components/context-menu"
         }
       }
     },
@@ -515,7 +515,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/dialog"
+          "docs": "https://suiss.app/ui/docs/components/dialog"
         }
       }
     },
@@ -535,7 +535,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/direction"
+          "docs": "https://suiss.app/ui/docs/components/direction"
         }
       }
     },
@@ -560,7 +560,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/drawer"
+          "docs": "https://suiss.app/ui/docs/components/drawer"
         }
       }
     },
@@ -584,7 +584,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/dropdown-menu"
+          "docs": "https://suiss.app/ui/docs/components/dropdown-menu"
         }
       }
     },
@@ -607,7 +607,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/empty"
+          "docs": "https://suiss.app/ui/docs/components/empty"
         }
       }
     },
@@ -632,7 +632,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/field"
+          "docs": "https://suiss.app/ui/docs/components/field"
         }
       }
     },
@@ -656,7 +656,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/fullscreen-menu"
+          "docs": "https://suiss.app/ui/docs/components/fullscreen-menu"
         }
       }
     },
@@ -679,7 +679,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/hover-card"
+          "docs": "https://suiss.app/ui/docs/components/hover-card"
         }
       }
     },
@@ -705,7 +705,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/input-group"
+          "docs": "https://suiss.app/ui/docs/components/input-group"
         }
       }
     },
@@ -728,7 +728,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/input-otp"
+          "docs": "https://suiss.app/ui/docs/components/input-otp"
         }
       }
     },
@@ -748,7 +748,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/input"
+          "docs": "https://suiss.app/ui/docs/components/input"
         }
       }
     },
@@ -772,7 +772,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/item"
+          "docs": "https://suiss.app/ui/docs/components/item"
         }
       }
     },
@@ -793,7 +793,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/kbd"
+          "docs": "https://suiss.app/ui/docs/components/kbd"
         }
       }
     },
@@ -813,7 +813,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/label"
+          "docs": "https://suiss.app/ui/docs/components/label"
         }
       }
     },
@@ -837,7 +837,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/marker"
+          "docs": "https://suiss.app/ui/docs/components/marker"
         }
       }
     },
@@ -861,7 +861,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/menubar"
+          "docs": "https://suiss.app/ui/docs/components/menubar"
         }
       }
     },
@@ -887,7 +887,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/message-scroller"
+          "docs": "https://suiss.app/ui/docs/components/message-scroller"
         }
       }
     },
@@ -907,7 +907,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/message"
+          "docs": "https://suiss.app/ui/docs/components/message"
         }
       }
     },
@@ -927,7 +927,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/native-select"
+          "docs": "https://suiss.app/ui/docs/components/native-select"
         }
       }
     },
@@ -951,7 +951,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/navigation-menu"
+          "docs": "https://suiss.app/ui/docs/components/navigation-menu"
         }
       }
     },
@@ -975,7 +975,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/pagination"
+          "docs": "https://suiss.app/ui/docs/components/pagination"
         }
       }
     },
@@ -998,7 +998,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/popover"
+          "docs": "https://suiss.app/ui/docs/components/popover"
         }
       }
     },
@@ -1021,7 +1021,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/progress"
+          "docs": "https://suiss.app/ui/docs/components/progress"
         }
       }
     },
@@ -1046,7 +1046,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/questionnaire"
+          "docs": "https://suiss.app/ui/docs/components/questionnaire"
         }
       }
     },
@@ -1069,7 +1069,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/radio-group"
+          "docs": "https://suiss.app/ui/docs/components/radio-group"
         }
       }
     },
@@ -1092,7 +1092,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/resizable"
+          "docs": "https://suiss.app/ui/docs/components/resizable"
         }
       }
     },
@@ -1115,7 +1115,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/scroll-area"
+          "docs": "https://suiss.app/ui/docs/components/scroll-area"
         }
       }
     },
@@ -1138,7 +1138,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/select"
+          "docs": "https://suiss.app/ui/docs/components/select"
         }
       }
     },
@@ -1161,7 +1161,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/separator"
+          "docs": "https://suiss.app/ui/docs/components/separator"
         }
       }
     },
@@ -1185,7 +1185,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/sheet"
+          "docs": "https://suiss.app/ui/docs/components/sheet"
         }
       }
     },
@@ -1218,7 +1218,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/sidebar"
+          "docs": "https://suiss.app/ui/docs/components/sidebar"
         }
       }
     },
@@ -1238,7 +1238,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/skeleton"
+          "docs": "https://suiss.app/ui/docs/components/skeleton"
         }
       }
     },
@@ -1261,7 +1261,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/slider"
+          "docs": "https://suiss.app/ui/docs/components/slider"
         }
       }
     },
@@ -1281,7 +1281,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/spinner"
+          "docs": "https://suiss.app/ui/docs/components/spinner"
         }
       }
     },
@@ -1304,7 +1304,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/switch"
+          "docs": "https://suiss.app/ui/docs/components/switch"
         }
       }
     },
@@ -1328,7 +1328,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/tab-bar"
+          "docs": "https://suiss.app/ui/docs/components/tab-bar"
         }
       }
     },
@@ -1348,7 +1348,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/table"
+          "docs": "https://suiss.app/ui/docs/components/table"
         }
       }
     },
@@ -1372,7 +1372,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/tabs"
+          "docs": "https://suiss.app/ui/docs/components/tabs"
         }
       }
     },
@@ -1392,7 +1392,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/textarea"
+          "docs": "https://suiss.app/ui/docs/components/textarea"
         }
       }
     },
@@ -1470,7 +1470,7 @@
       },
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/theming"
+          "docs": "https://suiss.app/ui/docs/theming"
         },
         "optIn": true
       }
@@ -1495,7 +1495,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/toast"
+          "docs": "https://suiss.app/ui/docs/components/toast"
         }
       }
     },
@@ -1520,7 +1520,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/toggle-group"
+          "docs": "https://suiss.app/ui/docs/components/toggle-group"
         }
       }
     },
@@ -1544,7 +1544,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/toggle"
+          "docs": "https://suiss.app/ui/docs/components/toggle"
         }
       }
     },
@@ -1567,7 +1567,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/tooltip"
+          "docs": "https://suiss.app/ui/docs/components/tooltip"
         }
       }
     },
@@ -1587,7 +1587,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/wheel-picker"
+          "docs": "https://suiss.app/ui/docs/components/wheel-picker"
         }
       }
     },
@@ -1607,7 +1607,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/components/widget"
+          "docs": "https://suiss.app/ui/docs/components/widget"
         }
       }
     },
@@ -1636,7 +1636,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/action-bar"
+          "docs": "https://suiss.app/ui/docs/patterns/action-bar"
         }
       }
     },
@@ -1662,7 +1662,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/action-menu"
+          "docs": "https://suiss.app/ui/docs/patterns/action-menu"
         }
       }
     },
@@ -1688,7 +1688,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/app-shell"
+          "docs": "https://suiss.app/ui/docs/patterns/app-shell"
         }
       }
     },
@@ -1717,7 +1717,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/command-palette"
+          "docs": "https://suiss.app/ui/docs/patterns/command-palette"
         }
       }
     },
@@ -1743,7 +1743,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/confirm"
+          "docs": "https://suiss.app/ui/docs/patterns/confirm"
         }
       }
     },
@@ -1770,7 +1770,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/context-actions"
+          "docs": "https://suiss.app/ui/docs/patterns/context-actions"
         }
       }
     },
@@ -1799,7 +1799,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/date-picker"
+          "docs": "https://suiss.app/ui/docs/patterns/date-picker"
         }
       }
     },
@@ -1829,7 +1829,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/flyout"
+          "docs": "https://suiss.app/ui/docs/patterns/flyout"
         }
       }
     },
@@ -1856,7 +1856,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/modal"
+          "docs": "https://suiss.app/ui/docs/patterns/modal"
         }
       }
     },
@@ -1883,7 +1883,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/navbar"
+          "docs": "https://suiss.app/ui/docs/patterns/navbar"
         }
       }
     },
@@ -1910,7 +1910,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/paged-list"
+          "docs": "https://suiss.app/ui/docs/patterns/paged-list"
         }
       }
     },
@@ -1937,7 +1937,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/panel"
+          "docs": "https://suiss.app/ui/docs/patterns/panel"
         }
       }
     },
@@ -1963,7 +1963,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/picker"
+          "docs": "https://suiss.app/ui/docs/patterns/picker"
         }
       }
     },
@@ -1990,7 +1990,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/preview"
+          "docs": "https://suiss.app/ui/docs/patterns/preview"
         }
       }
     },
@@ -2018,7 +2018,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/search-picker"
+          "docs": "https://suiss.app/ui/docs/patterns/search-picker"
         }
       }
     },
@@ -2044,7 +2044,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/segment-picker"
+          "docs": "https://suiss.app/ui/docs/patterns/segment-picker"
         }
       }
     },
@@ -2073,7 +2073,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/split-view"
+          "docs": "https://suiss.app/ui/docs/patterns/split-view"
         }
       }
     },
@@ -2099,7 +2099,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/table-list"
+          "docs": "https://suiss.app/ui/docs/patterns/table-list"
         }
       }
     },
@@ -2128,7 +2128,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/patterns/trail"
+          "docs": "https://suiss.app/ui/docs/patterns/trail"
         }
       }
     },
@@ -2152,7 +2152,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/island"
+          "docs": "https://suiss.app/ui/docs/interactions/island"
         }
       }
     },
@@ -2178,7 +2178,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/otp-autofill"
+          "docs": "https://suiss.app/ui/docs/interactions/otp-autofill"
         }
       }
     },
@@ -2205,7 +2205,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/preview-menu"
+          "docs": "https://suiss.app/ui/docs/interactions/preview-menu"
         }
       }
     },
@@ -2230,7 +2230,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/pull-to-refresh"
+          "docs": "https://suiss.app/ui/docs/interactions/pull-to-refresh"
         }
       }
     },
@@ -2254,7 +2254,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/search-reveal"
+          "docs": "https://suiss.app/ui/docs/interactions/search-reveal"
         }
       }
     },
@@ -2278,7 +2278,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/section-index"
+          "docs": "https://suiss.app/ui/docs/interactions/section-index"
         }
       }
     },
@@ -2303,7 +2303,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/selection-list"
+          "docs": "https://suiss.app/ui/docs/interactions/selection-list"
         }
       }
     },
@@ -2330,7 +2330,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/stepper"
+          "docs": "https://suiss.app/ui/docs/interactions/stepper"
         }
       }
     },
@@ -2357,7 +2357,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/swipe-actions"
+          "docs": "https://suiss.app/ui/docs/interactions/swipe-actions"
         }
       }
     },
@@ -2384,7 +2384,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/tip"
+          "docs": "https://suiss.app/ui/docs/interactions/tip"
         }
       }
     },
@@ -2409,7 +2409,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/interactions/undo-bar"
+          "docs": "https://suiss.app/ui/docs/interactions/undo-bar"
         }
       }
     },
@@ -2438,7 +2438,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-axes"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-axes"
         }
       }
     },
@@ -2467,7 +2467,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-default"
         }
       }
     },
@@ -2496,7 +2496,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-gradient"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-gradient"
         }
       }
     },
@@ -2526,7 +2526,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-interactive"
         }
       }
     },
@@ -2555,7 +2555,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-linear"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-linear"
         }
       }
     },
@@ -2584,7 +2584,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-range"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-range"
         }
       }
     },
@@ -2613,7 +2613,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-sparkline"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-sparkline"
         }
       }
     },
@@ -2642,7 +2642,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-stacked-expand"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-stacked-expand"
         }
       }
     },
@@ -2671,7 +2671,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-stacked"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-stacked"
         }
       }
     },
@@ -2700,7 +2700,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/area-chart-step"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart-step"
         }
       }
     },
@@ -2729,7 +2729,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-active"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-active"
         }
       }
     },
@@ -2758,7 +2758,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-default"
         }
       }
     },
@@ -2787,7 +2787,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-horizontal"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-horizontal"
         }
       }
     },
@@ -2816,7 +2816,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-hourly"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-hourly"
         }
       }
     },
@@ -2846,7 +2846,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-interactive"
         }
       }
     },
@@ -2875,7 +2875,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-labeled"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-labeled"
         }
       }
     },
@@ -2904,7 +2904,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-multiple"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-multiple"
         }
       }
     },
@@ -2933,7 +2933,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-negative"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-negative"
         }
       }
     },
@@ -2962,7 +2962,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-range"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-range"
         }
       }
     },
@@ -2991,7 +2991,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/bar-chart-stacked"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart-stacked"
         }
       }
     },
@@ -3020,7 +3020,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-default"
         }
       }
     },
@@ -3049,7 +3049,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-dots"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-dots"
         }
       }
     },
@@ -3078,7 +3078,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-forecast"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-forecast"
         }
       }
     },
@@ -3107,7 +3107,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-goal-dots"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-goal-dots"
         }
       }
     },
@@ -3136,7 +3136,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-goal"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-goal"
         }
       }
     },
@@ -3167,7 +3167,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-interactive"
         }
       }
     },
@@ -3196,7 +3196,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-labeled"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-labeled"
         }
       }
     },
@@ -3225,7 +3225,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-linear"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-linear"
         }
       }
     },
@@ -3254,7 +3254,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-multiple"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-multiple"
         }
       }
     },
@@ -3283,7 +3283,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/line-chart-step"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart-step"
         }
       }
     },
@@ -3312,7 +3312,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-active"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-active"
         }
       }
     },
@@ -3341,7 +3341,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-default"
         }
       }
     },
@@ -3370,7 +3370,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-donut-text"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-donut-text"
         }
       }
     },
@@ -3399,7 +3399,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-donut"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-donut"
         }
       }
     },
@@ -3428,7 +3428,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-half"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-half"
         }
       }
     },
@@ -3458,7 +3458,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-interactive"
         }
       }
     },
@@ -3487,7 +3487,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-label"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-label"
         }
       }
     },
@@ -3516,7 +3516,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-legend"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-legend"
         }
       }
     },
@@ -3545,7 +3545,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-nested"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-nested"
         }
       }
     },
@@ -3574,7 +3574,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/pie-chart-separated"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart-separated"
         }
       }
     },
@@ -3603,7 +3603,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-default"
         }
       }
     },
@@ -3632,7 +3632,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-dots"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-dots"
         }
       }
     },
@@ -3661,7 +3661,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-grid-circle"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-grid-circle"
         }
       }
     },
@@ -3690,7 +3690,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-grid-filled"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-grid-filled"
         }
       }
     },
@@ -3719,7 +3719,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-grid-none"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-grid-none"
         }
       }
     },
@@ -3749,7 +3749,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-interactive"
         }
       }
     },
@@ -3778,7 +3778,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-legend"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-legend"
         }
       }
     },
@@ -3807,7 +3807,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-lines-only"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-lines-only"
         }
       }
     },
@@ -3836,7 +3836,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-multiple"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-multiple"
         }
       }
     },
@@ -3865,7 +3865,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radar-chart-radius-axis"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart-radius-axis"
         }
       }
     },
@@ -3894,7 +3894,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-batteries"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-batteries"
         }
       }
     },
@@ -3923,7 +3923,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-default"
         }
       }
     },
@@ -3952,7 +3952,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-gauge"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-gauge"
         }
       }
     },
@@ -3978,7 +3978,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-interactive"
         }
       }
     },
@@ -4007,7 +4007,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-label"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-label"
         }
       }
     },
@@ -4036,7 +4036,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-progress"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-progress"
         }
       }
     },
@@ -4061,7 +4061,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-rings"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-rings"
         }
       }
     },
@@ -4090,7 +4090,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-stacked"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-stacked"
         }
       }
     },
@@ -4119,7 +4119,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-text"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-text"
         }
       }
     },
@@ -4148,7 +4148,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/radial-chart-tinted"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart-tinted"
         }
       }
     },
@@ -4177,7 +4177,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-custom"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-custom"
         }
       }
     },
@@ -4206,7 +4206,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-dashed"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-dashed"
         }
       }
     },
@@ -4235,7 +4235,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-dot"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-dot"
         }
       }
     },
@@ -4264,7 +4264,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-formatter"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-formatter"
         }
       }
     },
@@ -4293,7 +4293,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-icons"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-icons"
         }
       }
     },
@@ -4324,7 +4324,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-interactive"
         }
       }
     },
@@ -4353,7 +4353,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-label-formatter"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-label-formatter"
         }
       }
     },
@@ -4382,7 +4382,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-line"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-line"
         }
       }
     },
@@ -4411,7 +4411,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-no-indicator"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-no-indicator"
         }
       }
     },
@@ -4440,7 +4440,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/charts/tooltip-chart-no-label"
+          "docs": "https://suiss.app/ui/docs/charts/tooltip-chart-no-label"
         }
       }
     },
@@ -4467,7 +4467,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/bag-checkout"
+          "docs": "https://suiss.app/ui/docs/blocks/bag-checkout"
         }
       }
     },
@@ -4495,7 +4495,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/bag-configure"
+          "docs": "https://suiss.app/ui/docs/blocks/bag-configure"
         }
       }
     },
@@ -4521,7 +4521,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/bag-review"
+          "docs": "https://suiss.app/ui/docs/blocks/bag-review"
         }
       }
     },
@@ -4546,7 +4546,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/bento-closer-look"
+          "docs": "https://suiss.app/ui/docs/blocks/bento-closer-look"
         }
       }
     },
@@ -4568,7 +4568,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/bento-features"
+          "docs": "https://suiss.app/ui/docs/blocks/bento-features"
         }
       }
     },
@@ -4593,7 +4593,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/bento-stats"
+          "docs": "https://suiss.app/ui/docs/blocks/bento-stats"
         }
       }
     },
@@ -4624,7 +4624,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/chat-conversations"
+          "docs": "https://suiss.app/ui/docs/blocks/chat-conversations"
         }
       }
     },
@@ -4653,7 +4653,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/chat-support"
+          "docs": "https://suiss.app/ui/docs/blocks/chat-support"
         }
       }
     },
@@ -4683,7 +4683,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/chat-thread"
+          "docs": "https://suiss.app/ui/docs/blocks/chat-thread"
         }
       }
     },
@@ -4714,7 +4714,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/dash-analytics"
+          "docs": "https://suiss.app/ui/docs/blocks/dash-analytics"
         }
       }
     },
@@ -4741,7 +4741,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/dash-health"
+          "docs": "https://suiss.app/ui/docs/blocks/dash-health"
         }
       }
     },
@@ -4773,7 +4773,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/dash-store"
+          "docs": "https://suiss.app/ui/docs/blocks/dash-store"
         }
       }
     },
@@ -4799,7 +4799,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/empty-bag"
+          "docs": "https://suiss.app/ui/docs/blocks/empty-bag"
         }
       }
     },
@@ -4826,7 +4826,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/empty-offline"
+          "docs": "https://suiss.app/ui/docs/blocks/empty-offline"
         }
       }
     },
@@ -4852,7 +4852,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/empty-search"
+          "docs": "https://suiss.app/ui/docs/blocks/empty-search"
         }
       }
     },
@@ -4878,7 +4878,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/footer-compact"
+          "docs": "https://suiss.app/ui/docs/blocks/footer-compact"
         }
       }
     },
@@ -4904,7 +4904,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/footer-directory"
+          "docs": "https://suiss.app/ui/docs/blocks/footer-directory"
         }
       }
     },
@@ -4929,7 +4929,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/footer-services"
+          "docs": "https://suiss.app/ui/docs/blocks/footer-services"
         }
       }
     },
@@ -4955,7 +4955,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/grid-accessories"
+          "docs": "https://suiss.app/ui/docs/blocks/grid-accessories"
         }
       }
     },
@@ -4980,7 +4980,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/grid-carousel"
+          "docs": "https://suiss.app/ui/docs/blocks/grid-carousel"
         }
       }
     },
@@ -5006,7 +5006,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/grid-lineup"
+          "docs": "https://suiss.app/ui/docs/blocks/grid-lineup"
         }
       }
     },
@@ -5032,7 +5032,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/hero-cinematic"
+          "docs": "https://suiss.app/ui/docs/blocks/hero-cinematic"
         }
       }
     },
@@ -5057,7 +5057,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/hero-product"
+          "docs": "https://suiss.app/ui/docs/blocks/hero-product"
         }
       }
     },
@@ -5083,7 +5083,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/hero-tiles"
+          "docs": "https://suiss.app/ui/docs/blocks/hero-tiles"
         }
       }
     },
@@ -5112,7 +5112,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/inbox-categories"
+          "docs": "https://suiss.app/ui/docs/blocks/inbox-categories"
         }
       }
     },
@@ -5141,7 +5141,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/inbox-mail"
+          "docs": "https://suiss.app/ui/docs/blocks/inbox-mail"
         }
       }
     },
@@ -5170,7 +5170,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/inbox-support"
+          "docs": "https://suiss.app/ui/docs/blocks/inbox-support"
         }
       }
     },
@@ -5198,7 +5198,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/log-activity"
+          "docs": "https://suiss.app/ui/docs/blocks/log-activity"
         }
       }
     },
@@ -5225,7 +5225,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/log-live"
+          "docs": "https://suiss.app/ui/docs/blocks/log-live"
         }
       }
     },
@@ -5252,7 +5252,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/log-security"
+          "docs": "https://suiss.app/ui/docs/blocks/log-security"
         }
       }
     },
@@ -5282,7 +5282,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/login-account"
+          "docs": "https://suiss.app/ui/docs/blocks/login-account"
         }
       }
     },
@@ -5309,7 +5309,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/login-passkey"
+          "docs": "https://suiss.app/ui/docs/blocks/login-passkey"
         }
       }
     },
@@ -5337,7 +5337,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/login-sheet"
+          "docs": "https://suiss.app/ui/docs/blocks/login-sheet"
         }
       }
     },
@@ -5363,7 +5363,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/nav-categories"
+          "docs": "https://suiss.app/ui/docs/blocks/nav-categories"
         }
       }
     },
@@ -5389,7 +5389,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/nav-global"
+          "docs": "https://suiss.app/ui/docs/blocks/nav-global"
         }
       }
     },
@@ -5415,7 +5415,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/nav-local"
+          "docs": "https://suiss.app/ui/docs/blocks/nav-local"
         }
       }
     },
@@ -5443,7 +5443,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/price-bundle"
+          "docs": "https://suiss.app/ui/docs/blocks/price-bundle"
         }
       }
     },
@@ -5472,7 +5472,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/price-care"
+          "docs": "https://suiss.app/ui/docs/blocks/price-care"
         }
       }
     },
@@ -5500,7 +5500,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/price-storage"
+          "docs": "https://suiss.app/ui/docs/blocks/price-storage"
         }
       }
     },
@@ -5529,7 +5529,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/roles-editor"
+          "docs": "https://suiss.app/ui/docs/blocks/roles-editor"
         }
       }
     },
@@ -5556,7 +5556,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/roles-matrix"
+          "docs": "https://suiss.app/ui/docs/blocks/roles-matrix"
         }
       }
     },
@@ -5585,7 +5585,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/roles-requests"
+          "docs": "https://suiss.app/ui/docs/blocks/roles-requests"
         }
       }
     },
@@ -5614,7 +5614,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/settings-account"
+          "docs": "https://suiss.app/ui/docs/blocks/settings-account"
         }
       }
     },
@@ -5642,7 +5642,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/settings-device"
+          "docs": "https://suiss.app/ui/docs/blocks/settings-device"
         }
       }
     },
@@ -5671,7 +5671,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/settings-notifications"
+          "docs": "https://suiss.app/ui/docs/blocks/settings-notifications"
         }
       }
     },
@@ -5698,7 +5698,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/signup-form"
+          "docs": "https://suiss.app/ui/docs/blocks/signup-form"
         }
       }
     },
@@ -5724,7 +5724,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/signup-steps"
+          "docs": "https://suiss.app/ui/docs/blocks/signup-steps"
         }
       }
     },
@@ -5752,7 +5752,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/signup-trial"
+          "docs": "https://suiss.app/ui/docs/blocks/signup-trial"
         }
       }
     },
@@ -5784,7 +5784,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/users-detail"
+          "docs": "https://suiss.app/ui/docs/blocks/users-detail"
         }
       }
     },
@@ -5814,7 +5814,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/users-invite"
+          "docs": "https://suiss.app/ui/docs/blocks/users-invite"
         }
       }
     },
@@ -5845,7 +5845,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/users-table"
+          "docs": "https://suiss.app/ui/docs/blocks/users-table"
         }
       }
     },
@@ -5870,7 +5870,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/verify-code"
+          "docs": "https://suiss.app/ui/docs/blocks/verify-code"
         }
       }
     },
@@ -5896,7 +5896,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/verify-device"
+          "docs": "https://suiss.app/ui/docs/blocks/verify-device"
         }
       }
     },
@@ -5921,7 +5921,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/blocks/verify-email"
+          "docs": "https://suiss.app/ui/docs/blocks/verify-email"
         }
       }
     },
@@ -6092,7 +6092,7 @@
       },
       "meta": {
         "links": {
-          "docs": "https://ui.suiss.app/docs/theming"
+          "docs": "https://suiss.app/ui/docs/theming"
         }
       }
     }

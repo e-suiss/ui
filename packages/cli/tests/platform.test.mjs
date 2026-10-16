@@ -9,7 +9,7 @@ const entry = new URL("../index.mjs", import.meta.url).pathname
 
 const webRegistry = {
   name: "esuiss",
-  homepage: "https://ui.suiss.app",
+  homepage: "https://suiss.app/ui",
   items: [
     {
       name: "button",
@@ -22,7 +22,7 @@ const webRegistry = {
 
 const mobileRegistry = {
   name: "esuiss-ui-mobile",
-  homepage: "https://ui.suiss.app",
+  homepage: "https://suiss.app/ui",
   styles: {
     uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
     stylesheet: {

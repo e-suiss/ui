@@ -29,7 +29,7 @@ vi.mock("../lib/prompt.mjs", () => ({
 
 const registry = {
   name: "esuiss-ui-mobile",
-  homepage: "https://ui.suiss.app",
+  homepage: "https://suiss.app/ui",
   styles: {
     uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
     nativewind: {

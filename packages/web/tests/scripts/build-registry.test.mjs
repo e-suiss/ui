@@ -344,7 +344,7 @@ describe("the standard registry", () => {
     expect(standardOf(cwd)).toMatchObject({
       $schema: "https://ui.shadcn.com/schema/registry.json",
       name: "esuiss",
-      homepage: "https://ui.suiss.app",
+      homepage: "https://suiss.app/ui",
     })
   })
 
@@ -460,7 +460,7 @@ import { Dialog } from "@base-ui/react/dialog"
       title: "Alert Dialog",
       description: "About alert-dialog.",
       meta: {
-        links: { docs: "https://ui.suiss.app/docs/components/alert-dialog" },
+        links: { docs: "https://suiss.app/ui/docs/components/alert-dialog" },
       },
     })
   })

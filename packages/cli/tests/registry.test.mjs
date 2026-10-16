@@ -75,7 +75,7 @@ describe("fetchRegistry", () => {
     serveRegistry({
       "registry/registry.json": {
         name: "esuiss",
-        homepage: "https://ui.suiss.app",
+        homepage: "https://suiss.app/ui",
         items: [
           {
             name: "area-chart-default",
@@ -123,7 +123,7 @@ describe("fetchRegistry for the second base", () => {
     const fetch = serveRegistry({
       "registry/radix/registry.json": {
         name: "esuiss",
-        homepage: "https://ui.suiss.app",
+        homepage: "https://suiss.app/ui",
         items: [
           {
             name: "dialog",
@@ -161,7 +161,7 @@ describe("fetchRegistry for the third base", () => {
     const fetch = serveRegistry({
       "registry/aria/registry.json": {
         name: "esuiss",
-        homepage: "https://ui.suiss.app",
+        homepage: "https://suiss.app/ui",
         items: [
           {
             name: "dialog",
