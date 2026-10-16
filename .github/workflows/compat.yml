@@ -9,6 +9,8 @@ on:
       - "packages/cli/**"
       - "scripts/compat.mjs"
       - "apps/ui/next.config.ts"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
       - ".github/workflows/compat.yml"
   pull_request:
     paths:
@@ -16,7 +18,11 @@ on:
       - "packages/cli/**"
       - "scripts/compat.mjs"
       - "apps/ui/next.config.ts"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
       - ".github/workflows/compat.yml"
+  schedule:
+    - cron: "17 4 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -52,14 +58,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.npm
           key: compat-npm-${{ runner.os }}-${{ contains(matrix.args, 'vite') && 'vite' || 'next' }}-${{ hashFiles('scripts/compat.mjs') }}
@@ -74,3 +80,31 @@ jobs:
         run: |
           read -ra args <<< "$ARGS"
           node scripts/compat.mjs "${args[@]}"
+
+  compat-rn:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    name: React Native (${{ matrix.styling }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        styling:
+          - uniwind
+          - nativewind
+          - stylesheet
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install the registry tools
+        run: pnpm install --frozen-lockfile --ignore-scripts --filter @esuiss/site
+
+      - name: Install the items in a new Expo app
+        run: pnpm compat:rn --styling=${{ matrix.styling }}
