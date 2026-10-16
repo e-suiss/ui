@@ -6968,6 +6968,7 @@
                 "primary-12": "var(--primary-12)",
                 "primary-20": "var(--primary-20)",
                 "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
                 "red": {
                   "500": "#fb2c36"
                 },
@@ -7020,80 +7021,52 @@
                 "3xl": "28px"
               },
               "fontSize": {
-                "3xs": [
-                  "11px",
-                  {
-                    "lineHeight": "13px",
-                    "letterSpacing": "0.066px"
-                  }
-                ],
-                "2xs": [
+                "xs": [
                   "12px",
                   {
-                    "lineHeight": "16px",
-                    "letterSpacing": "0px"
-                  }
-                ],
-                "xs": [
-                  "13px",
-                  {
-                    "lineHeight": "18px",
-                    "letterSpacing": "-0.078px"
+                    "lineHeight": "16px"
                   }
                 ],
                 "sm": [
-                  "15px",
+                  "14px",
                   {
-                    "lineHeight": "20px",
-                    "letterSpacing": "-0.24px"
-                  }
-                ],
-                "md": [
-                  "16px",
-                  {
-                    "lineHeight": "21px",
-                    "letterSpacing": "-0.32px"
+                    "lineHeight": "20px"
                   }
                 ],
                 "base": [
-                  "17px",
+                  "16px",
                   {
-                    "lineHeight": "22px",
-                    "letterSpacing": "-0.442px"
+                    "lineHeight": "24px"
                   }
                 ],
                 "lg": [
-                  "20px",
+                  "18px",
                   {
-                    "lineHeight": "25px",
-                    "letterSpacing": "-0.46px"
+                    "lineHeight": "28px"
                   }
                 ],
                 "xl": [
-                  "22px",
+                  "20px",
                   {
-                    "lineHeight": "28px",
-                    "letterSpacing": "-0.264px"
+                    "lineHeight": "28px"
                   }
                 ],
                 "2xl": [
-                  "28px",
+                  "24px",
                   {
-                    "lineHeight": "34px",
-                    "letterSpacing": "0.392px"
+                    "lineHeight": "32px"
                   }
                 ],
                 "3xl": [
-                  "34px",
+                  "30px",
                   {
-                    "lineHeight": "41px",
-                    "letterSpacing": "0.408px"
+                    "lineHeight": "36px"
                   }
                 ]
               },
               "boxShadow": {
-                "md": "2px 4px 12px rgb(0 0 0 / 0.08)",
-                "lg": "0 4px 24px rgb(0 0 0 / 0.12)"
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
               }
             }
           }
@@ -7152,7 +7125,8 @@
             "--primary-10": "rgba(0, 113, 227, 0.1)",
             "--primary-12": "rgba(0, 113, 227, 0.12)",
             "--primary-20": "rgba(0, 113, 227, 0.2)",
-            "--primary-25": "rgba(0, 113, 227, 0.25)"
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
           },
           ".dark:root": {
             "--background": "#000000",
@@ -7205,7 +7179,8 @@
             "--primary-10": "rgba(41, 151, 255, 0.1)",
             "--primary-12": "rgba(41, 151, 255, 0.12)",
             "--primary-20": "rgba(41, 151, 255, 0.2)",
-            "--primary-25": "rgba(41, 151, 255, 0.25)"
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
           }
         }
       }
