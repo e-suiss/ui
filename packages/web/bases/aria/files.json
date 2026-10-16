@@ -3,7 +3,6 @@
   "files": [
     "components/blocks/bag-checkout.tsx",
     "components/blocks/bag-configure.tsx",
-    "components/blocks/bag-review.tsx",
     "components/blocks/bento-closer-look.tsx",
     "components/blocks/chat-conversations.tsx",
     "components/blocks/chat-support.tsx",
@@ -230,8 +229,6 @@
     "examples/slider-steps.tsx",
     "examples/slider-vertical.tsx",
     "examples/spinner-in-button.tsx",
-    "examples/stepper-demo.tsx",
-    "examples/stepper-print.tsx",
     "examples/switch-checked.tsx",
     "examples/switch-disabled.tsx",
     "examples/switch-invalid.tsx",

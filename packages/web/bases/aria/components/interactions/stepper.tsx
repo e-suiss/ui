@@ -34,21 +34,33 @@ const ACCELERATION = 0.86
 function Stepper({
   value: valueProp,
   defaultValue = 0,
-  onChange,
-  minValue = Number.NEGATIVE_INFINITY,
-  maxValue = Number.POSITIVE_INFINITY,
+  onValueChange: onChange,
+  min: minValue = Number.NEGATIVE_INFINITY,
+  max: maxValue = Number.POSITIVE_INFINITY,
   step = 1,
-  isDisabled = false,
+  disabled: isDisabled = false,
+  format,
   className,
   ...props
 }: Omit<
   NumberFieldPrimitiveProps,
-  "value" | "defaultValue" | "onChange" | "className"
+  | "value"
+  | "defaultValue"
+  | "onChange"
+  | "minValue"
+  | "maxValue"
+  | "isDisabled"
+  | "formatOptions"
+  | "className"
 > & {
   className?: string
   value?: number
   defaultValue?: number
-  onChange?: (value: number) => void
+  onValueChange?: (value: number) => void
+  min?: number
+  max?: number
+  disabled?: boolean
+  format?: Intl.NumberFormatOptions
 }) {
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue)
   const value = valueProp ?? uncontrolledValue
@@ -94,10 +106,11 @@ function Stepper({
         onChange={(next) => {
           if (!Number.isNaN(next)) setValue(next)
         }}
-        minValue={minValue}
-        maxValue={maxValue}
+        minValue={Number.isFinite(minValue) ? minValue : undefined}
+        maxValue={Number.isFinite(maxValue) ? maxValue : undefined}
         step={step}
         isDisabled={isDisabled}
+        formatOptions={format}
         className={cn("flex items-center gap-3", className)}
         {...props}
       />
