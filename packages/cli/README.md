@@ -1,12 +1,12 @@
 # @esuiss/ui
 
-Copy-paste React components with a clean, minimal design, built on [Base UI](https://base-ui.com) and [Tailwind CSS](https://tailwindcss.com) v4.
+Copy-paste React components with a clean, minimal design, built with [Tailwind CSS](https://tailwindcss.com) v4 on your choice of three primitive bases, [Base UI](https://base-ui.com) by default.
 
 **[Documentation](https://ui.suiss.app/docs)** · [Components](https://ui.suiss.app/docs/components) · [CLI reference](https://ui.suiss.app/docs/cli) · [GitHub](https://github.com/e-suiss/ui)
 
 `@esuiss/ui` is a command-line tool. It does not ship components as a dependency. Instead, it copies their source into your project so you own the code and can change it however you like.
 
-- 66 accessible components and 5 hooks, from buttons and dialogs to sidebars, charts, and chat views
+- 67 accessible components and 5 hooks, from buttons and dialogs to sidebars, charts, and chat views
 - A refined color palette for light and dark mode, written in oklch
 - [Phosphor](https://phosphoricons.com) icons
 - Next.js and React (Vite) with TypeScript
@@ -18,7 +18,7 @@ Copy-paste React components with a clean, minimal design, built on [Base UI](htt
 - Next.js or React with Vite
 - TypeScript
 - Tailwind CSS 4.2 or later (installed for you if missing)
-- Node.js 18 or later
+- Node.js 20 or later
 
 ## Mobile apps
 
@@ -31,7 +31,7 @@ npx @esuiss/ui@latest add dialog --platform swift
 npx @esuiss/ui@latest add dialog --platform kotlin
 ```
 
-React Native projects can pick a styling with `--styling uniwind|nativewind|stylesheet`; SwiftUI and Compose files go to `--path <dir>` when given. When a folder holds more than one project, choose one with `--platform web|rn|swift|kotlin`.
+React Native projects can pick a styling with `--styling uniwind|nativewind|stylesheet`; SwiftUI and Compose files go to `--path <dir>` when given. In a Swift package with several targets, pass `--path`, or pick the target from a list. When a folder holds more than one project, choose one with `--platform web|rn|swift|kotlin`.
 
 ## Quick start
 
@@ -76,17 +76,17 @@ Until the namespace is listed in the public registry directory, register it once
 }
 ```
 
-Every item is published for three primitive bases under the same name. A `radix-*`, `new-york` or `default` style in `components.json` installs the second base, an `aria-*` style the third, and every other style the default base. This CLI follows the same `style`, or `--base`.
+Every item is published for three primitive bases under the same name. A `radix-*`, `new-york` or `default` style in `components.json` installs the second base, an `aria-*` style the third, and every other style the default base. This CLI follows the same `style`, or `--base`. `init --base` saves the base as the `style` in `components.json`, creating the file when needed, so later `add` runs use it without the flag.
 
 ## What `init` does
 
 1. Detects Next.js or Vite and checks for TypeScript and Tailwind CSS 4.2+.
 2. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
 3. Installs and wires up Tailwind CSS if needed (`postcss.config.mjs` for Next.js, `vite.config.ts` for Vite).
-4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
+4. Writes the theme stylesheet to the `tailwind.css` file named in `components.json`, otherwise to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
 5. Sets up the font: text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
 6. Installs `tw-animate-css` and `shadcn`, whose stylesheets provide the animations, variants, and utilities the components rely on.
-7. Adds the `button` component.
+7. Adds the `button` component. With `--overwrite` it replaces a local `button` that differs from the registry.
 
 ## Commands
 
@@ -109,19 +109,22 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 
 Run `add` without names to pick from a list: choose components, patterns, interactions, charts or blocks, type to filter, select with space and press enter. `add patterns` (or another group) without names opens the list for that group. Outside an interactive terminal, `add` without names prints the available names instead.
 
-Components are written to `components/ui/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/`, blocks to `components/blocks/` and hooks to `hooks/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun).
+Components are written to `components/ui/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/`, blocks to `components/blocks/` and hooks to `hooks/` under your `@/*` alias root. Components they depend on are added too, and missing npm packages are installed with your package manager (npm, pnpm, yarn, or bun): the `packageManager` field in `package.json` decides, then the package manager that runs the CLI (`pnpm dlx`, `yarn dlx` or `bunx`), then the lockfile of the project or its workspace.
 
 ### Options
 
 | Option | Description |
 | --- | --- |
-| `-o, --overwrite` | Replace local files that differ from the registry |
-| `--diff` | Show how your local files differ from the registry |
+| `-o, --overwrite` | Replace local files that differ from the registry, including the components they depend on (`init` too) |
+| `--diff` | Show how your local files differ from the registry, for every file `--overwrite` would replace |
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns` / `add interactions` / `add charts` / `add blocks` |
-| `-y, --yes` | Skip confirmation prompts |
-| `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
+| `-y, --yes` | Skip confirmation prompts and the pick list |
+| `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. `init` saves it there |
+| `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
+| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
-| `-h, --help` | Show help |
+| `-h, --help` | Show help, or the help of a command with `init --help` and `add --help` |
 | `-v, --version` | Show the version |
 
 ## Updating components
@@ -133,7 +136,9 @@ npx @esuiss/ui@latest add button --diff
 npx @esuiss/ui@latest add button --overwrite
 ```
 
-Running `add` for a component you already have keeps your file and tells you when it differs from the registry.
+`--diff` and `--overwrite` cover the same files: the components you name and every component they depend on. Running `add` for a component you already have keeps your file and tells you when it differs from the registry.
+
+Each CLI version downloads the registry from the release tag of that version, so a pinned version keeps working when the registry changes. Use `@latest` for the newest components.
 
 ## Theming
 
@@ -242,7 +247,7 @@ setTheme("system", { effect: "circle", origin: "top-center" })
 
 accordion, alert, alert-dialog, alert-sheet, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, fullscreen-menu, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, spinner, switch, tab-bar, table, tabs, textarea, theme, toast, toggle, toggle-group, tooltip, wheel-picker, widget
 
-Hooks: use-message-scroller, use-mobile, use-platform, use-questionnaire
+Hooks: use-message-scroller, use-mobile, use-platform, use-questionnaire, use-scrollbar-gap
 
 ## Patterns
 
