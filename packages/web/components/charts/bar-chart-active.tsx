@@ -47,6 +47,11 @@ export function BarChartActive() {
   const [highlighted, setHighlighted] = React.useState<number | null>(null)
   const day = chartData[selected]
   if (!day) return null
+  const opacity = (index: number) => {
+    if (index === selected) return 1
+    if (index === highlighted) return 0.6
+    return 0.3
+  }
 
   return (
     <Card variant="filled" size="sm">
@@ -104,7 +109,7 @@ export function BarChartActive() {
                 <Cell
                   key={item.day}
                   fill="var(--color-steps)"
-                  fillOpacity={item.index === selected ? 1 : 0.3}
+                  fillOpacity={opacity(item.index)}
                   className="transition-[fill-opacity] duration-200"
                 />
               ))}

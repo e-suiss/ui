@@ -31,7 +31,7 @@ export function RadialChartText() {
             className="aspect-auto h-52 w-full"
           >
             <RadialBarChart
-              accessibilityLayer
+              accessibilityLayer={false}
               data={chartData}
               innerRadius="72%"
               outerRadius="100%"

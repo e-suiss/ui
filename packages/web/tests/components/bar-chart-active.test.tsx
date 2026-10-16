@@ -144,6 +144,20 @@ describe("BarChartActive", () => {
     if (!monday) throw new Error("Monday bar not found")
     await userEvent.hover(monday)
     await expect.element(caption()).toHaveTextContent("Saturday · select a bar")
-    expect(opacities()).toEqual(selectedOnly(5))
+    await expect
+      .poll(opacities)
+      .toEqual(
+        selectedOnly(5).map((value, index) => (index === 0 ? 0.6 : value))
+      )
+  })
+
+  it("shows which bar the keyboard cursor is on", async () => {
+    await renderChart()
+    await pointAt(2)
+    await expect
+      .poll(opacities)
+      .toEqual(
+        selectedOnly(5).map((value, index) => (index === 2 ? 0.6 : value))
+      )
   })
 })

@@ -106,7 +106,7 @@ test("Interactive", async () => {
       async () => {
         await userEvent.hover(title)
         await userEvent.hover(sectorAt(canvasElement, 0))
-        expect(readout).toHaveTextContent(`Apps${gigabytes.format(62.4)} GB`)
+        expect(readout).toHaveTextContent(`Apps: ${gigabytes.format(62.4)} GB`)
       },
       { timeout: 3000 }
     )

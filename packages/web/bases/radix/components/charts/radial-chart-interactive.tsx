@@ -184,7 +184,14 @@ export function RadialChartInteractive() {
             bar={24}
             className="size-65 max-w-full"
           />
-          <dl className="flex min-w-44 flex-col gap-4" aria-live="polite">
+          <p className="sr-only" aria-live="polite">
+            {WEEK[selected]?.day}:{" "}
+            {RINGS.map(
+              (ring, index) =>
+                `${ring.label} ${target[index] ?? 0} of ${ring.goal} ${ring.unit}`
+            ).join(", ")}
+          </p>
+          <dl className="flex min-w-44 flex-col gap-4">
             {RINGS.map((ring, index) => {
               const percent = Math.round(
                 ((target[index] ?? 0) / ring.goal) * 100

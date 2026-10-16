@@ -140,6 +140,9 @@ export function PieChartInteractive() {
   const total = values.reduce((sum, value) => sum + value, 0)
   const used = total - sizeOf("free")
   const activeValue = active ? sizeOf(active) : used
+  const targetOf = (kind: Kind) => target[KINDS.indexOf(kind)] ?? 0
+  const targetTotal = target.reduce((sum, value) => sum + value, 0)
+  const targetValue = active ? targetOf(active) : targetTotal - targetOf("free")
   const data = React.useMemo(
     () =>
       KINDS.map((kind, index) => ({
@@ -210,7 +213,7 @@ export function PieChartInteractive() {
               config={chartConfig}
               className="aspect-square size-full"
             >
-              <PieChart accessibilityLayer>
+              <PieChart accessibilityLayer={false}>
                 <Pie
                   data={data}
                   dataKey="size"
@@ -245,8 +248,13 @@ export function PieChartInteractive() {
                 />
               </PieChart>
             </ChartContainer>
+            <p className="sr-only" aria-live="polite">
+              {active ? chartConfig[active].label : "Used"}:{" "}
+              {sizeFormat.format(targetValue)} GB,{" "}
+              {Math.round((targetValue / targetTotal) * 100)}%
+            </p>
             <div
-              aria-live="polite"
+              aria-hidden
               className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center"
             >
               <span className="text-sm text-muted-foreground">
