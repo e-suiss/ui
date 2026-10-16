@@ -64,7 +64,7 @@ function useActionBar() {
 }
 
 function ActionBar({
-  isOpen: openProp,
+  open: openProp,
   defaultOpen = false,
   onOpenChange,
   dismissible = true,
@@ -75,9 +75,9 @@ function ActionBar({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   dismissible?: boolean
   floating?: boolean
   moreLabel?: string
@@ -173,14 +173,14 @@ function ActionBar({
 }
 
 function ActionBarMenu({
-  isOpen: open,
+  open,
   defaultOpen,
   onOpenChange,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   children?: React.ReactNode
 }) {
   const { isMobile, dismissible, active, showMenu, hideMenu } = useActionBar()
@@ -370,7 +370,7 @@ function ActionBarLabel({
 
 function ActionBarItem({
   variant,
-  isDisabled,
+  disabled: isDisabled,
   onAction,
   ...props
 }: {
@@ -379,7 +379,7 @@ function ActionBarItem({
   id?: string
   "aria-label"?: string
   variant?: "default" | "destructive"
-  isDisabled?: boolean
+  disabled?: boolean
   onAction?: () => void
 }) {
   const { isMobile } = useActionBar()

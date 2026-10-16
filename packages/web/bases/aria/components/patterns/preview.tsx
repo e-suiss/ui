@@ -27,15 +27,15 @@ function usePreview() {
 }
 
 function Preview({
-  isOpen,
+  open: isOpen,
   defaultOpen,
   onOpenChange,
   floating = true,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   floating?: boolean
   children?: React.ReactNode
 }) {

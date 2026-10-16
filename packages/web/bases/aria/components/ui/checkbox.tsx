@@ -11,10 +11,22 @@ import { cn } from "@/lib/utils"
 function Checkbox({
   className,
   children,
+  checked,
+  defaultChecked,
+  disabled,
+  onCheckedChange,
+  isSelected = checked,
+  defaultSelected = defaultChecked,
+  isDisabled = disabled,
+  onChange,
   ...props
 }: Omit<CheckboxPrimitiveProps, "className" | "children"> & {
   className?: string
   children?: React.ReactNode
+  checked?: boolean
+  defaultChecked?: boolean
+  disabled?: boolean
+  onCheckedChange?: (checked: boolean) => void
 }) {
   return (
     <CheckboxPrimitive
@@ -24,6 +36,13 @@ function Checkbox({
         className
       )}
       {...props}
+      isSelected={isSelected}
+      defaultSelected={defaultSelected}
+      isDisabled={isDisabled}
+      onChange={(next) => {
+        onChange?.(next)
+        onCheckedChange?.(next)
+      }}
     >
       {({ isSelected, isIndeterminate }) => (
         <>

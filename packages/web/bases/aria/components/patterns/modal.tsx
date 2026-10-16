@@ -41,15 +41,15 @@ function useModal() {
 }
 
 function Modal({
-  isOpen,
+  open: isOpen,
   defaultOpen,
   onOpenChange,
   floating,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   floating?: boolean
   children?: React.ReactNode
 }) {
@@ -83,17 +83,30 @@ function Modal({
 }
 
 type ModalButtonProps = {
+  render?: React.ReactElement
   className?: string
   children?: React.ReactNode
   id?: string
   "aria-label"?: string
 }
 
-function ModalTrigger(props: ModalButtonProps) {
+function ModalTrigger({ render, ...props }: ModalButtonProps) {
   const { isMobile } = useModal()
-  const Trigger = isMobile ? DrawerTrigger : DialogTrigger
 
-  return <Trigger data-slot="modal-trigger" {...props} />
+  if (isMobile)
+    return (
+      <DrawerTrigger data-slot="modal-trigger" render={render} {...props} />
+    )
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "modal-trigger",
+        ...props,
+      }
+    )
+
+  return <DialogTrigger data-slot="modal-trigger" {...props} />
 }
 
 function ModalContent({
@@ -188,11 +201,22 @@ function ModalDescription(props: {
   return <Description data-slot="modal-description" {...props} />
 }
 
-function ModalClose(props: ModalButtonProps) {
+function ModalClose({ render, ...props }: ModalButtonProps) {
   const { isMobile } = useModal()
-  const Close = isMobile ? DrawerClose : DialogClose
 
-  return <Close data-slot="modal-close" {...props} />
+  if (isMobile)
+    return <DrawerClose data-slot="modal-close" render={render} {...props} />
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "modal-close",
+        slot: "close",
+        ...props,
+      }
+    )
+
+  return <DialogClose data-slot="modal-close" {...props} />
 }
 
 export {

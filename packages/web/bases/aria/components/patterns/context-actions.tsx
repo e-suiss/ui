@@ -263,7 +263,7 @@ function ContextActionsLabel({
 
 function ContextActionsItem({
   variant,
-  isDisabled,
+  disabled: isDisabled,
   onAction,
   ...props
 }: {
@@ -272,7 +272,7 @@ function ContextActionsItem({
   id?: string
   "aria-label"?: string
   variant?: "default" | "destructive"
-  isDisabled?: boolean
+  disabled?: boolean
   onAction?: () => void
 }) {
   const { isMobile } = useContextActions()

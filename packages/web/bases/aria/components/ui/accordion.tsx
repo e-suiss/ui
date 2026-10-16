@@ -46,13 +46,23 @@ function Accordion({
 
 function AccordionItem({
   className,
+  value,
+  id = value,
+  disabled,
+  isDisabled = disabled,
   ...props
-}: Omit<DisclosurePrimitiveProps, "className"> & { className?: string }) {
+}: Omit<DisclosurePrimitiveProps, "className"> & {
+  className?: string
+  value?: string
+  disabled?: boolean
+}) {
   return (
     <DisclosurePrimitive
       data-slot="accordion-item"
       className={cn("ms-4 not-first:border-t", className)}
       {...props}
+      id={id}
+      isDisabled={isDisabled}
     />
   )
 }

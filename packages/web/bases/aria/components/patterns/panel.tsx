@@ -41,15 +41,15 @@ function usePanel() {
 }
 
 function Panel({
-  isOpen,
+  open: isOpen,
   defaultOpen,
   onOpenChange,
   floating,
   children,
 }: {
-  isOpen?: boolean
+  open?: boolean
   defaultOpen?: boolean
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (open: boolean) => void
   floating?: boolean
   children?: React.ReactNode
 }) {
@@ -83,17 +83,30 @@ function Panel({
 }
 
 type PanelButtonProps = {
+  render?: React.ReactElement
   className?: string
   children?: React.ReactNode
   id?: string
   "aria-label"?: string
 }
 
-function PanelTrigger(props: PanelButtonProps) {
+function PanelTrigger({ render, ...props }: PanelButtonProps) {
   const { isMobile } = usePanel()
-  const Trigger = isMobile ? DrawerTrigger : SheetTrigger
 
-  return <Trigger data-slot="panel-trigger" {...props} />
+  if (isMobile)
+    return (
+      <DrawerTrigger data-slot="panel-trigger" render={render} {...props} />
+    )
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "panel-trigger",
+        ...props,
+      }
+    )
+
+  return <SheetTrigger data-slot="panel-trigger" {...props} />
 }
 
 function PanelContent({
@@ -183,11 +196,22 @@ function PanelFooter(props: React.ComponentProps<"div">) {
   return <Footer data-slot="panel-footer" {...props} />
 }
 
-function PanelClose(props: PanelButtonProps) {
+function PanelClose({ render, ...props }: PanelButtonProps) {
   const { isMobile } = usePanel()
-  const Close = isMobile ? DrawerClose : SheetClose
 
-  return <Close data-slot="panel-close" {...props} />
+  if (isMobile)
+    return <DrawerClose data-slot="panel-close" render={render} {...props} />
+  if (React.isValidElement(render))
+    return React.cloneElement(
+      render as React.ReactElement<Record<string, unknown>>,
+      {
+        "data-slot": "panel-close",
+        slot: "close",
+        ...props,
+      }
+    )
+
+  return <SheetClose data-slot="panel-close" {...props} />
 }
 
 export {
