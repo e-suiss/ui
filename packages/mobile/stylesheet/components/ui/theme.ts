@@ -4,7 +4,6 @@ import {
   AccessibilityInfo,
   Appearance,
   type BoxShadowValue,
-  Pressable,
   type StyleProp,
   Text,
   useColorScheme,
@@ -13,6 +12,8 @@ import {
 } from "react-native"
 import Animated, {
   Easing,
+  LinearTransition,
+  ReduceMotion,
   type SharedValue,
   useAnimatedProps,
   useSharedValue,
@@ -31,6 +32,12 @@ import Svg, {
 } from "react-native-svg"
 import { useEffectEvent } from "@/components/primitives/hooks"
 import { Portal } from "@/components/primitives/portal"
+import { Toggle as TogglePrimitive } from "@/components/primitives/toggle"
+import {
+  ToggleGroupIndicator as ToggleGroupIndicatorPrimitive,
+  ToggleGroup as ToggleGroupPrimitive,
+  type ToggleGroupState,
+} from "@/components/primitives/toggle-group"
 
 const light = {
   background: "#ffffff",
@@ -760,27 +767,42 @@ function useTheme() {
   }
 }
 
+const INDICATOR_TRANSITION = LinearTransition.duration(300)
+  .easing(Easing.bezier(0.32, 0.72, 0, 1))
+  .reduceMotion(ReduceMotion.System)
+
 function ThemeToggle({
   labels,
-  disabled = false,
   effect,
   origin,
   blur,
   style,
-}: ThemeTransition & {
-  labels?: Partial<Record<Theme, string>>
-  disabled?: boolean
-  style?: StyleProp<ViewStyle>
-}) {
+  ...props
+}: Omit<
+  React.ComponentProps<typeof ToggleGroupPrimitive>,
+  "children" | "defaultValue" | "multiple" | "onValueChange" | "value"
+> &
+  ThemeTransition & {
+    labels?: Partial<Record<Theme, string>>
+  }) {
   const { colors, isDark, theme } = useTheme()
   const transition =
     effect !== undefined || origin !== undefined || blur !== undefined
       ? { effect, origin, blur }
       : undefined
-  return jsx(View, {
-    role: "radiogroup",
+  return jsxs(ToggleGroupPrimitive, {
     accessibilityLabel: "Theme",
-    style: [
+    value: [theme],
+    onValueChange: (value: string[], details: { cancel: () => void }) => {
+      const next = value[0]
+      if (!isTheme(next)) {
+        details.cancel()
+        return
+      }
+      setTheme(next, transition)
+    },
+    ...props,
+    style: (state: ToggleGroupState): StyleProp<ViewStyle> => [
       {
         position: "relative",
         flexDirection: "row",
@@ -791,22 +813,30 @@ function ThemeToggle({
         borderRadius: radius.xl,
         backgroundColor: colors.secondary,
       },
-      disabled && { opacity: 0.5 },
-      style,
+      state.disabled && { opacity: 0.5 },
+      typeof style === "function" ? style(state) : style,
     ],
-    children: THEMES.map((value) => {
-      const selected = theme === value
-      return jsx(
-        Pressable,
+    children: [
+      jsx(
+        ToggleGroupIndicatorPrimitive,
         {
-          role: "radio",
-          accessibilityState: { checked: selected, disabled },
-          disabled,
-          onPress: () => {
-            if (!selected) setTheme(value, transition)
-          },
           style: [
             {
+              borderRadius: radius.md,
+              backgroundColor: isDark ? colors.border : colors.card,
+            },
+            shadow.sm,
+          ],
+          render: jsx(Animated.View, { layout: INDICATOR_TRANSITION }),
+        },
+        "indicator"
+      ),
+      ...THEMES.map((value) =>
+        jsx(
+          TogglePrimitive,
+          {
+            value,
+            style: {
               height: 36,
               minWidth: 36,
               flexShrink: 0,
@@ -815,22 +845,21 @@ function ThemeToggle({
               paddingHorizontal: 12,
               borderRadius: radius.md,
             },
-            selected && {
-              backgroundColor: isDark ? colors.border : colors.card,
-              ...shadow.sm,
-            },
-          ],
-          children: jsx(Text, {
-            style: {
-              ...fontSize.sm,
-              color: selected ? colors.cardForeground : colors.mutedForeground,
-            },
-            children: labels?.[value] ?? LABELS[value],
-          }),
-        },
-        value
-      )
-    }),
+            children: jsx(Text, {
+              style: {
+                ...fontSize.sm,
+                color:
+                  theme === value
+                    ? colors.cardForeground
+                    : colors.mutedForeground,
+              },
+              children: labels?.[value] ?? LABELS[value],
+            }),
+          },
+          value
+        )
+      ),
+    ],
   })
 }
 

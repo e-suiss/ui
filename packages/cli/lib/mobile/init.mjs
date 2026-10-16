@@ -359,7 +359,13 @@ export async function init(options) {
     registry,
     css
       ? ["button", "primitives/portal"]
-      : ["button", "primitives/hooks", "primitives/portal"],
+      : [
+          "button",
+          "primitives/hooks",
+          "primitives/portal",
+          "primitives/toggle",
+          "primitives/toggle-group",
+        ],
     { styling: project.styling }
   )
 

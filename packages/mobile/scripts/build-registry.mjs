@@ -88,11 +88,20 @@ async function buildItem(dir, type, file) {
   const requires = new Set()
   const dependencies = {}
   const overrides = []
+  const styleFiles = {}
 
   for (const [style, { directory }] of Object.entries(STYLES)) {
-    const source = path.posix.join(directory, filePath)
+    let source = path.posix.join(directory, filePath)
     if (!existsSync(path.join(ROOT, source))) {
-      throw new Error(`missing ${source}`)
+      const alternate = filePath.replace(SCRIPT_EXTENSION, (extension) =>
+        extension === ".tsx" ? ".ts" : ".tsx"
+      )
+      const alternateSource = path.posix.join(directory, alternate)
+      if (!existsSync(path.join(ROOT, alternateSource))) {
+        throw new Error(`missing ${source}`)
+      }
+      source = alternateSource
+      styleFiles[style] = [alternate]
     }
     overrides.push(style)
     const analysis = await analyze(source, name)
@@ -109,6 +118,7 @@ async function buildItem(dir, type, file) {
     dependencies,
     requires: [...requires].sort(),
     files: [filePath],
+    ...(Object.keys(styleFiles).length > 0 && { styleFiles }),
     overrides,
   }
 }

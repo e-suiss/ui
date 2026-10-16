@@ -1686,12 +1686,20 @@
       "type": "registry:ui",
       "title": "Theme",
       "description": "A theme provider with a light, dark and system toggle and an animated switch between them.",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
       "registryDependencies": [
-        "@esuiss-rn/theme-suiss"
+        "@esuiss-rn/primitives-hooks",
+        "@esuiss-rn/primitives-portal",
+        "@esuiss-rn/primitives-toggle",
+        "@esuiss-rn/primitives-toggle-group"
       ],
       "files": [
         {
-          "path": "stylesheet/components/ui/theme.tsx",
+          "path": "stylesheet/components/ui/theme.ts",
           "type": "registry:ui"
         }
       ],

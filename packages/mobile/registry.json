@@ -3142,17 +3142,28 @@
           "react-native-svg",
           "react-native-worklets"
         ],
-        "stylesheet": []
+        "stylesheet": [
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
       },
       "requires": [
         "primitives/hooks",
         "primitives/portal",
+        "primitives/toggle",
+        "primitives/toggle-group",
         "text",
         "toggle-group"
       ],
       "files": [
         "components/ui/theme.tsx"
       ],
+      "styleFiles": {
+        "stylesheet": [
+          "components/ui/theme.ts"
+        ]
+      },
       "overrides": [
         "uniwind",
         "nativewind",
