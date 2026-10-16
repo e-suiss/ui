@@ -8,6 +8,7 @@ import { source } from "@/lib/source"
 import { pageSummary } from "@/lib/summary"
 
 const ONLY_OPEN = /^<Only platform="([^"]*)">$/
+const ONLY_BASE_OPEN = /^<OnlyBase base="([^"]*)">$/
 const TABS_OPEN = /^<Tabs\b(.*)>$/
 const BLOCK_OPEN = /^<(NativeExample|ApiPart|Callout|Anatomy)\b([^>]*)>$/
 const FIRST_CHAR = /^./
@@ -177,8 +178,14 @@ function cleanMarkdown(body: string) {
   let indent = 0
   let labels: string[] = []
   let anatomy = false
+  let otherBase = false
   for (const raw of body.split("\n")) {
     const isFence = raw.trim().startsWith("```")
+    if (otherBase) {
+      if (isFence) fence = !fence
+      else if (!fence && raw.trim() === "</OnlyBase>") otherBase = false
+      continue
+    }
     const line =
       (!fence || isFence) && indent > 0 && raw.startsWith(" ".repeat(indent))
         ? raw.slice(indent)
@@ -189,6 +196,12 @@ function cleanMarkdown(body: string) {
       output.push(line)
       continue
     }
+    const onlyBase = trimmed.match(ONLY_BASE_OPEN)
+    if (onlyBase) {
+      otherBase = !onlyBase[1].split(" ").includes("base")
+      continue
+    }
+    if (trimmed === "</OnlyBase>") continue
     const only = trimmed.match(ONLY_OPEN)
     if (only) {
       output.push(
