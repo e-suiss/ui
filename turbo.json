@@ -7,14 +7,67 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "public/r/**"]
     },
+    "@esuiss/site#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/packages/web/**",
+        "!$TURBO_ROOT$/packages/web/node_modules/**",
+        "$TURBO_ROOT$/packages/mobile/**",
+        "!$TURBO_ROOT$/packages/mobile/node_modules/**",
+        "$TURBO_ROOT$/packages/cli/lib/**"
+      ],
+      "outputs": [".next/**", "!.next/cache/**", "public/r/**"]
+    },
     "typecheck": {
       "dependsOn": ["^typecheck"]
     },
+    "@esuiss/site#typecheck": {
+      "dependsOn": ["^typecheck"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/packages/web/**",
+        "!$TURBO_ROOT$/packages/web/node_modules/**",
+        "$TURBO_ROOT$/packages/cli/lib/**"
+      ]
+    },
     "test": {},
+    "@esuiss/web#test": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/lib/**",
+        "$TURBO_ROOT$/apps/ui/content/docs/**"
+      ]
+    },
+    "@esuiss/ui#test": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/release.mjs",
+        "$TURBO_ROOT$/scripts/lib/**",
+        "$TURBO_ROOT$/packages/web/scripts/**"
+      ]
+    },
     "registry": {
       "cache": false
     },
     "registry:check": {},
+    "@esuiss/web#registry:check": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/lib/**",
+        "$TURBO_ROOT$/apps/ui/content/docs/**"
+      ]
+    },
+    "@esuiss/mobile#registry:check": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/packages/tokens/**",
+        "!$TURBO_ROOT$/packages/tokens/node_modules/**",
+        "$TURBO_ROOT$/scripts/lib/**",
+        "$TURBO_ROOT$/apps/ui/content/docs/**",
+        "$TURBO_ROOT$/biome.json"
+      ]
+    },
     "dev": {
       "cache": false,
       "persistent": true
