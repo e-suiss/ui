@@ -166,6 +166,22 @@ describe("theme transitions", () => {
     return { transition, variables }
   }
 
+  function deferTransitions() {
+    const finishers: (() => void)[] = []
+    vi.spyOn(document, "startViewTransition").mockImplementation(((
+      update?: ViewTransitionUpdateCallback | StartViewTransitionOptions
+    ) => {
+      if (typeof update === "function") update()
+      let finish: () => void = () => undefined
+      const finished = new Promise<void>((resolve) => {
+        finish = resolve
+      })
+      finishers.push(finish)
+      return { ready: Promise.resolve(), finished } as unknown as ViewTransition
+    }) as typeof document.startViewTransition)
+    return finishers
+  }
+
   it("animates a change with the requested effect and cleans up afterwards", async () => {
     emulate()
     const { transition, variables } = captureTransitions()
@@ -205,6 +221,52 @@ describe("theme transitions", () => {
     expect(rejections).toEqual([])
     expect(root.classList.contains("dark")).toBe(false)
     expect(root.style.getPropertyValue("--theme-transition-from")).toBe("")
+  })
+
+  it("clears what an interrupted transition left on the page", async () => {
+    emulate()
+    const finishers = deferTransitions()
+    const at = () => root.style.getPropertyValue("--theme-transition-at")
+    const from = () => root.style.getPropertyValue("--theme-transition-from")
+    const { result, act } = await renderTheme({ defaultTheme: "light" })
+    await expect.poll(() => result.current.resolvedTheme).toBe("light")
+
+    await act(() =>
+      result.current.setTheme("dark", { effect: "circle-blur", blur: true })
+    )
+    expect(at()).not.toBe("")
+    expect(root.dataset.themeTransitionBlur).toBe("")
+
+    await act(() => result.current.setTheme("light", { effect: "circle" }))
+    expect(at()).toBe("")
+    expect(root.dataset.themeTransitionBlur).toBeUndefined()
+    expect(root.dataset.themeTransition).toBe("circle")
+    expect(from()).not.toBe("")
+
+    finishers[0]?.()
+    await new Promise((resolve) => setTimeout(resolve, 0))
+    expect(root.dataset.themeTransition).toBe("circle")
+    expect(from()).not.toBe("")
+
+    finishers[1]?.()
+    await expect.poll(() => root.dataset.themeTransition).toBeUndefined()
+    expect(from()).toBe("")
+    expect(at()).toBe("")
+    expect(root.classList.contains("dark")).toBe(false)
+  })
+
+  it("leaves a running transition alone when the theme changes without one", async () => {
+    emulate()
+    const finishers = deferTransitions()
+    const { result, act } = await renderTheme({ defaultTheme: "light" })
+    await expect.poll(() => result.current.resolvedTheme).toBe("light")
+    await act(() => result.current.setTheme("dark", { effect: "circle" }))
+    await act(() => result.current.setTheme("light"))
+    expect(root.classList.contains("dark")).toBe(false)
+    finishers[0]?.()
+    await expect.poll(() => root.dataset.themeTransition).toBeUndefined()
+    expect(root.style.getPropertyValue("--theme-transition-from")).toBe("")
+    expect(root.classList.contains("dark")).toBe(false)
   })
 
   it("skips the animation for users who prefer reduced motion", async () => {

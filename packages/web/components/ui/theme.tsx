@@ -172,6 +172,7 @@ function ThemeProvider({
   const [theme, setThemeState] = React.useState<Theme>(defaultTheme)
   const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>()
   const transitionRef = React.useRef<ViewTransition | null>(null)
+  const cleanupRef = React.useRef<(() => void) | null>(null)
   const requestRef = React.useRef(0)
 
   React.useEffect(() => {
@@ -235,6 +236,17 @@ function ThemeProvider({
 
       const root = document.documentElement
       const variables = transitionVariables(transition, resolved)
+      cleanupRef.current?.()
+      const cleanup = () => {
+        if (cleanupRef.current !== cleanup) return
+        cleanupRef.current = null
+        delete root.dataset.themeTransition
+        delete root.dataset.themeTransitionBlur
+        for (const name of Object.keys(variables)) {
+          root.style.removeProperty(name)
+        }
+      }
+      cleanupRef.current = cleanup
       root.dataset.themeTransition = transition.effect ?? "circle"
       if (transition.blur) root.dataset.themeTransitionBlur = ""
       for (const [name, value] of Object.entries(variables)) {
@@ -249,11 +261,7 @@ function ThemeProvider({
       viewTransition.finished.finally(() => {
         if (transitionRef.current !== viewTransition) return
         transitionRef.current = null
-        delete root.dataset.themeTransition
-        delete root.dataset.themeTransitionBlur
-        for (const name of Object.keys(variables)) {
-          root.style.removeProperty(name)
-        }
+        cleanup()
       })
     },
     [storageKey]
