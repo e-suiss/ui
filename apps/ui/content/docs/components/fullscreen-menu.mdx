@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="fullscreen-menu-demo" layout="fullscreen" />
 
-Fullscreen menu is built on the Base UI Dialog. The `FullscreenMenu` root manages the open state, and `FullscreenMenuTrigger` renders a menu button whose two-line icon animates into a close icon. `FullscreenMenuContent` covers the viewport and reveals from the top, with a sticky header that holds the close button. Inside it, `FullscreenMenuTitle` names the menu, `FullscreenMenuGroup` holds a list of `FullscreenMenuLink` items, and `FullscreenMenuLabel` adds a caption to a group. Links and labels fade in with a staggered delay as the menu opens.
+Fullscreen menu is built on the dialog primitive of the chosen base. The `FullscreenMenu` root manages the open state, and `FullscreenMenuTrigger` renders a menu button whose two-line icon animates into a close icon. `FullscreenMenuContent` covers the viewport and reveals from the top, with a sticky header that holds the close button. Inside it, `FullscreenMenuTitle` names the menu, `FullscreenMenuGroup` holds a list of `FullscreenMenuLink` items, and `FullscreenMenuLabel` adds a caption to a group. Links and labels fade in with a staggered delay as the menu opens.
 
 Use it for the primary navigation of a website on phones, like the global navigation on apple.com. For a short list of actions, use a dropdown menu; for a panel that keeps part of the page visible, use a drawer or sheet.
 
@@ -55,7 +55,25 @@ import { FullscreenMenu, FullscreenMenuTrigger, FullscreenMenuContent, Fullscree
 
 The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Choosing a `FullscreenMenuLink` closes the menu. Set `isActive` on the link for the current page.
 
-Groups that contain a `FullscreenMenuLabel` render their links smaller than groups without one, so the first group reads as primary navigation. Use `FullscreenMenuLink` with the `render` prop to render a router link instead of an anchor.
+Groups that contain a `FullscreenMenuLabel` render their links smaller than groups without one, so the first group reads as primary navigation. `FullscreenMenuLink` can render a router link instead of an anchor.
+
+<OnlyBase base="base">
+
+Use `FullscreenMenuLink` with the `render` prop to render a router link instead of an anchor.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `FullscreenMenuLink` and pass a router link as the child.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `FullscreenMenuLink` that returns a router link with the props it receives.
+
+</OnlyBase>
 
 ## Examples
 
@@ -79,7 +97,7 @@ A menu whose close button shows the text `Done` instead of an icon.
 
 The root that manages the menu's open state.
 
-Also accepts the props of `DialogPrimitive.Root.Props`, `FullscreenMenuProps`.
+Also accepts the props of the primitive part it wraps, plus `FullscreenMenuProps`.
 
 </ApiPart>
 
@@ -89,7 +107,7 @@ Also accepts the props of `DialogPrimitive.Root.Props`, `FullscreenMenuProps`.
 
 The menu button, with an icon that animates between menu and close states.
 
-Also accepts the props of `DialogPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -104,7 +122,7 @@ The full-screen panel, with a sticky header that holds the close button.
 | `showCloseButton` | `boolean` | `true` | Shows the header with a close button at the top of the menu. |
 | `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
 
-Also accepts the props of `DialogPrimitive.Popup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -114,7 +132,7 @@ Also accepts the props of `DialogPrimitive.Popup.Props`.
 
 The menu's title, visually hidden and used as its accessible name.
 
-Also accepts the props of `DialogPrimitive.Title.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -146,7 +164,7 @@ A navigation link that closes the menu when chosen.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"` and the link color. |
+| `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"` and `text-primary`. |
 
 Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps<"a">`.
 
@@ -158,7 +176,7 @@ Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps
 
 A button that closes the menu from any element.
 
-Also accepts the props of `DialogPrimitive.Close.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -176,6 +194,6 @@ Also accepts the props of `DialogPrimitive.Close.Props`.
 - The active link gets `data-active`.
 - The stagger delay is computed from a link's position in its group, for up to 10 links, and the group's position in the menu, for up to 6 sections.
 - The content respects safe-area insets, and animations are disabled when reduced motion is preferred.
-- Uses the `surface`, `label`, `label-secondary` and `link` tokens.
+- Uses the `background`, `foreground`, `muted-foreground` and `primary` tokens.
 
 </Only>

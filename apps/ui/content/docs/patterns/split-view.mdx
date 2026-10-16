@@ -155,7 +155,25 @@ Also accepts the props of `useRender.ComponentProps<"button">`, `React.Component
 
 ## Notes
 
-Styling hooks: `data-slot="split-view"`, `split-view-sidebar`, `split-view-list`, `split-view-detail`, `split-view-back` and `split-view-item`; desktop panels use `split-view-sidebar-panel`, `split-view-list-panel` and `split-view-detail-panel`. On mobile the root has `data-column` set to the visible column. Use the `render` prop on `SplitViewItem` to render it as a link.
+Styling hooks: `data-slot="split-view"`, `split-view-sidebar`, `split-view-list`, `split-view-detail`, `split-view-back` and `split-view-item`; desktop panels use `split-view-sidebar-panel`, `split-view-list-panel` and `split-view-detail-panel`. On mobile the root has `data-column` set to the visible column.
+
+<OnlyBase base="base">
+
+Use the `render` prop on `SplitViewItem` to render it as a link.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `SplitViewItem` and pass a link as the child to render it as a link.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `SplitViewItem` that returns a link with the props it receives.
+
+</OnlyBase>
 
 </Only>
 

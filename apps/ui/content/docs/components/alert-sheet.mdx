@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="alert-sheet-demo" layout="fullscreen" />
 
-Alert Sheet is an iOS-style action sheet built on Base UI's dialog primitives. An `AlertSheet` root contains an `AlertSheetTrigger` and an `AlertSheetContent`, which renders its own portal and scrim overlay. Inside, an `AlertSheetGroup` holds an optional `AlertSheetHeader` (with `AlertSheetTitle` and `AlertSheetDescription`) and one or more `AlertSheetAction` rows. A separate `AlertSheetCancel` sits below the group.
+Alert Sheet is an iOS-style action sheet built on the dialog primitives of the chosen base. An `AlertSheet` root contains an `AlertSheetTrigger` and an `AlertSheetContent`, which renders its own portal and scrim overlay. Inside, an `AlertSheetGroup` holds an optional `AlertSheetHeader` (with `AlertSheetTitle` and `AlertSheetDescription`) and one or more `AlertSheetAction` rows. A separate `AlertSheetCancel` sits below the group.
 
 Use it to offer a short list of actions tied to the current context, especially on touch devices. For a centered confirmation, use Alert Dialog.
 
@@ -49,6 +49,8 @@ npm install @base-ui/react class-variance-authority
 import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from "@/components/ui/alert-sheet"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <AlertSheet>
@@ -73,6 +75,64 @@ import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, Ale
   </AlertSheet>
 </div>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <AlertSheet>
+    <AlertSheetTrigger asChild>
+      <Button variant="outline">Delete order</Button>
+    </AlertSheetTrigger>
+    <AlertSheetContent>
+      <AlertSheetGroup>
+        <AlertSheetHeader>
+          <AlertSheetTitle className="sr-only">Delete order</AlertSheetTitle>
+          <AlertSheetDescription>
+            Order #1042 will be permanently deleted. This action cannot be
+            undone.
+          </AlertSheetDescription>
+        </AlertSheetHeader>
+        <AlertSheetAction variant="destructive">
+          Delete Order
+        </AlertSheetAction>
+      </AlertSheetGroup>
+      <AlertSheetCancel>Cancel</AlertSheetCancel>
+    </AlertSheetContent>
+  </AlertSheet>
+</div>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <AlertSheet>
+    <Button variant="outline">Delete order</Button>
+    <AlertSheetContent>
+      <AlertSheetGroup>
+        <AlertSheetHeader>
+          <AlertSheetTitle className="sr-only">Delete order</AlertSheetTitle>
+          <AlertSheetDescription>
+            Order #1042 will be permanently deleted. This action cannot be
+            undone.
+          </AlertSheetDescription>
+        </AlertSheetHeader>
+        <AlertSheetAction variant="destructive">
+          Delete Order
+        </AlertSheetAction>
+      </AlertSheetGroup>
+      <AlertSheetCancel>Cancel</AlertSheetCancel>
+    </AlertSheetContent>
+  </AlertSheet>
+</div>
+```
+
+</OnlyBase>
 
 Every sheet needs an `AlertSheetTitle` for its accessible name. If the title should not be visible, hide it with `className="sr-only"`.
 
@@ -120,7 +180,7 @@ The root that manages the open state and dismissal behavior.
 | --- | --- | --- | --- |
 | `dismissible` | `boolean` | `true` | When `true`, renders as a dialog; when `false`, renders as an alert dialog. |
 
-Also accepts the props of `AlertSheetPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -130,7 +190,7 @@ Also accepts the props of `AlertSheetPrimitive.Root.Props`.
 
 The control that opens the sheet.
 
-Also accepts the props of `AlertSheetPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -140,7 +200,7 @@ Also accepts the props of `AlertSheetPrimitive.Trigger.Props`.
 
 Renders the sheet into a portal outside the DOM hierarchy.
 
-Also accepts the props of `AlertSheetPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -150,7 +210,7 @@ Also accepts the props of `AlertSheetPrimitive.Portal.Props`.
 
 The full-screen scrim behind the sheet.
 
-Also accepts the props of `AlertSheetPrimitive.Backdrop.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -160,7 +220,7 @@ Also accepts the props of `AlertSheetPrimitive.Backdrop.Props`.
 
 The bottom-anchored container, rendered with its own portal and overlay.
 
-Also accepts the props of `AlertSheetPrimitive.Popup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -190,7 +250,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The heading that names the sheet.
 
-Also accepts the props of `AlertSheetPrimitive.Title.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -200,7 +260,7 @@ Also accepts the props of `AlertSheetPrimitive.Title.Props`.
 
 Supporting text that describes the sheet.
 
-Also accepts the props of `AlertSheetPrimitive.Description.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -212,9 +272,9 @@ A full-width row button that performs an action and closes the sheet.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Text color of the action. `default` uses the link color; `destructive` uses the danger color. |
+| `variant` | `"default" \| "destructive"` | `"default"` | Text color of the action. `default` uses `text-primary`; `destructive` uses `text-destructive`. |
 
-Also accepts the props of `AlertSheetPrimitive.Close.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -224,7 +284,7 @@ Also accepts the props of `AlertSheetPrimitive.Close.Props`.
 
 A separate, bold button that dismisses the sheet.
 
-Also accepts the props of `AlertSheetPrimitive.Close.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -238,7 +298,7 @@ Also accepts the props of `AlertSheetPrimitive.Close.Props`.
 ## Notes
 
 - Styling hooks: `data-slot` values from `alert-sheet` through `alert-sheet-cancel`.
-- The sheet slides with `translate-y-full` on `data-starting-style` and `data-ending-style`, and its bottom padding respects `env(safe-area-inset-bottom)`.
+- The sheet slides up from `translate-y-full` as it opens and back down as it closes, and its bottom padding respects `env(safe-area-inset-bottom)`.
 - When an action contains an icon, the group switches to a grid so icons and labels align across rows.
 
 </Only>

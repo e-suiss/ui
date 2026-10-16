@@ -55,7 +55,25 @@ import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
 </div>
 ```
 
-`Marker` is built on Base UI's `useRender`, so it accepts a `render` prop to change the underlying element. Links inside the marker or its content are underlined automatically.
+Links inside the marker or its content are underlined automatically. The underlying element can be changed:
+
+<OnlyBase base="base">
+
+`Marker` is built on Base UI's `useRender`, so it accepts a `render` prop to change the underlying element.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `Marker` and pass the element as the child.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `Marker` that returns the element with the props it receives.
+
+</OnlyBase>
 
 ## Examples
 

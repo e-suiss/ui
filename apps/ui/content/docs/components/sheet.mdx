@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="sheet-demo" />
 
-`Sheet` is built on the Base UI Dialog primitive. `SheetTrigger` opens it, and `SheetContent` renders the panel in a portal over a dimming backdrop. Inside, `SheetHeader` holds a `SheetTitle` and `SheetDescription`, and `SheetFooter` holds actions. `SheetClose` closes the sheet from any element.
+`Sheet` is built on the dialog primitive of the chosen base. `SheetTrigger` opens it, and `SheetContent` renders the panel in a portal over a dimming backdrop. Inside, `SheetHeader` holds a `SheetTitle` and `SheetDescription`, and `SheetFooter` holds actions. `SheetClose` closes the sheet from any element.
 
 The panel floats inset from the screen edge with rounded corners and slides in from its `side`. Use a sheet for supporting tasks, such as editing details or showing navigation, that should keep the page in context. For short, centered confirmations, use `Dialog` or `AlertDialog`.
 
@@ -49,6 +49,8 @@ npm install @base-ui/react @phosphor-icons/react
 import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <Sheet>
   <SheetTrigger render={<Button variant="outline" />}>
@@ -58,7 +60,49 @@ import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter
 </Sheet>
 ```
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline">Open sheet</Button>
+  </SheetTrigger>
+  <ProfileSheet />
+</Sheet>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Sheet>
+  <Button variant="outline">Open sheet</Button>
+  <ProfileSheet />
+</Sheet>
+```
+
+</OnlyBase>
+
+<OnlyBase base="base">
+
 Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Use the `render` prop on `SheetTrigger` and `SheetClose` to render them as a `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Set `asChild` on `SheetTrigger` and `SheetClose` to render a `Button` in their place.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultOpen` for an uncontrolled sheet, or `isOpen` with `onOpenChange` to control it. The `Button` placed first inside `Sheet` opens it, and a `Button` with `slot="close"` closes it.
+
+</OnlyBase>
 
 `SheetFooter` sits at the bottom of the panel with `mt-auto`. By default `SheetContent` adds an icon close button in the top corner; set `closeLabel` to show a text button instead, or `showCloseButton={false}` to remove it.
 
@@ -109,7 +153,7 @@ Replaces the icon close button with a text button labelled `Done`.
 
 The root that holds the open state.
 
-Also accepts the props of `SheetPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -119,7 +163,7 @@ Also accepts the props of `SheetPrimitive.Root.Props`.
 
 The element that opens the sheet.
 
-Also accepts the props of `SheetPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -129,7 +173,7 @@ Also accepts the props of `SheetPrimitive.Trigger.Props`.
 
 An element that closes the sheet when pressed.
 
-Also accepts the props of `SheetPrimitive.Close.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -145,7 +189,7 @@ The sliding panel, rendered in a portal with a backdrop.
 | `showCloseButton` | `boolean` | `true` | Shows the built-in close button in the top corner. |
 | `closeLabel` | `string` | - | Shows this text in the close button instead of an icon. |
 
-Also accepts the props of `SheetPrimitive.Popup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -175,7 +219,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The sheet's title, which names the dialog.
 
-Also accepts the props of `SheetPrimitive.Title.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -185,7 +229,7 @@ Also accepts the props of `SheetPrimitive.Title.Props`.
 
 Supporting text, which describes the dialog.
 
-Also accepts the props of `SheetPrimitive.Description.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

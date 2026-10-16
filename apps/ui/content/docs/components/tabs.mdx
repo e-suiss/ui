@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="tabs-demo" />
 
-`Tabs` wraps the Base UI Tabs primitive. `TabsList` holds the `TabsTrigger` buttons, and each `TabsContent` panel is shown when its `value` matches the selected tab. An indicator slides to the active tab: a raised pill in the `default` variant, or an underline in the `line` variant.
+`Tabs` wraps the tabs primitive of the chosen base. `TabsList` holds the `TabsTrigger` buttons, and each `TabsContent` panel is shown when its `value` matches the selected tab. An indicator slides to the active tab: a raised pill in the `default` variant, or an underline in the `line` variant.
 
 When there are more tabs than fit, the list scrolls horizontally and keeps the active tab in view. On small screens, a horizontal list bleeds to the edges of its scroll container. Use `Tabs` to switch views within a page. For app-level navigation, use `TabBar` or `Sidebar`; for a compact single-choice control, consider a segmented `ToggleGroup`.
 
@@ -125,7 +125,7 @@ Combines a scrolling list with the `line` variant.
 
 The root that holds the selected value and orientation.
 
-Also accepts the props of `TabsPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -139,7 +139,7 @@ The row or column of tabs, with the sliding indicator.
 | --- | --- | --- | --- |
 | `variant` | `"default" \| "line"` | `"default"` | Chooses a filled `default` list with a raised pill, or a `line` list with an underline. |
 
-Also accepts the props of `TabsPrimitive.List.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -149,7 +149,7 @@ Also accepts the props of `TabsPrimitive.List.Props`.
 
 A tab that selects its panel.
 
-Also accepts the props of `TabsPrimitive.Tab.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -159,7 +159,7 @@ Also accepts the props of `TabsPrimitive.Tab.Props`.
 
 The panel shown when its tab is selected.
 
-Also accepts the props of `TabsPrimitive.Panel.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

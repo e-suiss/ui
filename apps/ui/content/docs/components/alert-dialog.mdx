@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="alert-dialog-demo" />
 
-Alert Dialog wraps the Base UI Alert Dialog primitive. An `AlertDialog` root contains an `AlertDialogTrigger` and an `AlertDialogContent`. The content renders its own portal and scrim overlay, and typically holds an `AlertDialogHeader` (with optional `AlertDialogMedia`, plus `AlertDialogTitle` and `AlertDialogDescription`) followed by an `AlertDialogFooter` with `AlertDialogCancel` and `AlertDialogAction` buttons.
+Alert Dialog wraps the alert dialog primitive of the chosen base. An `AlertDialog` root contains an `AlertDialogTrigger` and an `AlertDialogContent`. The content renders its own portal and scrim overlay, and typically holds an `AlertDialogHeader` (with optional `AlertDialogMedia`, plus `AlertDialogTitle` and `AlertDialogDescription`) followed by an `AlertDialogFooter` with `AlertDialogCancel` and `AlertDialogAction` buttons.
 
 Use it when a decision must be made before continuing, such as signing out or deleting data. Unlike a regular dialog, it is not dismissed by clicking outside. For a choice of actions anchored to the bottom of the screen, use Alert Sheet.
 
@@ -49,6 +49,8 @@ npm install @base-ui/react
 import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <AlertDialog>
   <AlertDialogTrigger render={<Button variant="outline" />}>
@@ -68,6 +70,54 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay,
   </AlertDialogContent>
 </AlertDialog>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Sign out</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>
+      <AlertDialogDescription>
+        You will need to sign in again to access your projects and settings.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Sign out</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<AlertDialog>
+  <Button variant="outline">Sign out</Button>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>
+      <AlertDialogDescription>
+        You will need to sign in again to access your projects and settings.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Sign out</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+</OnlyBase>
 
 `AlertDialogContent` already includes `AlertDialogPortal` and `AlertDialogOverlay`, so you rarely use those parts directly.
 
@@ -112,7 +162,7 @@ Adds an icon above the title with `AlertDialogMedia`.
 
 The root that manages the open state.
 
-Also accepts the props of `AlertDialogPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -122,7 +172,7 @@ Also accepts the props of `AlertDialogPrimitive.Root.Props`.
 
 The control that opens the dialog.
 
-Also accepts the props of `AlertDialogPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -132,7 +182,7 @@ Also accepts the props of `AlertDialogPrimitive.Trigger.Props`.
 
 Renders the dialog into a portal outside the DOM hierarchy.
 
-Also accepts the props of `AlertDialogPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -142,7 +192,7 @@ Also accepts the props of `AlertDialogPrimitive.Portal.Props`.
 
 The full-screen scrim behind the dialog.
 
-Also accepts the props of `AlertDialogPrimitive.Backdrop.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -156,7 +206,7 @@ The dialog surface, rendered with its own portal and overlay.
 | --- | --- | --- | --- |
 | `size` | `"default" \| "sm"` | `"default"` | Maximum width of the dialog. `sm` is narrower than `default`. |
 
-Also accepts the props of `AlertDialogPrimitive.Popup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -216,7 +266,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Desc
 
 A button that confirms and closes the dialog.
 
-Also accepts the props of `AlertDialogPrimitive.Close.Props`, `React.ComponentProps<typeof Button>`.
+Also accepts the props of the primitive part it wraps, plus `Button`.
 
 </ApiPart>
 
@@ -226,7 +276,7 @@ Also accepts the props of `AlertDialogPrimitive.Close.Props`, `React.ComponentPr
 
 A button that dismisses the dialog without acting.
 
-Also accepts the props of `AlertDialogPrimitive.Close.Props`, `React.ComponentProps<typeof Button>`.
+Also accepts the props of the primitive part it wraps, plus `Button`.
 
 </ApiPart>
 

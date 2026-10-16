@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="menubar-demo" layout="padded" />
 
-`Menubar` wraps Base UI's Menubar and groups several menus into one keyboard-navigable bar. Each `MenubarMenu` holds a `MenubarTrigger` and a `MenubarContent` popup. Inside the content, compose `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup` with `MenubarRadioItem`, `MenubarLabel`, `MenubarGroup`, `MenubarSeparator`, `MenubarShortcut`, and nested submenus built from `MenubarSub`, `MenubarSubTrigger` and `MenubarSubContent`.
+`Menubar` wraps the menubar primitive of the chosen base and groups several menus into one keyboard-navigable bar. Each `MenubarMenu` holds a `MenubarTrigger` and a `MenubarContent` popup. Inside the content, compose `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup` with `MenubarRadioItem`, `MenubarLabel`, `MenubarGroup`, `MenubarSeparator`, `MenubarShortcut`, and nested submenus built from `MenubarSub`, `MenubarSubTrigger` and `MenubarSubContent`.
 
 Most parts reuse the Dropdown Menu components with menubar styling. Use `Menubar` for persistent, app-level command menus; use Dropdown Menu for a single menu opened from one button.
 
@@ -83,7 +83,7 @@ A menubar with `disabled` set, so none of its menus open.
 
 The bar that contains the menus and manages keyboard navigation between them.
 
-Also accepts the props of `MenubarPrimitive.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -157,7 +157,7 @@ An item that toggles on and off, with a leading check indicator.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
 
-Also accepts the props of `MenuPrimitive.CheckboxItem.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -181,7 +181,7 @@ One option in a radio group, with a leading check indicator when selected.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
 
-Also accepts the props of `MenuPrimitive.RadioItem.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

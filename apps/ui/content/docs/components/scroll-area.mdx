@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="scroll-area-demo" />
 
-Scroll Area wraps Base UI's Scroll Area. `ScrollArea` renders the root, a focusable viewport for your content, a vertical `ScrollBar` and a corner. Add a horizontal `ScrollBar` as a child when content scrolls sideways.
+Scroll Area wraps the scroll area primitive of the chosen base. `ScrollArea` renders the root, a focusable viewport for your content, a vertical `ScrollBar` and a corner. Add a horizontal `ScrollBar` as a child when content scrolls sideways.
 
 Use Scroll Area to give overflowing content a consistent scrollbar across platforms. For chat transcripts that should open at the latest message, use Message Scroller.
 
@@ -86,7 +86,7 @@ A row of album covers that scrolls sideways with a horizontal scrollbar.
 
 The root that renders the viewport, the vertical scrollbar and the corner.
 
-Also accepts the props of `ScrollAreaPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -96,7 +96,7 @@ Also accepts the props of `ScrollAreaPrimitive.Root.Props`.
 
 A scrollbar track and thumb for one orientation, vertical by default.
 
-Also accepts the props of `ScrollAreaPrimitive.Scrollbar.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

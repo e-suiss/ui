@@ -138,7 +138,7 @@ Holds an icon or image above the title.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "icon"` | `"default"` | `icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background. |
+| `variant` | `"default" \| "icon"` | `"default"` | `icon` places the icon in a small rounded `bg-muted` tile; `default` renders the media without a background. |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -184,7 +184,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Styling hooks: `data-slot` values `empty`, `empty-header`, `empty-icon` (on `EmptyMedia`), `empty-title`, `empty-description` and `empty-content`.
 - `EmptyMedia` also sets `data-variant`.
 - `EmptyDescription` renders a `div` element even though it accepts paragraph props.
-- Uses the `surface-secondary`, `label`, `label-secondary` and `link` tokens.
+- Uses the `muted`, `foreground`, `muted-foreground` and `primary` tokens.
 
 </Only>
 

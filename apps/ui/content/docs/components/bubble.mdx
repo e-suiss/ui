@@ -57,7 +57,25 @@ import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/component
 
 Set `align="end"` for messages sent by the current user and leave the default `start` for incoming messages.
 
-`BubbleContent` renders a `div` by default. Use its `render` prop to render a `button` or `a` for tappable bubbles, such as suggested replies; these get hover and focus styles.
+`BubbleContent` renders a `div` by default. Render it as a `button` or `a` for tappable bubbles, such as suggested replies; these get hover and focus styles.
+
+<OnlyBase base="base">
+
+Use the `render` prop of `BubbleContent` to change its element.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `BubbleContent` and pass the `button` or `a` as its child.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `BubbleContent` that returns the `button` or `a` with the props it receives.
+
+</OnlyBase>
 
 `BubbleReactions` defaults to the bottom-end corner. The bubble adds margin on that side so reactions do not overlap neighboring bubbles.
 
@@ -83,7 +101,7 @@ Pins reactions to different corners with `side` and `align`.
 
 ### Interactive
 
-Renders the content as a `button` with the `render` prop.
+Renders the content as a `button`.
 
 <ComponentPreview name="bubble-interactive" />
 
@@ -118,7 +136,7 @@ The positioned wrapper that sets variant and alignment.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` | Background and text color: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
+| `variant` | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` | Background and text color: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
 | `align` | `"start" \| "end"` | `"start"` | Which side of the conversation the bubble sits on: `start` or `end`. |
 
 Also accepts the props of `React.ComponentProps<"div">`.
@@ -169,7 +187,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-bubble--default" />
 
-`Bubble` lays out one message aligned to the `start` or `end` of the conversation, and `BubbleContent` draws the rounded bubble with an SVG tail on the aligned side. Seven variants are available: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` and `destructive`; `outline` and `ghost` have no tail.
+`Bubble` lays out one message aligned to the `start` or `end` of the conversation, and `BubbleContent` draws the rounded bubble with an SVG tail on the aligned side. Seven variants are available: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` and `destructive`; `outline` and `ghost` have no tail.
 
 `BubbleGroup` stacks messages and shows the tail only on the last bubble of each run from the same side, so consecutive messages read as one block. `BubbleReactions` pins a small reaction pill to the top or bottom edge of a bubble.
 

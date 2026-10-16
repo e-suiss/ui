@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="tip-demo" responsive />
 
-`Tip` recreates TipKit-style feature tips. Each tip has an `id`; once dismissed, the id is stored in `localStorage` and the tip no longer appears. Show a tip inline with `TipCard`, which expands into the layout, or attach it to a control with `TipAnchor` and `TipPopover`, which uses a non-modal Base UI Popover with an arrow. Using the anchored control also dismisses its tip.
+`Tip` recreates TipKit-style feature tips. Each tip has an `id`; once dismissed, the id is stored in `localStorage` and the tip no longer appears. Show a tip inline with `TipCard`, which expands into the layout, or attach it to a control with `TipAnchor` and `TipPopover`, which uses a non-modal popover with an arrow. Using the anchored control also dismisses its tip.
 
 Wrap several tips in `TipGroup` to show them one at a time, in the order they mount; when one is dismissed, the next appears. Use tips sparingly to point out features people might otherwise miss.
 
@@ -111,7 +111,7 @@ Also accepts the props of `React.ComponentProps<"span">`.
 
 A popover with an arrow, positioned against `TipAnchor`.
 
-Also accepts the props of `PopoverPrimitive.Popup.Props`, `PopoverPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 

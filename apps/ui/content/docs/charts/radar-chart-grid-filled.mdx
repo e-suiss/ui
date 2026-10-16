@@ -1,6 +1,6 @@
 ---
 title: Radar Chart Grid Filled
-description: "A borderless radar shape over shaded circular rings separated by surface-colored lines."
+description: "A borderless radar shape over shaded circular rings separated by card-colored lines."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
 ---
@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview type="chart" name="radar-chart-grid-filled" />
 
-A borderless radar shape over shaded circular bands, separated by lines in the card's surface color. Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.
+A borderless radar shape over shaded circular bands, separated by lines in the card's background color (`muted`). Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.
 
 ## Installation
 
@@ -71,7 +71,7 @@ The gaps between bands use the card's background color, so place this chart on t
 
 </NativeExample>
 
-A `RadarChart` whose circular `PolarGrid` is filled with the control color and separated by strokes in the card color. The single `Radar` series has no stroke. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.
+A `RadarChart` whose circular `PolarGrid` is filled with the `secondary` color and separated by strokes in the card color. The single `Radar` series has no stroke. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.
 
 ## Installation
 

@@ -61,7 +61,7 @@ import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from "@/compon
 
 All standard `select` attributes, such as `value`, `defaultValue`, `onChange`, `name`, `disabled` and `required`, pass through to the `select` element. `className` is applied to the wrapper, not the `select`.
 
-To show a placeholder, add a first option with `value=""` and `disabled`; while it is selected, the text uses the secondary label color.
+To show a placeholder, add a first option with `value=""` and `disabled`; while it is selected, the text uses `text-muted-foreground`.
 
 ## Examples
 
@@ -79,13 +79,13 @@ Options organized under labelled `NativeSelectOptGroup` headings.
 
 ### Disabled
 
-A select with `disabled` set, shown with the disabled control colors.
+A select with `disabled` set, dimmed to 50% opacity.
 
 <ComponentPreview name="native-select-disabled" />
 
 ### Invalid
 
-A select with `aria-invalid` set, shown with the danger border and tint.
+A select with `aria-invalid` set, shown with the destructive border and ring.
 
 <ComponentPreview name="native-select-invalid" />
 

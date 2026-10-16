@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="navigation-menu-demo" layout="padded" />
 
-Navigation Menu wraps Base UI's Navigation Menu. `NavigationMenu` is the root; inside it, `NavigationMenuList` holds `NavigationMenuItem` entries. An item contains either a `NavigationMenuTrigger` with `NavigationMenuContent`, or a single `NavigationMenuLink`. Inside content, use `NavigationMenuLabel` for column headings and `NavigationMenuLink` for destinations.
+Navigation Menu wraps the navigation menu primitive of the chosen base. `NavigationMenu` is the root; inside it, `NavigationMenuList` holds `NavigationMenuItem` entries. An item contains either a `NavigationMenuTrigger` with `NavigationMenuContent`, or a single `NavigationMenuLink`. Inside content, use `NavigationMenuLabel` for column headings and `NavigationMenuLink` for destinations.
 
 The root renders the popup for you. With `layout="popover"` it adds a `NavigationMenuPositioner`, a floating card that resizes and slides between items. With `layout="panel"` it adds a `NavigationMenuPanel`, a full-width sheet under the bar with a blurred backdrop, like a store's global navigation. Use Navigation Menu for site navigation links; use Menubar or Dropdown Menu for commands.
 
@@ -144,7 +144,7 @@ The root that manages open state and renders the popover or panel popup.
 | --- | --- | --- | --- |
 | `layout` | `"popover" \| "panel"` | `"popover"` | Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop. |
 
-Also accepts the props of `NavigationMenuPrimitive.Root.Props`, `NavigationMenuPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
@@ -174,7 +174,7 @@ Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrim
 
 The button that opens its item's content, with a caret in the popover layout.
 
-Also accepts the props of `NavigationMenuPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -184,7 +184,7 @@ Also accepts the props of `NavigationMenuPrimitive.Trigger.Props`.
 
 The content shown in the popup when its item is open.
 
-Also accepts the props of `NavigationMenuPrimitive.Content.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -194,7 +194,7 @@ Also accepts the props of `NavigationMenuPrimitive.Content.Props`.
 
 The floating popover card used by the `popover` layout.
 
-Also accepts the props of `NavigationMenuPrimitive.Positioner.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -204,7 +204,7 @@ Also accepts the props of `NavigationMenuPrimitive.Positioner.Props`.
 
 The full-width sheet and backdrop used by the `panel` layout.
 
-Also accepts the props of `NavigationMenuPrimitive.Positioner.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -218,7 +218,7 @@ A navigation link, either in the bar or inside content.
 | --- | --- | --- | --- |
 | `size` | `"default" \| "lg"` | `"default"` | Sets the link size; `lg` uses large, semibold text for primary destinations. |
 
-Also accepts the props of `NavigationMenuPrimitive.Link.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -236,7 +236,7 @@ Also accepts the props of `React.ComponentProps<"p">`.
 
 ### NavigationMenuIndicator
 
-A small arrow built on the Base UI `NavigationMenu.Icon` part that fades in while its menu is open.
+A small arrow that fades in while its menu is open.
 
 Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>`.
 

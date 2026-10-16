@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="button-demo" />
 
-`Button` wraps the Base UI Button primitive and renders a native `button` by default. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the container width.
+`Button` renders a native `button` by default. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the container width.
 
 Use the `default` variant for the primary action in a view, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.
 
@@ -55,7 +55,23 @@ Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` to tighte
 
 Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `aria-label`.
 
+<OnlyBase base="base">
+
 To render a link or a router component with button styling, use the `render` prop from Base UI. `buttonVariants` is also exported if you need the classes on another element.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+To render a link or a router component with button styling, set `asChild` and pass it as the child. `buttonVariants` is also exported if you need the classes on another element.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`Button` always renders a `button`. To give a link or a router component button styling, apply the classes from `buttonVariants` to it.
+
+</OnlyBase>
 
 ## Examples
 
@@ -103,7 +119,7 @@ The interactive button element.
 | `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | Height and padding. `xs` to `xl` for text buttons; `icon-xs` to `icon-xl` for square icon-only buttons. |
 | `block` | `true` | - | When `true`, the button fills the container width and uses rounded corners instead of a pill shape. |
 
-Also accepts the props of `ButtonPrimitive.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -112,8 +128,8 @@ Also accepts the props of `ButtonPrimitive.Props`.
 - Renders a native `button`, so `Enter` and `Space` activate it.
 - A disabled button is removed from the tab order.
 - Icon-only buttons need an `aria-label`.
-- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant uses the danger color for it.
-- `aria-invalid` adds a danger-colored border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
+- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant tints it with `ring-destructive/20`.
+- `aria-invalid` adds a destructive border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
 
 ## Notes
 

@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="progress-demo" />
 
-Progress wraps Base UI's Progress. `Progress` is the root and always renders a `ProgressTrack` containing a `ProgressIndicator` after its children. Add a `ProgressLabel` to name the bar and a `ProgressValue` to show the formatted value; they sit on one row above the track.
+Progress wraps the progress primitive of the chosen base. `Progress` is the root and always renders a `ProgressTrack` containing a `ProgressIndicator` after its children. Add a `ProgressLabel` to name the bar and a `ProgressValue` to show the formatted value; they sit on one row above the track.
 
 Use Progress for determinate or indeterminate task progress.
 
@@ -55,7 +55,7 @@ import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValu
 
 Pass `value` as a number between `min` and `max` (by default `0` and `100`). Set `value={null}` for an indeterminate state when the amount of work is unknown.
 
-The track and indicator are rendered for you, so `ProgressTrack` and `ProgressIndicator` are not needed inside `Progress` children. `ProgressValue` uses Base UI's formatting and shows a percentage by default.
+The track and indicator are rendered for you, so `ProgressTrack` and `ProgressIndicator` are not needed inside `Progress` children. `ProgressValue` shows the formatted value, a percentage by default.
 
 ## Examples
 
@@ -93,7 +93,7 @@ A labelled bar with `value={null}` for work of unknown length.
 
 The root that holds the value and renders the track and indicator.
 
-Also accepts the props of `ProgressPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -103,7 +103,7 @@ Also accepts the props of `ProgressPrimitive.Root.Props`.
 
 The full-width rail behind the indicator.
 
-Also accepts the props of `ProgressPrimitive.Track.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -113,7 +113,7 @@ Also accepts the props of `ProgressPrimitive.Track.Props`.
 
 The filled portion of the track that reflects the value.
 
-Also accepts the props of `ProgressPrimitive.Indicator.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -123,7 +123,7 @@ Also accepts the props of `ProgressPrimitive.Indicator.Props`.
 
 Text that names the progress bar.
 
-Also accepts the props of `ProgressPrimitive.Label.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -133,7 +133,7 @@ Also accepts the props of `ProgressPrimitive.Label.Props`.
 
 The formatted current value, aligned to the end of the row.
 
-Also accepts the props of `ProgressPrimitive.Value.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -145,7 +145,7 @@ Also accepts the props of `ProgressPrimitive.Value.Props`.
 
 ## Notes
 
-- Styling hooks: `data-slot` values `progress`, `progress-track`, `progress-indicator`, `progress-label` and `progress-value`. Base UI also sets status attributes such as `data-progressing`, `data-complete` and `data-indeterminate`.
+- Styling hooks: `data-slot` values `progress`, `progress-track`, `progress-indicator`, `progress-label` and `progress-value`.
 - The track uses `muted` and the indicator uses `primary`; the indicator animates width changes.
 
 </Only>

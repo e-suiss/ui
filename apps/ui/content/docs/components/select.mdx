@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="select-demo" />
 
-`Select` wraps the Base UI Select primitive. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.
+`Select` wraps the select primitive of the chosen base. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.
 
 A highlight pill slides between options as the highlighted item changes, and the selected item shows a check mark. Use `Select` when people choose one value from a fixed list. For a few always-visible options, consider `ToggleGroup` or `RadioGroup`.
 
@@ -133,7 +133,7 @@ Marks the trigger with `aria-invalid` to show an error state.
 
 Groups related options; label it with a `SelectLabel`.
 
-Also accepts the props of `SelectPrimitive.Group.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -143,7 +143,7 @@ Also accepts the props of `SelectPrimitive.Group.Props`.
 
 Shows the selected option's label, or the placeholder, inside the trigger.
 
-Also accepts the props of `SelectPrimitive.Value.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -157,7 +157,7 @@ The button that opens the popup and displays the current value.
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "default"` | `"default"` | Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners. |
 
-Also accepts the props of `SelectPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -167,7 +167,7 @@ Also accepts the props of `SelectPrimitive.Trigger.Props`.
 
 The positioned popup that holds the option list and scroll arrows.
 
-Also accepts the props of `SelectPrimitive.Popup.Props`, `SelectPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
@@ -177,7 +177,7 @@ Also accepts the props of `SelectPrimitive.Popup.Props`, `SelectPrimitive.Positi
 
 A heading that names a `SelectGroup`.
 
-Also accepts the props of `SelectPrimitive.GroupLabel.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -187,7 +187,7 @@ Also accepts the props of `SelectPrimitive.GroupLabel.Props`.
 
 A selectable option, with a check mark when selected.
 
-Also accepts the props of `SelectPrimitive.Item.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -197,7 +197,7 @@ Also accepts the props of `SelectPrimitive.Item.Props`.
 
 A thin line that divides groups of options.
 
-Also accepts the props of `SelectPrimitive.Separator.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -527,7 +527,7 @@ Pressable field that opens the list.
 | --- | --- | --- | --- |
 | `children` | `React.ReactNode` | - |  |
 | `size` | `"default" \| "sm"` | `"default"` | Trigger height: `default` or `sm`. |
-| `invalid` | `boolean` | - | Shows the danger border. Falls back to the invalid state of an enclosing field. |
+| `invalid` | `boolean` | - | Shows the destructive border. Falls back to the invalid state of an enclosing field. |
 
 Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`.
 

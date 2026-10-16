@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="context-menu-demo" />
 
-Context menu wraps the Base UI Context Menu. The `ContextMenu` root manages the open state and `ContextMenuTrigger` defines the area that opens the menu. `ContextMenuContent` renders the menu in a portal at the pointer position. Inside it, use `ContextMenuItem` for actions, `ContextMenuCheckboxItem` for toggles, and `ContextMenuRadioGroup` with `ContextMenuRadioItem` for a single choice. Organize items with `ContextMenuGroup`, `ContextMenuLabel` and `ContextMenuSeparator`, and nest a submenu with `ContextMenuSub`, `ContextMenuSubTrigger` and `ContextMenuSubContent`. `ContextMenuShortcut` displays a keyboard shortcut at the end of an item.
+Context menu wraps the context menu primitive of the chosen base. The `ContextMenu` root manages the open state and `ContextMenuTrigger` defines the area that opens the menu. `ContextMenuContent` renders the menu in a portal at the pointer position. Inside it, use `ContextMenuItem` for actions, `ContextMenuCheckboxItem` for toggles, and `ContextMenuRadioGroup` with `ContextMenuRadioItem` for a single choice. Organize items with `ContextMenuGroup`, `ContextMenuLabel` and `ContextMenuSeparator`, and nest a submenu with `ContextMenuSub`, `ContextMenuSubTrigger` and `ContextMenuSubContent`. `ContextMenuShortcut` displays a keyboard shortcut at the end of an item.
 
 Use a context menu for secondary actions on an object. Because it is hidden until a right-click or long press, make the same actions available elsewhere. For a menu opened from a visible button, use a dropdown menu.
 
@@ -104,7 +104,17 @@ import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent,
 </ContextMenu>
 ```
 
-Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Respond to an action with the item's `onClick`. Selecting an item closes the menu.
+<OnlyBase base="base radix">
+
+Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Respond to an action with the item's `onClick`. Selecting a regular item closes the menu; checkbox and radio items keep it open.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Checkbox items are uncontrolled with `defaultSelected`, or controlled with `isSelected` and `onChange`. Radio groups take `defaultValue`, or `value` and `onChange`, and each radio item needs a `value`. Respond to an action with the item's `onAction`. Selecting a regular or radio item closes the menu; checkbox items keep it open.
+
+</OnlyBase>
 
 Set `inset` on items and labels that have no icon so their text aligns with items that do, or with the indicators of checkbox and radio items. Set `variant="destructive"` on items that delete or remove something.
 
@@ -147,7 +157,7 @@ A file menu where `inset` aligns a label and items without icons, ending with a 
 
 The root that manages the menu's open state.
 
-Also accepts the props of `ContextMenuPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -157,7 +167,7 @@ Also accepts the props of `ContextMenuPrimitive.Root.Props`.
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Also accepts the props of `ContextMenuPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -167,7 +177,7 @@ Also accepts the props of `ContextMenuPrimitive.Portal.Props`.
 
 The area that opens the menu on right-click.
 
-Also accepts the props of `ContextMenuPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -177,7 +187,7 @@ Also accepts the props of `ContextMenuPrimitive.Trigger.Props`.
 
 The menu panel, rendered in a portal at the pointer position.
 
-Also accepts the props of `ContextMenuPrimitive.Popup.Props`, `ContextMenuPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
@@ -187,7 +197,7 @@ Also accepts the props of `ContextMenuPrimitive.Popup.Props`, `ContextMenuPrimit
 
 Groups related items.
 
-Also accepts the props of `ContextMenuPrimitive.Group.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -201,7 +211,7 @@ A heading for a group of items.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the label aligns with items that have an icon or indicator. |
 
-Also accepts the props of `ContextMenuPrimitive.GroupLabel.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -216,7 +226,7 @@ An action in the menu.
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
 | `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `destructive` color. |
 
-Also accepts the props of `ContextMenuPrimitive.Item.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -226,7 +236,7 @@ Also accepts the props of `ContextMenuPrimitive.Item.Props`.
 
 The root of a nested submenu.
 
-Also accepts the props of `ContextMenuPrimitive.SubmenuRoot.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -240,7 +250,7 @@ The item that opens a submenu, shown with a trailing caret.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
 
-Also accepts the props of `ContextMenuPrimitive.SubmenuTrigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -264,7 +274,7 @@ An item that toggles a setting on or off and shows a check mark when on.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
 
-Also accepts the props of `ContextMenuPrimitive.CheckboxItem.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -274,7 +284,7 @@ Also accepts the props of `ContextMenuPrimitive.CheckboxItem.Props`.
 
 Groups radio items so that only one can be selected.
 
-Also accepts the props of `ContextMenuPrimitive.RadioGroup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -288,7 +298,7 @@ An item in a radio group that shows a check mark when selected.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
 
-Also accepts the props of `ContextMenuPrimitive.RadioItem.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -298,7 +308,7 @@ Also accepts the props of `ContextMenuPrimitive.RadioItem.Props`.
 
 A divider between groups of items.
 
-Also accepts the props of `ContextMenuPrimitive.Separator.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -321,7 +331,7 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - The menu has the `menu` role. Items have the `menuitem`, `menuitemcheckbox` or `menuitemradio` role, and checkbox and radio items set `aria-checked`.
 - Disabled items set `aria-disabled` and cannot be chosen.
 - Arrow keys move between items. On a submenu trigger, the Right Arrow opens the submenu and moves focus into it, and the Left Arrow returns to the trigger. The arrow directions follow the reading direction.
-- Escape closes the menu, and choosing an item closes it.
+- Escape closes the menu, and choosing a regular item closes it.
 - `ContextMenuShortcut` only displays a shortcut; it does not register one. It is hidden on small screens.
 
 ## Notes

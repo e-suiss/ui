@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="input-demo" />
 
-`Input` wraps the Base UI `Input` primitive and renders a native `input` element with a filled control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for three heights.
+`Input` renders a native `input` element with a filled control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for three heights.
 
 Use it for short, free-form values. For multi-line text use a textarea, for icons, buttons or text attached to the field use `InputGroup`, and for one-time codes use `InputOTP`.
 
@@ -128,7 +128,7 @@ Also accepts the props of `React.ComponentProps<"input">`.
 
 <NativeExample id="components-input--default" />
 
-`Input` wraps a `TextInput` through the field control primitive. It tracks its own focused, filled, invalid and disabled state and styles itself from that state: a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.
+`Input` wraps a `TextInput` through the field control primitive. It tracks its own focused, filled, invalid and disabled state and styles itself from that state: a focus border while editing, a destructive border and tint when invalid, and 50% opacity when disabled.
 
 It comes in three sizes: `default` (44 pt), `md` and `sm`. Use the default size for forms on a full screen, and the smaller sizes inside dense layouts such as toolbars or sheets.
 

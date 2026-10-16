@@ -113,6 +113,12 @@ The root that renders a `Menubar` on desktop and a More actions button with a `D
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
+<OnlyBase base="aria">
+
+On the `aria` base, use `isOpen` instead of `open`.
+
+</OnlyBase>
+
 </ApiPart>
 
 <ApiPart index={2}>
@@ -172,6 +178,12 @@ An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mob
 | `disabled` | `boolean` | - | Prevents the item from being chosen. |
 
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+<OnlyBase base="aria">
+
+On the `aria` base, use `isDisabled` instead of `disabled`, and `onAction` to respond to the item.
+
+</OnlyBase>
 
 </ApiPart>
 

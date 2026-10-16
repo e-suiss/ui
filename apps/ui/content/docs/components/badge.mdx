@@ -9,7 +9,25 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="badge-demo" />
 
-`Badge` is a single element that renders a `span` by default. Use the `render` prop to render it as another element, such as a link. Badges can hold text and an icon on either side.
+`Badge` is a single element that renders a `span` by default and can render as another element, such as a link. Badges can hold text and an icon on either side.
+
+<OnlyBase base="base">
+
+Use the `render` prop to render the badge as another element: `render={<a href="/" />}`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` and pass the element as the only child to render the badge as it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns the element; spread the props it receives onto it.
+
+</OnlyBase>
 
 Use a badge to tag content with a short status or category. For actions, use Button instead.
 
@@ -73,7 +91,7 @@ Places icons before and after the label with `data-icon`.
 
 ### As link
 
-Renders the badge as a link with the `render` prop.
+Renders the badge as a link.
 
 <ComponentPreview name="badge-as-link" />
 

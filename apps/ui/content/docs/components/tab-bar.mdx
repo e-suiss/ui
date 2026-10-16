@@ -55,7 +55,25 @@ import { TabBar, TabBarList, TabBarItem, TabBarTrigger, TabBarContent, TabBarSec
 
 Use `defaultOpen` on `TabBar` for an uncontrolled bar, or `open` with `onOpenChange` to control it. Give the `nav` a name with `aria-label`.
 
-Mark the current destination with `isActive` on a `TabBarItem` or `TabBarLink`. Use the `render` prop to render a `TabBarItem` as a link or router link. Choosing a `TabBarLink` or an overflowed item closes the bar. Child components can read the bar's state with the `useTabBar` hook.
+Mark the current destination with `isActive` on a `TabBarItem` or `TabBarLink`. A `TabBarItem` can render as a link or router link. Choosing a `TabBarLink` or an overflowed item closes the bar. Child components can read the bar's state with the `useTabBar` hook.
+
+<OnlyBase base="base">
+
+Use the `render` prop to render a `TabBarItem` as a link or router link.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on a `TabBarItem` and pass a link or router link as the child.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to a `TabBarItem` that returns a link or router link with the props it receives.
+
+</OnlyBase>
 
 ## Examples
 
@@ -212,7 +230,7 @@ Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps
 
 <NativeExample id="components-tab-bar--default" />
 
-`TabBar` is built on the tabs primitive and sits at the bottom of a screen. `TabBarList` is a rounded capsule with a shadow, inset from the screen edges, so the bar floats above the page. The root adds bottom padding for the safe area, unless an enclosing `Screen` already handles the bottom edge. `TabBarItem` stacks an icon over a short label; the active tab sits on a `bg-secondary` pill and uses the accent color and a filled icon weight.
+`TabBar` is built on the tabs primitive and sits at the bottom of a screen. `TabBarList` is a rounded capsule with a shadow, inset from the screen edges, so the bar floats above the page. The root adds bottom padding for the safe area, minus any inset an enclosing `Screen` already handles, and never less than 12 points. `TabBarItem` stacks an icon over a short label; the active tab sits on a `bg-secondary` pill and uses `text-primary` and a filled icon weight.
 
 Use it for switching between the top-level sections of an app. For switching views within a screen, use Tabs.
 

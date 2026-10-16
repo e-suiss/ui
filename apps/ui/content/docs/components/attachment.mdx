@@ -66,7 +66,7 @@ import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, Attach
 </Attachment>
 ```
 
-Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outside a group), and `error` colors the description with the danger color. The `state`, `size` and `orientation` values are also exposed as `data-*` attributes for your own styling.
+Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outside a group), and `error` colors the description with `text-destructive`. The `state`, `size` and `orientation` values are also exposed as `data-*` attributes for your own styling.
 
 `AttachmentAction` renders a `Button` with the `secondary` variant and an icon size by default. Pass `variant="link"` for a text action such as "Try Again". Icon-only actions need an `aria-label`.
 
@@ -235,7 +235,7 @@ Also accepts the props of `React.ComponentProps<"span">`.
 
 A progress bar with a value readout for uploads.
 
-Also accepts the props of `ProgressPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -281,7 +281,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 ## Accessibility
 
-- `AttachmentProgress` wraps the Base UI Progress primitive and exposes the `progressbar` role with `aria-valuenow`; give it an `aria-label`.
+- `AttachmentProgress` wraps the progress primitive and exposes the `progressbar` role with `aria-valuenow`; give it an `aria-label`.
 - `AttachmentTrigger` renders a `button` with `type="button"` by default; give it an `aria-label` that names the file.
 - The trigger and each `AttachmentAction` are separate tab stops, in that order.
 - The card shows a focus ring when its trigger has keyboard focus.
