@@ -180,6 +180,17 @@ describe("OtpAutofill", () => {
     await expect.poll(suggestionOpen).toBe(true)
   })
 
+  it("treats a failing verification as a wrong code", async () => {
+    const onVerify = vi.fn(() => Promise.reject(new Error("offline")))
+    await render(<Verification onVerify={onVerify} code={null} />)
+    await input().click()
+    await userEvent.keyboard("482913")
+    await expect.poll(state, { timeout: 2000 }).toBe("invalid")
+    await expect.poll(state, { timeout: 2000 }).toBe("idle")
+    expect(slots()).toBe("")
+    expect(inputElement().readOnly).toBe(false)
+  })
+
   it("verifies a code typed by hand once it is complete", async () => {
     const onVerify = vi.fn(() => true)
     await render(<Verification onVerify={onVerify} code={null} />)

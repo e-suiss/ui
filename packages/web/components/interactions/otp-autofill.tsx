@@ -107,7 +107,12 @@ function OtpAutofill({
 
   const verify = React.useCallback(async (code: string, run: number) => {
     setState("verifying")
-    const valid = await onVerifyRef.current(code)
+    let valid = false
+    try {
+      valid = await onVerifyRef.current(code)
+    } catch {
+      valid = false
+    }
     if (run !== runRef.current) return
     if (valid) {
       setState("verified")
@@ -256,6 +261,8 @@ function OtpAutofillSuggestion({
   code,
   source = "From Messages",
   className,
+  onPointerDown,
+  onClick,
   ...props
 }: Omit<React.ComponentProps<"button">, "children"> & {
   code: string | null | undefined
@@ -290,8 +297,14 @@ function OtpAutofillSuggestion({
       data-placement={isMobile ? "keyboard" : "inline"}
       inert={!open}
       style={isMobile ? { bottom: keyboardInset } : undefined}
-      onPointerDown={(event) => event.preventDefault()}
-      onClick={() => code && fill(code)}
+      onPointerDown={(event) => {
+        event.preventDefault()
+        onPointerDown?.(event)
+      }}
+      onClick={(event) => {
+        onClick?.(event)
+        if (!event.defaultPrevented && code) fill(code)
+      }}
       className={cn(
         "flex items-center outline-none transition-[opacity,translate,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] transition-discrete select-none focus-visible:ring-3 focus-visible:ring-ring/50 data-closed:invisible data-closed:opacity-0",
         "data-[placement=inline]:gap-2.5 data-[placement=inline]:rounded-full data-[placement=inline]:bg-popover data-[placement=inline]:py-2 data-[placement=inline]:ps-3 data-[placement=inline]:pe-4 data-[placement=inline]:text-sm data-[placement=inline]:shadow-lg data-[placement=inline]:ring-1 data-[placement=inline]:ring-border data-[placement=inline]:hover:bg-accent motion-safe:data-[placement=inline]:data-closed:-translate-y-1 data-[placement=inline]:hover:text-accent-foreground",
