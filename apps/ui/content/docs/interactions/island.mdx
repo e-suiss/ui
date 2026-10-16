@@ -156,7 +156,11 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 
 <Only platform="rn swift kotlin">
 
+<Only platform="rn kotlin">
+
 <NativeExample id="interactions-island--compact" />
+
+</Only>
 
 `Island` floats below the top safe area and morphs between views: `hidden`, `compact`, `minimal`, `expanded` and `notice`. Its width, height and corner radius spring to the measured size of the active view, and views cross-fade as it changes.
 
@@ -338,11 +342,17 @@ Wrap the app in `IslandProvider` and render one `Island`. Pass `compactLeading`,
 
 ## Examples
 
+<Only platform="rn kotlin">
+
 ### Expanded
 
 Starts with the island expanded to show download details.
 
 <NativeExample id="interactions-island--expanded" />
+
+</Only>
+
+<Only platform="rn kotlin">
 
 ### Minimal
 
@@ -350,11 +360,17 @@ Starts in the minimal view with only the progress ring.
 
 <NativeExample id="interactions-island--minimal" />
 
+</Only>
+
+<Only platform="rn kotlin">
+
 ### Notice
 
 Shows a notice on mount.
 
 <NativeExample id="interactions-island--notice" />
+
+</Only>
 
 ### Live activity
 

@@ -2,16 +2,26 @@
 title: Icon
 description: "Renders a Phosphor icon with size and color set through class names."
 eyebrow: Component
-platforms: [rn, kotlin]
+platforms: [rn, swift, kotlin]
 ---
 
-<Only platform="rn kotlin">
+<Only platform="rn swift kotlin">
 
 <NativeExample id="components-icon--default" />
+
+<Only platform="rn kotlin">
 
 `Icon` takes a Phosphor icon component in `as` and maps `size-*` classes to its size and `text-*` classes to its color. It defaults to `size-5 text-foreground`.
 
 Icons inherit text and icon classes from their parent, so an `Icon` inside a `Button`, `Badge` or menu item picks up the right size and color without extra classes. Components provide these through `IconClassContext`.
+
+</Only>
+
+<Only platform="swift">
+
+SwiftUI has no `Icon` view to install. Use the images from the Phosphor Swift package directly, and set their size and color with SwiftUI modifiers, as the examples on this page do.
+
+</Only>
 
 ## Installation
 
@@ -37,9 +47,27 @@ npx @esuiss/ui@latest add icon --platform kotlin
 
 </Only>
 
+<Only platform="swift">
+
+Add the Phosphor Swift package to your app:
+
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
+
+</Only>
+
+<Only platform="rn kotlin">
+
 The CLI also adds what it builds on: [Text](/docs/components/text).
 
+</Only>
+
+<Only platform="rn kotlin">
+
 ### Manual
+
+</Only>
 
 <Only platform="rn">
 
@@ -129,6 +157,8 @@ implementation("androidx.compose.ui:ui")
 
 </Only>
 
+<Only platform="rn">
+
 ## Usage
 
 ```tsx
@@ -142,6 +172,8 @@ import { Icon } from "@/components/ui/icon"
 Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-destructive`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
 
 Wrap a subtree in `IconClassContext.Provider` to set default classes for the icons inside your own components.
+
+</Only>
 
 ## Examples
 
@@ -163,6 +195,8 @@ The available Phosphor weights.
 
 <NativeExample id="components-icon--weights" />
 
+<Only platform="rn kotlin">
+
 ## API Reference
 
 <ApiPart index={1}>
@@ -174,6 +208,8 @@ Styled Phosphor icon.
 Also accepts the props of `IconProps`.
 
 </ApiPart>
+
+</Only>
 
 ## Accessibility
 
