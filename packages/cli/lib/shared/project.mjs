@@ -27,21 +27,89 @@ const TRAILING_WILDCARD = /\/?\*$/
 const TSCONFIG_PATHS = /"paths"\s*:\s*\{/
 const TSCONFIG_COMPILER_OPTIONS = /"compilerOptions"\s*:\s*\{/
 
-function readJsonc(file) {
+function parseFile(file, parse) {
   const text = readFileSync(file, "utf8")
-  const withoutComments = text.replace(
-    /("(?:\\.|[^"\\])*")|\/\/[^\n]*|\/\*[\s\S]*?\*\//g,
-    (_match, string) => string ?? ""
+  try {
+    return parse(text)
+  } catch (error) {
+    throw new CliError(
+      `Could not read ${path.basename(file)} in ${path.dirname(file)}: ${error.message}`
+    )
+  }
+}
+
+export function readJson(file) {
+  return parseFile(file, JSON.parse)
+}
+
+function readJsonc(file) {
+  return parseFile(file, (text) =>
+    JSON.parse(
+      text
+        .replace(
+          /("(?:\\.|[^"\\])*")|\/\/[^\n]*|\/\*[\s\S]*?\*\//g,
+          (_match, string) => string ?? ""
+        )
+        .replace(/,(\s*[}\]])/g, "$1")
+    )
   )
-  return JSON.parse(withoutComments.replace(/,(\s*[}\]])/g, "$1"))
+}
+
+function readOptionalJson(file) {
+  if (!existsSync(file)) return {}
+  try {
+    return readJson(file)
+  } catch {
+    return {}
+  }
+}
+
+function isBoundary(dir) {
+  if (existsSync(path.join(dir, "pnpm-workspace.yaml"))) return true
+  if (existsSync(path.join(dir, ".git"))) return true
+  return Boolean(readOptionalJson(path.join(dir, "package.json")).workspaces)
+}
+
+function searchDirectories(cwd) {
+  const dirs = []
+  for (let dir = cwd; ; dir = path.dirname(dir)) {
+    dirs.push(dir)
+    if (isBoundary(dir) || path.dirname(dir) === dir) return dirs
+  }
+}
+
+function managerOf(spec) {
+  const manager = spec?.split("@")[0]
+  return INSTALL_ARGS[manager] ? manager : null
+}
+
+function declaredPackageManager(dirs) {
+  for (const dir of dirs) {
+    const manager = managerOf(
+      readOptionalJson(path.join(dir, "package.json")).packageManager
+    )
+    if (manager) return manager
+  }
+  return null
+}
+
+function agentPackageManager() {
+  return managerOf(process.env.npm_config_user_agent?.split("/")[0])
 }
 
 function detectPackageManager(cwd) {
-  for (let dir = cwd; ; dir = path.dirname(dir)) {
-    const match = LOCKFILES.find(([file]) => existsSync(path.join(dir, file)))
-    if (match) return match[1]
-    if (path.dirname(dir) === dir) return "npm"
-  }
+  const dirs = searchDirectories(cwd)
+  const agent = agentPackageManager()
+  return (
+    declaredPackageManager(dirs) ??
+    (agent && agent !== "npm" ? agent : null) ??
+    dirs
+      .map((dir) =>
+        LOCKFILES.find(([file]) => existsSync(path.join(dir, file)))
+      )
+      .find(Boolean)?.[1] ??
+    "npm"
+  )
 }
 
 export function detectProject(cwd, { frameworkOf, kind, supported }) {
@@ -49,7 +117,7 @@ export function detectProject(cwd, { frameworkOf, kind, supported }) {
   if (!existsSync(manifestPath)) {
     throw new CliError(`No package.json found. Run this inside a ${kind}.`)
   }
-  const manifest = JSON.parse(readFileSync(manifestPath, "utf8"))
+  const manifest = readJson(manifestPath)
   const packages = { ...manifest.dependencies, ...manifest.devDependencies }
   const framework = frameworkOf(packages)
   if (!framework) {
@@ -68,16 +136,41 @@ export function detectProject(cwd, { frameworkOf, kind, supported }) {
   }
 }
 
+function aliasOptions(file, seen = new Set()) {
+  if (seen.has(file) || !existsSync(file)) return {}
+  seen.add(file)
+  const config = readJsonc(file)
+  const dir = path.dirname(file)
+  const parents = [config.extends ?? []]
+    .flat()
+    .filter((parent) => parent.startsWith("."))
+    .map((parent) => {
+      const resolved = path.resolve(dir, parent)
+      return aliasOptions(
+        existsSync(resolved) || resolved.endsWith(".json")
+          ? resolved
+          : `${resolved}.json`,
+        seen
+      )
+    })
+  const inherited = Object.assign({}, ...parents)
+  const options = config.compilerOptions ?? {}
+  return {
+    ...inherited,
+    ...(options.baseUrl !== undefined && {
+      baseUrl: path.resolve(dir, options.baseUrl),
+    }),
+    ...(options.paths && { paths: options.paths, pathsDir: dir }),
+  }
+}
+
 export function findAliasRoot(cwd) {
   for (const name of TSCONFIGS) {
-    const file = path.join(cwd, name)
-    if (!existsSync(file)) continue
-    const options = readJsonc(file).compilerOptions ?? {}
-    const target = options.paths?.["@/*"]?.[0]
+    const { baseUrl, paths, pathsDir } = aliasOptions(path.join(cwd, name))
+    const target = paths?.["@/*"]?.[0]
     if (target) {
       return path.resolve(
-        cwd,
-        options.baseUrl ?? ".",
+        baseUrl ?? pathsDir,
         target.replace(TRAILING_WILDCARD, "")
       )
     }
@@ -91,6 +184,7 @@ export function relative(project, file) {
 
 function addAliasTo(file, target) {
   let text = readFileSync(file, "utf8")
+  if (text.includes('"@/*"')) return
   const alias = `"@/*": ["${target}"]`
   const paths = text.match(TSCONFIG_PATHS)
   const options = text.match(TSCONFIG_COMPILER_OPTIONS)
