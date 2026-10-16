@@ -67,7 +67,7 @@ function MenuPartLabel({
   return (
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "px-3 py-2.5 text-xs font-semibold text-muted-foreground data-inset:ps-9.5",
         className
@@ -89,7 +89,7 @@ function MenuPartItem({
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       data-variant={variant}
       className={cn(
         "group/dropdown-menu-item relative flex cursor-default items-center gap-2.5 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive data-disabled:opacity-50",
@@ -115,7 +115,7 @@ function MenuPartSubTrigger({
   return (
     <MenuPrimitive.SubmenuTrigger
       data-slot="dropdown-menu-sub-trigger"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "flex cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-popup-open:bg-accent data-popup-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
@@ -277,7 +277,7 @@ function MenubarItem({
   return (
     <MenuPartItem
       data-slot="menubar-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       data-variant={variant}
       className={cn(
         "group/menubar-item gap-2.5 rounded-md px-3 py-2 text-base focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive! data-disabled:opacity-50",
@@ -300,7 +300,7 @@ function MenubarCheckboxItem({
   return (
     <MenuPrimitive.CheckboxItem
       data-slot="menubar-checkbox-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-3 ps-9.5 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 data-disabled:opacity-50",
         className
@@ -341,7 +341,7 @@ function MenubarRadioItem({
   return (
     <MenuPrimitive.RadioItem
       data-slot="menubar-radio-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-3 ps-9.5 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-disabled:opacity-50",
         className
@@ -374,7 +374,7 @@ function MenubarLabel({
   return (
     <MenuPartLabel
       data-slot="menubar-label"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "px-3.5 py-2.5 text-xs text-muted-foreground data-inset:ps-9.5",
         className
@@ -427,7 +427,7 @@ function MenubarSubTrigger({
   return (
     <MenuPartSubTrigger
       data-slot="menubar-sub-trigger"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "gap-2 rounded-md px-3 py-2 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-popup-open:bg-accent data-popup-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
         className

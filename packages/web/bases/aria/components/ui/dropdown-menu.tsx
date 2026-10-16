@@ -151,7 +151,7 @@ function DropdownMenuLabel({
   return (
     <HeaderPrimitive
       data-slot="dropdown-menu-label"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "px-3 py-2.5 text-xs font-semibold text-muted-foreground data-inset:ps-9.5",
         className
@@ -191,7 +191,7 @@ function DropdownMenuItem({
   return (
     <MenuItemPrimitive
       data-slot="dropdown-menu-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       data-variant={variant}
       textValue={itemText(children, textValue)}
       className={cn(
@@ -224,7 +224,7 @@ function DropdownMenuSubTrigger({
   return (
     <MenuItemPrimitive
       data-slot="dropdown-menu-sub-trigger"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
         "flex cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -312,7 +312,7 @@ function DropdownMenuCheckboxItem({
   return (
     <MenuItemPrimitive
       data-slot="dropdown-menu-checkbox-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
         "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-disabled:opacity-50",
@@ -385,7 +385,7 @@ function DropdownMenuRadioItem({
     <MenuItemPrimitive
       id={value}
       data-slot="dropdown-menu-radio-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
         "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-disabled:opacity-50",

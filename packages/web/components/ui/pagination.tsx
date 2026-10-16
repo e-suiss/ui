@@ -52,7 +52,7 @@ function PaginationLink({
     <a
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
-      data-active={isActive}
+      data-active={isActive ? "" : undefined}
       className={cn(
         buttonVariants({ variant: isActive ? "secondary" : "ghost", size }),
         "text-sm tabular-nums aria-disabled:pointer-events-none data-active:font-semibold aria-disabled:opacity-50",

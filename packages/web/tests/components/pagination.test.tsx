@@ -72,6 +72,10 @@ describe("Pagination", () => {
     await expect.element(control("2")).toHaveAttribute("data-active")
     await expect.element(control("1")).not.toHaveAttribute("aria-current")
     await expect.element(control("3")).not.toHaveAttribute("aria-current")
+    await expect.element(control("1")).not.toHaveAttribute("data-active")
+    expect(getComputedStyle(control("1").element()).fontWeight).not.toBe(
+      getComputedStyle(control("2").element()).fontWeight
+    )
   })
 
   it("renders page controls as anchors that keep their href", async () => {
