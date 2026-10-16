@@ -141,6 +141,21 @@ describe("UsersDetail", () => {
       .not.toBeInTheDocument()
   })
 
+  it("keeps signed out sessions per person", async () => {
+    await render(<UsersDetail />)
+    await tab("Sessions").click()
+    await page
+      .getByRole("button", { name: "Sign Out All Other Sessions" })
+      .click()
+    await expect.poll(rows).toHaveLength(1)
+    await person("Morgan Lee").click()
+    await tab("Sessions").click()
+    await expect.poll(rows).toHaveLength(3)
+    await person("Jamie Rivera").click()
+    await tab("Sessions").click()
+    await expect.poll(rows).toHaveLength(1)
+  })
+
   it("shows the security switches", async () => {
     await render(<UsersDetail />)
     await tab("Security").click()

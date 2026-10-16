@@ -11,7 +11,6 @@ const EMAIL = /.+@.+\..+/
 const UPPERCASE = /[A-Z]/
 const LOWERCASE = /[a-z]/
 const DIGIT = /\d/
-const SYMBOL = /[^A-Za-z0-9]/
 
 const stackClass =
   "overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input"
@@ -31,8 +30,7 @@ const rules = [
   { label: "At least one number", test: (value: string) => DIGIT.test(value) },
 ]
 
-const strength = (value: string) =>
-  rules.filter((rule) => rule.test(value)).length + (SYMBOL.test(value) ? 1 : 0)
+const strong = (value: string) => rules.every((rule) => rule.test(value))
 
 function PasswordRules({ password }: { password: string }) {
   return (
@@ -88,7 +86,7 @@ export function SignupForm() {
     !!form.last &&
     !!form.birthday &&
     EMAIL.test(form.email) &&
-    strength(form.password) >= 3 &&
+    strong(form.password) &&
     form.password === form.confirm
 
   if (done) {

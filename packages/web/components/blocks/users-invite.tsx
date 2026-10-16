@@ -190,6 +190,8 @@ const toasts = createToastManager()
 export function UsersInvite() {
   const [emails, setEmails] = React.useState(["avery@company.com"])
   const [draft, setDraft] = React.useState("")
+  const [invalid, setInvalid] = React.useState(false)
+  const id = React.useId()
   const [role, setRole] = React.useState("Editor")
   const [welcome, setWelcome] = React.useState(true)
   const [pending, setPending] = React.useState([
@@ -197,11 +199,22 @@ export function UsersInvite() {
     { email: "drew@company.com", role: "Viewer", sent: "5 days ago" },
   ])
 
+  let summary = "Type an email and press Enter."
+  if (emails.length)
+    summary = `${emails.length} ${emails.length === 1 ? "person" : "people"} will be invited as ${role}.`
+  if (invalid) summary = `${draft} is not a valid email address.`
+
   const commit = (value: string) => {
     const email = value.trim().replace(TRAILING_COMMA, "")
-    if (EMAIL.test(email) && !emails.includes(email))
+    if (email && !EMAIL.test(email)) {
+      setDraft(email)
+      setInvalid(true)
+      return
+    }
+    if (email && !emails.includes(email))
       setEmails((current) => [...current, email])
     setDraft("")
+    setInvalid(false)
   }
 
   return (
@@ -233,7 +246,7 @@ export function UsersInvite() {
               <Item size="sm" role="listitem" className="items-start">
                 <ItemContent className="w-22.5 flex-none pt-1">
                   <ItemTitle className="font-normal">
-                    <label htmlFor="users-invite-email">Email</label>
+                    <label htmlFor={`${id}-email`}>Email</label>
                   </ItemTitle>
                 </ItemContent>
                 <div className="flex min-h-7.5 flex-1 flex-wrap items-center gap-1.5">
@@ -266,13 +279,17 @@ export function UsersInvite() {
                     </span>
                   ))}
                   <input
-                    id="users-invite-email"
+                    id={`${id}-email`}
                     type="email"
                     value={draft}
+                    aria-invalid={invalid || undefined}
                     onChange={(event) => {
                       const value = event.target.value
                       if (TRAILING_SEPARATOR.test(value)) commit(value)
-                      else setDraft(value)
+                      else {
+                        setDraft(value)
+                        setInvalid(false)
+                      }
                     }}
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
@@ -321,14 +338,12 @@ export function UsersInvite() {
               <Item size="sm" role="listitem">
                 <ItemContent>
                   <ItemTitle className="font-normal">
-                    <label htmlFor="users-invite-welcome">
-                      Send welcome email
-                    </label>
+                    <label htmlFor={`${id}-welcome`}>Send welcome email</label>
                   </ItemTitle>
                 </ItemContent>
                 <ItemActions>
                   <Switch
-                    id="users-invite-welcome"
+                    id={`${id}-welcome`}
                     checked={welcome}
                     onCheckedChange={setWelcome}
                   />
@@ -340,9 +355,7 @@ export function UsersInvite() {
                 className="flex-1 text-sm text-muted-foreground"
                 aria-live="polite"
               >
-                {emails.length
-                  ? `${emails.length} ${emails.length === 1 ? "person" : "people"} will be invited as ${role}.`
-                  : "Type an email and press Enter."}
+                {summary}
               </span>
               <Button
                 size="sm"
@@ -354,7 +367,7 @@ export function UsersInvite() {
                       role,
                       sent: "Just now",
                     })),
-                    ...current,
+                    ...current.filter((item) => !emails.includes(item.email)),
                   ])
                   toasts.add({
                     title: `${emails.length} ${emails.length === 1 ? "invitation" : "invitations"} sent`,

@@ -119,6 +119,9 @@ describe("ChatConversations", () => {
     await composer().fill("Bring snacks")
     await send().click()
     await thread("Morgan Lee").click()
+    await new Promise((resolve) => setTimeout(resolve, 800))
+    expect(status()).toBe("Message")
+    expect(document.querySelector("[aria-label=Typing]")).toBeNull()
     await expect
       .poll(() => preview("Riley Chen"), { timeout: 4000 })
       .toContain("Sounds good")

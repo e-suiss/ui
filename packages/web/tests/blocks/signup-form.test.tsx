@@ -103,6 +103,13 @@ describe("SignupForm", () => {
     await expect.element(error()).toBeVisible()
   })
 
+  it("rejects a password that misses a shown rule", async () => {
+    await render(<SignupForm />)
+    await fillValid({ password: "sunrise2026!", confirm: "sunrise2026!" })
+    await submit().click()
+    await expect.element(error()).toBeVisible()
+  })
+
   it("flags mismatched passwords only after a submit attempt", async () => {
     await render(<SignupForm />)
     await fillValid({ confirm: "Sunrise2025" })

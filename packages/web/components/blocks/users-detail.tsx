@@ -333,9 +333,19 @@ export function UsersDetail() {
   const [selected, setSelected] = React.useState(0)
   const [tab, setTab] = React.useState("Profile")
   const [overrides, setOverrides] = React.useState<Record<number, string>>({})
-  const [sessions, setSessions] = React.useState(initialSessions)
+  const [sessionsByUser, setSessionsByUser] = React.useState<
+    Record<number, typeof initialSessions>
+  >({})
   const user = users[selected]
   if (!user) return null
+  const sessions = sessionsByUser[selected] ?? initialSessions
+  const setSessions = (
+    update: (current: typeof initialSessions) => typeof initialSessions
+  ) =>
+    setSessionsByUser((current) => ({
+      ...current,
+      [selected]: update(current[selected] ?? initialSessions),
+    }))
   const role = overrides[selected] ?? user.role
 
   return (

@@ -198,11 +198,12 @@ export function ChatConversations() {
     threads.map((thread, index) => toLines(thread.lines, index))
   )
   const [selected, setSelected] = React.useState(0)
-  const [typing, setTyping] = React.useState(false)
+  const [typingIn, setTypingIn] = React.useState<Record<number, number>>({})
   const replyCount = React.useRef(0)
   const thread = threads[selected]
   const lines = conversations[selected]
   if (!thread || !lines) return null
+  const typing = (typingIn[selected] ?? 0) > 0
 
   const send = (text: string) => {
     const target = selected
@@ -213,10 +214,15 @@ export function ChatConversations() {
           : items
       )
     )
-    window.setTimeout(() => setTyping(true), 500)
+    const typeIn = (step: number) =>
+      setTypingIn((current) => ({
+        ...current,
+        [target]: (current[target] ?? 0) + step,
+      }))
+    window.setTimeout(() => typeIn(1), 500)
     window.setTimeout(() => {
       const reply = replies[replyCount.current++ % replies.length] ?? replies[0]
-      setTyping(false)
+      typeIn(-1)
       setConversations((current) =>
         current.map((items, index) =>
           index === target

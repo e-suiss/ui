@@ -84,18 +84,40 @@ describe("UsersInvite", () => {
       .toEqual(["avery@company.com", "taylor@company.com"])
   })
 
-  it("ignores duplicates and invalid addresses", async () => {
+  it("ignores duplicates and keeps invalid addresses for fixing", async () => {
     await render(<UsersInvite />)
     await type("avery@company.com{Enter}")
     await expect.element(input()).toHaveValue("")
     await type("not-an-email{Enter}")
-    await expect.element(input()).toHaveValue("")
+    await expect.element(input()).toHaveValue("not-an-email")
+    await expect.element(input()).toHaveAttribute("aria-invalid", "true")
+    await expect
+      .element(page.getByText("not-an-email is not a valid email address."))
+      .toBeVisible()
+    await userEvent.keyboard("{Backspace}")
+    await expect.element(input()).not.toHaveAttribute("aria-invalid")
+    await input().fill("")
     await type("jamie@company,")
+    await expect.element(input()).toHaveValue("jamie@company")
+    await type(".com{Enter}")
     await expect.element(input()).toHaveValue("")
-    expect(chips()).toEqual(["avery@company.com"])
+    expect(chips()).toEqual(["avery@company.com", "jamie@company.com"])
     await expect
       .element(summary())
-      .toHaveTextContent("1 person will be invited as Editor.")
+      .toHaveTextContent("2 people will be invited as Editor.")
+  })
+
+  it("re-invites a pending address without listing it twice", async () => {
+    await render(<UsersInvite />)
+    await type("casey@company.com{Enter}")
+    await send().click()
+    await expect
+      .poll(pending)
+      .toEqual([
+        "avery@company.comEditor · Just now",
+        "casey@company.comEditor · Just now",
+        "drew@company.comViewer · 5 days ago",
+      ])
   })
 
   it("removes chips with their button and with backspace", async () => {
