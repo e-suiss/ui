@@ -109,7 +109,12 @@ function OtpAutofill({
 
   const verify = React.useCallback(async (code: string, run: number) => {
     setState("verifying")
-    const valid = await onVerifyRef.current(code)
+    let valid = false
+    try {
+      valid = await onVerifyRef.current(code)
+    } catch {
+      valid = false
+    }
     if (run !== runRef.current) return
     if (valid) {
       setState("verified")
@@ -256,6 +261,7 @@ function OtpAutofillSuggestion({
   source = "From Messages",
   portalHost,
   className,
+  style,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children" | "onPress"> & {
   code: string | null | undefined
@@ -289,11 +295,14 @@ function OtpAutofillSuggestion({
                 "min-h-11 items-center justify-center pt-1.5 active:opacity-80",
                 className
               )}
-              style={{
-                paddingBottom:
-                  keyboard.height > 0 ? 6 : Math.max(6, insets.bottom),
-              }}
               {...props}
+              style={(pressState) => [
+                {
+                  paddingBottom:
+                    keyboard.height > 0 ? 6 : Math.max(6, insets.bottom),
+                },
+                typeof style === "function" ? style(pressState) : style,
+              ]}
             >
               {typeof source === "string" || typeof source === "number" ? (
                 <Text className="text-xs text-muted-foreground">{source}</Text>

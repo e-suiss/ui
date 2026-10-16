@@ -218,6 +218,7 @@ function ActionBarTrigger({
   disabled,
   children,
   onPress,
+  accessibilityState,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children"> & {
   children?: React.ReactNode
@@ -238,7 +239,10 @@ function ActionBarTrigger({
       <Pressable
         role="button"
         disabled={disabled}
-        accessibilityState={{ disabled: Boolean(disabled) }}
+        accessibilityState={{
+          ...accessibilityState,
+          disabled: Boolean(disabled),
+        }}
         onPress={(event) => {
           onPress?.(event)
           showMenu(menu.index)

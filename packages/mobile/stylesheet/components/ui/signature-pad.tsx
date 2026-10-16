@@ -117,6 +117,9 @@ function SignaturePad({
   accessibilityLabel = "Signature",
   style,
   ref,
+  accessibilityActions,
+  onAccessibilityAction,
+  onLayout,
   ...props
 }: Omit<React.ComponentProps<typeof View>, "children" | "style"> & {
   style?: StyleProp<ViewStyle>
@@ -227,21 +230,29 @@ function SignaturePad({
     )
   return (
     <View
+      {...props}
       accessible
       accessibilityLabel={accessibilityLabel}
       accessibilityValue={{ text: empty ? "Empty" : "Signed" }}
       accessibilityState={{ disabled }}
       accessibilityActions={
-        empty || disabled ? undefined : [{ name: "clear", label: "Clear" }]
+        empty || disabled
+          ? accessibilityActions
+          : [{ name: "clear", label: "Clear" }, ...(accessibilityActions ?? [])]
       }
       onAccessibilityAction={(event) => {
-        if (event.nativeEvent.actionName === "clear") clear()
+        if (event.nativeEvent.actionName === "clear" && !empty && !disabled) {
+          clear()
+          return
+        }
+        onAccessibilityAction?.(event)
       }}
       onLayout={(event) => {
         sizeRef.current = {
           width: event.nativeEvent.layout.width,
           height: event.nativeEvent.layout.height,
         }
+        onLayout?.(event)
       }}
       style={[
         styles.root,
@@ -252,7 +263,6 @@ function SignaturePad({
         disabled && { opacity: 0.5 },
         style,
       ]}
-      {...props}
     >
       <View
         pointerEvents="none"

@@ -173,7 +173,12 @@ function OtpAutofill({
 
   const verify = React.useCallback(async (code: string, run: number) => {
     setState("verifying")
-    const valid = await onVerifyRef.current(code)
+    let valid = false
+    try {
+      valid = await onVerifyRef.current(code)
+    } catch {
+      valid = false
+    }
     if (run !== runRef.current) return
     if (valid) {
       setState("verified")
@@ -324,14 +329,10 @@ function OtpAutofillSuggestion({
   portalHost,
   style,
   ...props
-}: Omit<
-  React.ComponentProps<typeof Pressable>,
-  "children" | "onPress" | "style"
-> & {
+}: Omit<React.ComponentProps<typeof Pressable>, "children" | "onPress"> & {
   code: string | null | undefined
   source?: React.ReactNode
   portalHost?: string
-  style?: StyleProp<ViewStyle>
 }) {
   const { colors, isDark } = useTheme()
   const context = useOtpAutofill()
@@ -362,16 +363,16 @@ function OtpAutofillSuggestion({
               onPress={() => {
                 if (code) fill(code)
               }}
-              style={({ pressed }) => [
+              {...props}
+              style={(pressState) => [
                 styles.suggestion,
-                pressed && { opacity: 0.8 },
+                pressState.pressed && { opacity: 0.8 },
                 {
                   paddingBottom:
                     keyboard.height > 0 ? 6 : Math.max(6, insets.bottom),
                 },
-                style,
+                typeof style === "function" ? style(pressState) : style,
               ]}
-              {...props}
             >
               {typeof source === "string" || typeof source === "number" ? (
                 <Text

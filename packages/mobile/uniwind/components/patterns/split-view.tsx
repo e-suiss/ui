@@ -144,6 +144,7 @@ function SplitViewPane({
   kind,
   title,
   className,
+  style,
   children,
   ...props
 }: SplitViewPaneProps & {
@@ -220,6 +221,7 @@ function SplitViewPane({
         entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
         className="flex-1"
         accessibilityLabel={typeof title === "string" ? title : undefined}
+        style={style}
         {...props}
       >
         <ScrollView className="flex-1" contentContainerClassName={className}>
@@ -232,9 +234,9 @@ function SplitViewPane({
   return (
     <View
       className={cn("min-h-0", kinds[0] !== kind && "border-s border-border")}
-      style={{ flex: RATIO[kind] / total }}
       accessibilityLabel={typeof title === "string" ? title : undefined}
       {...props}
+      style={[{ flex: RATIO[kind] / total }, style]}
     >
       <ScrollView
         className="flex-1"
@@ -269,6 +271,7 @@ function SplitViewItem({
   className,
   children,
   onPress,
+  accessibilityState,
   ...props
 }: React.ComponentProps<typeof Pressable> & {
   isActive?: boolean
@@ -279,7 +282,7 @@ function SplitViewItem({
   return (
     <Pressable
       role="button"
-      accessibilityState={{ selected: isActive }}
+      accessibilityState={{ ...accessibilityState, selected: isActive }}
       onPress={(event) => {
         onPress?.(event)
         setColumn(NEXT[kind])

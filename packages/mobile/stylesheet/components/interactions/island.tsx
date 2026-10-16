@@ -497,6 +497,7 @@ function Island({
   minimal,
   accessibilityLabel,
   portalHost,
+  onAccessibilityEscape,
   ...props
 }: React.ComponentProps<typeof View> & {
   compactLeading?: React.ReactNode
@@ -527,6 +528,8 @@ function Island({
     if (!active) return
     return registerActivity()
   }, [active, registerActivity])
+
+  React.useEffect(() => () => setPaused(false), [setPaused])
 
   let view: IslandView = context.view
   if (context.view === "minimal" && !hasMinimal) view = "compact"
@@ -634,9 +637,15 @@ function Island({
           >
             <GestureDetector gesture={gesture}>
               <AnimatedView
+                {...props}
                 pointerEvents={view === "hidden" ? "none" : "auto"}
                 onAccessibilityEscape={
-                  view === "expanded" ? collapse : undefined
+                  view === "expanded"
+                    ? () => {
+                        collapse()
+                        onAccessibilityEscape?.()
+                      }
+                    : onAccessibilityEscape
                 }
                 style={[
                   styles.island,
@@ -644,7 +653,6 @@ function Island({
                   style,
                   animatedStyle,
                 ]}
-                {...props}
               >
                 <TextStyleContext.Provider value={{ color: palette.white }}>
                   <IconSizeContext.Provider value={20}>

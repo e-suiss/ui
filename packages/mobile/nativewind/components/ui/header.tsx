@@ -120,6 +120,7 @@ function Header({
 function HeaderTitle({
   subtitle,
   className,
+  style,
   children,
   ...props
 }: ViewProps & {
@@ -144,9 +145,9 @@ function HeaderTitle({
   return (
     <AnimatedView
       role="heading"
-      className={cn("shrink items-center px-2", className)}
-      style={animatedStyle}
       {...props}
+      className={cn("shrink items-center px-2", className)}
+      style={[style, animatedStyle]}
     >
       {wrapText(children, "text-base font-semibold")}
       {subtitle !== undefined
@@ -159,6 +160,7 @@ function HeaderTitle({
 function HeaderLargeTitle({
   subtitle,
   className,
+  style,
   children,
   onLayout,
   ...props
@@ -189,9 +191,11 @@ function HeaderLargeTitle({
 
   return (
     <AnimatedView
+      {...props}
       className={cn("gap-0.5 px-4 pt-0.5 pb-2", className)}
       style={[
         { transformOrigin: I18nManager.isRTL ? "right" : "left" },
+        style,
         animatedStyle,
       ]}
       onLayout={(event) => {
@@ -200,7 +204,6 @@ function HeaderLargeTitle({
         }
         onLayout?.(event)
       }}
-      {...props}
     >
       {typeof children === "string" || typeof children === "number" ? (
         <Text role="heading" className="text-3xl font-bold">

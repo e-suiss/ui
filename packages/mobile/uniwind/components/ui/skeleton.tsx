@@ -12,6 +12,7 @@ const duration = 1000
 
 function Skeleton({
   className,
+  style,
   ...props
 }: React.ComponentProps<typeof View> &
   React.RefAttributes<React.ComponentRef<typeof View>>) {
@@ -21,14 +22,14 @@ function Skeleton({
     sv.value = withRepeat(withTiming(0.5, { duration }), -1, true)
   }, [sv])
 
-  const style = useAnimatedStyle(() => ({
+  const animatedStyle = useAnimatedStyle(() => ({
     opacity: sv.value,
   }))
   return (
     <Animated.View
-      style={style}
-      className={cn("rounded-md bg-muted", className)}
       {...props}
+      style={[style, animatedStyle]}
+      className={cn("rounded-md bg-muted", className)}
     />
   )
 }

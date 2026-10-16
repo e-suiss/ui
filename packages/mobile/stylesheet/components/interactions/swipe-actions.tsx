@@ -139,6 +139,7 @@ function SwipeActions({
   style,
   children,
   onOpenChange,
+  onLayout,
   ...props
 }: ViewProps & {
   onOpenChange?: (side: SwipeActionsSide | null) => void
@@ -151,6 +152,8 @@ function SwipeActions({
   const fullRef = React.useRef<SwipeActionsSide | null>(null)
   const committingRef = React.useRef(false)
   const mountedRef = React.useRef(true)
+  const timersRef = React.useRef(new Set<ReturnType<typeof setTimeout>>())
+  const pendingRef = React.useRef<(() => void) | null>(null)
   const [full, setFull] = React.useState<SwipeActionsSide | null>(null)
   const [openSide, setOpenSide] = React.useState<SwipeActionsSide | null>(null)
   const haptics = useHaptics()
@@ -180,11 +183,25 @@ function SwipeActions({
 
   React.useEffect(() => {
     mountedRef.current = true
+    const timers = timersRef.current
     return () => {
       mountedRef.current = false
       openRows.delete(close)
+      for (const timer of timers) clearTimeout(timer)
+      timers.clear()
+      const pending = pendingRef.current
+      pendingRef.current = null
+      pending?.()
     }
   }, [close])
+
+  const schedule = (callback: () => void, delay: number) => {
+    const timer = setTimeout(() => {
+      timersRef.current.delete(timer)
+      callback()
+    }, delay)
+    timersRef.current.add(timer)
+  }
 
   const setFullSide = (side: SwipeActionsSide) => (next: boolean) => {
     if (committingRef.current) return
@@ -201,17 +218,19 @@ function SwipeActions({
     )
     if (!action) return
     committingRef.current = true
+    pendingRef.current = () => action.props.onPress?.()
     const sign = side === leftSide ? 1 : -1
     offset.value = withTiming(sign * rowWidth.value, {
       duration: 180,
       easing: EASING,
     })
-    setTimeout(() => {
+    schedule(() => {
       collapse.value = rowHeight.value
       collapse.value = withTiming(0, { duration: 220, easing: EASING })
-      setTimeout(() => {
+      schedule(() => {
+        pendingRef.current = null
         action.props.onPress?.()
-        setTimeout(() => {
+        schedule(() => {
           if (!mountedRef.current) return
           swipeableRef.current?.reset()
           offset.value = 0
@@ -310,6 +329,7 @@ function SwipeActions({
           if (collapse.value < 0) {
             rowHeight.value = event.nativeEvent.layout.height
           }
+          onLayout?.(event)
         }}
         {...props}
       >

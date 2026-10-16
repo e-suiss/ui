@@ -149,10 +149,11 @@ function SelectionList({
 
   const setSelected = React.useCallback(
     (next: string[]) => {
+      if (next.length === 0 && selected.length === 0) return
       if (value === undefined) setUncontrolledValue(next)
       onValueChange?.(next)
     },
-    [value, onValueChange]
+    [value, selected, onValueChange]
   )
 
   const setEditing = React.useCallback(
@@ -203,13 +204,14 @@ function SelectionList({
 function SelectionListTrigger({
   children,
   onPress,
+  accessibilityState,
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { editing, setEditing } = useSelectionList()
   return (
     <Button
       variant="plain"
-      accessibilityState={{ selected: editing }}
+      accessibilityState={{ ...accessibilityState, selected: editing }}
       onPress={(event) => {
         onPress?.(event)
         setEditing(!editing)
@@ -242,6 +244,7 @@ function SelectionListItem({
   style,
   children,
   onPress,
+  accessibilityState,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children"> & {
   value: string
@@ -281,7 +284,10 @@ function SelectionListItem({
       accessible={editing}
       disabled={!editing}
       role={editing ? "checkbox" : undefined}
-      accessibilityState={editing ? { checked } : undefined}
+      accessibilityState={{
+        ...accessibilityState,
+        ...(editing ? { checked } : undefined),
+      }}
       onPress={(event) => {
         onPress?.(event)
         toggle(value)

@@ -27,7 +27,7 @@ type ReorderListContextProps = {
   lift: SharedValue<number>
   activeKey: string | null
   setActiveKey: (key: string | null) => void
-  commit: (next: string[]) => void
+  commit: (next: string[], settled?: boolean) => void
   move: (key: string, delta: number) => void
   setHeight: (key: string, height: number) => void
   value: string[]
@@ -183,9 +183,10 @@ function ReorderList({
   }, [value, order, reset])
 
   const commit = React.useCallback(
-    (next: string[]) => {
-      pendingRef.current = true
+    (next: string[], settled = true) => {
+      pendingRef.current = settled
       onValueChange(next)
+      if (!settled) return
       requestAnimationFrame(() => {
         if (pendingRef.current) reset()
       })
@@ -350,6 +351,8 @@ function ReorderListItem({
 function ReorderListHandle({
   style,
   accessibilityLabel = "Reorder",
+  accessibilityActions,
+  onAccessibilityAction,
   ...props
 }: ViewProps) {
   const {
@@ -405,7 +408,8 @@ function ReorderListHandle({
           const to = target.value
           lift.value = withSpring(0, SETTLE)
           if (from === to || from < 0) {
-            dragY.value = withSpring(0, SETTLE, () => {
+            dragY.value = withSpring(0, SETTLE, (finished) => {
+              if (!finished) return
               active.value = null
               runOnJS(setActiveKey)(null)
             })
@@ -413,8 +417,8 @@ function ReorderListHandle({
           }
           const offset = dropOffset(order.value, heights.value, from, to)
           const next = moveItem(order.value, from, to)
-          dragY.value = withSpring(offset, SETTLE, () => {
-            runOnJS(commit)(next)
+          dragY.value = withSpring(offset, SETTLE, (finished) => {
+            runOnJS(commit)(next, finished === true)
           })
         }),
     [
@@ -444,16 +448,18 @@ function ReorderListHandle({
   return (
     <GestureDetector gesture={gesture}>
       <View
+        {...props}
         accessible
         role="button"
         accessibilityLabel={accessibilityLabel}
-        accessibilityActions={actions}
+        accessibilityActions={[...actions, ...(accessibilityActions ?? [])]}
         onAccessibilityAction={(event) => {
-          if (event.nativeEvent.actionName === "moveUp") move(key, -1)
-          if (event.nativeEvent.actionName === "moveDown") move(key, 1)
+          const name = event.nativeEvent.actionName
+          if (name === "moveUp") move(key, -1)
+          else if (name === "moveDown") move(key, 1)
+          else onAccessibilityAction?.(event)
         }}
         style={[styles.handle, style]}
-        {...props}
       >
         <Icon
           as={DotsSixVerticalIcon}
