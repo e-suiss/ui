@@ -324,6 +324,12 @@ private fun todayLabel(locale: Locale): String =
         android.icu.text.RelativeDateTimeFormatter.AbsoluteUnit.DAY,
     ).replaceFirstChar { it.titlecase(locale) }
 
+private fun monthLabel(locale: Locale, direction: android.icu.text.RelativeDateTimeFormatter.Direction): String =
+    android.icu.text.RelativeDateTimeFormatter.getInstance(locale).format(
+        direction,
+        android.icu.text.RelativeDateTimeFormatter.AbsoluteUnit.MONTH,
+    ).replaceFirstChar { it.titlecase(locale) }
+
 private fun dayKey(date: Date): Int {
     val calendar = JavaCalendar.getInstance().apply { time = date }
     return calendar.get(JavaCalendar.YEAR) * 10000 + calendar.get(JavaCalendar.MONTH) * 100 + calendar.get(JavaCalendar.DAY_OF_MONTH)
@@ -500,6 +506,8 @@ private fun CalendarMonth(
         else -> Typography.xs
     }.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold)
     val cell = size.cell
+    val previousLabel = remember(locale) { monthLabel(locale, android.icu.text.RelativeDateTimeFormatter.Direction.LAST) }
+    val nextLabel = remember(locale) { monthLabel(locale, android.icu.text.RelativeDateTimeFormatter.Direction.NEXT) }
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Box(modifier = Modifier.fillMaxWidth().height(cell)) {
@@ -521,8 +529,8 @@ private fun CalendarMonth(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     horizontalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
-                    CalendarNavButton(PhosphorIcons.Regular.CaretLeft, "Go to the Previous Month", canPrevious, buttonVariant, cell, onPrevious)
-                    CalendarNavButton(PhosphorIcons.Regular.CaretRight, "Go to the Next Month", canNext, buttonVariant, cell, onNext)
+                    CalendarNavButton(PhosphorIcons.Regular.CaretLeft, previousLabel, canPrevious, buttonVariant, cell, onPrevious)
+                    CalendarNavButton(PhosphorIcons.Regular.CaretRight, nextLabel, canNext, buttonVariant, cell, onNext)
                 }
             }
         }
