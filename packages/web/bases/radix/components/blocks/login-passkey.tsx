@@ -129,7 +129,7 @@ export function LoginPasskey() {
               JR
             </AvatarFallback>
           </Avatar>
-          <span className="text-base">jamie@suiss.com</span>
+          <span className="text-base">jamie@example.com</span>
           <a href="#change" className="text-sm text-primary hover:underline">
             Change ›
           </a>

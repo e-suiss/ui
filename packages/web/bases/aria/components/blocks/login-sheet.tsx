@@ -164,7 +164,7 @@ export function LoginSheet() {
                 {
                   value: "share",
                   label: "Share My Email",
-                  hint: "jamie@suiss.com",
+                  hint: "jamie@example.com",
                 },
                 {
                   value: "hide",

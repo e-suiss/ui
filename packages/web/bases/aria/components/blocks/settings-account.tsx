@@ -297,7 +297,7 @@ function EditableCard({
 function Security() {
   const idPrefix = React.useId()
   const [values, setValues] = React.useState({
-    email: "jamie@suiss.com",
+    email: "jamie@example.com",
     phone: "+1 (415) 555-0142",
   })
   const [editing, setEditing] = React.useState<Editable | null>(null)
@@ -402,7 +402,7 @@ export function SettingsAccount() {
             <p className="text-2xl font-semibold tracking-tight">
               Jamie Rivera
             </p>
-            <p className="text-sm text-muted-foreground">jamie@suiss.com</p>
+            <p className="text-sm text-muted-foreground">jamie@example.com</p>
           </div>
         }
       />

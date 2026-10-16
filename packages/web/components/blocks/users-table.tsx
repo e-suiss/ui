@@ -192,7 +192,7 @@ type User = {
 const initialUsers: User[] = [
   {
     name: "Jamie Rivera",
-    email: "jamie@company.com",
+    email: "jamie@example.com",
     role: "Admin",
     status: "Active",
     seen: "2 min ago",
@@ -200,7 +200,7 @@ const initialUsers: User[] = [
   },
   {
     name: "Morgan Lee",
-    email: "morgan@company.com",
+    email: "morgan@example.com",
     role: "Editor",
     status: "Active",
     seen: "1 hr ago",
@@ -208,7 +208,7 @@ const initialUsers: User[] = [
   },
   {
     name: "Riley Chen",
-    email: "riley@company.com",
+    email: "riley@example.com",
     role: "Support",
     status: "Active",
     seen: "Yesterday",
@@ -216,7 +216,7 @@ const initialUsers: User[] = [
   },
   {
     name: "Taylor Kim",
-    email: "taylor@company.com",
+    email: "taylor@example.com",
     role: "Viewer",
     status: "Suspended",
     seen: "3 days ago",
@@ -224,7 +224,7 @@ const initialUsers: User[] = [
   },
   {
     name: "Avery Brooks",
-    email: "avery@company.com",
+    email: "avery@example.com",
     role: "Editor",
     status: "Invited",
     seen: "—",
@@ -232,7 +232,7 @@ const initialUsers: User[] = [
   },
   {
     name: "Jordan Park",
-    email: "jordan@company.com",
+    email: "jordan@example.com",
     role: "Support",
     status: "Active",
     seen: "5 hr ago",

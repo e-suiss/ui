@@ -85,7 +85,7 @@ describe("UsersTable", () => {
     await render(<UsersTable />)
     await search().fill("PARK")
     await expect.poll(names).toEqual(["Jordan Park"])
-    await search().fill("riley@company")
+    await search().fill("riley@example")
     await expect.poll(names).toEqual(["Riley Chen"])
     await roleFilter("Editor").click()
     await expect.poll(names).toEqual([])

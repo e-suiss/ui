@@ -17,7 +17,7 @@ describe("LoginPasskey", () => {
   it("shows the account the passkey belongs to", async () => {
     await render(<LoginPasskey />)
     await expect.element(intro()).toBeVisible()
-    await expect.element(page.getByText("jamie@suiss.com")).toBeVisible()
+    await expect.element(page.getByText("jamie@example.com")).toBeVisible()
     await expect.element(dialog()).not.toBeInTheDocument()
   })
 

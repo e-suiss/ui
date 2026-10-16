@@ -18,7 +18,7 @@ const error = () =>
 const passwordRow = () =>
   password().element().closest<HTMLElement>("[class*=grid-rows]")
 
-async function reachPassword(address = "jamie@suiss.com") {
+async function reachPassword(address = "jamie@example.com") {
   await email().fill(address)
   await emailContinue().click()
   await expect.element(password()).toHaveAttribute("tabindex", "0")
@@ -92,14 +92,14 @@ describe("LoginAccount", () => {
 
   it("signs in, greets the account and signs out", async () => {
     await render(<LoginAccount />)
-    await reachPassword("jamie@suiss.com")
+    await reachPassword("jamie@example.com")
     await password().fill("secret")
     await passwordContinue().click()
     await expect.element(passwordContinue()).toBeDisabled()
     await expect
       .element(page.getByRole("heading", { name: "Hello." }))
       .toBeVisible()
-    await expect.element(page.getByText("jamie@suiss.com")).toBeVisible()
+    await expect.element(page.getByText("jamie@example.com")).toBeVisible()
     await expect.element(page.getByText("j", { exact: true })).toBeVisible()
 
     await page.getByRole("button", { name: "Sign out ›" }).click()
@@ -108,7 +108,7 @@ describe("LoginAccount", () => {
         page.getByRole("heading", { name: "Sign in with your suiss Account" })
       )
       .toBeVisible()
-    await expect.element(email()).toHaveValue("jamie@suiss.com")
+    await expect.element(email()).toHaveValue("jamie@example.com")
     await expect.element(password()).toHaveValue("")
     await expect.element(password()).toHaveAttribute("tabindex", "-1")
   })
@@ -127,7 +127,7 @@ describe("LoginAccount", () => {
     await reachPassword()
     expect(password().element().closest("[inert]")).toBeNull()
     await password().fill("secret")
-    await email().fill("riley@suiss.com")
+    await email().fill("riley@example.com")
     await expect.element(password()).toHaveAttribute("tabindex", "-1")
     expect(password().element().closest("[inert]")).not.toBeNull()
   })

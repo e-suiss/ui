@@ -31,7 +31,7 @@ describe("SettingsAccount", () => {
     await render(<SettingsAccount />)
     await expect.element(heading()).toHaveTextContent("Sign-In & Security")
     await expect
-      .element(page.getByText("jamie@suiss.com", { exact: true }).last())
+      .element(page.getByText("jamie@example.com", { exact: true }).last())
       .toBeVisible()
     await expect.element(page.getByText("+1 (415) 555-0142")).toBeVisible()
     await expect.element(status()).toHaveTextContent("")
@@ -40,7 +40,7 @@ describe("SettingsAccount", () => {
   it("edits a value, saves it and confirms", async () => {
     await render(<SettingsAccount />)
     await editEmail().click()
-    await expect.element(emailInput()).toHaveValue("jamie@suiss.com")
+    await expect.element(emailInput()).toHaveValue("jamie@example.com")
     await expect.element(emailInput()).toHaveFocus()
     await expect.element(editEmail()).not.toBeInTheDocument()
     await emailInput().fill("jamie@rivera.dev")
@@ -118,7 +118,7 @@ describe("SettingsAccount", () => {
       .element(page.getByRole("button", { name: "Toggle Sidebar" }))
       .toBeVisible()
     await editEmail().click()
-    await emailInput().fill("jr@suiss.com")
+    await emailInput().fill("jr@example.com")
     await formOf(emailInput).getByRole("button", { name: "Save" }).click()
     await expect.element(status()).toHaveTextContent("Email & phone saved.")
   })

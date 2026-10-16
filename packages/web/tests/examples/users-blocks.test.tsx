@@ -55,7 +55,7 @@ test("Detail", async () => {
     await expect(person).toHaveAttribute("aria-current", "true")
     const detail = await canvas.findByRole("region", { name: "Taylor Kim" })
     await expect(
-      within(detail).getByText("taylor@company.com · Viewer")
+      within(detail).getByText("taylor@example.com · Viewer")
     ).toBeInTheDocument()
   })
 })
@@ -65,7 +65,7 @@ test("Invite", async () => {
   await step("typing an email adds an invitee", async () => {
     await userEvent.type(
       canvas.getByRole("textbox", { name: "Email" }),
-      "morgan@company.com{Enter}"
+      "morgan@example.com{Enter}"
     )
     await expect(
       await canvas.findByText("2 people will be invited as Editor.")

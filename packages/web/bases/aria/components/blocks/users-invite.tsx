@@ -188,13 +188,13 @@ const roles = ["Admin", "Editor", "Support", "Viewer"]
 const toasts = createToastManager()
 
 export function UsersInvite() {
-  const [emails, setEmails] = React.useState(["avery@company.com"])
+  const [emails, setEmails] = React.useState(["avery@example.com"])
   const [draft, setDraft] = React.useState("")
   const [role, setRole] = React.useState("Editor")
   const [welcome, setWelcome] = React.useState(true)
   const [pending, setPending] = React.useState([
-    { email: "casey@company.com", role: "Support", sent: "2 days ago" },
-    { email: "drew@company.com", role: "Viewer", sent: "5 days ago" },
+    { email: "casey@example.com", role: "Support", sent: "2 days ago" },
+    { email: "drew@example.com", role: "Viewer", sent: "5 days ago" },
   ])
 
   const commit = (value: string) => {
@@ -284,7 +284,7 @@ export function UsersInvite() {
                     }}
                     onBlur={() => draft && commit(draft)}
                     placeholder={
-                      emails.length ? "Add another" : "name@company.com"
+                      emails.length ? "Add another" : "name@example.com"
                     }
                     className="min-w-35 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
                   />

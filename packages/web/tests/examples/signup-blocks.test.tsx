@@ -35,7 +35,7 @@ test("Form", async () => {
     )
     await userEvent.type(
       canvas.getByRole("textbox", { name: "Email" }),
-      "jamie@suiss.com"
+      "jamie@example.com"
     )
     await userEvent.type(
       canvas.getByLabelText("Password", { exact: true }),
@@ -97,7 +97,7 @@ test("Trial", async () => {
     await expect(start).toBeDisabled()
     await userEvent.type(
       canvas.getByRole("textbox", { name: "suiss Account email" }),
-      "jamie@suiss.com"
+      "jamie@example.com"
     )
     await userEvent.type(
       canvas.getByLabelText("Create a password"),

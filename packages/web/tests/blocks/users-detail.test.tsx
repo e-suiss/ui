@@ -49,7 +49,7 @@ describe("UsersDetail", () => {
   it("opens the first person on the profile tab", async () => {
     await render(<UsersDetail />)
     await expect
-      .element(detail("Jamie Rivera").getByText("jamie@company.com · Admin"))
+      .element(detail("Jamie Rivera").getByText("jamie@example.com · Admin"))
       .toBeVisible()
     await expect
       .element(person("Jamie Rivera"))
@@ -57,7 +57,7 @@ describe("UsersDetail", () => {
     await expect.element(tab("Profile")).toHaveAttribute("aria-pressed", "true")
     expect(rows()).toEqual([
       "Full name: Jamie Rivera",
-      "Email: jamie@company.com",
+      "Email: jamie@example.com",
       "Department: Product",
       "Joined: March 12, 2024",
       "Role: Admin",
@@ -69,7 +69,7 @@ describe("UsersDetail", () => {
     await render(<UsersDetail />)
     await person("Taylor Kim").click()
     await expect
-      .element(detail("Taylor Kim").getByText("taylor@company.com · Viewer"))
+      .element(detail("Taylor Kim").getByText("taylor@example.com · Viewer"))
       .toBeVisible()
     await expect.poll(rows).toContain("Status: Suspended")
     await expect
@@ -88,7 +88,7 @@ describe("UsersDetail", () => {
       .toHaveAttribute("aria-pressed", "true")
     await person("Riley Chen").click()
     await expect.element(tab("Profile")).toHaveAttribute("aria-pressed", "true")
-    await expect.poll(rows).toContain("Email: riley@company.com")
+    await expect.poll(rows).toContain("Email: riley@example.com")
   })
 
   it("changes a role and keeps it per person", async () => {
@@ -96,7 +96,7 @@ describe("UsersDetail", () => {
     await person("Morgan Lee").click()
     await chooseRole("Viewer")
     await expect
-      .element(detail("Morgan Lee").getByText("morgan@company.com · Viewer"))
+      .element(detail("Morgan Lee").getByText("morgan@example.com · Viewer"))
       .toBeVisible()
     expect(roleOf("Morgan Lee")).toBe("Viewer")
     expect(roleOf("Avery Brooks")).toBe("Editor")
@@ -185,7 +185,7 @@ describe("UsersDetail", () => {
     await expect.element(tab("Profile")).not.toBeInTheDocument()
     await person("Jordan Park").click()
     await expect
-      .element(detail("Jordan Park").getByText("jordan@company.com · Support"))
+      .element(detail("Jordan Park").getByText("jordan@example.com · Support"))
       .toBeVisible()
     await detail("Jordan Park").getByRole("button", { name: "Users" }).click()
     await expect.element(person("Riley Chen")).toBeVisible()

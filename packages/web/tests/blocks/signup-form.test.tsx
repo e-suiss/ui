@@ -26,7 +26,7 @@ async function fillValid(overrides: Record<string, string> = {}) {
     first: "Jamie",
     last: "Rivera",
     birthday: "04/12/1990",
-    email: "jamie@suiss.com",
+    email: "jamie@example.com",
     password: "Sunrise2026",
     confirm: "Sunrise2026",
     ...overrides,
@@ -92,7 +92,7 @@ describe("SignupForm", () => {
     await fillValid({ email: "jamie@suiss" })
     await submit().click()
     await expect.element(error()).toBeVisible()
-    await field("Email").fill("jamie@suiss.com")
+    await field("Email").fill("jamie@example.com")
     await expect.element(error()).not.toBeInTheDocument()
   })
 
@@ -146,7 +146,7 @@ describe("SignupForm", () => {
       .toBeVisible()
     await expect
       .element(
-        page.getByText("We sent a verification code to jamie@suiss.com.")
+        page.getByText("We sent a verification code to jamie@example.com.")
       )
       .toBeVisible()
     await page.getByRole("button", { name: "Start over ›" }).click()

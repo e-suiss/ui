@@ -51,10 +51,10 @@ describe("UsersInvite", () => {
     await expect
       .element(summary())
       .toHaveTextContent("1 person will be invited as Editor.")
-    expect(chips()).toEqual(["avery@company.com"])
+    expect(chips()).toEqual(["avery@example.com"])
     expect(pending()).toEqual([
-      "casey@company.comSupport · 2 days ago",
-      "drew@company.comViewer · 5 days ago",
+      "casey@example.comSupport · 2 days ago",
+      "drew@example.comViewer · 5 days ago",
     ])
     await expect.element(input()).toHaveAttribute("placeholder", "Add another")
     await expect
@@ -64,11 +64,11 @@ describe("UsersInvite", () => {
 
   it("adds emails on enter and comma", async () => {
     await render(<UsersInvite />)
-    await type("morgan@company.com{Enter}")
-    await type("riley@company.com,")
+    await type("morgan@example.com{Enter}")
+    await type("riley@example.com,")
     await expect
       .poll(chips)
-      .toEqual(["avery@company.com", "morgan@company.com", "riley@company.com"])
+      .toEqual(["avery@example.com", "morgan@example.com", "riley@example.com"])
     await expect.element(input()).toHaveValue("")
     await expect
       .element(summary())
@@ -77,16 +77,16 @@ describe("UsersInvite", () => {
 
   it("adds the draft when the field loses focus", async () => {
     await render(<UsersInvite />)
-    await type("taylor@company.com")
+    await type("taylor@example.com")
     await page.getByRole("heading", { name: "Invite users" }).click()
     await expect
       .poll(chips)
-      .toEqual(["avery@company.com", "taylor@company.com"])
+      .toEqual(["avery@example.com", "taylor@example.com"])
   })
 
   it("ignores duplicates and keeps invalid addresses for fixing", async () => {
     await render(<UsersInvite />)
-    await type("avery@company.com{Enter}")
+    await type("avery@example.com{Enter}")
     await expect.element(input()).toHaveValue("")
     await type("not-an-email{Enter}")
     await expect.element(input()).toHaveValue("not-an-email")
@@ -97,11 +97,11 @@ describe("UsersInvite", () => {
     await userEvent.keyboard("{Backspace}")
     await expect.element(input()).not.toHaveAttribute("aria-invalid")
     await input().fill("")
-    await type("jamie@company,")
-    await expect.element(input()).toHaveValue("jamie@company")
+    await type("jamie@example,")
+    await expect.element(input()).toHaveValue("jamie@example")
     await type(".com{Enter}")
     await expect.element(input()).toHaveValue("")
-    expect(chips()).toEqual(["avery@company.com", "jamie@company.com"])
+    expect(chips()).toEqual(["avery@example.com", "jamie@example.com"])
     await expect
       .element(summary())
       .toHaveTextContent("2 people will be invited as Editor.")
@@ -109,28 +109,28 @@ describe("UsersInvite", () => {
 
   it("re-invites a pending address without listing it twice", async () => {
     await render(<UsersInvite />)
-    await type("casey@company.com{Enter}")
+    await type("casey@example.com{Enter}")
     await send().click()
     await expect
       .poll(pending)
       .toEqual([
-        "avery@company.comEditor · Just now",
-        "casey@company.comEditor · Just now",
-        "drew@company.comViewer · 5 days ago",
+        "avery@example.comEditor · Just now",
+        "casey@example.comEditor · Just now",
+        "drew@example.comViewer · 5 days ago",
       ])
   })
 
   it("removes chips with their button and with backspace", async () => {
     await render(<UsersInvite />)
-    await type("morgan@company.com{Enter}riley@company.com{Enter}")
+    await type("morgan@example.com{Enter}riley@example.com{Enter}")
     await expect.poll(chips).toHaveLength(3)
     await page
-      .getByRole("button", { name: "Remove morgan@company.com" })
+      .getByRole("button", { name: "Remove morgan@example.com" })
       .click()
-    await expect.poll(chips).toEqual(["avery@company.com", "riley@company.com"])
+    await expect.poll(chips).toEqual(["avery@example.com", "riley@example.com"])
     await input().click()
     await userEvent.keyboard("{Backspace}")
-    await expect.poll(chips).toEqual(["avery@company.com"])
+    await expect.poll(chips).toEqual(["avery@example.com"])
     await userEvent.keyboard("{Backspace}")
     await expect.poll(chips).toEqual([])
     await expect
@@ -139,19 +139,19 @@ describe("UsersInvite", () => {
     await expect.element(send()).toBeDisabled()
     await expect
       .element(input())
-      .toHaveAttribute("placeholder", "name@company.com")
+      .toHaveAttribute("placeholder", "name@example.com")
   })
 
   it("only removes characters while the draft has text", async () => {
     await render(<UsersInvite />)
     await type("ab{Backspace}")
     await expect.element(input()).toHaveValue("a")
-    expect(chips()).toEqual(["avery@company.com"])
+    expect(chips()).toEqual(["avery@example.com"])
   })
 
   it("invites with the chosen role and lists them as pending", async () => {
     await render(<UsersInvite />)
-    await type("morgan@company.com{Enter}")
+    await type("morgan@example.com{Enter}")
     await page.getByRole("combobox", { name: "Role" }).click()
     await page.getByRole("option", { name: "Viewer" }).click()
     await expect
@@ -161,10 +161,10 @@ describe("UsersInvite", () => {
     await expect
       .poll(pending)
       .toEqual([
-        "avery@company.comViewer · Just now",
-        "morgan@company.comViewer · Just now",
-        "casey@company.comSupport · 2 days ago",
-        "drew@company.comViewer · 5 days ago",
+        "avery@example.comViewer · Just now",
+        "morgan@example.comViewer · Just now",
+        "casey@example.comSupport · 2 days ago",
+        "drew@example.comViewer · 5 days ago",
       ])
     await expect.poll(toastTitles).toContain("2 invitations sent")
     expect(chips()).toEqual([])
@@ -179,15 +179,15 @@ describe("UsersInvite", () => {
 
   it("resends and cancels pending invitations", async () => {
     await render(<UsersInvite />)
-    await pendingRow("drew@company.com")
+    await pendingRow("drew@example.com")
       .getByRole("button", { name: "Resend" })
       .click()
-    await expect.poll(toastTitles).toContain("Resent to drew@company.com")
-    await pendingRow("casey@company.com")
+    await expect.poll(toastTitles).toContain("Resent to drew@example.com")
+    await pendingRow("casey@example.com")
       .getByRole("button", { name: "Cancel" })
       .click()
-    await expect.poll(pending).toEqual(["drew@company.comViewer · 5 days ago"])
-    await pendingRow("drew@company.com")
+    await expect.poll(pending).toEqual(["drew@example.comViewer · 5 days ago"])
+    await pendingRow("drew@example.com")
       .getByRole("button", { name: "Cancel" })
       .click()
     await expect.poll(pending).toEqual([])

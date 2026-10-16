@@ -20,7 +20,7 @@ test("Account", async () => {
   })
 
   await step("a valid email and password sign in", async () => {
-    await userEvent.type(email, "@suiss.com")
+    await userEvent.type(email, "@example.com")
     await expect(email).not.toHaveAttribute("aria-invalid")
     await userEvent.keyboard("{Enter}")
     const password = canvas.getByLabelText("Password", { exact: true })

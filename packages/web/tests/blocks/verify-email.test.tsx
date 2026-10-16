@@ -28,7 +28,7 @@ describe("VerifyEmail", () => {
     await expect
       .element(page.getByRole("heading", { name: "Check your inbox." }))
       .toBeVisible()
-    await expect.element(page.getByText("jamie@suiss.com")).toBeVisible()
+    await expect.element(page.getByText("jamie@example.com")).toBeVisible()
     await expect.element(page.getByText("new message")).toBeInTheDocument()
     await expect.element(resend()).toHaveTextContent("Resend")
     await expect.element(resend()).toBeEnabled()
@@ -44,7 +44,7 @@ describe("VerifyEmail", () => {
       .element(page.getByRole("heading", { name: "Your email is verified." }))
       .toBeVisible()
     await expect
-      .element(page.getByText("jamie@suiss.com is now your suiss Account."))
+      .element(page.getByText("jamie@example.com is now your suiss Account."))
       .toBeVisible()
     await page.getByRole("button", { name: "Start over ›" }).click()
     await expect

@@ -5,7 +5,7 @@ import * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Button } from "@/components/ui/button"
 
-const EMAIL = "jamie@suiss.com"
+const EMAIL = "jamie@example.com"
 
 export function VerifyEmail() {
   const [verified, setVerified] = React.useState(false)

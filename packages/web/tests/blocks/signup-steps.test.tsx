@@ -36,7 +36,7 @@ function rules() {
 async function toPassword() {
   await nameInput().fill("Jamie Rivera")
   await nextButton().click()
-  await emailInput().fill("jamie@suiss.com")
+  await emailInput().fill("jamie@example.com")
   await nextButton().click()
   await expect.element(counter()).toHaveTextContent("Step 3 of 3")
 }
@@ -83,7 +83,7 @@ describe("SignupSteps", () => {
     await expect.element(nextButton()).toBeDisabled()
     await userEvent.keyboard("{Enter}")
     await expect.element(counter()).toHaveTextContent("Step 2 of 3")
-    await emailInput().fill("jamie@suiss.com")
+    await emailInput().fill("jamie@example.com")
     await userEvent.keyboard("{Enter}")
     await expect.element(counter()).toHaveTextContent("Step 3 of 3")
     await expect.element(nextButton("Create account")).toBeDisabled()
@@ -119,7 +119,7 @@ describe("SignupSteps", () => {
     await toPassword()
     await back().click()
     await expect.element(counter()).toHaveTextContent("Step 2 of 3")
-    await expect.element(emailInput()).toHaveValue("jamie@suiss.com")
+    await expect.element(emailInput()).toHaveValue("jamie@example.com")
     await back().click()
     await expect.element(counter()).toHaveTextContent("Step 1 of 3")
     await expect.element(nameInput()).toHaveValue("Jamie Rivera")
@@ -137,7 +137,7 @@ describe("SignupSteps", () => {
     await expect
       .element(
         page.getByText(
-          "Your account is ready. Verify jamie@suiss.com to finish."
+          "Your account is ready. Verify jamie@example.com to finish."
         )
       )
       .toBeVisible()

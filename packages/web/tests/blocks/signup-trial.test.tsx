@@ -55,7 +55,7 @@ describe("SignupTrial", () => {
 
   it("needs a valid email, a good password and the terms", async () => {
     await render(<SignupTrial />)
-    await email().fill("jamie@suiss.com")
+    await email().fill("jamie@example.com")
     await password().fill("Sunrise26")
     await expect.element(start()).toBeDisabled()
     await page.getByText(termsText).click()
@@ -63,7 +63,7 @@ describe("SignupTrial", () => {
     await expect.element(start()).toBeEnabled()
     await email().fill("jamie@suiss")
     await expect.element(start()).toBeDisabled()
-    await email().fill("jamie@suiss.com")
+    await email().fill("jamie@example.com")
     await password().fill("sunrise26")
     await expect.element(start()).toBeDisabled()
     await password().fill("sunrise26!")
@@ -74,7 +74,7 @@ describe("SignupTrial", () => {
 
   it("starts the trial and starts over with the form kept", async () => {
     await render(<SignupTrial />)
-    await email().fill("jamie@suiss.com")
+    await email().fill("jamie@example.com")
     await password().fill("Sunrise26")
     await terms().click()
     await start().click()
@@ -82,13 +82,13 @@ describe("SignupTrial", () => {
       .element(page.getByRole("heading", { name: "Welcome to suiss Music." }))
       .toBeVisible()
     await page.getByRole("button", { name: "Start over ›" }).click()
-    await expect.element(email()).toHaveValue("jamie@suiss.com")
+    await expect.element(email()).toHaveValue("jamie@example.com")
     await expect.element(start()).toBeEnabled()
   })
 
   it("does not submit on enter while invalid", async () => {
     await render(<SignupTrial />)
-    await email().fill("jamie@suiss.com")
+    await email().fill("jamie@example.com")
     await password().fill("Sunrise26")
     await password().click()
     await userEvent.keyboard("{Enter}")
