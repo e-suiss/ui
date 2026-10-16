@@ -467,6 +467,33 @@ describe("Drawer indent", () => {
     await expect.poll(() => indent()?.hasAttribute("data-raised")).toBe(false)
   })
 
+  it("keeps the page raised while another drawer stays open", async () => {
+    function Stack({ second }: { second: boolean }) {
+      return (
+        <DrawerProvider>
+          <DrawerIndentBackground />
+          <DrawerIndent>
+            <Drawer open>
+              <DrawerContent>
+                <DrawerTitle>First</DrawerTitle>
+              </DrawerContent>
+            </Drawer>
+            <Drawer open={second}>
+              <DrawerContent>
+                <DrawerTitle>Second</DrawerTitle>
+              </DrawerContent>
+            </Drawer>
+          </DrawerIndent>
+        </DrawerProvider>
+      )
+    }
+    const screen = await render(<Stack second />)
+    await expect.poll(() => indent()?.hasAttribute("data-raised")).toBe(true)
+    await screen.rerender(<Stack second={false} />)
+    await new Promise((resolve) => setTimeout(resolve, 100))
+    expect(indent()?.hasAttribute("data-raised")).toBe(true)
+  })
+
   it("does not raise the page for a floating drawer", async () => {
     await render(<Indented floating />)
     await open()

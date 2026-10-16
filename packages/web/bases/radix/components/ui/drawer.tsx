@@ -43,7 +43,7 @@ function asChildButtonProps(asChild: boolean, children: React.ReactNode) {
 
 type DrawerIndentContextProps = {
   raised: boolean
-  setRaised: (raised: boolean) => void
+  setRaised: (id: string, raised: boolean) => void
 }
 
 const DrawerIndentContext =
@@ -60,8 +60,23 @@ function useDrawer() {
 }
 
 function DrawerProvider({ children }: DrawerPrimitive.Provider.Props) {
-  const [raised, setRaised] = React.useState(false)
-  const contextValue = React.useMemo(() => ({ raised, setRaised }), [raised])
+  const [raisers, setRaisers] = React.useState<ReadonlySet<string>>(
+    () => new Set()
+  )
+  const setRaised = React.useCallback((id: string, raised: boolean) => {
+    setRaisers((current) => {
+      if (current.has(id) === raised) return current
+      const next = new Set(current)
+      if (raised) next.add(id)
+      else next.delete(id)
+      return next
+    })
+  }, [])
+  const raised = raisers.size > 0
+  const contextValue = React.useMemo(
+    () => ({ raised, setRaised }),
+    [raised, setRaised]
+  )
 
   return (
     <DrawerIndentContext.Provider value={contextValue}>
@@ -125,6 +140,7 @@ function Drawer({
   const hasSnapPoints = snapPoints != null && snapPoints.length > 0
   const indent = React.useContext(DrawerIndentContext)
   const setRaised = indent?.setRaised
+  const raiseId = React.useId()
   const initialSnapPoint = defaultSnapPoint ?? snapPoints?.[0] ?? null
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
   const [uncontrolledSnapPoint, setUncontrolledSnapPoint] =
@@ -140,9 +156,9 @@ function Drawer({
 
   React.useEffect(() => {
     if (!setRaised) return
-    setRaised(raised)
-    return () => setRaised(false)
-  }, [setRaised, raised])
+    setRaised(raiseId, raised)
+    return () => setRaised(raiseId, false)
+  }, [setRaised, raiseId, raised])
 
   const contextValue = React.useMemo(
     () => ({ floating, hasSnapPoints, modal, showSwipeHandle, swipeDirection }),
