@@ -133,8 +133,8 @@ async function DocPage(props: {
         dateModified: modified?.toISOString(),
         isPartOf: { "@id": absolute("/#website") },
         about: { "@id": absolute("/#software") },
-        author: { "@id": absolute("/#organization") },
-        publisher: { "@id": absolute("/#organization") },
+        author: { "@id": site.organization.id },
+        publisher: { "@id": site.organization.id },
         keywords: [page.data.title, kind, ...site.topics]
           .filter(Boolean)
           .join(", "),

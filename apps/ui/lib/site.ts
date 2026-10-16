@@ -4,7 +4,7 @@ import { strings } from "@/lib/strings"
 
 const TRAILING_SLASH = /\/$/
 
-const origin = (
+export const origin = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://suiss.app"
 ).replace(TRAILING_SLASH, "")
 
@@ -21,7 +21,13 @@ export const site = {
   repository,
   npm: "https://www.npmjs.com/package/@esuiss/ui",
   license: "MIT",
-  organization: { name: "suiss", url: "https://github.com/e-suiss" },
+  organization: {
+    name: "suiss",
+    url: origin,
+    id: `${origin}/#organization`,
+    logo: `${origin}/icon`,
+    github: "https://github.com/e-suiss",
+  },
   keywords: [
     "React components",
     "React UI library",

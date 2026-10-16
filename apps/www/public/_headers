@@ -27,11 +27,5 @@
 /ui/live/*
   X-Robots-Tag: noindex
 
-/ui/icon
-  Content-Type: image/png
-
-/ui/apple-icon
-  Content-Type: image/png
-
 /ui/opengraph-image
   Content-Type: image/png

@@ -18,7 +18,10 @@ const { values, positionals } = parseArgs({
   },
 })
 
-const hosts = positionals.length > 0 ? positionals : ["ui.suiss.app"]
+const sitemaps =
+  positionals.length > 0
+    ? positionals
+    : ["https://suiss.app/sitemap.xml", "https://suiss.app/ui/sitemap.xml"]
 const since = values.since
   ? new Date(values.since)
   : new Date(Date.now() - Number(values.days) * DAY)
@@ -72,17 +75,23 @@ async function submit(host, urlList) {
 }
 
 let failed = false
+const byHost = new Map()
 
-for (const host of hosts) {
-  const response = await fetch(`https://${host}/sitemap.xml`)
+for (const sitemap of sitemaps) {
+  const response = await fetch(sitemap)
   if (!response.ok) {
     console.error(
-      `${host}: sitemap returned ${response.status} ${response.statusText}`
+      `${sitemap}: returned ${response.status} ${response.statusText}`
     )
     failed = true
     continue
   }
+  const { host } = new URL(sitemap)
   const urls = changedUrls(await response.text())
+  byHost.set(host, [...(byHost.get(host) ?? []), ...urls])
+}
+
+for (const [host, urls] of byHost) {
   if (urls.length === 0) {
     console.log(`${host}: nothing changed since ${since.toISOString()}`)
     continue
