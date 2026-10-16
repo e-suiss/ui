@@ -174,7 +174,7 @@ class BlocksGalleryTest {
     private fun interact(scene: BlockScene, events: MutableList<String>) {
         when (scene) {
             BlockScene.LoginAccountPassword -> {
-                compose.onNodeWithContentDescription("Email or phone number").performTextInput("jamie@suiss.com")
+                compose.onNodeWithContentDescription("Email or phone number").performTextInput("jamie@example.com")
                 compose.onNodeWithContentDescription("Continue").performClick()
                 settle()
                 compose.onNodeWithContentDescription("Password").performTextInput("hunter2")
@@ -204,11 +204,11 @@ class BlocksGalleryTest {
                 compose.onNodeWithContentDescription("First name").performTextInput("Jamie")
                 compose.onNodeWithContentDescription("Last name").performTextInput("Rivera")
                 compose.onNodeWithContentDescription("Birthday (MM/DD/YYYY)").performTextInput("04/12/1994")
-                compose.onNodeWithContentDescription("name@example.com").performTextInput("jamie@suiss.com")
+                compose.onNodeWithContentDescription("name@example.com").performTextInput("jamie@example.com")
                 compose.onNodeWithContentDescription("Password").performTextInput("Secret12")
                 compose.onNodeWithContentDescription("Confirm password").performTextInput("Secret12")
                 compose.onNodeWithText("Continue").performClick()
-                assertEquals(listOf("signup:Jamie Rivera United States jamie@suiss.com"), events)
+                assertEquals(listOf("signup:Jamie Rivera United States jamie@example.com"), events)
                 settle()
                 compose.onNodeWithText("Your suiss Account is ready.").assertExists()
             }
@@ -216,7 +216,7 @@ class BlocksGalleryTest {
                 compose.onNodeWithContentDescription("Full name").performTextInput("Jamie Rivera")
                 compose.onNodeWithText("Continue").performClick()
                 settle()
-                compose.onNodeWithContentDescription("name@example.com").performTextInput("jamie@suiss.com")
+                compose.onNodeWithContentDescription("name@example.com").performTextInput("jamie@example.com")
                 compose.onNodeWithText("Continue").performClick()
                 settle()
                 compose.onNodeWithContentDescription("Password").performTextInput("secret1")
@@ -224,7 +224,7 @@ class BlocksGalleryTest {
                 compose.onNodeWithText("Step 3 of 3").assertExists()
             }
             BlockScene.SignupTrialFilled -> {
-                compose.onNodeWithContentDescription("suiss Account email").performTextInput("jamie@suiss.com")
+                compose.onNodeWithContentDescription("suiss Account email").performTextInput("jamie@example.com")
                 compose.onNodeWithContentDescription("Create a password").performTextInput("Secret12")
                 compose.onNodeWithText("I have read and agree to the suiss Media Services Terms and Conditions.").performSemanticsAction(SemanticsActions.OnClick)
                 settle()
@@ -253,7 +253,7 @@ class BlocksGalleryTest {
                 compose.onAllNodesWithText("Edit ›")[0].performClick()
                 settle()
                 compose.onNodeWithText("Save").performClick()
-                assertEquals(listOf("save:email=jamie@suiss.com"), events)
+                assertEquals(listOf("save:email=jamie@example.com"), events)
                 compose.onAllNodesWithText("Edit ›").onLast().performClick()
                 settle()
             }
@@ -309,7 +309,7 @@ class BlocksGalleryTest {
         when (scene) {
             BlockScene.LoginAccountPassword -> {
                 compose.onNodeWithContentDescription("Continue").performClick()
-                assertEquals(listOf("login:jamie@suiss.com"), events)
+                assertEquals(listOf("login:jamie@example.com"), events)
             }
             BlockScene.LoginSheetOpen -> {
                 compose.onNodeWithText("Continue with face scan").performClick()

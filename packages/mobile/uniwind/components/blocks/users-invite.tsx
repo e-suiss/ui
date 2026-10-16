@@ -97,13 +97,13 @@ function InviteForm({
   onResend?: (email: string) => void
   onCancelInvite?: (email: string) => void
 }) {
-  const [emails, setEmails] = React.useState(["avery@company.com"])
+  const [emails, setEmails] = React.useState(["avery@example.com"])
   const [draft, setDraft] = React.useState("")
   const [role, setRole] = React.useState("Editor")
   const [welcome, setWelcome] = React.useState(true)
   const [pending, setPending] = React.useState<Invite[]>([
-    { email: "casey@company.com", role: "Support", sent: "2 days ago" },
-    { email: "drew@company.com", role: "Viewer", sent: "5 days ago" },
+    { email: "casey@example.com", role: "Support", sent: "2 days ago" },
+    { email: "drew@example.com", role: "Viewer", sent: "5 days ago" },
   ])
 
   const commit = (value: string) => {
@@ -174,7 +174,7 @@ function InviteForm({
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoComplete="email"
-                placeholder={emails.length ? "Add another" : "name@company.com"}
+                placeholder={emails.length ? "Add another" : "name@example.com"}
                 accessibilityLabelledBy="users-invite-email"
                 className="h-7.5 min-w-35 flex-1 border-0 bg-transparent px-0 text-sm"
               />

@@ -20,7 +20,7 @@ const EMAIL_OPTIONS: {
   label: string
   hint: string
 }[] = [
-  { value: "share", label: "Share My Email", hint: "jamie@suiss.com" },
+  { value: "share", label: "Share My Email", hint: "jamie@example.com" },
   {
     value: "hide",
     label: "Hide My Email",

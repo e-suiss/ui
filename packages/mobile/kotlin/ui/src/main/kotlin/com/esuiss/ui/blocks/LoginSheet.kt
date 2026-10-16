@@ -64,7 +64,7 @@ import kotlinx.coroutines.delay
 private class EmailChoice(val value: String, val label: String, val hint: String)
 
 private val EmailChoices = listOf(
-    EmailChoice("share", "Share My Email", "jamie@suiss.com"),
+    EmailChoice("share", "Share My Email", "jamie@example.com"),
     EmailChoice("hide", "Hide My Email", "A unique address that forwards to you"),
 )
 

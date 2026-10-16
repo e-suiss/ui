@@ -159,7 +159,7 @@ function Security({
 }) {
   const { colors, isDark } = useTheme()
   const [values, setValues] = React.useState<Record<Editable, string>>({
-    email: "jamie@suiss.com",
+    email: "jamie@example.com",
     phone: "+1 (415) 555-0142",
   })
   const [editing, setEditing] = React.useState<Editable | null>(null)
@@ -308,7 +308,7 @@ function SettingsAccount({
                 Jamie Rivera
               </Text>
               <Text style={[fontSize.sm, { color: colors.mutedForeground }]}>
-                jamie@suiss.com
+                jamie@example.com
               </Text>
             </HeaderLargeTitle>
             <View style={{ paddingHorizontal: 16 }}>

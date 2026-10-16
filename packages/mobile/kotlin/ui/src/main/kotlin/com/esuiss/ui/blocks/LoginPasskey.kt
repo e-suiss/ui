@@ -220,7 +220,7 @@ private fun AccountPill(onChange: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GradientAvatar("JR", Modifier.size(28.dp), AvatarSize.Sm)
-        BasicText("jamie@suiss.com", style = Typography.base.copy(color = colors.foreground))
+        BasicText("jamie@example.com", style = Typography.base.copy(color = colors.foreground))
         BasicText(
             "Change ›",
             modifier = Modifier

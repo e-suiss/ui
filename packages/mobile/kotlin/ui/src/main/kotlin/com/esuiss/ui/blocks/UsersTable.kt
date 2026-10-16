@@ -98,12 +98,12 @@ private class TableUser(
 }
 
 private fun tableUsers() = listOf(
-    TableUser("Jamie Rivera", "jamie@company.com", "Admin", "Active", "2 min ago", 250),
-    TableUser("Morgan Lee", "morgan@company.com", "Editor", "Active", "1 hr ago", 30),
-    TableUser("Riley Chen", "riley@company.com", "Support", "Active", "Yesterday", 150),
-    TableUser("Taylor Kim", "taylor@company.com", "Viewer", "Suspended", "3 days ago", 200),
-    TableUser("Avery Brooks", "avery@company.com", "Editor", "Invited", "—", 330),
-    TableUser("Jordan Park", "jordan@company.com", "Support", "Active", "5 hr ago", 100),
+    TableUser("Jamie Rivera", "jamie@example.com", "Admin", "Active", "2 min ago", 250),
+    TableUser("Morgan Lee", "morgan@example.com", "Editor", "Active", "1 hr ago", 30),
+    TableUser("Riley Chen", "riley@example.com", "Support", "Active", "Yesterday", 150),
+    TableUser("Taylor Kim", "taylor@example.com", "Viewer", "Suspended", "3 days ago", 200),
+    TableUser("Avery Brooks", "avery@example.com", "Editor", "Invited", "—", 330),
+    TableUser("Jordan Park", "jordan@example.com", "Support", "Active", "5 hr ago", 100),
 )
 
 private val TableRoles = listOf("Admin", "Editor", "Support", "Viewer")

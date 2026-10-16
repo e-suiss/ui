@@ -137,7 +137,7 @@ function Security({
   onSave?: (field: Editable, value: string) => void
 }) {
   const [values, setValues] = React.useState<Record<Editable, string>>({
-    email: "jamie@suiss.com",
+    email: "jamie@example.com",
     phone: "+1 (415) 555-0142",
   })
   const [editing, setEditing] = React.useState<Editable | null>(null)
@@ -275,7 +275,7 @@ function SettingsAccount({
                 Jamie Rivera
               </Text>
               <Text className="text-sm text-muted-foreground">
-                jamie@suiss.com
+                jamie@example.com
               </Text>
             </HeaderLargeTitle>
             <View className="px-4">

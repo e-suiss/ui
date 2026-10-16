@@ -66,7 +66,7 @@ import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
 import kotlinx.coroutines.delay
 
-private const val DemoEmail = "jamie@suiss.com"
+private const val DemoEmail = "jamie@example.com"
 
 private val RevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
 

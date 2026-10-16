@@ -188,7 +188,7 @@ function LoginPasskey({
             <AvatarFallback className="bg-indigo-500">JR</AvatarFallback>
           </Avatar>
           <Text className="shrink text-base" numberOfLines={1}>
-            jamie@suiss.com
+            jamie@example.com
           </Text>
           <LinkText className="text-sm" onPress={onChangeAccount}>
             Change ›

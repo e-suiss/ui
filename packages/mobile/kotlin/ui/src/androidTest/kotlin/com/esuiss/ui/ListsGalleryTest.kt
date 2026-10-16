@@ -305,7 +305,7 @@ private fun InputGroups() {
             InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { InputGroupText(".com") }
         }
         InputGroup {
-            InputGroupInput("https://esuiss.com/r/1a2b", {}, readOnly = true)
+            InputGroupInput("https://example.com/r/1a2b", {}, readOnly = true)
             InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
                 InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs) {
                     Icon(PhosphorIcons.Regular.Copy, contentDescription = "Copy")
@@ -412,7 +412,7 @@ private fun Scene(scene: ListScene) {
                 title("Settings")
                 section(header = "Account", footer = "Your account is managed by your organization.") {
                     row("Name", trailing = "Evil Rabbit", key = "name", onClick = {})
-                    row("Email", description = "Used for sign in", trailing = "rabbit@esuiss.com", key = "email", onClick = {})
+                    row("Email", description = "Used for sign in", trailing = "rabbit@example.com", key = "email", onClick = {})
                 }
                 section(header = "Storage") {
                     items(Invoices, key = { it.number }, onClick = {}) { invoice ->

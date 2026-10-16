@@ -114,14 +114,14 @@ fun UsersInvite(
     val colors = EsuissTheme.colors
     val header = rememberHeaderState()
     val toasts = rememberToastState()
-    val emails = remember { mutableStateListOf("avery@company.com") }
+    val emails = remember { mutableStateListOf("avery@example.com") }
     var draft by rememberSaveable { mutableStateOf("") }
     var role by rememberSaveable { mutableStateOf("Editor") }
     var welcome by rememberSaveable { mutableStateOf(true) }
     val pending = remember {
         mutableStateListOf(
-            PendingInvite("casey@company.com", "Support", "2 days ago"),
-            PendingInvite("drew@company.com", "Viewer", "5 days ago"),
+            PendingInvite("casey@example.com", "Support", "2 days ago"),
+            PendingInvite("drew@example.com", "Viewer", "5 days ago"),
         )
     }
 
@@ -193,7 +193,7 @@ fun UsersInvite(
                                     }
                                     InviteField(
                                         value = draft,
-                                        placeholder = if (emails.isNotEmpty()) "Add another" else "name@company.com",
+                                        placeholder = if (emails.isNotEmpty()) "Add another" else "name@example.com",
                                         onValueChange = { value ->
                                             if (value.endsWith(",") || value.endsWith(" ")) commit(value) else draft = value
                                         },

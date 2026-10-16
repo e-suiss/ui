@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "@/components/ui/theme"
 
-const EMAIL = "jamie@suiss.com"
+const EMAIL = "jamie@example.com"
 
 const styles = StyleSheet.create({
   center: {

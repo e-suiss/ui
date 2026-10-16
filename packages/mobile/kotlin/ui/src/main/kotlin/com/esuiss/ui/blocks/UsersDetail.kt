@@ -91,12 +91,12 @@ private val DetailRevealEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
 private class DetailUser(val name: String, val email: String, val role: String, val status: String, val hue: Int)
 
 private val DetailUsers = listOf(
-    DetailUser("Jamie Rivera", "jamie@company.com", "Admin", "Active", 250),
-    DetailUser("Morgan Lee", "morgan@company.com", "Editor", "Active", 30),
-    DetailUser("Riley Chen", "riley@company.com", "Support", "Active", 150),
-    DetailUser("Taylor Kim", "taylor@company.com", "Viewer", "Suspended", 200),
-    DetailUser("Avery Brooks", "avery@company.com", "Editor", "Invited", 330),
-    DetailUser("Jordan Park", "jordan@company.com", "Support", "Active", 100),
+    DetailUser("Jamie Rivera", "jamie@example.com", "Admin", "Active", 250),
+    DetailUser("Morgan Lee", "morgan@example.com", "Editor", "Active", 30),
+    DetailUser("Riley Chen", "riley@example.com", "Support", "Active", 150),
+    DetailUser("Taylor Kim", "taylor@example.com", "Viewer", "Suspended", 200),
+    DetailUser("Avery Brooks", "avery@example.com", "Editor", "Invited", 330),
+    DetailUser("Jordan Park", "jordan@example.com", "Support", "Active", 100),
 )
 
 private val DetailRoles = listOf("Admin", "Editor", "Support", "Viewer").map { PickerItemData(it, it) }

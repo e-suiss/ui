@@ -364,7 +364,7 @@ class AdminGalleryTest {
                 compose.onNodeWithText("Morgan Lee").performClick()
                 settle()
                 compose.onNodeWithText("Suspend").performClick()
-                assertEquals(listOf("bulk:morgan@company.com:null:Suspended"), events)
+                assertEquals(listOf("bulk:morgan@example.com:null:Suspended"), events)
             }
             AdminScene.UsersDetailSecurity -> {
                 compose.onNodeWithText("Morgan Lee").performClick()
@@ -372,14 +372,14 @@ class AdminGalleryTest {
                 compose.onNodeWithText("Security").performClick()
                 settle()
                 compose.onNodeWithContentDescription("Require passkey").performClick()
-                assertEquals(listOf("security:morgan@company.com:Require passkey:true"), events)
+                assertEquals(listOf("security:morgan@example.com:Require passkey:true"), events)
             }
             AdminScene.UsersInviteSent -> {
-                compose.onNodeWithContentDescription("Email").performTextInput("sam@company.com,")
+                compose.onNodeWithContentDescription("Email").performTextInput("sam@example.com,")
                 settle()
-                compose.onNodeWithText("sam@company.com").assertExists()
+                compose.onNodeWithText("sam@example.com").assertExists()
                 compose.onNodeWithText("Send Invites").performClick()
-                assertEquals(listOf("invite:avery@company.com,sam@company.com:Editor:true"), events)
+                assertEquals(listOf("invite:avery@example.com,sam@example.com:Editor:true"), events)
                 settle()
                 compose.onNodeWithText("2 invitations sent").assertExists()
             }

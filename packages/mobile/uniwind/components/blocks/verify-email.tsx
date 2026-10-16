@@ -9,7 +9,7 @@ import { Icon } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
 
-const EMAIL = "jamie@suiss.com"
+const EMAIL = "jamie@example.com"
 
 function VerifyEmail({
   onChangeAddress,

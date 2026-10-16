@@ -194,7 +194,7 @@ private fun AccountList(modifier: Modifier, onSelect: (String) -> Unit) {
                 modifier = Modifier.semantics { heading() },
                 style = Typography.xl2.copy(color = colors.foreground, fontWeight = FontWeight.SemiBold),
             )
-            BasicText("jamie@suiss.com", style = Typography.sm.copy(color = colors.mutedForeground))
+            BasicText("jamie@example.com", style = Typography.sm.copy(color = colors.mutedForeground))
         }
         ItemGroup(variant = ItemGroupVariant.Inset) {
             Sections.forEachIndexed { index, section ->
@@ -249,7 +249,7 @@ private fun SectionPage(
 @Composable
 private fun Security(onSave: (String, String) -> Unit) {
     val colors = EsuissTheme.colors
-    val values = remember { mutableStateMapOf("email" to "jamie@suiss.com", "phone" to "+1 (415) 555-0142") }
+    val values = remember { mutableStateMapOf("email" to "jamie@example.com", "phone" to "+1 (415) 555-0142") }
     var editing by rememberSaveable { mutableStateOf<String?>(null) }
     var passkeys by rememberSaveable { mutableStateOf(true) }
     var saved by remember { mutableStateOf<String?>(null) }

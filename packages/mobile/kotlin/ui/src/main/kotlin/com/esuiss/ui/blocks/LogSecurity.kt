@@ -101,7 +101,7 @@ private class SecurityAlert(val severity: AlertSeverity, val title: String, val 
 }
 
 private fun securityAlerts() = listOf(
-    SecurityAlert(AlertSeverity.High, "Sign-in from an unusual location", "morgan@company.com · Lagos, NG · 3:12 AM", PhosphorIcons.Bold.Globe),
+    SecurityAlert(AlertSeverity.High, "Sign-in from an unusual location", "morgan@example.com · Lagos, NG · 3:12 AM", PhosphorIcons.Bold.Globe),
     SecurityAlert(AlertSeverity.Medium, "5 failed sign-in attempts", "85.104.x.x · last 10 minutes", PhosphorIcons.Bold.LockSimple),
     SecurityAlert(AlertSeverity.Medium, "API key expires in 7 days", "Payments integration", PhosphorIcons.Bold.Key),
     SecurityAlert(AlertSeverity.Low, "Two-factor authentication is off", "2 users", PhosphorIcons.Bold.Shield),

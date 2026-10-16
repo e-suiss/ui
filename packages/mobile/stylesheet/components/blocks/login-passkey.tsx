@@ -271,7 +271,7 @@ function LoginPasskey({
             </AvatarFallback>
           </Avatar>
           <Text style={{ ...fontSize.base, flexShrink: 1 }} numberOfLines={1}>
-            jamie@suiss.com
+            jamie@example.com
           </Text>
           <LinkText style={fontSize.sm} onPress={onChangeAccount}>
             Change ›

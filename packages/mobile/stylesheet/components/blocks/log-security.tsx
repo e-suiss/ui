@@ -74,7 +74,7 @@ const INITIAL_ALERTS: Alert[] = [
   {
     severity: "High",
     title: "Sign-in from an unusual location",
-    detail: "morgan@company.com · Lagos, NG · 3:12 AM",
+    detail: "morgan@example.com · Lagos, NG · 3:12 AM",
     icon: GlobeIcon,
     resolved: false,
   },
