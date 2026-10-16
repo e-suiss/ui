@@ -91,6 +91,12 @@ function SidebarProvider({
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      if (
+        target?.isContentEditable ||
+        target?.closest?.("input, textarea, select, [contenteditable]")
+      )
+        return
       if (
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
         (isMacPlatform() ? event.metaKey : event.ctrlKey)
@@ -161,6 +167,7 @@ function Sidebar({
   if (collapsible === "none") {
     return (
       <div
+        dir={dir}
         data-slot="sidebar"
         className={cn(
           "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
@@ -175,13 +182,14 @@ function Sidebar({
 
   if (isMobile) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <Sheet open={openMobile} onOpenChange={setOpenMobile}>
         <SheetContent
           dir={dir}
           data-slot="sidebar"
           data-mobile="true"
           className="bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           side={(side === "left") === (direction === "ltr") ? "left" : "right"}
+          {...props}
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
@@ -195,6 +203,7 @@ function Sidebar({
 
   return (
     <div
+      dir={dir}
       className="group peer hidden text-sidebar-foreground data-[side=right]:order-last md:block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
@@ -604,9 +613,15 @@ function SidebarMenuSkeleton({
 }: React.ComponentProps<"div"> & {
   showIcon?: boolean
 }) {
-  const [width] = React.useState(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
-  })
+  const id = React.useId()
+  const width = `${
+    50 +
+    (Array.from(id).reduce(
+      (hash, character) => (hash * 31 + character.charCodeAt(0)) % 9973,
+      7
+    ) %
+      40)
+  }%`
 
   return (
     <div

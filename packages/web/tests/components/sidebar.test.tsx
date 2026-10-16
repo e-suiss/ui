@@ -1,4 +1,6 @@
 import * as React from "react"
+import { hydrateRoot } from "react-dom/client"
+import { renderToString } from "react-dom/server"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { page, userEvent } from "vitest/browser"
 import { render } from "vitest-browser-react"
@@ -249,6 +251,25 @@ describe("Sidebar on desktop", () => {
     expect(sidebar().dataset.state).toBe("expanded")
   })
 
+  it("leaves the shortcut to text fields", async () => {
+    await render(
+      <>
+        <input aria-label="Notes" />
+        <Shell />
+      </>
+    )
+    page.getByRole("textbox", { name: "Notes" }).element().focus()
+    await shortcut()
+    await wait(100)
+    expect(sidebar().dataset.state).toBe("expanded")
+  })
+
+  it("passes the direction and attributes to the sidebar", async () => {
+    await render(<Shell dir="rtl" aria-label="Main" />)
+    expect(sidebar().getAttribute("dir")).toBe("rtl")
+    expect(container().getAttribute("aria-label")).toBe("Main")
+  })
+
   it("toggles from the rail", async () => {
     await render(<Shell />)
     await expect.element(rail()).toHaveAttribute("aria-label", "Toggle Sidebar")
@@ -453,6 +474,32 @@ describe("Sidebar menu items", () => {
       .toBe("1")
   })
 
+  it("hydrates skeleton rows without a mismatch", async () => {
+    const tree = (
+      <SidebarProvider>
+        <Sidebar collapsible="none">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuSkeleton />
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const host = document.createElement("div")
+    host.innerHTML = renderToString(tree)
+    document.body.append(host)
+    const onRecoverableError = vi.fn()
+    const consoleError = vi.spyOn(console, "error")
+    const root = hydrateRoot(host, tree, { onRecoverableError })
+    await wait(100)
+    expect(onRecoverableError).not.toHaveBeenCalled()
+    expect(consoleError).not.toHaveBeenCalled()
+    consoleError.mockRestore()
+    root.unmount()
+    host.remove()
+  })
+
   it("draws skeleton rows between half and nine tenths wide", async () => {
     await render(
       <SidebarProvider>
@@ -510,6 +557,20 @@ describe("Sidebar on mobile", () => {
       .poll(() => sheet.element().getBoundingClientRect().left)
       .toBe(8)
     expect(sheet.element().getAttribute("data-mobile")).toBe("true")
+  })
+
+  it("passes attributes to the sheet", async () => {
+    await render(<Shell aria-label="Main" />)
+    await expect.poll(state).toContain("mobile")
+    await trigger().click()
+    await expect
+      .element(page.getByRole("dialog"))
+      .toHaveAttribute("data-slot", "sidebar")
+    expect(
+      document
+        .querySelector("[data-slot=sidebar][data-mobile]")
+        ?.getAttribute("aria-label")
+    ).toBe("Main")
   })
 
   it("closes the sheet with Escape and returns focus to the trigger", async () => {

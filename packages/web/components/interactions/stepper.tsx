@@ -28,7 +28,9 @@ const MIN_TICK = 35
 const ACCELERATION = 0.86
 
 function decimals(number: number) {
-  const [mantissa, exponent = "0"] = String(number).toLowerCase().split("e")
+  const [mantissa = "", exponent = "0"] = String(number)
+    .toLowerCase()
+    .split("e")
   const fraction = mantissa.split(".")[1]?.length ?? 0
   return Math.max(0, fraction - Number(exponent))
 }

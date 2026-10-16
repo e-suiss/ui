@@ -146,6 +146,7 @@ export default defineConfig({
         plugins: [tailwindcss()],
         optimizeDeps: {
           entries: ["tests/{hooks,components,blocks}/**/*.test.tsx"],
+          include: ["react-dom/server"],
         },
         test: {
           name: "browser",
