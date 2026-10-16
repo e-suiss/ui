@@ -26,14 +26,14 @@ pnpm --filter @esuiss/mobile start                        # the React Native Sto
 Layout:
 
 - `apps/ui`: the ui.suiss.app site, with a React, React Native, SwiftUI and Compose tab on every page. Every page is one hand-written MDX file in `content/docs`, and each section's sidebar order is its `meta.json`.
-- `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `styles/theme.css` holds the theme transition styles `add theme` appends to the user's stylesheet, `examples/` has one example per file that the site previews and Vitest renders, `tests/` has the browser tests, and `registry.json` lists everything.
+- `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `styles/theme.css` holds the theme transition styles `add theme` appends to the user's stylesheet, `examples/` has one example per file that the site previews and Vitest renders, `tests/` has the browser tests, `bases/` holds the components for the other primitive bases, and `registry/registry.json` with one `registry/<base>/registry.json` per other base lists everything.
 - `packages/mobile`: the mobile library: React Native components for Uniwind, NativeWind and StyleSheet, the SwiftUI and Jetpack Compose libraries with their catalog apps, stories and its own `registry.json`. See `packages/mobile/README.md`.
 - `packages/tokens`: the design tokens the mobile themes are generated from.
 - `packages/cli`: the `@esuiss/ui` command.
 
 ## Adding a component
 
-1. Write the component in `packages/web/components/ui/` (or `patterns/`, `interactions/`, `charts/`, `blocks/`). The pre-commit hook adds it to `packages/web/registry.json`, which is what the CLI installs from.
+1. Write the component in `packages/web/components/ui/` (or `patterns/`, `interactions/`, `charts/`, `blocks/`). The pre-commit hook adds it to `packages/web/registry/registry.json` and the registry of every other base in `packages/web/registry/<base>/`, which are what the CLI installs from.
 2. Add its examples to `packages/web/examples/`, one file per example with a single default-exported component: `button-demo.tsx` for the first one, then names such as `button-variants.tsx` or `dialog-without-close-button.tsx`. Write them as plain React that users can copy, and leave overlays closed so they don't open on page load. Charts and blocks are previewed directly and need no example file.
 3. `tests/examples/render.test.tsx` renders every example file. Put interaction tests in `packages/web/tests/examples/<component>.test.tsx`: render the example with `renderExample` and assert on it. The accessibility, visual, RTL, mobile, responsive, motion, text size and long text checks run after every test in `tests/examples` (`pnpm --filter @esuiss/web test:a11y` and the other `test:*` scripts).
 4. Add the page to `apps/ui/content/docs/<section>/<name>.mdx` and its name to that section's `meta.json`. The page uses:
@@ -84,26 +84,45 @@ Some behaviour of the registry CLI (version pinned in `scripts/compat.mjs`) is n
 
 The prefix and the right-to-left transforms only reach class strings in `className`, `cva()` and `cn()` (and, for right-to-left, the `className` of `mergeProps()`). Keep component classes there, use a ternary rather than `&&` inside a `classNames` prop, and leave out `compoundVariants`, which the prefix transform skips.
 
-GitHub Actions runs the matrix in `.github/workflows/compat.yml` on pushes to `main` and pull requests that change `packages/web`, `packages/cli`, `scripts/compat.mjs` or `apps/ui/next.config.ts`. `node scripts/compat.mjs --matrix` prints its jobs: the default options, Vite, right-to-left and the prefix for every base in `PRIMITIVES`, and each other option once on the first base. A new base added to `PRIMITIVES` gets its jobs without changing the workflow.
+GitHub Actions runs the matrix in `.github/workflows/compat.yml` on pushes to `main` and pull requests that change `packages/web`, `packages/cli`, `scripts/compat.mjs`, `apps/ui/next.config.ts` or the lockfile, and every Monday. The Monday run also runs `pnpm compat:rn`, which installs the mobile items in a new Expo app for each styling. `node scripts/compat.mjs --matrix` prints its jobs: the default options, Vite, right-to-left and the prefix for every base in `PRIMITIVES`, and each other option once on the first base. A new base added to `PRIMITIVES` gets its jobs without changing the workflow.
 
 ## Git hooks
 
 Git hooks are installed by `pnpm install`:
 
-- pre-commit: Biome fixes and checks the staged files (warnings fail too). Changed web components regenerate `packages/web/registry.json`; changed mobile components, the Uniwind stylesheet or the tokens regenerate the NativeWind files, the themes and `packages/mobile/registry.json`.
+- pre-commit: Biome fixes and checks the staged files (warnings fail too). Changed web components, hooks, styles, bases or docs pages regenerate the web registries in `packages/web/registry/`; changed mobile components or primitives, the Uniwind stylesheet, the tokens or docs pages regenerate the NativeWind files, the themes, `packages/mobile/registry.json` and the registries in `packages/mobile/registry/`.
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
-- pre-push: Biome, Knip, typecheck, the registry checks and the tests.
+- pre-push: Biome, the registry checks and the tests in parallel with Knip and then typecheck, which run one after the other because both generate the mobile Storybook files.
+
+GitHub Actions runs the same checks in `.github/workflows/ci.yml` on every push to `main` and every pull request, and builds the SwiftUI library (and runs its tests on an iOS simulator) and the Compose library when `packages/mobile/swiftui`, `packages/mobile/kotlin` or the tokens change.
 
 ## Deploy
 
-Every push to `main` that changes the site builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui`, tagged `latest` and with the short commit SHA. The server only pulls and runs it:
+Every push to `main` that changes the site runs `.github/workflows/site.yml`:
+
+1. It builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui`, tagged `latest` and `sha-<short commit>`.
+2. It writes the image as `ghcr.io/e-suiss/ui:sha-<short commit>@<digest>` to `kubernetes/docs/app/ui.yaml` in [e-suiss/infra](https://github.com/e-suiss/infra) and commits it. Argo CD rolls the new image out to the cluster.
+3. It waits until `https://ui.suiss.app` answers with the new commit in the `X-Build` header ten times in a row, three seconds apart, so that every replica serves the new build.
+4. It purges the Cloudflare cache, submits the docs pages changed by the push to IndexNow, and purges the cache again a minute later.
+
+The workflow needs these repository secrets:
+
+| Secret | Used for |
+| --- | --- |
+| `INFRA_DEPLOY_KEY` | a deploy key with write access to e-suiss/infra |
+| `CLOUDFLARE_API_TOKEN` | a Cloudflare API token that can purge the cache of the zone |
+| `CLOUDFLARE_ZONE_ID` | the Cloudflare zone of ui.suiss.app |
+
+Run it by hand from the Actions tab (`main` only). To purge the cache or notify IndexNow from your machine, put `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` in `.env.deploy` and run:
 
 ```bash
-docker pull ghcr.io/e-suiss/ui:latest
-docker run -d -p 3000:3000 ghcr.io/e-suiss/ui:latest
+pnpm purge-cache
+pnpm indexnow                        # pages changed in the last 2 days
+pnpm indexnow --since=2026-01-01     # pages changed since a date
+pnpm indexnow --all                  # every page in the sitemap
 ```
 
-To build it locally, run `docker build -f apps/Dockerfile .` from the repository root.
+To build the image locally, run `docker build -f apps/Dockerfile .` from the repository root.
 
 ## Release
 
@@ -113,4 +132,12 @@ Component, hook, and theme color changes, on the web and on mobile, reach users 
 pnpm release patch   # or minor, major, or an exact version like 1.0.0
 ```
 
-This bumps the CLI version, commits, tags `vX.Y.Z`, and pushes. GitHub Actions then publishes it to npm, publishes `packages/mobile/swiftui` and `packages/mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.
+This bumps the CLI version, commits, tags that commit `vX.Y.Z`, and pushes both. GitHub Actions then publishes it to npm, publishes `packages/mobile/swiftui` and `packages/mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.
+
+Publishing the two repositories needs the `SWIFT_MIRROR_KEY` and `KOTLIN_MIRROR_KEY` secrets: the private keys of deploy keys with write access to e-suiss/uim-swift and e-suiss/uim-kotlin. The release fails before it publishes anything when one of them is missing.
+
+Every step can be run again: a version already on npm, a tag already in a mirror repository and an existing GitHub release are skipped. To finish a failed release without a new tag, open Actions > Release > Run workflow and enter the tag, e.g. `v1.2.3`, or run:
+
+```bash
+gh workflow run release.yml -f tag=v1.2.3
+```
