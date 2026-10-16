@@ -10,8 +10,8 @@ This repository is a pnpm workspace. One install at the root sets up everything:
 
 ```bash
 pnpm install
-pnpm dev             # the suiss.app/ui site on :3000
-pnpm build           # build the site
+pnpm dev             # suiss.app on :3001 and suiss.app/ui on :3000/ui
+pnpm build           # build both sites into dist/
 pnpm typecheck       # every package and site
 pnpm test            # web component tests and CLI tests
 pnpm check           # Biome on the whole repository: libraries, CLI and site
@@ -25,6 +25,7 @@ pnpm --filter @esuiss/mobile start                        # the React Native Sto
 
 Layout:
 
+- `apps/www`: the suiss.app site in English and Turkish, with every suiss product.
 - `apps/ui`: the suiss.app/ui site, with a React, React Native, SwiftUI and Compose tab on every page. Every page is one hand-written MDX file in `content/docs`, and each section's sidebar order is its `meta.json`.
 - `packages/web`: the web library. `components/` and `hooks/` are the files `add` copies into projects, `styles/globals.css` is the theme `init` writes, `styles/theme.css` holds the theme transition styles `add theme` appends to the user's stylesheet, `examples/` has one example per file that the site previews and Vitest renders, `tests/` has the browser tests, `bases/` holds the components for the other primitive bases, and `registry/registry.json` with one `registry/<base>/registry.json` per other base lists everything.
 - `packages/mobile`: the mobile library: React Native components for Uniwind, NativeWind and StyleSheet, the SwiftUI and Jetpack Compose libraries with their catalog apps, stories and its own `registry.json`. See `packages/mobile/README.md`.
@@ -98,31 +99,27 @@ GitHub Actions runs the same checks in `.github/workflows/ci.yml` on every push 
 
 ## Deploy
 
-Every push to `main` that changes the site runs `.github/workflows/site.yml`:
+suiss.app is a static site on Cloudflare. `apps/www` and `apps/ui` are exported with `output: "export"`, and `pnpm build` merges them into `dist/`: the site at the root and the docs under `dist/ui`. One Worker serves the whole domain from that folder (`wrangler.jsonc`). Its code, `worker.js`, runs only for `/ui/r/*` and maps shadcn style names such as `new-york` or `radix-nova` to the matching registry. Headers and redirects live in `apps/www/public/_headers` and `apps/www/public/_redirects`.
 
-1. It builds the `apps/Dockerfile` image for `linux/amd64` and `linux/arm64` and pushes it to `ghcr.io/e-suiss/ui`, tagged `latest` and `sha-<short commit>`.
-2. It writes the image as `ghcr.io/e-suiss/ui:sha-<short commit>@<digest>` to `kubernetes/docs/app/ui.yaml` in [e-suiss/infra](https://github.com/e-suiss/infra) and commits it. Argo CD rolls the new image out to the cluster.
-3. It waits until `https://suiss.app/ui` answers with the new commit in the `X-Build` header ten times in a row, three seconds apart, so that every replica serves the new build.
-4. It purges the Cloudflare cache, submits the docs pages changed by the push to IndexNow, and purges the cache again a minute later.
+Every push to `main` that changes the site runs `.github/workflows/site.yml`. It builds both sites, runs `pnpm run deploy` and submits the docs pages changed by the push to IndexNow.
 
 The workflow needs these repository secrets:
 
 | Secret | Used for |
 | --- | --- |
-| `INFRA_DEPLOY_KEY` | a deploy key with write access to e-suiss/infra |
-| `CLOUDFLARE_API_TOKEN` | a Cloudflare API token that can purge the cache of the zone |
-| `CLOUDFLARE_ZONE_ID` | the Cloudflare zone of ui.suiss.app |
+| `CLOUDFLARE_API_TOKEN` | a Cloudflare API token that can edit Workers |
+| `CLOUDFLARE_ACCOUNT_ID` | the Cloudflare account that owns the suiss.app zone |
 
-Run it by hand from the Actions tab (`main` only). To purge the cache or notify IndexNow from your machine, put `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` in `.env.deploy` and run:
+Run it by hand from the Actions tab (`main` only). To deploy or notify IndexNow from your machine:
 
 ```bash
-pnpm purge-cache
+pnpm build && pnpm run deploy        # needs wrangler login or CLOUDFLARE_API_TOKEN
 pnpm indexnow                        # pages changed in the last 2 days
 pnpm indexnow --since=2026-01-01     # pages changed since a date
-pnpm indexnow --all                  # every page in the sitemap
+pnpm indexnow --all                  # every page in the sitemaps
 ```
 
-To build the image locally, run `docker build -f apps/Dockerfile .` from the repository root.
+`wrangler dev` cannot watch the full `dist/` folder on macOS (more than 10,000 files fail with `spawn EBADF`); to try the Worker locally, serve a copy without `dist/ui/source`.
 
 ## Release
 
