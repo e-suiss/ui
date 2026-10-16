@@ -202,7 +202,10 @@ export const Icon = () => (
       const fetch = serveRegistry(radix)
       const cwd = viteProject({ "components.json": { style: "radix-nova" } })
       await add(["dialog"], { cwd })
-      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(RADIX_INDEX))
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching(RADIX_INDEX),
+        expect.anything()
+      )
       expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
         radix["bases/radix/components/ui/dialog.tsx"]
       )
@@ -260,7 +263,10 @@ export const Icon = () => (
       const fetch = serveRegistry(aria)
       const cwd = viteProject({ "components.json": { style: "aria-nova" } })
       await add(["dialog"], { cwd })
-      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(ARIA_INDEX))
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching(ARIA_INDEX),
+        expect.anything()
+      )
       expect(read(cwd, "src/components/ui/dialog.tsx")).toBe(
         aria["bases/aria/components/ui/dialog.tsx"]
       )
@@ -453,5 +459,50 @@ export const Icon = () => (
       "Refusing to write ../../escape.tsx outside the project."
     )
     expect(existsSync(path.join(cwd, "escape.tsx"))).toBe(false)
+  })
+
+  it("shows changed dependency files in the diff that --overwrite replaces", async () => {
+    const cwd = viteProject({
+      "src/components/ui/button.tsx": "export function Button() { edited }\n",
+    })
+    await add(["dialog"], { cwd, diff: true })
+    expect(output()).toContain("- export function Button() { edited }")
+    expect(read(cwd, "src/components/ui/button.tsx")).toContain("edited")
+
+    await add(["dialog"], { cwd, overwrite: true })
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+      files["components/ui/button.tsx"]
+    )
+  })
+
+  it("does not open the pick list with --yes", async () => {
+    const cwd = viteProject()
+    vi.mocked(isInteractive).mockReturnValue(true)
+    await expect(add([], { cwd, yes: true })).rejects.toThrow(
+      "Name at least one component"
+    )
+    expect(choose).not.toHaveBeenCalled()
+  })
+
+  it("does not add styles the stylesheet already has in another format", async () => {
+    const current =
+      "@import 'tailwindcss';\n@keyframes   theme-reveal{to{opacity:0.5}}\nhtml::view-transition-old(root){animation:none}\n"
+    const cwd = viteProject({ "src/index.css": current })
+    await add(["theme"], { cwd })
+    expect(read(cwd, "src/index.css")).toBe(current)
+  })
+
+  it("explains a dependency that is missing from the registry", async () => {
+    const cwd = viteProject()
+    serveRegistry({
+      ...files,
+      "registry/registry.json": {
+        ...registry,
+        items: [ui("menu", { registryDependencies: ["@esuiss/popup"] })],
+      },
+    })
+    await expect(add(["menu"], { cwd })).rejects.toThrow(
+      "menu needs popup, which is not in the registry."
+    )
   })
 })

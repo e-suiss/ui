@@ -5,7 +5,7 @@ import {
 } from "../shared/registry.mjs"
 
 export const { fetchText, fetchRegistry } = createRegistry({
-  base: "https://raw.githubusercontent.com/e-suiss/ui/main/packages/mobile",
+  base: "https://raw.githubusercontent.com/e-suiss/ui/{ref}/packages/mobile",
   env: "ESUISS_MOBILE_REGISTRY",
 })
 

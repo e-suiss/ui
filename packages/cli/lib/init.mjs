@@ -1,14 +1,16 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
 import { installItems } from "./add.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
 import {
+  configuredStylesheet,
   detectBase,
   detectProject,
   findAliasRoot,
   findStylesheet,
   install,
+  saveBase,
   VITE_STYLESHEET,
 } from "./project.mjs"
 import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
@@ -71,7 +73,17 @@ const SEMICOLON_IMPORT = /from\s+["'][^"']+["'];/
 const NEXT_FONT_IMPORT =
   /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
 
+const VITE_ENTRIES = [
+  "src/main.tsx",
+  "src/main.jsx",
+  "src/main.ts",
+  "src/main.js",
+]
+const REGEXP_SPECIAL = /[.*+?^${}()|[\]\\]/g
+
 function stylesheetPath(project) {
+  const configured = configuredStylesheet(project.cwd)
+  if (configured) return configured
   if (project.framework === "vite")
     return path.join(project.cwd, VITE_STYLESHEET)
   const existing = findStylesheet(project)
@@ -253,6 +265,31 @@ function configureNext(project) {
   return []
 }
 
+function importsStylesheet(project, stylesheet) {
+  const name = path.basename(stylesheet).replace(REGEXP_SPECIAL, "\\$&")
+  const statement = new RegExp(`import\\s+["'][^"']*\\b${name}["']`)
+  const entries = project.framework === "next" ? NEXT_LAYOUTS : VITE_ENTRIES
+  return entries
+    .map((file) => path.join(project.cwd, file))
+    .some(
+      (file) => existsSync(file) && statement.test(readFileSync(file, "utf8"))
+    )
+}
+
+function rememberBase(project, base, stylesheet) {
+  const saved = saveBase(project, base, stylesheet)
+  if (!saved) return []
+  if (saved.invalid) {
+    return [
+      `Could not read ${relative(project, saved.file)}. Set its style to ${base}-nova so add keeps using the ${base} base.`,
+    ]
+  }
+  step(
+    `${saved.created ? "Created" : "Updated"} ${relative(project, saved.file)} with the ${saved.style} style`
+  )
+  return []
+}
+
 export async function init(options) {
   const project = detectProject(options.cwd)
   assertTailwindVersion(project)
@@ -299,9 +336,12 @@ export async function init(options) {
       ? configureVite(project)
       : [...configureNext(project), ...configureNextFont(project)]
 
+  mkdirSync(path.dirname(stylesheet), { recursive: true })
   writeFileSync(stylesheet, css)
   step(`Wrote ${relative(project, stylesheet)}`)
-  if (!stylesheetExists) {
+  if (options.base)
+    manual.push(...rememberBase(project, options.base, stylesheet))
+  if (!importsStylesheet(project, stylesheet)) {
     manual.push(
       `Import ${relative(project, stylesheet)} in ${project.framework === "next" ? "your root layout" : "src/main.tsx"}.`
     )
@@ -311,7 +351,8 @@ export async function init(options) {
     project,
     findAliasRoot(project.cwd) ?? sourceRoot,
     registry,
-    ["button"]
+    ["button"],
+    { overwrite: options.overwrite }
   )
 
   for (const message of manual) note(message)

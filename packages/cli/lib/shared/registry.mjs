@@ -1,30 +1,64 @@
 import { CliError } from "../output.mjs"
+import { version } from "./package.mjs"
 
 const TRAILING_SLASH = /\/$/
+const REF = "{ref}"
+const TIMEOUT = 30_000
+
+const DEFAULT_BRANCH = "main"
+
+function registryRoots(base, override) {
+  const roots = override
+    ? [override]
+    : [base.replace(REF, `v${version}`), base.replace(REF, DEFAULT_BRANCH)]
+  return roots.map((root) => root.replace(TRAILING_SLASH, ""))
+}
+
+async function request(url, file) {
+  try {
+    return await fetch(url, { signal: AbortSignal.timeout(TIMEOUT) })
+  } catch (error) {
+    if (error?.name === "TimeoutError") {
+      throw new CliError(`Timed out downloading ${file} from the registry.`)
+    }
+    throw new CliError(`Could not reach the registry to download ${file}.`)
+  }
+}
 
 export function createRegistry({ base, env, index = "registry.json" }) {
-  const root = (process.env[env] ?? base).replace(TRAILING_SLASH, "")
+  const roots = registryRoots(base, process.env[env])
+  let first = 0
 
   async function fetchText(file) {
-    let response
+    for (let current = first; ; current++) {
+      const response = await request(`${roots[current]}/${file}`, file)
+      if (response.status === 404 && current < roots.length - 1) {
+        first = Math.max(first, current + 1)
+        continue
+      }
+      if (!response.ok) {
+        throw new CliError(
+          `Could not download ${file} (HTTP ${response.status}).`
+        )
+      }
+      return response.text()
+    }
+  }
+
+  async function fetchJson(file) {
+    const text = await fetchText(file)
     try {
-      response = await fetch(`${root}/${file}`)
+      return JSON.parse(text)
     } catch {
-      throw new CliError(`Could not reach the registry to download ${file}.`)
+      throw new CliError(`The registry file ${file} is not valid JSON.`)
     }
-    if (!response.ok) {
-      throw new CliError(
-        `Could not download ${file} (HTTP ${response.status}).`
-      )
-    }
-    return response.text()
   }
 
-  async function fetchRegistry() {
-    return JSON.parse(await fetchText(index))
+  function fetchRegistry() {
+    return fetchJson(index)
   }
 
-  return { fetchText, fetchRegistry }
+  return { fetchText, fetchJson, fetchRegistry }
 }
 
 export function resolveItems(registry, names) {
@@ -32,13 +66,20 @@ export function resolveItems(registry, names) {
 
   const ordered = []
   const seen = new Set()
-  const visit = (name) => {
+  const visit = (name, parent) => {
     if (seen.has(name)) return
     seen.add(name)
     const item = byName.get(name)
-    for (const required of item.requires) visit(required)
+    if (!item) {
+      throw new CliError(
+        parent
+          ? `${parent} needs ${name}, which is not in the registry.`
+          : `Unknown item: ${name}.`
+      )
+    }
+    for (const required of item.requires ?? []) visit(required, name)
     ordered.push(item)
   }
-  names.forEach(visit)
+  for (const name of names) visit(name)
   return ordered
 }

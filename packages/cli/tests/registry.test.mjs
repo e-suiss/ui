@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { CliError } from "../lib/output.mjs"
@@ -6,7 +7,6 @@ import {
   fetchStylesheet,
   fetchText,
   resolveItems,
-  scopeOf,
   toCss,
 } from "../lib/registry.mjs"
 import { serveRegistry } from "./helpers.mjs"
@@ -18,17 +18,7 @@ const item = (name, requires = []) => ({ name, requires })
 
 afterEach(() => {
   vi.unstubAllGlobals()
-})
-
-describe("scopeOf", () => {
-  it("returns the scope of a fetched item", () => {
-    expect(scopeOf({ scope: "chart" })).toBe("chart")
-    expect(scopeOf({ scope: "block" })).toBe("block")
-  })
-
-  it("falls back to ui for items without a scope", () => {
-    expect(scopeOf({})).toBe("ui")
-  })
+  vi.unstubAllEnvs()
 })
 
 describe("resolveItems", () => {
@@ -159,7 +149,10 @@ describe("fetchRegistry for the second base", () => {
         sources: ["bases/radix/components/ui/dialog.tsx"],
       },
     ])
-    expect(fetch).toHaveBeenCalledWith(expect.stringMatching(RADIX_INDEX))
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringMatching(RADIX_INDEX),
+      expect.anything()
+    )
   })
 })
 
@@ -194,7 +187,10 @@ describe("fetchRegistry for the third base", () => {
         sources: ["bases/aria/components/ui/dialog.tsx"],
       },
     ])
-    expect(fetch).toHaveBeenCalledWith(expect.stringMatching(ARIA_INDEX))
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringMatching(ARIA_INDEX),
+      expect.anything()
+    )
   })
 })
 
@@ -216,5 +212,92 @@ describe("toCss", () => {
       '@import "tw-animate-css";',
       "@keyframes spin {\n  to {\n    rotate: 1turn;\n  }\n}",
     ])
+  })
+})
+
+describe("registry version", () => {
+  const { version } = JSON.parse(
+    readFileSync(new URL("../package.json", import.meta.url), "utf8")
+  )
+
+  function freshRegistry() {
+    vi.resetModules()
+    return import("../lib/registry.mjs")
+  }
+
+  it("downloads from the tag of the CLI version", async () => {
+    const fetch = serveRegistry({ "components/ui/button.tsx": "export {}" })
+    const { fetchText: fetchFromTag } = await freshRegistry()
+    await expect(fetchFromTag("components/ui/button.tsx")).resolves.toBe(
+      "export {}"
+    )
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch.mock.calls[0][0]).toBe(
+      `https://raw.githubusercontent.com/e-suiss/ui/v${version}/packages/web/components/ui/button.tsx`
+    )
+  })
+
+  it("falls back to main when the tag has no such file", async () => {
+    const fetch = vi.fn((url) =>
+      Promise.resolve(
+        url.includes(`/v${version}/`)
+          ? new Response("missing", { status: 404 })
+          : new Response(`from ${url}`, { status: 200 })
+      )
+    )
+    vi.stubGlobal("fetch", fetch)
+    const { fetchText: fetchFromTag } = await freshRegistry()
+    await expect(fetchFromTag("a.tsx")).resolves.toBe(
+      "from https://raw.githubusercontent.com/e-suiss/ui/main/packages/web/a.tsx"
+    )
+    await fetchFromTag("b.tsx")
+    expect(fetch.mock.calls.map(([url]) => url)).toEqual([
+      `https://raw.githubusercontent.com/e-suiss/ui/v${version}/packages/web/a.tsx`,
+      "https://raw.githubusercontent.com/e-suiss/ui/main/packages/web/a.tsx",
+      "https://raw.githubusercontent.com/e-suiss/ui/main/packages/web/b.tsx",
+    ])
+  })
+
+  it("uses only the registry set in ESUISS_REGISTRY", async () => {
+    vi.stubEnv("ESUISS_REGISTRY", "http://localhost:4000/web/")
+    const fetch = serveRegistry({})
+    const { fetchText: fetchFromOverride } = await freshRegistry()
+    await expect(fetchFromOverride("a.tsx")).rejects.toThrow(
+      "Could not download a.tsx (HTTP 404)."
+    )
+    expect(fetch.mock.calls.map(([url]) => url)).toEqual([
+      "http://localhost:4000/web/a.tsx",
+    ])
+  })
+})
+
+describe("registry errors", () => {
+  it("reports a download that times out", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() =>
+        Promise.reject(
+          new DOMException("The operation timed out.", "TimeoutError")
+        )
+      )
+    )
+    await expect(fetchText("registry.json")).rejects.toThrow(
+      new CliError("Timed out downloading registry.json from the registry.")
+    )
+  })
+
+  it("reports an index that is not JSON", async () => {
+    serveRegistry({ "registry/registry.json": "<html>" })
+    await expect(fetchRegistry()).rejects.toThrow(
+      new CliError(
+        "The registry file registry/registry.json is not valid JSON."
+      )
+    )
+  })
+
+  it("names a required item that is missing", () => {
+    expect(() =>
+      resolveItems({ items: [item("menu", ["popup"])] }, ["menu"])
+    ).toThrow(new CliError("menu needs popup, which is not in the registry."))
   })
 })

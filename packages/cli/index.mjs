@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from "node:fs"
+import { existsSync } from "node:fs"
 import path from "node:path"
 
 import { add } from "./lib/add.mjs"
@@ -11,48 +11,91 @@ import {
   detectNativePlatforms,
   initNative,
 } from "./lib/mobile/native.mjs"
-import { CliError, choose, color, step } from "./lib/output.mjs"
+import { CliError, color, step } from "./lib/output.mjs"
+import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
+import { name, version } from "./lib/shared/package.mjs"
+import { readJson } from "./lib/shared/project.mjs"
 
-const { name, version } = JSON.parse(
-  readFileSync(new URL("./package.json", import.meta.url), "utf8")
-)
+const OPTIONS = {
+  overwrite:
+    "  -o, --overwrite  replace local files that differ from the registry",
+  diff: "  --diff           show how local files differ from the registry",
+  all: `  -a, --all        add every component, or every pattern, interaction,
+                   chart or block after "patterns", "interactions",
+                   "charts" or "blocks"; theme is only added by name`,
+  yes: "  -y, --yes        skip confirmation prompts and the pick list",
+  base: `  -b, --base <base|radix|aria>
+                   the primitive base of React components (read from the
+                   style in components.json when omitted, otherwise base);
+                   init saves it as the style in components.json`,
+  platform: `  -p, --platform <web|rn|swift|kotlin>
+                   web, React Native, SwiftUI or Jetpack Compose sources
+                   (detected from the project when omitted)`,
+  styling: `  -s, --styling <uniwind|nativewind|stylesheet>
+                   React Native styling (detected from the project when omitted)`,
+  path: `  --path <dir>     where SwiftUI or Compose files go, relative to --cwd
+                   (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)`,
+  cwd: "  -c, --cwd <dir>  project directory (defaults to the current directory)",
+  help: "  -h, --help       show this help",
+  version: "  -v, --version    show the version",
+}
 
-const usage = `${name} ${version}
+const SUPPORTED = `Supports Next.js and React (Vite) projects with TypeScript and Tailwind CSS v4,
+React Native and Expo projects with TypeScript, Xcode projects and Swift
+packages, and Android Gradle modules.`
 
-Usage:
-  npx ${name} init [options]              set up the theme and the button
+function optionLines(...keys) {
+  return keys.map((key) => OPTIONS[key]).join("\n")
+}
+
+const INIT_LINES = `
+  npx ${name} init [options]              set up the theme and the button`
+
+const ADD_LINES = `
   npx ${name} add                         pick what to add from a list
   npx ${name} add <component...> [options] add components, e.g. add button sidebar
   npx ${name} add patterns <pattern...>    add patterns, e.g. add patterns date-picker
   npx ${name} add interactions <name...>   add interactions, e.g. add interactions swipe-actions
   npx ${name} add charts <chart...>        add charts, e.g. add charts <name>
-  npx ${name} add blocks <block...>        add blocks, e.g. add blocks <name>
+  npx ${name} add blocks <block...>        add blocks, e.g. add blocks <name>`
 
-Options:
-  -o, --overwrite  replace local files that differ from the registry
-  --diff           show how local files differ from the registry
-  -a, --all        add every component, or every pattern, interaction,
-                   chart or block after "patterns", "interactions",
-                   "charts" or "blocks"; theme is only added by name
-  -y, --yes        skip confirmation prompts
-  -b, --base <base|radix|aria>
-                   the primitive base of React components (read from the
-                   style in components.json when omitted, otherwise base)
-  -p, --platform <web|rn|swift|kotlin>
-                   web, React Native, SwiftUI or Jetpack Compose sources
-                   (detected from the project when omitted)
-  -s, --styling <uniwind|nativewind|stylesheet>
-                   React Native styling (detected from the project when omitted)
-  --path <dir>     where SwiftUI or Compose files go, relative to --cwd
-                   (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)
-  -c, --cwd <dir>  project directory (defaults to the current directory)
-  -h, --help       show this help
-  -v, --version    show the version
+const ADD_OPTIONS = optionLines(
+  "overwrite",
+  "diff",
+  "all",
+  "yes",
+  "base",
+  "platform",
+  "styling",
+  "path",
+  "cwd",
+  "help",
+  "version"
+)
 
-Supports Next.js and React (Vite) projects with TypeScript and Tailwind CSS v4,
-React Native and Expo projects with TypeScript, Xcode projects and Swift
-packages, and Android Gradle modules.`
+const INIT_OPTIONS = optionLines(
+  "overwrite",
+  "yes",
+  "base",
+  "platform",
+  "styling",
+  "path",
+  "cwd",
+  "help",
+  "version"
+)
+
+function page(lines, list) {
+  return `${name} ${version}\n\nUsage:${lines}\n\nOptions:\n${list}\n\n${SUPPORTED}`
+}
+
+const usage = page(`${INIT_LINES}${ADD_LINES}`, ADD_OPTIONS)
+
+const COMMAND_USAGE = {
+  init: page(INIT_LINES, INIT_OPTIONS),
+  add: page(ADD_LINES, ADD_OPTIONS),
+}
 
 const SUBCOMMANDS = {
   patterns: "pattern",
@@ -82,6 +125,14 @@ function parseArgs(args) {
   const queue = args[Symbol.iterator]()
   for (const arg of queue) {
     switch (arg) {
+      case "-h":
+      case "--help":
+        options.help = true
+        break
+      case "-v":
+      case "--version":
+        options.version = true
+        break
       case "-y":
       case "--yes":
         options.yes = true
@@ -151,9 +202,7 @@ function parseArgs(args) {
 function packagesOf(cwd) {
   const manifest = path.join(cwd, "package.json")
   if (!existsSync(manifest)) return {}
-  const { dependencies, devDependencies } = JSON.parse(
-    readFileSync(manifest, "utf8")
-  )
+  const { dependencies, devDependencies } = readJson(manifest)
   return { ...dependencies, ...devDependencies }
 }
 
@@ -178,17 +227,17 @@ async function resolvePlatform(options) {
       if (options.platform === "swift" || options.platform === "kotlin") {
         step(`Found a ${PLATFORM_TITLES[options.platform]} project.`)
       }
-    } else if (options.yes || !process.stdin.isTTY) {
+    } else if (options.yes || !isInteractive()) {
       throw new CliError(
         `This folder has ${found.map((platform) => PLATFORM_TITLES[platform]).join(" and ")} projects. Pick one with --platform ${found.join("|")}.`
       )
     } else {
-      const answer = await choose(
+      options.platform = await choose(
         "Which project should get the components?",
-        found.map((platform) => PLATFORM_TITLES[platform])
-      )
-      options.platform = found.find(
-        (platform) => PLATFORM_TITLES[platform] === answer
+        found.map((platform) => ({
+          value: platform,
+          label: PLATFORM_TITLES[platform],
+        }))
       )
     }
   }
@@ -204,12 +253,27 @@ async function resolvePlatform(options) {
   return options
 }
 
+function parseCommand(command, args) {
+  const parsed = parseArgs(args)
+  if (parsed.options.version) {
+    console.log(version)
+    return null
+  }
+  if (parsed.options.help) {
+    console.log(COMMAND_USAGE[command])
+    return null
+  }
+  return parsed
+}
+
 async function main() {
   const [command, ...args] = process.argv.slice(2)
 
   switch (command) {
     case "init": {
-      const { options } = parseArgs(args)
+      const parsed = parseCommand(command, args)
+      if (!parsed) break
+      const { options } = parsed
       await resolvePlatform(options)
       if (options.platform === "web") await init(options)
       else if (options.platform === "rn") await initMobile(options)
@@ -218,11 +282,13 @@ async function main() {
     }
     case "add": {
       const scope = SUBCOMMANDS[args[0]]
-      const { options, names } = parseArgs(scope ? args.slice(1) : args)
+      const parsed = parseCommand(command, scope ? args.slice(1) : args)
+      if (!parsed) break
+      const options = { ...parsed.options, scope }
       await resolvePlatform(options)
-      if (options.platform === "web") await add(names, { ...options, scope })
-      else if (options.platform === "rn") await addMobile(names, options)
-      else await addNative(names, options)
+      if (options.platform === "web") await add(parsed.names, options)
+      else if (options.platform === "rn") await addMobile(parsed.names, options)
+      else await addNative(parsed.names, options)
       break
     }
     case "-v":

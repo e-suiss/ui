@@ -14,11 +14,12 @@ const INDEXES = {
 export const BASES = Object.keys(INDEXES)
 
 const registry = createRegistry({
-  base: "https://raw.githubusercontent.com/e-suiss/ui/main/packages/web",
+  base: "https://raw.githubusercontent.com/e-suiss/ui/{ref}/packages/web",
   env: "ESUISS_REGISTRY",
 })
 
 export const { fetchText } = registry
+const { fetchJson } = registry
 
 export const SCOPES = {
   ui: {
@@ -84,12 +85,8 @@ function toItem(item) {
 }
 
 export async function fetchRegistry(base = "base") {
-  const { items } = JSON.parse(await fetchText(INDEXES[base]))
+  const { items } = await fetchJson(INDEXES[base])
   return { items: items.filter((item) => item.files?.length).map(toItem) }
-}
-
-export function scopeOf(item) {
-  return item.scope ?? "ui"
 }
 
 export function fetchStylesheet() {

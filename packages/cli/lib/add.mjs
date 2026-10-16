@@ -1,5 +1,4 @@
 import { readFileSync, writeFileSync } from "node:fs"
-import path from "node:path"
 
 import {
   ICON_PACKAGE,
@@ -14,30 +13,24 @@ import {
   findStylesheet,
   install,
 } from "./project.mjs"
-import { choose, isInteractive } from "./prompt.mjs"
+import { fetchRegistry, fetchText, resolveItems, toCss } from "./registry.mjs"
 import {
-  fetchRegistry,
-  fetchText,
-  resolveItems,
-  SCOPES,
-  scopeOf,
-  toCss,
-} from "./registry.mjs"
-import { printDiff, reportFiles, writeFiles } from "./shared/files.mjs"
+  mapLimit,
+  printDiff,
+  reportFiles,
+  targetFor,
+  writeFiles,
+} from "./shared/files.mjs"
 import { relative } from "./shared/project.mjs"
+import { chooseNames } from "./shared/select.mjs"
 
-function targetFor(root, file) {
-  const target = path.resolve(root, file)
-  const relative = path.relative(root, target)
-  if (
-    relative === ".." ||
-    relative.startsWith(`..${path.sep}`) ||
-    path.isAbsolute(relative)
-  ) {
-    throw new CliError(`Refusing to write ${file} outside the project.`)
-  }
-  return target
-}
+const COMMENT = /\/\*[\s\S]*?\*\//g
+const WHITESPACE = /\s+/g
+const AROUND_PUNCTUATION = /\s*([{};,>])\s*/g
+const SINGLE_QUOTE = /'/g
+const RULE_HEAD_END = /[{;]/
+
+const scopeOf = (item) => item.scope
 
 function fetchFiles(root, items) {
   const files = items.flatMap((item) =>
@@ -47,15 +40,31 @@ function fetchFiles(root, items) {
       target: targetFor(root, file),
     }))
   )
-  return Promise.all(
-    files.map(async (entry) => {
-      const source = await fetchText(entry.source)
-      return {
-        ...entry,
-        content: toPhosphorIcons(source),
-        icons: usesIconPlaceholders(source),
-      }
-    })
+  return mapLimit(files, async (entry) => {
+    const source = await fetchText(entry.source)
+    return {
+      ...entry,
+      content: toPhosphorIcons(source),
+      icons: usesIconPlaceholders(source),
+    }
+  })
+}
+
+function normalizeCss(css) {
+  return css
+    .replace(COMMENT, "")
+    .replace(SINGLE_QUOTE, '"')
+    .replace(WHITESPACE, " ")
+    .replace(AROUND_PUNCTUATION, "$1")
+    .trim()
+}
+
+function hasRule(css, rule) {
+  const normalized = normalizeCss(rule)
+  const head = normalized.slice(0, normalized.search(RULE_HEAD_END) + 1)
+  return (
+    css.startsWith(head) ||
+    ["}", ";", "{"].some((before) => css.includes(`${before}${head}`))
   )
 }
 
@@ -72,7 +81,8 @@ function addStyles(project, items) {
     return
   }
   const current = readFileSync(file, "utf8")
-  const missing = rules.filter((rule) => !current.includes(rule))
+  const normalized = normalizeCss(current)
+  const missing = rules.filter((rule) => !hasRule(normalized, rule))
   if (!missing.length) return
   writeFileSync(file, `${current.trimEnd()}\n\n${missing.join("\n\n")}\n`)
   step(`Added the styles for ${names} to ${relative(project, file)}`)
@@ -97,67 +107,7 @@ export async function installItems(
 }
 
 async function showDiff(project, root, registry, names) {
-  const requested = new Set(names)
-  const items = resolveItems(registry, names).filter((item) =>
-    requested.has(item.name)
-  )
-  printDiff(project.cwd, await fetchFiles(root, items))
-}
-
-function selectNames(registry, names, { all, scope = "ui" }) {
-  const inScope = (item) => scopeOf(item) === scope
-  const scoped = registry.items.filter(inScope)
-  const { kind, command, example } = SCOPES[scope]
-
-  if (all) {
-    if (!scoped.length) throw new CliError(`No ${kind}s are available yet.`)
-    return scoped.filter((item) => !item.optIn).map((item) => item.name)
-  }
-
-  if (!names.length) {
-    throw new CliError(
-      `Name at least one ${kind}, e.g. npx @esuiss/ui ${command} ${example}\nAvailable: ${scoped.map((entry) => entry.name).join(", ") || "none yet"}`
-    )
-  }
-
-  const byName = new Map(registry.items.map((item) => [item.name, item]))
-  for (const name of names) {
-    const item = byName.get(name)
-    if (item && inScope(item)) continue
-    if (item) {
-      const other = SCOPES[scopeOf(item)]
-      throw new CliError(
-        `"${name}" is ${other.kind === "interaction" ? "an" : "a"} ${other.kind}. Run npx @esuiss/ui ${other.command} ${name}`
-      )
-    }
-    throw new CliError(
-      `Unknown ${kind}: ${name}.\nAvailable: ${scoped.map((entry) => entry.name).join(", ") || "none yet"}`
-    )
-  }
-  return names
-}
-
-function pickScope(registry) {
-  const choices = Object.entries(SCOPES).flatMap(([scope, { label }]) => {
-    const count = registry.items.filter(
-      (item) => scopeOf(item) === scope
-    ).length
-    return count ? [{ value: scope, label, hint: String(count) }] : []
-  })
-  return choose("What do you want to add?", choices)
-}
-
-function pickItems(registry, scope) {
-  const { kind } = SCOPES[scope]
-  const items = registry.items.filter((item) => scopeOf(item) === scope)
-  if (!items.length) throw new CliError(`No ${kind}s are available yet.`)
-  return choose(
-    `Which ${kind}s?`,
-    items
-      .map((item) => ({ value: item.name, label: item.name }))
-      .sort((a, b) => a.label.localeCompare(b.label)),
-    { multiple: true }
-  )
+  printDiff(project.cwd, await fetchFiles(root, resolveItems(registry, names)))
 }
 
 export async function add(names, options) {
@@ -170,10 +120,9 @@ export async function add(names, options) {
   }
 
   const registry = await fetchRegistry(options.base ?? detectBase(project.cwd))
-  const picking = !names.length && !options.all && isInteractive()
-  const scope = options.scope ?? (picking ? await pickScope(registry) : "ui")
-  const chosen = picking ? await pickItems(registry, scope) : names
-  const selected = selectNames(registry, chosen, { ...options, scope })
+  const selected = await chooseNames(registry.items, names, options, {
+    scopeOf,
+  })
 
   if (options.diff) await showDiff(project, root, registry, selected)
   else await installItems(project, root, registry, selected, options)

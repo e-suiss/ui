@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process"
+import { readFileSync } from "node:fs"
 import path from "node:path"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { install as installMobile } from "../lib/mobile/project.mjs"
 import { CliError } from "../lib/output.mjs"
 import {
@@ -9,6 +10,7 @@ import {
   findAliasRoot,
   install,
 } from "../lib/project.mjs"
+import { ensureAlias } from "../lib/shared/project.mjs"
 import { createProject } from "./helpers.mjs"
 
 vi.mock("node:child_process", () => ({
@@ -16,6 +18,10 @@ vi.mock("node:child_process", () => ({
 }))
 
 const tsconfig = { compilerOptions: {} }
+
+afterEach(() => {
+  vi.unstubAllEnvs()
+})
 
 describe("detectBase", () => {
   it.each([
@@ -97,6 +103,73 @@ describe("detectProject", () => {
     expect(detectProject(cwd).packageManager).toBe(manager)
   })
 
+  it("prefers the packageManager field over the lockfile", () => {
+    const cwd = createProject({
+      "package.json": {
+        packageManager: "yarn@4.5.0",
+        dependencies: { next: "16.0.0" },
+      },
+      "tsconfig.json": tsconfig,
+      "package-lock.json": "",
+    })
+    expect(detectProject(cwd).packageManager).toBe("yarn")
+  })
+
+  it("reads the packageManager field of the workspace root", () => {
+    const root = createProject({
+      "package.json": { packageManager: "pnpm@11.0.0", workspaces: ["apps/*"] },
+      "apps/web/package.json": { dependencies: { next: "16.0.0" } },
+      "apps/web/tsconfig.json": tsconfig,
+    })
+    expect(detectProject(path.join(root, "apps/web")).packageManager).toBe(
+      "pnpm"
+    )
+  })
+
+  it("follows the package manager that runs the CLI", () => {
+    vi.stubEnv("npm_config_user_agent", "bun/1.3.0 npm/? node/v22.0.0")
+    const cwd = createProject({
+      "package.json": { dependencies: { next: "16.0.0" } },
+      "tsconfig.json": tsconfig,
+    })
+    expect(detectProject(cwd).packageManager).toBe("bun")
+  })
+
+  it("prefers the lockfile when the CLI runs with npx", () => {
+    vi.stubEnv("npm_config_user_agent", "npm/11.0.0 node/v22.0.0")
+    const cwd = createProject({
+      "package.json": { dependencies: { next: "16.0.0" } },
+      "tsconfig.json": tsconfig,
+      "pnpm-lock.yaml": "",
+    })
+    expect(detectProject(cwd).packageManager).toBe("pnpm")
+  })
+
+  it.each([
+    ["pnpm-workspace.yaml", ""],
+    ["package.json", { workspaces: ["apps/*"] }],
+    [".git/HEAD", ""],
+  ])("stops looking for lockfiles at a folder with %s", (file, content) => {
+    const outer = createProject({
+      "yarn.lock": "",
+      [`repo/${file}`]: content,
+      "repo/apps/web/package.json": { dependencies: { next: "16.0.0" } },
+      "repo/apps/web/tsconfig.json": tsconfig,
+    })
+    const project = detectProject(path.join(outer, "repo/apps/web"))
+    expect(project.packageManager).toBe("npm")
+  })
+
+  it("names a package.json that is not valid JSON", () => {
+    const cwd = createProject({
+      "package.json": "{ broken",
+      "tsconfig.json": tsconfig,
+    })
+    expect(() => detectProject(cwd)).toThrow(
+      `Could not read package.json in ${cwd}:`
+    )
+  })
+
   it("finds the lockfile of a parent workspace", () => {
     const root = createProject({
       "pnpm-lock.yaml": "",
@@ -139,6 +212,57 @@ describe("findAliasRoot", () => {
       },
     })
     expect(findAliasRoot(cwd)).toBe(path.join(cwd, "src"))
+  })
+
+  it("follows extends to a shared base config", () => {
+    const root = createProject({
+      "tsconfig.base.json": {
+        compilerOptions: { paths: { "@/*": ["./apps/web/src/*"] } },
+      },
+      "apps/web/tsconfig.json": `{
+  // extends the workspace config
+  "extends": "../../tsconfig.base",
+}`,
+    })
+    expect(findAliasRoot(path.join(root, "apps/web"))).toBe(
+      path.join(root, "apps/web/src")
+    )
+  })
+
+  it("lets a local config override the inherited alias and baseUrl", () => {
+    const root = createProject({
+      "tsconfig.base.json": {
+        compilerOptions: { baseUrl: ".", paths: { "@/*": ["./shared/*"] } },
+      },
+      "apps/web/tsconfig.json": {
+        extends: ["../../tsconfig.base.json"],
+        compilerOptions: { baseUrl: ".", paths: { "@/*": ["./src/*"] } },
+      },
+    })
+    expect(findAliasRoot(path.join(root, "apps/web"))).toBe(
+      path.join(root, "apps/web/src")
+    )
+  })
+
+  it("does not add the alias again when a base config has it", () => {
+    const root = createProject({
+      "tsconfig.base.json": {
+        compilerOptions: { paths: { "@/*": ["./apps/web/*"] } },
+      },
+      "apps/web/tsconfig.json": { extends: "../../tsconfig.base.json" },
+    })
+    const cwd = path.join(root, "apps/web")
+    expect(ensureAlias({ cwd }, cwd)).toBe(false)
+    expect(readFileSync(path.join(cwd, "tsconfig.json"), "utf8")).not.toContain(
+      "paths"
+    )
+  })
+
+  it("names a tsconfig that is not valid JSON", () => {
+    const cwd = createProject({ "tsconfig.json": "{ broken" })
+    expect(() => findAliasRoot(cwd)).toThrow(
+      `Could not read tsconfig.json in ${cwd}:`
+    )
   })
 
   it("returns null when no alias is configured", () => {

@@ -29,13 +29,14 @@ npx @esuiss/ui@latest init [options]
 
 | Option | Description |
 | --- | --- |
+| `-o, --overwrite` | Replace a local `button` that differs from the registry |
 | `-y, --yes` | Skip confirmation prompts |
-| `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
+| `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. Saved as the `style` in `components.json` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
-| `-h, --help` | Show help |
+| `-h, --help` | Show help for `init` |
 | `-v, --version` | Show the version |
 
 ## add
@@ -53,16 +54,16 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 
 | Option | Description |
 | --- | --- |
-| `-o, --overwrite` | Replace local files that differ from the registry |
-| `--diff` | Show how your local files differ from the registry |
+| `-o, --overwrite` | Replace local files that differ from the registry, including the components they depend on |
+| `--diff` | Show how your local files differ from the registry, for every file `--overwrite` would replace |
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
-| `-y, --yes` | Skip confirmation prompts |
+| `-y, --yes` | Skip confirmation prompts and the pick list |
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
-| `-h, --help` | Show help |
+| `-h, --help` | Show help for `add` |
 | `-v, --version` | Show the version |
 
 ### Pick from a list
@@ -74,7 +75,7 @@ npx @esuiss/ui@latest add
 npx @esuiss/ui@latest add patterns
 ```
 
-In SwiftUI and Jetpack Compose projects the list only shows what exists for that platform:
+The groups work the same in React Native, SwiftUI and Jetpack Compose projects, and `--all` adds every item of the group. In SwiftUI and Jetpack Compose projects the list only shows what exists for that platform:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest add --platform swift
@@ -124,7 +125,7 @@ Patterns, interactions, charts and blocks are optional extras. Neither `init` no
 
 ## Primitive base
 
-React components come with three primitive bases. `init` and `add` use the default base, `base`, unless the `style` in `components.json` is `radix-*`, `new-york` or `default`, which uses `radix`, or `aria-*`, which uses `aria`. `--base` overrides both, so pass it to every `add` in a project without a `components.json`:
+React components come with three primitive bases. `init` and `add` use the default base, `base`, unless the `style` in `components.json` is `radix-*`, `new-york` or `default`, which uses `radix`, or `aria-*`, which uses `aria`. `init --base` saves the base as the `style` in `components.json`, creating the file when needed, so later `add` runs use it. `--base` on `add` overrides it for that run:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --base radix
@@ -147,6 +148,6 @@ Paths are relative to your `@/*` alias root.
 | Charts | `components/charts/` |
 | Blocks | `components/blocks/` |
 
-In React Native projects the same folders are used. SwiftUI files go to `EsuissUI/`, or to `Sources/<Target>/EsuissUI/` in a Swift package, and Compose files go to `src/main/kotlin/com/esuiss/ui/` in your app module. Pass `--path` to choose another folder.
+In React Native projects the same folders are used. SwiftUI files go to `EsuissUI/`, or to `Sources/<Target>/EsuissUI/` in a Swift package, and Compose files go to `src/main/kotlin/com/esuiss/ui/` in your app module. In a Swift package with several targets, pick the target from the list or pass `--path`. The CLI prints the folder it writes to, and `--path` chooses another one.
 
-Missing npm packages are installed with your package manager: npm, pnpm, yarn or bun. In Expo projects they are installed with `expo install`, so native modules match the Expo SDK. The CLI never edits Xcode or Gradle files: it lists the Swift packages and Gradle dependencies a SwiftUI or Compose component needs.
+Missing npm packages are installed with your package manager: npm, pnpm, yarn or bun. The `packageManager` field in `package.json` decides, then the package manager that runs the CLI (`pnpm dlx`, `yarn dlx` or `bunx`), then the lockfile of the project or its workspace. In Expo projects they are installed with `expo install`, so native modules match the Expo SDK. The CLI never edits Xcode or Gradle files: it lists the Swift packages and Gradle dependencies a SwiftUI or Compose component needs.

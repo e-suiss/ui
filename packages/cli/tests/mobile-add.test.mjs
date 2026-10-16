@@ -4,6 +4,7 @@ import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { add } from "../lib/mobile/add.mjs"
+import { choose, isInteractive } from "../lib/prompt.mjs"
 import {
   createProject,
   read,
@@ -12,7 +13,7 @@ import {
 } from "./helpers.mjs"
 
 const MOBILE_REGISTRY = vi.hoisted(() => {
-  const base = "https://registry.test/uim"
+  const base = "https://registry.test/mobile"
   process.env.ESUISS_MOBILE_REGISTRY = `${base}/`
   return base
 })
@@ -27,8 +28,8 @@ vi.mock("../lib/prompt.mjs", () => ({
 }))
 
 const registry = {
-  name: "esuiss-uim",
-  homepage: "https://github.com/e-suiss/uim",
+  name: "esuiss-ui-mobile",
+  homepage: "https://ui.suiss.app",
   styles: {
     uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
     nativewind: {
@@ -62,6 +63,13 @@ const registry = {
       files: ["components/ui/button.tsx"],
       overrides: ["uniwind", "nativewind", "stylesheet"],
     },
+    {
+      name: "date-picker",
+      type: "pattern",
+      dependencies: { uniwind: [], nativewind: [], stylesheet: [] },
+      requires: ["text"],
+      files: ["components/patterns/date-picker.tsx"],
+    },
   ],
 }
 
@@ -71,6 +79,7 @@ const files = {
   "uniwind/components/ui/button.tsx": "export function UniwindButton() {}\n",
   "stylesheet/components/ui/button.tsx":
     "export function StylesheetButton() {}\n",
+  "components/patterns/date-picker.tsx": "export function DatePicker() {}\n",
 }
 
 function expoProject(packages = {}, extra = {}) {
@@ -90,6 +99,8 @@ let output
 beforeEach(() => {
   output = silenceOutput()
   vi.mocked(spawnSync).mockClear()
+  vi.mocked(choose).mockReset()
+  vi.mocked(isInteractive).mockReturnValue(false)
 })
 
 afterEach(() => {
@@ -105,9 +116,13 @@ describe("mobile add", () => {
       "class-variance-authority": "0.7.1",
     })
     await add(["button"], { cwd })
-    expect(fetch).toHaveBeenCalledWith(`${MOBILE_REGISTRY}/registry.json`)
     expect(fetch).toHaveBeenCalledWith(
-      `${MOBILE_REGISTRY}/uniwind/components/ui/button.tsx`
+      `${MOBILE_REGISTRY}/registry.json`,
+      expect.anything()
+    )
+    expect(fetch).toHaveBeenCalledWith(
+      `${MOBILE_REGISTRY}/uniwind/components/ui/button.tsx`,
+      expect.anything()
     )
   })
 
@@ -187,5 +202,86 @@ describe("mobile add", () => {
     await add(["button"], { cwd })
     expect(read(cwd, "src/components/ui/text.tsx")).toBe("local\n")
     expect(output()).toContain("Kept 1 local file that differs")
+  })
+
+  it("shows changed dependency files in the diff", async () => {
+    serveRegistry(files)
+    const cwd = expoProject(
+      { uniwind: "1.0.0", "class-variance-authority": "0.7.1" },
+      { "src/components/ui/text.tsx": "local\n" }
+    )
+    await add(["button"], { cwd, diff: true })
+    expect(output()).toContain("- local")
+    expect(read(cwd, "src/components/ui/text.tsx")).toBe("local\n")
+  })
+
+  it("adds only the components with --all", async () => {
+    serveRegistry(files)
+    const cwd = expoProject({
+      uniwind: "1.0.0",
+      "class-variance-authority": "0.7.1",
+    })
+    await add([], { cwd, all: true })
+    expect(existsSync(path.join(cwd, "src/components/ui/button.tsx"))).toBe(
+      true
+    )
+    expect(
+      existsSync(path.join(cwd, "src/components/patterns/date-picker.tsx"))
+    ).toBe(false)
+  })
+
+  it("adds every item of the group with --all", async () => {
+    serveRegistry(files)
+    const cwd = expoProject({ uniwind: "1.0.0" })
+    await add([], { cwd, all: true, scope: "pattern" })
+    expect(
+      existsSync(path.join(cwd, "src/components/patterns/date-picker.tsx"))
+    ).toBe(true)
+    expect(existsSync(path.join(cwd, "src/components/ui/button.tsx"))).toBe(
+      false
+    )
+  })
+
+  it("points to the group command for an item of another group", async () => {
+    serveRegistry(files)
+    const cwd = expoProject({ uniwind: "1.0.0" })
+    await expect(add(["date-picker"], { cwd })).rejects.toThrow(
+      '"date-picker" is a pattern. Run npx @esuiss/ui add patterns date-picker'
+    )
+  })
+
+  it("skips the group question when the group is given", async () => {
+    serveRegistry(files)
+    const cwd = expoProject({ uniwind: "1.0.0" })
+    vi.mocked(isInteractive).mockReturnValue(true)
+    vi.mocked(choose).mockResolvedValueOnce(["date-picker"])
+    await add([], { cwd, scope: "pattern" })
+    expect(choose).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(choose).mock.calls[0][1]).toEqual([
+      { value: "date-picker", label: "date-picker" },
+    ])
+  })
+
+  it("refuses registry files that point outside the project", async () => {
+    serveRegistry({
+      ...files,
+      "registry.json": {
+        ...registry,
+        items: [
+          {
+            name: "escape",
+            type: "ui",
+            dependencies: { uniwind: [], nativewind: [], stylesheet: [] },
+            requires: [],
+            files: ["../../escape.tsx"],
+          },
+        ],
+      },
+      "../../escape.tsx": "export {}\n",
+    })
+    const cwd = expoProject({ uniwind: "1.0.0" })
+    await expect(add(["escape"], { cwd })).rejects.toThrow(
+      "Refusing to write ../../escape.tsx outside the project."
+    )
   })
 })

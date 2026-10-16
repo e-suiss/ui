@@ -3,6 +3,7 @@ import { existsSync } from "node:fs"
 import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { add } from "../lib/add.mjs"
 import { init } from "../lib/init.mjs"
 import {
   createProject,
@@ -38,6 +39,21 @@ const files = {
       },
     ],
   },
+  "registry/radix/registry.json": {
+    name: "esuiss",
+    homepage: "https://ui.suiss.app",
+    items: [
+      {
+        name: "button",
+        type: "registry:ui",
+        dependencies: ["radix-ui"],
+        files: [
+          { path: "bases/radix/components/ui/button.tsx", type: "registry:ui" },
+        ],
+      },
+    ],
+  },
+  "bases/radix/components/ui/button.tsx": "export function RadixButton() {}\n",
   "styles/globals.css": stylesheet,
   "components/ui/button.tsx": "export function Button() {}\n",
 }
@@ -191,6 +207,80 @@ export default defineConfig({
       "Cancelled. Run again with --yes to replace the stylesheet."
     )
     expect(read(cwd, "src/index.css")).toBe("body { color: red }")
+  })
+})
+
+describe("init options", () => {
+  it("saves --base as the style of a new components.json", async () => {
+    const cwd = viteProject()
+    await init({ cwd, yes: true, base: "radix" })
+    const config = JSON.parse(read(cwd, "components.json"))
+    expect(config.style).toBe("radix-nova")
+    expect(config.tailwind.css).toBe("src/index.css")
+    expect(config.rsc).toBe(false)
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+      "export function RadixButton() {}\n"
+    )
+
+    await add(["button"], { cwd, overwrite: true })
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+      "export function RadixButton() {}\n"
+    )
+  })
+
+  it("keeps the rest of components.json and the style name", async () => {
+    const cwd = viteProject({
+      "components.json": {
+        style: "aria-vega",
+        tailwind: { css: "src/index.css" },
+        aliases: { ui: "@/components/ui" },
+      },
+    })
+    await init({ cwd, yes: true, base: "radix" })
+    expect(JSON.parse(read(cwd, "components.json"))).toEqual({
+      style: "radix-vega",
+      tailwind: { css: "src/index.css" },
+      aliases: { ui: "@/components/ui" },
+    })
+  })
+
+  it("does not write components.json for the default base", async () => {
+    const cwd = viteProject()
+    await init({ cwd, yes: true, base: "base" })
+    expect(existsSync(path.join(cwd, "components.json"))).toBe(false)
+  })
+
+  it("replaces a changed button with --overwrite", async () => {
+    const cwd = viteProject({
+      "src/components/ui/button.tsx": "export function Button() { edited }\n",
+    })
+    await init({ cwd, yes: true })
+    expect(read(cwd, "src/components/ui/button.tsx")).toContain("edited")
+    await init({ cwd, yes: true, overwrite: true })
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+      "export function Button() {}\n"
+    )
+  })
+
+  it("writes the stylesheet named in components.json", async () => {
+    const cwd = viteProject({
+      "components.json": { tailwind: { css: "src/styles/app.css" } },
+    })
+    await init({ cwd, yes: true })
+    expect(read(cwd, "src/styles/app.css")).toBe(stylesheet)
+    expect(existsSync(path.join(cwd, "src/index.css"))).toBe(false)
+  })
+
+  it("asks to import the stylesheet when it is not imported", async () => {
+    const cwd = viteProject()
+    await init({ cwd, yes: true })
+    expect(output()).toContain("Import src/index.css in src/main.tsx.")
+  })
+
+  it("does not ask to import a stylesheet that is imported", async () => {
+    const cwd = viteProject({ "src/main.tsx": 'import "./index.css"\n' })
+    await init({ cwd, yes: true })
+    expect(output()).not.toContain("Import src/index.css")
   })
 })
 

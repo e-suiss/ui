@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs"
+import { existsSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -7,6 +7,7 @@ import {
   detectNativePlatforms,
   initNative,
 } from "../lib/mobile/native.mjs"
+import { choose, isInteractive } from "../lib/prompt.mjs"
 import {
   createProject,
   read,
@@ -22,8 +23,8 @@ vi.mock("../lib/prompt.mjs", () => ({
 const SWIFT_SOURCES = "swiftui/Sources/EsuissUI"
 
 const registry = {
-  name: "esuiss-uim",
-  homepage: "https://github.com/e-suiss/uim",
+  name: "esuiss-ui-mobile",
+  homepage: "https://ui.suiss.app",
   styles: {},
   platforms: {
     swift: {
@@ -59,6 +60,14 @@ const registry = {
       swift: ["Components/Dialog.swift", "Components/Button.swift"],
     },
     {
+      name: "date-picker",
+      type: "pattern",
+      dependencies: { uniwind: [], nativewind: [], stylesheet: [] },
+      requires: ["button"],
+      files: ["components/patterns/date-picker.tsx"],
+      swift: ["Patterns/DatePicker.swift"],
+    },
+    {
       name: "chart",
       type: "chart",
       dependencies: { uniwind: [], nativewind: [], stylesheet: [] },
@@ -75,6 +84,7 @@ const files = {
   [`${SWIFT_SOURCES}/Theme/Tokens.swift`]: "struct Tokens {}\n",
   [`${SWIFT_SOURCES}/Components/Button.swift`]: "struct EsuissButton {}\n",
   [`${SWIFT_SOURCES}/Components/Dialog.swift`]: "struct EsuissDialog {}\n",
+  [`${SWIFT_SOURCES}/Patterns/DatePicker.swift`]: "struct DatePicker {}\n",
 }
 
 function xcodeProject(extra = {}) {
@@ -86,6 +96,8 @@ let output
 beforeEach(() => {
   serveRegistry(files)
   output = silenceOutput()
+  vi.mocked(choose).mockReset()
+  vi.mocked(isInteractive).mockReturnValue(false)
 })
 
 afterEach(() => {
@@ -188,5 +200,106 @@ describe("native init and add", () => {
     await expect(
       addNative(["chart"], { cwd, platform: "kotlin" })
     ).rejects.toThrow("The registry has no Compose files.")
+  })
+
+  it("shows every file of the items in the diff", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    writeFileSync(
+      path.join(cwd, "EsuissUI/Components/Button.swift"),
+      "struct Edited {}\n"
+    )
+    await addNative(["dialog"], { cwd, platform: "swift", diff: true })
+    const printed = output()
+    expect(printed).toContain("- struct Edited {}")
+    expect(printed).toContain(
+      `${path.join("EsuissUI", "Components", "Dialog.swift")} is not installed.`
+    )
+  })
+
+  it("adds only the components with --all", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    await addNative([], { cwd, platform: "swift", all: true })
+    expect(existsSync(path.join(cwd, "EsuissUI/Components/Dialog.swift"))).toBe(
+      true
+    )
+    expect(existsSync(path.join(cwd, "EsuissUI/Patterns"))).toBe(false)
+  })
+
+  it("adds the items of the group given", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    await addNative([], { cwd, platform: "swift", all: true, scope: "pattern" })
+    expect(read(cwd, "EsuissUI/Patterns/DatePicker.swift")).toBe(
+      "struct DatePicker {}\n"
+    )
+    expect(existsSync(path.join(cwd, "EsuissUI/Components/Dialog.swift"))).toBe(
+      false
+    )
+  })
+
+  it("points to the group command for an item of another group", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    await expect(
+      addNative(["date-picker"], { cwd, platform: "swift" })
+    ).rejects.toThrow(
+      '"date-picker" is a pattern. Run npx @esuiss/ui add patterns date-picker --platform swift'
+    )
+  })
+
+  it("asks for --path in a Swift package with several targets", async () => {
+    const cwd = createProject({
+      "Package.swift": "",
+      "Sources/App/App.swift": "",
+      "Sources/Widgets/Widgets.swift": "",
+    })
+    await expect(initNative({ cwd, platform: "swift" })).rejects.toThrow(
+      "This Swift package has 2 targets: App, Widgets. Pick one with --path Sources/<target>/EsuissUI."
+    )
+  })
+
+  it("lets the user pick the target and keeps using it", async () => {
+    const cwd = createProject({
+      "Package.swift": "",
+      "Sources/App/App.swift": "",
+      "Sources/Widgets/Widgets.swift": "",
+    })
+    vi.mocked(isInteractive).mockReturnValue(true)
+    vi.mocked(choose).mockResolvedValueOnce("Widgets")
+    await initNative({ cwd, platform: "swift" })
+    await addNative(["dialog"], { cwd, platform: "swift" })
+    expect(choose).toHaveBeenCalledTimes(1)
+    expect(read(cwd, "Sources/Widgets/EsuissUI/Components/Dialog.swift")).toBe(
+      "struct EsuissDialog {}\n"
+    )
+    expect(output()).toContain(
+      `SwiftUI files go to ${path.join("Sources", "Widgets", "EsuissUI")}`
+    )
+  })
+
+  it("refuses registry files that point outside the folder", async () => {
+    serveRegistry({
+      ...files,
+      "registry.json": {
+        ...registry,
+        items: [
+          {
+            name: "button",
+            type: "ui",
+            dependencies: {},
+            requires: [],
+            files: [],
+            swift: ["../../Escape.swift"],
+          },
+        ],
+      },
+      [`${SWIFT_SOURCES}/../../Escape.swift`]: "struct Escape {}\n",
+    })
+    const cwd = xcodeProject()
+    await expect(initNative({ cwd, platform: "swift" })).rejects.toThrow(
+      "Refusing to write ../../Escape.swift outside the project."
+    )
   })
 })
