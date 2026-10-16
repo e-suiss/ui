@@ -43,6 +43,8 @@ npx @esuiss/ui@latest add patterns action-menu
 import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from "@/components/patterns/action-menu"
 ```
 
+<OnlyBase base="base radix">
+
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <ActionMenu>
@@ -60,6 +62,28 @@ import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, Acti
   </ActionMenu>
 </div>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <ActionMenu>
+    <Button variant="outline">Order actions</Button>
+    <ActionMenuContent>
+      <ActionMenuLabel>Order #1042</ActionMenuLabel>
+      <ActionMenuItem>Edit</ActionMenuItem>
+      <ActionMenuItem>Duplicate</ActionMenuItem>
+      <ActionMenuItem>Share</ActionMenuItem>
+      <ActionMenuSeparator />
+      <ActionMenuItem variant="destructive">Delete</ActionMenuItem>
+    </ActionMenuContent>
+  </ActionMenu>
+</div>
+```
+
+</OnlyBase>
 
 Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
 
@@ -155,6 +179,12 @@ An actionable entry that closes the menu when chosen.
 | `disabled` | `boolean` | - | Prevents the item from being chosen. |
 
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+<OnlyBase base="aria">
+
+On the `aria` base, use `isDisabled` instead of `disabled`, and `onAction` to respond to the item.
+
+</OnlyBase>
 
 </ApiPart>
 

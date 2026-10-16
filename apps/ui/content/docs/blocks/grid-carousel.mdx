@@ -99,7 +99,7 @@ npx @esuiss/ui@latest add grid-carousel --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -115,13 +115,17 @@ The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Pag
 npx expo install react-native-reanimated react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text), and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/blocks/grid-carousel.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/blocks/grid-carousel.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/grid-carousel.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -133,13 +137,17 @@ npx expo install react-native-reanimated react-native-worklets
 npx expo install react-native-reanimated react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text), and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/blocks/grid-carousel.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/blocks/grid-carousel.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/grid-carousel.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -151,13 +159,17 @@ npx expo install react-native-reanimated react-native-worklets
 npx expo install react-native-reanimated react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+2. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text), and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/blocks/grid-carousel.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/blocks/grid-carousel.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/grid-carousel.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -191,10 +203,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Carousel.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
 <ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/KeyboardScrollView.swift" />
@@ -202,8 +210,6 @@ npx expo install react-native-reanimated react-native-worklets
 <ComponentSource path="swift/Components/PageIndicator.swift" />
 
 <ComponentSource path="swift/Components/Screen.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 

@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="accordion-demo" />
 
-Accordion wraps the Base UI Accordion primitive. An `Accordion` holds one or more `AccordionItem` parts; each item pairs an `AccordionTrigger` with an `AccordionContent` panel. The trigger renders inside a heading element and shows a caret that flips between down and up as the panel opens and closes.
+Accordion wraps the accordion primitive of the chosen base. An `Accordion` holds one or more `AccordionItem` parts; each item pairs an `AccordionTrigger` with an `AccordionContent` panel. The trigger renders inside a heading element and shows a caret that flips between down and up as the panel opens and closes.
 
 Use an accordion to shorten long pages of related content, such as FAQs or settings groups, where people only need one or a few sections at a time. For a single show-and-hide region, a collapsible is a lighter fit.
 
@@ -68,7 +68,7 @@ The open state is an array of item values. Use `defaultValue` (for example `["sh
 
 ### Filled
 
-The `filled` variant places the items on a rounded, secondary surface.
+The `filled` variant places the items on a rounded `bg-muted` surface.
 
 <ComponentPreview name="accordion-filled" />
 
@@ -105,7 +105,7 @@ The root that groups items and manages which panels are open.
 | --- | --- | --- | --- |
 | `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
 
-Also accepts the props of `AccordionPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -115,7 +115,7 @@ Also accepts the props of `AccordionPrimitive.Root.Props`.
 
 A single section that pairs a trigger with its panel, identified by `value`.
 
-Also accepts the props of `AccordionPrimitive.Item.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -125,7 +125,7 @@ Also accepts the props of `AccordionPrimitive.Item.Props`.
 
 The button, inside a heading, that toggles its item's panel and shows the caret indicator.
 
-Also accepts the props of `AccordionPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -135,14 +135,14 @@ Also accepts the props of `AccordionPrimitive.Trigger.Props`.
 
 The collapsible panel holding the item's content.
 
-Also accepts the props of `AccordionPrimitive.Panel.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 ## Accessibility
 
 - Each trigger is a `button` with `aria-expanded` reflecting its panel's state.
-- Triggers are wrapped in a heading element provided by Base UI.
+- Triggers are wrapped in a heading element.
 - Triggers are reachable with Tab; `Enter` and `Space` toggle the focused panel.
 - Disabled triggers receive `aria-disabled` and are dimmed with `opacity-50`.
 
@@ -160,7 +160,7 @@ Also accepts the props of `AccordionPrimitive.Panel.Props`.
 
 `Accordion` groups `AccordionItem`s, each with an `AccordionTrigger` and an `AccordionContent` panel. The root and items are Reanimated views with a layout transition, so items below move smoothly as a panel opens or closes, and the trigger's caret rotates as it opens.
 
-The `default` variant draws items on the page background separated by hairlines. The `filled` variant puts the whole list on a rounded secondary surface, which suits grouped settings or FAQ cards.
+The `default` variant draws items on the page background separated by hairlines. The `filled` variant puts the whole list on a rounded `bg-muted` surface, which suits grouped settings or FAQ cards.
 
 ## Installation
 
@@ -343,7 +343,7 @@ Use `defaultValue` (an array of item values) for uncontrolled state, or `value` 
 
 ### Filled
 
-The `filled` variant on a rounded secondary surface.
+The `filled` variant on a rounded `bg-muted` surface.
 
 <NativeExample id="components-accordion--filled" />
 

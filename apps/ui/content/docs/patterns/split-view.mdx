@@ -155,7 +155,25 @@ Also accepts the props of `useRender.ComponentProps<"button">`, `React.Component
 
 ## Notes
 
-Styling hooks: `data-slot="split-view"`, `split-view-sidebar`, `split-view-list`, `split-view-detail`, `split-view-back` and `split-view-item`; desktop panels use `split-view-sidebar-panel`, `split-view-list-panel` and `split-view-detail-panel`. On mobile the root has `data-column` set to the visible column. Use the `render` prop on `SplitViewItem` to render it as a link.
+Styling hooks: `data-slot="split-view"`, `split-view-sidebar`, `split-view-list`, `split-view-detail`, `split-view-back` and `split-view-item`; desktop panels use `split-view-sidebar-panel`, `split-view-list-panel` and `split-view-detail-panel`. On mobile the root has `data-column` set to the visible column.
+
+<OnlyBase base="base">
+
+Use the `render` prop on `SplitViewItem` to render it as a link.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `SplitViewItem` and pass a link as the child to render it as a link.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `SplitViewItem` that returns a link with the props it receives.
+
+</OnlyBase>
 
 </Only>
 
@@ -199,7 +217,7 @@ npx @esuiss/ui@latest add split-view --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -215,13 +233,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/patterns/split-view.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/patterns/split-view.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/split-view.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -233,13 +255,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/patterns/split-view.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/patterns/split-view.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/split-view.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -251,13 +277,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/patterns/split-view.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/patterns/split-view.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/split-view.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -289,13 +319,9 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/DropdownMenu.swift" />
 
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
@@ -397,6 +423,10 @@ Also accepts the props of `ViewProps`.
 
 The first pane, for top-level sections.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `React.ReactNode` | - | The title shown at the top of the column. |
+
 Also accepts the props of `SplitViewPaneProps`.
 
 </ApiPart>
@@ -407,6 +437,10 @@ Also accepts the props of `SplitViewPaneProps`.
 
 The middle pane, for the items in a section.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `React.ReactNode` | - | The title shown at the top of the column. |
+
 Also accepts the props of `SplitViewPaneProps`.
 
 </ApiPart>
@@ -416,6 +450,10 @@ Also accepts the props of `SplitViewPaneProps`.
 ### SplitViewDetail
 
 The last pane, for the selected item.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `React.ReactNode` | - | The title shown at the top of the column. |
 
 Also accepts the props of `SplitViewPaneProps`.
 

@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="direction-demo" />
 
-The direction module re-exports `DirectionProvider` and `useDirection` from Base UI. `DirectionProvider` takes a `direction` of `ltr` or `rtl` and makes it available to Base UI components below it, so behaviors that depend on direction, such as arrow-key navigation and popup placement, follow the reading direction. `useDirection` returns the current direction for your own components.
+The direction module provides `DirectionProvider` and `useDirection` from the chosen base. `DirectionProvider` takes a `direction` of `ltr` or `rtl` and makes it available to the primitives below it, so behaviors that depend on direction, such as arrow-key navigation and popup placement, follow the reading direction. `useDirection` returns the current direction for your own components.
 
 The provider does not set the `dir` attribute on the page. Set `dir` on the `html` element or on a container yourself so that the browser and logical CSS properties flip the layout.
 

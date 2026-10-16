@@ -9,9 +9,9 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="avatar-demo" />
 
-Avatar wraps the Base UI Avatar primitive. An `Avatar` contains an `AvatarImage` and an `AvatarFallback`; the fallback shows while the image is loading or if it fails to load. Add an `AvatarBadge` to show a status dot or icon in the bottom-end corner.
+Avatar wraps the avatar primitive of the chosen base. An `Avatar` contains an `AvatarImage` and an `AvatarFallback`; the fallback shows while the image is loading or if it fails to load. Add an `AvatarBadge` to show a status dot or icon in the bottom-end corner.
 
-To show several people together, place avatars in an `AvatarGroup`, which overlaps them and rings each one with the surface color. End the group with an `AvatarGroupCount` to indicate how many more people there are.
+To show several people together, place avatars in an `AvatarGroup`, which overlaps them and rings each one with the background color. End the group with an `AvatarGroupCount` to indicate how many more people there are.
 
 ## Installation
 
@@ -128,7 +128,7 @@ The circular root that sets the size.
 | --- | --- | --- | --- |
 | `size` | `"default" \| "sm" \| "lg" \| "xl"` | `"default"` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
 
-Also accepts the props of `AvatarPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -138,7 +138,7 @@ Also accepts the props of `AvatarPrimitive.Root.Props`.
 
 The person's image, cropped to a circle.
 
-Also accepts the props of `AvatarPrimitive.Image.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -148,7 +148,7 @@ Also accepts the props of `AvatarPrimitive.Image.Props`.
 
 Content shown when the image is missing or still loading.
 
-Also accepts the props of `AvatarPrimitive.Fallback.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

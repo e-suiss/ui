@@ -9,7 +9,25 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="badge-demo" />
 
-`Badge` is a single element that renders a `span` by default. Use the `render` prop to render it as another element, such as a link. Badges can hold text and an icon on either side.
+`Badge` is a single element that renders a `span` by default and can render as another element, such as a link. Badges can hold text and an icon on either side.
+
+<OnlyBase base="base">
+
+Use the `render` prop to render the badge as another element: `render={<a href="/" />}`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` and pass the element as the only child to render the badge as it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns the element; spread the props it receives onto it.
+
+</OnlyBase>
 
 Use a badge to tag content with a short status or category. For actions, use Button instead.
 
@@ -73,7 +91,7 @@ Places icons before and after the label with `data-icon`.
 
 ### As link
 
-Renders the badge as a link with the `render` prop.
+Renders the badge as a link.
 
 <ComponentPreview name="badge-as-link" />
 
@@ -103,12 +121,12 @@ Also accepts the props of `useRender.ComponentProps<"span">`.
 
 - A badge is static text by default and is not focusable.
 - When rendered as a link, it shows a focus ring on keyboard focus.
-- `aria-invalid` adds a danger-colored border.
+- `aria-invalid` adds a `border-destructive` border.
 
 ## Notes
 
 - Styling hook: `data-slot="badge"`, plus `data-variant` from the render state.
-- The `destructive` variant also sets the focus ring color to `--color-danger`.
+- The `destructive` variant also tints the focus ring with `ring-destructive/20` (`ring-destructive/40` in dark mode).
 - Badges are a fixed `h-5` with fully rounded corners and do not wrap text.
 
 </Only>
@@ -217,19 +235,13 @@ npx expo install class-variance-authority cn
 
 1. Target iOS 17 or later.
 
-2. Add the Swift package to your app:
-
-```swift title="Package.swift"
-.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
-```
-
-3. Copy the theme files every view uses:
+2. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-4. Copy the source and every file it uses:
+3. Copy the source and every file it uses:
 
 <ComponentSource path="swift/Components/Badge.swift" />
 
@@ -237,17 +249,9 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
-
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
-5. Add the files to your app target.
+4. Add the files to your app target.
 
 </Only>
 
@@ -314,6 +318,11 @@ Badges with a leading icon.
 <ApiPart index={1}>
 
 ### Badge
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` | Visual style. |
+| `render` | `RenderProp` | - | Renders the badge as another element. |
 
 Also accepts the props of `BadgeProps`.
 

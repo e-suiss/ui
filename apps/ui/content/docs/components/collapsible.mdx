@@ -9,7 +9,25 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="collapsible-demo" />
 
-`Collapsible` wraps the Base UI Collapsible primitive. The `Collapsible` root holds the open state, a `CollapsibleTrigger` toggles it, and `CollapsibleContent` holds the content that is shown or hidden. The parts are unstyled, so you control layout and appearance with `className`, or render the trigger as another component such as `Button` with the `render` prop.
+`Collapsible` wraps the collapsible primitive of the chosen base. The `Collapsible` root holds the open state, a `CollapsibleTrigger` toggles it, and `CollapsibleContent` holds the content that is shown or hidden. The parts are unstyled, so you control layout and appearance with `className`, or render the trigger as another component such as `Button`.
+
+<OnlyBase base="base">
+
+Render the trigger as another component with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `CollapsibleTrigger` to render another component as the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Any `Button` with `slot="trigger"` inside `Collapsible` toggles it.
+
+</OnlyBase>
 
 Use a collapsible for a single disclosure region. For a set of related, stacked sections, use an accordion instead.
 
@@ -47,6 +65,8 @@ npm install @base-ui/react
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <div className="w-80">
   <Collapsible className="flex flex-col gap-2">
@@ -78,6 +98,79 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
   </Collapsible>
 </div>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="w-80">
+  <Collapsible className="flex flex-col gap-2">
+    <div className="flex items-center justify-between gap-4 px-3">
+      <span className="text-sm font-medium">
+        @ademceper starred 3 repositories
+      </span>
+      <CollapsibleTrigger asChild>
+        <Button variant="ghost" size="icon-sm" aria-label="Toggle list">
+          <CaretUpDownIcon />
+        </Button>
+      </CollapsibleTrigger>
+    </div>
+    <div className="bg-muted rounded-2xl px-4 py-2 text-sm">
+      {repositories[0]}
+    </div>
+    <CollapsibleContent className="flex flex-col gap-2">
+      {repositories.slice(1).map((repository) => (
+        <div
+          key={repository}
+          className="bg-muted rounded-2xl px-4 py-2 text-sm"
+        >
+          {repository}
+        </div>
+      ))}
+    </CollapsibleContent>
+  </Collapsible>
+</div>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="w-80">
+  <Collapsible className="flex flex-col gap-2">
+    <div className="flex items-center justify-between gap-4 px-3">
+      <span className="text-sm font-medium">
+        @ademceper starred 3 repositories
+      </span>
+      <Button
+        slot="trigger"
+        variant="ghost"
+        size="icon-sm"
+        aria-label="Toggle list"
+      >
+        <CaretUpDownIcon />
+      </Button>
+    </div>
+    <div className="bg-muted rounded-2xl px-4 py-2 text-sm">
+      {repositories[0]}
+    </div>
+    <CollapsibleContent className="flex flex-col gap-2">
+      {repositories.slice(1).map((repository) => (
+        <div
+          key={repository}
+          className="bg-muted rounded-2xl px-4 py-2 text-sm"
+        >
+          {repository}
+        </div>
+      ))}
+    </CollapsibleContent>
+  </Collapsible>
+</div>
+```
+
+</OnlyBase>
 
 The root is uncontrolled by default; set `defaultOpen` to start expanded. To control it, pass `open` and `onOpenChange`. Set `disabled` on the root to prevent toggling. While collapsed, the content is removed from the page.
 
@@ -111,7 +204,7 @@ A disabled collapsible whose trigger does not toggle the content.
 
 The root that holds the open state and groups the trigger and content.
 
-Also accepts the props of `CollapsiblePrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -121,7 +214,7 @@ Also accepts the props of `CollapsiblePrimitive.Root.Props`.
 
 The button that toggles the content open and closed.
 
-Also accepts the props of `CollapsiblePrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -131,7 +224,7 @@ Also accepts the props of `CollapsiblePrimitive.Trigger.Props`.
 
 The panel that is shown when the collapsible is open.
 
-Also accepts the props of `CollapsiblePrimitive.Panel.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -144,7 +237,7 @@ Also accepts the props of `CollapsiblePrimitive.Panel.Props`.
 ## Notes
 
 - Styling hooks: `data-slot="collapsible"`, `data-slot="collapsible-trigger"` and `data-slot="collapsible-content"`.
-- Base UI sets state attributes such as `data-open` and `data-closed` on the parts, which you can use for styling and animation.
+- The primitive sets state attributes on the parts, which you can use for styling and animation.
 - No styles are applied by default.
 
 </Only>

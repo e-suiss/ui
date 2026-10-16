@@ -1,6 +1,6 @@
 ---
 title: Radar Chart Grid Filled
-description: "A borderless radar shape over shaded circular rings separated by surface-colored lines."
+description: "A borderless radar shape over shaded circular rings separated by card-colored lines."
 eyebrow: Chart
 platforms: [web, rn, swift, kotlin]
 ---
@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview type="chart" name="radar-chart-grid-filled" />
 
-A borderless radar shape over shaded circular bands, separated by lines in the card's surface color. Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.
+A borderless radar shape over shaded circular bands, separated by lines in the card's background color (`muted`). Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.
 
 ## Installation
 
@@ -71,7 +71,7 @@ The gaps between bands use the card's background color, so place this chart on t
 
 </NativeExample>
 
-A `RadarChart` whose circular `PolarGrid` is filled with the control color and separated by strokes in the card color. The single `Radar` series has no stroke. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.
+A `RadarChart` whose circular `PolarGrid` is filled with the `secondary` color and separated by strokes in the card color. The single `Radar` series has no stroke. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.
 
 ## Installation
 
@@ -157,29 +157,19 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Target iOS 17 or later.
 
-2. Add the Swift package to your app:
-
-```swift title="Package.swift"
-.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
-```
-
-3. Copy the theme files every view uses:
+2. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-4. Copy the source and every file it uses:
+3. Copy the source and every file it uses:
 
 <ComponentSource path="swift/Charts/RadarChartGridFilled.swift" />
 
 <ComponentSource path="swift/Components/Card.swift" />
 
 <ComponentSource path="swift/Components/Chart.swift" />
-
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
 
 <ComponentSource path="swift/Components/Haptics.swift" />
 
@@ -189,7 +179,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
-5. Add the files to your app target.
+4. Add the files to your app target.
 
 </Only>
 

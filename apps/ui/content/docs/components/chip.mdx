@@ -290,6 +290,16 @@ A disabled group.
 
 Selectable pill.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `boolean` | - | Whether the chip is selected, for controlled use. |
+| `defaultSelected` | `boolean` | - | Whether the chip starts selected when uncontrolled. |
+| `onSelectedChange` | `(selected: boolean, details) => void` | - | Called when the chip is toggled. |
+| `size` | `"default" \| "sm"` | `"default"` | The chip height; inherited from a surrounding group. |
+| `icon` | `PhosphorIcon` | - | An icon shown before the label. |
+| `onRemove` | `() => void` | - | Shows a remove button and is called when it is pressed. |
+| `removeLabel` | `string` | `"Remove"` | Accessibility label of the remove button. |
+
 Also accepts the props of `ChipProps`.
 
 </ApiPart>

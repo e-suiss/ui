@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="dialog-demo" />
 
-Dialog wraps the Base UI Dialog. The `Dialog` root manages the open state, and `DialogTrigger` opens it. `DialogContent` renders the window in a portal over a dimmed `DialogOverlay`, with a close button in the top corner by default. Inside it, `DialogHeader` holds the `DialogTitle` and `DialogDescription`, and `DialogFooter` holds the actions. `DialogClose` closes the dialog from any element.
+Dialog wraps the dialog primitive of the chosen base. The `Dialog` root manages the open state, and `DialogTrigger` opens it. `DialogContent` renders the window in a portal over a dimmed `DialogOverlay`, with a close button in the top corner by default. Inside it, `DialogHeader` holds the `DialogTitle` and `DialogDescription`, and `DialogFooter` holds the actions. `DialogClose` closes the dialog from any element.
 
 Use a dialog for a short, focused task such as editing a few fields. To confirm a destructive or important action that needs an explicit response, consider an alert dialog. For larger content that slides in from an edge, use a sheet or drawer.
 
@@ -49,6 +49,8 @@ npm install @base-ui/react @phosphor-icons/react
 import { Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <Dialog>
   <DialogTrigger render={<Button variant="outline" />}>
@@ -81,7 +83,95 @@ import { Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, Dialog
 </Dialog>
 ```
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<Dialog>
+  <DialogTrigger asChild>
+    <Button variant="outline">Edit profile</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Edit profile</DialogTitle>
+      <DialogDescription>
+        Update your name and username. Click save when you are done.
+      </DialogDescription>
+    </DialogHeader>
+    <div className="grid gap-4">
+      <div className="grid gap-2">
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" defaultValue="Ada Lovelace" />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="username">Username</Label>
+        <Input id="username" defaultValue="@ada" />
+      </div>
+    </div>
+    <DialogFooter>
+      <DialogClose asChild>
+        <Button variant="secondary">Cancel</Button>
+      </DialogClose>
+      <Button>Save changes</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Dialog>
+  <Button variant="outline">Edit profile</Button>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Edit profile</DialogTitle>
+      <DialogDescription>
+        Update your name and username. Click save when you are done.
+      </DialogDescription>
+    </DialogHeader>
+    <div className="grid gap-4">
+      <div className="grid gap-2">
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" defaultValue="Ada Lovelace" />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="username">Username</Label>
+        <Input id="username" defaultValue="@ada" />
+      </div>
+    </div>
+    <DialogFooter>
+      <Button slot="close" variant="secondary">
+        Cancel
+      </Button>
+      <Button>Save changes</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+</OnlyBase>
+
+<OnlyBase base="base">
+
 The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Use `DialogClose` with `render` for a Cancel button.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `asChild` on `DialogTrigger` to render your own `Button` as the trigger, and on `DialogClose` for a Cancel button.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`. The first pressable child of `Dialog`, such as a `Button`, opens it. Give a `Button` `slot="close"` for a Cancel button.
+
+</OnlyBase>
 
 Set `showCloseButton={false}` on `DialogContent` to remove the corner close button, and set `closeLabel` to replace its icon with a text label. Set `showCloseButton` on `DialogFooter` to add a secondary Close button to the actions. The footer stacks its actions in reverse order on small screens and aligns them to the end on wider screens.
 
@@ -120,7 +210,7 @@ A dialog that confirms deleting a project, with a destructive action and a Cance
 
 The root that manages the dialog's open state.
 
-Also accepts the props of `DialogPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -130,7 +220,7 @@ Also accepts the props of `DialogPrimitive.Root.Props`.
 
 The button that opens the dialog.
 
-Also accepts the props of `DialogPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -140,7 +230,7 @@ Also accepts the props of `DialogPrimitive.Trigger.Props`.
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Also accepts the props of `DialogPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -150,7 +240,7 @@ Also accepts the props of `DialogPrimitive.Portal.Props`.
 
 A button that closes the dialog.
 
-Also accepts the props of `DialogPrimitive.Close.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -160,7 +250,7 @@ Also accepts the props of `DialogPrimitive.Close.Props`.
 
 The dimmed layer behind the dialog.
 
-Also accepts the props of `DialogPrimitive.Backdrop.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -175,7 +265,7 @@ The dialog window, rendered in a portal with an overlay and an optional close bu
 | `showCloseButton` | `boolean` | `true` | Shows the close button in the top corner. |
 | `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
 
-Also accepts the props of `DialogPrimitive.Popup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -209,7 +299,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The dialog's title, which also names it for assistive technology.
 
-Also accepts the props of `DialogPrimitive.Title.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -219,7 +309,7 @@ Also accepts the props of `DialogPrimitive.Title.Props`.
 
 Supporting text that describes the dialog for assistive technology.
 
-Also accepts the props of `DialogPrimitive.Description.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -280,7 +370,7 @@ npx @esuiss/ui@latest add dialog --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -296,13 +386,17 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/dialog.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/dialog.tsx`:
 
 <ComponentSource path="uniwind/components/ui/dialog.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -314,13 +408,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/dialog.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/dialog.tsx`:
 
 <ComponentSource path="nativewind/components/ui/dialog.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -332,13 +430,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/dialog.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/dialog.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/dialog.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/dialog.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -370,15 +472,7 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
 <ComponentSource path="swift/Components/Overlay.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
@@ -472,6 +566,22 @@ A text close button through `closeLabel`.
 
 <ApiPart index={1}>
 
+### Dialog
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the dialog is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the dialog starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the dialog opens or closes. |
+| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
+| `disablePointerDismissal` | `boolean` | `false` | Keeps the dialog open when the overlay is tapped. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### DialogOverlay
 
 Dimmed scrim that closes the dialog when tapped.
@@ -480,7 +590,7 @@ Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Backdrop>
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### DialogContent
 
@@ -496,7 +606,7 @@ Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Popup>`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### DialogHeader
 
@@ -506,7 +616,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### DialogFooter
 
@@ -520,7 +630,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### DialogTitle
 
@@ -530,7 +640,7 @@ Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Title>`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### DialogDescription
 

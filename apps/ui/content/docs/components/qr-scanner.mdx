@@ -1,5 +1,5 @@
 ---
-title: Qr Scanner
+title: QR Scanner
 description: "A camera overlay with a rounded cut-out scan frame, rounded corner brackets, an optional scan line and an optional flashlight toggle."
 eyebrow: Component
 platforms: [rn, swift, kotlin]
@@ -45,7 +45,7 @@ npx @esuiss/ui@latest add qr-scanner --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -61,13 +61,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/qr-scanner.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/qr-scanner.tsx`:
 
 <ComponentSource path="uniwind/components/ui/qr-scanner.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -79,13 +83,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/qr-scanner.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/qr-scanner.tsx`:
 
 <ComponentSource path="nativewind/components/ui/qr-scanner.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -97,13 +105,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, `components/primitives/hooks.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/qr-scanner.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/qr-scanner.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/qr-scanner.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -278,7 +290,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 - The dimmed surround and brackets are hidden from VoiceOver and TalkBack.
 - The overlay is a polite live region, so changes to the title and description are announced on Android.
 - The flashlight button has the `button` role, uses `torchLabel` as its label and reports `torch` as its selected state.
-- State changes to `success` and `error` play a matching haptic notification.
+- State changes to `success` and `error` play a matching haptic notification when a haptics adapter is provided through `HapticsContext`.
 - The shake and scan-line animations respect the system reduce motion setting, and the success scale is skipped when reduce motion is on.
 
 ## Notes

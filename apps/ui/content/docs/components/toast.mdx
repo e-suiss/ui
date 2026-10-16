@@ -208,18 +208,28 @@ Also accepts the props of `ToastPrimitive.Provider.Props`.
 
 ## Notes
 
-- On small screens the stack spans the bottom of the screen; from the `sm` breakpoint it sits in the bottom end corner, up to `max-w-sm` wide.
+- On small screens the stack is centered at the bottom, inset from the edges and up to `max-w-sm` wide; from the `sm` breakpoint it sits in the bottom end corner, up to `max-w-sm` wide.
 - Toasts can be swiped away; the exit animation follows the swipe direction.
 - Parts carry `data-slot` attributes such as `toast-viewport`, `toast`, `toast-content`, `toast-icon` and `toast-close`.
-- Icons are filled Phosphor icons in `text-green-500`, `text-primary`, `text-orange-500` and `text-destructive`; the loading ring uses `stroke-primary`. The ring's progress animation is removed when reduced motion is preferred.
+- Status icons are solid circles filled with `fill-green-500`, `fill-primary`, `fill-orange-500` and `fill-destructive`, with a white glyph (`text-primary-foreground` on the info icon); the loading ring uses `stroke-primary`. The ring's progress animation is removed when reduced motion is preferred.
 
 </Only>
 
 <Only platform="rn swift kotlin">
 
+<Only platform="rn">
+
 <NativeExample id="components-toast--default" />
 
-`Toaster` wraps your app in a toast provider and renders the queue through a portal into a full-screen viewport. On iOS the viewport sits inside a `FullWindowOverlay` from `react-native-screens`, so toasts appear above native modals. Each toast is a Reanimated view that slides in from the bottom edge, fades out downward, and is capped at 384 points wide.
+</Only>
+
+`Toaster` wraps your app in a toast provider and renders the queue into a full-screen viewport. Each toast slides in from the bottom edge, fades out downward, and is capped at 384 points wide.
+
+<Only platform="rn">
+
+The viewport renders through a portal. On iOS it sits inside a `FullWindowOverlay` from `react-native-screens`, so toasts appear above native modals. Each toast is a Reanimated view.
+
+</Only>
 
 Visible toasts stack with a small peek and shrink behind the frontmost one. Touching the stack expands it; it collapses again three seconds after the touch ends. Each toast shows an icon for its `type` (`success`, `info`, `warning`, `error`, or a spinner for `loading`), a title, a description, an optional action button and a close button.
 
@@ -255,7 +265,7 @@ npx @esuiss/ui@latest add toast --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -271,13 +281,17 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/toast.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/toast.tsx`:
 
 <ComponentSource path="uniwind/components/ui/toast.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -289,13 +303,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/toast.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/toast.tsx`:
 
 <ComponentSource path="nativewind/components/ui/toast.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -307,13 +325,17 @@ npx expo install cn nativewind phosphor-react-native react-native-reanimated rea
 npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/toast.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/toast.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/toast.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/toast.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -344,14 +366,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 <ComponentSource path="swift/Components/Button.swift" />
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
-
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
@@ -414,11 +428,15 @@ Use `createToastManager` to create a separate manager and pass it to `Toaster` a
 
 ## Examples
 
+<Only platform="rn">
+
 ### Show on load
 
 Shows a success toast as soon as the screen mounts.
 
 <NativeExample id="components-toast--show-on-load" />
+
+</Only>
 
 ## API Reference
 

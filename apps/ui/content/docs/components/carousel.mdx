@@ -173,6 +173,14 @@ Testimonials advancing every six seconds.
 
 The root region that owns the Embla instance, keyboard handling and autoplay state.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `opts` | `CarouselOptions` | - | Options passed to Embla Carousel. |
+| `plugins` | `CarouselPlugin` | - | Embla Carousel plugins. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | The scroll direction. |
+| `setApi` | `(api: CarouselApi) => void` | - | Receives the Embla Carousel API once it is ready. |
+| `autoplay` | `boolean \| number` | `false` | Advances the slides automatically; a number sets the delay in milliseconds. |
+
 Also accepts the props of `React.ComponentProps<"div">`, `CarouselProps`.
 
 </ApiPart>
@@ -308,7 +316,7 @@ npx @esuiss/ui@latest add carousel --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon).
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -324,13 +332,17 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/carousel.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/carousel.tsx`:
 
 <ComponentSource path="uniwind/components/ui/carousel.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -342,13 +354,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/carousel.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/carousel.tsx`:
 
 <ComponentSource path="nativewind/components/ui/carousel.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -360,13 +376,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), and the primitives `components/primitives/carousel.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/carousel.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/carousel.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/carousel.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -397,14 +417,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 <ComponentSource path="swift/Components/Button.swift" />
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
-
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 

@@ -49,6 +49,8 @@ npm install @base-ui/react
 import { Flyout, FlyoutTrigger, FlyoutContent, FlyoutHeader, FlyoutTitle, FlyoutDescription, FlyoutBody, FlyoutClose } from "@/components/patterns/flyout"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <Flyout>
@@ -85,7 +87,89 @@ import { Flyout, FlyoutTrigger, FlyoutContent, FlyoutHeader, FlyoutTitle, Flyout
 </div>
 ```
 
-The flyout can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. `align`, `alignOffset`, `side` and `sideOffset` on `FlyoutContent` position the desktop popover and are ignored on mobile. Put interactive content in `FlyoutBody`, and use `FlyoutClose` for a button that closes the flyout after an action.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Flyout>
+    <FlyoutTrigger asChild>
+      <Button variant="outline">Dimensions</Button>
+    </FlyoutTrigger>
+    <FlyoutContent>
+      <FlyoutHeader>
+        <FlyoutTitle>Dimensions</FlyoutTitle>
+        <FlyoutDescription>
+          Set the dimensions for the layer.
+        </FlyoutDescription>
+      </FlyoutHeader>
+      <FlyoutBody className="grid gap-3">
+        <div className="grid grid-cols-3 items-center gap-3">
+          <Label htmlFor="flyout-width">Width</Label>
+          <Input
+            id="flyout-width"
+            defaultValue="100%"
+            className="col-span-2"
+          />
+        </div>
+        <div className="grid grid-cols-3 items-center gap-3">
+          <Label htmlFor="flyout-height">Height</Label>
+          <Input
+            id="flyout-height"
+            defaultValue="25px"
+            className="col-span-2"
+          />
+        </div>
+      </FlyoutBody>
+    </FlyoutContent>
+  </Flyout>
+</div>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Flyout>
+    <FlyoutTrigger className={buttonVariants({ variant: "outline" })}>
+      Dimensions
+    </FlyoutTrigger>
+    <FlyoutContent>
+      <FlyoutHeader>
+        <FlyoutTitle>Dimensions</FlyoutTitle>
+        <FlyoutDescription>
+          Set the dimensions for the layer.
+        </FlyoutDescription>
+      </FlyoutHeader>
+      <FlyoutBody className="grid gap-3">
+        <div className="grid grid-cols-3 items-center gap-3">
+          <Label htmlFor="flyout-width">Width</Label>
+          <Input
+            id="flyout-width"
+            defaultValue="100%"
+            className="col-span-2"
+          />
+        </div>
+        <div className="grid grid-cols-3 items-center gap-3">
+          <Label htmlFor="flyout-height">Height</Label>
+          <Input
+            id="flyout-height"
+            defaultValue="25px"
+            className="col-span-2"
+          />
+        </div>
+      </FlyoutBody>
+    </FlyoutContent>
+  </Flyout>
+</div>
+```
+
+</OnlyBase>
+
+The flyout is uncontrolled with `defaultOpen`, or controlled with `onOpenChange` and the open-state prop (`isOpen` on the `aria` base, `open` on the others). `align`, `alignOffset`, `side` and `sideOffset` on `FlyoutContent` position the desktop popover and are ignored on mobile. Put interactive content in `FlyoutBody`, and use `FlyoutClose` for a button that closes the flyout after an action.
 
 ## Examples
 
@@ -155,6 +239,18 @@ The button that opens the flyout.
 
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
 
+<OnlyBase base="radix">
+
+On the `radix` base, set `asChild` and pass your element as the child instead of `render`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+On the `aria` base, `render` is not available; style the trigger with `className`, for example `buttonVariants({ variant: "outline" })`.
+
+</OnlyBase>
+
 </ApiPart>
 
 <ApiPart index={3}>
@@ -223,6 +319,18 @@ A button that closes the flyout.
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
 
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+<OnlyBase base="radix">
+
+On the `radix` base, set `asChild` and pass your element as the child instead of `render`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+On the `aria` base, `render` is not available; style the button with `className`, for example `buttonVariants({ variant: "secondary" })`.
+
+</OnlyBase>
 
 </ApiPart>
 

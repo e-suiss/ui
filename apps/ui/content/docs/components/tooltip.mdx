@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="tooltip-demo" />
 
-`Tooltip` wraps the Base UI Tooltip primitive. `TooltipTrigger` is the element that shows the tooltip, and `TooltipContent` renders the dark label with an arrow in a portal, positioned beside the trigger. `TooltipProvider` shares open delays across a group of tooltips.
+`Tooltip` wraps the tooltip primitive of the chosen base. `TooltipTrigger` is the element that shows the tooltip, and `TooltipContent` renders the dark label with an arrow in a portal, positioned beside the trigger. `TooltipProvider` shares open delays across a group of tooltips.
 
 Use tooltips to name icon-only buttons or show a keyboard shortcut. Keep the text short and don't put essential information or interactive content in a tooltip; use `Popover` for that.
 
@@ -47,6 +47,8 @@ npm install @base-ui/react
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <TooltipProvider>
   <div className="p-12">
@@ -60,7 +62,59 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/comp
 </TooltipProvider>
 ```
 
-Use the `render` prop on `TooltipTrigger` to render it as a `Button`. Set `side` on `TooltipContent` to place the tooltip on another side; it opens above the trigger by default, `4px` away. Place a `Kbd` inside `TooltipContent` to show a shortcut.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<TooltipProvider>
+  <div className="p-12">
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button variant="outline">Hover me</Button>
+      </TooltipTrigger>
+      <TooltipContent side="top">Add to library</TooltipContent>
+    </Tooltip>
+  </div>
+</TooltipProvider>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<TooltipProvider>
+  <div className="p-12">
+    <Tooltip>
+      <Button variant="outline">Hover me</Button>
+      <TooltipContent side="top">Add to library</TooltipContent>
+    </Tooltip>
+  </div>
+</TooltipProvider>
+```
+
+</OnlyBase>
+
+Set `side` on `TooltipContent` to place the tooltip on another side; it opens above the trigger by default, `4px` away. Place a `Kbd` inside `TooltipContent` to show a shortcut.
+
+<OnlyBase base="base">
+
+Use the `render` prop on `TooltipTrigger` to render it as a `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `TooltipTrigger` to render a `Button` as the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The `Button` placed first inside `Tooltip` is the trigger.
+
+</OnlyBase>
 
 Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delay` to `0`, so tooltips open without waiting.
 
@@ -95,7 +149,7 @@ Names an icon button and shows its keyboard shortcut with `Kbd`.
 
 Shares delay timing across the tooltips inside it.
 
-Also accepts the props of `TooltipPrimitive.Provider.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -105,7 +159,7 @@ Also accepts the props of `TooltipPrimitive.Provider.Props`.
 
 The root that holds a tooltip's open state.
 
-Also accepts the props of `TooltipPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -115,7 +169,7 @@ Also accepts the props of `TooltipPrimitive.Root.Props`.
 
 The element that shows the tooltip on hover or focus.
 
-Also accepts the props of `TooltipPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -125,7 +179,7 @@ Also accepts the props of `TooltipPrimitive.Trigger.Props`.
 
 The positioned label with its arrow, rendered in a portal.
 
-Also accepts the props of `TooltipPrimitive.Popup.Props`, `TooltipPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 

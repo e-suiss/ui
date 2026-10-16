@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="radio-group-demo" />
 
-Radio Group wraps Base UI's Radio Group and Radio. `RadioGroup` holds the selected value and contains one `RadioGroupItem` per option. Each item renders a round control with an indicator dot when checked; pair it with a `Label` to give it visible text.
+Radio Group wraps the radio group primitive of the chosen base. `RadioGroup` holds the selected value and contains one `RadioGroupItem` per option. Each item renders a round control with an indicator dot when checked; pair it with a `Label` to give it visible text.
 
 Use a radio group for a small set of mutually exclusive options that should all stay visible. Use Select or Native Select for longer lists, and Checkbox when several options can be selected.
 
@@ -86,7 +86,7 @@ A fully disabled group that ignores clicks.
 
 ### Invalid
 
-Items marked with `aria-invalid` and shown with a danger border.
+Items marked with `aria-invalid` and shown with a destructive border.
 
 <ComponentPreview name="radio-group-invalid" />
 
@@ -105,7 +105,7 @@ Items marked with `aria-invalid` and shown with a danger border.
 
 The container that manages the selected value and keyboard navigation.
 
-Also accepts the props of `RadioGroupPrimitive.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -115,7 +115,7 @@ Also accepts the props of `RadioGroupPrimitive.Props`.
 
 A single radio button with a checked indicator.
 
-Also accepts the props of `RadioPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -129,7 +129,7 @@ Also accepts the props of `RadioPrimitive.Root.Props`.
 
 ## Notes
 
-- Styling hooks: `data-slot` values `radio-group`, `radio-group-item` and `radio-group-indicator`. Base UI sets `data-checked`, `data-unchecked` and `data-disabled` on items.
+- Styling hooks: `data-slot` values `radio-group`, `radio-group-item` and `radio-group-indicator`.
 - Items carry the `peer` class, so a following `Label` can react to their state.
 - Uses the `primary`, `primary-foreground` and `destructive` colors, and `opacity-50` when disabled.
 
@@ -330,7 +330,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 Give every `RadioGroupItem` a unique `value`. Control the group with `value` and `onValueChange(value, details)`, or leave it uncontrolled with `defaultValue`. Values are generic, so they can be strings or other types.
 
-Put a `Label` next to each item and link it through `nativeID` and `accessibilityLabelledBy`. Set `disabled` on the group to disable all items, or on a single item. Set `invalid` on items to show the danger border.
+Put a `Label` next to each item and link it through `nativeID` and `accessibilityLabelledBy`. Set `disabled` on the group to disable all items, or on a single item. Set `invalid` on items to show the destructive border.
 
 ## Examples
 
@@ -378,7 +378,7 @@ A single radio button with its checked indicator.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `invalid` | `boolean` | - | Shows a danger border while unchecked. |
+| `invalid` | `boolean` | - | Shows a destructive border while unchecked. |
 
 Also accepts the props of `RadioPrimitive.RootProps<Value>`.
 

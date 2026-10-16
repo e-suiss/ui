@@ -45,6 +45,8 @@ npx @esuiss/ui@latest add patterns panel
 import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescription, PanelBody, PanelFooter, PanelClose } from "@/components/patterns/panel"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <Panel>
@@ -56,10 +58,61 @@ import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescri
 </div>
 ```
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Panel>
+    <PanelTrigger asChild>
+      <Button variant="outline">Edit profile</Button>
+    </PanelTrigger>
+    <ProfilePanel />
+  </Panel>
+</div>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Panel>
+    <PanelTrigger className={buttonVariants({ variant: "outline" })}>
+      Edit profile
+    </PanelTrigger>
+    <ProfilePanel />
+  </Panel>
+</div>
+```
+
+</OnlyBase>
+
 - Compose `PanelTrigger` and `PanelContent` inside `Panel`. All parts must be used inside `Panel`, or they throw.
+- Put scrollable or form content in `PanelBody`, which applies padding that matches each presentation.
+
+<OnlyBase base="base">
+
 - Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `open` with `onOpenChange` to control it.
 - Use the `render` prop on `PanelTrigger` and `PanelClose` to render them as a suiss/ui `Button`.
-- Put scrollable or form content in `PanelBody`, which applies padding that matches each presentation.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `open` with `onOpenChange` to control it.
+- Set `asChild` on `PanelTrigger` and `PanelClose` to render a suiss/ui `Button` in their place.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `isOpen` with `onOpenChange` to control it.
+- Style `PanelTrigger` and `PanelClose` with `buttonVariants` to make them look like a suiss/ui `Button`.
+
+</OnlyBase>
 
 ## Examples
 
@@ -128,6 +181,12 @@ The button that opens the panel.
 | `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
 
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+<OnlyBase base="aria">
+
+On the `aria` base, `render` is not available; style the trigger with `className`, for example `buttonVariants({ variant: "outline" })`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -208,6 +267,12 @@ A button that closes the panel.
 | `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
 
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+<OnlyBase base="aria">
+
+On the `aria` base, `render` is not available; style the button with `className`, for example `buttonVariants({ variant: "secondary" })`.
+
+</OnlyBase>
 
 </ApiPart>
 

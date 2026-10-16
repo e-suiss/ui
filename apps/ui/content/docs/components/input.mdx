@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="input-demo" />
 
-`Input` wraps the Base UI `Input` primitive and renders a native `input` element with a filled control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for three heights.
+`Input` renders a native `input` element with a filled control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for three heights.
 
 Use it for short, free-form values. For multi-line text use a textarea, for icons, buttons or text attached to the field use `InputGroup`, and for one-time codes use `InputOTP`.
 
@@ -128,7 +128,7 @@ Also accepts the props of `React.ComponentProps<"input">`.
 
 <NativeExample id="components-input--default" />
 
-`Input` wraps a `TextInput` through the field control primitive. It tracks its own focused, filled, invalid and disabled state and styles itself from that state: a focus border while editing, a danger border and tint when invalid, and muted colors when disabled.
+`Input` wraps a `TextInput` through the field control primitive. It tracks its own focused, filled, invalid and disabled state and styles itself from that state: a focus border while editing, a destructive border and tint when invalid, and 50% opacity when disabled.
 
 It comes in three sizes: `default` (44 pt), `md` and `sm`. Use the default size for forms on a full screen, and the smaller sizes inside dense layouts such as toolbars or sheets.
 
@@ -226,19 +226,13 @@ npx expo install cn nativewind
 
 1. Target iOS 17 or later.
 
-2. Add the Swift package to your app:
-
-```swift title="Package.swift"
-.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
-```
-
-3. Copy the theme files every view uses:
+2. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-4. Copy the source and every file it uses:
+3. Copy the source and every file it uses:
 
 <ComponentSource path="swift/Components/Input.swift" />
 
@@ -246,17 +240,13 @@ npx expo install cn nativewind
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
-5. Add the files to your app target.
+4. Add the files to your app target.
 
 </Only>
 

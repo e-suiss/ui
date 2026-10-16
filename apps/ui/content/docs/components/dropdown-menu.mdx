@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="dropdown-menu-demo" />
 
-Dropdown menu wraps the Base UI Menu. The `DropdownMenu` root manages the open state and `DropdownMenuTrigger` opens it. `DropdownMenuContent` renders the menu in a portal, positioned below the trigger. Inside it, use `DropdownMenuItem` for actions, `DropdownMenuCheckboxItem` for toggles, and `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` for a single choice. Organize items with `DropdownMenuGroup`, `DropdownMenuLabel` and `DropdownMenuSeparator`, and nest a submenu with `DropdownMenuSub`, `DropdownMenuSubTrigger` and `DropdownMenuSubContent`. `DropdownMenuShortcut` displays a keyboard shortcut at the end of an item.
+Dropdown menu wraps the menu primitive of the chosen base. The `DropdownMenu` root manages the open state and `DropdownMenuTrigger` opens it. `DropdownMenuContent` renders the menu in a portal, positioned below the trigger. Inside it, use `DropdownMenuItem` for actions, `DropdownMenuCheckboxItem` for toggles, and `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` for a single choice. Organize items with `DropdownMenuGroup`, `DropdownMenuLabel` and `DropdownMenuSeparator`, and nest a submenu with `DropdownMenuSub`, `DropdownMenuSubTrigger` and `DropdownMenuSubContent`. `DropdownMenuShortcut` displays a keyboard shortcut at the end of an item.
 
 Use a dropdown menu for actions and settings behind a visible button. For actions on an object opened with a right-click, use a context menu; to choose a value for a form field, use a select.
 
@@ -48,6 +48,8 @@ npm install @base-ui/react @phosphor-icons/react
 ```tsx
 import { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut } from "@/components/ui/dropdown-menu"
 ```
+
+<OnlyBase base="base">
 
 ```tsx
 <DropdownMenu>
@@ -105,7 +107,157 @@ import { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuCont
 </DropdownMenu>
 ```
 
-The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Selecting an item closes the menu.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">Open menu</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent className="w-56">
+    <DropdownMenuGroup>
+      <DropdownMenuLabel>My account</DropdownMenuLabel>
+      <DropdownMenuItem>
+        <UserIcon />
+        Profile
+        <DropdownMenuShortcut mod>⇧P</DropdownMenuShortcut>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <CreditCardIcon />
+        Billing
+        <DropdownMenuShortcut mod>B</DropdownMenuShortcut>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <GearIcon />
+        Settings
+        <DropdownMenuShortcut mod>,</DropdownMenuShortcut>
+      </DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <UserPlusIcon />
+        Invite users
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent>
+        <DropdownMenuItem>
+          <EnvelopeIcon />
+          Email
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <ChatCircleIcon />
+          Message
+        </DropdownMenuItem>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
+    <DropdownMenuItem disabled>API access</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive">
+      <TrashIcon />
+      Delete account
+    </DropdownMenuItem>
+    <DropdownMenuItem>
+      <SignOutIcon />
+      Log out
+      <DropdownMenuShortcut mod>⇧Q</DropdownMenuShortcut>
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<DropdownMenu>
+  <Button variant="outline">Open menu</Button>
+  <DropdownMenuContent className="w-56">
+    <DropdownMenuGroup>
+      <DropdownMenuLabel>My account</DropdownMenuLabel>
+      <DropdownMenuItem>
+        <UserIcon />
+        Profile
+        <DropdownMenuShortcut mod>⇧P</DropdownMenuShortcut>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <CreditCardIcon />
+        Billing
+        <DropdownMenuShortcut mod>B</DropdownMenuShortcut>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <GearIcon />
+        Settings
+        <DropdownMenuShortcut mod>,</DropdownMenuShortcut>
+      </DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <UserPlusIcon />
+        Invite users
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent>
+        <DropdownMenuItem>
+          <EnvelopeIcon />
+          Email
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <ChatCircleIcon />
+          Message
+        </DropdownMenuItem>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
+    <DropdownMenuItem disabled>API access</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive">
+      <TrashIcon />
+      Delete account
+    </DropdownMenuItem>
+    <DropdownMenuItem>
+      <SignOutIcon />
+      Log out
+      <DropdownMenuShortcut mod>⇧Q</DropdownMenuShortcut>
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+</OnlyBase>
+
+<OnlyBase base="base">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `asChild` on `DropdownMenuTrigger` to render your own `Button` as the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`. The `Button` placed first inside `DropdownMenu` opens it.
+
+</OnlyBase>
+
+Selecting a regular item closes the menu.
+
+<OnlyBase base="base radix">
+
+Checkbox and radio items keep the menu open so several choices can be made in a row.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Checkbox items keep the menu open so several can be toggled in a row; choosing a radio item closes it.
+
+</OnlyBase>
 
 Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Set `inset` on items and labels without an icon to align their text with items that have one, and set `variant="destructive"` on items that delete or remove something.
 
@@ -156,7 +308,7 @@ A labelled group of inset items without icons, each with a keyboard shortcut.
 
 The root that manages the menu's open state.
 
-Also accepts the props of `MenuPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -166,7 +318,7 @@ Also accepts the props of `MenuPrimitive.Root.Props`.
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Also accepts the props of `MenuPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -176,7 +328,7 @@ Also accepts the props of `MenuPrimitive.Portal.Props`.
 
 The button that opens the menu.
 
-Also accepts the props of `MenuPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -186,7 +338,7 @@ Also accepts the props of `MenuPrimitive.Trigger.Props`.
 
 The menu panel, rendered in a portal and positioned relative to the trigger.
 
-Also accepts the props of `MenuPrimitive.Popup.Props`, `MenuPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
@@ -196,7 +348,7 @@ Also accepts the props of `MenuPrimitive.Popup.Props`, `MenuPrimitive.Positioner
 
 Groups related items.
 
-Also accepts the props of `MenuPrimitive.Group.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -210,7 +362,7 @@ A heading for a group of items.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the label aligns with items that have an icon or indicator. |
 
-Also accepts the props of `MenuPrimitive.GroupLabel.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -225,7 +377,7 @@ An action in the menu.
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
 | `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `destructive` color. |
 
-Also accepts the props of `MenuPrimitive.Item.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -235,7 +387,7 @@ Also accepts the props of `MenuPrimitive.Item.Props`.
 
 The root of a nested submenu.
 
-Also accepts the props of `MenuPrimitive.SubmenuRoot.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -249,7 +401,7 @@ The item that opens a submenu, shown with a trailing caret.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
 
-Also accepts the props of `MenuPrimitive.SubmenuTrigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -273,7 +425,7 @@ An item that toggles a setting on or off and shows a check mark when on.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
 
-Also accepts the props of `MenuPrimitive.CheckboxItem.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -283,7 +435,7 @@ Also accepts the props of `MenuPrimitive.CheckboxItem.Props`.
 
 Groups radio items so that only one can be selected.
 
-Also accepts the props of `MenuPrimitive.RadioGroup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -297,7 +449,7 @@ An item in a radio group that shows a check mark when selected.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
 
-Also accepts the props of `MenuPrimitive.RadioItem.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -307,7 +459,7 @@ Also accepts the props of `MenuPrimitive.RadioItem.Props`.
 
 A divider between groups of items.
 
-Also accepts the props of `MenuPrimitive.Separator.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -383,7 +535,7 @@ npx @esuiss/ui@latest add dropdown-menu --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -399,13 +551,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/dropdown-menu.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/dropdown-menu.tsx`:
 
 <ComponentSource path="uniwind/components/ui/dropdown-menu.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -417,13 +573,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/dropdown-menu.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/dropdown-menu.tsx`:
 
 <ComponentSource path="nativewind/components/ui/dropdown-menu.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -435,13 +595,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/menu.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/dropdown-menu.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/dropdown-menu.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/dropdown-menu.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -473,11 +637,7 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
@@ -627,6 +787,22 @@ Items aligned with `inset`.
 
 <ApiPart index={1}>
 
+### DropdownMenu
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the menu opens or closes. |
+| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
+| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### DropdownMenuContent
 
 Floating menu card.
@@ -639,7 +815,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`, `P
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### DropdownMenuSubTrigger
 
@@ -655,7 +831,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.SubmenuTrig
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### DropdownMenuSubContent
 
@@ -665,7 +841,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### DropdownMenuItem
 
@@ -680,7 +856,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Item>`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### DropdownMenuCheckboxItem
 
@@ -695,7 +871,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.CheckboxIte
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### DropdownMenuRadioItem
 
@@ -710,7 +886,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.RadioItem>`
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### DropdownMenuLabel
 
@@ -724,7 +900,7 @@ Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.GroupLabel>
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### DropdownMenuSeparator
 

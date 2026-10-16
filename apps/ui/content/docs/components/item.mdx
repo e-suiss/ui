@@ -9,9 +9,27 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="item-demo" />
 
-`Item` is a row container. Inside it, `ItemMedia` holds an icon, image or avatar, `ItemContent` stacks an `ItemTitle` and `ItemDescription`, and `ItemActions` holds buttons or indicators at the end. `ItemHeader` and `ItemFooter` span the full width of the item, above and below the main row. Use the `render` prop to turn the whole item into a link or button.
+`Item` is a row container. Inside it, `ItemMedia` holds an icon, image or avatar, `ItemContent` stacks an `ItemTitle` and `ItemDescription`, and `ItemActions` holds buttons or indicators at the end. `ItemHeader` and `ItemFooter` span the full width of the item, above and below the main row. The whole item can also render as a link or button.
 
-`ItemGroup` stacks items as a list, and its `inset` variant groups them into a rounded list on a secondary surface, like iOS Settings. Place an `ItemSeparator` between items to divide them. Use items to display content; for form controls with labels and validation, use `Field`.
+<OnlyBase base="base">
+
+Use the `render` prop to turn the whole item into a link or button.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` and pass a link or button as the child to turn the whole item into it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns a link or button with the props it receives to turn the whole item into it.
+
+</OnlyBase>
+
+`ItemGroup` stacks items as a list, and its `inset` variant groups them into a rounded list on `bg-muted`, like iOS Settings. Place an `ItemSeparator` between items to divide them. Use items to display content; for form controls with labels and validation, use `Field`.
 
 ## Installation
 
@@ -148,7 +166,7 @@ Stacks items as a list, or groups them into an inset list.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start. |
+| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the items into a rounded list on `bg-muted`, with square item corners and separators inset from the start. |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -479,7 +497,7 @@ import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, Item
 
 Compose a row from `ItemMedia`, `ItemContent` (holding `ItemTitle` and `ItemDescription`) and `ItemActions`. Use `ItemHeader` and `ItemFooter` for full-width rows above or below the main content.
 
-`ItemMedia` with `variant="icon"` sizes icons to 16 points; `variant="image"` makes a square thumbnail that shrinks with the item size. `ItemTitle` truncates to one line and `ItemDescription` to two by default; override with `numberOfLines`. Text inside `ItemActions` picks up a secondary color.
+`ItemMedia` with `variant="icon"` sizes icons to 16 points; `variant="image"` makes a square thumbnail that shrinks with the item size. `ItemTitle` truncates to one line and `ItemDescription` to two by default; override with `numberOfLines`. Text inside `ItemActions` picks up `text-muted-foreground`.
 
 Pass `render` to render the row as another component while keeping the item styles.
 
@@ -522,6 +540,12 @@ Also accepts the props of `ViewProps`.
 ### Item
 
 The row itself, pressable when given a press handler.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "muted"` | `"default"` | Visual style. |
+| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Padding and gap. |
+| `render` | `RenderProp` | - | Renders the item as another element, such as a `Pressable`. |
 
 Also accepts the props of `ItemProps`.
 

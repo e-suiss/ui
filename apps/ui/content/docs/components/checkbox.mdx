@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="checkbox-demo" />
 
-`Checkbox` wraps the Base UI `Checkbox.Root` and renders a check icon inside a `Checkbox.Indicator` when checked. It is a single self-contained part: there are no child components to compose.
+`Checkbox` wraps the checkbox primitive and renders a check icon inside its indicator when checked. It is a single self-contained part: there are no child components to compose.
 
 Use a checkbox for independent options that people can select in any combination, such as accepting terms or opting in to email. For a mutually exclusive choice, use a radio group; for a setting that takes effect immediately, consider a switch.
 
@@ -93,7 +93,7 @@ A checkbox marked with `aria-invalid` to show a validation error.
 
 The checkbox control, rendering the box and its check indicator.
 
-Also accepts the props of `CheckboxPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -108,7 +108,7 @@ Also accepts the props of `CheckboxPrimitive.Root.Props`.
 ## Notes
 
 - Styling hooks: `data-slot="checkbox"` on the root and `data-slot="checkbox-indicator"` on the indicator.
-- State attributes from Base UI such as `data-checked` and `data-disabled` drive the checked and disabled styles.
+- State attributes set by the primitive drive the checked and disabled styles.
 - Uses the `primary`, `primary-foreground`, `background` and `border` colors, and `opacity-50` when disabled.
 - The hit area extends beyond the visible box through an `after` pseudo-element, making the small control easier to tap.
 
@@ -303,7 +303,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 Use `checked` with `onCheckedChange` for controlled state, or `defaultChecked` for uncontrolled. Set `indeterminate` for a parent checkbox whose children are partly selected.
 
-Pair the checkbox with a `Label`: give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`. Set `invalid` to show a danger border.
+Pair the checkbox with a `Label`: give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`. Set `invalid` to show a destructive border.
 
 ## Examples
 
@@ -352,7 +352,7 @@ A required checkbox with the `invalid` border.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `iconClassName` | `string` | - | Extra classes for the check icon. |
-| `invalid` | `boolean` | - | Shows a danger-colored border. |
+| `invalid` | `boolean` | - | Shows a destructive border. |
 
 Also accepts the props of `React.ComponentProps<typeof CheckboxPrimitive.Root>`.
 

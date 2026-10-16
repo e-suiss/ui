@@ -67,7 +67,25 @@ import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbP
 
 Place a `BreadcrumbSeparator` between items as its own sibling, not inside a `BreadcrumbItem`. It renders a caret by default; pass children to use a different separator.
 
-`BreadcrumbLink` renders an `a` by default. Use the `render` prop to render your router's link component instead.
+`BreadcrumbLink` renders an `a` by default and can render your router's link component instead.
+
+<OnlyBase base="base">
+
+Use the `render` prop to render your router's link component: `render={<Link href="/" />}`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `BreadcrumbLink` and pass your router's link component as the child.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `BreadcrumbLink` that returns your router's link component with the props it receives.
+
+</OnlyBase>
 
 For an icon-only link, such as a home icon, add an `aria-label`.
 

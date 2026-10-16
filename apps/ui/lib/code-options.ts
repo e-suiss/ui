@@ -29,6 +29,10 @@ export const BASES = [
 
 export const PRIMITIVE_BASES = BASES.slice(1)
 
+export const CODE_OPTIONS_KEY = "suiss-code"
+
+export const baseScript = `(()=>{try{const b=new URLSearchParams(location.search).get("base")||JSON.parse(localStorage.getItem("${CODE_OPTIONS_KEY}")||"{}").base;if(${JSON.stringify(BASES)}.includes(b))document.documentElement.dataset.base=b}catch(e){}})()`
+
 export type CodeOptions = { icons: IconLibrary; base: string }
 
 export const DEFAULT_OPTIONS: CodeOptions = {

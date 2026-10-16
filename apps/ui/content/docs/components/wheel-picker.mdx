@@ -101,6 +101,12 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 A scrolling, snapping wheel that holds one selected value.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | The selected value, for controlled use. |
+| `defaultValue` | `string` | - | The initial value when uncontrolled. |
+| `onValueChange` | `(value: string) => void` | - | Called when the column settles on a new value. |
+
 Also accepts the props of `React.ComponentProps<"div">`, `WheelPickerColumnProps`.
 
 </ApiPart>
@@ -259,8 +265,6 @@ npx expo install cn
 <ComponentSource path="swift/Components/Button.swift" />
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
-
-<ComponentSource path="swift/Components/Checkbox.swift" />
 
 <ComponentSource path="swift/Components/DropdownMenu.swift" />
 

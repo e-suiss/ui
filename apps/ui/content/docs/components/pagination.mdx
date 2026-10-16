@@ -139,6 +139,10 @@ Also accepts the props of `React.ComponentProps<"li">`.
 
 A page link styled as a button, highlighted when active.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
+
 Also accepts the props of `PaginationLinkProps`.
 
 </ApiPart>
@@ -152,6 +156,7 @@ A link to the previous page with a leading caret.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `text` | `string` | `"Previous"` | The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link. |
+| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
 
 Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 
@@ -166,6 +171,7 @@ A link to the next page with a trailing caret.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `text` | `string` | `"Next"` | The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link. |
+| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
 
 Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 
@@ -177,6 +183,10 @@ Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 
 An icon link to the first page.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
+
 Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 
 </ApiPart>
@@ -186,6 +196,10 @@ Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 ### PaginationLast
 
 An icon link to the last page.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
 
 Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 

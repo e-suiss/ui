@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="alert-dialog-demo" />
 
-Alert Dialog wraps the Base UI Alert Dialog primitive. An `AlertDialog` root contains an `AlertDialogTrigger` and an `AlertDialogContent`. The content renders its own portal and scrim overlay, and typically holds an `AlertDialogHeader` (with optional `AlertDialogMedia`, plus `AlertDialogTitle` and `AlertDialogDescription`) followed by an `AlertDialogFooter` with `AlertDialogCancel` and `AlertDialogAction` buttons.
+Alert Dialog wraps the alert dialog primitive of the chosen base. An `AlertDialog` root contains an `AlertDialogTrigger` and an `AlertDialogContent`. The content renders its own portal and scrim overlay, and typically holds an `AlertDialogHeader` (with optional `AlertDialogMedia`, plus `AlertDialogTitle` and `AlertDialogDescription`) followed by an `AlertDialogFooter` with `AlertDialogCancel` and `AlertDialogAction` buttons.
 
 Use it when a decision must be made before continuing, such as signing out or deleting data. Unlike a regular dialog, it is not dismissed by clicking outside. For a choice of actions anchored to the bottom of the screen, use Alert Sheet.
 
@@ -49,6 +49,8 @@ npm install @base-ui/react
 import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <AlertDialog>
   <AlertDialogTrigger render={<Button variant="outline" />}>
@@ -68,6 +70,54 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay,
   </AlertDialogContent>
 </AlertDialog>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Sign out</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>
+      <AlertDialogDescription>
+        You will need to sign in again to access your projects and settings.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Sign out</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<AlertDialog>
+  <Button variant="outline">Sign out</Button>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>
+      <AlertDialogDescription>
+        You will need to sign in again to access your projects and settings.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Sign out</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+</OnlyBase>
 
 `AlertDialogContent` already includes `AlertDialogPortal` and `AlertDialogOverlay`, so you rarely use those parts directly.
 
@@ -112,7 +162,7 @@ Adds an icon above the title with `AlertDialogMedia`.
 
 The root that manages the open state.
 
-Also accepts the props of `AlertDialogPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -122,7 +172,7 @@ Also accepts the props of `AlertDialogPrimitive.Root.Props`.
 
 The control that opens the dialog.
 
-Also accepts the props of `AlertDialogPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -132,7 +182,7 @@ Also accepts the props of `AlertDialogPrimitive.Trigger.Props`.
 
 Renders the dialog into a portal outside the DOM hierarchy.
 
-Also accepts the props of `AlertDialogPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -142,7 +192,7 @@ Also accepts the props of `AlertDialogPrimitive.Portal.Props`.
 
 The full-screen scrim behind the dialog.
 
-Also accepts the props of `AlertDialogPrimitive.Backdrop.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -156,7 +206,7 @@ The dialog surface, rendered with its own portal and overlay.
 | --- | --- | --- | --- |
 | `size` | `"default" \| "sm"` | `"default"` | Maximum width of the dialog. `sm` is narrower than `default`. |
 
-Also accepts the props of `AlertDialogPrimitive.Popup.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -216,7 +266,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Desc
 
 A button that confirms and closes the dialog.
 
-Also accepts the props of `AlertDialogPrimitive.Close.Props`, `React.ComponentProps<typeof Button>`.
+Also accepts the props of the primitive part it wraps, plus `Button`.
 
 </ApiPart>
 
@@ -226,7 +276,7 @@ Also accepts the props of `AlertDialogPrimitive.Close.Props`, `React.ComponentPr
 
 A button that dismisses the dialog without acting.
 
-Also accepts the props of `AlertDialogPrimitive.Close.Props`, `React.ComponentProps<typeof Button>`.
+Also accepts the props of the primitive part it wraps, plus `Button`.
 
 </ApiPart>
 
@@ -285,7 +335,7 @@ npx @esuiss/ui@latest add alert-dialog --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -301,13 +351,17 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/alert-dialog.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/alert-dialog.tsx`:
 
 <ComponentSource path="uniwind/components/ui/alert-dialog.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -319,13 +373,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/alert-dialog.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/alert-dialog.tsx`:
 
 <ComponentSource path="nativewind/components/ui/alert-dialog.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -337,13 +395,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 npx expo install react-native-reanimated react-native-screens react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/alert-dialog.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/alert-dialog.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/alert-dialog.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/alert-dialog.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -375,17 +437,9 @@ npx expo install react-native-reanimated react-native-screens react-native-workl
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Dialog.swift" />
 
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
 <ComponentSource path="swift/Components/Overlay.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
@@ -481,6 +535,20 @@ A destructive action button for an irreversible confirmation.
 
 <ApiPart index={1}>
 
+### AlertDialog
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the dialog is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the dialog starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the dialog opens or closes. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### AlertDialogOverlay
 
 Dimmed scrim behind the dialog.
@@ -489,7 +557,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Back
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### AlertDialogContent
 
@@ -504,7 +572,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Popu
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### AlertDialogHeader
 
@@ -514,7 +582,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### AlertDialogFooter
 
@@ -524,7 +592,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### AlertDialogMedia
 
@@ -534,7 +602,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### AlertDialogTitle
 
@@ -544,7 +612,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Titl
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### AlertDialogDescription
 
@@ -554,7 +622,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Desc
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### AlertDialogAction
 
@@ -564,7 +632,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Clos
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### AlertDialogCancel
 

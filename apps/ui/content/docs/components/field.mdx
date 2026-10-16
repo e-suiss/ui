@@ -71,7 +71,7 @@ To build selectable cards, place a horizontal `Field` inside a `FieldLabel`; the
 
 ### With help link
 
-A description that contains a link, styled with the link color and an underline.
+A description that contains a link, styled with `text-primary` and an underline.
 
 <ComponentPreview name="field-with-help-link" />
 
@@ -194,7 +194,7 @@ Stacks fields with consistent spacing, or groups them into an inset list.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end. |
+| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the fields into a rounded list on `bg-muted`, with separators between rows and inputs aligned to the end. |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -305,7 +305,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 `Field` wraps one control, such as an `Input`, `Textarea` or `Switch`, with a `FieldLabel`, an optional `FieldDescription` and a `FieldError`. It shares the field's disabled and invalid state with the control and handles validation: required values, length limits and custom `validate` functions, checked on submit, blur or change.
 
-`FieldSet` and `FieldLegend` group related fields under a heading, and `FieldGroup` stacks fields. The `inset` variant of `FieldGroup` turns the fields into rows on a rounded secondary surface with hairlines between them, like a settings list.
+`FieldSet` and `FieldLegend` group related fields under a heading, and `FieldGroup` stacks fields. The `inset` variant of `FieldGroup` turns the fields into rows on a rounded `bg-muted` surface with hairlines between them, like a settings list.
 
 ## Installation
 

@@ -45,7 +45,7 @@ npx @esuiss/ui@latest add reorder-list --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -61,13 +61,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/reorder-list.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/reorder-list.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/reorder-list.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -79,13 +83,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/reorder-list.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/reorder-list.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/reorder-list.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -97,13 +105,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/reorder-list.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/reorder-list.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/reorder-list.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -206,11 +218,15 @@ Rows inside an inset `ItemGroup`.
 
 <NativeExample id="interactions-reorder-list--inset" />
 
+<Only platform="rn kotlin">
+
 ### Leading handle
 
 Places the handle at the start of each row.
 
 <NativeExample id="interactions-reorder-list--leading-handle" />
+
+</Only>
 
 ## API Reference
 

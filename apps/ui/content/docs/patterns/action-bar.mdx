@@ -113,6 +113,12 @@ The root that renders a `Menubar` on desktop and a More actions button with a `D
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
+<OnlyBase base="aria">
+
+On the `aria` base, use `isOpen` instead of `open`.
+
+</OnlyBase>
+
 </ApiPart>
 
 <ApiPart index={2}>
@@ -172,6 +178,12 @@ An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mob
 | `disabled` | `boolean` | - | Prevents the item from being chosen. |
 
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+<OnlyBase base="aria">
+
+On the `aria` base, use `isDisabled` instead of `disabled`, and `onAction` to respond to the item.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -340,8 +352,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Dialog.swift" />
 
 <ComponentSource path="swift/Components/Drawer.swift" />
@@ -349,8 +359,6 @@ npx expo install phosphor-react-native react-native-svg
 <ComponentSource path="swift/Components/DropdownMenu.swift" />
 
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
@@ -473,11 +481,15 @@ Renames the More actions button and the Cancel button with `moreLabel` and `canc
 
 <NativeExample id="patterns-action-bar--custom-labels" />
 
+<Only platform="rn kotlin">
+
 ### Floating
 
 Detaches the drawer from the screen edges with `floating`.
 
 <NativeExample id="patterns-action-bar--floating" />
+
+</Only>
 
 ## API Reference
 

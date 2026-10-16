@@ -45,6 +45,8 @@ npx @esuiss/ui@latest add patterns modal
 import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from "@/components/patterns/modal"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <Modal>
@@ -79,7 +81,103 @@ import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter,
 </div>
 ```
 
-The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Pass `render` to `ModalTrigger` or `ModalClose` to use your own `Button`. `ModalContent` shows a close button by default; set `showCloseButton` to `false` to hide it, or pass `closeLabel` to show text instead of the icon.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Modal>
+    <ModalTrigger asChild>
+      <Button variant="outline">Edit profile</Button>
+    </ModalTrigger>
+    <ModalContent>
+      <ModalHeader>
+        <ModalTitle>Edit profile</ModalTitle>
+        <ModalDescription>
+          Update your name and username. Click save when you are done.
+        </ModalDescription>
+      </ModalHeader>
+      <ModalBody className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="modal-name">Name</Label>
+          <Input id="modal-name" defaultValue="Ada Lovelace" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="modal-username">Username</Label>
+          <Input id="modal-username" defaultValue="@ada" />
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <ModalClose asChild>
+          <Button variant="secondary">Cancel</Button>
+        </ModalClose>
+        <Button>Save changes</Button>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
+</div>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Modal>
+    <ModalTrigger className={buttonVariants({ variant: "outline" })}>
+      Edit profile
+    </ModalTrigger>
+    <ModalContent>
+      <ModalHeader>
+        <ModalTitle>Edit profile</ModalTitle>
+        <ModalDescription>
+          Update your name and username. Click save when you are done.
+        </ModalDescription>
+      </ModalHeader>
+      <ModalBody className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="modal-name">Name</Label>
+          <Input id="modal-name" defaultValue="Ada Lovelace" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="modal-username">Username</Label>
+          <Input id="modal-username" defaultValue="@ada" />
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <ModalClose className={buttonVariants({ variant: "secondary" })}>
+          Cancel
+        </ModalClose>
+        <Button>Save changes</Button>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
+</div>
+```
+
+</OnlyBase>
+
+`ModalContent` shows a close button by default; set `showCloseButton` to `false` to hide it, or pass `closeLabel` to show text instead of the icon.
+
+<OnlyBase base="base">
+
+The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Pass `render` to `ModalTrigger` or `ModalClose` to use your own `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Set `asChild` on `ModalTrigger` or `ModalClose` to use your own `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The modal can be controlled with `isOpen` and `onOpenChange` or uncontrolled with `defaultOpen`. Style `ModalTrigger` and `ModalClose` with `buttonVariants` to make them look like buttons.
+
+</OnlyBase>
 
 ## Examples
 

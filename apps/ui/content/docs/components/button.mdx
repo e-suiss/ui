@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="button-demo" />
 
-`Button` wraps the Base UI Button primitive and renders a native `button` by default. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the container width.
+`Button` renders a native `button` by default. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the container width.
 
 Use the `default` variant for the primary action in a view, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.
 
@@ -55,7 +55,23 @@ Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` to tighte
 
 Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `aria-label`.
 
+<OnlyBase base="base">
+
 To render a link or a router component with button styling, use the `render` prop from Base UI. `buttonVariants` is also exported if you need the classes on another element.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+To render a link or a router component with button styling, set `asChild` and pass it as the child. `buttonVariants` is also exported if you need the classes on another element.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`Button` always renders a `button`. To give a link or a router component button styling, apply the classes from `buttonVariants` to it.
+
+</OnlyBase>
 
 ## Examples
 
@@ -103,7 +119,7 @@ The interactive button element.
 | `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | Height and padding. `xs` to `xl` for text buttons; `icon-xs` to `icon-xl` for square icon-only buttons. |
 | `block` | `true` | - | When `true`, the button fills the container width and uses rounded corners instead of a pill shape. |
 
-Also accepts the props of `ButtonPrimitive.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -112,8 +128,8 @@ Also accepts the props of `ButtonPrimitive.Props`.
 - Renders a native `button`, so `Enter` and `Space` activate it.
 - A disabled button is removed from the tab order.
 - Icon-only buttons need an `aria-label`.
-- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant uses the danger color for it.
-- `aria-invalid` adds a danger-colored border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
+- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant tints it with `ring-destructive/20`.
+- `aria-invalid` adds a destructive border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
 
 ## Notes
 
@@ -227,35 +243,21 @@ npx expo install class-variance-authority cn
 
 1. Target iOS 17 or later.
 
-2. Add the Swift package to your app:
-
-```swift title="Package.swift"
-.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
-```
-
-3. Copy the theme files every view uses:
+2. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-4. Copy the source and every file it uses:
+3. Copy the source and every file it uses:
 
 <ComponentSource path="swift/Components/Button.swift" />
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
-
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
-5. Add the files to your app target.
+4. Add the files to your app target.
 
 </Only>
 
@@ -346,6 +348,12 @@ Full-width buttons at each size, whose corner radius scales with size.
 <ApiPart index={1}>
 
 ### Button
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | Visual style. |
+| `size` | `"xs" \| "sm" \| "default" \| "lg" \| "xl" \| "icon-xs" \| "icon-sm" \| "icon" \| "icon-lg" \| "icon-xl"` | `"default"` | Height and padding; `icon` sizes are square. |
+| `block` | `boolean` | - | Stretches the button to the full width of its container. |
 
 Also accepts the props of `ButtonProps`.
 

@@ -143,7 +143,7 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 
 - `IslandCompact` is a button with `aria-expanded` reflecting the expanded state; give it an `aria-label` that describes the activity.
 - Expanding moves focus to the first enabled button, link, or input inside `IslandExpanded`, which has `role="group"` and is `inert` while not shown.
-- `Escape` or a pointer press outside collapses the expanded view; when focus was inside, it returns to the compact button.
+- `Escape` or a pointer press outside collapses the expanded view. After `Escape`, focus returns to the compact button if it was inside the island.
 - Notices render as a button that dismisses on press, and their title and description are announced through a polite live region.
 - Inactive parts are removed from the tab order. `IslandRing` is `aria-hidden`.
 
@@ -156,7 +156,11 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 
 <Only platform="rn swift kotlin">
 
+<Only platform="rn kotlin">
+
 <NativeExample id="interactions-island--compact" />
+
+</Only>
 
 `Island` floats below the top safe area and morphs between views: `hidden`, `compact`, `minimal`, `expanded` and `notice`. Its width, height and corner radius spring to the measured size of the active view, and views cross-fade as it changes.
 
@@ -194,7 +198,7 @@ npx @esuiss/ui@latest add island --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -210,13 +214,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/island.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/island.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/island.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -228,13 +236,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/island.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/island.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/island.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -246,13 +258,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/hooks.tsx`, `components/primitives/portal.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/interactions/island.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/interactions/island.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/island.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -326,11 +342,17 @@ Wrap the app in `IslandProvider` and render one `Island`. Pass `compactLeading`,
 
 ## Examples
 
+<Only platform="rn kotlin">
+
 ### Expanded
 
 Starts with the island expanded to show download details.
 
 <NativeExample id="interactions-island--expanded" />
+
+</Only>
+
+<Only platform="rn kotlin">
 
 ### Minimal
 
@@ -338,11 +360,17 @@ Starts in the minimal view with only the progress ring.
 
 <NativeExample id="interactions-island--minimal" />
 
+</Only>
+
+<Only platform="rn kotlin">
+
 ### Notice
 
 Shows a notice on mount.
 
 <NativeExample id="interactions-island--notice" />
+
+</Only>
 
 ### Live activity
 
@@ -369,6 +397,10 @@ Holds the island mode, the notice and the notice timer.
 ### IslandExpandedRegion
 
 A region of the expanded view.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `region` | `"leading" \| "trailing" \| "center" \| "bottom"` | Required | Where the content sits in the expanded view. |
 
 Also accepts the props of `IslandExpandedRegionProps`.
 

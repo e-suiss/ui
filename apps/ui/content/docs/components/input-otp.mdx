@@ -1,5 +1,5 @@
 ---
-title: Input Otp
+title: Input OTP
 description: "A segmented field for entering one-time passcodes, one character per slot."
 eyebrow: Component
 platforms: [web, rn, swift, kotlin]
@@ -176,7 +176,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Styling hooks: `data-slot` values `input-otp`, `input-otp-group`, `input-otp-slot` and `input-otp-separator`. The active slot gets `data-active="true"` and a `primary` border.
 - Slots react to the invalid and disabled states of the input through the `data-input-otp-container` attribute on its container.
 - The blinking caret uses the `animate-caret-blink` animation.
-- Uses the `secondary`, `primary`, `destructive` and `muted-foreground` colors, and `opacity-50` when disabled.
+- Uses the `secondary`, `primary` and `destructive` colors, and `opacity-50` when disabled.
 
 </Only>
 
@@ -184,7 +184,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-inputotp--default" />
 
-`InputOTP` is backed by one hidden `TextInput` and shows each character in an `InputOTPSlot`. The active slot gets an accent border and a blinking caret. The hidden input uses the one-time-code autofill hints, so codes from messages can be filled in automatically, and pasting fills every slot.
+`InputOTP` is backed by one hidden `TextInput` and shows each character in an `InputOTPSlot`. The active slot gets a `border-primary` border and a blinking caret. The hidden input uses the one-time-code autofill hints, so codes from messages can be filled in automatically, and pasting fills every slot.
 
 Group slots with `InputOTPGroup` and place an `InputOTPSeparator` between groups for codes such as `123-456`.
 
@@ -306,11 +306,7 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/InputOTP.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
@@ -399,11 +395,15 @@ Letters and numbers with `validationType="alphanumeric"`.
 
 <NativeExample id="components-inputotp--alphanumeric" />
 
+<Only platform="rn">
+
 ### Masked
 
 A four-digit code with hidden characters.
 
 <NativeExample id="components-inputotp--masked" />
+
+</Only>
 
 ### Disabled
 

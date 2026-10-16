@@ -49,6 +49,8 @@ npm install @base-ui/react class-variance-authority
 import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from "@/components/ui/button-group"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <ButtonGroup orientation="horizontal">
   <ButtonGroup>
@@ -114,6 +116,134 @@ import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from "@/components
   </ButtonGroup>
 </ButtonGroup>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<ButtonGroup orientation="horizontal">
+  <ButtonGroup>
+    <Button variant="secondary" size="icon" aria-label="Go back">
+      <ArrowLeftIcon />
+    </Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">Archive</Button>
+    <ButtonGroupSeparator />
+    <Button variant="secondary">Report</Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">Snooze</Button>
+    <ButtonGroupSeparator />
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary" size="icon" aria-label="More options">
+          <DotsThreeIcon />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-52">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <ListPlusIcon />
+            Mark as read
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <ArchiveIcon />
+            Archive
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <ClockIcon />
+            Snooze
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CalendarPlusIcon />
+            Add to calendar
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <TagIcon />
+            Label as
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem variant="destructive">
+            <TrashIcon />
+            Trash
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </ButtonGroup>
+</ButtonGroup>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<ButtonGroup orientation="horizontal">
+  <ButtonGroup>
+    <Button variant="secondary" size="icon" aria-label="Go back">
+      <ArrowLeftIcon />
+    </Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">Archive</Button>
+    <ButtonGroupSeparator />
+    <Button variant="secondary">Report</Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button variant="secondary">Snooze</Button>
+    <ButtonGroupSeparator />
+    <DropdownMenu>
+      <Button variant="secondary" size="icon" aria-label="More options">
+        <DotsThreeIcon />
+      </Button>
+      <DropdownMenuContent placement="bottom end" className="w-52">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <ListPlusIcon />
+            Mark as read
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <ArchiveIcon />
+            Archive
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <ClockIcon />
+            Snooze
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CalendarPlusIcon />
+            Add to calendar
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <TagIcon />
+            Label as
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem variant="destructive">
+            <TrashIcon />
+            Trash
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </ButtonGroup>
+</ButtonGroup>
+```
+
+</OnlyBase>
 
 Elements are joined only when they expose a `data-slot` attribute, as the library's components do.
 
@@ -372,35 +502,21 @@ npx expo install class-variance-authority cn
 
 1. Target iOS 17 or later.
 
-2. Add the Swift package to your app:
-
-```swift title="Package.swift"
-.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
-```
-
-3. Copy the theme files every view uses:
+2. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-4. Copy the source and every file it uses:
+3. Copy the source and every file it uses:
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
 <ComponentSource path="swift/Components/Button.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
-
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
-5. Add the files to your app target.
+4. Add the files to your app target.
 
 </Only>
 

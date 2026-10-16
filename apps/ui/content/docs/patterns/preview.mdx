@@ -75,6 +75,12 @@ Uses a Done text button for the mobile close button through `closeLabel`.
 
 <ComponentPreview name="preview-with-close-label" layout="fullscreen" responsive />
 
+### Attached
+
+Sets `floating` to `false` so the mobile drawer sits on the screen edges.
+
+<ComponentPreview name="preview-attached" layout="fullscreen" responsive />
+
 ## API Reference
 
 <Anatomy>
@@ -265,21 +271,13 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Dialog.swift" />
 
 <ComponentSource path="swift/Components/Drawer.swift" />
 
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
 <ComponentSource path="swift/Components/Overlay.swift" />
 
 <ComponentSource path="swift/Components/Popover.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
@@ -360,11 +358,15 @@ Labels the close button `Done` with `closeLabel`.
 
 <NativeExample id="patterns-preview--with-close-label" />
 
+<Only platform="rn kotlin">
+
 ### Attached
 
 Sets `floating` to `false` so the drawer sits on the screen edges.
 
 <NativeExample id="patterns-preview--attached" />
+
+</Only>
 
 ## API Reference
 

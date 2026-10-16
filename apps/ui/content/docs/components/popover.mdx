@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="popover-demo" />
 
-Popover wraps Base UI's Popover. `Popover` is the root that holds the open state, `PopoverTrigger` toggles it, and `PopoverContent` renders the positioned panel in a portal. Inside the content, `PopoverHeader` groups a `PopoverTitle` and `PopoverDescription` above any other content, such as form fields.
+Popover wraps the popover primitive of the chosen base. `Popover` is the root that holds the open state, `PopoverTrigger` toggles it, and `PopoverContent` renders the positioned panel in a portal. Inside the content, `PopoverHeader` groups a `PopoverTitle` and `PopoverDescription` above any other content, such as form fields.
 
 Use a popover for interactive content that relates to its trigger. Use Tooltip for short, non-interactive hints, and Dialog when the task needs the user's full attention.
 
@@ -47,6 +47,8 @@ npm install @base-ui/react
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <Popover>
   <PopoverTrigger render={<Button variant="outline" />}>
@@ -81,9 +83,101 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, P
 </Popover>
 ```
 
-The popover is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it. `PopoverContent` accepts the positioning props `side`, `sideOffset`, `align` and `alignOffset`, defaulting to `bottom`, `4`, `center` and `0`.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline">Open popover</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>Dimensions</PopoverTitle>
+      <PopoverDescription>
+        Set the dimensions for the layer.
+      </PopoverDescription>
+    </PopoverHeader>
+    <div className="grid gap-3">
+      <div className="grid grid-cols-3 items-center gap-3">
+        <Label htmlFor="popover-width">Width</Label>
+        <Input
+          id="popover-width"
+          defaultValue="100%"
+          className="col-span-2"
+        />
+      </div>
+      <div className="grid grid-cols-3 items-center gap-3">
+        <Label htmlFor="popover-height">Height</Label>
+        <Input
+          id="popover-height"
+          defaultValue="25px"
+          className="col-span-2"
+        />
+      </div>
+    </div>
+  </PopoverContent>
+</Popover>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Popover>
+  <Button variant="outline">Open popover</Button>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>Dimensions</PopoverTitle>
+      <PopoverDescription>
+        Set the dimensions for the layer.
+      </PopoverDescription>
+    </PopoverHeader>
+    <div className="grid gap-3">
+      <div className="grid grid-cols-3 items-center gap-3">
+        <Label htmlFor="popover-width">Width</Label>
+        <Input
+          id="popover-width"
+          defaultValue="100%"
+          className="col-span-2"
+        />
+      </div>
+      <div className="grid grid-cols-3 items-center gap-3">
+        <Label htmlFor="popover-height">Height</Label>
+        <Input
+          id="popover-height"
+          defaultValue="25px"
+          className="col-span-2"
+        />
+      </div>
+    </div>
+  </PopoverContent>
+</Popover>
+```
+
+</OnlyBase>
+
+The popover is uncontrolled by default; use `defaultOpen`, or the open state with `onOpenChange` to control it. `PopoverContent` accepts the positioning props `side`, `sideOffset`, `align` and `alignOffset`, defaulting to `bottom`, `4`, `center` and `0`.
+
+<OnlyBase base="base">
 
 Use the trigger's `render` prop to render it as another component, such as a `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `PopoverTrigger` to render another component, such as a `Button`, as the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The `Button` placed first inside `Popover` opens it, and `isOpen` controls the open state.
+
+</OnlyBase>
 
 ## Examples
 
@@ -118,7 +212,7 @@ A plain text popover opened from a ghost button, without a header.
 
 The root that manages the popover's open state.
 
-Also accepts the props of `PopoverPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -128,7 +222,7 @@ Also accepts the props of `PopoverPrimitive.Root.Props`.
 
 The button that opens and closes the popover.
 
-Also accepts the props of `PopoverPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -138,7 +232,7 @@ Also accepts the props of `PopoverPrimitive.Trigger.Props`.
 
 The positioned panel that renders in a portal.
 
-Also accepts the props of `PopoverPrimitive.Popup.Props`, `PopoverPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
@@ -158,7 +252,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The heading that names the popover.
 
-Also accepts the props of `PopoverPrimitive.Title.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -168,7 +262,7 @@ Also accepts the props of `PopoverPrimitive.Title.Props`.
 
 Secondary text that describes the popover.
 
-Also accepts the props of `PopoverPrimitive.Description.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -183,8 +277,8 @@ Also accepts the props of `PopoverPrimitive.Description.Props`.
 
 - Styling hooks: `data-slot` values `popover`, `popover-trigger`, `popover-content`, `popover-header`, `popover-title` and `popover-description`.
 - The panel is `w-72` by default; override it with `className`.
-- The panel animates in from the side it opens on, using Base UI's `data-side`, `data-open` and `data-closed` attributes.
-- Uses the `surface-raised`, `label` and `label-secondary` tokens.
+- The panel animates in from the side it opens on.
+- Uses the `popover`, `popover-foreground` and `muted-foreground` tokens.
 
 </Only>
 
@@ -228,7 +322,7 @@ npx @esuiss/ui@latest add popover --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Text](/docs/components/text).
+The CLI also adds what it builds on: [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -244,13 +338,17 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/popover.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/popover.tsx`:
 
 <ComponentSource path="uniwind/components/ui/popover.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -262,13 +360,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/popover.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/popover.tsx`:
 
 <ComponentSource path="nativewind/components/ui/popover.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -280,13 +382,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 npx expo install react-native-reanimated react-native-screens react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Text](/docs/components/text), and the primitives `components/primitives/popover.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/popover.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/popover.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/popover.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -318,17 +424,9 @@ npx expo install react-native-reanimated react-native-screens react-native-workl
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Dialog.swift" />
 
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
 <ComponentSource path="swift/Components/Overlay.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 
@@ -440,15 +538,34 @@ A short text popover aligned to the start of its trigger.
 
 <NativeExample id="components-popover--simple" />
 
+<Only platform="rn swift">
+
 ### Detached triggers
 
 Several triggers sharing one popover through a handle, each passing its own payload.
 
 <NativeExample id="components-popover--detached-triggers" />
 
+</Only>
+
 ## API Reference
 
 <ApiPart index={1}>
+
+### Popover
+
+The root that manages the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the popover is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the popover starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the popover opens or closes. |
+| `modal` | `boolean` | `false` | Blocks interaction with the rest of the screen while open. |
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### PopoverContent
 
@@ -462,7 +579,7 @@ Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`,
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### PopoverHeader
 
@@ -472,7 +589,7 @@ Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### PopoverTitle
 
@@ -482,7 +599,7 @@ Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Title>`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### PopoverDescription
 

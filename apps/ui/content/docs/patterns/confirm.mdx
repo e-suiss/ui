@@ -184,7 +184,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
 
 ## Accessibility
 
-- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`.
+- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`. On mobile with `dismissible` set, it has the `dialog` role instead.
 - Opening moves focus into the dialog, and closing returns it to the trigger.
 - On desktop, pressing outside does not close the dialog; `Escape`, Cancel or an action does.
 
@@ -322,17 +322,9 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Dialog.swift" />
 
-<ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
-
 <ComponentSource path="swift/Components/Overlay.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 

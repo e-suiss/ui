@@ -5,6 +5,7 @@ import { Footer } from "@/components/site/footer"
 import { GlobalNav } from "@/components/site/global-nav"
 import { JsonLd } from "@/components/site/json-ld"
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
+import { baseScript } from "@/lib/code-options"
 import { platformScript } from "@/lib/platform"
 import { absolute, site } from "@/lib/site"
 import { strings } from "@/lib/strings"
@@ -110,7 +111,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <ThemeScript />
         <script
-          dangerouslySetInnerHTML={{ __html: platformScript }}
+          dangerouslySetInnerHTML={{
+            __html: `${platformScript};${baseScript}`,
+          }}
           suppressHydrationWarning
         />
         <JsonLd data={structuredData} />

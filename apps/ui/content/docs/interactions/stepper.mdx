@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="stepper-demo" responsive />
 
-`Stepper` recreates the iOS stepper on top of the Base UI Number Field. It pairs an editable `StepperInput` with a segmented `StepperGroup` of `StepperDecrement` and `StepperIncrement` buttons. Each press changes the value by `step`; holding a button repeats the change after a short delay and speeds up over time. Each button disables itself when the value reaches `min` or `max`.
+`Stepper` recreates the iOS stepper on top of a number field primitive. It pairs an editable `StepperInput` with a segmented `StepperGroup` of `StepperDecrement` and `StepperIncrement` buttons. Each press changes the value by `step`; holding a button repeats the change after a short delay and speeds up over time. Each button disables itself when the value reaches `min` or `max`.
 
 Use it for small, bounded quantities such as copies, servings, or scale, where people usually adjust a value by a few steps.
 
@@ -60,7 +60,7 @@ import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement
 
 - Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator`, and `StepperIncrement` inside `Stepper`.
 - The value is uncontrolled by default; pass `value` and `onValueChange` to control it.
-- Other Base UI Number Field props, such as `min`, `max`, `disabled`, and `format`, pass through to the root.
+- Other number field props, such as `min`, `max`, `disabled`, and `format`, pass through to the root.
 - The buttons render minus and plus icons by default; pass children to replace them.
 
 ## Examples
@@ -97,7 +97,13 @@ The Number Field root that holds the value and its limits.
 | `defaultValue` | `number` | `0` | The initial value when uncontrolled. |
 | `onValueChange` | `(value: number) => void` | - | Called with the new value when it changes. |
 
-Also accepts the props of `NumberFieldPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="aria">
+
+On the `aria` base, use `onChange` instead of `onValueChange`, and `isDisabled` instead of `disabled`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -107,7 +113,7 @@ Also accepts the props of `NumberFieldPrimitive.Root.Props`.
 
 The editable text field that shows the value.
 
-Also accepts the props of `NumberFieldPrimitive.Input.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -154,7 +160,7 @@ Also accepts the props of `React.ComponentProps<"span">`.
 ## Accessibility
 
 - Label `StepperInput` with `aria-label` or `aria-labelledby`.
-- The arrow keys step the value from the input, as provided by Base UI Number Field.
+- The arrow keys step the value from the input, as provided by the number field primitive.
 - The buttons are labelled `Decrease` and `Increase`, and are disabled at the limits or when the stepper is disabled.
 - `StepperGroup` has `role="group"`, and `StepperSeparator` is `aria-hidden`.
 

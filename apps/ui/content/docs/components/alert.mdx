@@ -59,7 +59,7 @@ import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/components/u
 </div>
 ```
 
-Put a Phosphor icon (or any `svg`) first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows.
+Put an icon from your icon library (or any `svg`) first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows.
 
 `AlertAction` is positioned in the top-end corner, and the alert reserves end padding for it automatically.
 
@@ -67,7 +67,7 @@ Put a Phosphor icon (or any `svg`) first inside `Alert`; it is sized to `size-5`
 
 ### Destructive
 
-Tints the icon with the danger color for errors.
+Tints the icon with the destructive color for errors.
 
 <ComponentPreview name="alert-destructive" />
 
@@ -108,7 +108,7 @@ The container that lays out the icon, text and action.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Icon color. `default` uses the accent color; `destructive` uses the danger color. |
+| `variant` | `"default" \| "destructive"` | `"default"` | Icon color. `default` uses `text-primary`; `destructive` uses `text-destructive`. |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -162,7 +162,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-alert--default" />
 
-`Alert` is a `View` on a rounded secondary surface with an optional leading icon, a title and description column, and an optional action pinned to the top-end corner. It is static and stays in the layout; it is not a toast or a modal.
+`Alert` is a `View` on a rounded `bg-muted` surface with an optional leading icon, a title and description column, and an optional action pinned to the top-end corner. It is static and stays in the layout; it is not a toast or a modal.
 
 Use the `default` variant for neutral information, where the icon uses the primary color, and `destructive` for errors, where the icon uses the destructive color.
 
@@ -338,7 +338,7 @@ Use `iconClassName` to adjust the icon's size or color.
 
 ### Destructive
 
-The `destructive` variant with a danger-colored icon.
+The `destructive` variant with a destructive-colored icon.
 
 <NativeExample id="components-alert--destructive" />
 

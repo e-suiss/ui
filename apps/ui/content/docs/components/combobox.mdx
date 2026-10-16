@@ -110,20 +110,31 @@ Multiple selection shown as removable chips, with Backspace removing the last ch
 
 <Anatomy>
 
-- [ComboboxInput](#comboboxinput)
-- [ComboboxContent](#comboboxcontent)
-  - [ComboboxEmpty](#comboboxempty)
-  - [ComboboxList](#comboboxlist)
-    - [ComboboxItem](#comboboxitem)
-    - [ComboboxGroup](#comboboxgroup)
-      - [ComboboxSeparator](#comboboxseparator)
-      - [ComboboxLabel](#comboboxlabel)
-      - [ComboboxCollection](#comboboxcollection)
-        - [ComboboxItem](#comboboxitem)
+- [Combobox](#combobox)
+  - [ComboboxInput](#comboboxinput)
+  - [ComboboxContent](#comboboxcontent)
+    - [ComboboxEmpty](#comboboxempty)
+    - [ComboboxList](#comboboxlist)
+      - [ComboboxItem](#comboboxitem)
+      - [ComboboxGroup](#comboboxgroup)
+        - [ComboboxSeparator](#comboboxseparator)
+        - [ComboboxLabel](#comboboxlabel)
+        - [ComboboxCollection](#comboboxcollection)
+          - [ComboboxItem](#comboboxitem)
 
 </Anatomy>
 
 <ApiPart index={1}>
+
+### Combobox
+
+The root that holds the items, the selected value and the open state.
+
+Also accepts the props of `ComboboxPrimitive.Root`.
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ComboboxValue
 
@@ -133,7 +144,7 @@ Also accepts the props of `ComboboxPrimitive.Value.Props`.
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### ComboboxTrigger
 
@@ -143,7 +154,7 @@ Also accepts the props of `ComboboxPrimitive.Trigger.Props`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### ComboboxInput
 
@@ -158,7 +169,7 @@ Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### ComboboxContent
 
@@ -168,7 +179,7 @@ Also accepts the props of `ComboboxPrimitive.Popup.Props`, `ComboboxPrimitive.Po
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### ComboboxList
 
@@ -178,7 +189,7 @@ Also accepts the props of `ComboboxPrimitive.List.Props`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### ComboboxItem
 
@@ -188,7 +199,7 @@ Also accepts the props of `ComboboxPrimitive.Item.Props`.
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### ComboboxGroup
 
@@ -198,7 +209,7 @@ Also accepts the props of `ComboboxPrimitive.Group.Props`.
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### ComboboxLabel
 
@@ -208,7 +219,7 @@ Also accepts the props of `ComboboxPrimitive.GroupLabel.Props`.
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### ComboboxCollection
 
@@ -218,7 +229,7 @@ Also accepts the props of `ComboboxPrimitive.Collection.Props`.
 
 </ApiPart>
 
-<ApiPart index={10}>
+<ApiPart index={11}>
 
 ### ComboboxEmpty
 
@@ -228,7 +239,7 @@ Also accepts the props of `ComboboxPrimitive.Empty.Props`.
 
 </ApiPart>
 
-<ApiPart index={11}>
+<ApiPart index={12}>
 
 ### ComboboxSeparator
 
@@ -238,7 +249,7 @@ Also accepts the props of `ComboboxPrimitive.Separator.Props`.
 
 </ApiPart>
 
-<ApiPart index={12}>
+<ApiPart index={13}>
 
 ### ComboboxChips
 
@@ -248,7 +259,7 @@ Also accepts the props of `React.ComponentPropsWithRef<typeof ComboboxPrimitive.
 
 </ApiPart>
 
-<ApiPart index={13}>
+<ApiPart index={14}>
 
 ### ComboboxChip
 
@@ -263,7 +274,7 @@ Also accepts the props of `ComboboxPrimitive.Chip.Props`.
 
 </ApiPart>
 
-<ApiPart index={14}>
+<ApiPart index={15}>
 
 ### ComboboxChipsInput
 
@@ -294,7 +305,11 @@ Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 <Only platform="rn swift kotlin">
 
+<Only platform="rn kotlin">
+
 <NativeExample id="components-combobox--open-by-default" live="combobox/OpenByDefault" />
+
+</Only>
 
 `Combobox` pairs a text input with a floating list that filters its `items` as the user types. `ComboboxInput` draws the field with a caret trigger and an optional clear button, and `ComboboxContent` renders the list through a portal (inside a full-window overlay on iOS), positioned below the input and as wide as it.
 
@@ -332,7 +347,7 @@ npx @esuiss/ui@latest add combobox --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -348,13 +363,17 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/combobox.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/combobox.tsx`:
 
 <ComponentSource path="uniwind/components/ui/combobox.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -366,13 +385,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/combobox.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/combobox.tsx`:
 
 <ComponentSource path="nativewind/components/ui/combobox.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -384,13 +407,17 @@ npx expo install cn nativewind phosphor-react-native react-native-reanimated rea
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/combobox.tsx`, `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/combobox.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/combobox.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/combobox.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -422,13 +449,9 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/DropdownMenu.swift" />
 
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Item.swift" />
 
@@ -529,11 +552,15 @@ A clear button through `showClear`.
 
 <NativeExample id="components-combobox--with-clear" live="combobox/WithClear" />
 
+<Only platform="rn kotlin">
+
 ### Grouped
 
 Items in labelled groups with separators.
 
 <NativeExample id="components-combobox--grouped" live="combobox/Grouped" />
+
+</Only>
 
 ### Multiple
 
@@ -563,6 +590,33 @@ The `invalid` style with an error message.
 
 <ApiPart index={1}>
 
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `Item[] \| ComboboxItemGroup<Item>[]` | - | The items to filter, flat or grouped. |
+| `value` | `Value \| Value[] \| null` | - | The selected value, for controlled use. |
+| `defaultValue` | `Value \| Value[] \| null` | - | The initial value when uncontrolled. |
+| `onValueChange` | `(value, details) => void` | - | Called when the selection changes. |
+| `multiple` | `boolean` | `false` | Allows several values to be selected. |
+| `inputValue` | `string` | - | The typed text, for controlled use. |
+| `onInputValueChange` | `(inputValue: string, details) => void` | - | Called when the typed text changes. |
+| `filter` | `ComboboxFilter<Item> \| null` | - | Custom filter function; `null` turns filtering off. |
+| `limit` | `number` | - | The maximum number of items shown. |
+| `itemToStringLabel` | `(itemValue: Value) => string` | - | Returns the label shown for an item value. |
+| `openOnInputClick` | `boolean` | `true` | Opens the list when the input is pressed. |
+| `open` | `boolean` | - | Whether the list is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the list starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the list opens or closes. |
+| `disabled` | `boolean` | `false` | Disables the combobox. |
+| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### ComboboxTrigger
 
 Round button that opens the list.
@@ -575,7 +629,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Trigger
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### ComboboxInput
 
@@ -587,13 +641,13 @@ Text field with caret trigger and optional clear button.
 | `children` | `React.ReactNode` | - |  |
 | `showTrigger` | `boolean` | `true` | Shows the caret button. Defaults to `true`. |
 | `showClear` | `boolean` | `false` | Shows a clear button when there is text or a value. |
-| `invalid` | `boolean` | - | Shows the danger border; also read from a surrounding Field. |
+| `invalid` | `boolean` | - | Shows the destructive border; also read from a surrounding Field. |
 
 Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### ComboboxContent
 
@@ -607,7 +661,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Popup>`
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### ComboboxList
 
@@ -617,7 +671,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.List>`.
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### ComboboxItem
 
@@ -631,7 +685,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Item>`.
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### ComboboxGroup
 
@@ -641,7 +695,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Group>`
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### ComboboxLabel
 
@@ -651,7 +705,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.GroupLa
 
 </ApiPart>
 
-<ApiPart index={8}>
+<ApiPart index={9}>
 
 ### ComboboxEmpty
 
@@ -661,7 +715,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Empty>`
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### ComboboxSeparator
 
@@ -671,7 +725,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Separat
 
 </ApiPart>
 
-<ApiPart index={10}>
+<ApiPart index={11}>
 
 ### ComboboxChips
 
@@ -679,13 +733,13 @@ Field that holds chips for multiple selection.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `invalid` | `boolean` | - | Shows the danger border. |
+| `invalid` | `boolean` | - | Shows the destructive border. |
 
 Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chips>`.
 
 </ApiPart>
 
-<ApiPart index={11}>
+<ApiPart index={12}>
 
 ### ComboboxChip
 
@@ -700,7 +754,7 @@ Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chip>`.
 
 </ApiPart>
 
-<ApiPart index={12}>
+<ApiPart index={13}>
 
 ### ComboboxChipsInput
 

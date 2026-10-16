@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="switch-demo" />
 
-`Switch` wraps the Base UI Switch primitive and renders the track and thumb together. The thumb stretches while pressed, and the track fills with the accent color when on.
+`Switch` wraps the switch primitive of the chosen base and renders the track and thumb together. The thumb stretches while pressed, and the track fills with the primary color when on.
 
 Use a switch for settings that take effect immediately. To select an option in a form that's submitted later, use `Checkbox`.
 
@@ -97,7 +97,7 @@ The switch track and its sliding thumb.
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "default"` | `"default"` | Sets the switch size: `default` or the smaller `sm`. |
 
-Also accepts the props of `SwitchPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -110,7 +110,7 @@ Also accepts the props of `SwitchPrimitive.Root.Props`.
 
 ## Notes
 
-- Uses `data-slot="switch"` and `data-slot="switch-thumb"`, plus `data-size` and Base UI's `data-checked`, `data-unchecked` and `data-disabled` attributes.
+- Uses `data-slot="switch"` and `data-slot="switch-thumb"`, plus `data-size` and the primitive's state attributes.
 - An invalid switch draws a `destructive` border.
 - A transparent hit area extends around the track to make it easier to tap.
 - The thumb's travel flips in right-to-left layouts.
@@ -121,7 +121,7 @@ Also accepts the props of `SwitchPrimitive.Root.Props`.
 
 <NativeExample id="components-switch--default" />
 
-`Switch` is a pressable track with a round thumb that slides between the off and on positions. The thumb animates with Reanimated and stretches slightly while pressed. It comes in two sizes, `default` and `sm`, and has an `invalid` state that adds a danger-colored border.
+`Switch` is a pressable track with a round thumb that slides between the off and on positions. The thumb animates with Reanimated and stretches slightly while pressed. It comes in two sizes, `default` and `sm`, and has an `invalid` state that adds a destructive border.
 
 Use a switch for settings that take effect immediately. For choices that are submitted later, use Checkbox.
 
@@ -354,7 +354,7 @@ A switch with the `invalid` border next to its label.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `size` | `SwitchSize` | `"default"` | `default` or `sm`. |
-| `invalid` | `boolean` | - | Adds a danger-colored border when not disabled. |
+| `invalid` | `boolean` | - | Adds a destructive border when not disabled. |
 
 Also accepts the props of `React.ComponentProps<typeof SwitchPrimitives.Root>`.
 

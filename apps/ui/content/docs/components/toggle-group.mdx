@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="toggle-group-demo" />
 
-`ToggleGroup` wraps the Base UI Toggle Group primitive and holds `ToggleGroupItem` buttons that share the group's `variant` and `size`. Items can be spaced apart, attached into one bar, or combined into a segmented control.
+`ToggleGroup` wraps the toggle group primitive of the chosen base and holds `ToggleGroupItem` buttons that share the group's `variant` and `size`. Items can be spaced apart, attached into one bar, or combined into a segmented control.
 
 With `spacing={0}` and the `default` variant, the group becomes a segmented control: a filled track where a raised pill slides to the pressed item. Use a segmented group to switch between views, such as day, week and month. For a single on-off option, use `Toggle`; for switching panels of content, use `Tabs`.
 
@@ -149,7 +149,7 @@ The container that holds the pressed values and shared styles.
 | `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
 
-Also accepts the props of `ToggleGroupPrimitive.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -159,7 +159,7 @@ Also accepts the props of `ToggleGroupPrimitive.Props`.
 
 A toggle button within the group, identified by its `value`.
 
-Also accepts the props of `TogglePrimitive.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

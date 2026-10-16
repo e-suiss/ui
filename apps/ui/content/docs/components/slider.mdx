@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="slider-demo" />
 
-`Slider` wraps the Base UI Slider primitive in a single component. It renders the track, the filled range and one thumb per value. The thumb is a wide capsule that stretches while it's dragged or pressed.
+`Slider` wraps the slider primitive of the chosen base in a single component. It renders the track, the filled range and one thumb per value. The thumb is a wide capsule that stretches while it's dragged or pressed.
 
 Use a slider when an approximate value within a range matters more than a precise number, such as volume or brightness. For exact numbers, use a number field or `Input`.
 
@@ -89,7 +89,7 @@ Disables interaction and removes the thumb from the tab order.
 
 The complete slider: track, filled range and thumbs.
 
-Also accepts the props of `SliderPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -294,11 +294,15 @@ A two-thumb price range with a step and a minimum gap.
 
 <NativeExample id="components-slider--range" />
 
+<Only platform="rn">
+
 ### Multiple thumbs
 
 Three thumbs that swap when they cross.
 
 <NativeExample id="components-slider--multiple-thumbs" />
+
+</Only>
 
 ### Step
 
@@ -306,11 +310,15 @@ A slider that moves in decimal steps.
 
 <NativeExample id="components-slider--step" />
 
+<Only platform="rn">
+
 ### Vertical
 
 Single and range sliders in vertical orientation.
 
 <NativeExample id="components-slider--vertical" />
+
+</Only>
 
 ### Disabled
 

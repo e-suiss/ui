@@ -9,7 +9,7 @@ platforms: [web]
 
 <ComponentPreview name="hover-card-demo" />
 
-`HoverCard` wraps the Base UI Preview Card. The `HoverCard` root manages the open state, `HoverCardTrigger` renders the link that opens it, and `HoverCardContent` renders the floating card in a portal, positioned next to the trigger.
+`HoverCard` wraps the hover card primitive of the chosen base. The `HoverCard` root manages the open state, `HoverCardTrigger` renders the link that opens it, and `HoverCardContent` renders the floating card in a portal, positioned next to the trigger.
 
 Use a hover card for supplementary, non-essential previews, such as a profile summary behind a username. Because it only opens on hover or focus, do not put content there that people need to complete a task. For interactive content opened with a click, use a popover.
 
@@ -102,7 +102,7 @@ Four hover cards opening on the `top`, `right`, `bottom` and `left` sides of the
 
 The root that manages the card's open state.
 
-Also accepts the props of `PreviewCardPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -112,7 +112,7 @@ Also accepts the props of `PreviewCardPrimitive.Root.Props`.
 
 The link that opens the card on hover or focus.
 
-Also accepts the props of `PreviewCardPrimitive.Trigger.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -122,7 +122,7 @@ Also accepts the props of `PreviewCardPrimitive.Trigger.Props`.
 
 The floating card, rendered in a portal and positioned relative to the trigger.
 
-Also accepts the props of `PreviewCardPrimitive.Popup.Props`, `PreviewCardPrimitive.Positioner.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
@@ -134,8 +134,8 @@ Also accepts the props of `PreviewCardPrimitive.Popup.Props`, `PreviewCardPrimit
 
 ## Notes
 
-- Styling hooks: `data-slot` values `hover-card`, `hover-card-trigger` and `hover-card-content`.
-- `HoverCardContent` receives `data-side` from Base UI, which drives the slide-in direction, along with `data-open` and `data-closed` for the fade and zoom animation.
+- Styling hooks: `data-slot` values `hover-card-trigger` and `hover-card-content`. The root renders no element of its own.
+- `HoverCardContent` slides in from the side it opens on, and fades and zooms as it opens and closes.
 - The card is `w-72` by default; override it with `className`.
 - Uses the `popover` and `popover-foreground` colors.
 

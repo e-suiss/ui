@@ -3333,7 +3333,7 @@
       "name": "pie-chart-default",
       "type": "registry:block",
       "title": "Pie Chart Default",
-      "description": "A full pie split into five device slices, separated by thin surface-colored borders.",
+      "description": "A full pie split into five device slices, separated by thin card-colored borders.",
       "dependencies": [
         "recharts"
       ],
@@ -3682,7 +3682,7 @@
       "name": "radar-chart-grid-filled",
       "type": "registry:block",
       "title": "Radar Chart Grid Filled",
-      "description": "A borderless radar shape over shaded circular rings separated by surface-colored lines.",
+      "description": "A borderless radar shape over shaded circular rings separated by card-colored lines.",
       "dependencies": [
         "recharts"
       ],

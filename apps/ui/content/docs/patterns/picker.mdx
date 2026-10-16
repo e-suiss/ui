@@ -125,6 +125,12 @@ The root that renders the Select or native select and holds the value.
 | `aria-label` | `string` | - | The accessible name of the control. |
 | `aria-describedby` | `string` | - | The ID of an element that describes the control. |
 
+<OnlyBase base="radix">
+
+On the `radix` base, `items` is not available; the selected label always comes from the `PickerItem` children.
+
+</OnlyBase>
+
 </ApiPart>
 
 <ApiPart index={2}>
@@ -279,13 +285,9 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/DropdownMenu.swift" />
 
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
@@ -426,7 +428,7 @@ One selectable option.
 
 ## Notes
 
-- The popup uses `bg-card` with a subtle border that is stronger in dark mode.
+- The popup uses `bg-popover` with a subtle border that is stronger in dark mode.
 - The popup fades in and out, and respects the system reduce motion setting.
 - On iOS the popup renders in a full-window overlay so it appears above native screens.
 

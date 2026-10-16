@@ -263,7 +263,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 `Widget` is a `View` with a rounded, filled surface. It comes in four fixed sizes, `small` (168×168), `medium` (352×168), `large` (352×352) and `extra-large` (720×352), or `auto`, which fills its parent. Fixed sizes animate with Reanimated when the size changes.
 
-With `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap, and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align="center"` to center the content, which also hides `WidgetAction`.
+With `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap (when a haptics adapter is provided through `HapticsContext`), and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align="center"` to center the content, which also hides `WidgetAction`.
 
 ## Installation
 
@@ -297,7 +297,7 @@ npx @esuiss/ui@latest add widget --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -313,13 +313,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/widget.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/widget.tsx`:
 
 <ComponentSource path="uniwind/components/ui/widget.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -331,13 +335,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/widget.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/widget.tsx`:
 
 <ComponentSource path="nativewind/components/ui/widget.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -349,13 +357,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/haptics.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/widget.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/widget.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/widget.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -387,21 +399,15 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/Dialog.swift" />
 
 <ComponentSource path="swift/Components/Drawer.swift" />
-
-<ComponentSource path="swift/Components/Field.swift" />
 
 <ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
 <ComponentSource path="swift/Components/Popover.swift" />
-
-<ComponentSource path="swift/Components/Separator.swift" />
 
 <ComponentSource path="swift/Components/TextVariant.swift" />
 

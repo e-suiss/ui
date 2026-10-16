@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="select-demo" />
 
-`Select` wraps the Base UI Select primitive. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.
+`Select` wraps the select primitive of the chosen base. `SelectTrigger` shows the current choice through `SelectValue` and a chevron icon; `SelectContent` renders the popup in a portal, positioned against the trigger, and holds `SelectItem` options. Use `SelectGroup` with a `SelectLabel` to title a set of options, and `SelectSeparator` to divide groups.
 
 A highlight pill slides between options as the highlighted item changes, and the selected item shows a check mark. Use `Select` when people choose one value from a fixed list. For a few always-visible options, consider `ToggleGroup` or `RadioGroup`.
 
@@ -116,38 +116,49 @@ Marks the trigger with `aria-invalid` to show an error state.
 
 <Anatomy>
 
-- [SelectTrigger](#selecttrigger)
-  - [SelectValue](#selectvalue)
-- [SelectContent](#selectcontent)
-  - [SelectGroup](#selectgroup)
+- [Select](#select)
+  - [SelectTrigger](#selecttrigger)
+    - [SelectValue](#selectvalue)
+  - [SelectContent](#selectcontent)
+    - [SelectGroup](#selectgroup)
+      - [SelectItem](#selectitem)
+      - [SelectLabel](#selectlabel)
     - [SelectItem](#selectitem)
-    - [SelectLabel](#selectlabel)
-  - [SelectItem](#selectitem)
-  - [SelectSeparator](#selectseparator)
+    - [SelectSeparator](#selectseparator)
 
 </Anatomy>
 
 <ApiPart index={1}>
 
-### SelectGroup
+### Select
 
-Groups related options; label it with a `SelectLabel`.
+The root that holds the selected value and the open state.
 
-Also accepts the props of `SelectPrimitive.Group.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 <ApiPart index={2}>
 
-### SelectValue
+### SelectGroup
 
-Shows the selected option's label, or the placeholder, inside the trigger.
+Groups related options; label it with a `SelectLabel`.
 
-Also accepts the props of `SelectPrimitive.Value.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 <ApiPart index={3}>
+
+### SelectValue
+
+Shows the selected option's label, or the placeholder, inside the trigger.
+
+Also accepts the props of the primitive part it wraps.
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SelectTrigger
 
@@ -157,51 +168,51 @@ The button that opens the popup and displays the current value.
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "default"` | `"default"` | Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners. |
 
-Also accepts the props of `SelectPrimitive.Trigger.Props`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectContent
-
-The positioned popup that holds the option list and scroll arrows.
-
-Also accepts the props of `SelectPrimitive.Popup.Props`, `SelectPrimitive.Positioner.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 <ApiPart index={5}>
 
-### SelectLabel
+### SelectContent
 
-A heading that names a `SelectGroup`.
+The positioned popup that holds the option list and scroll arrows.
 
-Also accepts the props of `SelectPrimitive.GroupLabel.Props`.
+Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
 
 <ApiPart index={6}>
 
-### SelectItem
+### SelectLabel
 
-A selectable option, with a check mark when selected.
+A heading that names a `SelectGroup`.
 
-Also accepts the props of `SelectPrimitive.Item.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 <ApiPart index={7}>
 
-### SelectSeparator
+### SelectItem
 
-A thin line that divides groups of options.
+A selectable option, with a check mark when selected.
 
-Also accepts the props of `SelectPrimitive.Separator.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 <ApiPart index={8}>
+
+### SelectSeparator
+
+A thin line that divides groups of options.
+
+Also accepts the props of the primitive part it wraps.
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### SelectScrollUpButton
 
@@ -211,7 +222,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollUpA
 
 </ApiPart>
 
-<ApiPart index={9}>
+<ApiPart index={10}>
 
 ### SelectScrollDownButton
 
@@ -240,7 +251,11 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollDow
 
 <Only platform="rn swift kotlin">
 
+<Only platform="rn">
+
 <NativeExample id="components-select--open-by-default" />
+
+</Only>
 
 `Select` is built on the select primitive. `SelectTrigger` is a pressable field with the `combobox` role and an up-down caret. `SelectContent` renders in a portal, positioned next to the trigger, and fades in and out with Reanimated. The list matches the trigger width.
 
@@ -278,7 +293,7 @@ npx @esuiss/ui@latest add select --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
 
 ### Manual
 
@@ -294,13 +309,17 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/select.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="uniwind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/select.tsx`:
 
 <ComponentSource path="uniwind/components/ui/select.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -312,13 +331,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/select.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="nativewind/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/select.tsx`:
 
 <ComponentSource path="nativewind/components/ui/select.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -330,13 +353,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/field.tsx`, `components/primitives/positioner.tsx`, `components/primitives/select.tsx`, `components/primitives/use-render.tsx`, and the animated view `components/ui/animated-view.tsx` from the next step.
 
-3. Copy the source into `components/ui/select.tsx`:
+3. Copy the animated view into `components/ui/animated-view.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
+
+4. Copy the source into `components/ui/select.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/select.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -368,13 +395,9 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/Checkbox.swift" />
-
 <ComponentSource path="swift/Components/DropdownMenu.swift" />
 
 <ComponentSource path="swift/Components/Field.swift" />
-
-<ComponentSource path="swift/Components/Haptics.swift" />
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
@@ -491,6 +514,28 @@ The invalid state with an error message.
 
 <ApiPart index={1}>
 
+### Select
+
+The root that holds the selected value and the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `SelectItems` | - | Value and label pairs used to show the selected label. |
+| `value` | `Value \| Value[] \| null` | - | The selected value, for controlled use. |
+| `defaultValue` | `Value \| Value[] \| null` | - | The initial value when uncontrolled. |
+| `onValueChange` | `(value, details) => void` | - | Called when the selection changes. |
+| `multiple` | `boolean` | `false` | Allows several values to be selected. |
+| `open` | `boolean` | - | Whether the popup is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the popup starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the popup opens or closes. |
+| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
+| `disabled` | `boolean` | `false` | Disables the select. |
+| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
 ### SelectGroup
 
 Groups related items.
@@ -499,7 +544,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Group>`.
 
 </ApiPart>
 
-<ApiPart index={2}>
+<ApiPart index={3}>
 
 ### SelectValue
 
@@ -509,7 +554,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Value>`.
 
 </ApiPart>
 
-<ApiPart index={3}>
+<ApiPart index={4}>
 
 ### SelectTrigger
 
@@ -519,13 +564,13 @@ Pressable field that opens the list.
 | --- | --- | --- | --- |
 | `children` | `React.ReactNode` | - |  |
 | `size` | `"default" \| "sm"` | `"default"` | Trigger height: `default` or `sm`. |
-| `invalid` | `boolean` | - | Shows the danger border. Falls back to the invalid state of an enclosing field. |
+| `invalid` | `boolean` | - | Shows the destructive border. Falls back to the invalid state of an enclosing field. |
 
 Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`.
 
 </ApiPart>
 
-<ApiPart index={4}>
+<ApiPart index={5}>
 
 ### SelectContent
 
@@ -539,7 +584,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Popup>`, 
 
 </ApiPart>
 
-<ApiPart index={5}>
+<ApiPart index={6}>
 
 ### SelectLabel
 
@@ -549,7 +594,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.GroupLabe
 
 </ApiPart>
 
-<ApiPart index={6}>
+<ApiPart index={7}>
 
 ### SelectItem
 
@@ -563,7 +608,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Item>`.
 
 </ApiPart>
 
-<ApiPart index={7}>
+<ApiPart index={8}>
 
 ### SelectSeparator
 

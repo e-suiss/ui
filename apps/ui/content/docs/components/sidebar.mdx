@@ -55,7 +55,25 @@ import { SidebarProvider, Sidebar, SidebarTrigger, SidebarRail, SidebarInset, Si
 
 Use `defaultOpen` on `SidebarProvider` for an uncontrolled sidebar, or `open` with `onOpenChange` to control it. Read and change state from any child with the `useSidebar` hook, which returns `state`, `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile` and `toggleSidebar`.
 
-Set `collapsible="icon"` to shrink the sidebar to a rail of icons when collapsed, `offcanvas` to slide it out of view, or `none` to keep it fixed. Give each `SidebarMenuButton` a `tooltip` so its label stays available while collapsed to icons. Use the `render` prop on `SidebarMenuButton` to render it as a link.
+Set `collapsible="icon"` to shrink the sidebar to a rail of icons when collapsed, `offcanvas` to slide it out of view, or `none` to keep it fixed. Give each `SidebarMenuButton` a `tooltip` so its label stays available while collapsed to icons.
+
+<OnlyBase base="base">
+
+Use the `render` prop on `SidebarMenuButton` to render it as a link.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `SidebarMenuButton` and pass a link as the child to render it as a link.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to `SidebarMenuButton` that returns a link with the props it receives.
+
+</OnlyBase>
 
 ## Examples
 

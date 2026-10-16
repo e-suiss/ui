@@ -414,6 +414,13 @@ body {
   height: 32rem;
 }
 
+html:not([data-base]) [data-only-base]:not([data-only-base~="base"]),
+html[data-base="base"] [data-only-base]:not([data-only-base~="base"]),
+html[data-base="radix"] [data-only-base]:not([data-only-base~="radix"]),
+html[data-base="aria"] [data-only-base]:not([data-only-base~="aria"]) {
+  display: none;
+}
+
 html:not([data-platform])
   [data-first="web"]
   [data-only]:not([data-only~="web"]),
