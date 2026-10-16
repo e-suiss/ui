@@ -199,6 +199,7 @@ function MessageScrollerButton({
   size = "icon-sm",
   type = "button",
   tabIndex,
+  disabled,
   onClick,
   ...props
 }: React.ComponentProps<"button"> &
@@ -237,6 +238,7 @@ function MessageScrollerButton({
     return render({
       ...elementProps,
       type,
+      disabled,
       tabIndex: active ? tabIndex : -1,
       onClick: handleClick,
       children,
@@ -247,6 +249,7 @@ function MessageScrollerButton({
       variant={variant}
       size={size}
       type={type === "submit" || type === "reset" ? type : "button"}
+      isDisabled={disabled}
       excludeFromTabOrder={!active || tabIndex === -1}
       onClick={(event) =>
         handleClick(event as React.MouseEvent<HTMLButtonElement>)

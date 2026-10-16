@@ -418,7 +418,8 @@
       "title": "Combobox",
       "description": "A text input with a filterable list of options, for choosing one or more values by typing.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority"
       ],
       "registryDependencies": [
         "@esuiss/button",
