@@ -249,7 +249,7 @@ Hooks: use-message-scroller, use-mobile, use-platform, use-questionnaire
 Patterns combine several components into one ready-made piece, such as a date and time picker. They are not added by `init` or `add --all`; add them by name, or all at once:
 
 ```bash
-npx @esuiss/ui add patterns date-time-picker
+npx @esuiss/ui add patterns date-picker
 npx @esuiss/ui add patterns --all
 ```
 

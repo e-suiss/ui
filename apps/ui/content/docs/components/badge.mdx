@@ -103,12 +103,12 @@ Also accepts the props of `useRender.ComponentProps<"span">`.
 
 - A badge is static text by default and is not focusable.
 - When rendered as a link, it shows a focus ring on keyboard focus.
-- `aria-invalid` adds a danger-colored border.
+- `aria-invalid` adds a `border-destructive` border.
 
 ## Notes
 
 - Styling hook: `data-slot="badge"`, plus `data-variant` from the render state.
-- The `destructive` variant also sets the focus ring color to `--color-danger`.
+- The `destructive` variant also tints the focus ring with `ring-destructive/20` (`ring-destructive/40` in dark mode).
 - Badges are a fixed `h-5` with fully rounded corners and do not wrap text.
 
 </Only>
