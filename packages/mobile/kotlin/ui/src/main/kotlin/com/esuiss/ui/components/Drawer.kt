@@ -104,7 +104,7 @@ fun Drawer(
     val currentOnOpenChange by rememberUpdatedState(onOpenChange)
     val currentOnSnapPointChange by rememberUpdatedState(onSnapPointChange)
     val currentSnapPoints by rememberUpdatedState(snapPoints)
-    val close = { if (open) onOpenChange(false) }
+    val close = { if (currentOpen) currentOnOpenChange(false) }
 
     LaunchedEffect(open, sheetHeight) {
         if (sheetHeight == 0) {

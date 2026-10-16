@@ -40,6 +40,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -274,6 +275,7 @@ private fun ThreadContact(onPress: () -> Unit) {
 private fun ThreadBubble(line: ThreadLine, onToggleLike: () -> Unit) {
     val colors = EsuissTheme.colors
     val appear = remember { Animatable(0f) }
+    val currentOnToggleLike by rememberUpdatedState(onToggleLike)
     LaunchedEffect(Unit) { appear.animateTo(1f, tween(700, easing = ThreadEnterEasing)) }
     val align = if (line.mine) BubbleAlign.End else BubbleAlign.Start
     Message(
@@ -292,7 +294,7 @@ private fun ThreadBubble(line: ThreadLine, onToggleLike: () -> Unit) {
             ) {
                 BubbleContent(
                     modifier = Modifier
-                        .pointerInput(Unit) { detectTapGestures(onDoubleTap = { onToggleLike() }) }
+                        .pointerInput(Unit) { detectTapGestures(onDoubleTap = { currentOnToggleLike() }) }
                         .semantics(mergeDescendants = true) {
                             if (line.liked) stateDescription = "Liked"
                             onClick(label = if (line.liked) "Remove the heart" else "Add a heart") {

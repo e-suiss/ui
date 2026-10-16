@@ -19,9 +19,9 @@ android {
 
 dependencies {
   val composeBom = platform("androidx.compose:compose-bom:2026.09.00")
-  implementation(composeBom)
-  implementation("androidx.compose.foundation:foundation")
-  implementation("androidx.compose.ui:ui")
+  api(composeBom)
+  api("androidx.compose.foundation:foundation")
+  api("androidx.compose.ui:ui")
   implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
   androidTestImplementation(composeBom)

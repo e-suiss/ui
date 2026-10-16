@@ -22,6 +22,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -195,6 +196,7 @@ fun BubbleContent(
             action()
         }
     }
+    val currentLongPress by rememberUpdatedState(longPress)
     val gestures = when {
         onClick != null -> Modifier.combinedClickable(
             interactionSource = interaction,
@@ -210,7 +212,7 @@ fun BubbleContent(
                         tryAwaitRelease()
                         holding = false
                     },
-                    onLongPress = { longPress() },
+                    onLongPress = { currentLongPress?.invoke() },
                 )
             }
             .semantics {

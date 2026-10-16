@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@esuiss/ui?label=%40esuiss%2Fui)](https://www.npmjs.com/package/@esuiss/ui)
 [![npm downloads](https://img.shields.io/npm/dm/@esuiss/ui)](https://www.npmjs.com/package/@esuiss/ui)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](https://github.com/e-suiss/ui/blob/main/LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-ui.suiss.app-black)](https://ui.suiss.app)
 
 **This package holds the mobile side of suiss/ui, an open-source library of copy-paste components with a clean, minimal design,** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same API: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet. The `@esuiss/ui` command-line tool, shared with the web library, copies each component's source into your app, so you own the code and can change anything.
@@ -80,7 +80,7 @@ Yes. Colors follow the system appearance on iOS and Android.
 Yes. [suiss/ui](https://github.com/e-suiss/ui) has the same components for React, Next.js and Vite.
 
 **Is it free?**
-Yes, it is released under the [MIT License](LICENSE).
+Yes, it is released under the [MIT License](https://github.com/e-suiss/ui/blob/main/LICENSE).
 
 **Is the documentation available for AI assistants?**
 Yes. [ui.suiss.app/llms.txt](https://ui.suiss.app/llms.txt) lists every page, [ui.suiss.app/llms-full.txt](https://ui.suiss.app/llms-full.txt) contains the full documentation, and every page is available as Markdown by adding `.md` to its URL.
