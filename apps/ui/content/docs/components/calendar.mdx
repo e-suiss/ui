@@ -435,7 +435,7 @@ Also accepts the props of `React.ComponentProps<typeof CalendarPrimitive.Root>`.
 
 - Each month is a `grid` labelled with its caption.
 - Day cells have the `button` role, a full date label, and `selected` and `disabled` state.
-- The previous and next buttons are labelled "Go to the Previous Month" and "Go to the Next Month".
+- On React Native and Android, the previous and next buttons are labelled with the relative month in the calendar's locale, such as "Last month" and "Next month" in English. On iOS they are labelled "Previous month" and "Next month".
 - Caption dropdowns are labelled "Choose the Month" and "Choose the Year".
 
 ## Notes
