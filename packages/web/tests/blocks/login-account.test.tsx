@@ -9,7 +9,12 @@ const password = () => page.getByLabelText("Password", { exact: true })
 const continueButtons = () => page.getByRole("button", { name: "Continue" })
 const emailContinue = () => continueButtons().first()
 const passwordContinue = () => continueButtons().last()
-const error = () => document.getElementById("login-account-error")
+const error = () =>
+  document.getElementById(
+    document
+      .querySelector("[aria-describedby]")
+      ?.getAttribute("aria-describedby") ?? ""
+  )
 const passwordRow = () =>
   password().element().closest<HTMLElement>("[class*=grid-rows]")
 

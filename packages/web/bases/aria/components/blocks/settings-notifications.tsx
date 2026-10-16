@@ -103,6 +103,7 @@ function Notification({ body, stacked }: { body: string; stacked?: boolean }) {
 }
 
 export function SettingsNotifications() {
+  const idPrefix = React.useId()
   const [allow, setAllow] = React.useState(true)
   const [enabled, setEnabled] = React.useState<Record<Alert, boolean>>({
     lock: true,
@@ -157,14 +158,12 @@ export function SettingsNotifications() {
           <Item size="sm" role="listitem">
             <ItemContent>
               <ItemTitle className="text-base font-normal">
-                <label htmlFor="settings-notifications-allow">
-                  Allow Notifications
-                </label>
+                <label htmlFor={`${idPrefix}-allow`}>Allow Notifications</label>
               </ItemTitle>
             </ItemContent>
             <ItemActions>
               <Switch
-                id="settings-notifications-allow"
+                id={`${idPrefix}-allow`}
                 isSelected={allow}
                 onChange={(value) => {
                   setAllow(value)
@@ -247,12 +246,12 @@ export function SettingsNotifications() {
             <Item size="sm" role="listitem">
               <ItemContent>
                 <ItemTitle className="text-base font-normal">
-                  <label htmlFor="settings-notifications-sounds">Sounds</label>
+                  <label htmlFor={`${idPrefix}-sounds`}>Sounds</label>
                 </ItemTitle>
               </ItemContent>
               <ItemActions>
                 <Switch
-                  id="settings-notifications-sounds"
+                  id={`${idPrefix}-sounds`}
                   isSelected={sounds}
                   onChange={setSounds}
                 />
@@ -262,12 +261,12 @@ export function SettingsNotifications() {
             <Item size="sm" role="listitem">
               <ItemContent>
                 <ItemTitle className="text-base font-normal">
-                  <label htmlFor="settings-notifications-badges">Badges</label>
+                  <label htmlFor={`${idPrefix}-badges`}>Badges</label>
                 </ItemTitle>
               </ItemContent>
               <ItemActions>
                 <Switch
-                  id="settings-notifications-badges"
+                  id={`${idPrefix}-badges`}
                   isSelected={badges}
                   onChange={setBadges}
                 />

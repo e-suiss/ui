@@ -295,6 +295,7 @@ function EditableCard({
 }
 
 function Security() {
+  const idPrefix = React.useId()
   const [values, setValues] = React.useState({
     email: "jamie@suiss.com",
     phone: "+1 (415) 555-0142",
@@ -335,7 +336,7 @@ function Security() {
       <div className="flex items-center gap-3 rounded-[1.125rem] bg-muted px-5 py-4.5">
         <div className="flex flex-1 flex-col gap-0.75">
           <label
-            htmlFor="settings-account-passkeys"
+            htmlFor={`${idPrefix}-passkeys`}
             className="text-lg font-semibold"
           >
             Passkeys
@@ -345,7 +346,7 @@ function Security() {
           </p>
         </div>
         <Switch
-          id="settings-account-passkeys"
+          id={`${idPrefix}-passkeys`}
           isSelected={passkeys}
           onChange={setPasskeys}
         />

@@ -19,6 +19,7 @@ const slotClass =
   "h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl transition-[border-color,box-shadow,scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive group-data-[status=ok]/code:border-green-500"
 
 export function VerifyCode() {
+  const idPrefix = React.useId()
   const [code, setCode] = React.useState("")
   const [status, setStatus] = React.useState<"idle" | "error" | "ok">("idle")
   const [left, setLeft] = React.useState(30)
@@ -107,7 +108,7 @@ export function VerifyCode() {
             }}
             onComplete={complete}
             aria-label="Verification code"
-            aria-describedby="verify-code-hint"
+            aria-describedby={`${idPrefix}-hint`}
           >
             <div data-status={status} className="group/code flex gap-4">
               <InputOTPGroup className="gap-2.5">
@@ -132,7 +133,7 @@ export function VerifyCode() {
           </InputOTP>
         </div>
         <p
-          id="verify-code-hint"
+          id={`${idPrefix}-hint`}
           aria-live="polite"
           data-status={status}
           className="mt-3.5 min-h-5 text-sm text-muted-foreground data-[status=error]:text-destructive"

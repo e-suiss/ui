@@ -10,7 +10,12 @@ afterEach(async () => {
 })
 
 const input = () => page.getByRole("textbox", { name: "Verification code" })
-const hint = () => document.getElementById("verify-code-hint")
+const hint = () =>
+  document.getElementById(
+    document
+      .querySelector("[aria-describedby]")
+      ?.getAttribute("aria-describedby") ?? ""
+  )
 const countdownText = /^Resend code · 0:\d\d$/
 const countdown = () => page.getByText(countdownText)
 const resend = () => page.getByRole("button", { name: "Resend code ›" })

@@ -63,6 +63,7 @@ function PasswordRules({ password }: { password: string }) {
 }
 
 export function SignupForm() {
+  const idPrefix = React.useId()
   const [form, setForm] = React.useState({
     first: "",
     last: "",
@@ -214,13 +215,13 @@ export function SignupForm() {
               onChange={update("email")}
               placeholder="name@example.com"
               aria-label="Email"
-              aria-describedby="signup-form-email-hint"
+              aria-describedby={`${idPrefix}-email-hint`}
               autoComplete="email"
               className={inputClass}
             />
           </div>
           <p
-            id="signup-form-email-hint"
+            id={`${idPrefix}-email-hint`}
             className="mt-1.5 text-xs text-muted-foreground"
           >
             This will be your new suiss Account.

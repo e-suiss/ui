@@ -212,6 +212,7 @@ const defaults: Record<Role, boolean[]> = {
 const clone = (value: Record<Role, boolean[]>) => structuredClone(value)
 
 export function RolesEditor() {
+  const idPrefix = React.useId()
   const [role, setRole] = React.useState<Role>("Editor")
   const [state, setState] = React.useState(() => clone(defaults))
   const [base, setBase] = React.useState(() => clone(defaults))
@@ -306,7 +307,7 @@ export function RolesEditor() {
                   <ItemGroup variant="inset">
                     {group.permissions.map((permission, position) => {
                       const slot = index++
-                      const id = `roles-editor-${slot}`
+                      const id = `${idPrefix}-${slot}`
                       return (
                         <React.Fragment key={permission.name}>
                           {position > 0 && <ItemSeparator />}

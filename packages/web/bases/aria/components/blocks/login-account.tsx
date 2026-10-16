@@ -43,6 +43,7 @@ function SubmitArrow({ ready, busy }: { ready: boolean; busy: boolean }) {
 }
 
 export function LoginAccount() {
+  const idPrefix = React.useId()
   const [step, setStep] = React.useState<"email" | "password">("email")
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
@@ -131,7 +132,7 @@ export function LoginAccount() {
               placeholder="Email or phone number"
               aria-label="Email or phone number"
               aria-invalid={(step === "email" && !!error) || undefined}
-              aria-describedby="login-account-error"
+              aria-describedby={`${idPrefix}-error`}
               autoComplete="username"
               className="h-14 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
             />
@@ -154,7 +155,7 @@ export function LoginAccount() {
                   placeholder="Password"
                   aria-label="Password"
                   aria-invalid={(step === "password" && !!error) || undefined}
-                  aria-describedby="login-account-error"
+                  aria-describedby={`${idPrefix}-error`}
                   autoComplete="current-password"
                   tabIndex={step === "password" ? 0 : -1}
                   className="h-14 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
@@ -165,7 +166,7 @@ export function LoginAccount() {
           </div>
         </div>
         <p
-          id="login-account-error"
+          id={`${idPrefix}-error`}
           aria-live="polite"
           className="mt-2.5 min-h-5.5 text-sm text-destructive"
         >

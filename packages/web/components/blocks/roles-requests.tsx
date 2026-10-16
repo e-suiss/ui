@@ -209,6 +209,7 @@ const initialRequests = [
 ]
 
 export function RolesRequests() {
+  const idPrefix = React.useId()
   const [requests, setRequests] = React.useState(() =>
     initialRequests.map((request) => ({
       ...request,
@@ -258,7 +259,7 @@ export function RolesRequests() {
             </div>
             <div className="flex items-center gap-2">
               <span
-                id="roles-requests-duration"
+                id={`${idPrefix}-duration`}
                 className="text-sm text-muted-foreground"
               >
                 Approval length
@@ -269,7 +270,7 @@ export function RolesRequests() {
               >
                 <SelectTrigger
                   size="sm"
-                  aria-labelledby="roles-requests-duration"
+                  aria-labelledby={`${idPrefix}-duration`}
                   className="h-7.5"
                 >
                   <SelectValue />

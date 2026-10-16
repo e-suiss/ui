@@ -197,6 +197,7 @@ function RowLink(props: React.ComponentProps<"a">) {
 const groupClass = "shrink-0 bg-background dark:bg-muted"
 
 export function SettingsDevice() {
+  const idPrefix = React.useId()
   const [query, setQuery] = React.useState("")
   const [toggles, setToggles] = React.useState<Toggles>({
     airplane: false,
@@ -316,7 +317,7 @@ export function SettingsDevice() {
             >
               {rows.map((row, index) => {
                 const detail = row.detail?.(toggles)
-                const switchId = `settings-device-${row.toggle}`
+                const switchId = `${idPrefix}-${row.toggle}`
                 return (
                   <div key={row.label} role="listitem" className="contents">
                     {index > 0 && <ItemSeparator />}
