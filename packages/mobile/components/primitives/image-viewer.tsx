@@ -578,7 +578,6 @@ function Pages({ render, className, style, ref, ...elementProps }: PagesProps) {
       })
       .onEnd(() => {
         settle()
-        mode.value = 0
       })
 
     const pan = Gesture.Pan()
@@ -651,6 +650,8 @@ function Pages({ render, className, style, ref, ...elementProps }: PagesProps) {
             dismissY.value = withTiming(0, TIMING)
           }
         }
+      })
+      .onFinalize(() => {
         mode.value = 0
       })
 

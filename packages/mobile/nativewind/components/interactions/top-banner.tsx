@@ -122,8 +122,8 @@ function TopBannerView({
             translateY.value = withTiming(
               -(height.value + top + 16),
               { duration: 200, easing: EASING },
-              () => {
-                runOnJS(onSwipe)()
+              (finished) => {
+                if (finished) runOnJS(onSwipe)()
               }
             )
             return

@@ -212,15 +212,19 @@ function TipCard({ className, ...props }: ViewProps) {
   )
 }
 
-function TipAnchor({ className, ...props }: ViewProps) {
+function TipAnchor({
+  className,
+  onStartShouldSetResponderCapture,
+  ...props
+}: ViewProps) {
   const { anchorRef, visible, dismiss } = useTip()
   return (
     <View
       ref={anchorRef}
       collapsable={false}
-      onStartShouldSetResponderCapture={() => {
+      onStartShouldSetResponderCapture={(event) => {
         if (visible) dismiss()
-        return false
+        return onStartShouldSetResponderCapture?.(event) ?? false
       }}
       className={cn("flex-row self-start", className)}
       {...props}

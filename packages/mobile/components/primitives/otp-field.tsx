@@ -289,6 +289,7 @@ function Root({
       autoFocus={autoFocus}
       accessibilityLabel={`${length} character code`}
       accessibilityState={{ disabled }}
+      secureTextEntry={mask}
       {...restInputProps}
       ref={composedInputRef}
       value={value}

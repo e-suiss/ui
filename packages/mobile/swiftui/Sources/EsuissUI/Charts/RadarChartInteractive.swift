@@ -127,7 +127,7 @@ public struct RadarChartInteractive: View {
                   .foregroundStyle(EsuissColor.mutedForeground)
                   .frame(maxWidth: .infinity, alignment: .leading)
                 Text(item.value, format: .number)
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

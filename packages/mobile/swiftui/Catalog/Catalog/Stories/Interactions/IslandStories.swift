@@ -81,15 +81,25 @@ private struct IslandLiveActivity: View {
   }
 
   private func push() {
-    guard let activity else { return }
-    let content = ActivityContent(state: state, staleDate: nil)
-    Task { await activity.update(content) }
+    guard let id = activity?.id else { return }
+    let next = state
+    Task { await Self.send(next, to: id, ending: false) }
   }
 
   private func end() {
-    guard let activity else { return }
+    guard let id = activity?.id else { return }
+    let next = state
+    activity = nil
+    Task { await Self.send(next, to: id, ending: true) }
+  }
+
+  private nonisolated static func send(_ state: DownloadActivityAttributes.ContentState, to id: String, ending: Bool) async {
+    guard let activity = Activity<DownloadActivityAttributes>.activities.first(where: { $0.id == id }) else { return }
     let content = ActivityContent(state: state, staleDate: nil)
-    self.activity = nil
-    Task { await activity.end(content, dismissalPolicy: .immediate) }
+    if ending {
+      await activity.end(content, dismissalPolicy: .immediate)
+    } else {
+      await activity.update(content)
+    }
   }
 }

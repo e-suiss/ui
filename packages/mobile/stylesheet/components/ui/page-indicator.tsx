@@ -190,6 +190,7 @@ function PageIndicator({
 
   return (
     <View
+      {...props}
       accessible
       accessibilityRole="adjustable"
       accessibilityLabel={accessibilityLabel}
@@ -197,7 +198,6 @@ function PageIndicator({
       accessibilityActions={onIndexChange ? ACTIONS : undefined}
       onAccessibilityAction={onAccessibilityAction}
       style={[styles.root, style]}
-      {...props}
     >
       <View
         style={[styles.frame, { width: frameWidth, height: metrics.dot + 16 }]}

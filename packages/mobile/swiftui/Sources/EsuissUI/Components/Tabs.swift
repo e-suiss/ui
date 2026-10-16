@@ -123,7 +123,7 @@ public struct TabsTrigger<Label: View>: View {
     } label: {
       label
         .labelStyle(ButtonLabelStyle(spacing: 8, iconSize: 16))
-        .font(TextStyle.sm.font())
+        .scaledFont(TextStyle.sm)
         .lineLimit(1)
         .foregroundStyle(active ? EsuissColor.foreground : EsuissColor.mutedForeground)
         .opacity(isEnabled ? 1 : 0.5)

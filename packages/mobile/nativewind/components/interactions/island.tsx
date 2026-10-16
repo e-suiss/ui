@@ -433,6 +433,7 @@ function Island({
   minimal,
   accessibilityLabel,
   portalHost,
+  onAccessibilityEscape,
   ...props
 }: React.ComponentProps<typeof View> & {
   className?: string
@@ -464,6 +465,8 @@ function Island({
     if (!active) return
     return registerActivity()
   }, [active, registerActivity])
+
+  React.useEffect(() => () => setPaused(false), [setPaused])
 
   const view = availableView(context.view, hasCompact, hasMinimal)
 
@@ -570,13 +573,18 @@ function Island({
           >
             <GestureDetector gesture={gesture}>
               <AnimatedView
+                {...props}
                 pointerEvents={view === "hidden" ? "none" : "auto"}
                 onAccessibilityEscape={
-                  view === "expanded" ? collapse : undefined
+                  view === "expanded"
+                    ? () => {
+                        collapse()
+                        onAccessibilityEscape?.()
+                      }
+                    : onAccessibilityEscape
                 }
                 className={cn("overflow-hidden bg-black shadow-xl", className)}
                 style={[style, animatedStyle]}
-                {...props}
               >
                 <TextClassContext.Provider value="text-white">
                   <IconClassContext.Provider value="size-5 text-white">

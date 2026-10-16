@@ -180,7 +180,9 @@ private struct RolesRequestsRow: View {
   var body: some View {
     HStack(alignment: .top, spacing: 12) {
       Text(verbatim: request.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
-        .font(.system(size: 13, weight: .semibold))
+        .scaledFont(.xs, weight: .semibold)
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
         .foregroundStyle(EsuissColor.primaryForeground)
         .frame(width: 34, height: 34)
         .background(request.tint, in: Circle())

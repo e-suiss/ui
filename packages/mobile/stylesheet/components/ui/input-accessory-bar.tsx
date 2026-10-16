@@ -1,6 +1,7 @@
 import { CaretDownIcon, CaretUpIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
+  I18nManager,
   InputAccessoryView,
   Keyboard,
   Platform,
@@ -26,6 +27,10 @@ import { useTheme } from "@/components/ui/theme"
 
 type InputRef = React.RefObject<React.ComponentRef<typeof TextInput> | null>
 
+type InputEntry = { ref: InputRef; order: number | undefined }
+
+type InputPosition = { x: number; y: number }
+
 type FocusEvent = Parameters<NonNullable<TextInputProps["onFocus"]>>[0]
 
 type BlurEvent = Parameters<NonNullable<TextInputProps["onBlur"]>>[0]
@@ -36,8 +41,9 @@ type InputAccessoryBarContextValue = {
   nativeID: string
   inputs: readonly InputRef[]
   focused: InputRef | null
-  register: (input: InputRef) => () => void
-  setFocused: (input: InputRef | null) => void
+  register: (input: InputRef, order?: number) => () => void
+  setFocused: React.Dispatch<React.SetStateAction<InputRef | null>>
+  measure: () => void
   focusAt: (index: number) => void
   done: () => void
 }
@@ -56,6 +62,35 @@ function useInputAccessoryBarContext() {
 }
 
 const BAR_HEIGHT = 44
+
+function sortInputs(
+  entries: readonly InputEntry[],
+  positions: ReadonlyMap<InputRef, InputPosition>
+) {
+  return entries
+    .map((entry, index) => ({ entry, index }))
+    .sort((a, b) => {
+      const aOrder = a.entry.order
+      const bOrder = b.entry.order
+      if (aOrder !== undefined && bOrder !== undefined && aOrder !== bOrder) {
+        return aOrder - bOrder
+      }
+      const aPosition = positions.get(a.entry.ref)
+      const bPosition = positions.get(b.entry.ref)
+      if (aPosition && bPosition) {
+        if (Math.abs(aPosition.y - bPosition.y) > 1) {
+          return aPosition.y - bPosition.y
+        }
+        if (aPosition.x !== bPosition.x) {
+          return I18nManager.isRTL
+            ? bPosition.x - aPosition.x
+            : aPosition.x - bPosition.x
+        }
+      }
+      return a.index - b.index
+    })
+    .map(({ entry }) => entry.ref)
+}
 
 const styles = StyleSheet.create({
   bar: {
@@ -143,18 +178,50 @@ function InputAccessoryBar({
   children?: React.ReactNode
 }) {
   const nativeID = `input-accessory-bar-${React.useId()}`
-  const [inputs, setInputs] = React.useState<readonly InputRef[]>([])
+  const [entries, setEntries] = React.useState<readonly InputEntry[]>([])
+  const [positions, setPositions] = React.useState<
+    ReadonlyMap<InputRef, InputPosition>
+  >(() => new Map())
+  const entriesRef = React.useRef(entries)
+  entriesRef.current = entries
+  const inputs = React.useMemo(
+    () => sortInputs(entries, positions),
+    [entries, positions]
+  )
   const [focused, setFocused] = React.useState<InputRef | null>(null)
   const keyboard = useKeyboard()
   const visible =
     Platform.OS !== "ios" && focused !== null && keyboard.height > 0
 
-  const register = React.useCallback((input: InputRef) => {
-    setInputs((current) => [...current, input])
+  const register = React.useCallback((input: InputRef, order?: number) => {
+    setEntries((current) => [...current, { ref: input, order }])
     return () => {
-      setInputs((current) => current.filter((entry) => entry !== input))
+      setEntries((current) => current.filter((entry) => entry.ref !== input))
       setFocused((current) => (current === input ? null : current))
     }
+  }, [])
+
+  const measure = React.useCallback(() => {
+    const list = entriesRef.current
+    Promise.all(
+      list.map(
+        (entry) =>
+          new Promise<[InputRef, InputPosition | null]>((resolve) => {
+            const node = entry.ref.current
+            if (!node) {
+              resolve([entry.ref, null])
+              return
+            }
+            node.measureInWindow((x, y) => resolve([entry.ref, { x, y }]))
+          })
+      )
+    ).then((results) => {
+      const next = new Map<InputRef, InputPosition>()
+      for (const [ref, position] of results) {
+        if (position) next.set(ref, position)
+      }
+      setPositions(next)
+    })
   }, [])
 
   const focusAt = React.useCallback(
@@ -188,10 +255,11 @@ function InputAccessoryBar({
       focused,
       register,
       setFocused,
+      measure,
       focusAt,
       done,
     }),
-    [nativeID, inputs, focused, register, focusAt, done]
+    [nativeID, inputs, focused, register, measure, focusAt, done]
   )
 
   const bar = (
@@ -230,22 +298,24 @@ function InputAccessoryBar({
 
 function useInputAccessoryBarInput({
   ref,
+  order,
   onFocus,
   onBlur,
   onSubmitEditing,
 }: {
   ref?: React.Ref<React.ComponentRef<typeof TextInput>>
+  order?: number
   onFocus?: TextInputProps["onFocus"]
   onBlur?: TextInputProps["onBlur"]
   onSubmitEditing?: TextInputProps["onSubmitEditing"]
 } = {}) {
-  const { nativeID, inputs, register, setFocused, focusAt, done } =
+  const { nativeID, inputs, register, setFocused, measure, focusAt, done } =
     useInputAccessoryBarContext()
   const scrollView = React.useContext(KeyboardScrollViewContext)
   const inputRef = React.useRef<React.ComponentRef<typeof TextInput>>(null)
   const composedRef = useComposedRefs(ref, inputRef)
 
-  React.useEffect(() => register(inputRef), [register])
+  React.useEffect(() => register(inputRef, order), [register, order])
 
   const index = inputs.indexOf(inputRef)
   const last = index === inputs.length - 1
@@ -257,11 +327,12 @@ function useInputAccessoryBarInput({
     submitBehavior: last ? "blurAndSubmit" : "submit",
     onFocus: (event: FocusEvent) => {
       setFocused(inputRef)
+      measure()
       if (scrollView) setTimeout(scrollView.scrollToFocused, 50)
       onFocus?.(event)
     },
     onBlur: (event: BlurEvent) => {
-      setFocused(null)
+      setFocused((current) => (current === inputRef ? null : current))
       onBlur?.(event)
     },
     onSubmitEditing: (event: SubmitEvent) => {
@@ -276,13 +347,15 @@ function useInputAccessoryBarInput({
 
 function InputAccessoryBarInput({
   ref,
+  order,
   onFocus,
   onBlur,
   onSubmitEditing,
   ...props
-}: React.ComponentProps<typeof Input>) {
+}: React.ComponentProps<typeof Input> & { order?: number }) {
   const accessory = useInputAccessoryBarInput({
     ref,
+    order,
     onFocus,
     onBlur,
     onSubmitEditing,

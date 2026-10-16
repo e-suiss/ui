@@ -123,9 +123,9 @@ private struct GridCarouselCard: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .frame(height: 440)
-      .background(EsuissColor.background, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+      .background(EsuissColor.background, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
       .shadow(Shadow.md)
-      .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+      .contentShape(RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
     }
     .buttonStyle(GridCarouselCardStyle())
     .accessibilityElement(children: .combine)

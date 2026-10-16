@@ -119,7 +119,9 @@ public struct DashHealth: View {
         HeaderTitle("Health")
       } trailing: {
         Text(verbatim: "JR")
-          .font(.system(size: 13, weight: .semibold))
+          .scaledFont(.xs, weight: .semibold)
+          .lineLimit(1)
+          .minimumScaleFactor(0.5)
           .foregroundStyle(EsuissColor.primaryForeground)
           .frame(width: 34, height: 34)
           .background(Palette.indigo500, in: Circle())
@@ -294,12 +296,16 @@ private struct DashHealthCard: View {
         }
         .foregroundStyle(category.tint)
         HStack(alignment: .bottom, spacing: 16) {
-          (Text(verbatim: metric.value)
-            .font(TextStyle.xl3.font(weight: .bold))
-            .foregroundColor(EsuissColor.foreground)
-            + Text(verbatim: metric.unit.map { " \($0)" } ?? "")
-            .font(TextStyle.base.font(weight: .semibold))
-            .foregroundColor(EsuissColor.mutedForeground))
+          HStack(alignment: .firstTextBaseline, spacing: 4) {
+            Text(verbatim: metric.value)
+              .scaledFont(.xl3, weight: .bold)
+              .foregroundStyle(EsuissColor.foreground)
+            if let unit = metric.unit {
+              Text(verbatim: unit)
+                .scaledFont(.base, weight: .semibold)
+                .foregroundStyle(EsuissColor.mutedForeground)
+            }
+          }
             .monospacedDigit()
             .lineLimit(1)
             .minimumScaleFactor(0.7)
@@ -338,7 +344,7 @@ private struct DashHealthSpark: View {
       if bars {
         HStack(alignment: .bottom, spacing: 4) {
           ForEach(Array(data.enumerated()), id: \.offset) { index, value in
-            RoundedRectangle(cornerRadius: 3, style: .continuous)
+            RoundedRectangle(cornerRadius: Radius.xs, style: .continuous)
               .fill(color)
               .opacity(index == data.count - 1 ? 1 : 0.45)
               .frame(width: 8, height: max(2, 36 * value / max(high, 1)))

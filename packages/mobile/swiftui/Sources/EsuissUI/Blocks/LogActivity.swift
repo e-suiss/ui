@@ -208,7 +208,7 @@ private struct LogActivityRow: View {
         .background(kind.tint, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
         .accessibilityHidden(true)
       VStack(alignment: .leading, spacing: 1) {
-        (Text(verbatim: event.actor).fontWeight(.semibold) + Text(verbatim: " ") + Text(LocalizedStringKey(event.action)))
+        Text("\(Text(verbatim: event.actor).fontWeight(.semibold)) \(Text(LocalizedStringKey(event.action)))")
           .scaledFont(.sm)
           .lineLimit(1)
         Text(verbatim: event.target)

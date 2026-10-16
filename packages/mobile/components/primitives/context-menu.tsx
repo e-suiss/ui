@@ -90,6 +90,7 @@ function Trigger({
     ref: composedRef,
     props: [
       {
+        accessibilityRole: "button",
         accessibilityActions: ACCESSIBILITY_ACTIONS,
         accessibilityState: { expanded: open, disabled },
         onAccessibilityAction,

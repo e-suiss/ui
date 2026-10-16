@@ -6,6 +6,7 @@ const NATIVE_SIZE = 20
 function Spinner({
   colorClassName = "accent-muted-foreground",
   className,
+  style,
   size = 16,
   accessibilityLabel = "Loading",
   ...props
@@ -20,7 +21,7 @@ function Spinner({
       accessibilityLabel={accessibilityLabel}
       accessibilityState={{ busy: true }}
       className={cn("shrink-0 items-center justify-center", className)}
-      style={{ width: size, height: size }}
+      style={[{ width: size, height: size }, style]}
     >
       <ActivityIndicator
         colorClassName={colorClassName}

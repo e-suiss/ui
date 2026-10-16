@@ -316,66 +316,74 @@ function Root({
   if (invalidProp !== undefined) valid = !invalidProp
   else if (formErrors.length > 0) valid = false
 
-  const runValidation = useEffectEvent((value: unknown) => {
-    const control = controlRef.current?.current
-    const messages = { ...DEFAULT_MESSAGES, ...validationMessages }
-    const text = toText(value)
-    const required = control?.required ?? false
-    const minLength = control?.minLength
-    const maxLength = control?.maxLength
-    const nextState: ValidityState = {
-      valueMissing: required && text.length === 0,
-      tooShort:
-        minLength !== undefined && text.length > 0 && text.length < minLength,
-      tooLong: maxLength !== undefined && text.length > maxLength,
-      customError: false,
-      valid: true,
-    }
-    const builtIn: string[] = []
-    if (nextState.valueMissing) builtIn.push(messages.valueMissing)
-    if (nextState.tooShort && minLength !== undefined) {
-      builtIn.push(messages.tooShort(minLength))
-    }
-    if (nextState.tooLong && maxLength !== undefined) {
-      builtIn.push(messages.tooLong(maxLength))
-    }
+  const runValidation = useEffectEvent(
+    (value: unknown): boolean | Promise<boolean> => {
+      const control = controlRef.current?.current
+      const messages = { ...DEFAULT_MESSAGES, ...validationMessages }
+      const text = toText(value)
+      const required = control?.required ?? false
+      const minLength = control?.minLength
+      const maxLength = control?.maxLength
+      const nextState: ValidityState = {
+        valueMissing: required && text.length === 0,
+        tooShort:
+          minLength !== undefined && text.length > 0 && text.length < minLength,
+        tooLong: maxLength !== undefined && text.length > maxLength,
+        customError: false,
+        valid: true,
+      }
+      const builtIn: string[] = []
+      if (nextState.valueMissing) builtIn.push(messages.valueMissing)
+      if (nextState.tooShort && minLength !== undefined) {
+        builtIn.push(messages.tooShort(minLength))
+      }
+      if (nextState.tooLong && maxLength !== undefined) {
+        builtIn.push(messages.tooLong(maxLength))
+      }
 
-    const validationId = validationIdRef.current + 1
-    validationIdRef.current = validationId
+      const validationId = validationIdRef.current + 1
+      validationIdRef.current = validationId
 
-    const apply = (custom: string[]) => {
-      if (validationId !== validationIdRef.current) return
-      const nextErrors = [...builtIn, ...custom]
-      setValidity({
-        state: {
-          ...nextState,
-          customError: custom.length > 0,
-          valid: nextErrors.length === 0,
-        },
-        error: nextErrors[0] ?? "",
-        errors: nextErrors,
-        value,
-        initialValue: control?.initialValue,
-      })
-    }
+      const apply = (custom: string[]) => {
+        if (validationId !== validationIdRef.current) return
+        const nextErrors = [...builtIn, ...custom]
+        setValidity({
+          state: {
+            ...nextState,
+            customError: custom.length > 0,
+            valid: nextErrors.length === 0,
+          },
+          error: nextErrors[0] ?? "",
+          errors: nextErrors,
+          value,
+          initialValue: control?.initialValue,
+        })
+      }
 
-    if (builtIn.length > 0 || !validateProp) {
-      apply([])
-      return builtIn.length === 0
-    }
+      if (builtIn.length > 0 || !validateProp) {
+        apply([])
+        return builtIn.length === 0
+      }
 
-    const result = validateProp(value, form?.getValues() ?? {})
-    if (isPromise(result)) {
-      result.then(
-        (resolved) => apply(toMessages(resolved)),
-        () => apply([])
-      )
-      return true
+      const result = validateProp(value, form?.getValues() ?? {})
+      if (isPromise(result)) {
+        return result.then(
+          (resolved) => {
+            const custom = toMessages(resolved)
+            apply(custom)
+            return custom.length === 0
+          },
+          () => {
+            apply([])
+            return true
+          }
+        )
+      }
+      const custom = toMessages(result)
+      apply(custom)
+      return custom.length === 0
     }
-    const custom = toMessages(result)
-    apply(custom)
-    return custom.length === 0
-  })
+  )
 
   const validateCurrent = useEffectEvent(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)

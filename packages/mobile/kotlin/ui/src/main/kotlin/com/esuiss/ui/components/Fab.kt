@@ -36,6 +36,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -149,6 +150,7 @@ private val FabActionSize = 44.dp
 
 @Composable
 private fun FabScrim(open: Boolean, onDismiss: () -> Unit) {
+    val currentOnDismiss by rememberUpdatedState(onDismiss)
     val color = Palette.black.copy(alpha = 0.5f)
     val alpha by animateFloatAsState(if (open) 1f else 0f, tween(200), label = "scrim")
     val container = LocalWindowInfo.current.containerSize
@@ -165,7 +167,7 @@ private fun FabScrim(open: Boolean, onDismiss: () -> Unit) {
                     size = Size(container.width.toFloat(), container.height.toFloat()),
                 )
             }
-            .then(if (open) Modifier.pointerInput(Unit) { detectTapGestures { onDismiss() } } else Modifier),
+            .then(if (open) Modifier.pointerInput(Unit) { detectTapGestures { currentOnDismiss() } } else Modifier),
     )
 }
 

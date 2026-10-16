@@ -42,6 +42,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -335,6 +336,8 @@ private fun ToastItem(
     val enter = remember { Animatable(1f) }
     val exit = remember { Animatable(0f) }
     val drag = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
+    val currentOnDismiss by rememberUpdatedState(onDismiss)
+    val currentOnToggle by rememberUpdatedState(onToggle)
 
     LaunchedEffect(Unit) {
         enter.animateTo(0f, tween(450))
@@ -383,7 +386,7 @@ private fun ToastItem(
                 }
             }
             .pointerInput(toast.id) {
-                detectTapGestures { onToggle() }
+                detectTapGestures { currentOnToggle() }
             }
             .pointerInput(toast.id) {
                 val threshold = 48.dp.toPx()
@@ -391,7 +394,7 @@ private fun ToastItem(
                     onDragEnd = {
                         val value = drag.value
                         if (abs(value.x) > threshold * 2 || value.y > threshold) {
-                            onDismiss()
+                            currentOnDismiss()
                         } else {
                             scope.launch { drag.animateTo(Offset.Zero, tween(200)) }
                         }

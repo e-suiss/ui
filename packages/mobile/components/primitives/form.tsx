@@ -18,13 +18,13 @@ type SubmitEventDetails = BaseUIGenericEventDetails<SubmitEventReason>
 interface FieldRegistration {
   getName: () => string | undefined
   getValue: () => unknown
-  validate: () => boolean
+  validate: () => boolean | Promise<boolean>
   focus: () => void
 }
 
 interface Actions {
   validate: (fieldName?: string | undefined) => void
-  submit: () => void
+  submit: () => void | Promise<void>
 }
 
 interface RootState {
@@ -50,7 +50,7 @@ interface FormContextValue {
   submitAttempted: boolean
   register: (field: FieldRegistration) => () => void
   getValues: () => Values
-  submit: () => void
+  submit: () => void | Promise<void>
   validate: (fieldName?: string | undefined) => void
 }
 
@@ -74,6 +74,7 @@ function Root<FormValues extends Values = Values>({
   ...elementProps
 }: RootProps<FormValues>) {
   const fieldsRef = React.useRef(new Set<FieldRegistration>())
+  const submitIdRef = React.useRef(0)
   const [submitAttempted, setSubmitAttempted] = React.useState(false)
   const [errors, setErrors] = React.useState<Errors>(errorsProp ?? EMPTY_ERRORS)
   const [previousErrorsProp, setPreviousErrorsProp] = React.useState(errorsProp)
@@ -116,21 +117,28 @@ function Root<FormValues extends Values = Values>({
     }
   })
 
-  const submit = useEffectEvent(() => {
+  const submit = useEffectEvent((): void | Promise<void> => {
     setSubmitAttempted(true)
-    let firstInvalid: FieldRegistration | undefined
-    for (const field of fieldsRef.current) {
-      const valid = field.validate()
-      if (!valid && !firstInvalid) firstInvalid = field
+    const submitId = submitIdRef.current + 1
+    submitIdRef.current = submitId
+    const fields = [...fieldsRef.current]
+    const results = fields.map((field) => field.validate())
+    const finish = (valid: readonly boolean[]) => {
+      if (submitId !== submitIdRef.current) return
+      const firstInvalid = fields.find((_, index) => !valid[index])
+      if (firstInvalid) {
+        firstInvalid.focus()
+        return
+      }
+      onFormSubmit?.(
+        getValues() as FormValues,
+        createGenericEventDetails(REASONS.none)
+      )
     }
-    if (firstInvalid) {
-      firstInvalid.focus()
-      return
+    if (results.some((result) => typeof result !== "boolean")) {
+      return Promise.all(results).then(finish)
     }
-    onFormSubmit?.(
-      getValues() as FormValues,
-      createGenericEventDetails(REASONS.none)
-    )
+    finish(results as boolean[])
   })
 
   React.useImperativeHandle(actionsRef, () => ({ validate, submit }), [

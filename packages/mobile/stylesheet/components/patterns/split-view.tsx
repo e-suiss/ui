@@ -337,6 +337,7 @@ function SplitViewItem({
   style,
   children,
   onPress,
+  accessibilityState,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "style"> & {
   isActive?: boolean
@@ -349,7 +350,7 @@ function SplitViewItem({
   return (
     <Pressable
       role="button"
-      accessibilityState={{ selected: isActive }}
+      accessibilityState={{ ...accessibilityState, selected: isActive }}
       onPress={(event) => {
         onPress?.(event)
         setColumn(NEXT[kind])

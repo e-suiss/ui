@@ -7,22 +7,28 @@ enum PullToRefreshStories {
       PullToRefreshFeed()
     },
     Story("WithFlatList", scrolls: false) {
-      ScrollView {
-        LazyVStack(alignment: .leading, spacing: 0) {
-          ForEach(["Inbox", "Drafts", "Sent", "Archive"], id: \.self) { item in
-            Text(verbatim: item)
-              .textStyle(.base)
-              .foregroundStyle(EsuissColor.foreground)
-              .padding(.vertical, 12)
-              .frame(maxWidth: .infinity, alignment: .leading)
-          }
-        }
-      }
-      .pullToRefresh {
-        try? await Task.sleep(for: .milliseconds(1000))
-      }
+      PullToRefreshList()
     },
   ])
+}
+
+private struct PullToRefreshList: View {
+  var body: some View {
+    ScrollView {
+      LazyVStack(alignment: .leading, spacing: 0) {
+        ForEach(["Inbox", "Drafts", "Sent", "Archive"], id: \.self) { item in
+          Text(verbatim: item)
+            .textStyle(.base)
+            .foregroundStyle(EsuissColor.foreground)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+      }
+    }
+    .pullToRefresh {
+      try? await Task.sleep(for: .milliseconds(1000))
+    }
+  }
 }
 
 private struct PullToRefreshFeed: View {

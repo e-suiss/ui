@@ -121,7 +121,7 @@ public struct DatePickerField: View {
           .foregroundStyle(EsuissColor.mutedForeground)
           .accessibilityHidden(true)
         label
-          .font(TextStyle.base.font())
+          .scaledFont(TextStyle.base)
           .lineLimit(1)
           .foregroundStyle(empty ? EsuissColor.mutedForeground : EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)

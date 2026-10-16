@@ -774,6 +774,7 @@ function QuestionnaireChoice({
   style,
   children,
   onPress,
+  accessibilityState,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children" | "style"> &
   React.RefAttributes<React.ComponentRef<typeof View>> & {
@@ -838,7 +839,11 @@ function QuestionnaireChoice({
   return (
     <Pressable
       role={multiple ? "checkbox" : "radio"}
-      accessibilityState={{ checked: isChecked, disabled }}
+      accessibilityState={{
+        ...accessibilityState,
+        checked: isChecked,
+        disabled,
+      }}
       disabled={disabled}
       onPress={handlePress}
       style={(state) => [

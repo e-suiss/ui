@@ -49,7 +49,7 @@ public struct BarChartRange: View {
             ) { payload in
               ChartTooltipContent(payload, hideIndicator: true) { (_: ChartTooltipItem) in
                 Text(verbatim: "\(Int(chartData[payload.index].low))° to \(Int(chartData[payload.index].high))°")
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

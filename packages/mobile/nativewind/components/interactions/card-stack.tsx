@@ -233,6 +233,17 @@ function CardStack<T>({
     translateX.value = withSpring(0, SPRING)
   }, [index, translateX, translateY])
 
+  const land = React.useCallback(
+    (direction: CardStackDirection, feedback: boolean, finished: boolean) => {
+      if (finished) {
+        commit(direction, feedback)
+        return
+      }
+      flyingRef.current = false
+    },
+    [commit]
+  )
+
   const fly = React.useCallback(
     (direction: CardStackDirection, feedback: boolean) => {
       if (flyingRef.current || disabled) return
@@ -247,12 +258,12 @@ function CardStack<T>({
           easing: EASING,
           reduceMotion: ReduceMotion.System,
         },
-        () => {
-          runOnJS(commit)(direction, feedback)
+        (finished) => {
+          runOnJS(land)(direction, feedback, finished === true)
         }
       )
     },
-    [disabled, translateX, width, commit]
+    [disabled, translateX, width, land]
   )
 
   const swipe = React.useCallback(

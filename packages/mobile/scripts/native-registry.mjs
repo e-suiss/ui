@@ -373,8 +373,8 @@ export async function nativeRequirements(root, platform) {
   return {
     minSdk: Number(manifest.match(MIN_SDK)?.[1]),
     bom: main.match(GRADLE_PLATFORM)?.[1],
-    dependencies: [...main.matchAll(/implementation\("([^"]+)"\)/g)].map(
-      (match) => match[1]
-    ),
+    dependencies: [
+      ...main.matchAll(/(?:api|implementation)\("([^"]+)"\)/g),
+    ].map((match) => match[1]),
   }
 }

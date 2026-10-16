@@ -14,8 +14,8 @@ public struct UsersInvite: View {
 
   static var initialPending: [Invite] {
     [
-      Invite(email: "casey@company.com", role: "Support", sent: "2 days ago"),
-      Invite(email: "drew@company.com", role: "Viewer", sent: "5 days ago"),
+      Invite(email: "casey@example.com", role: "Support", sent: "2 days ago"),
+      Invite(email: "drew@example.com", role: "Viewer", sent: "5 days ago"),
     ]
   }
 
@@ -44,7 +44,7 @@ public struct UsersInvite: View {
     onCancelInvite: ((_ email: String) -> Void)? = nil,
     onNavigate: ((_ section: String) -> Void)? = nil
   ) {
-    self.init(emails: ["avery@company.com"])
+    self.init(emails: ["avery@example.com"])
     self.onNavigate = onNavigate
     self.onInvite = onInvite
     self.onResend = onResend
@@ -172,7 +172,7 @@ public struct UsersInvite: View {
         TextField(
           "Email",
           text: $draft,
-          prompt: (emails.isEmpty ? Text(verbatim: "name@company.com") : Text("Add another")).foregroundStyle(EsuissColor.mutedForeground)
+          prompt: (emails.isEmpty ? Text(verbatim: "name@example.com") : Text("Add another")).foregroundStyle(EsuissColor.mutedForeground)
         )
           .scaledFont(.sm)
           .keyboardType(.emailAddress)

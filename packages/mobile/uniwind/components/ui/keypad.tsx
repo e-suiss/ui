@@ -26,6 +26,7 @@ function KeypadKey({
   disabled,
   className,
   children,
+  accessibilityState,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children"> & {
   variant?: "default" | "plain"
@@ -36,7 +37,7 @@ function KeypadKey({
     <Pressable
       role="button"
       disabled={disabled}
-      accessibilityState={{ disabled: !!disabled }}
+      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}
       className={cn(
         "size-18 items-center justify-center rounded-full",
         variant === "default" && "bg-secondary",

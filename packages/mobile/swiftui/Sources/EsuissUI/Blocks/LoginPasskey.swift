@@ -103,7 +103,7 @@ public struct LoginPasskey: View {
         LoginPasskeyInitials(style: .xs)
       }
       .frame(width: 28, height: 28)
-      Text(verbatim: "jamie@suiss.com")
+      Text(verbatim: "jamie@example.com")
         .scaledFont(.base)
         .foregroundStyle(EsuissColor.foreground)
         .lineLimit(1)

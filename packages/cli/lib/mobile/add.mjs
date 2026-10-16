@@ -34,7 +34,7 @@ export function fetchFiles(root, entries) {
 
 function itemEntries(registry, items, styling) {
   return items.flatMap((item) =>
-    item.files.map((file) => ({
+    (item.styleFiles?.[styling] ?? item.files).map((file) => ({
       file,
       source: sourceOf(registry, item, file, styling),
     }))

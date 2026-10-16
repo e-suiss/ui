@@ -52,7 +52,7 @@ The `catalog` module is a browsable app with every component, pattern, block and
 
 ## Contributing
 
-This repository is published from [e-suiss/ui](https://github.com/e-suiss/ui/tree/main/packages/mobile) on every release. Please open issues and pull requests there.
+This repository is published from [e-suiss/ui](https://github.com/e-suiss/ui/tree/main/packages/mobile/kotlin) on every release. Please open issues and pull requests there.
 
 ## License
 

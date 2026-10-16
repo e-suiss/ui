@@ -375,6 +375,19 @@ function relativeToday(locale: string | undefined) {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
+function monthLabel(locale: string | undefined, offset: -1 | 1) {
+  const fallback = offset < 0 ? "Previous month" : "Next month"
+  try {
+    if (typeof Intl.RelativeTimeFormat !== "function") return fallback
+    const text = new Intl.RelativeTimeFormat(locale, {
+      numeric: "auto",
+    }).format(offset, "month")
+    return text.charAt(0).toUpperCase() + text.slice(1)
+  } catch {
+    return fallback
+  }
+}
+
 function todayLabel(locale: string | undefined) {
   try {
     return relativeToday(locale) ?? "Today"
@@ -686,6 +699,8 @@ function Previous({
   ...elementProps
 }: NavProps) {
   const { state, disabled, onPress } = useNavButton(-1)
+  const { locale } = useRootContext()
+  const label = React.useMemo(() => monthLabel(locale, -1), [locale])
   return useRender({
     defaultComponent: Pressable,
     render,
@@ -696,7 +711,7 @@ function Previous({
     props: [
       {
         accessibilityRole: "button",
-        accessibilityLabel: "Go to the Previous Month",
+        accessibilityLabel: label,
         accessibilityState: { disabled },
         disabled,
         onPress,
@@ -710,6 +725,8 @@ Previous.displayName = "CalendarPrevious"
 
 function Next({ render, className, style, ref, ...elementProps }: NavProps) {
   const { state, disabled, onPress } = useNavButton(1)
+  const { locale } = useRootContext()
+  const label = React.useMemo(() => monthLabel(locale, 1), [locale])
   return useRender({
     defaultComponent: Pressable,
     render,
@@ -720,7 +737,7 @@ function Next({ render, className, style, ref, ...elementProps }: NavProps) {
     props: [
       {
         accessibilityRole: "button",
-        accessibilityLabel: "Go to the Next Month",
+        accessibilityLabel: label,
         accessibilityState: { disabled },
         disabled,
         onPress,

@@ -351,6 +351,7 @@ function RootState({
     const timeout = setTimeout(() => {
       setLifted(false)
       setMenuHeightState(null)
+      setSource(null)
     }, HANDOFF_DELAY)
     return () => clearTimeout(timeout)
   }, [open])
@@ -463,6 +464,7 @@ function Trigger({
     ref: composedRef,
     props: [
       {
+        accessibilityRole: "button",
         accessibilityActions: ACCESSIBILITY_ACTIONS,
         accessibilityState: { expanded: open, disabled },
         onAccessibilityAction: (event: AccessibilityActionEvent) => {

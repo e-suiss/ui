@@ -1,9 +1,8 @@
 import { cn } from "cn"
+import * as React from "react"
 import Animated, {
-  Extrapolation,
-  interpolate,
   useAnimatedStyle,
-  useDerivedValue,
+  useSharedValue,
   withSpring,
 } from "react-native-reanimated"
 import * as ProgressPrimitive from "@/components/primitives/progress"
@@ -59,16 +58,16 @@ function ProgressIndicator({
   ...props
 }: Omit<React.ComponentProps<typeof ProgressPrimitive.Indicator>, "render">) {
   const { percentage } = ProgressPrimitive.useRootContext()
-  const progress = useDerivedValue(() => percentage ?? 0)
+  const target = Math.min(Math.max(percentage ?? 0, 0), 100)
+  const progress = useSharedValue(target)
 
-  const indicator = useAnimatedStyle(() => {
-    return {
-      width: withSpring(
-        `${interpolate(progress.value, [0, 100], [0, 100], Extrapolation.CLAMP)}%`,
-        { overshootClamping: true }
-      ),
-    }
-  })
+  React.useEffect(() => {
+    progress.value = withSpring(target, { overshootClamping: true })
+  }, [progress, target])
+
+  const indicator = useAnimatedStyle(() => ({
+    width: `${progress.value}%`,
+  }))
 
   return (
     <ProgressPrimitive.Indicator

@@ -26,12 +26,12 @@ public struct UsersDetail: View {
 
   static var users: [User] {
     [
-      User(name: "Jamie Rivera", email: "jamie@company.com", role: "Admin", status: "Active", tint: Palette.indigo500),
-      User(name: "Morgan Lee", email: "morgan@company.com", role: "Editor", status: "Active", tint: Palette.orange500),
-      User(name: "Riley Chen", email: "riley@company.com", role: "Support", status: "Active", tint: Palette.green500),
-      User(name: "Taylor Kim", email: "taylor@company.com", role: "Viewer", status: "Suspended", tint: Palette.blue500),
-      User(name: "Avery Brooks", email: "avery@company.com", role: "Editor", status: "Invited", tint: Palette.pink500),
-      User(name: "Jordan Park", email: "jordan@company.com", role: "Support", status: "Active", tint: Palette.teal400),
+      User(name: "Jamie Rivera", email: "jamie@example.com", role: "Admin", status: "Active", tint: Palette.indigo500),
+      User(name: "Morgan Lee", email: "morgan@example.com", role: "Editor", status: "Active", tint: Palette.orange500),
+      User(name: "Riley Chen", email: "riley@example.com", role: "Support", status: "Active", tint: Palette.green500),
+      User(name: "Taylor Kim", email: "taylor@example.com", role: "Viewer", status: "Suspended", tint: Palette.blue500),
+      User(name: "Avery Brooks", email: "avery@example.com", role: "Editor", status: "Invited", tint: Palette.pink500),
+      User(name: "Jordan Park", email: "jordan@example.com", role: "Support", status: "Active", tint: Palette.teal400),
     ]
   }
 

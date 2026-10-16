@@ -1,7 +1,7 @@
 import ActivityKit
 import Foundation
 
-struct DownloadActivityAttributes: ActivityAttributes {
+nonisolated struct DownloadActivityAttributes: ActivityAttributes {
   struct ContentState: Codable, Hashable {
     var progress: Double
     var fileName: String

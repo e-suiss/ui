@@ -127,9 +127,12 @@ function Chip({
       onPressedChange={onSelectedChange}
       disabled={disabled}
       accessibilityActions={
-        onRemove ? [{ name: "remove", label: removeLabel }] : undefined
+        onRemove && !disabled
+          ? [{ name: "remove", label: removeLabel }]
+          : undefined
       }
       onAccessibilityAction={(event) => {
+        if (disabled) return
         if (event.nativeEvent.actionName === "remove") onRemove?.()
       }}
       render={(renderProps, state) => (

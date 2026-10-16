@@ -355,6 +355,11 @@ function Column({
       if (!item || item.disabled) return
       if (setValue(item.value, createChangeEventDetails(reason, event))) {
         haptics.selection()
+        return
+      }
+      const currentIndex = indexOf(value)
+      if (currentIndex !== -1 && currentIndex !== index) {
+        scrollToIndex(currentIndex, true)
       }
     }
   )
@@ -424,7 +429,8 @@ function Column({
     const name = event.nativeEvent.actionName
     if (name !== "increment" && name !== "decrement") return
     const list = itemsRef.current
-    const current = Math.max(indexOf(value), 0)
+    const current = indexOf(value)
+    if (name === "decrement" && current === -1) return
     const target =
       name === "increment"
         ? enabledFrom(list, current + 1, 1)

@@ -44,7 +44,7 @@ public struct LogSecurity: View {
 
   static var initialAlerts: [Alert] {
     [
-      Alert(severity: .high, title: "Sign-in from an unusual location", detail: "morgan@company.com · Lagos, NG · 3:12 AM", icon: Ph.globe.bold),
+      Alert(severity: .high, title: "Sign-in from an unusual location", detail: "morgan@example.com · Lagos, NG · 3:12 AM", icon: Ph.globe.bold),
       Alert(severity: .medium, title: "5 failed sign-in attempts", detail: "85.104.x.x · last 10 minutes", icon: Ph.lockSimple.bold),
       Alert(severity: .medium, title: "API key expires in 7 days", detail: "Payments integration", icon: Ph.key.bold),
       Alert(severity: .low, title: "Two-factor authentication is off", detail: "2 users", icon: Ph.shield.bold),
@@ -226,7 +226,7 @@ public struct LogSecurity: View {
         Text(verbatim: alert.title)
           .scaledFont(.sm, weight: .semibold)
           .lineLimit(1)
-        (Text(alert.resolved ? "Resolved" : "\(alert.severity.rawValue) severity") + Text(verbatim: " · \(alert.detail)"))
+        Text("\(Text(alert.resolved ? "Resolved" : "\(alert.severity.rawValue) severity"))\(Text(verbatim: " · \(alert.detail)"))")
           .scaledFont(.xs)
           .foregroundStyle(EsuissColor.mutedForeground)
           .lineLimit(1)

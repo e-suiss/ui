@@ -168,15 +168,15 @@ final class AdminGalleryTests: XCTestCase {
   func testRendersUsersTable() throws {
     try snapshot([
       Shot("Default") { UsersTable(role: "All") },
-      Shot("Selecting") { UsersTable(role: "All", selected: ["morgan@company.com", "taylor@company.com"]) },
+      Shot("Selecting") { UsersTable(role: "All", selected: ["morgan@example.com", "taylor@example.com"]) },
       Shot("Editor, search") { UsersTable(role: "Editor", query: "av") },
     ], name: "blocks-users-table")
   }
 
   func testRendersUsersInvite() throws {
     try snapshot([
-      Shot("Default") { UsersInvite(emails: ["avery@company.com"]) },
-      Shot("Several, Support") { UsersInvite(emails: ["avery@company.com", "sam@company.com", "kai@company.com"], draft: "lee@", role: "Support") },
+      Shot("Default") { UsersInvite(emails: ["avery@example.com"]) },
+      Shot("Several, Support") { UsersInvite(emails: ["avery@example.com", "sam@example.com", "kai@example.com"], draft: "lee@", role: "Support") },
       Shot("Empty") { UsersInvite(emails: [], pending: []) },
     ], name: "blocks-users-invite")
   }
@@ -226,7 +226,7 @@ final class AdminGalleryTests: XCTestCase {
     XCTAssertEqual(LogSecurity.tone(63), Palette.red500)
     XCTAssertEqual(LogSecurity.score(LogSecurity.initialAlerts.map { var alert = $0; alert.resolved = true; return alert }), 100)
 
-    XCTAssertEqual(UsersInvite.email(" sam@company.com,"), "sam@company.com")
+    XCTAssertEqual(UsersInvite.email(" sam@example.com,"), "sam@example.com")
     XCTAssertNil(UsersInvite.email("sam@company"))
 
     XCTAssertEqual(UsersTable.filtered(UsersTable.initialUsers, role: "Editor", query: "").map(\.name), ["Morgan Lee", "Avery Brooks"])

@@ -119,7 +119,7 @@ private struct StyledButton: View {
     let shape = joined ? AnyShape(Rectangle()) : AnyShape(rounded)
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: metrics?.spacing ?? size.spacing, iconSize: metrics?.iconSize ?? size.iconSize))
-    .font((metrics?.textStyle ?? size.textStyle).font())
+    .scaledFont(metrics?.textStyle ?? size.textStyle)
     .underline(variant == .link && pressed && isEnabled)
     .lineLimit(1)
     .foregroundStyle(foreground)

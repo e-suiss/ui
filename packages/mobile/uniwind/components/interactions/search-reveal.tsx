@@ -58,9 +58,12 @@ function SearchReveal({
 
   React.useEffect(() => {
     if (positioned.current || fieldHeight <= 0 || viewportHeight <= 0) return
-    positioned.current = true
-    if (hasQuery) return
+    if (hasQuery) {
+      positioned.current = true
+      return
+    }
     const frame = requestAnimationFrame(() => {
+      positioned.current = true
       const scroll = scrollRef.current as React.ComponentRef<
         typeof ScrollView
       > | null

@@ -500,6 +500,7 @@ function useStepButton(direction: Direction) {
   const context = useRootContext()
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
+  const pressingRef = React.useRef(false)
   const reason =
     direction > 0
       ? NUMBER_FIELD_REASONS.incrementPress
@@ -521,6 +522,7 @@ function useStepButton(direction: Direction) {
 
   const onPressIn = (event: GestureResponderEvent) => {
     if (!enabled) return
+    pressingRef.current = true
     context.stepBy(direction, reason, event)
     stop()
     timeoutRef.current = setTimeout(() => {
@@ -531,8 +533,8 @@ function useStepButton(direction: Direction) {
   }
 
   const onPressOut = (event: GestureResponderEvent) => {
-    const wasActive =
-      timeoutRef.current !== null || intervalRef.current !== null
+    const wasActive = pressingRef.current
+    pressingRef.current = false
     stop()
     if (wasActive) context.commit(reason, event)
   }

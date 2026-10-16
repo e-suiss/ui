@@ -21,7 +21,7 @@ Add the package in Xcode with **File → Add Package Dependencies…** and the U
 https://github.com/e-suiss/uim-swift
 ```
 
-Or in `Package.swift`:
+Or in `Package.swift`, replacing `0.6.0` with the latest release:
 
 ```swift
 dependencies: [

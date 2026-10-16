@@ -263,15 +263,19 @@ function TipCard({ style, ...props }: ViewProps) {
   )
 }
 
-function TipAnchor({ style, ...props }: ViewProps) {
+function TipAnchor({
+  style,
+  onStartShouldSetResponderCapture,
+  ...props
+}: ViewProps) {
   const { anchorRef, visible, dismiss } = useTip()
   return (
     <View
       ref={anchorRef}
       collapsable={false}
-      onStartShouldSetResponderCapture={() => {
+      onStartShouldSetResponderCapture={(event) => {
         if (visible) dismiss()
-        return false
+        return onStartShouldSetResponderCapture?.(event) ?? false
       }}
       style={[styles.anchor, style]}
       {...props}

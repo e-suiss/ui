@@ -28,7 +28,7 @@ public struct LineChartGoal: View {
                 .foregroundStyle(Palette.green500)
                 .annotation(position: .top, alignment: .leading, spacing: 4) {
                   Text("Goal")
-                    .font(TextStyle.xs.font(weight: .semibold))
+                    .scaledFont(TextStyle.xs, weight: .semibold)
                     .foregroundStyle(EsuissColor.mutedForeground)
                 }
               ForEach(chartData.indices, id: \.self) { index in
@@ -54,7 +54,7 @@ public struct LineChartGoal: View {
             ) { payload in
               ChartTooltipContent(payload, hideIndicator: true) { item in
                 Text("\(item.value, format: .number) steps")
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .monospacedDigit()
               }
             }

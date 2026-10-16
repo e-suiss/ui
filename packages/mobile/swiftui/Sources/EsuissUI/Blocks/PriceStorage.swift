@@ -134,7 +134,7 @@ private struct PriceStorageCard: View {
   let action: () -> Void
 
   var body: some View {
-    let shape = RoundedRectangle(cornerRadius: 18, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
     Button(action: action) {
       VStack(alignment: .leading, spacing: 12) {
         HStack(spacing: 8) {
@@ -204,7 +204,7 @@ private struct PriceStorageCardStyle: ButtonStyle {
   let selected: Bool
 
   func makeBody(configuration: Configuration) -> some View {
-    let shape = RoundedRectangle(cornerRadius: 18, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
     configuration.label
       .background(EsuissColor.muted, in: shape)
       .opacity(configuration.isPressed ? 0.8 : 1)

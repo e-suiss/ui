@@ -47,6 +47,7 @@ function KeypadKey({
   disabled,
   style,
   children,
+  accessibilityState,
   ...props
 }: Omit<React.ComponentProps<typeof Pressable>, "children" | "style"> & {
   variant?: "default" | "plain"
@@ -60,7 +61,7 @@ function KeypadKey({
     <Pressable
       role="button"
       disabled={disabled}
-      accessibilityState={{ disabled: !!disabled }}
+      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}
       style={({ pressed }) => [
         styles.key,
         { backgroundColor: background },

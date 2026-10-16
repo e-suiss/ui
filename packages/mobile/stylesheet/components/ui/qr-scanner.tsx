@@ -172,6 +172,7 @@ function QRScanner({
   frameSize: frameSizeProp,
   style,
   children,
+  onLayout,
   ...props
 }: Omit<React.ComponentProps<typeof View>, "style"> & {
   style?: StyleProp<ViewStyle>
@@ -267,12 +268,13 @@ function QRScanner({
 
   return (
     <View
-      onLayout={(event) =>
+      onLayout={(event) => {
         setLayout({
           width: event.nativeEvent.layout.width,
           height: event.nativeEvent.layout.height,
         })
-      }
+        onLayout?.(event)
+      }}
       style={[
         styles.root,
         children == null && { backgroundColor: palette.black },

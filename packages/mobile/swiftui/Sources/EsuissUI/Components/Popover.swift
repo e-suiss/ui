@@ -14,7 +14,7 @@ public struct PopoverContent<Content: View>: View {
     VStack(alignment: .leading, spacing: 16) {
       content
     }
-    .font(TextStyle.base.font())
+    .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
     .padding(16)
     .frame(width: width, alignment: .leading)

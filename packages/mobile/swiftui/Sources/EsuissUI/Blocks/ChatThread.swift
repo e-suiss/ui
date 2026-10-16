@@ -47,6 +47,7 @@ public struct ChatThread: View {
   @State private var typing: Bool
   @State private var draft: String
   @State private var replyCount = 0
+  @State private var replyTasks: [Task<Void, Never>] = []
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   public init(
@@ -150,6 +151,10 @@ public struct ChatThread: View {
         }
       }
     }
+    .onDisappear {
+      replyTasks.forEach { $0.cancel() }
+      replyTasks.removeAll()
+    }
   }
 
   private func toggleLike(_ id: String) {
@@ -170,15 +175,15 @@ public struct ChatThread: View {
     }
     let reply = Self.replies[replyCount % Self.replies.count]
     replyCount += 1
-    Task {
-      try? await Task.sleep(for: .milliseconds(500))
+    replyTasks.append(Task {
+      guard (try? await Task.sleep(for: .milliseconds(500))) != nil else { return }
       typing = true
-      try? await Task.sleep(for: .milliseconds(1300))
+      guard (try? await Task.sleep(for: .milliseconds(1300))) != nil else { return }
       typing = false
       withAnimation(reduceMotion ? nil : .timingCurve(0.32, 0.72, 0, 1, duration: 0.7)) {
         lines.append(Line(id: String(lines.count), fromMe: false, text: reply))
       }
-    }
+    })
   }
 }
 

@@ -6,7 +6,7 @@ enum SeparatorStories {
     Story("Default") {
       VStack(alignment: .leading, spacing: 0) {
         VStack(alignment: .leading, spacing: 4) {
-          Text("esuiss")
+          Text(verbatim: "suiss")
             .textStyle(.sm, weight: .medium)
             .foregroundStyle(EsuissColor.foreground)
           Text("An open-source UI component library.")

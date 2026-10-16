@@ -58,7 +58,7 @@ public struct ChartContainer<Content: View>: View {
     }
     .frame(maxWidth: .infinity)
     .environment(\.chartConfig, config)
-    .font(TextStyle.xs.font())
+    .scaledFont(TextStyle.xs)
     .foregroundStyle(EsuissColor.foreground)
   }
 }
@@ -387,7 +387,7 @@ public struct ChartTooltipContent<LabelContent: View, ValueContent: View>: View 
         }
       }
     }
-    .font(TextStyle.xs.font())
+    .scaledFont(TextStyle.xs)
     .foregroundStyle(EsuissColor.foreground)
     .padding(.horizontal, 10)
     .padding(.vertical, 6)
@@ -404,12 +404,12 @@ public struct ChartTooltipContent<LabelContent: View, ValueContent: View>: View 
     if !hideLabel {
       if let labelFormatter {
         labelFormatter(payload)
-          .font(TextStyle.xs.font(weight: .semibold))
+          .scaledFont(TextStyle.xs, weight: .semibold)
       } else {
         let value = config[payload.label]?.label ?? payload.label
         if !value.isEmpty {
           Text(LocalizedStringKey(value))
-            .font(TextStyle.xs.font(weight: .semibold))
+            .scaledFont(TextStyle.xs, weight: .semibold)
         }
       }
     }
@@ -441,7 +441,7 @@ public struct ChartTooltipContent<LabelContent: View, ValueContent: View>: View 
           }
           Spacer(minLength: 8)
           Text(item.value, format: .number)
-            .font(TextStyle.xs.font(weight: .semibold))
+            .scaledFont(TextStyle.xs, weight: .semibold)
             .monospacedDigit()
             .foregroundStyle(EsuissColor.foreground)
         }
@@ -565,7 +565,7 @@ public struct ChartLegendContent: View {
               .frame(width: 8, height: 8)
           }
           Text(LocalizedStringKey(config.label(key)))
-            .font(TextStyle.xs.font())
+            .scaledFont(TextStyle.xs)
             .foregroundStyle(EsuissColor.foreground)
         }
         .accessibilityElement(children: .combine)
@@ -1152,7 +1152,7 @@ public struct RadialBarChart<Tooltip: View>: View {
             ForEach(bars.indices, id: \.self) { index in
               ForEach(layout.glyphs(String(localized: String.LocalizationValue(config.label(bars[index].key))), ring: index), id: \.offset) { glyph in
                 Text(verbatim: glyph.text)
-                  .font(TextStyle.xs.font(weight: .semibold))
+                  .scaledFont(TextStyle.xs, weight: .semibold)
                   .foregroundStyle(EsuissColor.primaryForeground)
                   .fixedSize()
                   .rotationEffect(glyph.rotation)
@@ -1572,7 +1572,7 @@ public struct RadarChart<Tooltip: View>: View {
             ChartPointLayout(placements: layout.radiusTicks(radiusAxis)) {
               ForEach(layout.radiusValues(radiusAxis), id: \.self) { value in
                 Text(verbatim: value.formatted())
-                  .font(TextStyle.xs.font())
+                  .scaledFont(TextStyle.xs)
                   .foregroundStyle(EsuissColor.mutedForeground)
                   .fixedSize()
               }
@@ -1582,7 +1582,7 @@ public struct RadarChart<Tooltip: View>: View {
             ForEach(labels.indices, id: \.self) { index in
               let active = angleAxis.highlightsSelection && current == index
               Text(LocalizedStringKey(labels[index]))
-                .font(angleAxis.textStyle.font(weight: active ? .semibold : .regular))
+                .scaledFont(angleAxis.textStyle, weight: active ? .semibold : .regular)
                 .foregroundStyle(active ? EsuissColor.foreground : EsuissColor.mutedForeground)
                 .fixedSize()
             }

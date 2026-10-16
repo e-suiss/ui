@@ -78,7 +78,7 @@ fun List<SignatureStroke>.toPath(scale: Float = 1f): Path {
     return path
 }
 
-fun List<SignatureStroke>.toSvg(width: Float, height: Float, strokeWidth: Float = 3f, color: String = "#000000"): String {
+fun List<SignatureStroke>.toSvg(width: Float, height: Float, strokeWidth: Float = 2.5f, color: String = "#000000"): String {
     fun format(value: Float) = String.format(Locale.US, "%.1f", value)
     val paths = joinToString("") { stroke ->
         val points = stroke.points
@@ -103,7 +103,7 @@ fun List<SignatureStroke>.toImageBitmap(
     height: Dp,
     density: Density,
     color: Color = Color.Black,
-    strokeWidth: Dp = 3.dp,
+    strokeWidth: Dp = 2.5.dp,
     background: Color = Color.Transparent,
 ): ImageBitmap {
     val bitmap = with(density) { ImageBitmap(width.roundToPx().coerceAtLeast(1), height.roundToPx().coerceAtLeast(1)) }
@@ -126,7 +126,7 @@ fun SignaturePad(
     value: List<SignatureStroke>? = null,
     onValueChange: ((List<SignatureStroke>) -> Unit)? = null,
     defaultValue: List<SignatureStroke> = emptyList(),
-    strokeWidth: Dp = 3.dp,
+    strokeWidth: Dp = 2.5.dp,
     enabled: Boolean = true,
     placeholder: String = "Sign here",
     clearLabel: String = "Clear",

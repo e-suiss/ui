@@ -20,8 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
@@ -68,7 +72,7 @@ fun Switch(
     )
     val track = if (checked) colors.primary else colors.input
     val border = when {
-        invalid -> colors.destructive
+        invalid && enabled -> colors.destructive
         checked -> colors.primary
         else -> Color.Transparent
     }
@@ -87,7 +91,11 @@ fun Switch(
             )
             .formTouchTarget()
     } else {
-        Modifier
+        Modifier.semantics {
+            role = Role.Switch
+            toggleableState = ToggleableState(checked)
+            if (!enabled) disabled()
+        }
     }
     Box(
         modifier = modifier

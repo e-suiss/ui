@@ -119,7 +119,7 @@ async function analyze(root, name, styling, source) {
 async function toStandard(root, item, styling) {
   const kind = TYPES[item.type]
   const name = standardName(item.name)
-  const files = item.files.map((file) => ({
+  const files = (item.styleFiles?.[styling] ?? item.files).map((file) => ({
     path: sourceOf(item, styling, file),
     type: kind.type === "registry:ui" ? "registry:ui" : "registry:component",
     ...(kind.type !== "registry:ui" && { target: `@${file}` }),

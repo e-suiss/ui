@@ -456,6 +456,7 @@ function usePositioner({
       ? keyboardTop
       : window.height
   const rtl = I18nManager.isRTL
+  const swap = swapsLeftAndRight()
   const anchor = useResolvedAnchor(open, anchorParameter, fallbackAnchor)
   const [popupSize, setPopupSize] = React.useState<Size | null>(null)
   const [arrowSize, setArrowSizeState] = React.useState<Size | null>(null)
@@ -513,15 +514,22 @@ function usePositioner({
     style = {
       position: "absolute",
       top: position.y,
-      left: position.x,
+      left: swap
+        ? window.width - position.x - (popupSize?.width ?? 0)
+        : position.x,
       maxWidth,
     }
   }
 
+  const arrowX =
+    position?.arrow.x !== undefined && swap && popupSize
+      ? popupSize.width - position.arrow.x - (arrowSize?.width ?? 0)
+      : position?.arrow.x
+
   const arrowStyle: ViewStyle = position
     ? {
         position: "absolute",
-        ...(position.arrow.x !== undefined ? { left: position.arrow.x } : null),
+        ...(arrowX !== undefined ? { left: arrowX } : null),
         ...(position.arrow.y !== undefined ? { top: position.arrow.y } : null),
       }
     : { position: "absolute", opacity: 0 }
@@ -577,6 +585,19 @@ type PositionerProps = BaseUIComponentProps<typeof View, PositionerState> &
     dismissOnOutsidePress?: boolean | undefined
   }
 
+function swapsLeftAndRight() {
+  return I18nManager.isRTL && I18nManager.doLeftAndRightSwapInRTL !== false
+}
+
+function mirrorRegion(region: ViewStyle): ViewStyle {
+  const { left, right, ...rest } = region
+  return {
+    ...rest,
+    ...(right !== undefined ? { left: right } : null),
+    ...(left !== undefined ? { right: left } : null),
+  }
+}
+
 function claimResponder() {
   return true
 }
@@ -613,7 +634,10 @@ function OutsidePressLayer({ anchor, onPress }: OutsidePressLayerProps) {
       key={key}
       accessible={false}
       importantForAccessibility="no"
-      style={[styles.region, region]}
+      style={[
+        styles.region,
+        swapsLeftAndRight() ? mirrorRegion(region) : region,
+      ]}
       onPress={onPress}
     />
   ))

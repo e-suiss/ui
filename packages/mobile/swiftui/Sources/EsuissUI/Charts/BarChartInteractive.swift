@@ -248,7 +248,7 @@ public struct BarChartInteractive: View {
             .foregroundStyle(EsuissColor.mutedForeground)
             .frame(maxWidth: .infinity, alignment: .leading)
           Text(verbatim: formatMinutes(item.value))
-            .font(TextStyle.xs.font(weight: .semibold))
+            .scaledFont(TextStyle.xs, weight: .semibold)
             .monospacedDigit()
         }
       }

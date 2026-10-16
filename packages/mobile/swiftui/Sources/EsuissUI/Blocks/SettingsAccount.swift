@@ -67,7 +67,7 @@ public struct SettingsAccount: View {
           }
           Text(verbatim: "Jamie Rivera")
             .scaledTextStyle(.xl, weight: .bold)
-          Text(verbatim: "jamie@suiss.com")
+          Text(verbatim: "jamie@example.com")
             .scaledFont(.sm)
             .foregroundStyle(EsuissColor.mutedForeground)
         }
@@ -140,7 +140,7 @@ private struct SettingsAccountSecurity: View {
   @Binding var editing: String?
   let onSave: ((String, String) -> Void)?
 
-  @State private var email = "jamie@suiss.com"
+  @State private var email = "jamie@example.com"
   @State private var phone = "+1 (415) 555-0142"
   @State private var passkeys = true
   @State private var saved: LocalizedStringKey?

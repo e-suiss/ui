@@ -16,7 +16,7 @@ public struct Badge<Label: View>: View {
   public var body: some View {
     label
       .labelStyle(ButtonLabelStyle(spacing: 4, iconSize: 12))
-      .font(TextStyle.xs.font(weight: .semibold))
+      .scaledFont(TextStyle.xs, weight: .semibold)
       .lineLimit(1)
       .foregroundStyle(foreground)
       .padding(.horizontal, padded ? 8 : 0)

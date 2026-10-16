@@ -178,6 +178,7 @@ function PageIndicator({
 
   return (
     <View
+      {...props}
       accessible
       accessibilityRole="adjustable"
       accessibilityLabel={accessibilityLabel}
@@ -185,7 +186,6 @@ function PageIndicator({
       accessibilityActions={onIndexChange ? ACTIONS : undefined}
       onAccessibilityAction={onAccessibilityAction}
       className={cn("items-center justify-center self-center", className)}
-      {...props}
     >
       <View
         className="justify-center overflow-hidden"

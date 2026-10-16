@@ -143,6 +143,7 @@ function QRScanner({
   frameSize: frameSizeProp,
   className,
   children,
+  onLayout,
   ...props
 }: React.ComponentProps<typeof View> & {
   state?: QRScannerState
@@ -236,12 +237,13 @@ function QRScanner({
 
   return (
     <View
-      onLayout={(event) =>
+      onLayout={(event) => {
         setLayout({
           width: event.nativeEvent.layout.width,
           height: event.nativeEvent.layout.height,
         })
-      }
+        onLayout?.(event)
+      }}
       className={cn(
         "relative overflow-hidden",
         children == null && "bg-black",

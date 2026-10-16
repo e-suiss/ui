@@ -200,7 +200,7 @@ private struct TabBarBadgeView: View {
     Group {
       if let label = badge.label {
         Text(verbatim: label)
-          .font(TextStyle.xs.font(weight: .semibold))
+          .scaledFont(TextStyle.xs, weight: .semibold)
           .monospacedDigit()
           .foregroundStyle(EsuissColor.primaryForeground)
           .padding(.horizontal, 5)

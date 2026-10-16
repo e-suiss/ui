@@ -795,6 +795,8 @@ function Root({
     store.resume(`swipe-${id}`)
   }, [store, id])
 
+  React.useEffect(() => () => store.resume(`swipe-${id}`), [store, id])
+
   const onDismiss = React.useCallback(
     (direction: SwipeDirection) => {
       setDismissDirection(direction)

@@ -345,6 +345,7 @@ function Trigger({
       {
         accessibilityState: { expanded: open, disabled },
         accessibilityLabelledBy: select.labelId,
+        disabled: disabled || undefined,
       },
       elementProps,
     ],
