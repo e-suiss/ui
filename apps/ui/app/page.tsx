@@ -5,11 +5,12 @@ import { Anchor } from "@/components/site/anchor"
 import { Bento } from "@/components/site/bento"
 import { InstallCommand } from "@/components/site/install-command"
 import { Search } from "@/components/site/search"
+import { site } from "@/lib/site"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  alternates: { canonical: site.url },
 }
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
