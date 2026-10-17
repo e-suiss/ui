@@ -32,6 +32,11 @@
         "tests/base.ts",
         "tests/examples/*.test.tsx",
         "bases/**/*.{ts,tsx}"
+      ],
+      "ignore": [
+        "styles/generated/*.css",
+        "styles/style-suiss.css",
+        "styles/vendor/*.css"
       ]
     },
     "packages/cli": {

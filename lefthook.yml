@@ -2,6 +2,9 @@ pre-commit:
   commands:
     lint-staged:
       run: pnpm exec lint-staged
+    web-styles:
+      glob: "{packages/web/styles/style-suiss.css,packages/web/styles/vendor/*.css,packages/web/scripts/build-styles.mjs,packages/web/scripts/lib/styles.mjs}"
+      run: node packages/web/scripts/build-styles.mjs && git add packages/web/styles/generated
     web-registry:
       glob: "{packages/web/components/**/*.tsx,packages/web/hooks/*.ts,packages/web/lib/*.ts,packages/web/styles/*.css,packages/web/bases/**,packages/web/scripts/build-registry.mjs,scripts/lib/registry.mjs,apps/ui/content/docs/**/*.mdx}"
       run: node packages/web/scripts/build-registry.mjs && git add packages/web/registry.json packages/web/registry

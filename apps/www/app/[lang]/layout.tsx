@@ -112,7 +112,7 @@ export default async function RootLayout({
   return (
     <html
       lang={dictionary.htmlLang}
-      className={fontInter.variable}
+      className={`style-suiss ${fontInter.variable}`}
       suppressHydrationWarning
     >
       <head>

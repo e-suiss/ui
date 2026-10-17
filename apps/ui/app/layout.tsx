@@ -114,7 +114,11 @@ const structuredData = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={fontInter.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`style-suiss ${fontInter.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <ThemeScript />
         <script

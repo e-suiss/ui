@@ -12,6 +12,12 @@ import {
   toIcons,
   usesIconPlaceholders,
 } from "../../../packages/cli/lib/icons.mjs"
+import {
+  applyStyle,
+  DEFAULT_STYLE,
+  loadStyleMaps,
+  markersIn,
+} from "../../../packages/web/scripts/lib/styles.mjs"
 
 const palettes: Record<
   string,
@@ -127,12 +133,22 @@ function twinPath(file: string, base: string) {
   return existsSync(twin) ? twin : undefined
 }
 
+async function styled(source: string, file: string, style = DEFAULT_STYLE) {
+  if (markersIn(source, file).length === 0) return source
+  const maps = await loadStyleMaps()
+  return applyStyle(source, maps[style] ?? maps[DEFAULT_STYLE], file).output
+}
+
 export async function readSource(
   file: string,
   { icons = DEFAULT_ICONS, base = DEFAULT_BASE }: Partial<CodeOptions> = {}
 ) {
   const resolved = twinPath(file, base) ?? sourcePath(file)
-  return resolved ? toIcons(await readFile(resolved, "utf8"), icons) : undefined
+  if (!resolved) return undefined
+  return toIcons(
+    await styled(await readFile(resolved, "utf8"), resolved),
+    icons
+  )
 }
 
 export type Variants = { icons: boolean; bases: string[] }
