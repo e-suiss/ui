@@ -1,13 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs"
 
-import {
-  ICON_PACKAGE,
-  toPhosphorIcons,
-  usesIconPlaceholders,
-} from "./icons.mjs"
+import { iconPackages, toIcons, usesIconPlaceholders } from "./icons.mjs"
 import { CliError, note, step } from "./output.mjs"
 import {
   detectBase,
+  detectIcons,
+  detectMenuColor,
   detectProject,
   detectStyle,
   findAliasRoot,
@@ -31,6 +29,7 @@ import {
 import { relative } from "./shared/project.mjs"
 import { chooseNames } from "./shared/select.mjs"
 import {
+  applyMenuColor,
   applyStyleMap,
   composeStyleMap,
   DEFAULT_STYLE,
@@ -64,10 +63,13 @@ function fetchFiles(root, items, styling = {}) {
     }))
   )
   return mapLimit(files, async (entry) => {
-    const source = await styled(await fetchText(entry.source), styling)
+    const source = applyMenuColor(
+      await styled(await fetchText(entry.source), styling),
+      styling.menuColor
+    )
     return {
       ...entry,
-      content: toPhosphorIcons(source),
+      content: toIcons(source, styling.icons),
       icons: usesIconPlaceholders(source),
     }
   })
@@ -116,14 +118,14 @@ export async function installItems(
   root,
   registry,
   names,
-  { overwrite = false, base, style } = {}
+  { overwrite = false, base, style, icons, menuColor } = {}
 ) {
   const items = resolveItems(registry, names)
-  const files = await fetchFiles(root, items, { base, style })
+  const files = await fetchFiles(root, items, { base, style, icons, menuColor })
   const result = writeFiles(project.cwd, files, overwrite)
   const installed = install(project, [
     ...items.flatMap((item) => item.dependencies),
-    ...(files.some((file) => file.icons) ? [ICON_PACKAGE] : []),
+    ...(files.some((file) => file.icons) ? iconPackages(icons) : []),
   ])
   reportFiles(result, installed)
   addStyles(project, items)
@@ -147,18 +149,23 @@ export async function add(names, options) {
 
   const base = options.base ?? detectBase(project.cwd)
   const style = options.style ?? detectStyle(project.cwd)
+  const styling = {
+    base,
+    style,
+    icons: detectIcons(project.cwd),
+    menuColor: detectMenuColor(project.cwd),
+  }
   const registry = await fetchRegistry(base)
   const selected = await chooseNames(registry.items, names, options, {
     scopeOf,
   })
 
   if (options.diff) {
-    await showDiff(project, root, registry, selected, { base, style })
+    await showDiff(project, root, registry, selected, styling)
   } else {
     await installItems(project, root, registry, selected, {
       ...options,
-      base,
-      style,
+      ...styling,
     })
   }
 }

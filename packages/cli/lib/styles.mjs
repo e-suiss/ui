@@ -52,6 +52,36 @@ export function expandMarkers(text, map, unknown = new Set()) {
   return output + text.slice(cursor)
 }
 
+const TRANSLUCENT =
+  "animate-none! relative bg-popover/70 before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 **:data-[slot$=-item]:focus:bg-foreground/10 **:data-[slot$=-item]:data-highlighted:bg-foreground/10 **:data-[slot$=-separator]:bg-foreground/5 **:data-[slot$=-trigger]:focus:bg-foreground/10 **:data-[slot$=-trigger]:aria-expanded:bg-foreground/10! **:data-[variant=destructive]:focus:bg-foreground/10! **:data-[variant=destructive]:text-accent-foreground! **:data-[variant=destructive]:**:text-accent-foreground!"
+
+function replaceMarkers(text, values) {
+  let output = ""
+  let cursor = 0
+  for (const match of text.matchAll(MARKER)) {
+    const [marker] = match
+    if (!(marker in values)) continue
+    const start = match.index
+    let end = start + marker.length
+    const value = values[marker]
+    output += text.slice(cursor, start)
+    if (value === "") {
+      if (text[end] === " ") end++
+      else if (output.endsWith(" ")) output = output.slice(0, -1)
+    }
+    output += value
+    cursor = end
+  }
+  return output + text.slice(cursor)
+}
+
+export function applyMenuColor(source, menuColor = "default") {
+  return replaceMarkers(source, {
+    "cn-menu-target": menuColor.startsWith("inverted") ? "dark" : "",
+    "cn-menu-translucent": menuColor.endsWith("translucent") ? TRANSLUCENT : "",
+  })
+}
+
 export function composeStyleMap(data, base, style) {
   const known = Object.fromEntries(data.known.map((marker) => [marker, ""]))
   return {

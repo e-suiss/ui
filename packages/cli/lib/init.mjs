@@ -3,9 +3,12 @@ import path from "node:path"
 
 import { installItems } from "./add.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
+import { decodePreset, RADIUS_VALUES } from "./preset.mjs"
 import {
   configuredStylesheet,
   detectBase,
+  detectIcons,
+  detectMenuColor,
   detectProject,
   detectStyle,
   findAliasRoot,
@@ -14,7 +17,7 @@ import {
   saveBase,
   VITE_STYLESHEET,
 } from "./project.mjs"
-import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
+import { fetchRegistry, fetchStylesheet, fetchThemes } from "./registry.mjs"
 import { ensureAlias, relative } from "./shared/project.mjs"
 
 const NEXT_APP_DIRS = ["src/app", "app"]
@@ -277,8 +280,43 @@ function importsStylesheet(project, stylesheet) {
     )
 }
 
-function rememberBase(project, base, stylesheet, style) {
-  const saved = saveBase(project, base, stylesheet, style)
+const ROOT_BLOCK = /(:root\s*\{)([\s\S]*?)(\n\})/
+const DARK_BLOCK = /(\.dark\s*\{)([\s\S]*?)(\n\})/
+const OWN_THEME = "suiss"
+const DEFAULT_FONT = "inter"
+
+function withVariables(block, variables) {
+  return Object.entries(variables).reduce(
+    (text, [name, value]) =>
+      text.replace(new RegExp(`(--${name}:\\s*)[^;]+;`), `$1${value};`),
+    block
+  )
+}
+
+function paletteOf(themes, preset) {
+  const find = (name) => themes.find((theme) => theme.name === name)
+  const base = find(preset.baseColor)
+  const accent = find(preset.theme)
+  const { radius: _light, ...light } = { ...base?.light, ...accent?.light }
+  const { radius: _dark, ...dark } = { ...base?.dark, ...accent?.dark }
+  return { light, dark }
+}
+
+function applyPreset(css, preset, palette) {
+  const radius = RADIUS_VALUES[preset.radius]
+  const light = { ...(palette?.light ?? {}), ...(radius ? { radius } : {}) }
+  const dark = palette?.dark ?? {}
+  return css
+    .replace(ROOT_BLOCK, (_, head, body, tail) =>
+      [head, withVariables(body, light), tail].join("")
+    )
+    .replace(DARK_BLOCK, (_, head, body, tail) =>
+      [head, withVariables(body, dark), tail].join("")
+    )
+}
+
+function rememberBase(project, base, stylesheet, style, extra) {
+  const saved = saveBase(project, base, stylesheet, style, extra)
   if (!saved) return []
   if (saved.invalid) {
     return [
@@ -319,10 +357,20 @@ export async function init(options) {
     }
   }
 
+  const preset = options.preset ? decodePreset(options.preset) : null
   const base = options.base ?? detectBase(project.cwd)
-  const style = options.style ?? detectStyle(project.cwd)
+  const style = options.style ?? preset?.style ?? detectStyle(project.cwd)
+  const icons = preset?.iconLibrary ?? detectIcons(project.cwd)
+  const menuColor = preset?.menuColor ?? detectMenuColor(project.cwd)
   const registry = await fetchRegistry(base)
-  const css = stylesheetFor(project, await fetchStylesheet())
+  const palette =
+    preset && options.theme !== OWN_THEME
+      ? paletteOf(await fetchThemes(), preset)
+      : null
+  const stylesheetCss = stylesheetFor(project, await fetchStylesheet())
+  const css = preset
+    ? applyPreset(stylesheetCss, preset, palette)
+    : stylesheetCss
 
   const tsconfigs =
     project.framework === "vite"
@@ -342,8 +390,28 @@ export async function init(options) {
   mkdirSync(path.dirname(stylesheet), { recursive: true })
   writeFileSync(stylesheet, css)
   step(`Wrote ${relative(project, stylesheet)}`)
-  if (options.base || options.style)
-    manual.push(...rememberBase(project, base, stylesheet, options.style))
+  if (options.base || options.style || preset) {
+    manual.push(
+      ...rememberBase(
+        project,
+        base,
+        stylesheet,
+        options.style ?? preset?.style,
+        preset
+          ? {
+              iconLibrary: icons,
+              menuColor,
+              menuAccent: preset.menuAccent,
+            }
+          : {}
+      )
+    )
+  }
+  if (preset && preset.font !== DEFAULT_FONT) {
+    manual.push(
+      `Load the ${preset.font} font and point --font-sans at it in ${relative(project, stylesheet)}.`
+    )
+  }
   if (!importsStylesheet(project, stylesheet)) {
     manual.push(
       `Import ${relative(project, stylesheet)} in ${project.framework === "next" ? "your root layout" : "src/main.tsx"}.`
@@ -355,7 +423,7 @@ export async function init(options) {
     findAliasRoot(project.cwd) ?? sourceRoot,
     registry,
     ["button"],
-    { overwrite: options.overwrite, base, style }
+    { overwrite: options.overwrite, base, style, icons, menuColor }
   )
 
   for (const message of manual) note(message)

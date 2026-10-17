@@ -568,4 +568,29 @@ export const Icon = () => (
       )
     })
   })
+
+  describe("components.json", () => {
+    it("applies the saved icon library and menu color", async () => {
+      serveRegistry({
+        ...files,
+        "components/ui/button.tsx": `import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+
+export const menu = "cn-menu-target cn-menu-translucent z-50"
+export const Icon = () => <IconPlaceholder lucide="CheckIcon" tabler="IconCheck" hugeicons="Tick02Icon" phosphor="CheckIcon" remixicon="RiCheckLine" />
+`,
+      })
+      const cwd = viteProject({
+        "components.json": { iconLibrary: "lucide", menuColor: "inverted" },
+      })
+      await add(["button"], { cwd })
+      const button = read(cwd, "src/components/ui/button.tsx")
+      expect(button).toContain('export const menu = "dark z-50"')
+      expect(button).toContain('from "lucide-react"')
+      expect(spawnSync).toHaveBeenCalledWith(
+        "npm",
+        ["install", "@base-ui/react", "lucide-react"],
+        expect.objectContaining({ cwd })
+      )
+    })
+  })
 })

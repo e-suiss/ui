@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
-
+import { isIconLibrary } from "./icons.mjs"
 import {
   assertPackageNames,
   detectProject as detect,
@@ -61,6 +61,16 @@ export function detectStyle(cwd) {
   return styleOf(readConfig(cwd)?.style)
 }
 
+export function detectIcons(cwd) {
+  const library = readConfig(cwd)?.iconLibrary
+  return isIconLibrary(library) ? library : "phosphor"
+}
+
+export function detectMenuColor(cwd) {
+  const color = readConfig(cwd)?.menuColor
+  return typeof color === "string" ? color : "default"
+}
+
 function newConfig(project, style, stylesheet) {
   return {
     $schema: "https://ui.shadcn.com/schema.json",
@@ -88,7 +98,7 @@ function newConfig(project, style, stylesheet) {
   }
 }
 
-export function saveBase(project, base, stylesheet, styleName) {
+export function saveBase(project, base, stylesheet, styleName, extra = {}) {
   const file = path.join(project.cwd, CONFIG_FILE)
   const exists = existsSync(file)
   const config = readConfig(project.cwd)
@@ -98,11 +108,16 @@ export function saveBase(project, base, stylesheet, styleName) {
       ? config.style.replace(STYLE_PREFIX, "")
       : DEFAULT_STYLE
   const style = `${base}-${styleName ?? kept}`
-  if (config?.style === style) return null
-  if (!styleName && baseOf(config?.style) === base) return null
-  const next = config
-    ? { ...config, style }
-    : newConfig(project, style, stylesheet)
+  const changed = Object.entries(extra).some(
+    ([key, value]) => config?.[key] !== value
+  )
+  if (config?.style === style && !changed) return null
+  if (!styleName && !changed && baseOf(config?.style) === base) return null
+  const next = {
+    ...(config ?? newConfig(project, style, stylesheet)),
+    style,
+    ...extra,
+  }
   writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`)
   return { file, style, created: !exists }
 }
