@@ -32,7 +32,7 @@ npx @esuiss/ui@latest init [options]
 | `-o, --overwrite` | Replace a local `button` that differs from the registry |
 | `-y, --yes` | Skip confirmation prompts |
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. Saved as the `style` in `components.json` |
-| `--style <name>` | Visual style of React components: `suiss`, `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. Saved as the `style` in `components.json` |
+| `--style <name>` | Visual style: `suiss`, `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is saved as the `style` in `components.json`; for React Native, SwiftUI and Compose it picks the theme or tokens file |
 | `--preset <code>` | A preset code from [Create](/create): style, colors, radius, icon library and menu color |
 | `--theme suiss` | Keep the suiss/ui colors when applying a preset |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
@@ -141,11 +141,12 @@ The files, folders and names are the same for all three. See [Installation](/doc
 
 ## Styles
 
-React components come in nine styles: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` and `rhea`. The style is the part of the `style` in `components.json` after the base, such as `base-suiss` or `radix-nova`. `add` writes components in that style, and the registry serves the same style to `npx shadcn@latest add`:
+Every platform comes in nine styles: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` and `rhea`. For React the style is the part of the `style` in `components.json` after the base, such as `base-suiss` or `radix-nova`; `add` writes components in that style, and the registry serves the same style to `npx shadcn@latest add`. For React Native, SwiftUI and Compose, `init` copies the theme or tokens file of the style:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --style nova
 npx @esuiss/ui@latest add button --style vega
+npx @esuiss/ui@latest init --platform swift --style luma
 ```
 
 Pick a style, colors, radius and icons on the [Create](/create) page, then run the command it shows. `init --preset` applies the code and saves the style, `iconLibrary` and `menuColor` in `components.json`, so later `add` runs follow them.

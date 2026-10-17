@@ -64,6 +64,14 @@ describe("registry paths", () => {
     })
   })
 
+  it.each([
+    ["rn-uniwind-vega/theme-suiss.json", "rn-uniwind/theme-vega.json"],
+    ["rn-nativewind-suiss/theme-suiss.json", "rn-nativewind/theme-suiss.json"],
+    ["rn-stylesheet-rhea/button.json", "rn-stylesheet/button.json"],
+  ])("maps the native style path %s", (rest, path) => {
+    expect(registryPath(rest)).toEqual({ path })
+  })
+
   it("resolves base and style names", () => {
     expect(resolveStyle("aria-rhea")).toEqual({ base: "aria", style: "rhea" })
   })
