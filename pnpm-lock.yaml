@@ -226,6 +226,9 @@ importers:
 
   packages/cli:
     devDependencies:
+      shadcn:
+        specifier: 'catalog:'
+        version: 4.21.4(supports-color@10.2.2)
       vitest:
         specifier: 5.0.3
         version: 5.0.3(@types/node@26.6.3)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))

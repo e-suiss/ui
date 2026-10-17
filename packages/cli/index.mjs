@@ -16,6 +16,7 @@ import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
 import { name, version } from "./lib/shared/package.mjs"
 import { readJson } from "./lib/shared/project.mjs"
+import { DEFAULT_STYLE, resolveStyle, STYLES } from "./lib/shared/style.mjs"
 
 const OPTIONS = {
   overwrite:
@@ -34,6 +35,10 @@ const OPTIONS = {
                    (detected from the project when omitted)`,
   styling: `  -s, --styling <uniwind|nativewind|stylesheet>
                    React Native styling (detected from the project when omitted)`,
+  style: `  --style <name>   the visual style: ${STYLES.join(", ")}
+                   (defaults to ${DEFAULT_STYLE})`,
+  preset: `  --preset <code>  a preset code from a style configurator; its style
+                   is used like --style`,
   path: `  --path <dir>     where SwiftUI or Compose files go, relative to --cwd
                    (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)`,
   cwd: "  -c, --cwd <dir>  project directory (defaults to the current directory)",
@@ -80,6 +85,8 @@ const INIT_OPTIONS = optionLines(
   "base",
   "platform",
   "styling",
+  "style",
+  "preset",
   "path",
   "cwd",
   "help",
@@ -177,6 +184,18 @@ function parseArgs(args) {
         options.platform = platform
         break
       }
+      case "--style": {
+        const style = queue.next().value
+        if (!style) throw new CliError(`${arg} needs ${STYLES.join(", ")}.`)
+        options.style = style
+        break
+      }
+      case "--preset": {
+        const preset = queue.next().value
+        if (!preset) throw new CliError(`${arg} needs a preset code.`)
+        options.preset = preset
+        break
+      }
       case "--path": {
         const dir = queue.next().value
         if (!dir) throw new CliError(`${arg} needs a directory.`)
@@ -250,6 +269,12 @@ async function resolvePlatform(options) {
   if (options.styling && options.platform !== "rn") {
     throw new CliError("--styling works with React Native projects.")
   }
+  options.style = resolveStyle(options)
+  if (options.platform === "web" && options.style !== DEFAULT_STYLE) {
+    throw new CliError(
+      `The ${options.style} style is not available for React components yet. Use --platform rn, swift or kotlin, or leave out --style.`
+    )
+  }
   return options
 }
 
@@ -285,6 +310,11 @@ async function main() {
       const parsed = parseCommand(command, scope ? args.slice(1) : args)
       if (!parsed) break
       const options = { ...parsed.options, scope }
+      if (options.style !== undefined || options.preset !== undefined) {
+        throw new CliError(
+          "--style and --preset work with init; add keeps the style init set up."
+        )
+      }
       await resolvePlatform(options)
       if (options.platform === "web") await add(parsed.names, options)
       else if (options.platform === "rn") await addMobile(parsed.names, options)

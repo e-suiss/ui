@@ -13,7 +13,12 @@ import {
   run,
   STYLINGS,
 } from "./project.mjs"
-import { fetchRegistry, fetchStylesheet, fetchText } from "./registry.mjs"
+import {
+  fetchRegistry,
+  fetchStylesheet,
+  fetchText,
+  presetFile,
+} from "./registry.mjs"
 
 const METRO_CONFIGS = ["metro.config.js", "metro.config.cjs"]
 const ROOT_COMPONENTS = [
@@ -233,7 +238,10 @@ async function writeTailwindConfig(project, registry, options) {
     path.join(project.cwd, name)
   ).find(existsSync)
   const file = existing ?? path.join(project.cwd, "tailwind.config.js")
-  const config = await fetchText(registry.styles.nativewind.config)
+  const config = await fetchText(
+    presetFile(registry, "nativewind", options.style) ??
+      registry.styles.nativewind.config
+  )
   if (existing && readFileSync(existing, "utf8") === config) return
   if (existing && !options.yes) {
     const replace = await confirm(
@@ -260,9 +268,12 @@ function pickStyling(project, options) {
   return choose("How should components be styled?", STYLING_CHOICES)
 }
 
-async function writeTheme(project, registry, root) {
+async function writeTheme(project, registry, root, style) {
   const file = path.join(root, "components", "ui", "theme.ts")
-  const theme = await fetchText(registry.styles.stylesheet.theme)
+  const theme = await fetchText(
+    presetFile(registry, "stylesheet", style) ??
+      registry.styles.stylesheet.theme
+  )
   if (existsSync(file)) {
     if (readFileSync(file, "utf8") !== theme) {
       note(
@@ -307,7 +318,9 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
-  const css = usesCss ? await fetchStylesheet(registry, project.styling) : null
+  const css = usesCss
+    ? await fetchStylesheet(registry, project.styling, options.style)
+    : null
 
   if (ensureAlias(project, sourceRoot))
     step("Added the @/* import alias to tsconfig.json")
@@ -336,7 +349,8 @@ export async function init(options) {
     await writeTheme(
       project,
       registry,
-      findAliasRoot(project.cwd) ?? sourceRoot
+      findAliasRoot(project.cwd) ?? sourceRoot,
+      options.style
     )
   }
 

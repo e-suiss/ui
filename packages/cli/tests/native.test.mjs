@@ -26,6 +26,7 @@ const registry = {
   name: "esuiss-ui-mobile",
   homepage: "https://suiss.app/ui",
   styles: {},
+  presets: { vega: { swift: "styles/presets/vega/Tokens.swift" } },
   platforms: {
     swift: {
       directory: SWIFT_SOURCES,
@@ -82,6 +83,7 @@ const files = {
   "registry.json": registry,
   [`${SWIFT_SOURCES}/Theme/Theme.swift`]: "struct Theme {}\n",
   [`${SWIFT_SOURCES}/Theme/Tokens.swift`]: "struct Tokens {}\n",
+  "styles/presets/vega/Tokens.swift": "struct VegaTokens {}\n",
   [`${SWIFT_SOURCES}/Components/Button.swift`]: "struct EsuissButton {}\n",
   [`${SWIFT_SOURCES}/Components/Dialog.swift`]: "struct EsuissDialog {}\n",
   [`${SWIFT_SOURCES}/Patterns/DatePicker.swift`]: "struct DatePicker {}\n",
@@ -141,6 +143,17 @@ describe("native init and add", () => {
     )
     expect(output()).toContain(
       "Swift package https://github.com/phosphor-icons/swift from 2.1.0 (PhosphorSwift)"
+    )
+  })
+
+  it("writes the tokens of the chosen style on init", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", style: "vega" })
+    expect(read(cwd, "EsuissUI/Theme/Tokens.swift")).toBe(
+      "struct VegaTokens {}\n"
+    )
+    expect(read(cwd, "EsuissUI/Theme/Theme.swift")).toBe(
+      files[`${SWIFT_SOURCES}/Theme/Theme.swift`]
     )
   })
 
