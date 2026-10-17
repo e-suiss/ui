@@ -29,6 +29,7 @@
     "components/**/*.tsx",
     "hooks/**/*.ts",
     "lib/**/*.ts",
+    "site/**/*.tsx",
     "examples/**/*.tsx",
     "vitest.config.ts",
     "tests/**/*.ts",

@@ -1,16 +1,14 @@
 import { notFound } from "next/navigation"
 
-import { getDictionary, isLocale, locales } from "@/lib/i18n"
+import { dictionary } from "@/lib/dictionary"
 import { ogImage } from "@/lib/og"
 import { getProduct, products } from "@/lib/products"
 
 export async function GET(
   _request: Request,
-  context: RouteContext<"/og/[lang]/[...slug]">
+  context: RouteContext<"/og/[...slug]">
 ) {
-  const { lang, slug } = await context.params
-  if (!isLocale(lang)) notFound()
-  const dictionary = getDictionary(lang)
+  const { slug } = await context.params
   const path = slug.slice(0, -1)
 
   if (path.length === 0)
@@ -23,16 +21,17 @@ export async function GET(
   if (!product) notFound()
   return ogImage({
     title: product.name,
-    description: product.tagline[lang],
-    eyebrow: product.category[lang],
+    description: product.tagline,
+    eyebrow: product.category,
   })
 }
 
 export function generateStaticParams() {
-  return locales.flatMap((lang) => [
-    { lang, slug: ["image.png"] },
-    ...products.map((product) => ({ lang, slug: [product.slug, "image.png"] })),
-  ])
+  return [
+    { slug: ["image.png"] },
+    ...products.map((product) => ({ slug: [product.slug, "image.png"] })),
+  ]
 }
 
 export const dynamic = "force-static"
+export const dynamicParams = false

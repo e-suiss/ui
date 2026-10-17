@@ -69,7 +69,10 @@ const grain = `url("data:image/svg+xml,${encodeURIComponent(
 
 function Hero() {
   return (
-    <section className="relative flex flex-col overflow-hidden text-[#1d1d1f]">
+    <section
+      data-nav-hero
+      className="relative flex flex-col overflow-hidden text-[#1d1d1f]"
+    >
       <div
         aria-hidden
         className="absolute inset-0 bg-[#dbba95] bg-[radial-gradient(circle_at_18%_22%,#ff5005_0%,#dbba95_48%,#d0bce1_100%)]"

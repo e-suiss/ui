@@ -32,6 +32,7 @@
       "@/hooks/*": ["../../packages/web/hooks/*"],
       "@/lib/highlighter": ["../../packages/web/lib/highlighter"],
       "@/lib/utils": ["../../packages/web/lib/utils"],
+      "@/site/*": ["../../packages/web/site/*"],
       "@/examples/*": ["../../packages/web/examples/*"],
       "@/*": ["./*"]
     }

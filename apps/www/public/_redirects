@@ -1,2 +1,6 @@
 /en /  308
 /en/* /:splat 308
+/tr /  301
+/tr/* /:splat 301
+/og/en/* /og/:splat 301
+/og/tr/* /og/:splat 301

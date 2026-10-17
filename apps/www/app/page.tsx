@@ -1,46 +1,28 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import { notFound } from "next/navigation"
 import { Anchor } from "@/components/anchor"
 import { Arrow, ease, Label, Pill } from "@/components/arrow"
 import { HeroBackground } from "@/components/hero-background"
-import {
-  type Dictionary,
-  getDictionary,
-  isLocale,
-  type Locale,
-  localePath,
-} from "@/lib/i18n"
+import { dictionary } from "@/lib/dictionary"
 import { pageMetadata } from "@/lib/metadata"
 import { libraries, type Product, products } from "@/lib/products"
 import { cn } from "@/lib/utils"
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/[lang]">): Promise<Metadata> {
-  const { lang } = await params
-  if (!isLocale(lang)) notFound()
-  const dictionary = getDictionary(lang)
-  return pageMetadata({
-    locale: lang,
-    path: "/",
-    title: dictionary.title,
-    description: dictionary.description,
-    image: `/og/${lang}/image.png`,
-  })
-}
+export const metadata: Metadata = pageMetadata({
+  path: "/",
+  title: dictionary.title,
+  description: dictionary.description,
+  image: "/og/image.png",
+})
 
-function Hero({
-  locale,
-  dictionary,
-}: {
-  locale: Locale
-  dictionary: Dictionary
-}) {
+function Hero() {
   return (
-    <section className="relative flex flex-col overflow-hidden text-[#1d1d1f]">
+    <section
+      data-nav-hero
+      className="relative flex flex-col overflow-hidden text-[#1d1d1f]"
+    >
       <HeroBackground />
       <div
         className={cn(
@@ -57,13 +39,13 @@ function Hero({
           </p>
           <div className="flex flex-wrap gap-3">
             <Anchor
-              href={localePath(locale, "/#products")}
+              href={"/#products"}
               className="group rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <Pill dark>{dictionary.exploreProducts}</Pill>
             </Anchor>
             <Anchor
-              href={localePath(locale, "/#developers")}
+              href={"/#developers"}
               className="group rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <Pill className="bg-white/55 backdrop-blur-2xl">
@@ -77,7 +59,7 @@ function Hero({
   )
 }
 
-function Approach({ dictionary }: { dictionary: Dictionary }) {
+function Approach() {
   return (
     <section
       className={cn(frame, "grid gap-10 py-24 md:grid-cols-[1fr_3fr] md:py-36")}
@@ -100,19 +82,15 @@ function Approach({ dictionary }: { dictionary: Dictionary }) {
 function Tile({
   product,
   index,
-  locale,
-  dictionary,
   featured,
 }: {
   product: Product
   index: number
-  locale: Locale
-  dictionary: Dictionary
   featured?: boolean
 }) {
   return (
     <Anchor
-      href={localePath(locale, `/${product.slug}`)}
+      href={`/${product.slug}`}
       className={cn(
         "group relative flex flex-col justify-between overflow-hidden rounded-[28px] bg-black p-6 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:p-10",
         featured ? "min-h-[min(88svh,52rem)]" : "min-h-[34rem] md:min-h-[40rem]"
@@ -138,7 +116,7 @@ function Tile({
           {String(index + 1).padStart(2, "0")} /{" "}
           {String(products.length).padStart(2, "0")}
         </span>
-        <span className="text-white/75">{product.category[locale]}</span>
+        <span className="text-white/75">{product.category}</span>
       </div>
 
       <div
@@ -170,7 +148,7 @@ function Tile({
               : "text-[clamp(1.375rem,1.9vw,1.875rem)]"
           )}
         >
-          {product.tagline[locale]}
+          {product.tagline}
         </p>
         <span
           className={cn(
@@ -188,13 +166,7 @@ function Tile({
   )
 }
 
-function Products({
-  locale,
-  dictionary,
-}: {
-  locale: Locale
-  dictionary: Dictionary
-}) {
+function Products() {
   const [first, second, ...rest] = products
   return (
     <section id="products" className="scroll-mt-20 pb-32 md:pb-48">
@@ -213,29 +185,11 @@ function Products({
         </h2>
       </div>
       <div className={cn(frame, "flex flex-col gap-3 md:gap-4")}>
-        <Tile
-          product={first}
-          index={0}
-          locale={locale}
-          dictionary={dictionary}
-          featured
-        />
-        <Tile
-          product={second}
-          index={1}
-          locale={locale}
-          dictionary={dictionary}
-          featured
-        />
+        <Tile product={first} index={0} featured />
+        <Tile product={second} index={1} featured />
         <div className="grid gap-3 md:gap-4">
           {rest.map((product, index) => (
-            <Tile
-              key={product.slug}
-              product={product}
-              index={index + 2}
-              locale={locale}
-              dictionary={dictionary}
-            />
+            <Tile key={product.slug} product={product} index={index + 2} />
           ))}
         </div>
       </div>
@@ -243,13 +197,7 @@ function Products({
   )
 }
 
-function Verbs({
-  locale,
-  dictionary,
-}: {
-  locale: Locale
-  dictionary: Dictionary
-}) {
+function Verbs() {
   return (
     <section className="pb-32 md:pb-48">
       <div
@@ -270,7 +218,7 @@ function Verbs({
             className="border-t border-foreground/15 last:border-b"
           >
             <Anchor
-              href={localePath(locale, `/${product.slug}`)}
+              href={`/${product.slug}`}
               className="group grid items-center gap-3 py-7 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:grid-cols-[1fr_3fr] md:gap-6 md:py-9"
             >
               <span className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
@@ -284,10 +232,10 @@ function Verbs({
                       ease
                     )}
                   >
-                    {product.verb[locale]}.
+                    {product.verb}.
                   </span>
                   <span className="max-w-2xl text-[17px] leading-[1.4] tracking-[-0.02em] text-muted-foreground">
-                    {product.question[locale]}
+                    {product.question}
                   </span>
                 </span>
                 <Arrow className="hidden md:flex" />
@@ -300,13 +248,7 @@ function Verbs({
   )
 }
 
-function Developers({
-  locale,
-  dictionary,
-}: {
-  locale: Locale
-  dictionary: Dictionary
-}) {
+function Developers() {
   return (
     <section id="developers" className="scroll-mt-20 pb-32 md:pb-48">
       <div
@@ -347,7 +289,7 @@ function Developers({
               className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70"
             />
             <div className="relative flex items-start justify-between gap-6 font-mono text-xs tracking-[0.02em] uppercase">
-              <span>{library.status[locale]}</span>
+              <span>{library.status}</span>
               <span className="text-white/75">
                 {library.url.replace("https://", "")}
               </span>
@@ -357,10 +299,10 @@ function Developers({
                 {library.name}
               </h3>
               <p className="max-w-lg text-[clamp(1.125rem,1.5vw,1.375rem)] leading-[1.3] tracking-[-0.02em] text-white/85">
-                {library.tagline[locale]}
+                {library.tagline}
               </p>
               <ul className="flex flex-wrap gap-2">
-                {library.points[locale].map((point) => (
+                {library.points.map((point) => (
                   <li
                     key={point}
                     className="rounded-full border border-white/25 px-3.5 py-1.5 text-sm tracking-[-0.01em] text-white/90"
@@ -387,18 +329,14 @@ function Developers({
   )
 }
 
-export default async function Home({ params }: PageProps<"/[lang]">) {
-  const { lang } = await params
-  if (!isLocale(lang)) notFound()
-  const dictionary = getDictionary(lang)
-
+export default function Home() {
   return (
     <main>
-      <Hero locale={lang} dictionary={dictionary} />
-      <Approach dictionary={dictionary} />
-      <Products locale={lang} dictionary={dictionary} />
-      <Verbs locale={lang} dictionary={dictionary} />
-      <Developers locale={lang} dictionary={dictionary} />
+      <Hero />
+      <Approach />
+      <Products />
+      <Verbs />
+      <Developers />
     </main>
   )
 }

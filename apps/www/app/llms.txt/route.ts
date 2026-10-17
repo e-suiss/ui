@@ -1,4 +1,4 @@
-import { getDictionary, localePath } from "@/lib/i18n"
+import { dictionary } from "@/lib/dictionary"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
 
@@ -13,7 +13,6 @@ const UI_FACTS = [
 ]
 
 export function GET() {
-  const dictionary = getDictionary("en")
   const lines = [
     `# ${site.name}`,
     `> ${dictionary.description}`,
@@ -21,13 +20,13 @@ export function GET() {
     `## Products\n\n${products
       .map(
         (product) =>
-          `- [suiss ${product.name}](${absolute(localePath("en", `/${product.slug}`))}): ${product.category.en} (${product.status === "development" ? "in development" : "planned"}). ${product.summary.en} Core question: ${product.question.en}`
+          `- [suiss ${product.name}](${absolute(`/${product.slug}`)}): ${product.category} (${product.status === "development" ? "in development" : "planned"}). ${product.summary} Core question: ${product.question}`
       )
       .join("\n")}`,
     `## Developers\n\n${libraries
       .map(
         (library) =>
-          `- [${library.name}](${library.url}): ${library.tagline.en} Start with \`${library.install}\`. Documentation for AI: ${library.url}/llms.txt`
+          `- [${library.name}](${library.url}): ${library.tagline} Start with \`${library.install}\`. Documentation for AI: ${library.url}/llms.txt`
       )
       .join("\n")}`,
     `## suiss/ui at a glance\n\n${UI_FACTS.map((fact) => `- ${fact}`).join("\n")}`,

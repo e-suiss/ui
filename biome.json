@@ -205,7 +205,8 @@
       "includes": [
         "packages/web/styles/globals.css",
         "apps/ui/app/globals.css",
-        "apps/www/app/globals.css"
+        "apps/www/app/globals.css",
+        "packages/web/site/global-nav.css"
       ],
       "linter": {
         "rules": {

@@ -1,15 +1,14 @@
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
-import { notFound } from "next/navigation"
 
 import { Footer } from "@/components/footer"
 import { GlobalNav } from "@/components/global-nav"
 import { JsonLd } from "@/components/json-ld"
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
-import { getDictionary, isLocale, localePath, locales } from "@/lib/i18n"
+import { dictionary } from "@/lib/dictionary"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
-import "../globals.css"
+import "./globals.css"
 
 const fontInter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -45,22 +44,44 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 }
 
-export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }))
-}
-
-export default async function RootLayout({
-  children,
-  params,
-}: LayoutProps<"/[lang]">) {
-  const { lang } = await params
-  if (!isLocale(lang)) notFound()
-  const dictionary = getDictionary(lang)
-
+export default function RootLayout({ children }: LayoutProps<"/">) {
   const items = products.map((product) => ({
     label: product.name,
-    href: localePath(lang, `/${product.slug}`),
+    href: `/${product.slug}`,
   }))
+  const navItems = products.map((product) => {
+    const href = `/${product.slug}`
+    const section = (id: string, label: string) => ({
+      label,
+      href: `${href}#${id}`,
+    })
+    return {
+      label: product.name,
+      href,
+      explore: [
+        { label: dictionary.overview, href },
+        section("principles", dictionary.principlesLabel),
+        section("capabilities", dictionary.capabilitiesLabel),
+        section("agents", dictionary.agentLabel),
+        ...(product.rules
+          ? [section("guarantees", dictionary.rulesLabel)]
+          : []),
+        section("facts", dictionary.factsLabel),
+        section("faq", dictionary.faqLabel),
+      ],
+      quick: product.connections.flatMap((connection) => {
+        const related = products.find((other) => other.slug === connection.slug)
+        return related
+          ? [
+              {
+                label: related.name,
+                href: `/${related.slug}`,
+              },
+            ]
+          : []
+      }),
+    }
+  })
   const columns = [
     { title: dictionary.products, links: items.slice(0, 4) },
     { title: " ", links: items.slice(4) },
@@ -76,13 +97,7 @@ export default async function RootLayout({
     },
     {
       title: dictionary.company,
-      links: [
-        { label: dictionary.allProducts, href: localePath(lang, "/#products") },
-        {
-          label: dictionary.switchLanguage,
-          href: localePath(lang === "en" ? "tr" : "en", "/"),
-        },
-      ],
+      links: [{ label: dictionary.allProducts, href: "/#products" }],
     },
   ]
 
@@ -95,7 +110,7 @@ export default async function RootLayout({
         name: site.name,
         url: site.url,
         logo: absolute("/icon"),
-        description: getDictionary("en").description,
+        description: dictionary.description,
         sameAs: [site.github, site.npm],
       },
       {
@@ -103,7 +118,7 @@ export default async function RootLayout({
         "@id": absolute("/#website"),
         name: site.name,
         url: site.url,
-        inLanguage: [...locales],
+        inLanguage: "en",
         publisher: { "@id": absolute("/#organization") },
       },
     ],
@@ -111,7 +126,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={dictionary.htmlLang}
+      lang="en"
       className={`style-suiss ${fontInter.variable}`}
       suppressHydrationWarning
     >
@@ -122,13 +137,28 @@ export default async function RootLayout({
       <body className="flex min-h-svh flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
           <GlobalNav
-            locale={lang}
-            items={items}
+            items={navItems}
+            quickLinks={[
+              ...items,
+              {
+                label: dictionary.allProducts,
+                href: "/#products",
+              },
+              {
+                label: dictionary.developers,
+                href: "/#developers",
+              },
+            ]}
+            tagline={[dictionary.taglineStart, dictionary.taglineEnd]}
             labels={{
               menu: dictionary.menu,
-              close: dictionary.close,
+              search: dictionary.search,
+              searchPlaceholder: dictionary.searchPlaceholder,
+              back: dictionary.back,
+              explore: dictionary.explore,
+              quickLinks: dictionary.quickLinks,
+              home: dictionary.home,
               developers: dictionary.developers,
-              switchLanguage: dictionary.switchLanguage,
             }}
           />
           <div className="flex flex-1 flex-col">{children}</div>

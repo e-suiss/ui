@@ -18,7 +18,8 @@
         "tests/*-setup.ts",
         "examples/*.tsx",
         "bases/*/components/**/*.tsx",
-        "bases/*/examples/*.tsx"
+        "bases/*/examples/*.tsx",
+        "site/*.tsx"
       ],
       "project": [
         "components/**/*.{ts,tsx}",
@@ -31,7 +32,8 @@
         "tests/render-example.tsx",
         "tests/base.ts",
         "tests/examples/*.test.tsx",
-        "bases/**/*.{ts,tsx}"
+        "bases/**/*.{ts,tsx}",
+        "site/**/*.{tsx,css}"
       ],
       "ignore": [
         "styles/generated/*.css",
@@ -75,7 +77,7 @@
       "ignoreDependencies": ["expo-updates"]
     },
     "apps/www": {
-      "entry": ["scripts/*.mjs", "lib/image-loader.ts"],
+      "entry": ["lib/image-loader.ts"],
       "ignoreDependencies": ["@esuiss/web", "@fontsource/inter"]
     },
     "apps/ui": {

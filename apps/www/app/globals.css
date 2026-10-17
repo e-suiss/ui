@@ -3,11 +3,13 @@
 @import "shadcn/tailwind.css";
 @import "../../../packages/web/styles/theme.css";
 @import "../../../packages/web/styles/generated/style-suiss.css" layer(base);
+@import "../../../packages/web/site/global-nav.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @source "../../../packages/web/components/ui/theme.tsx";
 @source "../../../packages/web/components/ui/button.tsx";
+@source "../../../packages/web/site";
 
 :root {
   --radius: 0.625rem;

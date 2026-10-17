@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/site/json-ld"
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
 import { withBase } from "@/lib/base-path"
 import { baseScript } from "@/lib/code-options"
+import { navItems } from "@/lib/nav"
 import { platformScript } from "@/lib/platform"
 import { absolute, origin, site } from "@/lib/site"
 import { strings } from "@/lib/strings"
@@ -131,7 +132,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="flex min-h-svh flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
-          <GlobalNav />
+          <GlobalNav items={navItems()} />
           <div className="flex flex-1 flex-col">{children}</div>
           <Footer />
         </ThemeProvider>
