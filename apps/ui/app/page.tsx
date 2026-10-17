@@ -4,7 +4,6 @@ import type * as React from "react"
 import { Anchor } from "@/components/site/anchor"
 import { Bento } from "@/components/site/bento"
 import { InstallCommand } from "@/components/site/install-command"
-import { Search } from "@/components/site/search"
 import { site } from "@/lib/site"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
@@ -96,10 +95,6 @@ function Hero() {
             {strings.heroLead}
           </p>
         </div>
-        <Search
-          variant="field"
-          className="h-14 w-full rounded-full bg-white/45 px-5 md:max-w-2xl text-[17px] tracking-[-0.02em] text-[#1d1d1f]/70 backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-300 hover:bg-white/60 md:h-16 md:px-6"
-        />
       </div>
     </section>
   )

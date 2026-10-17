@@ -31,7 +31,6 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { isMacPlatform } from "@/hooks/use-platform"
 import { withBase } from "@/lib/base-path"
 import { strings } from "@/lib/strings"
-import { cn } from "@/lib/utils"
 
 type Entry = { title: string; description?: string; url: string }
 type Group = { name: string; pages: Entry[] }
@@ -238,11 +237,9 @@ function Keys() {
 
 export function Search({
   className,
-  variant = "icon",
   hotkey = true,
 }: {
   className?: string
-  variant?: "icon" | "field"
   hotkey?: boolean
 }) {
   const router = useRouter()
@@ -280,37 +277,19 @@ export function Search({
     loadIndex().catch(() => undefined)
   }
 
-  const trigger =
-    variant === "field" ? (
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        onPointerEnter={prefetch}
-        onFocus={prefetch}
-        className={cn(
-          "flex items-center gap-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-          className
-        )}
-      >
-        <MagnifyingGlassIcon className="size-5 shrink-0" />
-        <span className="flex-1 truncate">{strings.searchPlaceholder}</span>
-        <kbd className="shrink-0 rounded-md bg-current/10 px-2 py-0.5 font-sans text-xs font-medium">
-          ⌘K
-        </kbd>
-      </button>
-    ) : (
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        aria-label={strings.search}
-        onClick={() => setOpen(true)}
-        onPointerEnter={prefetch}
-        onFocus={prefetch}
-        className={className}
-      >
-        <MagnifyingGlassIcon className="size-4" />
-      </Button>
-    )
+  const trigger = (
+    <Button
+      variant="ghost"
+      size="icon-sm"
+      aria-label={strings.search}
+      onClick={() => setOpen(true)}
+      onPointerEnter={prefetch}
+      onFocus={prefetch}
+      className={className}
+    >
+      <MagnifyingGlassIcon className="size-4" />
+    </Button>
+  )
 
   const body = (
     <>
