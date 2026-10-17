@@ -24,6 +24,7 @@ export type GlobalNavLabels = {
 const COMPACT_SIZE = 29
 const BAR_HEIGHT = 44
 const COLLAPSED = 0.999
+const LOGO_GAP = 48
 
 const heroTones = {
   light: {
@@ -211,22 +212,7 @@ function useProgress(isHome: boolean, storageKey: string) {
     }
   }, [isHome, storageKey, target, tween, write])
 
-  const collapse = React.useCallback(
-    (open: boolean) => {
-      if (!isHome) return
-      if (open) {
-        state.current.locked = true
-        tween(1, 180)
-      } else {
-        tween(target(), 280, () => {
-          state.current.locked = false
-        })
-      }
-    },
-    [isHome, target, tween]
-  )
-
-  return { navRef, logoRef, collapse, collapsed }
+  return { navRef, logoRef, collapsed }
 }
 
 export function GlobalNav({
@@ -265,12 +251,33 @@ export function GlobalNav({
   const closeTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined)
   const panelsRef = React.useRef<HTMLDivElement>(null)
   const [shown, setShown] = React.useState<string | null>(null)
+  const linksRef = React.useRef<HTMLUListElement>(null)
+  const [linksStart, setLinksStart] = React.useState(0)
+
+  React.useLayoutEffect(() => {
+    if (!panel) return
+    const measure = () => {
+      const links = linksRef.current
+      const frame = links?.parentElement
+      const logo = logoRef.current
+      if (!links || !frame) return
+      const rtl = getComputedStyle(frame).direction === "rtl"
+      const box = frame.getBoundingClientRect()
+      const offset = (rect: DOMRect) =>
+        rtl ? box.right - rect.right : rect.left - box.left
+      const end = (rect: DOMRect) =>
+        rtl ? box.right - rect.left : rect.right - box.left
+      const linksStart = offset(links.getBoundingClientRect())
+      const logoEnd = logo ? end(logo.getBoundingClientRect()) + LOGO_GAP : 0
+      setLinksStart(Math.max(0, linksStart, logoEnd))
+    }
+    measure()
+    window.addEventListener("resize", measure)
+    return () => window.removeEventListener("resize", measure)
+  }, [panel])
   const [panelHeight, setPanelHeight] = React.useState(0)
   const searchRef = React.useRef<HTMLInputElement>(null)
-  const { navRef, logoRef, collapse, collapsed } = useProgress(
-    isHome,
-    storageKey
-  )
+  const { navRef, logoRef, collapsed } = useProgress(isHome, storageKey)
   const words = React.useMemo(() => taglineWords(tagline), [tagline])
   const menus = items.filter((item) => item.explore?.length)
   const open = panel !== null || mobile === "open"
@@ -287,16 +294,11 @@ export function GlobalNav({
     wasOpen.current = open
     if (open) {
       setSolid(true)
-      collapse(true)
       return
     }
     const bar = setTimeout(() => setSolid(false), 300)
-    const grow = setTimeout(() => collapse(false), 130)
-    return () => {
-      clearTimeout(bar)
-      clearTimeout(grow)
-    }
-  }, [open, collapse])
+    return () => clearTimeout(bar)
+  }, [open])
 
   const openPanel = (name: string | null) => {
     clearTimeout(closeTimer.current)
@@ -404,7 +406,7 @@ export function GlobalNav({
         className={cn("global-nav z-50 w-full text-foreground", position)}
       >
         <div className="relative mx-auto flex h-11 max-w-[1680px] items-center justify-end gap-7 px-5 md:px-10">
-          <ul className="hidden items-center gap-7 lg:flex">
+          <ul ref={linksRef} className="hidden items-center gap-7 lg:flex">
             {items.map((item) => (
               <li
                 key={item.href}
@@ -533,7 +535,10 @@ export function GlobalNav({
               hidden={shown !== item.label}
               className="nav-panel"
             >
-              <div className="mx-auto flex max-w-[1680px] gap-20 px-5 py-10 md:px-10">
+              <div
+                style={{ paddingInlineStart: linksStart }}
+                className="mx-auto flex max-w-[1680px] gap-20 px-5 py-10 md:px-10"
+              >
                 <div>
                   <p className="text-xs text-muted-foreground">
                     {labels.explore}
@@ -595,7 +600,10 @@ export function GlobalNav({
               hidden={shown !== SEARCH}
               className="nav-panel"
             >
-              <div className="mx-auto max-w-[680px] px-5 py-8">
+              <div
+                style={{ paddingInlineStart: linksStart }}
+                className="mx-auto max-w-[1680px] px-5 py-8 md:px-10"
+              >
                 <div className="flex items-center gap-3 border-b border-border pb-3 text-foreground">
                   <SearchIcon />
                   <input
