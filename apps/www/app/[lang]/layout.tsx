@@ -61,6 +61,39 @@ export default async function RootLayout({
     label: product.name,
     href: localePath(lang, `/${product.slug}`),
   }))
+  const navItems = products.map((product) => {
+    const href = localePath(lang, `/${product.slug}`)
+    const section = (id: string, label: string) => ({
+      label,
+      href: `${href}#${id}`,
+    })
+    return {
+      label: product.name,
+      href,
+      explore: [
+        { label: dictionary.overview, href },
+        section("principles", dictionary.principlesLabel),
+        section("capabilities", dictionary.capabilitiesLabel),
+        section("agents", dictionary.agentLabel),
+        ...(product.rules
+          ? [section("guarantees", dictionary.rulesLabel)]
+          : []),
+        section("facts", dictionary.factsLabel),
+        section("faq", dictionary.faqLabel),
+      ],
+      quick: product.connections.flatMap((connection) => {
+        const related = products.find((other) => other.slug === connection.slug)
+        return related
+          ? [
+              {
+                label: related.name,
+                href: localePath(lang, `/${related.slug}`),
+              },
+            ]
+          : []
+      }),
+    }
+  })
   const columns = [
     { title: dictionary.products, links: items.slice(0, 4) },
     { title: " ", links: items.slice(4) },
@@ -123,10 +156,27 @@ export default async function RootLayout({
         <ThemeProvider>
           <GlobalNav
             locale={lang}
-            items={items}
+            items={navItems}
+            quickLinks={[
+              ...items,
+              {
+                label: dictionary.allProducts,
+                href: localePath(lang, "/#products"),
+              },
+              {
+                label: dictionary.developers,
+                href: localePath(lang, "/#developers"),
+              },
+            ]}
+            tagline={[dictionary.taglineStart, dictionary.taglineEnd]}
             labels={{
               menu: dictionary.menu,
-              close: dictionary.close,
+              search: dictionary.search,
+              searchPlaceholder: dictionary.searchPlaceholder,
+              back: dictionary.back,
+              explore: dictionary.explore,
+              quickLinks: dictionary.quickLinks,
+              home: dictionary.home,
               developers: dictionary.developers,
               switchLanguage: dictionary.switchLanguage,
             }}

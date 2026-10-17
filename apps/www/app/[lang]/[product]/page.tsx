@@ -52,11 +52,13 @@ const statusLabel = (product: Product, dictionary: Dictionary) =>
     : dictionary.planned
 
 function Section({
+  id,
   index,
   label,
   className,
   children,
 }: {
+  id?: string
   index: number
   label: string
   className?: string
@@ -64,6 +66,7 @@ function Section({
 }) {
   return (
     <section
+      id={id}
       className={cn(
         frame,
         "grid gap-10 py-24 md:grid-cols-[1fr_3fr] md:py-32",
@@ -176,14 +179,22 @@ export default async function ProductPage({
       </Section>
 
       <div className="dark bg-background text-foreground dark:bg-muted">
-        <Section index={nextIndex()} label={dictionary.questionLabel}>
+        <Section
+          id="question"
+          index={nextIndex()}
+          label={dictionary.questionLabel}
+        >
           <blockquote className="text-[clamp(2.5rem,6vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.055em] text-balance">
             “{product.question[locale]}”
           </blockquote>
         </Section>
       </div>
 
-      <Section index={nextIndex()} label={dictionary.principlesLabel}>
+      <Section
+        id="principles"
+        index={nextIndex()}
+        label={dictionary.principlesLabel}
+      >
         <ol className="grid gap-x-10 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
           {product.principles.map((principle, index) => (
             <li
@@ -204,7 +215,11 @@ export default async function ProductPage({
         </ol>
       </Section>
 
-      <Section index={nextIndex()} label={dictionary.capabilitiesLabel}>
+      <Section
+        id="capabilities"
+        index={nextIndex()}
+        label={dictionary.capabilitiesLabel}
+      >
         <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 xl:grid-cols-3">
           {product.groups.map((group) => (
             <div
@@ -229,7 +244,7 @@ export default async function ProductPage({
         </div>
       </Section>
 
-      <section className={cn(frame, "py-12 md:py-16")}>
+      <section id="agents" className={cn(frame, "py-12 md:py-16")}>
         <div className="relative overflow-hidden rounded-[28px] bg-black text-white">
           <Image
             src={product.image}
@@ -262,7 +277,11 @@ export default async function ProductPage({
       </section>
 
       {product.rules && (
-        <Section index={nextIndex()} label={dictionary.rulesLabel}>
+        <Section
+          id="guarantees"
+          index={nextIndex()}
+          label={dictionary.rulesLabel}
+        >
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-4">
               <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
@@ -292,7 +311,11 @@ export default async function ProductPage({
       )}
 
       {product.standards && (
-        <Section index={nextIndex()} label={dictionary.standardsLabel}>
+        <Section
+          id="standards"
+          index={nextIndex()}
+          label={dictionary.standardsLabel}
+        >
           <ul className="flex flex-wrap gap-2.5">
             {product.standards.map((standard) => (
               <li
@@ -306,7 +329,7 @@ export default async function ProductPage({
         </Section>
       )}
 
-      <Section index={nextIndex()} label={dictionary.factsLabel}>
+      <Section id="facts" index={nextIndex()} label={dictionary.factsLabel}>
         <dl className="grid sm:grid-cols-2">
           {product.facts.map((fact) => (
             <div
@@ -324,7 +347,11 @@ export default async function ProductPage({
         </dl>
       </Section>
 
-      <Section index={nextIndex()} label={dictionary.worksWithLabel}>
+      <Section
+        id="works-with"
+        index={nextIndex()}
+        label={dictionary.worksWithLabel}
+      >
         <div className="grid gap-3 md:grid-cols-2 md:gap-4">
           {product.connections.map((connection) => {
             const item = getProduct(connection.slug)
@@ -369,7 +396,7 @@ export default async function ProductPage({
         </div>
       </Section>
 
-      <Section index={nextIndex()} label={dictionary.faqLabel}>
+      <Section id="faq" index={nextIndex()} label={dictionary.faqLabel}>
         <div className="flex flex-col border-b border-foreground/15">
           {product.faq.map((item) => (
             <details
