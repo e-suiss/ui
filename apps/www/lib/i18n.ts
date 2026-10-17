@@ -20,7 +20,7 @@ const dictionaries = {
     switchLanguage: "Türkçe",
     title: "suiss – Infrastructure for the agent era",
     description:
-      "suiss builds agent-native infrastructure: a personal agent, identity and authority, events and messaging, personal money, payments, commerce, restaurants and work coordination.",
+      "suiss builds agent-native infrastructure: a personal agent, identity, messaging, money, payments, commerce, restaurants and work coordination.",
     heroTitle: "Infrastructure for the agent era.",
     heroSubtitle:
       "Eight products that let people and their agents understand, authorize, communicate, pay, buy and coordinate work together.",

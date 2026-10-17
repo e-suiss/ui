@@ -101,7 +101,7 @@ export default async function RootLayout({
         url: site.url,
         logo: absolute("/icon"),
         description: getDictionary("en").description,
-        sameAs: [site.github],
+        sameAs: [site.github, site.npm],
       },
       {
         "@type": "WebSite",

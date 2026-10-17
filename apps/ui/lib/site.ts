@@ -12,7 +12,7 @@ export const site = {
   name: strings.brand,
   alternateNames: ["suiss ui", "suiss.app/ui"],
   url: `${origin}${basePath}`,
-  title: `${strings.brand} – Copy-paste components for React, React Native, SwiftUI and Jetpack Compose`,
+  title: `${strings.brand} – React, React Native, SwiftUI and Compose components`,
   description: strings.heroSubtitle,
   summary:
     "suiss/ui is an open-source collection of components, patterns, interactions, charts and blocks with a clean, minimal design, for React, React Native, SwiftUI and Jetpack Compose. React components are built with Tailwind CSS v4 on three interchangeable primitive bases; React Native components come in Uniwind, NativeWind and StyleSheet flavors with the same API; SwiftUI and Compose versions share the same design tokens. Every component is copied into your project with the @esuiss/ui CLI, so you own and can change the code.",
@@ -27,6 +27,7 @@ export const site = {
     id: `${origin}/#organization`,
     logo: `${origin}/icon`,
     github: "https://github.com/e-suiss",
+    npm: "https://www.npmjs.com/org/esuiss",
   },
   keywords: [
     "React components",

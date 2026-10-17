@@ -2,6 +2,16 @@ import { getDictionary, localePath } from "@/lib/i18n"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
 
+const UI_FACTS = [
+  "Web: React components for Next.js and Vite, built with Tailwind CSS v4 on a choice of three primitive bases: Base UI, Radix or React Aria.",
+  "Mobile: React Native and Expo components styled with Uniwind, NativeWind or StyleSheet, plus native SwiftUI (Swift Package Manager) and Jetpack Compose libraries.",
+  "One design on every platform: the same component names, parts and design tokens, with light and dark mode.",
+  "Install: `npx @esuiss/ui@latest init`, then `npx @esuiss/ui@latest add button`. Every component is copied into your project, so you own the code.",
+  "Registry: any project with a components.json can add items from `https://suiss.app/ui/r/{style}/{name}.json` under the `@esuiss` namespace.",
+  `Docs: [Introduction](${absolute("/ui/docs")}), [Installation](${absolute("/ui/docs/installation")}), [Components](${absolute("/ui/docs/components")}), [CLI](${absolute("/ui/docs/cli")}), full text for AI at ${absolute("/ui/llms-full.txt")}.`,
+  "License: MIT. Source: https://github.com/e-suiss/ui",
+]
+
 export function GET() {
   const dictionary = getDictionary("en")
   const lines = [
@@ -20,7 +30,8 @@ export function GET() {
           `- [${library.name}](${library.url}): ${library.tagline.en} Start with \`${library.install}\`. Documentation for AI: ${library.url}/llms.txt`
       )
       .join("\n")}`,
-    `## Optional\n\n- [Turkish version](${absolute("/tr")})\n- [GitHub](${site.github})`,
+    `## suiss/ui at a glance\n\n${UI_FACTS.map((fact) => `- ${fact}`).join("\n")}`,
+    `## Optional\n\n- [Turkish version](${absolute("/tr")})\n- [GitHub](${site.github})\n- [npm](${site.npm})`,
   ]
   return new Response(lines.join("\n\n"), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

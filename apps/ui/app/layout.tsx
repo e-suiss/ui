@@ -81,7 +81,7 @@ const structuredData = {
       name: site.organization.name,
       url: site.organization.url,
       logo: site.organization.logo,
-      sameAs: [site.organization.github],
+      sameAs: [site.organization.github, site.organization.npm],
     },
     {
       "@type": "WebSite",
@@ -101,6 +101,7 @@ const structuredData = {
       description: site.summary,
       url: absolute("/"),
       codeRepository: site.repository,
+      sameAs: [site.repository, site.npm],
       programmingLanguage: site.languages,
       runtimePlatform: site.platform,
       license: "https://opensource.org/licenses/MIT",

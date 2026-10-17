@@ -7,6 +7,7 @@ export const site = {
     ""
   ),
   github: "https://github.com/e-suiss",
+  npm: "https://www.npmjs.com/org/esuiss",
 }
 
 export const absolute = (path: string) =>

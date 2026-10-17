@@ -42,7 +42,7 @@ export async function generateMetadata({
     locale,
     path: `/${product.slug}`,
     title: `${site.name} ${product.name} – ${product.category[locale]}`,
-    description: product.summary[locale],
+    description: product.description[locale],
     image: `/og/${locale}/${product.slug}/image.png`,
   })
 }

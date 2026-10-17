@@ -17,6 +17,7 @@ export type Product = {
   category: Text
   tagline: Text
   summary: Text
+  description: Text
   question: Text
   principles: { title: Text; body: Text }[]
   groups: { title: Text; items: List }[]
@@ -43,6 +44,10 @@ export const products: Product[] = [
     summary: t(
       "One is a personal agent that belongs to you, not to a model provider. It learns how you live and work through memory you can see and correct, keeps your tasks going across your devices, acts only within the limits you set, and interrupts you only when it is worth it.",
       "One, bir model sağlayıcısına değil sana ait kişisel bir agent. Görebildiğin ve düzeltebildiğin bir hafızayla nasıl yaşadığını ve çalıştığını öğrenir, işlerini cihazların arasında sürdürür, sadece senin belirlediğin sınırlar içinde hareket eder ve seni yalnızca gerçekten değdiğinde rahatsız eder."
+    ),
+    description: t(
+      "One is a personal agent that belongs to you, not a model provider: memory you can see and correct, tasks across devices, and only the limits you set.",
+      "One, bir model sağlayıcısına değil sana ait kişisel bir agent: görüp düzeltebildiğin hafıza, cihazlar arasında süren işler ve senin belirlediğin sınırlar."
     ),
     question: t(
       "What should be done for you now, who should do it, and is it worth interrupting you?",
@@ -370,6 +375,10 @@ export const products: Product[] = [
     summary: t(
       "Access is a complete identity provider with authority built in. It signs in people, services, devices and AI agents over standard protocols, and before an action happens it decides whether that actor, on that authority, may do this exact thing now: allow, deny, or say what is still required. Every decision leaves a signed record that others can check without asking suiss.",
       "Access, yetkinin içine yerleştirildiği eksiksiz bir kimlik sağlayıcı. İnsanları, servisleri, cihazları ve AI agent'larını standart protokollerle oturum açtırır ve bir işlem gerçekleşmeden önce o aktörün, o yetkiyle, tam bu işi şimdi yapıp yapamayacağına karar verir: izin ver, reddet ya da neyin eksik olduğunu söyle. Her karar, başkalarının suiss'e sormadan doğrulayabileceği imzalı bir kayıt bırakır."
+    ),
+    description: t(
+      "Access is an identity provider with authority built in. It signs in people, services, devices and AI agents and decides what each may do, with signed records.",
+      "Access, yetkinin içinde olduğu bir kimlik sağlayıcı: insanları, servisleri, cihazları ve AI agent'larını oturum açtırır, ne yapabileceklerine karar verir."
     ),
     question: t(
       "May this actor, on this authority, do this exact thing now?",
@@ -703,6 +712,10 @@ export const products: Product[] = [
       "Relay takes an event from your product and gets it to the right person, service, device or AI agent, on the right channel and at the right time, within consent rules. It handles retries, failover and preferences, and keeps a record of what happened to every message, including the ones it chose not to send and why.",
       "Relay, ürününden gelen bir event'i doğru kişiye, servise, cihaza ya da AI agent'ına, doğru kanaldan ve doğru zamanda, izin kuralları içinde ulaştırır. Yeniden denemeleri, yedeklemeyi ve tercihleri yönetir; her mesajın başına ne geldiğinin kaydını tutar; göndermemeyi seçtiklerini ve nedenini de."
     ),
+    description: t(
+      "Relay gets events from your product to the right person, service, device or AI agent, on the right channel and time, with a record of every message.",
+      "Relay, ürününden gelen event'leri doğru kişiye, servise, cihaza ya da AI agent'ına doğru kanaldan ve zamanda ulaştırır, her mesajın kaydını tutar."
+    ),
     question: t(
       "How does this event or message reach the right person, service, device or agent?",
       "Bu event ya da mesaj doğru kişiye, servise, cihaza ya da agent'a nasıl ulaşır?"
@@ -1023,6 +1036,10 @@ export const products: Product[] = [
       "Money is a personal money account for everyday life: balances in several currencies, physical and virtual cards, transfers, budgets, subscriptions and rewards. It is built so that your agent can pay for things on your behalf, using only the accounts and limits you allow.",
       "Money, gündelik hayat için kişisel bir para hesabı: birden fazla para biriminde bakiye, fiziksel ve sanal kartlar, transferler, bütçeler, abonelikler ve ödüller. Agent'ının senin adına ödeme yapabilmesi için tasarlanır; sadece izin verdiğin hesapları ve limitleri kullanarak."
     ),
+    description: t(
+      "Money is a personal account for everyday life: multi-currency balances, cards, transfers and budgets, built so your agent can pay within your limits.",
+      "Money, gündelik hayat için kişisel para hesabı: çok para birimli bakiye, kartlar, transferler ve bütçeler; agent'ın senin limitlerinle ödeme yapabilir."
+    ),
     question: t(
       "Which of your accounts, balances or cards should be used?",
       "Hangi hesabın, bakiyen ya da kartın kullanılmalı?"
@@ -1260,6 +1277,10 @@ export const products: Product[] = [
     summary: t(
       "Pay is payment infrastructure for businesses and platforms: payment and checkout APIs, virtual POS, payment links, settlement and payouts, and marketplace payments. Checkout is built for agents too, so a purchase made by someone's agent is as clear as one made by a person.",
       "Pay, işletmeler ve platformlar için ödeme altyapısı: ödeme ve checkout API'leri, sanal POS, ödeme linkleri, mutabakat ve ödemeler ve pazaryeri ödemeleri. Checkout agent'lar için de tasarlanır; birinin agent'ının yaptığı alışveriş, bir insanın yaptığı kadar nettir."
+    ),
+    description: t(
+      "Pay is payment infrastructure for businesses and platforms: checkout APIs, virtual POS, payment links, payouts and marketplace payments, built for agents too.",
+      "Pay, işletmeler ve platformlar için ödeme altyapısı: checkout API'leri, sanal POS, ödeme linkleri, ödemeler ve pazaryeri ödemeleri; agent'lar için de."
     ),
     question: t(
       "How does a payment actually reach the merchant?",
@@ -1507,6 +1528,10 @@ export const products: Product[] = [
       "Commerce brings together a multi-seller marketplace, a platform for merchants to run their own stores, and commerce that agents can use. An agent can discover, compare, buy and return on your behalf, with Access deciding what it may spend and Relay keeping you posted.",
       "Commerce; çok satıcılı bir pazaryerini, satıcıların kendi mağazalarını yönettiği bir platformu ve agent'ların kullanabildiği ticareti bir araya getirir. Bir agent senin adına keşfedebilir, karşılaştırabilir, satın alabilir ve iade edebilir; ne harcayabileceğine Access karar verir, Relay seni haberdar eder."
     ),
+    description: t(
+      "Commerce brings a multi-seller marketplace, a store platform for merchants and agent-ready commerce together, so agents can discover, compare and buy for you.",
+      "Commerce; çok satıcılı pazaryerini, satıcı mağaza platformunu ve agent'ların kullanabildiği ticareti birleştirir, agent'ın senin için bulur ve satın alır."
+    ),
     question: t(
       "What should be bought, from whom, and at what price?",
       "Ne, kimden ve hangi fiyata satın alınmalı?"
@@ -1738,6 +1763,10 @@ export const products: Product[] = [
       "Serve brings a restaurant operating system, a food marketplace and a delivery network together. Every order from every channel lands in one place and goes straight to the kitchen, and agents help with stock, purchasing, scheduling, pricing and customer support.",
       "Serve; bir restoran işletim sistemini, bir yemek pazaryerini ve bir teslimat ağını bir araya getirir. Her kanaldan gelen her sipariş tek bir yere düşer ve doğrudan mutfağa gider; agent'lar stok, satın alma, vardiya, fiyat ve müşteri desteğinde yardım eder."
     ),
+    description: t(
+      "Serve brings a restaurant operating system, a food marketplace and a delivery network together: every order in one place, with agents helping run it.",
+      "Serve; restoran işletim sistemini, yemek pazaryerini ve teslimat ağını birleştirir: her kanaldan gelen sipariş tek yerde, agent'lar işletmeye yardım eder."
+    ),
     question: t(
       "How does every order get cooked and delivered on time?",
       "Her sipariş zamanında nasıl hazırlanır ve teslim edilir?"
@@ -1965,6 +1994,10 @@ export const products: Product[] = [
     summary: t(
       "Work coordinates work shared between people, AI agents, systems and machines. It records who promised what to whom, who acts on whose behalf, what each piece of work is waiting on and which decision falls to whom, and it brings each person only the items that need them. Work coordinates; the work itself is done by people and agents.",
       "Work; insanlar, AI agent'ları, sistemler ve makineler arasında paylaşılan işi koordine eder. Kimin kime neyi söz verdiğini, kimin kimin adına hareket ettiğini, her işin neyi beklediğini ve hangi kararın kime düştüğünü kaydeder; her insana sadece ona ihtiyaç duyan işleri getirir. Work koordine eder; işin kendisini insanlar ve agent'lar yapar."
+    ),
+    description: t(
+      "Work coordinates work shared between people, AI agents, systems and machines: who promised what, what is waiting, and who is needed now.",
+      "Work; insanlar, AI agent'ları, sistemler ve makineler arasındaki işi koordine eder: kim neyi söz verdi, ne bekliyor ve şimdi kime ihtiyaç var."
     ),
     question: t(
       "Who promised what to whom, what is waiting on what, and whose attention is needed now?",
