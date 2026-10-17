@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -34,7 +35,7 @@ enum class InputSize(
     internal val horizontalPadding: Dp,
     internal val radius: Dp,
 ) {
-    Default(44.dp, 12.dp, Radius.lg),
+    Default(Metrics.Height.input, Metrics.PaddingX.input, Metrics.Radius.input),
     Md(36.dp, 12.dp, Radius.lg),
     Sm(32.dp, 10.dp, Radius.md),
 }

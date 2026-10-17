@@ -55,6 +55,7 @@ import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.CaretRight
 import com.adamglin.phosphoricons.regular.Check
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -131,9 +132,9 @@ internal fun MenuPopup(
                 modifier = modifier
                     .widthIn(min = minWidth)
                     .width(IntrinsicSize.Max)
-                    .raisedSurface(colors, RoundedCornerShape(Radius.xl))
+                    .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.menu), Metrics.Elevation.menu)
                     .verticalScroll(rememberScrollState())
-                    .padding(6.dp),
+                    .padding(Metrics.Padding.menu),
                 content = content,
             )
         }
@@ -153,7 +154,7 @@ private fun MenuRow(
     content: @Composable RowScope.() -> Unit,
 ) {
     val pressed by interaction.collectIsPressedAsState()
-    val shape = RoundedCornerShape(Radius.md)
+    val shape = RoundedCornerShape(Metrics.Radius.menuItem)
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -179,7 +180,7 @@ private fun MenuRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 44.dp)
-                    .padding(start = startPadding, end = endPadding, top = 8.dp, bottom = 8.dp),
+                    .padding(start = startPadding, end = endPadding, top = Metrics.PaddingY.menuItem, bottom = Metrics.PaddingY.menuItem),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 content = content,

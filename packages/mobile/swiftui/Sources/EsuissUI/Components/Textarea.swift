@@ -7,7 +7,7 @@ public struct TextareaStyle: TextFieldStyle {
     configuration
       .lineLimit(1...8)
       .modifier(InputField(
-        radius: Radius.xl,
+        radius: Metrics.Radius.textarea,
         horizontalPadding: 12,
         verticalPadding: 12,
         minHeight: 64,

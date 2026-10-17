@@ -53,7 +53,7 @@ struct ToggleSurface<Content: View>: View {
   let pressed: Bool
   let variant: ToggleVariant
   let size: ToggleSize
-  var shape = AnyShape(RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
+  var shape = AnyShape(RoundedRectangle(cornerRadius: Metrics.Radius.toggle, style: .continuous))
   var bordered = true
   let content: Content
 

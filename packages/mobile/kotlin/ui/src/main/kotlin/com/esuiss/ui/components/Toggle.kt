@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -63,7 +64,7 @@ fun Toggle(
             onPressedChange(!pressed)
         },
         size = size,
-        shape = RoundedCornerShape(Radius.lg),
+        shape = RoundedCornerShape(Metrics.Radius.toggle),
         outlined = variant == ToggleVariant.Outline,
         background = toggleBackground(colors, pressed),
         foreground = toggleForeground(colors, pressed),

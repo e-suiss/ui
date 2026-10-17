@@ -17,9 +17,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -34,7 +34,7 @@ fun Alert(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val shape = RoundedCornerShape(Radius.xl2)
+    val shape = RoundedCornerShape(Metrics.Radius.alert)
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -73,7 +73,7 @@ fun Alert(
 
 @Composable
 fun AlertTitle(text: String, modifier: Modifier = Modifier) {
-    Text(text, modifier, style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold))
+    Text(text, modifier, style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = Metrics.Weight.title))
 }
 
 @Composable

@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -44,7 +45,7 @@ fun Textarea(
     val colors = EsuissTheme.colors
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val focused by source.collectIsFocusedAsState()
-    val shape = RoundedCornerShape(Radius.xl)
+    val shape = RoundedCornerShape(Metrics.Radius.textarea)
     val textStyle = Typography.base.copy(color = colors.foreground)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
         BasicTextField(

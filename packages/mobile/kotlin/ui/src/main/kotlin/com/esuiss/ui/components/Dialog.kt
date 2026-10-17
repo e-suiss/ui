@@ -36,6 +36,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -74,7 +75,7 @@ internal fun CenteredModal(
                 enter = fadeIn(tween(150)) + scaleIn(tween(150), initialScale = 0.95f),
                 exit = fadeOut(tween(100)) + scaleOut(tween(100), targetScale = 0.95f),
             ) {
-                val shape = RoundedCornerShape(Radius.xl2)
+                val shape = RoundedCornerShape(Metrics.Radius.dialog)
                 Box(
                     modifier = modifier
                         .widthIn(max = maxWidth)
@@ -92,7 +93,7 @@ internal fun CenteredModal(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .verticalScroll(rememberScrollState())
-                                .padding(24.dp),
+                                .padding(Metrics.Padding.dialog),
                             verticalArrangement = Arrangement.spacedBy(24.dp),
                             content = content,
                         )
