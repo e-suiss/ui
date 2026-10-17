@@ -1,5 +1,7 @@
 import * as React from "react"
 
+const GAP = "--scrollbar-gap"
+
 let observer: MutationObserver | null = null
 let applied: { padding: string } | null = null
 let measured = 0
@@ -32,6 +34,7 @@ function release(html: HTMLElement, body: HTMLElement) {
       releasing = false
       if (isLocked(html, body) || !applied) return
       body.style.paddingInlineEnd = applied.padding
+      html.style.removeProperty(GAP)
       applied = null
     })
   })
@@ -60,6 +63,7 @@ function sync() {
     applied = { padding: body.style.paddingInlineEnd }
     html.style.setProperty("scrollbar-gutter", "auto", "important")
     body.style.paddingInlineEnd = `${width}px`
+    html.style.setProperty(GAP, `${width}px`)
   } else if (!locked && applied) {
     release(html, body)
   } else if (!locked && !releasing) {

@@ -303,9 +303,9 @@ export function GlobalNav({
   const overHero = useOverHero(Boolean(hero))
   const tone =
     hero && overHero && !collapsed && !solid ? heroTones[hero] : undefined
-  let position = "relative"
-  if (hero) position = "fixed inset-x-0 top-0"
-  else if (isHome) position = "sticky top-0"
+  let position = "relative w-full"
+  if (hero) position = "fixed start-0 end-[var(--scrollbar-gap,0px)] top-0"
+  else if (isHome) position = "sticky top-0 w-full"
 
   const panelOpen = panel !== null
   const wasPanelOpen = React.useRef(false)
@@ -430,7 +430,7 @@ export function GlobalNav({
         onMouseLeave={() => {
           closeTimer.current = setTimeout(close, 120)
         }}
-        className={cn("global-nav z-50 w-full text-foreground", position)}
+        className={cn("global-nav z-50 text-foreground", position)}
       >
         <div className="relative mx-auto flex h-11 max-w-[1680px] items-center justify-end gap-7 px-5 md:px-10">
           <ul ref={linksRef} className="hidden items-center gap-7 lg:flex">
