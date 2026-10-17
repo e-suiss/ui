@@ -18,6 +18,8 @@ export function generateStaticParams() {
   return products.map((product) => ({ product: product.slug }))
 }
 
+export const dynamicParams = false
+
 async function resolve(params: PageProps<"/[product]">["params"]) {
   const { product: slug } = await params
   const product = getProduct(slug)
