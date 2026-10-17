@@ -19,7 +19,10 @@ export const metadata: Metadata = pageMetadata({
 
 function Hero() {
   return (
-    <section className="relative flex flex-col overflow-hidden text-[#1d1d1f]">
+    <section
+      data-nav-hero
+      className="relative flex flex-col overflow-hidden text-[#1d1d1f]"
+    >
       <HeroBackground />
       <div
         className={cn(

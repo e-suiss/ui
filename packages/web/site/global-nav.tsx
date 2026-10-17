@@ -22,6 +22,39 @@ export type GlobalNavLabels = {
 }
 
 const COMPACT_SIZE = 29
+const BAR_HEIGHT = 44
+
+const heroTones = {
+  light: {
+    "--foreground": "oklch(0.2316 0.0038 286.09)",
+    "--background": "oklch(1 0 0)",
+    "--muted-foreground": "oklch(0.5399 0.0077 286.13)",
+  },
+  dark: {
+    "--foreground": "oklch(1 0 0)",
+    "--background": "oklch(0 0 0)",
+    "--muted-foreground": "oklch(1 0 0 / 0.6)",
+  },
+}
+
+function useOverHero(enabled: boolean) {
+  const [over, setOver] = React.useState(enabled)
+  React.useEffect(() => {
+    if (!enabled) return
+    const update = () => {
+      const hero = document.querySelector("[data-nav-hero]")
+      setOver(hero ? hero.getBoundingClientRect().bottom > BAR_HEIGHT : false)
+    }
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [enabled])
+  return enabled && over
+}
 const SEARCH = "search"
 const WORDMARK = "clamp(88px,13vw,180px)"
 
@@ -205,6 +238,7 @@ export function GlobalNav({
   actions,
   storageKey = "suiss:nav",
   anchor,
+  hero,
 }: {
   home: string
   isHome: boolean
@@ -217,6 +251,7 @@ export function GlobalNav({
   actions?: React.ReactNode
   storageKey?: string
   anchor: AnchorComponent
+  hero?: keyof typeof heroTones
 }) {
   const [panel, setPanel] = React.useState<string | null>(null)
   const [solid, setSolid] = React.useState(false)
@@ -231,6 +266,11 @@ export function GlobalNav({
   const words = React.useMemo(() => taglineWords(tagline), [tagline])
   const menus = items.filter((item) => item.explore?.length)
   const open = panel !== null || mobile === "open"
+  const overHero = useOverHero(Boolean(hero))
+  const tone = hero && overHero && !solid ? heroTones[hero] : undefined
+  let position = "relative"
+  if (hero) position = "fixed inset-x-0 top-0"
+  else if (isHome) position = "sticky top-0"
 
   const wasOpen = React.useRef(false)
   React.useEffect(() => {
@@ -340,19 +380,21 @@ export function GlobalNav({
         aria-label="Global"
         data-home={isHome}
         data-solid={solid || undefined}
+        data-transparent={tone ? true : undefined}
         style={
-          { "--p": isHome ? 0 : 1, "--end-scale": 0.12 } as React.CSSProperties
+          {
+            "--p": isHome ? 0 : 1,
+            "--end-scale": 0.12,
+            ...tone,
+          } as React.CSSProperties
         }
         onMouseEnter={() => clearTimeout(closeTimer.current)}
         onMouseLeave={() => {
           closeTimer.current = setTimeout(close, 120)
         }}
-        className={cn(
-          "global-nav z-50 w-full text-foreground",
-          isHome ? "sticky top-0" : "relative"
-        )}
+        className={cn("global-nav z-50 w-full text-foreground", position)}
       >
-        <div className="relative mx-auto flex h-11 max-w-[1440px] items-center justify-end gap-7 px-6 lg:px-10">
+        <div className="relative mx-auto flex h-11 max-w-[1680px] items-center justify-end gap-7 px-5 md:px-10">
           <ul className="hidden items-center gap-7 lg:flex">
             {items.map((item) => (
               <li
@@ -429,7 +471,7 @@ export function GlobalNav({
         </div>
 
         <div className="nav-wordmark pointer-events-none absolute inset-x-0 top-11 z-20">
-          <div className="mx-auto max-w-[1440px] px-6 lg:px-10">
+          <div className="mx-auto max-w-[1680px] px-5 md:px-10">
             <a
               ref={logoRef}
               href={home}
@@ -477,7 +519,7 @@ export function GlobalNav({
               data-open={panel === item.label || undefined}
               className="nav-panel absolute inset-x-0 top-11 bg-background"
             >
-              <div className="mx-auto flex max-w-[1440px] gap-20 px-6 py-10 lg:px-10">
+              <div className="mx-auto flex max-w-[1680px] gap-20 px-5 py-10 md:px-10">
                 <div>
                   <p className="text-xs text-muted-foreground">
                     {labels.explore}
@@ -583,12 +625,12 @@ export function GlobalNav({
         inert={mobile !== "open"}
         className="mobile-menu bg-background lg:hidden"
       >
-        <div className="relative px-6 pt-[150px] pb-8">
+        <div className="relative px-5 pt-[150px] pb-8 md:px-10">
           <button
             type="button"
             aria-label={labels.back}
             onClick={() => setReturning(true)}
-            className="mm-back absolute end-6 top-28 rounded-full text-muted-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            className="mm-back absolute end-5 top-28 md:end-10 rounded-full text-muted-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             <svg
               viewBox="0 0 24 12"
@@ -654,7 +696,10 @@ export function GlobalNav({
             ))}
           </div>
 
-          <div data-mm-sub className="absolute inset-x-6 top-[150px]">
+          <div
+            data-mm-sub
+            className="absolute inset-x-5 top-[150px] md:inset-x-10"
+          >
             {menus.map((item) => (
               <div
                 key={item.label}
@@ -702,7 +747,7 @@ export function GlobalNav({
         className="nav-backdrop pointer-events-none fixed inset-0 z-40 bg-black/20 backdrop-blur-md"
       />
 
-      {isHome && (
+      {isHome && !hero && (
         <div
           aria-hidden
           className="h-[clamp(84px,12.4vw,172px)] w-full bg-background"

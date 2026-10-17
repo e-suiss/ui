@@ -22,6 +22,7 @@ export function GlobalNav({ items }: { items: NavItem[] }) {
       anchor={Anchor}
       home="/"
       isHome
+      hero="light"
       storageKey="suiss:ui"
       tagline={[strings.taglineStart, strings.taglineEnd]}
       items={items.map((item) => ({ ...item, active: isActive(item.href) }))}

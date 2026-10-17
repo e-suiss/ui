@@ -10,6 +10,12 @@ import {
   GlobalNav as SharedNav,
 } from "@/site/global-nav"
 
+function heroTone(isHome: boolean, isProduct: boolean) {
+  if (isHome) return "light"
+  if (isProduct) return "dark"
+  return undefined
+}
+
 export function GlobalNav({
   items,
   quickLinks,
@@ -22,12 +28,15 @@ export function GlobalNav({
   labels: GlobalNavLabels & { developers: string }
 }) {
   const pathname = usePathname()
+  const isHome = pathname === "/"
+  const isProduct = items.some((item) => item.href === pathname)
 
   return (
     <SharedNav
       anchor={Anchor}
       home="/"
-      isHome={pathname === "/"}
+      isHome={isHome}
+      hero={heroTone(isHome, isProduct)}
       storageKey="suiss:www"
       tagline={tagline}
       labels={labels}

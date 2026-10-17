@@ -13,6 +13,15 @@
   backdrop-filter: none;
 }
 
+.global-nav[data-transparent] {
+  background-color: transparent;
+  backdrop-filter: none;
+}
+
+.global-nav[data-transparent][data-solid] {
+  background-color: var(--background);
+}
+
 .nav-panel {
   max-height: 0;
   overflow: hidden;

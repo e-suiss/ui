@@ -126,7 +126,10 @@ export default async function ProductPage({ params }: PageProps<"/[product]">) {
   return (
     <main>
       <JsonLd data={structuredData} />
-      <section className="relative flex flex-col justify-end overflow-hidden bg-black text-white">
+      <section
+        data-nav-hero
+        className="relative flex flex-col justify-end overflow-hidden bg-black text-white"
+      >
         <Image
           src={product.image}
           alt=""
