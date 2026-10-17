@@ -23,6 +23,7 @@ export type GlobalNavLabels = {
 
 const COMPACT_SIZE = 29
 const BAR_HEIGHT = 44
+const COLLAPSED = 0.999
 
 const heroTones = {
   light: {
@@ -132,8 +133,10 @@ function useProgress(isHome: boolean, storageKey: string) {
       0,
     []
   )
+  const [collapsed, setCollapsed] = React.useState(!isHome)
   const write = React.useCallback((value: number) => {
     navRef.current?.style.setProperty("--p", value.toFixed(4))
+    setCollapsed(value >= COLLAPSED)
   }, [])
   const target = React.useCallback(
     () => Math.min(window.scrollY / state.current.range, 1),
@@ -223,7 +226,7 @@ function useProgress(isHome: boolean, storageKey: string) {
     [isHome, target, tween]
   )
 
-  return { navRef, logoRef, collapse }
+  return { navRef, logoRef, collapse, collapsed }
 }
 
 export function GlobalNav({
@@ -262,12 +265,16 @@ export function GlobalNav({
   const closeTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined)
   const panelsRef = React.useRef<HTMLDivElement>(null)
   const searchRef = React.useRef<HTMLInputElement>(null)
-  const { navRef, logoRef, collapse } = useProgress(isHome, storageKey)
+  const { navRef, logoRef, collapse, collapsed } = useProgress(
+    isHome,
+    storageKey
+  )
   const words = React.useMemo(() => taglineWords(tagline), [tagline])
   const menus = items.filter((item) => item.explore?.length)
   const open = panel !== null || mobile === "open"
   const overHero = useOverHero(Boolean(hero))
-  const tone = hero && overHero && !solid ? heroTones[hero] : undefined
+  const tone =
+    hero && overHero && !collapsed && !solid ? heroTones[hero] : undefined
   let position = "relative"
   if (hero) position = "fixed inset-x-0 top-0"
   else if (isHome) position = "sticky top-0"
