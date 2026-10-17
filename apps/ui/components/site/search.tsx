@@ -46,7 +46,7 @@ const icons: Record<string, Icon> = {
 
 let index: Promise<Group[]> | undefined
 
-function loadIndex() {
+export function loadIndex() {
   index ??= fetch(withBase("/api/search"))
     .then((response) => {
       if (!response.ok) throw new Error(response.statusText)

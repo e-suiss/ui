@@ -243,6 +243,7 @@ export function GlobalNav({
   storageKey = "suiss:nav",
   anchor,
   hero,
+  loadSearchLinks,
 }: {
   home: string
   isHome: boolean
@@ -256,6 +257,7 @@ export function GlobalNav({
   storageKey?: string
   anchor: AnchorComponent
   hero?: keyof typeof heroTones
+  loadSearchLinks?: () => Promise<NavLink[]>
 }) {
   const [panel, setPanel] = React.useState<string | null>(null)
   const [solid, setSolid] = React.useState(false)
@@ -388,6 +390,19 @@ export function GlobalNav({
     }
   }, [mobile])
 
+  const [searchLinks, setSearchLinks] = React.useState<NavLink[]>([])
+  const searchOpen = panel === SEARCH
+  React.useEffect(() => {
+    if (!searchOpen || !loadSearchLinks || searchLinks.length) return
+    let active = true
+    loadSearchLinks()
+      .then((links) => active && setSearchLinks(links))
+      .catch(() => undefined)
+    return () => {
+      active = false
+    }
+  }, [searchOpen, loadSearchLinks, searchLinks.length])
+
   const results = React.useMemo(() => {
     const needle = query.trim().toLowerCase()
     if (!needle) return quickLinks
@@ -399,6 +414,7 @@ export function GlobalNav({
         ...(item.quick ?? []),
       ]),
       ...quickLinks,
+      ...searchLinks,
     ]
       .filter((link) => {
         if (seen.has(link.href) || !link.label.toLowerCase().includes(needle))
@@ -407,9 +423,32 @@ export function GlobalNav({
         return true
       })
       .slice(0, 8)
-  }, [items, quickLinks, query])
+  }, [items, quickLinks, searchLinks, query])
 
   const close = () => setPanel(null)
+
+  const toggleSearch = () => {
+    const opening = panel !== SEARCH
+    openPanel(opening ? SEARCH : null)
+    if (opening)
+      requestAnimationFrame(() =>
+        searchRef.current?.focus({ preventScroll: true })
+      )
+  }
+  const toggleSearchRef = React.useRef(toggleSearch)
+  toggleSearchRef.current = toggleSearch
+
+  React.useEffect(() => {
+    if (search) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== "k" || !(event.metaKey || event.ctrlKey))
+        return
+      event.preventDefault()
+      toggleSearchRef.current()
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [search])
 
   return (
     <AnchorContext value={anchor}>
@@ -468,14 +507,7 @@ export function GlobalNav({
               aria-label={labels.search}
               aria-expanded={panel === SEARCH}
               onMouseEnter={() => clearTimeout(closeTimer.current)}
-              onClick={() => {
-                const opening = panel !== SEARCH
-                openPanel(opening ? SEARCH : null)
-                if (opening)
-                  requestAnimationFrame(() =>
-                    searchRef.current?.focus({ preventScroll: true })
-                  )
-              }}
+              onClick={toggleSearch}
               className="flex size-6 items-center justify-center rounded-full text-foreground/70 outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <SearchIcon />
@@ -641,7 +673,7 @@ export function GlobalNav({
                     tabIndex={panel === SEARCH ? undefined : -1}
                     placeholder={labels.searchPlaceholder}
                     aria-label={labels.search}
-                    className="w-full bg-transparent text-[21px] text-foreground outline-none placeholder:text-muted-foreground"
+                    className="w-full bg-transparent text-[21px] text-foreground outline-none placeholder:text-muted-foreground [&::-webkit-search-cancel-button]:appearance-none"
                   />
                 </div>
                 <p className="mt-6 text-xs text-muted-foreground">
