@@ -42,7 +42,7 @@ export function GlobalNav({ items }: { items: NavItem[] }) {
       storageKey="suiss:ui"
       tagline={[strings.taglineStart, strings.taglineEnd]}
       items={items.map((item) => ({ ...item, active: isActive(item.href) }))}
-      cta={{ label: strings.getStarted, href: "/docs/installation" }}
+      cta={{ label: strings.create, href: "/create" }}
       quickLinks={quickLinks(items)}
       loadSearchLinks={loadSearchLinks}
       labels={{

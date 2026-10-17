@@ -13,6 +13,7 @@ export const strings = {
   next: "Next",
   documentation: "Documentation",
   getStarted: "Get started",
+  create: "Create",
   overview: "Overview",
   explore: "Explore",
   quickLinks: "Quick links",
