@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 type CardSize = "default" | "sm"
 
@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "column",
     overflow: "hidden",
-    borderRadius: radius["2xl"],
+    borderRadius: metrics.radius.card,
   },
-  raised: { borderWidth: 1, ...shadow.md },
+  raised: { borderWidth: 1, ...metrics.shadow.card },
   header: { flexDirection: "column", gap: 6 },
   headerWithAction: {
     flexDirection: "row",
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   headerText: { flex: 1, flexDirection: "column", gap: 6 },
-  title: { ...fontSize.base, fontWeight: "600" },
+  title: { ...fontSize.base, fontWeight: metrics.fontWeight.title },
   description: { ...fontSize.sm },
   action: { alignSelf: "flex-start" },
   footer: { flexDirection: "row", alignItems: "center" },

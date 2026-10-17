@@ -1,0 +1,143 @@
+@import "tailwindcss";
+@import "uniwind";
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-background: oklch(1 0 0);
+      --color-foreground: oklch(0.2316 0.0038 286.09);
+      --color-card: oklch(1 0 0);
+      --color-card-foreground: oklch(0.2316 0.0038 286.09);
+      --color-popover: oklch(1 0 0);
+      --color-popover-foreground: oklch(0.2316 0.0038 286.09);
+      --color-primary: oklch(0.5629 0.1933 256.16);
+      --color-primary-foreground: oklch(1 0 0);
+      --color-secondary: oklch(0 0 0 / 4%);
+      --color-secondary-foreground: oklch(0.2316 0.0038 286.09);
+      --color-muted: oklch(0.9707 0.0026 286.29);
+      --color-muted-foreground: oklch(0.5399 0.0077 286.13);
+      --color-accent: oklch(0 0 0 / 6%);
+      --color-accent-foreground: oklch(0.2316 0.0038 286.09);
+      --color-destructive: oklch(0.5329 0.2255 27.27);
+      --color-border: oklch(0.8652 0.0068 286.24);
+      --color-input: oklch(0.6217 0.0074 286.17);
+      --color-ring: oklch(0.5629 0.1933 256.16);
+      --color-chart-1: oklch(0.6028 0.2177 257.42);
+      --color-chart-2: oklch(0.6998 0.1109 212.72);
+      --color-chart-3: oklch(0.5295 0.191 278.34);
+      --color-chart-4: oklch(0.7652 0.1752 62.57);
+      --color-chart-5: oklch(0.6483 0.0073 286.18);
+      --color-sidebar: oklch(0.9707 0.0026 286.29);
+      --color-sidebar-foreground: oklch(0.2316 0.0038 286.09);
+      --color-sidebar-primary: oklch(0.5629 0.1933 256.16);
+      --color-sidebar-primary-foreground: oklch(1 0 0);
+      --color-sidebar-accent: oklch(0 0 0 / 6%);
+      --color-sidebar-accent-foreground: oklch(0.2316 0.0038 286.09);
+      --color-sidebar-border: oklch(0.8652 0.0068 286.24);
+      --color-sidebar-ring: oklch(0.5629 0.1933 256.16);
+    }
+
+    @variant dark {
+      --color-background: oklch(0 0 0);
+      --color-foreground: oklch(0.9707 0.0026 286.29);
+      --color-card: oklch(0.2316 0.0038 286.09);
+      --color-card-foreground: oklch(0.9707 0.0026 286.29);
+      --color-popover: oklch(0.2316 0.0038 286.09);
+      --color-popover-foreground: oklch(0.9707 0.0026 286.29);
+      --color-primary: oklch(0.669 0.1808 251.84);
+      --color-primary-foreground: oklch(1 0 0);
+      --color-secondary: oklch(1 0 0 / 10%);
+      --color-secondary-foreground: oklch(0.9707 0.0026 286.29);
+      --color-muted: oklch(0.2006 0.002 286.21);
+      --color-muted-foreground: oklch(0.7105 0.0072 286.2);
+      --color-accent: oklch(1 0 0 / 10%);
+      --color-accent-foreground: oklch(0.9707 0.0026 286.29);
+      --color-destructive: oklch(0.7033 0.2236 28.29);
+      --color-border: oklch(0.3802 0.005 286.15);
+      --color-input: oklch(0.5399 0.0077 286.13);
+      --color-ring: oklch(0.5629 0.1933 256.16);
+      --color-chart-1: oklch(0.6243 0.2056 255.49);
+      --color-chart-2: oklch(0.7706 0.1181 211.98);
+      --color-chart-3: oklch(0.5564 0.2032 278.15);
+      --color-chart-4: oklch(0.7824 0.1711 67.22);
+      --color-chart-5: oklch(0.6483 0.0073 286.18);
+      --color-sidebar: oklch(0.2006 0.002 286.21);
+      --color-sidebar-foreground: oklch(0.9707 0.0026 286.29);
+      --color-sidebar-primary: oklch(0.669 0.1808 251.84);
+      --color-sidebar-primary-foreground: oklch(1 0 0);
+      --color-sidebar-accent: oklch(1 0 0 / 10%);
+      --color-sidebar-accent-foreground: oklch(0.9707 0.0026 286.29);
+      --color-sidebar-border: oklch(0.3802 0.005 286.15);
+      --color-sidebar-ring: oklch(0.5629 0.1933 256.16);
+    }
+  }
+}
+
+@theme {
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --radius-xs: 0.1875rem;
+  --radius-sm: 0.3125rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.75rem;
+
+  --radius-button: 26px;
+  --radius-input: 22px;
+  --radius-textarea: 18px;
+  --radius-card: 26px;
+  --radius-dialog: 26px;
+  --radius-popover: 22px;
+  --radius-menu: 22px;
+  --radius-menu-item: 18px;
+  --radius-badge: 22px;
+  --radius-checkbox: 5px;
+  --radius-tabs: 9999px;
+  --radius-tabs-trigger: 9999px;
+  --radius-toggle: 22px;
+  --radius-alert: 18px;
+  --radius-item: 18px;
+  --spacing-button-xs: 24px;
+  --spacing-button-sm: 32px;
+  --spacing-button: 36px;
+  --spacing-button-lg: 40px;
+  --spacing-input: 36px;
+  --spacing-button-xs-x: 10px;
+  --spacing-button-sm-x: 12px;
+  --spacing-button-x: 12px;
+  --spacing-button-lg-x: 16px;
+  --spacing-input-x: 12px;
+  --spacing-menu-item-x: 12px;
+  --spacing-menu-item-y: 8px;
+  --spacing-dialog: 24px;
+  --spacing-popover: 16px;
+  --spacing-menu: 6px;
+  --font-weight-button: 500;
+  --font-weight-title: 500;
+  --shadow-card:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-dialog:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-popover:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-menu:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}

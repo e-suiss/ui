@@ -28,7 +28,7 @@ function Alert({
       <View
         role="alert"
         className={cn(
-          "relative w-full flex-row gap-3 rounded-2xl bg-muted p-5",
+          "relative w-full flex-row gap-3 rounded-alert bg-muted p-5",
           actions.length > 0 && "pe-24",
           className
         )}
@@ -55,7 +55,7 @@ function AlertTitle({
   className,
   ...props
 }: React.ComponentProps<typeof Text>) {
-  return <Text className={cn("font-semibold", className)} {...props} />
+  return <Text className={cn("font-title", className)} {...props} />
 }
 
 function AlertDescription({

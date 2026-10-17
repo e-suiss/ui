@@ -83,3 +83,62 @@ extension Shadow {
   public static let md = Shadow(.init(color: .black.opacity(0.1), radius: 3, y: 4), .init(color: .black.opacity(0.1), radius: 2, y: 2))
   public static let lg = Shadow(.init(color: .black.opacity(0.1), radius: 7.5, y: 10), .init(color: .black.opacity(0.1), radius: 3, y: 4))
 }
+
+public enum Metrics {
+  public enum Radius {
+    public static let button: CGFloat = 9999
+    public static let input: CGFloat = 10
+    public static let textarea: CGFloat = 12
+    public static let card: CGFloat = 18
+    public static let dialog: CGFloat = 18
+    public static let popover: CGFloat = 18
+    public static let menu: CGFloat = 12
+    public static let menuItem: CGFloat = 8
+    public static let badge: CGFloat = 9999
+    public static let checkbox: CGFloat = 4
+    public static let tabs: CGFloat = 12
+    public static let tabsTrigger: CGFloat = 8
+    public static let toggle: CGFloat = 10
+    public static let alert: CGFloat = 18
+    public static let item: CGFloat = 12
+  }
+
+  public enum Height {
+    public static let buttonXs: CGFloat = 24
+    public static let buttonSm: CGFloat = 32
+    public static let button: CGFloat = 36
+    public static let buttonLg: CGFloat = 44
+    public static let input: CGFloat = 44
+  }
+
+  public enum PaddingX {
+    public static let buttonXs: CGFloat = 11
+    public static let buttonSm: CGFloat = 12
+    public static let button: CGFloat = 16
+    public static let buttonLg: CGFloat = 22
+    public static let input: CGFloat = 12
+    public static let menuItem: CGFloat = 12
+  }
+
+  public enum PaddingY {
+    public static let menuItem: CGFloat = 8
+  }
+
+  public enum Padding {
+    public static let dialog: CGFloat = 24
+    public static let popover: CGFloat = 16
+    public static let menu: CGFloat = 6
+  }
+
+  public enum Weight {
+    public static let button: Font.Weight = .regular
+    public static let title: Font.Weight = .semibold
+  }
+
+  public enum Elevation {
+    public static let card: Shadow = Shadow(.init(color: .black.opacity(0.1), radius: 3, y: 4), .init(color: .black.opacity(0.1), radius: 2, y: 2))
+    public static let dialog: Shadow = Shadow(.init(color: .black.opacity(0.1), radius: 12.5, y: 20), .init(color: .black.opacity(0.1), radius: 5, y: 8))
+    public static let popover: Shadow = Shadow(.init(color: .black.opacity(0.1), radius: 7.5, y: 10), .init(color: .black.opacity(0.1), radius: 3, y: 4))
+    public static let menu: Shadow = Shadow(.init(color: .black.opacity(0.1), radius: 7.5, y: 10), .init(color: .black.opacity(0.1), radius: 3, y: 4))
+  }
+}

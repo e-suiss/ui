@@ -16,6 +16,65 @@
       "directory": "stylesheet"
     }
   },
+  "defaultStyle": "suiss",
+  "presets": {
+    "vega": {
+      "uniwind": "styles/presets/vega/uniwind.css",
+      "nativewind": "styles/presets/vega/nativewind.config.js",
+      "stylesheet": "styles/presets/vega/theme.ts",
+      "swift": "styles/presets/vega/Tokens.swift",
+      "kotlin": "styles/presets/vega/Tokens.kt"
+    },
+    "nova": {
+      "uniwind": "styles/presets/nova/uniwind.css",
+      "nativewind": "styles/presets/nova/nativewind.config.js",
+      "stylesheet": "styles/presets/nova/theme.ts",
+      "swift": "styles/presets/nova/Tokens.swift",
+      "kotlin": "styles/presets/nova/Tokens.kt"
+    },
+    "maia": {
+      "uniwind": "styles/presets/maia/uniwind.css",
+      "nativewind": "styles/presets/maia/nativewind.config.js",
+      "stylesheet": "styles/presets/maia/theme.ts",
+      "swift": "styles/presets/maia/Tokens.swift",
+      "kotlin": "styles/presets/maia/Tokens.kt"
+    },
+    "lyra": {
+      "uniwind": "styles/presets/lyra/uniwind.css",
+      "nativewind": "styles/presets/lyra/nativewind.config.js",
+      "stylesheet": "styles/presets/lyra/theme.ts",
+      "swift": "styles/presets/lyra/Tokens.swift",
+      "kotlin": "styles/presets/lyra/Tokens.kt"
+    },
+    "mira": {
+      "uniwind": "styles/presets/mira/uniwind.css",
+      "nativewind": "styles/presets/mira/nativewind.config.js",
+      "stylesheet": "styles/presets/mira/theme.ts",
+      "swift": "styles/presets/mira/Tokens.swift",
+      "kotlin": "styles/presets/mira/Tokens.kt"
+    },
+    "luma": {
+      "uniwind": "styles/presets/luma/uniwind.css",
+      "nativewind": "styles/presets/luma/nativewind.config.js",
+      "stylesheet": "styles/presets/luma/theme.ts",
+      "swift": "styles/presets/luma/Tokens.swift",
+      "kotlin": "styles/presets/luma/Tokens.kt"
+    },
+    "sera": {
+      "uniwind": "styles/presets/sera/uniwind.css",
+      "nativewind": "styles/presets/sera/nativewind.config.js",
+      "stylesheet": "styles/presets/sera/theme.ts",
+      "swift": "styles/presets/sera/Tokens.swift",
+      "kotlin": "styles/presets/sera/Tokens.kt"
+    },
+    "rhea": {
+      "uniwind": "styles/presets/rhea/uniwind.css",
+      "nativewind": "styles/presets/rhea/nativewind.config.js",
+      "stylesheet": "styles/presets/rhea/theme.ts",
+      "swift": "styles/presets/rhea/Tokens.swift",
+      "kotlin": "styles/presets/rhea/Tokens.kt"
+    }
+  },
   "platforms": {
     "swift": {
       "directory": "swiftui/Sources/EsuissUI",

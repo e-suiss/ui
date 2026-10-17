@@ -10,7 +10,12 @@ import * as CheckboxPrimitive from "@/components/primitives/checkbox"
 import { resolveStyle } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
-import { shadow, type ThemeColors, useTheme } from "@/components/ui/theme"
+import {
+  metrics,
+  shadow,
+  type ThemeColors,
+  useTheme,
+} from "@/components/ui/theme"
 
 const HIT_SLOP = { top: 8, bottom: 8, left: 12, right: 12 }
 
@@ -21,7 +26,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 4,
+    borderRadius: metrics.radius.checkbox,
     borderWidth: 1,
   },
   indicator: { alignItems: "center", justifyContent: "center" },

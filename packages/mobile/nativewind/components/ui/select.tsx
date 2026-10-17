@@ -28,7 +28,7 @@ function SelectGroup({
 }: React.ComponentProps<typeof SelectPrimitive.Group>) {
   return (
     <SelectPrimitive.Group
-      className={(state) => cn("p-1.5", resolveClassName(className, state))}
+      className={(state) => cn("p-menu", resolveClassName(className, state))}
       {...props}
     />
   )
@@ -70,7 +70,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       className={(state) =>
         cn(
-          "h-11 flex-row items-center justify-between gap-1.5 self-start rounded-lg border border-transparent bg-secondary px-3 py-2",
+          "h-input flex-row items-center justify-between gap-1.5 self-start rounded-input border border-transparent bg-secondary px-input-x py-2",
           size === "sm" && "h-9 rounded-md",
           isInvalid &&
             "border-destructive bg-destructive-5 dark:bg-destructive-10",
@@ -105,7 +105,7 @@ function ContentPopup({
     <SelectPrimitive.Popup
       className={(state) =>
         cn(
-          "relative min-w-36 overflow-hidden rounded-xl border border-foreground-5 bg-popover shadow-lg dark:border-foreground-10",
+          "relative min-w-36 overflow-hidden rounded-menu border border-foreground-5 bg-popover shadow-menu dark:border-foreground-10",
           resolveClassName(className, state)
         )
       }
@@ -184,7 +184,7 @@ function SelectItem({
     <SelectPrimitive.Item
       className={(state) =>
         cn(
-          "relative w-full flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
+          "relative w-full flex-row items-center gap-2.5 rounded-menu-item py-menu-item-y pr-8 pl-menu-item-x",
           state.highlighted && "opacity-80",
           state.disabled && "opacity-50",
           resolveClassName(className, state)

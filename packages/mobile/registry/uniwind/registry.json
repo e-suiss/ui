@@ -6913,6 +6913,174 @@
       "css": {
         "@import \"./theme-suiss.css\"": {}
       }
+    },
+    {
+      "name": "theme-vega",
+      "title": "suiss/ui Theme (Vega)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the vega style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-vega.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-nova",
+      "title": "suiss/ui Theme (Nova)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the nova style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-nova.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-maia",
+      "title": "suiss/ui Theme (Maia)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the maia style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-maia.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-lyra",
+      "title": "suiss/ui Theme (Lyra)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the lyra style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-lyra.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-mira",
+      "title": "suiss/ui Theme (Mira)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the mira style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-mira.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-luma",
+      "title": "suiss/ui Theme (Luma)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the luma style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-luma.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-sera",
+      "title": "suiss/ui Theme (Sera)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the sera style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-sera.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
+    },
+    {
+      "name": "theme-rhea",
+      "title": "suiss/ui Theme (Rhea)",
+      "description": "The suiss/ui colors for light and dark mode, with the type scale, shadows and radius scale, as a stylesheet imported by global.css. Uses the rhea style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "files": [
+        {
+          "path": "registry/uniwind/theme-rhea.css",
+          "type": "registry:file",
+          "target": "~/theme-suiss.css"
+        }
+      ],
+      "css": {
+        "@import \"./theme-suiss.css\"": {}
+      }
     }
   ]
 }

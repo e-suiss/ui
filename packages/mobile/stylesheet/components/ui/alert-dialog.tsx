@@ -11,7 +11,7 @@ import * as AlertDialogPrimitive from "@/components/primitives/alert-dialog"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Button } from "@/components/ui/button"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, radius, useTheme } from "@/components/ui/theme"
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -55,10 +55,10 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     gap: 24,
-    borderRadius: radius["2xl"],
+    borderRadius: metrics.radius.dialog,
     borderWidth: 1,
-    padding: 24,
-    ...shadow.xl,
+    padding: metrics.padding.dialog,
+    ...metrics.shadow.dialog,
   },
   header: { flexDirection: "column", alignItems: "center", gap: 6 },
   footer: { flexDirection: "row", gap: 8 },
@@ -71,7 +71,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: radius.full,
   },
-  title: { ...fontSize.lg, fontWeight: "600", textAlign: "center" },
+  title: {
+    ...fontSize.lg,
+    fontWeight: metrics.fontWeight.title,
+    textAlign: "center",
+  },
   description: { ...fontSize.sm, textAlign: "center" },
 })
 

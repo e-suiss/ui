@@ -16,7 +16,7 @@ import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 const DropdownMenu = MenuPrimitive.Root
 
@@ -39,44 +39,44 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    borderRadius: radius.md,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    borderRadius: metrics.radius.menuItem,
+    paddingHorizontal: metrics.paddingX.menuItem,
+    paddingVertical: metrics.paddingY.menuItem,
   },
   subTriggerIcon: { marginLeft: "auto", flexShrink: 0 },
   subTriggerIconOpen: { transform: [{ rotate: "90deg" }] },
   subContent: {
     minWidth: 144,
-    borderRadius: radius.xl,
+    borderRadius: metrics.radius.menu,
     borderWidth: 1,
-    padding: 6,
-    ...shadow.lg,
+    padding: metrics.padding.menu,
+    ...metrics.shadow.menu,
   },
   content: {
     minWidth: 192,
-    borderRadius: radius.xl,
+    borderRadius: metrics.radius.menu,
     borderWidth: 1,
-    padding: 6,
-    ...shadow.lg,
+    padding: metrics.padding.menu,
+    ...metrics.shadow.menu,
   },
   item: {
     position: "relative",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: radius.md,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    borderRadius: metrics.radius.menuItem,
+    paddingHorizontal: metrics.paddingX.menuItem,
+    paddingVertical: metrics.paddingY.menuItem,
   },
   checkItem: {
     position: "relative",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: radius.md,
-    paddingVertical: 8,
+    borderRadius: metrics.radius.menuItem,
+    paddingVertical: metrics.paddingY.menuItem,
     paddingRight: 32,
-    paddingLeft: 12,
+    paddingLeft: metrics.paddingX.menuItem,
   },
   indicator: {
     position: "absolute",

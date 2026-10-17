@@ -43,7 +43,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "rounded-xl bg-secondary p-1",
+        default: "rounded-tabs bg-secondary p-1",
         line: "bg-transparent p-0.5",
       },
     },
@@ -59,7 +59,7 @@ function TabsIndicator({ variant }: { variant: TabsListVariant }) {
       className={cn(
         variant === "line"
           ? "bg-foreground"
-          : "rounded-md bg-card shadow dark:bg-border"
+          : "rounded-tabs-trigger bg-card shadow dark:bg-border"
       )}
       style={(state) => {
         if (variant !== "line") return undefined
@@ -126,7 +126,7 @@ function TabsTrigger({
         disabled={disabled}
         className={(state) =>
           cn(
-            "flex-row items-center justify-center gap-2 rounded-md px-3 py-1",
+            "flex-row items-center justify-center gap-2 rounded-tabs-trigger px-3 py-1",
             orientation === "vertical"
               ? "h-9 w-full justify-start"
               : "h-full flex-1",

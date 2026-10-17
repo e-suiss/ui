@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 import * as InputPrimitive from "@/components/primitives/input"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 function withAlpha(color: string, alpha: number) {
   if (!color.startsWith("#") || color.length !== 7) return color
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     minHeight: 64,
     width: "100%",
     flexDirection: "row",
-    borderRadius: radius.xl,
+    borderRadius: metrics.radius.textarea,
     borderWidth: 1,
     borderColor: "transparent",
     paddingHorizontal: 12,

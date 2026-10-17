@@ -11,6 +11,7 @@ import { IconSizeContext } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
+  metrics,
   radius,
   type ThemeColors,
   useTheme,
@@ -39,15 +40,40 @@ type ButtonSize =
   | "icon-xl"
 
 const sizes = StyleSheet.create({
-  default: { height: 36, gap: 6, paddingHorizontal: 16 },
-  xs: { height: 24, gap: 4, paddingHorizontal: 11 },
-  sm: { height: 32, gap: 4, paddingHorizontal: 12 },
-  lg: { height: 44, gap: 6, paddingHorizontal: 22 },
+  default: {
+    height: metrics.height.button,
+    gap: 6,
+    paddingHorizontal: metrics.paddingX.button,
+  },
+  xs: {
+    height: metrics.height.buttonXs,
+    gap: 4,
+    paddingHorizontal: metrics.paddingX.buttonXs,
+  },
+  sm: {
+    height: metrics.height.buttonSm,
+    gap: 4,
+    paddingHorizontal: metrics.paddingX.buttonSm,
+  },
+  lg: {
+    height: metrics.height.buttonLg,
+    gap: 6,
+    paddingHorizontal: metrics.paddingX.buttonLg,
+  },
   xl: { height: 56, gap: 8, paddingHorizontal: 31 },
-  icon: { width: 36, height: 36 },
-  "icon-xs": { width: 24, height: 24 },
-  "icon-sm": { width: 32, height: 32 },
-  "icon-lg": { width: 44, height: 44 },
+  icon: { width: metrics.height.button, height: metrics.height.button },
+  "icon-xs": {
+    width: metrics.height.buttonXs,
+    height: metrics.height.buttonXs,
+  },
+  "icon-sm": {
+    width: metrics.height.buttonSm,
+    height: metrics.height.buttonSm,
+  },
+  "icon-lg": {
+    width: metrics.height.buttonLg,
+    height: metrics.height.buttonLg,
+  },
   "icon-xl": { width: 56, height: 56 },
 })
 
@@ -65,7 +91,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: radius.full,
+    borderRadius: metrics.radius.button,
     borderWidth: 1,
     borderColor: "transparent",
   },
@@ -131,7 +157,11 @@ function buttonTextStyle(
   let scale: TextStyle =
     size === "lg" || size === "xl" ? fontSize.base : fontSize.sm
   if (size === "xs") scale = fontSize.xs
-  return { ...scale, color: buttonTextColor(variant, colors) }
+  return {
+    ...scale,
+    fontWeight: metrics.fontWeight.button,
+    color: buttonTextColor(variant, colors),
+  }
 }
 
 const ButtonStyleContext = React.createContext<

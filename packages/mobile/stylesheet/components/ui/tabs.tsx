@@ -7,7 +7,7 @@ import Animated, {
 } from "react-native-reanimated"
 import * as TabsPrimitive from "@/components/primitives/tabs"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, shadow, useTheme } from "@/components/ui/theme"
 
 type TabsListVariant = "default" | "line"
 
@@ -30,20 +30,20 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     gap: 4,
   },
-  listDefault: { borderRadius: radius.xl, padding: 4, height: 44 },
+  listDefault: { borderRadius: metrics.radius.tabs, padding: 4, height: 44 },
   listLine: { padding: 2, height: 41, paddingBottom: 7 },
   listVertical: {
     height: "auto",
     flexDirection: "column",
     alignItems: "stretch",
   },
-  indicatorDefault: { borderRadius: radius.md, ...shadow.sm },
+  indicatorDefault: { borderRadius: metrics.radius.tabsTrigger, ...shadow.sm },
   trigger: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    borderRadius: radius.md,
+    borderRadius: metrics.radius.tabsTrigger,
     paddingHorizontal: 12,
     paddingVertical: 4,
   },

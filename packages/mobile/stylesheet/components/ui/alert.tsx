@@ -6,7 +6,7 @@ import * as React from "react"
 import { StyleSheet, View } from "react-native"
 import { Icon } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 const styles = StyleSheet.create({
   root: {
@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     gap: 12,
-    borderRadius: radius["2xl"],
+    borderRadius: metrics.radius.alert,
     padding: 20,
   },
   withAction: { paddingEnd: 96 },
   icon: { marginTop: 1 },
   content: { flex: 1, gap: 2 },
-  title: { fontWeight: "600" },
+  title: { fontWeight: metrics.fontWeight.title },
   action: { position: "absolute", top: 16, end: 16 },
 })
 

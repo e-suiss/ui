@@ -2,6 +2,9 @@ const PREFIX = "/ui/r/"
 const RADIX_STYLE = /^(radix-.+|new-york|default)$/
 const ARIA_STYLE = /^aria-.+$/
 const OWN_STYLE = /^(base|radix|aria|rn-.+)$/
+const RN_STYLE =
+  /^(rn-(?:uniwind|nativewind|stylesheet))-(suiss|vega|nova|maia|lyra|mira|luma|sera|rhea)$/
+const RN_THEME = "theme-suiss.json"
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -12,6 +15,11 @@ const headers = {
 function registryPath(rest) {
   const [style, file] = rest.split("/")
   if (file === undefined) return `base/${style}`
+  const native = style.match(RN_STYLE)
+  if (native) {
+    const [, styling, name] = native
+    return `${styling}/${file === RN_THEME ? `theme-${name}.json` : file}`
+  }
   if (RADIX_STYLE.test(style)) return `radix/${file}`
   if (ARIA_STYLE.test(style)) return `aria/${file}`
   if (OWN_STYLE.test(style)) return rest

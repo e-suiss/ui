@@ -15,7 +15,7 @@ import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
-  radius,
+  metrics,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 4,
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.toggle,
     backgroundColor: "transparent",
   },
   outline: { borderWidth: 1 },

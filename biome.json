@@ -225,7 +225,8 @@
     {
       "includes": [
         "packages/mobile/styles/uniwind.css",
-        "packages/mobile/registry/uniwind/theme-suiss.css"
+        "packages/mobile/styles/presets/*/uniwind.css",
+        "packages/mobile/registry/uniwind/theme-*.css"
       ],
       "linter": {
         "rules": {
