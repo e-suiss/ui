@@ -47,7 +47,7 @@ export function GlobalNav({
       }))}
       cta={{
         label: labels.developers,
-        href: "/#developers",
+        href: "/ui",
       }}
       actions={
         <ThemeToggle

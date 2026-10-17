@@ -142,7 +142,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               },
               {
                 label: dictionary.developers,
-                href: "/#developers",
+                href: "/ui",
               },
             ]}
             tagline={[dictionary.taglineStart, dictionary.taglineEnd]}
