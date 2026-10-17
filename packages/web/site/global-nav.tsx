@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { flushSync } from "react-dom"
 import { cn } from "@/lib/utils"
 
 export type NavLink = { label: string; href: string }
@@ -302,9 +303,10 @@ export function GlobalNav({
       const nodes =
         panelsRef.current.querySelectorAll<HTMLElement>("[data-nav-panel]")
       for (const node of nodes) node.style.transition = "none"
-      requestAnimationFrame(() => {
-        for (const node of nodes) node.style.transition = ""
-      })
+      flushSync(() => setPanel(name))
+      panelsRef.current.getBoundingClientRect()
+      for (const node of nodes) node.style.transition = ""
+      return
     }
     setPanel(name)
   }
