@@ -41,8 +41,9 @@ function readStored(): CodeOptions {
 }
 
 function apply(options: CodeOptions) {
-  document.documentElement.dataset.base = options.base
-  void showStyle(options.style)
+  const root = document.documentElement
+  root.dataset.base = options.base
+  if (root.dataset.create === undefined) void showStyle(options.style)
 }
 
 function snapshot() {
@@ -142,6 +143,7 @@ export function CodeOptionsMenu() {
     options.base !== DEFAULT_OPTIONS.base ||
     options.style !== DEFAULT_OPTIONS.style
   React.useEffect(() => {
+    if (document.documentElement.dataset.create !== undefined) return
     if (options.style !== DEFAULT_OPTIONS.style) void showStyle(options.style)
   }, [options.style])
   return (

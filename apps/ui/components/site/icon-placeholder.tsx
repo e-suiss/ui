@@ -39,11 +39,13 @@ const PreviewIcons = React.createContext<IconLibrary>(DEFAULT_ICONS)
 
 export function PreviewIconsProvider({
   children,
+  icons,
 }: {
   children: React.ReactNode
+  icons?: IconLibrary
 }) {
-  const { icons } = useCodeOptions()
-  return <PreviewIcons value={icons}>{children}</PreviewIcons>
+  const options = useCodeOptions()
+  return <PreviewIcons value={icons ?? options.icons}>{children}</PreviewIcons>
 }
 
 function useIconSet(library: IconLibrary) {

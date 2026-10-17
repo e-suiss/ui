@@ -1,0 +1,184 @@
+[
+  {
+    "name": "geist",
+    "title": "Geist",
+    "family": "'Geist Variable', sans-serif",
+    "google": "Geist",
+    "dependency": "@fontsource-variable/geist"
+  },
+  {
+    "name": "inter",
+    "title": "Inter",
+    "family": "'Inter Variable', sans-serif",
+    "google": "Inter",
+    "dependency": "@fontsource-variable/inter"
+  },
+  {
+    "name": "noto-sans",
+    "title": "Noto Sans",
+    "family": "'Noto Sans Variable', sans-serif",
+    "google": "Noto_Sans",
+    "dependency": "@fontsource-variable/noto-sans"
+  },
+  {
+    "name": "nunito-sans",
+    "title": "Nunito Sans",
+    "family": "'Nunito Sans Variable', sans-serif",
+    "google": "Nunito_Sans",
+    "dependency": "@fontsource-variable/nunito-sans"
+  },
+  {
+    "name": "figtree",
+    "title": "Figtree",
+    "family": "'Figtree Variable', sans-serif",
+    "google": "Figtree",
+    "dependency": "@fontsource-variable/figtree"
+  },
+  {
+    "name": "roboto",
+    "title": "Roboto",
+    "family": "'Roboto Variable', sans-serif",
+    "google": "Roboto",
+    "dependency": "@fontsource-variable/roboto"
+  },
+  {
+    "name": "raleway",
+    "title": "Raleway",
+    "family": "'Raleway Variable', sans-serif",
+    "google": "Raleway",
+    "dependency": "@fontsource-variable/raleway"
+  },
+  {
+    "name": "dm-sans",
+    "title": "DM Sans",
+    "family": "'DM Sans Variable', sans-serif",
+    "google": "DM_Sans",
+    "dependency": "@fontsource-variable/dm-sans"
+  },
+  {
+    "name": "public-sans",
+    "title": "Public Sans",
+    "family": "'Public Sans Variable', sans-serif",
+    "google": "Public_Sans",
+    "dependency": "@fontsource-variable/public-sans"
+  },
+  {
+    "name": "outfit",
+    "title": "Outfit",
+    "family": "'Outfit Variable', sans-serif",
+    "google": "Outfit",
+    "dependency": "@fontsource-variable/outfit"
+  },
+  {
+    "name": "oxanium",
+    "title": "Oxanium",
+    "family": "'Oxanium Variable', sans-serif",
+    "google": "Oxanium",
+    "dependency": "@fontsource-variable/oxanium"
+  },
+  {
+    "name": "manrope",
+    "title": "Manrope",
+    "family": "'Manrope Variable', sans-serif",
+    "google": "Manrope",
+    "dependency": "@fontsource-variable/manrope"
+  },
+  {
+    "name": "space-grotesk",
+    "title": "Space Grotesk",
+    "family": "'Space Grotesk Variable', sans-serif",
+    "google": "Space_Grotesk",
+    "dependency": "@fontsource-variable/space-grotesk"
+  },
+  {
+    "name": "montserrat",
+    "title": "Montserrat",
+    "family": "'Montserrat Variable', sans-serif",
+    "google": "Montserrat",
+    "dependency": "@fontsource-variable/montserrat"
+  },
+  {
+    "name": "ibm-plex-sans",
+    "title": "IBM Plex Sans",
+    "family": "'IBM Plex Sans Variable', sans-serif",
+    "google": "IBM_Plex_Sans",
+    "dependency": "@fontsource-variable/ibm-plex-sans"
+  },
+  {
+    "name": "source-sans-3",
+    "title": "Source Sans 3",
+    "family": "'Source Sans 3 Variable', sans-serif",
+    "google": "Source_Sans_3",
+    "dependency": "@fontsource-variable/source-sans-3"
+  },
+  {
+    "name": "instrument-sans",
+    "title": "Instrument Sans",
+    "family": "'Instrument Sans Variable', sans-serif",
+    "google": "Instrument_Sans",
+    "dependency": "@fontsource-variable/instrument-sans"
+  },
+  {
+    "name": "jetbrains-mono",
+    "title": "JetBrains Mono",
+    "family": "'JetBrains Mono Variable', monospace",
+    "google": "JetBrains_Mono",
+    "dependency": "@fontsource-variable/jetbrains-mono"
+  },
+  {
+    "name": "geist-mono",
+    "title": "Geist Mono",
+    "family": "'Geist Mono Variable', monospace",
+    "google": "Geist_Mono",
+    "dependency": "@fontsource-variable/geist-mono"
+  },
+  {
+    "name": "noto-serif",
+    "title": "Noto Serif",
+    "family": "'Noto Serif Variable', serif",
+    "google": "Noto_Serif",
+    "dependency": "@fontsource-variable/noto-serif"
+  },
+  {
+    "name": "roboto-slab",
+    "title": "Roboto Slab",
+    "family": "'Roboto Slab Variable', serif",
+    "google": "Roboto_Slab",
+    "dependency": "@fontsource-variable/roboto-slab"
+  },
+  {
+    "name": "merriweather",
+    "title": "Merriweather",
+    "family": "'Merriweather Variable', serif",
+    "google": "Merriweather",
+    "dependency": "@fontsource-variable/merriweather"
+  },
+  {
+    "name": "lora",
+    "title": "Lora",
+    "family": "'Lora Variable', serif",
+    "google": "Lora",
+    "dependency": "@fontsource-variable/lora"
+  },
+  {
+    "name": "playfair-display",
+    "title": "Playfair Display",
+    "family": "'Playfair Display Variable', serif",
+    "google": "Playfair_Display",
+    "dependency": "@fontsource-variable/playfair-display"
+  },
+  {
+    "name": "eb-garamond",
+    "title": "EB Garamond",
+    "family": "'EB Garamond Variable', serif",
+    "google": "EB_Garamond",
+    "dependency": "@fontsource-variable/eb-garamond"
+  },
+  {
+    "name": "instrument-serif",
+    "title": "Instrument Serif",
+    "family": "'Instrument Serif', serif",
+    "google": "Instrument_Serif",
+    "dependency": "@fontsource/instrument-serif"
+  }
+]
