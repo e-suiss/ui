@@ -7,13 +7,9 @@ private struct TraceOutput: View {
   var error = false
 
   var body: some View {
-    Text(verbatim: text)
-      .font(.system(.caption, design: .monospaced))
-      .foregroundStyle(error ? EsuissColor.destructive : EsuissColor.foreground)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(.horizontal, 12)
-      .padding(.vertical, 8)
-      .background(error ? EsuissColor.destructive.opacity(0.1) : EsuissColor.muted, in: .rect(cornerRadius: 12))
+    CodeBlock(error ? .destructive : .default, size: .sm) {
+      CodeBlockContent(text, wrap: true)
+    }
   }
 }
 

@@ -20,6 +20,7 @@ import com.esuiss.catalog.stories.components.carouselStories
 import com.esuiss.catalog.stories.components.chartStories
 import com.esuiss.catalog.stories.components.checkboxStories
 import com.esuiss.catalog.stories.components.chipStories
+import com.esuiss.catalog.stories.components.codeBlockStories
 import com.esuiss.catalog.stories.components.collapsibleStories
 import com.esuiss.catalog.stories.components.comboboxStories
 import com.esuiss.catalog.stories.components.contextMenuStories
@@ -58,6 +59,7 @@ val componentsA: List<StoryGroup> = listOf(
     chartStories,
     checkboxStories,
     chipStories,
+    codeBlockStories,
     collapsibleStories,
     comboboxStories,
     contextMenuStories,

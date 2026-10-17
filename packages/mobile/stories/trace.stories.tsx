@@ -20,6 +20,7 @@ import * as React from "react"
 import { Linking, Pressable, View } from "react-native"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { Button } from "@/components/ui/button"
+import { CodeBlock, CodeBlockContent } from "@/components/ui/code-block"
 import { Icon } from "@/components/ui/icon"
 import { Message, MessageContent } from "@/components/ui/message"
 import { Text } from "@/components/ui/text"
@@ -45,23 +46,9 @@ type Story = StoryObj<typeof meta>
 
 function Output({ children, error }: { children: string; error?: boolean }) {
   return (
-    <View
-      className={
-        error
-          ? "rounded-xl bg-destructive/10 px-3 py-2"
-          : "rounded-xl bg-muted px-3 py-2"
-      }
-    >
-      <Text
-        className={
-          error
-            ? "font-mono text-xs text-destructive"
-            : "font-mono text-xs text-foreground"
-        }
-      >
-        {children}
-      </Text>
-    </View>
+    <CodeBlock size="sm" variant={error ? "destructive" : "default"}>
+      <CodeBlockContent wrap>{children}</CodeBlockContent>
+    </CodeBlock>
   )
 }
 

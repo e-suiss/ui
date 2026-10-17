@@ -1038,6 +1038,54 @@
       ]
     },
     {
+      "name": "code-block",
+      "type": "ui",
+      "title": "Code Block",
+      "dependencies": {
+        "uniwind": [
+          "class-variance-authority",
+          "cn",
+          "expo-clipboard",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "nativewind": [
+          "class-variance-authority",
+          "cn",
+          "expo-clipboard",
+          "phosphor-react-native",
+          "react-native-svg"
+        ],
+        "stylesheet": [
+          "expo-clipboard",
+          "phosphor-react-native",
+          "react-native-svg"
+        ]
+      },
+      "requires": [
+        "icon",
+        "text"
+      ],
+      "files": [
+        "components/ui/code-block.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ],
+      "swift": [
+        "Components/CodeBlock.swift"
+      ],
+      "kotlin": [
+        "components/CodeBlock.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
+      ]
+    },
+    {
       "name": "collapsible",
       "type": "ui",
       "title": "Collapsible",

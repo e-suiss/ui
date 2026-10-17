@@ -41,6 +41,7 @@
     --border-50: rgba(210, 210, 215, 0.5);
     --destructive-5: rgba(208, 0, 10, 0.05);
     --destructive-10: rgba(208, 0, 10, 0.1);
+    --destructive-15: rgba(208, 0, 10, 0.15);
     --destructive-20: rgba(208, 0, 10, 0.2);
     --foreground-5: rgba(29, 29, 31, 0.05);
     --foreground-10: rgba(29, 29, 31, 0.1);
@@ -97,6 +98,7 @@
     --border-50: rgba(66, 66, 69, 0.5);
     --destructive-5: rgba(255, 84, 71, 0.05);
     --destructive-10: rgba(255, 84, 71, 0.1);
+    --destructive-15: rgba(255, 84, 71, 0.15);
     --destructive-20: rgba(255, 84, 71, 0.2);
     --foreground-5: rgba(245, 245, 247, 0.05);
     --foreground-10: rgba(245, 245, 247, 0.1);

@@ -19,6 +19,7 @@ enum ComponentsA {
     ChartStories.group,
     CheckboxStories.group,
     ChipStories.group,
+    CodeBlockStories.group,
     CollapsibleStories.group,
     ComboboxStories.group,
     ContextMenuStories.group,

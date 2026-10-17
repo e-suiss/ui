@@ -1,12 +1,9 @@
 package com.esuiss.catalog.stories.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.adamglin.PhosphorIcons
 import com.adamglin.phosphoricons.Regular
@@ -45,6 +41,10 @@ import com.esuiss.ui.components.BubbleVariant
 import com.esuiss.ui.components.Button
 import com.esuiss.ui.components.ButtonSize
 import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.CodeBlock
+import com.esuiss.ui.components.CodeBlockContent
+import com.esuiss.ui.components.CodeBlockSize
+import com.esuiss.ui.components.CodeBlockVariant
 import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Message
 import com.esuiss.ui.components.MessageAlign
@@ -85,21 +85,12 @@ val traceStories = StoryGroup(
 
 @Composable
 private fun TraceOutput(text: String, error: Boolean = false) {
-    val colors = EsuissTheme.colors
-    BasicText(
-        text,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                if (error) colors.destructive.copy(alpha = 0.1f) else colors.muted,
-                RoundedCornerShape(12.dp),
-            )
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-        style = Typography.xs.copy(
-            fontFamily = FontFamily.Monospace,
-            color = if (error) colors.destructive else colors.foreground,
-        ),
-    )
+    CodeBlock(
+        variant = if (error) CodeBlockVariant.Destructive else CodeBlockVariant.Default,
+        size = CodeBlockSize.Sm,
+    ) {
+        CodeBlockContent(text, wrap = true)
+    }
 }
 
 @Composable

@@ -527,6 +527,33 @@
       }
     },
     {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "A surface for code, terminal output and diffs, with copy, line numbers, line states and streaming syntax highlighting.",
+      "dependencies": [
+        "expo-clipboard",
+        "phosphor-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "@esuiss-rn/icon",
+        "@esuiss-rn/text",
+        "@esuiss-rn/theme-suiss"
+      ],
+      "files": [
+        {
+          "path": "stylesheet/components/ui/code-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/code-block"
+        }
+      }
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
