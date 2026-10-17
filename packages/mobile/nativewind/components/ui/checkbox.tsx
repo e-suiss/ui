@@ -12,7 +12,7 @@ function checkboxClassName(
 ) {
   const checked = state.checked || state.indeterminate
   return cn(
-    "size-4 shrink-0 items-center justify-center rounded-[4px] border",
+    "size-4 shrink-0 items-center justify-center rounded-checkbox border",
     checked
       ? "border-primary bg-primary"
       : cn(

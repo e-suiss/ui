@@ -50,7 +50,7 @@ public struct InlineAlert<Content: View, Action: View>: View {
     .foregroundStyle(EsuissColor.foreground)
     .padding(20)
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous))
+    .background(EsuissColor.muted, in: RoundedRectangle(cornerRadius: Metrics.Radius.alert, style: .continuous))
     .accessibilityElement(children: .contain)
   }
 }
@@ -74,7 +74,7 @@ public struct AlertTitle: View {
 
   public var body: some View {
     text
-      .scaledTextStyle(.base, weight: .semibold)
+      .scaledTextStyle(.base, weight: Metrics.Weight.title)
       .foregroundStyle(EsuissColor.foreground)
   }
 }

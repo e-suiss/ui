@@ -17,6 +17,7 @@ import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
 import { name, version } from "./lib/shared/package.mjs"
 import { readJson } from "./lib/shared/project.mjs"
+import { resolveStyle } from "./lib/shared/style.mjs"
 import { STYLE_NAMES } from "./lib/styles.mjs"
 
 const OPTIONS = {
@@ -31,10 +32,9 @@ const OPTIONS = {
                    the primitive base of React components (read from the
                    style in components.json when omitted, otherwise base);
                    init saves it as the style in components.json`,
-  style: `  --style <name>   the visual style of React components: suiss, vega, nova,
-                   maia, lyra, mira, luma, sera or rhea (read from the style
-                   in components.json when omitted, otherwise suiss); init
-                   saves it as the style in components.json`,
+  style: `  --style <name>   the visual style: suiss, vega, nova, maia, lyra, mira,
+                   luma, sera or rhea (defaults to suiss); for React it is
+                   read from and saved to the style in components.json`,
   preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
                    colors, radius, icons and menu color (init only)`,
   theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
@@ -287,6 +287,7 @@ async function resolvePlatform(options) {
   if (options.styling && options.platform !== "rn") {
     throw new CliError("--styling works with React Native projects.")
   }
+  if (options.platform !== "web") options.style = resolveStyle(options)
   return options
 }
 
@@ -322,6 +323,11 @@ async function main() {
       const parsed = parseCommand(command, scope ? args.slice(1) : args)
       if (!parsed) break
       const options = { ...parsed.options, scope }
+      if (options.style !== undefined || options.preset !== undefined) {
+        throw new CliError(
+          "--style and --preset work with init; add keeps the style init set up."
+        )
+      }
       await resolvePlatform(options)
       if (options.platform === "web") await add(parsed.names, options)
       else if (options.platform === "rn") await addMobile(parsed.names, options)

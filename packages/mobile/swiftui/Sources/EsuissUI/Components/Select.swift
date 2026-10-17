@@ -59,7 +59,7 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
         if let value = value.base as? Value { binding.wrappedValue = value }
       }
     )
-    ButtonGroupItem(radius: size == .sm ? Radius.md : Radius.lg) { shape in
+    ButtonGroupItem(radius: size == .sm ? Radius.md : Metrics.Radius.input) { shape in
       Button {
         open = true
       } label: {
@@ -74,8 +74,8 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
             .foregroundStyle(EsuissColor.mutedForeground)
             .accessibilityHidden(true)
         }
-        .padding(.horizontal, 12)
-        .frame(height: size == .sm ? 36 : 44)
+        .padding(.horizontal, Metrics.PaddingX.input)
+        .frame(height: size == .sm ? 36 : Metrics.Height.input)
         .background(background, in: shape)
         .overlay {
           if invalid {
@@ -131,14 +131,14 @@ struct SelectPanel<Content: View>: View {
     let stack = VStack(alignment: .leading, spacing: 0) {
       content()
     }
-    .padding(6)
+    .padding(Metrics.Padding.menu)
     ViewThatFits(in: .vertical) {
       stack
       ScrollView { stack }
     }
     .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
-    .popupSurface(radius: Radius.xl)
+    .popupSurface(radius: Metrics.Radius.menu, shadow: Metrics.Elevation.menu)
     .accessibilityElement(children: .contain)
   }
 }

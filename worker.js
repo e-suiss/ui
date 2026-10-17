@@ -16,6 +16,9 @@ const STYLES = [
 const DEFAULT_STYLE = "suiss"
 const LEGACY_RADIX = new Set(["new-york", "default"])
 const NATIVE = /^rn-.+$/
+const NATIVE_STYLED =
+  /^(rn-(?:uniwind|nativewind|stylesheet))-(suiss|vega|nova|maia|lyra|mira|luma|sera|rhea)$/
+const NATIVE_THEME = "theme-suiss.json"
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -39,6 +42,13 @@ export function resolveStyle(name) {
 export function registryPath(rest) {
   const [first, file] = rest.split("/")
   if (file === undefined) return { path: `base/${first}`, style: DEFAULT_STYLE }
+  const native = first.match(NATIVE_STYLED)
+  if (native) {
+    const [, styling, style] = native
+    return {
+      path: `${styling}/${file === NATIVE_THEME ? `theme-${style}.json` : file}`,
+    }
+  }
   if (NATIVE.test(first)) return { path: rest }
   const { base, style } = resolveStyle(first)
   return { path: `${base}/${file}`, style }

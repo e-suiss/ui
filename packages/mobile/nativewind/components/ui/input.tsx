@@ -40,7 +40,7 @@ function Input({
     <InputPrimitive.Root
       className={(state) =>
         cn(
-          "h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary px-3 py-1 text-[16px] text-secondary-foreground",
+          "h-input w-full min-w-0 flex-row items-center rounded-input border border-transparent bg-secondary px-input-x py-1 text-[16px] text-secondary-foreground",
           size === "md" && "h-9 text-[14px]",
           size === "sm" && "h-8 rounded-md px-2.5 text-[14px]",
           state.focused && "border-ring ring ring-ring-50",

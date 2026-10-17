@@ -77,11 +77,11 @@ public struct InputGroup<Content: View>: View {
   public var body: some View {
     let request = $focusRequest
     let rounded = multiline || addons.contains(.blockStart) || addons.contains(.blockEnd)
-    ButtonGroupItem(radius: rounded ? Radius.xl : Radius.lg) { shape in
+    ButtonGroupItem(radius: rounded ? Metrics.Radius.textarea : Metrics.Radius.input) { shape in
       InputGroupLayout {
         content
       }
-      .frame(maxWidth: .infinity, minHeight: 44)
+      .frame(maxWidth: .infinity, minHeight: Metrics.Height.input)
       .environment(
         \.inputGroup,
         InputGroupContext(
@@ -368,7 +368,7 @@ public struct InputGroupInput: View {
       .opacity(isEnabled ? 1 : 0.5)
       .padding(.leading, addons.contains(.inlineStart) ? 6 : 12)
       .padding(.trailing, addons.contains(.inlineEnd) ? 6 : 12)
-      .frame(maxWidth: .infinity, minHeight: 44)
+      .frame(maxWidth: .infinity, minHeight: Metrics.Height.input)
       .modifier(InputGroupFocus(request: group?.focusRequest ?? 0))
       .layoutValue(key: InputGroupSlotKey.self, value: .control)
   }

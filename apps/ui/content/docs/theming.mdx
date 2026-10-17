@@ -189,6 +189,36 @@ Text sizes and shadows are the Tailwind defaults on every platform: `xs` is 12 p
 
 Focused fields in Uniwind and NativeWind draw the same `border-ring ring-3 ring-ring/50` ring as the web. SwiftUI and Compose keep the system focus.
 
+### Styles
+
+A style changes the shape of components without touching their colors: corner radius, control heights, paddings, font weights and shadows. React Native, SwiftUI and Compose ship nine styles: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` and `rhea`. Components read the style from the theme, so switching styles only replaces the theme file.
+
+| Platform | Where the style lives | Example |
+| --- | --- | --- |
+| Uniwind | `@theme` variables in the theme stylesheet | `rounded-button`, `h-input`, `px-button-x`, `shadow-card` |
+| NativeWind | `theme.extend` in `tailwind.config.js` | `rounded-button`, `h-input`, `px-button-x`, `shadow-card` |
+| StyleSheet | `metrics` in `theme.ts` | `metrics.radius.button`, `metrics.height.input` |
+| SwiftUI | `Metrics` in `Tokens.swift` | `Metrics.Radius.button`, `Metrics.Height.input` |
+| Compose | `Metrics` in `Tokens.kt` | `Metrics.Radius.button`, `Metrics.Height.input` |
+
+| Token | Covers |
+| --- | --- |
+| Radius | `button`, `input`, `textarea`, `card`, `dialog`, `popover`, `menu`, `menu-item`, `badge`, `checkbox`, `tabs`, `tabs-trigger`, `toggle`, `alert`, `item` |
+| Height | `button-xs`, `button-sm`, `button`, `button-lg`, `input` |
+| Padding | `button-xs-x` to `button-lg-x`, `input-x`, `menu-item-x`, `menu-item-y`, and `dialog`, `popover`, `menu` on all sides |
+| Font weight | `button`, `title` |
+| Shadow | `card`, `dialog`, `popover`, `menu` |
+
+Pick a style when you set up the project:
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --style vega
+npx @esuiss/ui@latest init --platform swift --style luma
+npx @esuiss/ui@latest init --preset <code>
+```
+
+`--preset` takes a preset code from a style configurator and uses its style. With the registry CLI, add `@esuiss-rn/theme-<style>` instead of `theme-suiss`, or point `@esuiss-rn` at `https://suiss.app/ui/r/rn-<styling>-<style>/{name}.json` so every component that needs the theme gets the right one. The previews in these docs use the `suiss` style.
+
 ## Radius
 
 `--radius` is `0.625rem` by default. Every rounded component scales from it.

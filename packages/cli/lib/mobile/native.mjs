@@ -5,7 +5,7 @@ import { choose, isInteractive } from "../prompt.mjs"
 import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { fetchFiles, scopeOf } from "./add.mjs"
-import { fetchRegistry } from "./registry.mjs"
+import { fetchRegistry, presetFile } from "./registry.mjs"
 
 const ANDROID_PLUGIN =
   /com\.android\.(?:application|library)|android[.-](?:application|library)|androidApplication|androidLibrary/
@@ -181,8 +181,15 @@ async function setup(options) {
   if (!spec) {
     throw new CliError(`The registry has no ${platform.title} files.`)
   }
+  const tokens = presetFile(registry, options.platform, options.style)
   const entries = (files) =>
-    files.map((file) => ({ file, source: `${spec.directory}/${file}` }))
+    files.map((file) => ({
+      file,
+      source:
+        tokens && path.posix.basename(file).startsWith("Tokens.")
+          ? tokens
+          : `${spec.directory}/${file}`,
+    }))
   step(
     `${platform.title} files go to ${path.relative(project.cwd, project.root) || "."}`
   )

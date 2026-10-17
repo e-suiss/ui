@@ -23,10 +23,10 @@ public struct Badge<Label: View>: View {
       .frame(height: 20)
       .overlay {
         if variant == .outline {
-          Capsule().strokeBorder(EsuissColor.border)
+          RoundedRectangle(cornerRadius: Metrics.Radius.badge, style: .continuous).strokeBorder(EsuissColor.border)
         }
       }
-      .clipShape(Capsule())
+      .clipShape(RoundedRectangle(cornerRadius: Metrics.Radius.badge, style: .continuous))
   }
 
   private var padded: Bool {

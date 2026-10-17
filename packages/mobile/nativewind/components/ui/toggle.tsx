@@ -10,7 +10,7 @@ import { Icon } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
 const toggleVariants = cva(
-  "flex-row items-center justify-center gap-1 rounded-lg",
+  "flex-row items-center justify-center gap-1 rounded-toggle",
   {
     variants: {
       variant: {

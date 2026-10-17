@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Typography
 
 enum class BadgeVariant { Default, Secondary, Destructive, Outline, Ghost, Link }
@@ -37,8 +38,8 @@ fun Badge(
     Row(
         modifier = modifier
             .height(20.dp)
-            .clip(CircleShape)
-            .then(if (variant == BadgeVariant.Outline) Modifier.border(1.dp, colors.border, CircleShape) else Modifier)
+            .clip(RoundedCornerShape(Metrics.Radius.badge))
+            .then(if (variant == BadgeVariant.Outline) Modifier.border(1.dp, colors.border, RoundedCornerShape(Metrics.Radius.badge)) else Modifier)
             .padding(horizontal = if (padded) 8.dp else 0.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,

@@ -12,7 +12,7 @@ import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
 import { IconSizeContext } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, radius, useTheme } from "@/components/ui/theme"
 
 type ItemSize = "default" | "sm" | "xs"
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
-    borderRadius: radius.xl,
+    borderRadius: metrics.radius.item,
     borderWidth: 1,
     borderColor: "transparent",
   },

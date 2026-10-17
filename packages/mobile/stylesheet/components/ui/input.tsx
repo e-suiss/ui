@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 import * as InputPrimitive from "@/components/primitives/input"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, radius, useTheme } from "@/components/ui/theme"
 
 type InputSize = "sm" | "md" | "default"
 
@@ -15,15 +15,15 @@ function withAlpha(color: string, alpha: number) {
 const styles = StyleSheet.create({
   root: {
     fontSize: fontSize.base.fontSize,
-    height: 44,
+    height: metrics.height.input,
     width: "100%",
     minWidth: 0,
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.input,
     borderWidth: 1,
     borderColor: "transparent",
-    paddingHorizontal: 12,
+    paddingHorizontal: metrics.paddingX.input,
     paddingVertical: 4,
   },
   md: { fontSize: fontSize.sm.fontSize, height: 36 },

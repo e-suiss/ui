@@ -174,7 +174,7 @@ private struct ItemBackground: View {
   let inset: Bool
 
   var body: some View {
-    let shape = RoundedRectangle(cornerRadius: inset ? 0 : Radius.xl, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: inset ? 0 : Metrics.Radius.item, style: .continuous)
     ZStack {
       shape.fill(variant == .muted ? EsuissColor.muted.opacity(0.5) : .clear)
       if variant == .outline {

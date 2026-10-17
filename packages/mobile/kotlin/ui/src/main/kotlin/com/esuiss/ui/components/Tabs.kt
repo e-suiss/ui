@@ -44,6 +44,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
@@ -90,7 +91,7 @@ fun TabsList(
     val state = LocalTabs.current ?: error("TabsList must be used within Tabs.")
     val colors = EsuissTheme.colors
     val line = variant == TabsListVariant.Line
-    val listShape = RoundedCornerShape(Radius.xl)
+    val listShape = RoundedCornerShape(Metrics.Radius.tabs)
     Box(
         modifier = modifier
             .width(IntrinsicSize.Max)
@@ -123,7 +124,7 @@ private fun TabsIndicator(state: TabsState, variant: TabsListVariant) {
         launch { left.animateTo(target.left, spec) }
         launch { width.animateTo(target.width, spec) }
     }
-    val shape = RoundedCornerShape(Radius.md)
+    val shape = RoundedCornerShape(Metrics.Radius.tabsTrigger)
     if (variant == TabsListVariant.Line) {
         Box(
             modifier = Modifier

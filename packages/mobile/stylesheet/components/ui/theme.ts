@@ -172,6 +172,71 @@ const shadow = {
   },
 } satisfies Record<string, { boxShadow: string | BoxShadowValue[] }>
 
+const metrics = {
+  radius: {
+    button: 9999,
+    input: 10,
+    textarea: 12,
+    card: 18,
+    dialog: 18,
+    popover: 18,
+    menu: 12,
+    menuItem: 8,
+    badge: 9999,
+    checkbox: 4,
+    tabs: 12,
+    tabsTrigger: 8,
+    toggle: 10,
+    alert: 18,
+    item: 12,
+  },
+  height: {
+    buttonXs: 24,
+    buttonSm: 32,
+    button: 36,
+    buttonLg: 44,
+    input: 44,
+  },
+  paddingX: {
+    buttonXs: 11,
+    buttonSm: 12,
+    button: 16,
+    buttonLg: 22,
+    input: 12,
+    menuItem: 12,
+  },
+  paddingY: {
+    menuItem: 8,
+  },
+  padding: {
+    dialog: 24,
+    popover: 16,
+    menu: 6,
+  },
+  fontWeight: {
+    button: "400" as const,
+    title: "600" as const,
+  },
+  shadow: {
+    card: {
+      boxShadow:
+        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+    },
+    dialog: {
+      boxShadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+    },
+    popover: {
+      boxShadow:
+        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
+    },
+    menu: {
+      boxShadow:
+        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
+    },
+  },
+}
+
 type Theme = "light" | "dark" | "system"
 
 type ResolvedTheme = "light" | "dark"
@@ -761,6 +826,7 @@ function useTheme() {
     radius,
     fontSize,
     shadow,
+    metrics,
     theme,
     resolvedTheme,
     setTheme,
@@ -876,6 +942,7 @@ export {
   dark,
   fontSize,
   light,
+  metrics,
   palette,
   radius,
   shadow,

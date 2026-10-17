@@ -7018,7 +7018,22 @@
                 "lg": "10px",
                 "xl": "12px",
                 "2xl": "18px",
-                "3xl": "28px"
+                "3xl": "28px",
+                "button": "9999px",
+                "input": "10px",
+                "textarea": "12px",
+                "card": "18px",
+                "dialog": "18px",
+                "popover": "18px",
+                "menu": "12px",
+                "menu-item": "8px",
+                "badge": "9999px",
+                "checkbox": "4px",
+                "tabs": "12px",
+                "tabs-trigger": "8px",
+                "toggle": "10px",
+                "alert": "18px",
+                "item": "12px"
               },
               "fontSize": {
                 "xs": [
@@ -7066,7 +7081,2624 @@
               },
               "boxShadow": {
                 "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "dialog": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+                "popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "menu": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "32px",
+                "button": "36px",
+                "button-lg": "44px",
+                "input": "44px",
+                "button-xs-x": "11px",
+                "button-sm-x": "12px",
+                "button-x": "16px",
+                "button-lg-x": "22px",
+                "input-x": "12px",
+                "menu-item-x": "12px",
+                "menu-item-y": "8px",
+                "dialog": "24px",
+                "popover": "16px",
+                "menu": "6px"
+              },
+              "fontWeight": {
+                "button": "400",
+                "title": "600"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-vega",
+      "title": "suiss/ui Theme (Vega)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the vega style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "8px",
+                "input": "8px",
+                "textarea": "8px",
+                "card": "14px",
+                "dialog": "14px",
+                "popover": "8px",
+                "menu": "8px",
+                "menu-item": "6px",
+                "badge": "26px",
+                "checkbox": "4px",
+                "tabs": "10px",
+                "tabs-trigger": "8px",
+                "toggle": "8px",
+                "alert": "10px",
+                "item": "8px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+                "dialog": "0 0 #0000",
+                "popover": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "menu": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "32px",
+                "button": "36px",
+                "button-lg": "40px",
+                "input": "36px",
+                "button-xs-x": "8px",
+                "button-sm-x": "10px",
+                "button-x": "10px",
+                "button-lg-x": "10px",
+                "input-x": "10px",
+                "menu-item-x": "8px",
+                "menu-item-y": "6px",
+                "dialog": "24px",
+                "popover": "16px",
+                "menu": "4px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-nova",
+      "title": "suiss/ui Theme (Nova)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the nova style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "10px",
+                "input": "10px",
+                "textarea": "10px",
+                "card": "14px",
+                "dialog": "14px",
+                "popover": "10px",
+                "menu": "10px",
+                "menu-item": "8px",
+                "badge": "26px",
+                "checkbox": "4px",
+                "tabs": "10px",
+                "tabs-trigger": "8px",
+                "toggle": "10px",
+                "alert": "10px",
+                "item": "10px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 0 #0000",
+                "dialog": "0 0 #0000",
+                "popover": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "menu": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "28px",
+                "button": "32px",
+                "button-lg": "36px",
+                "input": "32px",
+                "button-xs-x": "8px",
+                "button-sm-x": "10px",
+                "button-x": "10px",
+                "button-lg-x": "10px",
+                "input-x": "10px",
+                "menu-item-x": "6px",
+                "menu-item-y": "4px",
+                "dialog": "16px",
+                "popover": "10px",
+                "menu": "4px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-maia",
+      "title": "suiss/ui Theme (Maia)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the maia style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "26px",
+                "input": "26px",
+                "textarea": "14px",
+                "card": "18px",
+                "dialog": "26px",
+                "popover": "18px",
+                "menu": "18px",
+                "menu-item": "14px",
+                "badge": "26px",
+                "checkbox": "6px",
+                "tabs": "26px",
+                "tabs-trigger": "14px",
+                "toggle": "26px",
+                "alert": "10px",
+                "item": "18px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 0 #0000",
+                "dialog": "0 0 #0000",
+                "popover": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+                "menu": "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "32px",
+                "button": "36px",
+                "button-lg": "40px",
+                "input": "36px",
+                "button-xs-x": "10px",
+                "button-sm-x": "12px",
+                "button-x": "12px",
+                "button-lg-x": "16px",
+                "input-x": "12px",
+                "menu-item-x": "12px",
+                "menu-item-y": "8px",
+                "dialog": "24px",
+                "popover": "16px",
+                "menu": "4px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-lyra",
+      "title": "suiss/ui Theme (Lyra)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the lyra style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "0px",
+                "input": "0px",
+                "textarea": "0px",
+                "card": "0px",
+                "dialog": "0px",
+                "popover": "0px",
+                "menu": "0px",
+                "menu-item": "0px",
+                "badge": "0px",
+                "checkbox": "0px",
+                "tabs": "0px",
+                "tabs-trigger": "0px",
+                "toggle": "0px",
+                "alert": "0px",
+                "item": "0px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 0 #0000",
+                "dialog": "0 0 #0000",
+                "popover": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "menu": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "28px",
+                "button": "32px",
+                "button-lg": "36px",
+                "input": "32px",
+                "button-xs-x": "8px",
+                "button-sm-x": "10px",
+                "button-x": "10px",
+                "button-lg-x": "10px",
+                "input-x": "10px",
+                "menu-item-x": "8px",
+                "menu-item-y": "8px",
+                "dialog": "16px",
+                "popover": "10px",
+                "menu": "0px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-mira",
+      "title": "suiss/ui Theme (Mira)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the mira style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "8px",
+                "input": "8px",
+                "textarea": "8px",
+                "card": "10px",
+                "dialog": "14px",
+                "popover": "10px",
+                "menu": "10px",
+                "menu-item": "8px",
+                "badge": "9999px",
+                "checkbox": "4px",
+                "tabs": "10px",
+                "tabs-trigger": "8px",
+                "toggle": "8px",
+                "alert": "10px",
+                "item": "8px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 0 #0000",
+                "dialog": "0 0 #0000",
+                "popover": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "menu": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "20px",
+                "button-sm": "24px",
+                "button": "28px",
+                "button-lg": "32px",
+                "input": "28px",
+                "button-xs-x": "8px",
+                "button-sm-x": "8px",
+                "button-x": "8px",
+                "button-lg-x": "10px",
+                "input-x": "8px",
+                "menu-item-x": "8px",
+                "menu-item-y": "4px",
+                "dialog": "16px",
+                "popover": "10px",
+                "menu": "4px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-luma",
+      "title": "suiss/ui Theme (Luma)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the luma style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "26px",
+                "input": "22px",
+                "textarea": "18px",
+                "card": "26px",
+                "dialog": "26px",
+                "popover": "22px",
+                "menu": "22px",
+                "menu-item": "18px",
+                "badge": "22px",
+                "checkbox": "5px",
+                "tabs": "9999px",
+                "tabs-trigger": "9999px",
+                "toggle": "22px",
+                "alert": "18px",
+                "item": "18px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "dialog": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+                "popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "menu": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "32px",
+                "button": "36px",
+                "button-lg": "40px",
+                "input": "36px",
+                "button-xs-x": "10px",
+                "button-sm-x": "12px",
+                "button-x": "12px",
+                "button-lg-x": "16px",
+                "input-x": "12px",
+                "menu-item-x": "12px",
+                "menu-item-y": "8px",
+                "dialog": "24px",
+                "popover": "16px",
+                "menu": "6px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-sera",
+      "title": "suiss/ui Theme (Sera)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the sera style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "0px",
+                "input": "0px",
+                "textarea": "0px",
+                "card": "0px",
+                "dialog": "0px",
+                "popover": "0px",
+                "menu": "0px",
+                "menu-item": "0px",
+                "badge": "0px",
+                "checkbox": "0px",
+                "tabs": "0px",
+                "tabs-trigger": "0px",
+                "toggle": "0px",
+                "alert": "0px",
+                "item": "0px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+                "dialog": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "popover": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "menu": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "28px",
+                "button-sm": "36px",
+                "button": "40px",
+                "button-lg": "44px",
+                "input": "40px",
+                "button-xs-x": "12px",
+                "button-sm-x": "16px",
+                "button-x": "24px",
+                "button-lg-x": "32px",
+                "input-x": "0px",
+                "menu-item-x": "12px",
+                "menu-item-y": "8px",
+                "dialog": "24px",
+                "popover": "16px",
+                "menu": "6px"
+              },
+              "fontWeight": {
+                "button": "600",
+                "title": "600"
+              }
+            }
+          }
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--background": "#ffffff",
+            "--foreground": "#1d1d1f",
+            "--card": "#ffffff",
+            "--card-foreground": "#1d1d1f",
+            "--popover": "#ffffff",
+            "--popover-foreground": "#1d1d1f",
+            "--primary": "#0071e3",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(0, 0, 0, 0.04)",
+            "--secondary-foreground": "#1d1d1f",
+            "--muted": "#f5f5f7",
+            "--muted-foreground": "#6e6e73",
+            "--accent": "rgba(0, 0, 0, 0.06)",
+            "--accent-foreground": "#1d1d1f",
+            "--destructive": "#d0000a",
+            "--border": "#d2d2d7",
+            "--input": "#86868b",
+            "--ring": "#0071e3",
+            "--chart-1": "#007aff",
+            "--chart-2": "#30b0c7",
+            "--chart-3": "#5856d6",
+            "--chart-4": "#ff9500",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#f5f5f7",
+            "--sidebar-foreground": "#1d1d1f",
+            "--sidebar-primary": "#0071e3",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(0, 0, 0, 0.06)",
+            "--sidebar-accent-foreground": "#1d1d1f",
+            "--sidebar-border": "#d2d2d7",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(255, 255, 255, 0.2)",
+            "--border-30": "rgba(210, 210, 215, 0.3)",
+            "--border-40": "rgba(210, 210, 215, 0.4)",
+            "--border-50": "rgba(210, 210, 215, 0.5)",
+            "--destructive-5": "rgba(208, 0, 10, 0.05)",
+            "--destructive-10": "rgba(208, 0, 10, 0.1)",
+            "--destructive-20": "rgba(208, 0, 10, 0.2)",
+            "--foreground-5": "rgba(29, 29, 31, 0.05)",
+            "--foreground-10": "rgba(29, 29, 31, 0.1)",
+            "--foreground-15": "rgba(29, 29, 31, 0.15)",
+            "--foreground-20": "rgba(29, 29, 31, 0.2)",
+            "--foreground-25": "rgba(29, 29, 31, 0.25)",
+            "--muted-50": "rgba(245, 245, 247, 0.5)",
+            "--muted-60": "rgba(245, 245, 247, 0.6)",
+            "--muted-foreground-50": "rgba(110, 110, 115, 0.5)",
+            "--muted-foreground-60": "rgba(110, 110, 115, 0.6)",
+            "--primary-10": "rgba(0, 113, 227, 0.1)",
+            "--primary-12": "rgba(0, 113, 227, 0.12)",
+            "--primary-20": "rgba(0, 113, 227, 0.2)",
+            "--primary-25": "rgba(0, 113, 227, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          },
+          ".dark:root": {
+            "--background": "#000000",
+            "--foreground": "#f5f5f7",
+            "--card": "#1d1d1f",
+            "--card-foreground": "#f5f5f7",
+            "--popover": "#1d1d1f",
+            "--popover-foreground": "#f5f5f7",
+            "--primary": "#2997ff",
+            "--primary-foreground": "#ffffff",
+            "--secondary": "rgba(255, 255, 255, 0.1)",
+            "--secondary-foreground": "#f5f5f7",
+            "--muted": "#161617",
+            "--muted-foreground": "#a1a1a6",
+            "--accent": "rgba(255, 255, 255, 0.1)",
+            "--accent-foreground": "#f5f5f7",
+            "--destructive": "#ff5447",
+            "--border": "#424245",
+            "--input": "#6e6e73",
+            "--ring": "#0071e3",
+            "--chart-1": "#0a84ff",
+            "--chart-2": "#40c8e0",
+            "--chart-3": "#5e5ce6",
+            "--chart-4": "#ff9f0a",
+            "--chart-5": "#8e8e93",
+            "--sidebar": "#161617",
+            "--sidebar-foreground": "#f5f5f7",
+            "--sidebar-primary": "#2997ff",
+            "--sidebar-primary-foreground": "#ffffff",
+            "--sidebar-accent": "rgba(255, 255, 255, 0.1)",
+            "--sidebar-accent-foreground": "#f5f5f7",
+            "--sidebar-border": "#424245",
+            "--sidebar-ring": "#0071e3",
+            "--background-20": "rgba(0, 0, 0, 0.2)",
+            "--border-30": "rgba(66, 66, 69, 0.3)",
+            "--border-40": "rgba(66, 66, 69, 0.4)",
+            "--border-50": "rgba(66, 66, 69, 0.5)",
+            "--destructive-5": "rgba(255, 84, 71, 0.05)",
+            "--destructive-10": "rgba(255, 84, 71, 0.1)",
+            "--destructive-20": "rgba(255, 84, 71, 0.2)",
+            "--foreground-5": "rgba(245, 245, 247, 0.05)",
+            "--foreground-10": "rgba(245, 245, 247, 0.1)",
+            "--foreground-15": "rgba(245, 245, 247, 0.15)",
+            "--foreground-20": "rgba(245, 245, 247, 0.2)",
+            "--foreground-25": "rgba(245, 245, 247, 0.25)",
+            "--muted-50": "rgba(22, 22, 23, 0.5)",
+            "--muted-60": "rgba(22, 22, 23, 0.6)",
+            "--muted-foreground-50": "rgba(161, 161, 166, 0.5)",
+            "--muted-foreground-60": "rgba(161, 161, 166, 0.6)",
+            "--primary-10": "rgba(41, 151, 255, 0.1)",
+            "--primary-12": "rgba(41, 151, 255, 0.12)",
+            "--primary-20": "rgba(41, 151, 255, 0.2)",
+            "--primary-25": "rgba(41, 151, 255, 0.25)",
+            "--ring-50": "rgba(0, 113, 227, 0.5)"
+          }
+        }
+      }
+    },
+    {
+      "name": "theme-rhea",
+      "title": "suiss/ui Theme (Rhea)",
+      "description": "The suiss/ui colors for light and dark mode as CSS variables, with the Tailwind CSS v3 colors, type scale, shadows and radius scale. Uses the rhea style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:theme",
+      "tailwind": {
+        "config": {
+          "darkMode": "class",
+          "theme": {
+            "extend": {
+              "colors": {
+                "background": "var(--background)",
+                "foreground": "var(--foreground)",
+                "card": "var(--card)",
+                "card-foreground": "var(--card-foreground)",
+                "popover": "var(--popover)",
+                "popover-foreground": "var(--popover-foreground)",
+                "primary": "var(--primary)",
+                "primary-foreground": "var(--primary-foreground)",
+                "secondary": "var(--secondary)",
+                "secondary-foreground": "var(--secondary-foreground)",
+                "muted": "var(--muted)",
+                "muted-foreground": "var(--muted-foreground)",
+                "accent": "var(--accent)",
+                "accent-foreground": "var(--accent-foreground)",
+                "destructive": "var(--destructive)",
+                "border": "var(--border)",
+                "input": "var(--input)",
+                "ring": "var(--ring)",
+                "chart-1": "var(--chart-1)",
+                "chart-2": "var(--chart-2)",
+                "chart-3": "var(--chart-3)",
+                "chart-4": "var(--chart-4)",
+                "chart-5": "var(--chart-5)",
+                "sidebar": "var(--sidebar)",
+                "sidebar-foreground": "var(--sidebar-foreground)",
+                "sidebar-primary": "var(--sidebar-primary)",
+                "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+                "sidebar-accent": "var(--sidebar-accent)",
+                "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+                "sidebar-border": "var(--sidebar-border)",
+                "sidebar-ring": "var(--sidebar-ring)",
+                "background-20": "var(--background-20)",
+                "border-30": "var(--border-30)",
+                "border-40": "var(--border-40)",
+                "border-50": "var(--border-50)",
+                "destructive-5": "var(--destructive-5)",
+                "destructive-10": "var(--destructive-10)",
+                "destructive-20": "var(--destructive-20)",
+                "foreground-5": "var(--foreground-5)",
+                "foreground-10": "var(--foreground-10)",
+                "foreground-15": "var(--foreground-15)",
+                "foreground-20": "var(--foreground-20)",
+                "foreground-25": "var(--foreground-25)",
+                "muted-50": "var(--muted-50)",
+                "muted-60": "var(--muted-60)",
+                "muted-foreground-50": "var(--muted-foreground-50)",
+                "muted-foreground-60": "var(--muted-foreground-60)",
+                "primary-10": "var(--primary-10)",
+                "primary-12": "var(--primary-12)",
+                "primary-20": "var(--primary-20)",
+                "primary-25": "var(--primary-25)",
+                "ring-50": "var(--ring-50)",
+                "red": {
+                  "500": "#fb2c36"
+                },
+                "orange": {
+                  "500": "#ff6900"
+                },
+                "amber": {
+                  "400": "#ffb900",
+                  "500": "#fe9a00",
+                  "600": "#e17100"
+                },
+                "yellow": {
+                  "500": "#f0b100"
+                },
+                "green": {
+                  "400": "#05df72",
+                  "500": "#00c950",
+                  "600": "#00a63e"
+                },
+                "teal": {
+                  "400": "#00d5be",
+                  "500": "#00bba7"
+                },
+                "cyan": {
+                  "500": "#00b8db"
+                },
+                "blue": {
+                  "500": "#2b7fff"
+                },
+                "indigo": {
+                  "500": "#615fff"
+                },
+                "purple": {
+                  "500": "#ad46ff"
+                },
+                "pink": {
+                  "500": "#f6339a"
+                },
+                "zinc": {
+                  "500": "#71717b"
+                }
+              },
+              "borderRadius": {
+                "xs": "3px",
+                "sm": "5px",
+                "md": "8px",
+                "lg": "10px",
+                "xl": "12px",
+                "2xl": "18px",
+                "3xl": "28px",
+                "button": "18px",
+                "input": "18px",
+                "textarea": "18px",
+                "card": "24px",
+                "dialog": "24px",
+                "popover": "22px",
+                "menu": "18px",
+                "menu-item": "14px",
+                "badge": "18px",
+                "checkbox": "5px",
+                "tabs": "18px",
+                "tabs-trigger": "18px",
+                "toggle": "18px",
+                "alert": "18px",
+                "item": "18px"
+              },
+              "fontSize": {
+                "xs": [
+                  "12px",
+                  {
+                    "lineHeight": "16px"
+                  }
+                ],
+                "sm": [
+                  "14px",
+                  {
+                    "lineHeight": "20px"
+                  }
+                ],
+                "base": [
+                  "16px",
+                  {
+                    "lineHeight": "24px"
+                  }
+                ],
+                "lg": [
+                  "18px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "xl": [
+                  "20px",
+                  {
+                    "lineHeight": "28px"
+                  }
+                ],
+                "2xl": [
+                  "24px",
+                  {
+                    "lineHeight": "32px"
+                  }
+                ],
+                "3xl": [
+                  "30px",
+                  {
+                    "lineHeight": "36px"
+                  }
+                ]
+              },
+              "boxShadow": {
+                "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+                "dialog": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+                "popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                "menu": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+              },
+              "spacing": {
+                "button-xs": "24px",
+                "button-sm": "28px",
+                "button": "32px",
+                "button-lg": "36px",
+                "input": "32px",
+                "button-xs-x": "10px",
+                "button-sm-x": "12px",
+                "button-x": "12px",
+                "button-lg-x": "16px",
+                "input-x": "10px",
+                "menu-item-x": "8px",
+                "menu-item-y": "6px",
+                "dialog": "24px",
+                "popover": "16px",
+                "menu": "4px"
+              },
+              "fontWeight": {
+                "button": "500",
+                "title": "500"
               }
             }
           }

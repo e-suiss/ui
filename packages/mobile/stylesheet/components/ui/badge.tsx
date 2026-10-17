@@ -5,7 +5,7 @@ import { IconSizeContext } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
-  radius,
+  metrics,
   type ThemeColors,
   useTheme,
 } from "@/components/ui/theme"
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     gap: 4,
     alignSelf: "flex-start",
     overflow: "hidden",
-    borderRadius: radius.full,
+    borderRadius: metrics.radius.badge,
     borderWidth: 1,
     borderColor: "transparent",
   },

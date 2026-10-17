@@ -84,7 +84,7 @@ struct MenuPanel<Content: View>: View {
     let stack = VStack(alignment: .leading, spacing: 0) {
       content()
     }
-    .padding(6)
+    .padding(Metrics.Padding.menu)
     ViewThatFits(in: .vertical) {
       stack
       ScrollView { stack }
@@ -92,7 +92,7 @@ struct MenuPanel<Content: View>: View {
     .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
     .environment(\.menuPresentation, .popup)
-    .popupSurface(radius: Radius.xl)
+    .popupSurface(radius: Metrics.Radius.menu, shadow: Metrics.Elevation.menu)
     .accessibilityElement(children: .contain)
   }
 }
@@ -110,11 +110,11 @@ struct MenuRowStyle: ButtonStyle {
       .labelStyle(ButtonLabelStyle(spacing: 10, iconSize: 16))
       .lineLimit(1)
       .foregroundStyle(destructive ? EsuissColor.destructive : EsuissColor.foreground)
-      .padding(.leading, inset ? 38 : 12)
+      .padding(.leading, inset ? 38 : Metrics.PaddingX.menuItem)
       .padding(.trailing, trailing)
-      .padding(.vertical, 8)
+      .padding(.vertical, Metrics.PaddingY.menuItem)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(selected ? EsuissColor.accent : .clear, in: RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+      .background(selected ? EsuissColor.accent : .clear, in: RoundedRectangle(cornerRadius: Metrics.Radius.menuItem, style: .continuous))
       .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.5)
       .contentShape(Rectangle())
   }
@@ -316,7 +316,7 @@ public struct DropdownMenuLabel: View {
       Text(title)
         .scaledFont(TextStyle.xs, weight: .semibold)
         .foregroundStyle(EsuissColor.mutedForeground)
-        .padding(.leading, inset ? 38 : 12)
+        .padding(.leading, inset ? 38 : Metrics.PaddingX.menuItem)
         .padding(.trailing, 12)
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)

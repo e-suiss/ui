@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -89,7 +90,7 @@ fun InputGroup(
     state.enabled = enabled
     state.invalid = invalid
     val tall = state.blockStart > 0 || state.blockEnd > 0 || state.multiline > 0
-    val item = rememberButtonGroupItem(LocalButtonGroup.current, RoundedCornerShape(if (tall) Radius.xl else Radius.lg))
+    val item = rememberButtonGroupItem(LocalButtonGroup.current, RoundedCornerShape(if (tall) Metrics.Radius.textarea else Metrics.Radius.input))
     CompositionLocalProvider(
         LocalInputGroup provides state,
         LocalTextSelectionColors provides formSelectionColors(colors),
@@ -103,7 +104,7 @@ fun InputGroup(
                 .semantics { isTraversalGroup = true },
         ) { measurables, constraints ->
             val width = if (constraints.hasBoundedWidth) constraints.maxWidth else 320.dp.roundToPx()
-            val rowMin = 44.dp.roundToPx()
+            val rowMin = Metrics.Height.input.roundToPx()
             val blockStart = measurables.filter { it.layoutId == InputGroupAddonAlign.BlockStart }
                 .map { it.measure(Constraints(minWidth = width, maxWidth = width)) }
             val blockEnd = measurables.filter { it.layoutId == InputGroupAddonAlign.BlockEnd }

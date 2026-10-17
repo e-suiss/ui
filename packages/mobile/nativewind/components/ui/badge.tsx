@@ -7,7 +7,7 @@ import { IconClassContext } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
 const badgeVariants = cva(
-  "h-5 shrink-0 flex-row items-center justify-center gap-1 self-start overflow-hidden rounded-full border border-transparent",
+  "h-5 shrink-0 flex-row items-center justify-center gap-1 self-start overflow-hidden rounded-badge border border-transparent",
   {
     variants: {
       variant: {

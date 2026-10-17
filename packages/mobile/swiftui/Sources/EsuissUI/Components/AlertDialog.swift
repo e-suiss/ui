@@ -30,9 +30,9 @@ public struct AlertDialogContent<Content: View>: View {
     VStack(spacing: 24) {
       content
     }
-    .padding(24)
+    .padding(Metrics.Padding.dialog)
     .frame(maxWidth: size == .sm ? 320 : 340)
-    .popupSurface(radius: Radius.xl2)
+    .popupSurface(radius: Metrics.Radius.dialog)
     .accessibilityElement(children: .contain)
     .accessibilityAddTraits(.isModal)
   }
@@ -85,7 +85,7 @@ public struct AlertDialogTitle: View {
 
   public var body: some View {
     text
-      .textStyle(.lg, weight: .semibold)
+      .textStyle(.lg, weight: Metrics.Weight.title)
       .foregroundStyle(EsuissColor.foreground)
       .multilineTextAlignment(.center)
       .fixedSize(horizontal: false, vertical: true)

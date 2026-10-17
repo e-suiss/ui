@@ -99,4 +99,45 @@
   --radius-xl: 0.75rem;
   --radius-2xl: 1.125rem;
   --radius-3xl: 1.75rem;
+
+  --radius-button: 9999px;
+  --radius-input: 10px;
+  --radius-textarea: 12px;
+  --radius-card: 18px;
+  --radius-dialog: 18px;
+  --radius-popover: 18px;
+  --radius-menu: 12px;
+  --radius-menu-item: 8px;
+  --radius-badge: 9999px;
+  --radius-checkbox: 4px;
+  --radius-tabs: 12px;
+  --radius-tabs-trigger: 8px;
+  --radius-toggle: 10px;
+  --radius-alert: 18px;
+  --radius-item: 12px;
+  --spacing-button-xs: 24px;
+  --spacing-button-sm: 32px;
+  --spacing-button: 36px;
+  --spacing-button-lg: 44px;
+  --spacing-input: 44px;
+  --spacing-button-xs-x: 11px;
+  --spacing-button-sm-x: 12px;
+  --spacing-button-x: 16px;
+  --spacing-button-lg-x: 22px;
+  --spacing-input-x: 12px;
+  --spacing-menu-item-x: 12px;
+  --spacing-menu-item-y: 8px;
+  --spacing-dialog: 24px;
+  --spacing-popover: 16px;
+  --spacing-menu: 6px;
+  --font-weight-button: 400;
+  --font-weight-title: 600;
+  --shadow-card:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-dialog:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-popover:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-menu:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

@@ -56,7 +56,7 @@ function ItemSeparator({ className, ...props }: ViewProps) {
 }
 
 const itemVariants = cva(
-  "w-full flex-row flex-wrap items-center rounded-xl border",
+  "w-full flex-row flex-wrap items-center rounded-item border",
   {
     variants: {
       variant: {

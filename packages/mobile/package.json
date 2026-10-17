@@ -17,6 +17,7 @@
     "nativewind:check": "node scripts/build-nativewind.mjs --check",
     "tokens": "node scripts/build-tokens.mjs",
     "tokens:check": "node scripts/build-tokens.mjs --check",
+    "styles": "node scripts/derive-styles.mjs",
     "live": "expo export --platform web --output-dir ../../apps/ui/public/live"
   },
   "dependencies": {

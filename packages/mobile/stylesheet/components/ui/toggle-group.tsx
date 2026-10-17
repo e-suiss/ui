@@ -26,6 +26,7 @@ import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
 import {
   fontSize,
+  metrics,
   radius,
   shadow,
   type ThemeColors,
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   vertical: { flexDirection: "column", alignItems: "stretch" },
-  attached: { borderRadius: radius.lg },
+  attached: { borderRadius: metrics.radius.toggle },
   item: { flexShrink: 0 },
   segmentedItem: { borderRadius: radius.md, paddingHorizontal: 12 },
   indicator: { borderRadius: radius.md },
