@@ -15,7 +15,8 @@
       "!packages/mobile/android",
       "!packages/mobile/uniwind-types.d.ts",
       "!packages/web/styles/vendor",
-      "!packages/web/styles/generated"
+      "!packages/web/styles/generated",
+      "!packages/web/registry/styles.json"
     ]
   },
   "formatter": {
@@ -243,6 +244,16 @@
         "rules": {
           "suspicious": {
             "noUnknownAtRules": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/web/styles/style-suiss*.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noEmptyBlock": "off"
           }
         }
       }

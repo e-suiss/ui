@@ -133,9 +133,14 @@ function twinPath(file: string, base: string) {
   return existsSync(twin) ? twin : undefined
 }
 
-async function styled(source: string, file: string, style = DEFAULT_STYLE) {
+async function styled(
+  source: string,
+  file: string,
+  base: string,
+  style = DEFAULT_STYLE
+) {
   if (markersIn(source, file).length === 0) return source
-  const maps = await loadStyleMaps()
+  const maps = await loadStyleMaps(base)
   return applyStyle(source, maps[style] ?? maps[DEFAULT_STYLE], file).output
 }
 
@@ -146,7 +151,7 @@ export async function readSource(
   const resolved = twinPath(file, base) ?? sourcePath(file)
   if (!resolved) return undefined
   return toIcons(
-    await styled(await readFile(resolved, "utf8"), resolved),
+    await styled(await readFile(resolved, "utf8"), resolved, base),
     icons
   )
 }

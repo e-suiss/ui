@@ -52,7 +52,7 @@ function ContextMenuTrigger({
         role="button"
         tabIndex={0}
         data-slot="context-menu-trigger"
-        className={cn("select-none", className)}
+        className={cn("cn-context-menu-trigger", className)}
         {...props}
       />
     </Pressable>
@@ -166,10 +166,7 @@ function ContextMenuLabel({
     <HeaderPrimitive
       data-slot="context-menu-label"
       data-inset={inset ? "" : undefined}
-      className={cn(
-        "px-3 py-2.5 text-xs font-semibold text-muted-foreground data-inset:ps-9.5",
-        className
-      )}
+      className={cn("cn-context-menu-label", className)}
       {...props}
     />
   )
@@ -209,7 +206,7 @@ function ContextMenuItem({
       data-variant={variant}
       textValue={itemText(children, textValue)}
       className={cn(
-        "group/context-menu-item relative flex cursor-default items-center gap-2.5 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 focus:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive data-disabled:opacity-50",
+        "cn-context-menu-item group/context-menu-item [&_svg:not([class*='size-'])]:size-4 focus:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -241,7 +238,7 @@ function ContextMenuSubTrigger({
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
-        "flex cursor-default items-center rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "cn-context-menu-sub-trigger flex cursor-default items-center outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -272,7 +269,7 @@ function ContextMenuSubContent({
   return (
     <ContextMenuContent
       data-slot="context-menu-sub-content"
-      className="cn-menu-target cn-menu-translucent shadow-lg"
+      className="cn-menu-target cn-menu-translucent cn-context-menu-sub-content-aria"
       placement={placement}
       offset={offset}
       crossOffset={crossOffset}
@@ -360,7 +357,7 @@ function CheckboxMenuItem({
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
-        "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-disabled:opacity-50",
+        "cn-context-menu-checkbox-item [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -432,7 +429,7 @@ function ContextMenuRadioItem({
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
-        "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-disabled:opacity-50",
+        "cn-context-menu-radio-item [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -454,7 +451,7 @@ function ContextMenuSeparator({
   return (
     <SeparatorPrimitive
       data-slot="context-menu-separator"
-      className={cn("-mx-1.5 my-1.5 h-px bg-border/50", className)}
+      className={cn("cn-context-menu-separator", className)}
       {...props}
     />
   )
@@ -471,10 +468,7 @@ function ContextMenuShortcut({
   return (
     <span
       data-slot="context-menu-shortcut"
-      className={cn(
-        "max-md:hidden ms-auto text-xs text-muted-foreground group-focus/context-menu-item:text-foreground",
-        className
-      )}
+      className={cn("cn-context-menu-shortcut", className)}
       {...props}
     >
       {mod && modifier}

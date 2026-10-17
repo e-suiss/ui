@@ -35,7 +35,7 @@
       ],
       "ignore": [
         "styles/generated/*.css",
-        "styles/style-suiss.css",
+        "styles/style-suiss*.css",
         "styles/vendor/*.css"
       ]
     },

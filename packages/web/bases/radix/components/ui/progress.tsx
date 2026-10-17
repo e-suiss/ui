@@ -26,7 +26,7 @@ function Progress({
         max={max}
         aria-labelledby={labelId}
         data-slot="progress"
-        className={cn("flex flex-wrap gap-3", className)}
+        className={cn("cn-progress flex", className)}
         {...props}
       >
         {children}
@@ -41,10 +41,7 @@ function Progress({
 function ProgressTrack({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn(
-        "relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-muted",
-        className
-      )}
+      className={cn("cn-progress-track", className)}
       data-slot="progress-track"
       {...props}
     />
@@ -61,7 +58,7 @@ function ProgressIndicator({
   return (
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
-      className={cn("h-full bg-primary transition-[width]", className)}
+      className={cn("cn-progress-indicator", className)}
       style={{
         ...(value !== null && { width: `${(value / max) * 100}%` }),
         ...style,
@@ -88,7 +85,7 @@ function ProgressLabel({
   return (
     <span
       id={labelId}
-      className={cn("text-sm", className)}
+      className={cn("cn-progress-label", className)}
       data-slot="progress-label"
       {...props}
     />
@@ -105,10 +102,7 @@ function ProgressValue({
   return (
     <span
       aria-hidden
-      className={cn(
-        "ms-auto text-sm text-muted-foreground tabular-nums",
-        className
-      )}
+      className={cn("cn-progress-value", className)}
       data-slot="progress-value"
       {...props}
     >

@@ -13,10 +13,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
       aria-label="Loading"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={cn(
-        "size-4 shrink-0 animate-[spin_0.8s_steps(8)_infinite]",
-        className
-      )}
+      className={cn("cn-spinner size-4", className)}
       {...props}
     >
       {spokes.map(({ angle, opacity }) => (

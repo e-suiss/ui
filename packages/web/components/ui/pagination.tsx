@@ -12,7 +12,7 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
       aria-label="pagination"
       data-slot="pagination"
       className={cn(
-        "mx-auto flex w-full items-center justify-center gap-3",
+        "cn-pagination mx-auto flex w-full justify-center",
         className
       )}
       {...props}
@@ -27,7 +27,7 @@ function PaginationContent({
   return (
     <ul
       data-slot="pagination-content"
-      className={cn("flex items-center gap-1", className)}
+      className={cn("cn-pagination-content flex items-center", className)}
       {...props}
     />
   )
@@ -157,7 +157,7 @@ function PaginationEllipsis({
     <span
       data-slot="pagination-ellipsis"
       className={cn(
-        "flex size-8 items-center justify-center text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+        "cn-pagination-ellipsis flex items-center justify-center [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -179,10 +179,7 @@ function PaginationSummary({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="pagination-summary"
-      className={cn(
-        "text-sm whitespace-nowrap text-muted-foreground tabular-nums",
-        className
-      )}
+      className={cn("cn-pagination-summary", className)}
       {...props}
     />
   )
@@ -194,7 +191,7 @@ function PaginationGroup({ className, ...props }: React.ComponentProps<"div">) {
       role="group"
       data-slot="pagination-group"
       className={cn(
-        "flex items-center gap-px overflow-hidden rounded-lg *:w-10 *:rounded-none *:border-0 *:bg-secondary *:hover:bg-secondary/80 *:focus-visible:ring-inset *:focus-visible:relative *:focus-visible:z-10",
+        "cn-pagination-group *:w-10 *:rounded-none *:border-0 *:bg-secondary *:hover:bg-secondary/80 *:focus-visible:ring-inset *:focus-visible:relative *:focus-visible:z-10",
         className
       )}
       {...props}
@@ -211,10 +208,7 @@ function PaginationInput({
       type="text"
       inputMode="numeric"
       data-slot="pagination-input"
-      className={cn(
-        "h-8 w-12 rounded-md bg-secondary text-center text-sm font-semibold text-secondary-foreground tabular-nums caret-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-        className
-      )}
+      className={cn("cn-pagination-input", className)}
       {...props}
     />
   )

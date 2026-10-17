@@ -17,11 +17,11 @@ import {
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
-const accordionVariants = cva("flex w-full flex-col", {
+const accordionVariants = cva("cn-accordion", {
   variants: {
     variant: {
       default: "",
-      filled: "overflow-hidden rounded-2xl bg-muted",
+      filled: "cn-accordion-variant-filled",
     },
   },
   defaultVariants: {
@@ -59,7 +59,7 @@ function AccordionItem({
   return (
     <DisclosurePrimitive
       data-slot="accordion-item"
-      className={cn("ms-4 not-first:border-t", className)}
+      className={cn("cn-accordion-item", className)}
       {...props}
       id={id}
       isDisabled={isDisabled}
@@ -81,7 +81,7 @@ function AccordionTrigger({
         slot="trigger"
         data-slot="accordion-trigger"
         className={cn(
-          "group/accordion-trigger relative flex min-h-11 cursor-pointer flex-1 items-center justify-between gap-6 py-2.75 ps-0 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md hover:underline focus-visible:after:ring-3 focus-visible:after:ring-ring/50 data-disabled:pointer-events-none **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground data-disabled:opacity-50",
+          "cn-accordion-trigger group/accordion-trigger flex flex-1 justify-between outline-none **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
           className
         )}
         {...props}
@@ -94,7 +94,7 @@ function AccordionTrigger({
           phosphor="CaretDownIcon"
           remixicon="RiArrowDownSLine"
           data-slot="accordion-trigger-icon"
-          className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
+          className="cn-accordion-trigger-icon pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
         />
         <IconPlaceholder
           lucide="ChevronUpIcon"
@@ -103,7 +103,7 @@ function AccordionTrigger({
           phosphor="CaretUpIcon"
           remixicon="RiArrowUpSLine"
           data-slot="accordion-trigger-icon"
-          className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
+          className="cn-accordion-trigger-icon pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
         />
       </ButtonPrimitive>
     </HeadingPrimitive>
@@ -123,7 +123,7 @@ function AccordionContent({
   return (
     <DisclosurePanelPrimitive
       data-slot="accordion-content"
-      className="overflow-hidden text-sm text-muted-foreground in-data-expanded:animate-accordion-down"
+      className="cn-accordion-content"
       {...props}
     >
       <div

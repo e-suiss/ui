@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils"
 
 const buttonStyles = cva(
-  "cn-button group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "cn-button group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -29,12 +29,13 @@ const buttonStyles = cva(
       },
       size: {
         default: "cn-button-size-default",
-        xs: "cn-button-size-xs",
+        xs: "cn-button-size-xs [&_svg:not([class*='size-'])]:size-3",
         sm: "cn-button-size-sm",
         lg: "cn-button-size-lg",
         xl: "cn-button-size-xl",
         icon: "cn-button-size-icon",
-        "icon-xs": "cn-button-size-icon-xs",
+        "icon-xs":
+          "cn-button-size-icon-xs [&_svg:not([class*='size-'])]:size-3",
         "icon-sm": "cn-button-size-icon-sm",
         "icon-lg": "cn-button-size-icon-lg",
         "icon-xl": "cn-button-size-icon-xl",

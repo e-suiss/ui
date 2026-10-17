@@ -1,45 +1,82 @@
+import { existsSync } from "node:fs"
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 import postcss from "postcss"
 import { createStyleMap, transformDirection } from "shadcn/utils"
 import ts from "typescript"
 
+import {
+  composeStyleMap,
+  expandMarkers,
+  styleMarkers,
+} from "../../../cli/lib/styles.mjs"
+
 const ROOT = import.meta.dirname
   ? path.resolve(import.meta.dirname, "../..")
   : path.resolve(process.cwd(), "../../packages/web")
 const STYLES = path.join(ROOT, "styles")
 
-export const DEFAULT_STYLE = "suiss"
-const VENDOR_STYLES = [
-  "vega",
-  "nova",
-  "maia",
-  "lyra",
-  "mira",
-  "luma",
-  "sera",
-  "rhea",
-]
-export const STYLE_NAMES = [DEFAULT_STYLE, ...VENDOR_STYLES]
+export { DEFAULT_STYLE, STYLE_NAMES } from "../../../cli/lib/styles.mjs"
 
-const MARKER = /(?<![\w-])cn-[a-z0-9]+(?:-[a-z0-9]+)*(?![\w-])/g
-const CLIENT_MARKERS = new Set([
-  "cn-font-heading",
-  "cn-menu-target",
-  "cn-menu-translucent",
-])
+import { DEFAULT_STYLE, STYLE_NAMES } from "../../../cli/lib/styles.mjs"
+
+const VENDOR_STYLES = STYLE_NAMES.filter((name) => name !== DEFAULT_STYLE)
+const DEFAULT_BASE = "base"
+export const TWIN_BASES = ["radix", "aria"]
 
 function hasStyleMarker(value) {
-  for (const [marker] of value.matchAll(MARKER)) {
-    if (!CLIENT_MARKERS.has(marker)) return true
-  }
-  return false
+  return styleMarkers(value).length > 0
 }
 
 function stylePath(name) {
   return name === DEFAULT_STYLE
     ? path.join(STYLES, "style-suiss.css")
     : path.join(STYLES, "vendor", `style-${name}.css`)
+}
+
+function overridePath(base) {
+  return path.join(STYLES, `style-suiss-${base}.css`)
+}
+
+const MARK = /^\s*MARK: (.+?)\s*$/
+
+function lastRules(scope) {
+  const last = new Map()
+  let component = ""
+  scope.each((node) => {
+    if (node.type === "comment") component = node.text.match(MARK)?.[1] ?? ""
+    if (node.type === "rule") last.set(component, node)
+  })
+  return last
+}
+
+async function ownSheet(base) {
+  const sheet = postcss.parse(await readFile(stylePath(DEFAULT_STYLE), "utf8"))
+  if (base === DEFAULT_BASE || !existsSync(overridePath(base))) return sheet
+  const overrides = postcss.parse(await readFile(overridePath(base), "utf8"))
+  const scope = sheet.first
+  const rules = new Map()
+  scope.each((node) => {
+    if (node.type === "rule") rules.set(node.selector, node)
+  })
+  const last = lastRules(scope)
+  let component = ""
+  overrides.first.each((node) => {
+    if (node.type === "comment") component = node.text.match(MARK)?.[1] ?? ""
+    if (node.type !== "rule") return
+    const current = rules.get(node.selector)
+    if (current) {
+      current.removeAll()
+      current.append(node.clone().nodes)
+      return
+    }
+    const clone = node.clone()
+    const anchor = last.get(component)
+    if (anchor) anchor.after(clone)
+    else scope.append(clone)
+    last.set(component, clone)
+  })
+  return sheet
 }
 
 async function logical(values) {
@@ -54,42 +91,78 @@ async function logicalMap(map) {
   return Object.fromEntries(keys.map((key, index) => [key, values[index]]))
 }
 
-async function buildStyleMaps() {
-  const own = createStyleMap(await readFile(stylePath(DEFAULT_STYLE), "utf8"))
-  const maps = { [DEFAULT_STYLE]: own }
+const EMPTY_RULE = /^\.(cn-[a-z0-9-]+)$/
+
+function declared(css) {
+  const markers = {}
+  postcss.parse(css).walkRules(EMPTY_RULE, (rule) => {
+    if (!rule.nodes?.length) markers[rule.selector.slice(1)] = ""
+  })
+  return markers
+}
+
+let structuralCache
+
+function structural() {
+  structuralCache ??= readFile(path.join(STYLES, "structural.json"), "utf8")
+    .then(JSON.parse)
+    .catch(() => ({}))
+  return structuralCache
+}
+
+async function withStructural(map) {
+  const carried = await structural()
+  return Object.fromEntries(
+    Object.entries(map).map(([marker, value]) => [
+      marker,
+      carried[marker] ? `${carried[marker]} ${value}`.trim() : value,
+    ])
+  )
+}
+
+function ownMap(css) {
+  return { ...declared(css), ...createStyleMap(css) }
+}
+
+async function buildStyleData() {
+  const suiss = ownMap(await readFile(stylePath(DEFAULT_STYLE), "utf8"))
+  const overrides = {}
+  for (const base of TWIN_BASES) {
+    if (existsSync(overridePath(base))) {
+      overrides[base] = ownMap(await readFile(overridePath(base), "utf8"))
+    }
+  }
+  const vendors = {}
   for (const name of VENDOR_STYLES) {
     const vendor = createStyleMap(await readFile(stylePath(name), "utf8"))
-    maps[name] = { ...own, ...(await logicalMap(vendor)) }
+    vendors[name] = await withStructural(await logicalMap(vendor))
   }
-  return maps
+  const known = [
+    ...new Set(Object.values(vendors).flatMap((map) => Object.keys(map))),
+  ].sort()
+  return { known, suiss, overrides, vendors }
 }
 
-let cache
+let data
 
-export function loadStyleMaps() {
-  cache ??= buildStyleMaps()
-  return cache
+export function loadStyleData() {
+  data ??= buildStyleData()
+  return data
 }
 
-function expand(value, map, unknown) {
-  return value.replace(MARKER, (marker) => {
-    if (CLIENT_MARKERS.has(marker)) return marker
-    if (!(marker in map)) unknown.add(marker)
-    return map[marker] ?? ""
-  })
-}
-
-function tidy(value, edges) {
-  const collapsed = value.replace(/ {2,}/g, " ")
-  return edges ? collapsed.trim() : collapsed
+export async function loadStyleMaps(base = DEFAULT_BASE) {
+  const styles = await loadStyleData()
+  return Object.fromEntries(
+    STYLE_NAMES.map((style) => [style, composeStyleMap(styles, base, style)])
+  )
 }
 
 const LITERALS = new Map([
-  [ts.SyntaxKind.StringLiteral, [1, 1, true]],
-  [ts.SyntaxKind.NoSubstitutionTemplateLiteral, [1, 1, true]],
-  [ts.SyntaxKind.TemplateHead, [1, 2, false]],
-  [ts.SyntaxKind.TemplateMiddle, [1, 2, false]],
-  [ts.SyntaxKind.TemplateTail, [1, 1, false]],
+  [ts.SyntaxKind.StringLiteral, [1, 1]],
+  [ts.SyntaxKind.NoSubstitutionTemplateLiteral, [1, 1]],
+  [ts.SyntaxKind.TemplateHead, [1, 2]],
+  [ts.SyntaxKind.TemplateMiddle, [1, 2]],
+  [ts.SyntaxKind.TemplateTail, [1, 1]],
 ])
 
 function literalRanges(source, fileName) {
@@ -104,11 +177,11 @@ function literalRanges(source, fileName) {
   const visit = (node) => {
     const shape = LITERALS.get(node.kind)
     if (shape) {
-      const [head, tail, edges] = shape
+      const [head, tail] = shape
       const from = node.getStart(file) + head
       const to = node.getEnd() - tail
       if (hasStyleMarker(source.slice(from, to))) {
-        ranges.push({ from, to, edges })
+        ranges.push({ from, to })
       }
     }
     ts.forEachChild(node, visit)
@@ -121,9 +194,9 @@ export function applyStyle(source, map, fileName = "file.tsx") {
   const unknown = new Set()
   let output = ""
   let cursor = 0
-  for (const { from, to, edges } of literalRanges(source, fileName)) {
+  for (const { from, to } of literalRanges(source, fileName)) {
     output += source.slice(cursor, from)
-    output += tidy(expand(source.slice(from, to), map, unknown), edges)
+    output += expandMarkers(source.slice(from, to), map, unknown)
     cursor = to
   }
   output += source.slice(cursor)
@@ -133,9 +206,7 @@ export function applyStyle(source, map, fileName = "file.tsx") {
 export function markersIn(source, fileName = "file.tsx") {
   const found = new Set()
   for (const { from, to } of literalRanges(source, fileName)) {
-    for (const [marker] of source.slice(from, to).matchAll(MARKER)) {
-      if (!CLIENT_MARKERS.has(marker)) found.add(marker)
-    }
+    for (const marker of styleMarkers(source.slice(from, to))) found.add(marker)
   }
   return [...found]
 }
@@ -153,8 +224,8 @@ async function parseStyle(name) {
   return postcss.parse(await readFile(stylePath(name), "utf8"))
 }
 
-export async function styleSheet(name) {
-  const own = await parseStyle(DEFAULT_STYLE)
+export async function styleSheet(name, base = DEFAULT_BASE) {
+  const own = await ownSheet(base)
   const sheet = name === DEFAULT_STYLE ? own : await parseStyle(name)
   const scope = sheet.first
   const covered = new Set()
@@ -170,6 +241,19 @@ export async function styleSheet(name) {
     if (name === DEFAULT_STYLE && !TRANSLUCENT.test(node.selector)) return
     scope.append(node.clone())
   })
+  if (name !== DEFAULT_STYLE) {
+    const carried = await structural()
+    scope.each((node) => {
+      if (node.type !== "rule" || !covered.has(node.selector)) return
+      const marker = node.selector.slice(1)
+      if (!carried[marker]) return
+      const apply = node.nodes?.find(
+        (child) => child.type === "atrule" && child.name === "apply"
+      )
+      if (apply) apply.params = `${carried[marker]} ${apply.params}`
+      else node.append({ name: "apply", params: carried[marker] })
+    })
+  }
   scopeTranslucent(scope)
   const applies = []
   scope.walkAtRules("apply", (rule) => {

@@ -25,7 +25,8 @@ const STYLED = /[\\/](components|bases[\\/][^\\/]+[\\/]components)[\\/]/
 const SOURCE_FILE = /\.tsx?$/
 const WHITESPACE = /\s+/
 
-const HARMLESS = new Set(["group/button"])
+const DESCENDANT = /(^|:)\*{1,2}:|\[&[^\]]*[>_+~ ]/
+const HARMLESS = /^((group|peer)\/[\w-]+|cn-font-heading)$/
 
 const args = process.argv.slice(2)
 const ref = args.find((arg) => !arg.startsWith("--")) ?? "main"
@@ -34,8 +35,14 @@ const only = args
   ?.slice("--only=".length)
   .split(",")
 
-const maps = await loadStyleMaps()
-const map = maps[DEFAULT_STYLE]
+const maps = Object.fromEntries(
+  await Promise.all(
+    BASES.map(async (base) => [
+      base,
+      (await loadStyleMaps(base))[DEFAULT_STYLE],
+    ])
+  )
+)
 
 function isFile(file) {
   return statSync(file, { throwIfNoEntry: false })?.isFile() ?? false
@@ -77,7 +84,7 @@ function resolver(base) {
   }
 }
 
-const styler = {
+const styler = (map) => ({
   name: "compare-style",
   transform(code, id) {
     if (id.startsWith(REFERENCE) || !STYLED.test(id)) return null
@@ -88,12 +95,12 @@ const styler = {
     }
     return output
   },
-}
+})
 
 function classLists(html) {
   return [...html.matchAll(CLASS_ATTRIBUTE)].map(([, value]) =>
     [...new Set(value.split(WHITESPACE).filter(Boolean))]
-      .filter((token) => !HARMLESS.has(token))
+      .filter((token) => !HARMLESS.test(token))
       .sort()
       .join(" ")
   )
@@ -154,15 +161,34 @@ function split(value) {
   }
 }
 
-function conflicts(plain, markers) {
-  if (plain.length === 0 || markers.length === 0) return []
-  const rules = markers.map((marker) => map[marker] ?? "").join(" ")
-  const merged = new Set(twMerge(`${rules} ${plain.join(" ")}`).split(" "))
-  const kept = new Set(twMerge(`${plain.join(" ")} ${rules}`).split(" "))
-  return plain.filter((token) => merged.has(token) && !kept.has(token))
+function utility(token) {
+  let depth = 0
+  let start = 0
+  for (let index = 0; index < token.length; index++) {
+    const char = token[index]
+    if (char === "[" || char === "(") depth++
+    else if (char === "]" || char === ")") depth--
+    else if (char === ":" && depth === 0) start = index + 1
+  }
+  return token.slice(start)
 }
 
-async function lintFile(file) {
+function conflicts(plain, markers, map) {
+  if (plain.length === 0 || markers.length === 0) return []
+  const rules = markers
+    .flatMap((marker) => (map[marker] ?? "").split(WHITESPACE))
+    .filter((token) => token && !DESCENDANT.test(token))
+    .map(utility)
+  return plain.filter((token) => {
+    if (DESCENDANT.test(token)) return false
+    const own = utility(token)
+    return rules.some(
+      (rule) => rule !== own && !twMerge(`${own} ${rule}`).includes(own)
+    )
+  })
+}
+
+async function lintFile(file, map) {
   const source = await readFile(file, "utf8")
   if (markersIn(source, file).length === 0) return []
   const tree = ts.createSourceFile(
@@ -186,13 +212,13 @@ async function lintFile(file) {
       const markers = [...base, ...variants].flatMap(
         (value) => split(value).markers
       )
-      const clash = conflicts(plain, markers)
+      const clash = conflicts(plain, markers, map)
       if (clash.length) problems.push(`cva: ${clash.join(" ")}`)
       return
     }
     if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
       const { plain, markers } = split(node.text)
-      const clash = conflicts(plain, markers)
+      const clash = conflicts(plain, markers, map)
       if (clash.length) problems.push(`"${node.text.slice(0, 40)}…": ${clash}`)
     }
     ts.forEachChild(node, visit)
@@ -216,8 +242,14 @@ const lint = (
       ...BASES.slice(1).map((base) =>
         path.join(ROOT, "bases", base, "components/ui")
       ),
-    ].map(async (dir) =>
-      (await Promise.all((await sourceFiles(dir)).map(lintFile))).flat()
+    ].map(async (dir, index) =>
+      (
+        await Promise.all(
+          (
+            await sourceFiles(dir)
+          ).map((file) => lintFile(file, maps[BASES[index]]))
+        )
+      ).flat()
     )
   )
 ).flat()
@@ -240,7 +272,7 @@ for (const base of BASES) {
     logLevel: "silent",
     appType: "custom",
     server: { middlewareMode: true, hmr: false, ws: false },
-    plugins: [resolver(base), styler],
+    plugins: [resolver(base), styler(maps[base])],
   })
   for (const name of names) {
     const before = await render(server, exampleFile(REFERENCE, base, name))

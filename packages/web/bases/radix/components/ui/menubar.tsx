@@ -43,7 +43,7 @@ function Menubar({
         data-disabled={disabled ? "" : undefined}
         value={current}
         onValueChange={setValue}
-        className={cn("flex h-9 items-center rounded-md border p-1", className)}
+        className={cn("cn-menubar flex items-center", className)}
         {...props}
       />
     </MenubarContext.Provider>
@@ -129,7 +129,7 @@ function MenubarTrigger({
       data-slot="menubar-trigger"
       disabled={disabled ?? menubar.disabled}
       className={cn(
-        "flex items-center rounded-sm px-2 py-0.75 text-sm outline-hidden select-none hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50 aria-expanded:bg-accent hover:text-accent-foreground",
+        "cn-menubar-trigger flex items-center outline-hidden select-none",
         className
       )}
       {...props}
@@ -157,7 +157,7 @@ function MenubarContent({
         side={side}
         sideOffset={sideOffset}
         className={cn(
-          "cn-menu-target cn-menu-translucent z-50 max-h-(--radix-menubar-content-available-height) w-(--radix-menubar-trigger-width) min-w-48 origin-(--radix-menubar-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+          "cn-menu-target cn-menu-translucent cn-menubar-content z-50 origin-(--radix-menubar-content-transform-origin)",
           "cn-menu-target cn-menu-translucent min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-[instant=group]:data-closed:animate-none",
           className
         )}
@@ -186,7 +186,7 @@ function MenubarItem({
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       className={cn(
-        "group/dropdown-menu-item relative flex cursor-default items-center gap-2.5 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive data-disabled:opacity-50",
+        "cn-menubar-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 group/menubar-item group/dropdown-menu-item not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive! data-[variant=destructive]:*:[svg]:text-destructive",
         "group/menubar-item gap-2.5 rounded-md px-3 py-2 text-base focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive! data-disabled:opacity-50",
         className
       )}
@@ -227,7 +227,7 @@ function MenubarCheckboxItem({
         if (!closeOnClick) event.preventDefault()
       }}
       className={cn(
-        "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-3 ps-9.5 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 data-disabled:opacity-50",
+        "cn-menubar-checkbox-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 focus:**:text-accent-foreground",
         className
       )}
       checked={checked ?? uncontrolled}
@@ -304,7 +304,7 @@ function MenubarRadioItem({
         if (!closeOnClick) event.preventDefault()
       }}
       className={cn(
-        "relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-3 ps-9.5 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-disabled:opacity-50",
+        "cn-menubar-radio-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 focus:**:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -348,7 +348,7 @@ function MenubarLabel({
       id={labelId}
       data-inset={inset ? "" : undefined}
       className={cn(
-        "px-3 py-2.5 text-xs font-semibold text-muted-foreground data-inset:ps-9.5",
+        "cn-menubar-label",
         "px-3.5 py-2.5 text-xs text-muted-foreground data-inset:ps-9.5",
         className
       )}
@@ -365,7 +365,7 @@ function MenubarSeparator({
     <MenubarPrimitive.Separator
       data-slot="menubar-separator"
       className={cn(
-        "-mx-1.5 my-1.5 h-px bg-border/50",
+        "cn-menubar-separator h-px",
         "-mx-1 my-1 h-px bg-border/50",
         className
       )}
@@ -381,10 +381,7 @@ function MenubarShortcut({
   return (
     <DropdownMenuShortcut
       data-slot="menubar-shortcut"
-      className={cn(
-        "max-md:hidden ms-auto text-xs text-muted-foreground group-focus/menubar-item:text-foreground",
-        className
-      )}
+      className={cn("cn-menubar-shortcut", className)}
       {...props}
     />
   )
@@ -409,7 +406,7 @@ function MenubarSubTrigger({
       data-slot="menubar-sub-trigger"
       data-inset={inset ? "" : undefined}
       className={cn(
-        "flex cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:ps-9.5 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "cn-menubar-sub-trigger flex cursor-default items-center select-none [&_svg:not([class*='size-'])]:size-4 not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
         "gap-2 rounded-md px-3 py-2 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
@@ -441,7 +438,7 @@ function MenubarSubContent({
         alignOffset={alignOffset}
         sideOffset={sideOffset}
         className={cn(
-          "cn-menu-target cn-menu-translucent z-50 max-h-(--radix-menubar-content-available-height) w-auto min-w-36 origin-(--radix-menubar-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+          "cn-menu-target cn-menu-translucent cn-menubar-sub-content z-50 origin-(--radix-menubar-content-transform-origin)",
           "cn-menu-target cn-menu-translucent min-w-32 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}

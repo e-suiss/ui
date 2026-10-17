@@ -65,7 +65,7 @@ function SheetOverlay({
     <ModalOverlayPrimitive
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/50 transition-opacity duration-400 data-exiting:opacity-0 data-entering:opacity-0",
+        "cn-sheet-overlay fixed inset-0 z-50 transition-opacity data-exiting:opacity-0 data-entering:opacity-0",
         className
       )}
       {...props}
@@ -109,7 +109,7 @@ function SheetContent({
           data-side={side}
           aria-describedby={described ? descriptionId : undefined}
           className={cn(
-            "has-[>[data-slot=sheet-close]]:*:first:pe-14 has-[>[data-slot=sheet-close][data-label]]:*:first:pe-24 fixed z-50 flex flex-col rounded-3xl bg-popover text-base text-popover-foreground shadow-xl transition duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] in-data-exiting:opacity-0 in-data-entering:opacity-0 data-[side=bottom]:inset-x-2 data-[side=bottom]:bottom-2 data-[side=bottom]:h-auto data-[side=bottom]:in-data-exiting:translate-y-10 data-[side=bottom]:in-data-entering:translate-y-10 data-[side=left]:inset-y-2 data-[side=left]:left-2 data-[side=left]:w-3/4 data-[side=left]:in-data-exiting:-translate-x-10 data-[side=left]:in-data-entering:-translate-x-10 data-[side=right]:inset-y-2 data-[side=right]:right-2 data-[side=right]:w-3/4 data-[side=right]:in-data-exiting:translate-x-10 data-[side=right]:in-data-entering:translate-x-10 data-[side=top]:inset-x-2 data-[side=top]:top-2 data-[side=top]:h-auto data-[side=top]:in-data-exiting:-translate-y-10 data-[side=top]:in-data-entering:-translate-y-10 data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm",
+            "cn-sheet-content has-[>[data-slot=sheet-close]]:*:first:pe-14 has-[>[data-slot=sheet-close][data-label]]:*:first:pe-24",
             className
           )}
           {...props}
@@ -124,7 +124,7 @@ function SheetContent({
               data-label={closeLabel ? "" : undefined}
               variant={closeLabel ? "plain" : "ghost"}
               className={cn(
-                "absolute top-4.75 inset-e-4",
+                "cn-sheet-close",
                 closeLabel && "text-base",
                 !closeLabel &&
                   "bg-secondary hover:bg-[color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]"
@@ -155,7 +155,7 @@ function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sheet-header"
-      className={cn("flex flex-col gap-1.5 p-6", className)}
+      className={cn("cn-sheet-header flex flex-col", className)}
       {...props}
     />
   )
@@ -165,7 +165,7 @@ function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sheet-footer"
-      className={cn("mt-auto flex flex-col gap-2 p-6", className)}
+      className={cn("cn-sheet-footer mt-auto flex flex-col", className)}
       {...props}
     />
   )
@@ -180,7 +180,7 @@ function SheetTitle({
       slot="title"
       level={2}
       data-slot="sheet-title"
-      className={cn("text-base font-semibold text-foreground", className)}
+      className={cn("cn-font-heading cn-sheet-title", className)}
       {...props}
     />
   )
@@ -199,7 +199,7 @@ function SheetDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       id={context?.id}
       data-slot="sheet-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("cn-sheet-description", className)}
       {...props}
     />
   )

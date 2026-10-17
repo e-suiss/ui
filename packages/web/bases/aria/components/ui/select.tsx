@@ -81,7 +81,7 @@ function SelectGroup({
   return (
     <ListBoxSectionPrimitive
       data-slot="select-group"
-      className={cn("scroll-my-1.5 p-1.5", className)}
+      className={cn("cn-select-group", className)}
       {...props}
     />
   )
@@ -99,7 +99,7 @@ function SelectValue({
   return (
     <SelectValuePrimitive
       data-slot="select-value"
-      className={cn("flex flex-1 text-start", className)}
+      className={cn("cn-select-value cn-select-value-aria", className)}
       {...props}
     >
       {children ??
@@ -126,7 +126,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "flex w-fit items-center justify-between gap-1.5 rounded-lg border border-transparent bg-secondary px-3 py-2 text-base whitespace-nowrap transition-[color,box-shadow,background-color] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed group-data-invalid/select:border-destructive group-data-invalid/select:ring-3 group-data-invalid/select:ring-destructive/20 dark:group-data-invalid/select:ring-destructive/40 group-data-invalid/select:bg-destructive/5 dark:group-data-invalid/select:bg-destructive/10 has-data-placeholder:text-muted-foreground data-[size=default]:h-11 data-[size=sm]:h-9 data-[size=sm]:rounded-md *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 disabled:opacity-50",
+        "cn-select-trigger flex items-center justify-between whitespace-nowrap outline-none disabled:cursor-not-allowed *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0 disabled:opacity-50 *:data-[slot=select-value]:gap-1.5 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -164,7 +164,7 @@ function SelectContent({
       offset={offset}
       crossOffset={crossOffset}
       className={cn(
-        "cn-menu-target cn-menu-translucent relative isolate z-50 w-(--trigger-width) min-w-36 origin-(--trigger-anchor-point) overflow-x-hidden overflow-y-auto rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95",
+        "cn-menu-target cn-menu-translucent cn-select-content-aria cn-menu-translucent-aria relative isolate z-50 w-(--trigger-width) origin-(--trigger-anchor-point)",
         className
       )}
     >
@@ -172,7 +172,7 @@ function SelectContent({
         <span
           aria-hidden="true"
           data-slot="select-highlight"
-          className="pointer-events-none absolute rounded-md bg-accent opacity-0 transition-[top,left,width,height,opacity] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] data-instant:transition-none data-visible:opacity-100 motion-reduce:transition-none text-accent-foreground"
+          className="cn-select-highlight"
         />
         <ListBoxPrimitive className="relative outline-none" {...props}>
           {children}
@@ -189,10 +189,7 @@ function SelectLabel({
   return (
     <HeaderPrimitive
       data-slot="select-label"
-      className={cn(
-        "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
-        className
-      )}
+      className={cn("cn-select-label", className)}
       {...props}
     />
   )
@@ -226,7 +223,7 @@ function SelectItem({
       data-slot="select-item"
       textValue={textValue ?? (textOf(children).trim() || value)}
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:text-foreground not-data-[variant=destructive]:focus:**:text-foreground data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 data-disabled:opacity-50",
+        "cn-select-item cn-select-item-aria relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 data-disabled:opacity-50 not-data-[variant=destructive]:focus:**:text-foreground [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}
@@ -261,10 +258,7 @@ function SelectSeparator({
   return (
     <SeparatorPrimitive
       data-slot="select-separator"
-      className={cn(
-        "pointer-events-none -mx-1.5 my-1.5 h-px bg-border",
-        className
-      )}
+      className={cn("cn-select-separator pointer-events-none", className)}
       {...props}
     />
   )
@@ -279,7 +273,7 @@ function SelectScrollUpButton({
       aria-hidden="true"
       data-slot="select-scroll-up-button"
       className={cn(
-        "top-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4",
+        "cn-select-scroll-up-button [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -304,7 +298,7 @@ function SelectScrollDownButton({
       aria-hidden="true"
       data-slot="select-scroll-down-button"
       className={cn(
-        "bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4",
+        "cn-select-scroll-down-button [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

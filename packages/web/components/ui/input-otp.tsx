@@ -29,7 +29,10 @@ function InputOTP({
       }}
       containerClassName={cn("flex items-center", containerClassName)}
       spellCheck={false}
-      className={cn("disabled:cursor-not-allowed", className)}
+      className={cn(
+        "cn-input-otp-input disabled:cursor-not-allowed",
+        className
+      )}
       {...props}
     />
   )
@@ -39,7 +42,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="input-otp-group"
-      className={cn("flex items-center gap-2", className)}
+      className={cn("cn-input-otp-group flex items-center", className)}
       {...props}
     />
   )
@@ -60,7 +63,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-secondary text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 in-[[data-input-otp-container]:has(input[aria-invalid=true])]:border-destructive in-[[data-input-otp-container]:has(input[aria-invalid=true])]:bg-destructive/5 dark:in-[[data-input-otp-container]:has(input[aria-invalid=true])]:bg-destructive/10 data-[active=true]:z-10 data-[active=true]:border-primary in-[[data-input-otp-container]:has(input:disabled)]:opacity-50",
+        "cn-input-otp-slot relative flex items-center justify-center data-[active=true]:z-10",
         className
       )}
       {...props}
@@ -79,7 +82,7 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="input-otp-separator"
-      className="flex items-center [&_svg:not([class*='size-'])]:size-4 in-[[data-input-otp-container]:has(input:disabled)]:opacity-50"
+      className="cn-input-otp-separator flex items-center [&_svg:not([class*='size-'])]:size-4"
       role="separator"
       {...props}
     >
