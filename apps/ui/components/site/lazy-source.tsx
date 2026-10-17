@@ -12,6 +12,12 @@ import { SourceCode } from "@/components/site/source-code"
 import { DEFAULT_BASE, DEFAULT_ICONS, sourceUrl } from "@/lib/code-options"
 import type { Variants } from "@/lib/highlight"
 
+const CodeVisibleContext = React.createContext(false)
+
+export const CodeVisible = CodeVisibleContext.Provider
+
+export const useCodeVisible = () => React.useContext(CodeVisibleContext)
+
 export function LazySource({
   file,
   variants,
@@ -35,7 +41,9 @@ export function LazySource({
     base: variants.bases.includes(options.base) ? options.base : DEFAULT_BASE,
   })
   const [expanded, setExpanded] = React.useState(false)
-  const wanted = src !== sourceUrl(file) || (long && expanded)
+  const visible = useCodeVisible()
+  const wanted =
+    src !== sourceUrl(file) || (long && (expanded || (!fold && visible)))
   const [loaded, setLoaded] = React.useState<{ src: string; source: Source }>()
 
   React.useEffect(() => {

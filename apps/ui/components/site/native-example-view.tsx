@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import * as React from "react"
+import { CodeVisible } from "@/components/site/lazy-source"
 import { useActivePlatform } from "@/components/site/platform"
 import { SourceCode } from "@/components/site/source-code"
 import { useTheme } from "@/components/ui/theme"
@@ -198,17 +199,19 @@ export function NativeExampleView({
           </div>
         </div>
       )}
-      <div hidden={tab !== "code"}>
-        {labels.length > 1 ? (
-          panels.map((panel, index) => (
-            <div key={labels[index]} hidden={index !== active}>
-              <SourceCode>{panel}</SourceCode>
-            </div>
-          ))
-        ) : (
-          <SourceCode>{children}</SourceCode>
-        )}
-      </div>
+      <CodeVisible value={tab === "code"}>
+        <div hidden={tab !== "code"}>
+          {labels.length > 1 ? (
+            panels.map((panel, index) => (
+              <div key={labels[index]} hidden={index !== active}>
+                <SourceCode>{panel}</SourceCode>
+              </div>
+            ))
+          ) : (
+            <SourceCode>{children}</SourceCode>
+          )}
+        </div>
+      </CodeVisible>
     </div>
   )
 }

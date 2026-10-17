@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { ExamplePreview } from "@/components/site/example-preview"
+import { CodeVisible } from "@/components/site/lazy-source"
 import {
   ResponsivePreview,
   ResponsiveToolbar,
@@ -63,7 +64,9 @@ export function Example({
         )}
       </div>
       <div hidden={tab !== "code"}>
-        <SourceCode>{children}</SourceCode>
+        <CodeVisible value={tab === "code"}>
+          <SourceCode>{children}</SourceCode>
+        </CodeVisible>
       </div>
     </div>
   )

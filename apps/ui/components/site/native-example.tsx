@@ -1,8 +1,8 @@
 import type * as React from "react"
 
-import { Code } from "@/components/site/component-source"
+import { NativeCode } from "@/components/site/component-source"
 import { NativeExampleView } from "@/components/site/native-example-view"
-import { nativeCode, nativePreview } from "@/lib/native"
+import { NATIVE_LANGUAGES, nativeCode, nativePreview } from "@/lib/native"
 
 const LABELS = { swift: "SwiftUI", kotlin: "Compose" } as const
 
@@ -45,9 +45,20 @@ export function NativeExample({
           : undefined
       }
     >
-      <Code code={code.rn ?? ""} />
+      <NativeCode
+        id={id}
+        platform="rn"
+        code={code.rn ?? ""}
+        lang={NATIVE_LANGUAGES.rn}
+      />
       {others.map((platform) => (
-        <Code key={platform} code={code[platform] ?? ""} lang={platform} />
+        <NativeCode
+          key={platform}
+          id={id}
+          platform={platform}
+          code={code[platform] ?? ""}
+          lang={NATIVE_LANGUAGES[platform]}
+        />
       ))}
     </NativeExampleView>
   )

@@ -2,6 +2,8 @@ import path from "node:path"
 
 import { CodeBlock } from "@/components/site/code-block"
 import { LazySource } from "@/components/site/lazy-source"
+import { NativeSource } from "@/components/site/native-source"
+import { withBase } from "@/lib/base-path"
 import { sourceUrl } from "@/lib/code-options"
 import {
   exampleFile,
@@ -34,16 +36,32 @@ async function highlighted(
   )
 }
 
-export function Code({
+export async function NativeCode({
+  id,
+  platform,
   code,
-  lang = "tsx",
-  title,
+  lang,
 }: {
+  id: string
+  platform: string
   code: string
-  lang?: string
-  title?: string
+  lang: string
 }) {
-  return highlighted(code, lang, title)
+  const lines = code.trimEnd().split("\n")
+  const long = lines.length > PREVIEW_LINES
+  const src = long ? withBase(`/native/${platform}/${id}`) : undefined
+  return (
+    <NativeSource src={src}>
+      {
+        await highlighted(
+          long ? lines.slice(0, PREVIEW_LINES).join("\n") : code,
+          lang,
+          undefined,
+          src
+        )
+      }
+    </NativeSource>
+  )
 }
 
 async function preview(file: string) {
@@ -86,19 +104,24 @@ export async function ComponentSource({
   )
 }
 
-async function example(name: string) {
-  const file = exampleFile(name)
-  return {
-    file,
-    block: await highlighted(await exampleSource(name), "tsx"),
-    variants: await sourceVariants(file),
-  }
-}
-
 export async function ExampleSource({ name }: { name: string }) {
-  const { file, block, variants } = await example(name)
+  const file = exampleFile(name)
+  const code = (await exampleSource(name)).trimEnd()
+  const lines = code.split("\n")
+  const long = lines.length > PREVIEW_LINES
+  const block = await highlighted(
+    long ? lines.slice(0, PREVIEW_LINES).join("\n") : code,
+    "tsx",
+    undefined,
+    long ? sourceUrl(file) : undefined
+  )
   return (
-    <LazySource file={file} variants={variants} fold={false}>
+    <LazySource
+      file={file}
+      variants={await sourceVariants(file)}
+      long={long}
+      fold={false}
+    >
       {block}
     </LazySource>
   )

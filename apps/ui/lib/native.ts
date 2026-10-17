@@ -10,9 +10,23 @@ const mobileRoot = path.join(process.cwd(), "../../packages/mobile")
 
 let examples: Map<string, NativeCode> | undefined
 
-export function nativeCode(id: string): NativeCode {
+export const NATIVE_LANGUAGES = {
+  rn: "tsx",
+  swift: "swift",
+  kotlin: "kotlin",
+} as const
+
+function allExamples() {
   examples ??= nativeExamples(mobileRoot) as Map<string, NativeCode>
-  return examples.get(id) ?? {}
+  return examples
+}
+
+export function nativeCode(id: string): NativeCode {
+  return allExamples().get(id) ?? {}
+}
+
+export function nativeIds() {
+  return [...allExamples().keys()]
 }
 
 function webpSize(file: string) {
