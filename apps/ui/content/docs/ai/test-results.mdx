@@ -1,0 +1,135 @@
+---
+title: Test Results
+description: "A test run by the agent, with a summary, its suites and the error for each failure."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="test-results-demo" />
+
+Test Results is a test run by the agent. The summary row counts what passed and failed. Open it to see each suite, its tests, and the error for each failure.
+
+The run and each suite are a `TraceCollapsible`, and each failed test opens into a [Code Block](/docs/components/code-block) with its error.
+
+## Installation
+
+Test Results is built with the [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace @esuiss/code-block
+```
+
+Works in any project with a `components.json`. See [Installation](/docs/installation#add-components) for the one-line registry setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block
+```
+
+## Usage
+
+```tsx
+import { CodeBlock, CodeBlockContent } from "@/components/ui/code-block"
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine status="error">
+        <TraceIcon>
+          <FlaskConicalIcon />
+        </TraceIcon>
+        <TraceTitle>Ran 2 tests, 1 failed</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <CheckIcon />
+          </TraceIcon>
+          <TraceTitle>creates a user</TraceTitle>
+        </TraceLine>
+        <TraceCollapsible>
+          <TraceCollapsibleTrigger>
+            <TraceLine status="error">
+              <TraceIcon>
+                <XIcon />
+              </TraceIcon>
+              <TraceTitle>updates a user profile</TraceTitle>
+            </TraceLine>
+          </TraceCollapsibleTrigger>
+          <TraceCollapsibleContent>
+            <CodeBlock size="sm">
+              <CodeBlockContent wrap className="max-h-64">
+                Expected status 200, received 500
+              </CodeBlockContent>
+            </CodeBlock>
+          </TraceCollapsibleContent>
+        </TraceCollapsible>
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+<OnlyBase base="aria">
+
+With React Aria, use `defaultExpanded` on `TraceCollapsible` in place of `defaultOpen`.
+
+</OnlyBase>
+
+## Examples
+
+### Suites
+
+Groups tests by file. Each suite is a collapsible row with a `Trace` of its tests, and the suites with a failure start open.
+
+<ComponentPreview name="test-results-suites" />
+
+## AI SDK
+
+Run the tests as a tool and render its output. The tool states map the same way as in [Tool](/docs/ai/tool).
+
+```tsx
+const tests = part.output.suites.flatMap((suite) => suite.tests)
+const failed = tests.filter((test) => test.status === "failed").length
+
+return (
+  <TraceCollapsible defaultOpen={failed > 0}>
+    <TraceCollapsibleTrigger>
+      <TraceLine status={failed > 0 ? "error" : undefined}>
+        <TraceIcon>
+          <FlaskConicalIcon />
+        </TraceIcon>
+        <TraceTitle>
+          Ran {tests.length} tests{failed > 0 && `, ${failed} failed`}
+        </TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>…</TraceCollapsibleContent>
+  </TraceCollapsible>
+)
+```
+
+## API Reference
+
+See [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block).
+
+## Accessibility
+
+- Put the counts in the summary title, such as "Ran 8 tests, 2 failed", so the result is read before the row is opened.
+- A failed run, suite or test sets `status="error"`, and its title names what failed, so the state is not shown by color alone.
+
+</Only>

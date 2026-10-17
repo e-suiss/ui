@@ -288,6 +288,7 @@ const groupTitles: Record<string, string> = {
   interactions: "Interactions",
   charts: "Charts",
   blocks: "Blocks",
+  ai: "AI",
 }
 
 function treeOrder() {

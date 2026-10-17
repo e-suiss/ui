@@ -1,0 +1,30 @@
+{
+  "title": "AI",
+  "pages": [
+    "index",
+    "---Conversation---",
+    "chat",
+    "message",
+    "prompt-input",
+    "suggestion",
+    "model-selector",
+    "context",
+    "checkpoint",
+    "inline-citation",
+    "---Agent steps---",
+    "chain-of-thought",
+    "reasoning",
+    "tool",
+    "confirmation",
+    "task",
+    "plan",
+    "queue",
+    "subagent",
+    "sources",
+    "---Output---",
+    "terminal",
+    "stack-trace",
+    "test-results",
+    "file-tree"
+  ]
+}

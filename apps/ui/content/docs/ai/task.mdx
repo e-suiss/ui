@@ -1,0 +1,121 @@
+---
+title: Task
+description: "A piece of work the agent is doing, with each search, read or edit listed under it as it happens."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="task-demo" />
+
+Task is a piece of work the agent is doing, such as finding the project files or updating a page. Each step, like a search, a read or an edit, appears under the task when the agent takes it.
+
+It is built with [Trace](/docs/components/trace): a `TraceCollapsible` for each task and a nested `Trace` for its steps.
+
+Use [Plan](/docs/ai/plan) when the agent decides the steps before it starts. Use Task when the steps come from the work itself, and the agent only knows the next one once it has taken the last.
+
+| | Plan | Task |
+| --- | --- | --- |
+| Steps | Every step, from the start | Each step, once the agent takes it |
+| Pending steps | Yes, waiting their turn | None |
+| Title | The goal, with progress: "2 of 4 done" | What the agent is doing, then what it did |
+| Per reply | One plan | One or more tasks, each closing when it is done |
+
+## Installation
+
+Task is built with [Trace](/docs/components/trace).
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace
+```
+
+## Usage
+
+```tsx
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible defaultOpen>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceTitle>Found the project files</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <SearchIcon />
+          </TraceIcon>
+          <TraceTitle>Searched for app/page.tsx</TraceTitle>
+        </TraceLine>
+        <a href="/files/app/page.tsx">
+          <TraceLine>
+            <TraceIcon>
+              <FileTextIcon />
+            </TraceIcon>
+            <TraceTitle>Read app/page.tsx</TraceTitle>
+          </TraceLine>
+        </a>
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+<OnlyBase base="aria">
+
+Use `defaultExpanded` instead of `defaultOpen` on `TraceCollapsible`.
+
+</OnlyBase>
+
+### Status
+
+Set the task's status from its steps. Write the title in the present tense while the task runs, and in the past tense once it is done.
+
+| Steps | `status` | Title |
+| --- | --- | --- |
+| A step is still running | `"running"` | Updating the page metadata |
+| A step failed | `"error"` | Failed to update the page metadata |
+| Every step is done | none | Updated the page metadata |
+
+Put several tasks in one `Trace`. Keep the running task open, and close each task once it is done.
+
+## AI SDK
+
+Stream each task as a data part with its own `id`. The AI SDK replaces a data part with the same `id`, so writing a task again with a new step updates it in place.
+
+```ts title="app/api/chat/route.ts"
+const stream = createUIMessageStream({
+  execute: async ({ writer }) => {
+    writer.write({ type: "data-task", id: "update", data: { title, steps } })
+  },
+})
+```
+
+```tsx
+const tasks = message.parts.filter((part) => part.type === "data-task")
+```
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference).
+
+</Only>

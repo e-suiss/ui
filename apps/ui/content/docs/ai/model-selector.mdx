@@ -1,0 +1,153 @@
+---
+title: Model Selector
+description: "Two menus in the prompt input: one picks the model the agent runs, the other picks how much effort it spends."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="model-selector-demo" />
+
+The model selector is two [Dropdown Menu](/docs/components/dropdown-menu) radio groups in the [Prompt Input](/docs/ai/prompt-input). One picks the model, grouped by provider, and the other picks the reasoning effort. Each trigger shows the current choice.
+
+## Installation
+
+The model selector is built with Dropdown Menu and Input Group.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/dropdown-menu @esuiss/input-group
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add dropdown-menu input-group
+```
+
+## Usage
+
+<OnlyBase base="base">
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger render={<InputGroupButton size="sm" variant="outline" />}>
+    {modelName}
+    <ChevronDownIcon />
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="start">
+    <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
+      <DropdownMenuGroup>
+        <DropdownMenuLabel>Anthropic</DropdownMenuLabel>
+        <DropdownMenuRadioItem value="claude-opus-5-5" closeOnClick>
+          Claude Opus 5.5
+        </DropdownMenuRadioItem>
+      </DropdownMenuGroup>
+    </DropdownMenuRadioGroup>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+Set `closeOnClick` on each radio item so the menu closes once a model is picked.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <InputGroupButton size="sm" variant="outline">
+      {modelName}
+      <ChevronDownIcon />
+    </InputGroupButton>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="start">
+    <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
+      <DropdownMenuGroup>
+        <DropdownMenuLabel>Anthropic</DropdownMenuLabel>
+        <DropdownMenuRadioItem value="claude-opus-5-5" closeOnClick>
+          Claude Opus 5.5
+        </DropdownMenuRadioItem>
+      </DropdownMenuGroup>
+    </DropdownMenuRadioGroup>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+Set `closeOnClick` on each radio item so the menu closes once a model is picked.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<DropdownMenu>
+  <InputGroupButton size="sm" variant="outline">
+    {modelName}
+    <ChevronDownIcon />
+  </InputGroupButton>
+  <DropdownMenuContent>
+    <DropdownMenuRadioGroup value={model} onChange={setModel}>
+      <DropdownMenuLabel>Anthropic</DropdownMenuLabel>
+      <DropdownMenuRadioItem value="claude-opus-5-5" shouldCloseOnSelect>
+        Claude Opus 5.5
+      </DropdownMenuRadioItem>
+    </DropdownMenuRadioGroup>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+Use one radio group per provider, and set `shouldCloseOnSelect` on each radio item so the menu closes once a model is picked.
+
+</OnlyBase>
+
+Give each trigger an `aria-label` that includes the current choice, such as "Model: Claude Opus 5.5", so the value is announced along with what the menu changes.
+
+## AI SDK
+
+Send the model and the effort with the message. Map them to a model and provider options in the route.
+
+```tsx
+sendMessage({ text }, { body: { model, effort } })
+```
+
+```ts title="app/api/chat/route.ts"
+import { anthropic } from "@ai-sdk/anthropic"
+import { openai } from "@ai-sdk/openai"
+import { convertToModelMessages, streamText, type UIMessage } from "ai"
+
+const models = {
+  "claude-opus-5-5": anthropic("claude-opus-5-5"),
+  "claude-sonnet-5-5": anthropic("claude-sonnet-5-5"),
+  "gpt-5": openai("gpt-5"),
+  "gpt-5-mini": openai("gpt-5-mini"),
+}
+
+export async function POST(req: Request) {
+  const { messages, model, effort } = (await req.json()) as {
+    messages: UIMessage[]
+    model: keyof typeof models
+    effort: "low" | "medium" | "high"
+  }
+
+  const result = streamText({
+    model: models[model] ?? models["claude-opus-5-5"],
+    messages: await convertToModelMessages(messages),
+    providerOptions: {
+      anthropic: { effort },
+      openai: { reasoningEffort: effort },
+    },
+  })
+
+  return result.toUIMessageStreamResponse()
+}
+```
+
+Each provider reads its own key in `providerOptions` and ignores the rest.
+
+## API Reference
+
+See [Dropdown Menu](/docs/components/dropdown-menu#api-reference) and [Input Group](/docs/components/input-group#api-reference).
+
+</Only>

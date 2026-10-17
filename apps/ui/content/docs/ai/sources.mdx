@@ -1,0 +1,102 @@
+---
+title: Sources
+description: "The links the agent used for a reply, in a row that opens into a list of links."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="sources-demo" />
+
+Sources is a row that lists the links the agent used for a reply. It says how many there are, such as "Used 3 sources", and opens into a link for each one.
+
+The list is a `TraceCollapsible` with a nested `Trace` of links. To cite a source inside a sentence, use [Inline Citation](/docs/ai/inline-citation).
+
+## Installation
+
+Sources is built with the [Trace](/docs/components/trace) component.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace
+```
+
+Works in any project with a `components.json`. See [Installation](/docs/installation#add-components) for the one-line registry setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace
+```
+
+## Usage
+
+```tsx
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <GlobeIcon />
+        </TraceIcon>
+        <TraceTitle>Used {sources.length} sources</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Trace>
+        {sources.map((source) => (
+          <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
+            <TraceLine>
+              <TraceTitle>
+                {source.title ?? new URL(source.url).hostname}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </TraceTitle>
+              <TraceIcon>
+                <ArrowUpRightIcon />
+              </TraceIcon>
+            </TraceLine>
+          </a>
+        ))}
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+## AI SDK
+
+Collect the `source-url` parts of a message and render them after the text. The agent can cite the same page more than once, so dedupe them by `url`.
+
+```tsx
+const sources = message.parts
+  .filter((part) => part.type === "source-url")
+  .filter(
+    (part, index, all) =>
+      all.findIndex((other) => other.url === part.url) === index
+  )
+```
+
+`title` is optional on a `source-url` part. Fall back to the hostname of the URL.
+
+## API Reference
+
+See [Trace](/docs/components/trace) for every part and prop.
+
+## Accessibility
+
+- Each source is a plain link inside the list.
+- Links open in a new tab. Add `sr-only` text, such as "(opens in a new tab)", so screen readers announce it.
+- The arrow icon is decorative, so the title is the name of the link.
+- The count in the trigger, such as "Used 3 sources", says what opens before the list is opened.
+
+</Only>

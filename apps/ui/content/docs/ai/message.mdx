@@ -1,0 +1,113 @@
+---
+title: Message
+description: "One turn of a conversation: the person's message, and the agent's reply with actions to copy, rate and retry it."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="message-pattern" />
+
+Use this pattern for one turn in a thread. The person's text is a [Bubble](/docs/components/bubble) on a [Message](/docs/components/message) with `align="end"`. The agent's reply is plain content on a Message, with actions under it. A thread of these turns is a [Chat](/docs/ai/chat).
+
+## Installation
+
+The pattern is built with Message, Bubble, Button and Tooltip.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/message @esuiss/bubble @esuiss/button @esuiss/tooltip
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble button tooltip
+```
+
+## Usage
+
+```tsx
+import { Bubble, BubbleContent } from "@/components/ui/bubble"
+import { Button } from "@/components/ui/button"
+import { Message, MessageContent, MessageFooter } from "@/components/ui/message"
+```
+
+```tsx
+<Message align="end">
+  <MessageContent>
+    <Bubble align="end" variant="muted">
+      <BubbleContent>How do I add a settings dialog?</BubbleContent>
+    </Bubble>
+  </MessageContent>
+</Message>
+<Message>
+  <MessageContent className="gap-2">
+    <p>Install Dialog, then open it from the gear button.</p>
+    <MessageFooter>
+      <Button variant="ghost" size="icon-sm" aria-label="Copy">
+        <CopyIcon />
+      </Button>
+    </MessageFooter>
+  </MessageContent>
+</Message>
+```
+
+Put actions in `MessageFooter`. It follows the message alignment, so on the person's turn the actions sit at the end. Use ghost icon buttons with a tooltip for each:
+
+- **Copy** writes the reply to the clipboard and swaps to a check for two seconds.
+- **Good response** and **Bad response** are toggles. Set `aria-pressed` so screen readers announce the state.
+- **Retry** runs the turn again.
+- **Edit** on the person's turn puts the text back in the field.
+
+Render markdown replies with your markdown renderer of choice, and route fenced code to a [Code Block](/docs/components/code-block).
+
+## AI SDK
+
+Branch on the message role. The person's turn is the bubble. The agent's turn is the reply, and `regenerate` with the message id runs it again.
+
+```tsx
+const { messages, regenerate } = useChat()
+
+if (message.role === "user") {
+  return (
+    <Message align="end">
+      <MessageContent>
+        <Bubble align="end" variant="muted">
+          <BubbleContent>{text}</BubbleContent>
+        </Bubble>
+      </MessageContent>
+    </Message>
+  )
+}
+
+return (
+  <Message>
+    <MessageContent className="gap-2">
+      <Markdown>{text}</Markdown>
+      <MessageFooter>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Retry"
+          onClick={() => regenerate({ messageId: message.id })}
+        >
+          <RefreshCcwIcon />
+        </Button>
+      </MessageFooter>
+    </MessageContent>
+  </Message>
+)
+```
+
+## API Reference
+
+See [Message](/docs/components/message#api-reference), [Bubble](/docs/components/bubble#api-reference) and [Tooltip](/docs/components/tooltip#api-reference).
+
+## Accessibility
+
+- Every action is an icon button, so give each an `aria-label`; the tooltip repeats it for pointer users.
+- Change the label when the state changes, such as "Copy" to "Copied", so the change is announced.
+- Feedback buttons are toggles and set `aria-pressed`.
+
+</Only>

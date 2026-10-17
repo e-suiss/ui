@@ -8,6 +8,7 @@ import {
   type Icon,
   LayoutIcon,
   MagnifyingGlassIcon,
+  SparkleIcon,
   SquaresFourIcon,
 } from "@phosphor-icons/react"
 import { useRouter } from "next/navigation"
@@ -41,6 +42,7 @@ const icons: Record<string, Icon> = {
   interactions: HandTapIcon,
   charts: ChartBarIcon,
   blocks: LayoutIcon,
+  ai: SparkleIcon,
 }
 
 let index: Promise<Group[]> | undefined

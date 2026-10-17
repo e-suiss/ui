@@ -1,0 +1,119 @@
+---
+title: Terminal
+description: "A shell command an agent runs, such as a lint, a test run or a build, with its output underneath."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="terminal-demo" />
+
+Terminal is a shell command the agent runs, such as a lint, a test run or a build. The row shows the command, and its output sits underneath in a [Code Block](/docs/components/code-block).
+
+Terminal is built with [Trace](/docs/components/trace), with a `TraceCollapsible` for each command.
+
+## Installation
+
+Terminal is built with the [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace @esuiss/code-block
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block
+```
+
+## Usage
+
+```tsx
+import { CodeBlock, CodeBlockContent } from "@/components/ui/code-block"
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <TerminalIcon />
+        </TraceIcon>
+        <TraceTitle>Ran pnpm build</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <CodeBlock size="sm">
+        <CodeBlockContent wrap className="max-h-64">
+          {output}
+        </CodeBlockContent>
+      </CodeBlock>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+## Examples
+
+### Exit code
+
+A command that exits with any code other than `0` failed. Set `status="error"` and open the row so the output is visible.
+
+<ComponentPreview name="terminal-error" />
+
+| Command | `status` | Title |
+| --- | --- | --- |
+| Running | `"running"` | Running pnpm build |
+| Exited with `0` | — | Ran pnpm build |
+| Exited with another code | `"error"` | pnpm lint exited with code 1 |
+
+### Open while running
+
+Open the row once the first output arrives, so the output is visible while the command runs, and let the reader's choice win after that. See [Trace](/docs/components/trace#controlled).
+
+## AI SDK
+
+A tool result arrives only once the command exits. To stream the output while it runs, write it from the tool as a data part with the tool call's id. The AI SDK replaces a data part that has the same id, so the output grows in place.
+
+```ts title="app/api/chat/route.ts"
+writer.write({
+  type: "data-terminal",
+  id: toolCallId,
+  data: { output },
+})
+```
+
+On the client, find the data part that matches each tool part.
+
+```tsx
+function getOutput(message: ChatMessage, toolCallId: string) {
+  for (const part of message.parts) {
+    if (part.type === "data-terminal" && part.id === toolCallId) {
+      return part.data.output
+    }
+  }
+  return ""
+}
+```
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference) and [Code Block](/docs/components/code-block#api-reference).
+
+## Accessibility
+
+- Say the result in the title, not only with color: "Ran pnpm build" or "pnpm lint exited with code 1".
+- Each row is a button with `aria-expanded`, and the output is reachable by keyboard so long lines can be scrolled.
+
+</Only>

@@ -1,0 +1,69 @@
+---
+title: Suggestion
+description: "Short prompts that people can send to an agent in one click, in a row above the prompt input."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="suggestion-demo" />
+
+A suggestion is a prompt you send without typing. Each one is a [Button](/docs/components/button) with the prompt as its label. Put a row of them above the [Prompt Input](/docs/ai/prompt-input).
+
+## Installation
+
+Suggestions are built with Button and Input Group.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/button @esuiss/input-group
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button input-group
+```
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<div className="flex gap-2 overflow-x-auto overscroll-x-contain">
+  {suggestions.map((suggestion) => (
+    <Button
+      key={suggestion}
+      variant="outline"
+      size="sm"
+      className="shrink-0"
+      onClick={() => send(suggestion)}
+    >
+      {suggestion}
+    </Button>
+  ))}
+</div>
+```
+
+The row scrolls sideways when the suggestions do not fit, and `shrink-0` keeps each label on one line.
+
+## AI SDK
+
+The label is the message. Send it as is.
+
+```tsx
+sendMessage({ text: suggestion })
+```
+
+## API Reference
+
+See [Button](/docs/components/button#api-reference).
+
+## Accessibility
+
+- Each suggestion is a button whose label is the prompt, so it is announced as written.
+- Keep labels short and specific, so the row can be scanned quickly.
+
+</Only>

@@ -1,0 +1,87 @@
+---
+title: Chat
+description: "A conversation thread where each turn holds a message, the agent's steps and its reply, inside a Message Scroller."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="chat-demo" />
+
+Chat is the thread of a conversation with an agent. Each turn is a [Message](/docs/ai/message) inside a [Message Scroller](/docs/components/message-scroller). The steps the agent took sit above its reply as [Trace](/docs/components/trace) rows, and the field at the bottom is a [Prompt Input](/docs/ai/prompt-input).
+
+The person's message is the scroll anchor, so a new question settles near the top and the reply streams in under it.
+
+## Installation
+
+Chat is built with Message Scroller, Message, Bubble, Trace, Code Block, Input Group, Dropdown Menu and Tooltip.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/message-scroller @esuiss/message @esuiss/bubble @esuiss/trace @esuiss/code-block @esuiss/input-group @esuiss/dropdown-menu @esuiss/tooltip
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message-scroller message bubble trace code-block input-group dropdown-menu tooltip
+```
+
+## Usage
+
+```tsx
+<MessageScrollerProvider autoScroll>
+  <MessageScroller>
+    <MessageScrollerViewport>
+      <MessageScrollerContent>
+        <MessageScrollerItem messageId={id} scrollAnchor>
+          <Message align="end">
+            <MessageContent>
+              <Bubble align="end" variant="muted">
+                <BubbleContent>{text}</BubbleContent>
+              </Bubble>
+            </MessageContent>
+          </Message>
+        </MessageScrollerItem>
+      </MessageScrollerContent>
+    </MessageScrollerViewport>
+    <MessageScrollerButton />
+  </MessageScroller>
+</MessageScrollerProvider>
+```
+
+Set `scrollAnchor` on the person's turn. `autoScroll` follows the reply while the person stays at the live edge, and `MessageScrollerButton` jumps back down when they scroll away.
+
+## AI SDK
+
+Render each message from `useChat`. The person's turn is a bubble. The agent's turn maps its reasoning and tool parts to Trace rows, then shows the text.
+
+```tsx
+const { messages, sendMessage, status } = useChat()
+
+{messages.map((message) =>
+  message.role === "user" ? (
+    <MessageScrollerItem key={message.id} messageId={message.id} scrollAnchor>
+      …
+    </MessageScrollerItem>
+  ) : (
+    <MessageScrollerItem key={message.id} messageId={message.id}>
+      …
+    </MessageScrollerItem>
+  )
+)}
+```
+
+Set `aria-busy` on `MessageScrollerContent` while `status` is `submitted` or `streaming`.
+
+## API Reference
+
+See [Message Scroller](/docs/components/message-scroller#api-reference), [Message](/docs/components/message#api-reference), [Trace](/docs/components/trace#api-reference) and [Input Group](/docs/components/input-group#api-reference).
+
+## Accessibility
+
+- Give the textarea an accessible name such as "Message", since the placeholder is not a label.
+- Give icon-only buttons, such as reset, add context and send, an `aria-label`.
+- Enter sends the message and Shift+Enter adds a new line.
+
+</Only>

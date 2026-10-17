@@ -9,4 +9,5 @@ export const sections: Section[] = [
   { label: "Interactions", path: "/docs/interactions" },
   { label: "Charts", path: "/docs/charts" },
   { label: "Blocks", path: "/docs/blocks" },
+  { label: "AI", path: "/docs/ai" },
 ]

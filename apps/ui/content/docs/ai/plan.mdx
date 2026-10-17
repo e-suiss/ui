@@ -1,0 +1,124 @@
+---
+title: Plan
+description: "The steps the agent plans to take, and how far it has got, under one line with a progress count."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="plan-demo" />
+
+Plan is the list of steps the agent decides on before it starts, such as the steps of a migration. Each step is done, running or pending, and the title counts how many are done.
+
+It is built with [Trace](/docs/components/trace): a `TraceCollapsible` for the plan and a nested `Trace` for its steps. When the steps are not known up front, use [Task](/docs/ai/task) instead.
+
+## Installation
+
+Plan is built with [Trace](/docs/components/trace).
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace
+```
+
+## Usage
+
+```tsx
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceDescription,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible defaultOpen>
+    <TraceCollapsibleTrigger>
+      <TraceLine status="running">
+        <TraceIcon>
+          <RouteIcon />
+        </TraceIcon>
+        <TraceTitle>Plan: migrate to Base UI</TraceTitle>
+        <TraceDescription>2 of 5 done</TraceDescription>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <CircleCheckIcon />
+          </TraceIcon>
+          <TraceTitle>Replace the Radix imports</TraceTitle>
+        </TraceLine>
+        <TraceLine status="running">
+          <TraceIcon>
+            <CircleDotIcon />
+          </TraceIcon>
+          <TraceTitle>Rename asChild to render</TraceTitle>
+        </TraceLine>
+        <TraceLine status="pending">
+          <TraceIcon>
+            <CircleIcon />
+          </TraceIcon>
+          <TraceTitle>Run the type checker</TraceTitle>
+        </TraceLine>
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+<OnlyBase base="aria">
+
+Use `defaultExpanded` instead of `defaultOpen` on `TraceCollapsible`.
+
+</OnlyBase>
+
+Mark finished steps with no status, the current step with `running` and the steps still to come with `pending`. Keep the progress count in a `TraceDescription` so the title itself stays the goal.
+
+## Examples
+
+### Details
+
+A description above the steps, inside `TraceCollapsibleContent`.
+
+<ComponentPreview name="plan-description" />
+
+## AI SDK
+
+Stream the plan as a data part with a fixed `id`. The AI SDK replaces a data part with the same `id`, so the plan updates in place as steps finish.
+
+```ts title="app/api/chat/route.ts"
+const stream = createUIMessageStream({
+  execute: async ({ writer }) => {
+    writer.write({ type: "data-plan", id: "plan", data: { title, steps } })
+  },
+})
+```
+
+```tsx
+const plan = message.parts.find((part) => part.type === "data-plan")
+```
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference).
+
+## Accessibility
+
+- The plan line is a button with `aria-expanded`, and its accessible name includes the progress count.
+- Pending steps are muted and the running step shimmers, so the step icons also differ by state.
+
+</Only>

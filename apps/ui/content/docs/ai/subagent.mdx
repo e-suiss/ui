@@ -1,0 +1,101 @@
+---
+title: Subagent
+description: "A subagent run, with the tool calls it made and what it found."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="subagent-demo" />
+
+Subagent is a row for work the agent hands to a subagent. The run is the title, such as "Ran the research agent". Open it for the tool calls the subagent made and what it found.
+
+The run is a `TraceCollapsible`, and its tool calls are a nested `Trace`. Each tool call follows the same shape as [Tool](/docs/ai/tool).
+
+## Installation
+
+Subagent is built with the [Trace](/docs/components/trace), [Code Block](/docs/components/code-block) and [Badge](/docs/components/badge) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace @esuiss/code-block @esuiss/badge
+```
+
+Works in any project with a `components.json`. See [Installation](/docs/installation#add-components) for the one-line registry setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block badge
+```
+
+## Usage
+
+```tsx
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <CircleCheckIcon />
+        </TraceIcon>
+        <TraceTitle>Ran the research agent</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent className="flex flex-col gap-3">
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <CircleCheckIcon />
+          </TraceIcon>
+          <TraceTitle>Ran grep -rn cacheKey scripts</TraceTitle>
+        </TraceLine>
+      </Trace>
+      <p>The cache is keyed on the commit SHA.</p>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+## Examples
+
+### Running
+
+While the subagent runs, the row has `status="running"` and its content shows the tool calls so far. Add the result when the subagent finishes.
+
+<ComponentPreview name="subagent-running" />
+
+### Details
+
+Puts the task the subagent was given at the top of the content, with its model and tools as [Badge](/docs/components/badge) items, and how long it ran in a `TraceDescription` after the title.
+
+<ComponentPreview name="subagent-details" />
+
+## AI SDK
+
+With the AI SDK, a subagent is a tool whose `execute` yields the subagent's `UIMessage` as it streams. Render the tool part as the row and `part.output.parts` as the nested `Trace`.
+
+Each yield is a preliminary output: the part is `output-available` with `preliminary: true`. The final output replaces it, so check `preliminary` before you show "Ran".
+
+| Tool part state | `TraceLine` status | Title |
+| --- | --- | --- |
+| `input-streaming`, `input-available` | `running` while the chat streams | Running … |
+| `output-available` with `preliminary: true` | `running` while the chat streams | Running … |
+| `output-available` | — | Ran … |
+| `output-error`, or a running state after the chat stops | `error` | Failed to run … |
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Code Block](/docs/components/code-block) and [Badge](/docs/components/badge).
+
+</Only>

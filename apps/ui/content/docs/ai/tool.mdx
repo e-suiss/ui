@@ -1,0 +1,208 @@
+---
+title: Tool
+description: "A tool call the agent makes, from input to output, including errors, approvals and output in a sheet."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="tool-demo" />
+
+Tool is a tool call the agent makes, such as running a command or reading a file. The line follows the call from input to output, including errors and calls that wait for approval.
+
+It is built with [Trace](/docs/components/trace): a plain `TraceLine` while the call runs, and a `TraceCollapsible` with a [Code Block](/docs/components/code-block) once its output arrives. For several calls under one summary, see [Chain of Thought](/docs/ai/chain-of-thought).
+
+## Installation
+
+Tool is built with [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block). The approval prompt uses [Item](/docs/components/item) and [Button](/docs/components/button), and long output can open in a [Sheet](/docs/components/sheet).
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace @esuiss/code-block @esuiss/item @esuiss/button @esuiss/sheet
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block item button sheet
+```
+
+## Usage
+
+```tsx
+import { CodeBlock, CodeBlockContent } from "@/components/ui/code-block"
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <TerminalIcon />
+        </TraceIcon>
+        <TraceTitle>Ran git status --short</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <CodeBlock size="sm">
+        <CodeBlockContent wrap className="max-h-64">
+          {output}
+        </CodeBlockContent>
+      </CodeBlock>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+## Examples
+
+### States
+
+A finished call, a failed call, a denied call and a running call.
+
+<ComponentPreview name="tool-states" />
+
+Map each tool call's state to a `status` and a title:
+
+| Tool call | `status` | Title |
+| --- | --- | --- |
+| Input streaming or ready, while the chat streams | `"running"` | Running … |
+| Input streaming or ready, after the chat stops | `"error"` | Failed to run … |
+| Waiting for approval | — | Not a line. An `Item` outside `Trace` with Approve and Deny buttons. |
+| Approved and running | `"running"` | Running … |
+| Output available | none | Ran … |
+| Output error | `"error"` | Failed to run … |
+| Denied | none | Denied … |
+
+### Output in a sheet
+
+For long output, wrap the `TraceLine` in a `SheetTrigger` and show the output in the sheet.
+
+<ComponentPreview name="tool-sheet" />
+
+### Approval
+
+A pending approval is a question for the person, not a step the agent took, so it sits outside `Trace` as an `Item`. Once the person answers, the call goes back to being a line. See [Confirmation](/docs/ai/confirmation).
+
+<ComponentPreview name="tool-approval" />
+
+## AI SDK
+
+Render each tool part as a line. A call is a plain `TraceLine` while it runs, and a `TraceCollapsible` once its output arrives.
+
+```tsx
+function ToolLine({ part, streaming }: { part: ToolPart; streaming: boolean }) {
+  const command = part.input?.command
+
+  if (
+    part.state === "output-denied" ||
+    (part.state === "approval-responded" && !part.approval.approved)
+  ) {
+    return (
+      <TraceLine>
+        <TraceIcon>
+          <TerminalIcon />
+        </TraceIcon>
+        <TraceTitle>Denied {command}</TraceTitle>
+      </TraceLine>
+    )
+  }
+
+  if (part.state === "output-available" || part.state === "output-error") {
+    const failed = part.state === "output-error"
+
+    return (
+      <TraceCollapsible>
+        <TraceCollapsibleTrigger>
+          <TraceLine status={failed ? "error" : undefined}>
+            <TraceIcon>
+              <TerminalIcon />
+            </TraceIcon>
+            <TraceTitle>
+              {failed ? "Failed to run" : "Ran"} {command}
+            </TraceTitle>
+          </TraceLine>
+        </TraceCollapsibleTrigger>
+        <TraceCollapsibleContent>
+          <CodeBlock size="sm">
+            <CodeBlockContent wrap className="max-h-64">
+              {failed ? part.errorText : part.output.stdout}
+            </CodeBlockContent>
+          </CodeBlock>
+        </TraceCollapsibleContent>
+      </TraceCollapsible>
+    )
+  }
+
+  return (
+    <TraceLine status={streaming ? "running" : "error"}>
+      <TraceIcon>
+        <TerminalIcon />
+      </TraceIcon>
+      <TraceTitle>
+        {streaming ? "Running" : "Failed to run"} {command}
+      </TraceTitle>
+    </TraceLine>
+  )
+}
+```
+
+For approvals, render the `approval-requested` state as an `Item` and answer it with `addToolApprovalResponse`:
+
+```tsx
+if (part.state === "approval-requested") {
+  return (
+    <Item variant="outline" size="sm">
+      <ItemMedia variant="icon">
+        <TerminalIcon />
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>Run {part.input.command}?</ItemTitle>
+      </ItemContent>
+      <ItemActions>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() =>
+            addToolApprovalResponse({ id: part.approval.id, approved: false })
+          }
+        >
+          Deny
+        </Button>
+        <Button
+          size="sm"
+          onClick={() =>
+            addToolApprovalResponse({ id: part.approval.id, approved: true })
+          }
+        >
+          Approve
+        </Button>
+      </ItemActions>
+    </Item>
+  )
+}
+```
+
+Pass `sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses` to `useChat` so the chat continues once every approval has an answer. A tool that runs on the client stays `input-available` after the chat stops until you call `addToolOutput`; treat it as waiting, not failed.
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components/code-block#api-reference), [Item](/docs/components/item#api-reference) and [Sheet](/docs/components/sheet#api-reference).
+
+## Accessibility
+
+- A call with output is a button with `aria-expanded`; a call in a sheet takes the sheet trigger's focus and Escape behavior.
+- Write the state into the title, such as "Failed to run pnpm dev", so it does not rely on color.
+- The approval buttons are regular buttons with visible labels, and they are not inside the `Trace` row.
+
+</Only>

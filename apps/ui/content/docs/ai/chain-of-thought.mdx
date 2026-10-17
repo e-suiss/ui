@@ -1,0 +1,152 @@
+---
+title: Chain of Thought
+description: "A summary line that expands into the steps an agent took, such as reads, searches and tool calls."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="chain-of-thought-demo" />
+
+Chain of Thought is a summary line that expands into the steps an agent took. The summary says what happened, such as "Researched in 3 steps", and each step inside it is a line of its own that can expand into its output.
+
+It is built with [Trace](/docs/components/trace): a `TraceCollapsible` for the summary and a nested `Trace` for the steps. For a single tool call, see [Tool](/docs/ai/tool). For steps that are known up front, see [Plan](/docs/ai/plan).
+
+## Installation
+
+Chain of Thought is built with [Trace](/docs/components/trace), [Code Block](/docs/components/code-block) and [Badge](/docs/components/badge).
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace @esuiss/code-block @esuiss/badge
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block badge
+```
+
+## Usage
+
+```tsx
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible defaultOpen>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <CircleCheckIcon />
+        </TraceIcon>
+        <TraceTitle>Researched in 3 steps</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent keepMounted>
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <CircleCheckIcon />
+          </TraceIcon>
+          <TraceTitle>Read the build log for dpl_8Kx2</TraceTitle>
+        </TraceLine>
+        <TraceLine>
+          <TraceIcon>
+            <CircleCheckIcon />
+          </TraceIcon>
+          <TraceTitle>Searched the code for cacheKey</TraceTitle>
+        </TraceLine>
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+<OnlyBase base="base">
+
+Set `keepMounted` on the summary's `TraceCollapsibleContent` so the steps keep their open state while the summary is closed.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultExpanded` instead of `defaultOpen` on `TraceCollapsible`.
+
+</OnlyBase>
+
+### Steps
+
+Each step is a `TraceLine`, or a `TraceCollapsible` when it has output to show. Set its `status` and write the title in the matching tense.
+
+| Step | `status` | Title |
+| --- | --- | --- |
+| Running | `"running"` | Searching for … |
+| Done | none | Searched for … |
+| Failed | `"error"` | Failed to search for … |
+
+Set the summary's status and title from its steps: `running` while any step runs, `error` when one failed, and a count such as "Researched in 3 steps, 1 failed" once they are done.
+
+### Search results
+
+When a step runs a web search, show each result as a link row, or show the hostnames as a `Badge` each:
+
+```tsx
+<TraceCollapsibleContent className="flex flex-wrap gap-1.5">
+  {results.map((result) => (
+    <Badge key={result.url} variant="secondary">
+      {new URL(result.url).hostname}
+    </Badge>
+  ))}
+</TraceCollapsibleContent>
+```
+
+## AI SDK
+
+Render each tool part as a step. The summary is running while tool parts stream and before the reply text starts. It opens while the steps run and keeps the reader's choice once they open or close it.
+
+```tsx
+const [open, setOpen] = React.useState<boolean>()
+const running = streaming && !answering
+const failed = steps.filter((part) => part.state === "output-error").length
+
+<TraceCollapsible open={open ?? running} onOpenChange={setOpen}>
+  <TraceCollapsibleTrigger>
+    <TraceLine status={running ? "running" : failed > 0 ? "error" : undefined}>
+      <TraceTitle>
+        {running ? "Researching" : `Researched in ${steps.length} steps`}
+      </TraceTitle>
+    </TraceLine>
+  </TraceCollapsibleTrigger>
+  <TraceCollapsibleContent keepMounted>
+    <Trace>
+      {steps.map((part) => (
+        <StepLine key={part.toolCallId} part={part} streaming={streaming} />
+      ))}
+    </Trace>
+  </TraceCollapsibleContent>
+</TraceCollapsible>
+```
+
+`StepLine` renders one tool part as a line, as in [Tool](/docs/ai/tool#states).
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components/code-block#api-reference) and [Badge](/docs/components/badge#api-reference).
+
+## Accessibility
+
+- The summary and each expandable step are buttons with `aria-expanded`.
+- Say the state in each title, such as "Searching" or "Failed to search", since status is otherwise shown with color and motion.
+- Add "(opens in a new tab)" with `sr-only` to links that open a new tab.
+
+</Only>

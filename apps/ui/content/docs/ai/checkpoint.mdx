@@ -1,0 +1,91 @@
+---
+title: Checkpoint
+description: "Marks a point in the conversation that you can return to, dropping every message after it."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="checkpoint-demo" />
+
+Checkpoint is a point in the conversation you can return to. It is a [Marker](/docs/components/marker) after a turn, with a Restore button. Restore keeps that turn and drops every message after it.
+
+## Installation
+
+Checkpoint is built with the [Marker](/docs/components/marker) and [Button](/docs/components/button) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/marker @esuiss/button
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add marker button
+```
+
+## Usage
+
+Render a marker after the turn, with a button that restores it.
+
+<OnlyBase base="base radix">
+
+```tsx
+<Marker variant="separator">
+  <MarkerContent className="inline-flex items-center gap-2">
+    {label}
+    <Button size="xs" variant="outline" onClick={restore}>
+      Restore
+    </Button>
+  </MarkerContent>
+</Marker>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Marker variant="separator">
+  <MarkerContent className="inline-flex items-center gap-2">
+    {label}
+    <Button size="xs" variant="outline" onPress={restore}>
+      Restore
+    </Button>
+  </MarkerContent>
+</Marker>
+```
+
+</OnlyBase>
+
+Show the button only on checkpoints that have turns after them.
+
+## AI SDK
+
+Restore replaces the thread with the messages up to and including that turn. Every later turn is removed. Send a new message to continue from there.
+
+```tsx
+const index = messages.findIndex((message) => message.id === messageId)
+setMessages(messages.slice(0, index + 1))
+```
+
+Write the checkpoint as a data part on the agent's turn. Send the same `id` again only when you mean to update that checkpoint.
+
+```ts title="app/api/chat/route.ts"
+writer.write({
+  type: "data-checkpoint",
+  id: "rename",
+  data: { label: "Button renamed" },
+})
+```
+
+## API Reference
+
+See [Marker](/docs/components/marker#api-reference) and [Button](/docs/components/button#api-reference).
+
+## Accessibility
+
+- Name each Restore button after its checkpoint with `aria-label`, such as "Restore to Button renamed", so several buttons can be told apart.
+
+</Only>

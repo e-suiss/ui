@@ -1,0 +1,109 @@
+---
+title: Prompt Input
+description: "The field people type into to message an agent, with attachments, model menus and a send button."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="prompt-input-demo" />
+
+Prompt Input is the field the person types into to message the agent. It is an [Input Group](/docs/components/input-group) with a textarea, an attach button, the [Model Selector](/docs/ai/model-selector) menus and a send button. Attached files show as [Attachment](/docs/components/attachment) chips above the text.
+
+## Installation
+
+Prompt Input is built with Input Group, Attachment and Dropdown Menu.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/input-group @esuiss/attachment @esuiss/dropdown-menu
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-group attachment dropdown-menu
+```
+
+## Usage
+
+```tsx
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
+```
+
+```tsx
+<form ref={formRef} onSubmit={onSubmit}>
+  <InputGroup>
+    <InputGroupTextarea
+      value={text}
+      onChange={(event) => setText(event.target.value)}
+      placeholder="Ask the agent to change your code..."
+      aria-label="Message"
+      className="p-3"
+    />
+    <InputGroupAddon align="block-end">
+      <InputGroupButton
+        size="icon-sm"
+        variant="outline"
+        className="rounded-full"
+        aria-label="Attach files"
+        onClick={() => inputRef.current?.click()}
+      >
+        <PlusIcon />
+      </InputGroupButton>
+      <InputGroupButton
+        type="submit"
+        size="icon-sm"
+        variant="default"
+        className="ms-auto rounded-full"
+        disabled={!canSend}
+        aria-label="Send"
+      >
+        <ArrowUpIcon />
+      </InputGroupButton>
+    </InputGroupAddon>
+  </InputGroup>
+</form>
+```
+
+The attach button opens a hidden file input. Show each file as an `Attachment` in an addon with `align="block-start"`, with a button to remove it.
+
+Put the two [Model Selector](/docs/ai/model-selector) menus in the `block-end` addon, between the attach and send buttons. Move `ms-auto` from the send button to the first menu trigger, so both menus sit next to the send button.
+
+Enter sends the message and Shift+Enter adds a new line:
+
+```tsx
+onKeyDown={(event) => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault()
+    formRef.current?.requestSubmit()
+  }
+}}
+```
+
+## AI SDK
+
+Send the text and the `FileList` from the file input.
+
+```tsx
+sendMessage({ text, files })
+```
+
+The route streams the reply with `result.toUIMessageStreamResponse()`.
+
+## API Reference
+
+See [Input Group](/docs/components/input-group#api-reference), [Attachment](/docs/components/attachment#api-reference) and [Dropdown Menu](/docs/components/dropdown-menu#api-reference).
+
+## Accessibility
+
+- Give the textarea an accessible name such as "Message", since the placeholder is not a label.
+- Name each remove button after its file, such as "Remove settings-page.tsx".
+- Disable the send button while the field is empty.
+
+</Only>

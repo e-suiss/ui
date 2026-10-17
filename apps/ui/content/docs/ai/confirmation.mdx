@@ -1,0 +1,111 @@
+---
+title: Confirmation
+description: "Asks for approval before an agent runs a tool, then shows the call as a step once the person answers."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="confirmation-demo" />
+
+Confirmation asks the person for a yes or no before a tool runs. The question is an [Item](/docs/components/item) with Deny and Approve buttons. Once the person answers, the call becomes a [Tool](/docs/ai/tool) row.
+
+A pending approval is a prompt, not activity, so it sits outside the [Trace](/docs/components/trace).
+
+## Installation
+
+Confirmation is built with the [Item](/docs/components/item), [Button](/docs/components/button) and [Trace](/docs/components/trace) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/item @esuiss/button @esuiss/trace
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add item button trace
+```
+
+## Usage
+
+<OnlyBase base="base radix">
+
+```tsx
+<Item variant="outline" size="sm">
+  <ItemMedia variant="icon">
+    <TerminalIcon />
+  </ItemMedia>
+  <ItemContent>
+    <ItemTitle>Run {command}?</ItemTitle>
+    <ItemDescription>The command runs in this project.</ItemDescription>
+  </ItemContent>
+  <ItemActions>
+    <Button size="sm" variant="outline" onClick={deny}>
+      Deny
+    </Button>
+    <Button size="sm" onClick={approve}>
+      Approve
+    </Button>
+  </ItemActions>
+</Item>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Item variant="outline" size="sm">
+  <ItemMedia variant="icon">
+    <TerminalIcon />
+  </ItemMedia>
+  <ItemContent>
+    <ItemTitle>Run {command}?</ItemTitle>
+    <ItemDescription>The command runs in this project.</ItemDescription>
+  </ItemContent>
+  <ItemActions>
+    <Button size="sm" variant="outline" onPress={deny}>
+      Deny
+    </Button>
+    <Button size="sm" onPress={approve}>
+      Approve
+    </Button>
+  </ItemActions>
+</Item>
+```
+
+</OnlyBase>
+
+After the answer, replace the item with a row that says what happened: "Ran rm -rf dist" or "Denied rm -rf dist".
+
+## AI SDK
+
+While the part is `approval-requested`, answer with the approval id. Pass `sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses` so the chat continues once every approval has an answer.
+
+```tsx
+addToolApprovalResponse({
+  id: part.approval.id,
+  approved: true,
+})
+```
+
+```tsx
+useChat({
+  sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,
+})
+```
+
+Approve streams the tool output. Deny streams `output-denied`. Either way, the part becomes a Tool row. Set `needsApproval` on the tool on the server to ask first.
+
+## API Reference
+
+See [Item](/docs/components/item#api-reference), [Button](/docs/components/button#api-reference) and [Trace](/docs/components/trace#api-reference).
+
+## Accessibility
+
+- Put the command in the item title, so the question names what will run.
+- Deny comes before Approve, so the safe answer is reached first with Tab.
+- Once answered, the buttons are removed and the row title says the outcome in words.
+
+</Only>

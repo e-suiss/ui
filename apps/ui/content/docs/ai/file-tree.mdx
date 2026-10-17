@@ -1,0 +1,150 @@
+---
+title: File Tree
+description: "The files an agent changed, shown as a folder tree you can open, with the selected file marked."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="file-tree-demo" />
+
+File Tree shows the files the agent changed as folders you can open. A folder is a [Collapsible](/docs/components/collapsible) and a file is a [Button](/docs/components/button). For a single file the agent read or edited, use a [Tool](/docs/ai/tool) row instead.
+
+## Installation
+
+File Tree is built with the [Collapsible](/docs/components/collapsible) and [Button](/docs/components/button) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/collapsible @esuiss/button
+```
+
+Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add collapsible button
+```
+
+## Usage
+
+Render nodes recursively, and nest each folder's children in its `CollapsibleContent`.
+
+<OnlyBase base="base">
+
+```tsx
+if (node.type === "folder") {
+  return (
+    <Collapsible defaultOpen>
+      <CollapsibleTrigger
+        render={
+          <Button
+            variant="ghost"
+            size="sm"
+            className="group/folder w-full justify-start"
+          />
+        }
+      >
+        <ChevronRightIcon className="transition-transform group-aria-expanded/folder:rotate-90" />
+        <FolderIcon />
+        {node.name}
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="ms-4 flex flex-col">
+          {node.children.map((child) => (
+            <FileTreeNode key={child.path} node={child} />
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+```
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+if (node.type === "folder") {
+  return (
+    <Collapsible defaultOpen>
+      <CollapsibleTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="group/folder w-full justify-start"
+        >
+          <ChevronRightIcon className="transition-transform group-aria-expanded/folder:rotate-90" />
+          <FolderIcon />
+          {node.name}
+        </Button>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="ms-4 flex flex-col">
+          {node.children.map((child) => (
+            <FileTreeNode key={child.path} node={child} />
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+if (node.type === "folder") {
+  return (
+    <Collapsible defaultExpanded>
+      <Button
+        slot="trigger"
+        variant="ghost"
+        size="sm"
+        className="group/folder w-full justify-start"
+      >
+        <ChevronRightIcon className="transition-transform group-aria-expanded/folder:rotate-90" />
+        <FolderIcon />
+        {node.name}
+      </Button>
+      <CollapsibleContent>
+        <div className="ms-4 flex flex-col">
+          {node.children.map((child) => (
+            <FileTreeNode key={child.path} node={child} />
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+```
+
+</OnlyBase>
+
+A file is a ghost button that selects it. Set `aria-current` on the selected file.
+
+```tsx
+<Button
+  variant="ghost"
+  size="sm"
+  className="w-full justify-start"
+  aria-current={selected === node.path ? "true" : undefined}
+>
+  <FileIcon />
+  {node.name}
+</Button>
+```
+
+## API Reference
+
+See [Collapsible](/docs/components/collapsible#api-reference) and [Button](/docs/components/button#api-reference).
+
+## Accessibility
+
+- Each folder is a button with `aria-expanded`, and opens and closes with Enter or Space.
+- Mark the selected file with `aria-current` as well as a background, so the selection is announced.
+- The chevron and the folder and file icons are decorative; the name is the accessible label.
+
+</Only>

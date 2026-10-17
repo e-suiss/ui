@@ -1,0 +1,115 @@
+---
+title: Stack Trace
+description: "A failed tool call with its stack frames, linking your own frames and folding the framework ones."
+eyebrow: AI
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="stack-trace-demo" />
+
+Stack Trace is a row for a tool call that failed. The error is the title, such as "Failed: TypeError". Open it for the stack frames, which can link to the file and line.
+
+The frames are a `TraceCollapsible` with a nested `Trace`. For a failure inside a test run, use [Test Results](/docs/ai/test-results).
+
+## Installation
+
+Stack Trace is built with the [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block) components.
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace @esuiss/code-block
+```
+
+Works in any project with a `components.json`. See [Installation](/docs/installation#add-components) for the one-line registry setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block
+```
+
+## Usage
+
+```tsx
+import {
+  Trace,
+  TraceCollapsible,
+  TraceCollapsibleContent,
+  TraceCollapsibleTrigger,
+  TraceIcon,
+  TraceLine,
+  TraceTitle,
+} from "@/components/ui/trace"
+```
+
+```tsx
+const [error, ...frames] = stack.split("\n").map((line) => line.trim())
+
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine status="error">
+        <TraceIcon>
+          <CircleXIcon />
+        </TraceIcon>
+        <TraceTitle>Failed: {error}</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <div className="flex flex-col gap-2 rounded-md bg-muted p-3 font-mono text-xs">
+        <p className="text-destructive">{error}</p>
+        <ol>
+          {frames.map((frame) => (
+            <li
+              key={frame}
+              className={frame.includes("node_modules") ? undefined : "text-foreground"}
+            >
+              {frame}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+The title truncates, so repeat the full error at the top of the content. Frames from `node_modules` stay muted, so your own frames stand out.
+
+## Examples
+
+### Frame links
+
+Turns your own frames into links that open the file at the line, and folds the framework frames into a collapsible row of their own, so the frames you can fix come first.
+
+<ComponentPreview name="stack-trace-frames" />
+
+## AI SDK
+
+When a tool throws, its part is `output-error`. By default `errorText` is only the error message, with no frames. Return `error.stack` from `onError` in `toUIMessageStreamResponse` to send them.
+
+```ts title="app/api/chat/route.ts"
+return result.toUIMessageStreamResponse({
+  onError: (error) =>
+    error instanceof Error ? (error.stack ?? error.message) : String(error),
+})
+```
+
+A stack shows file paths from your server, so only send it in development.
+
+```tsx
+if (part.state === "output-error") {
+  const [error, ...frames] = part.errorText
+    .split("\n")
+    .map((line) => line.trim())
+
+  return <TraceCollapsible>…</TraceCollapsible>
+}
+```
+
+Map the other tool states as in [Tool](/docs/ai/tool).
+
+## API Reference
+
+See [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block).
+
+</Only>
