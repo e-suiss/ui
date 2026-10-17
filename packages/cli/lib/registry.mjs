@@ -89,6 +89,13 @@ export async function fetchRegistry(base = "base") {
   return { items: items.filter((item) => item.files?.length).map(toItem) }
 }
 
+let styles
+
+export function fetchStyles() {
+  styles ??= fetchJson("registry/styles.json")
+  return styles
+}
+
 export function fetchStylesheet() {
   return fetchText(STYLESHEET)
 }

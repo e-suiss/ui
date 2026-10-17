@@ -7,6 +7,7 @@ import {
   configuredStylesheet,
   detectBase,
   detectProject,
+  detectStyle,
   findAliasRoot,
   findStylesheet,
   install,
@@ -276,8 +277,8 @@ function importsStylesheet(project, stylesheet) {
     )
 }
 
-function rememberBase(project, base, stylesheet) {
-  const saved = saveBase(project, base, stylesheet)
+function rememberBase(project, base, stylesheet, style) {
+  const saved = saveBase(project, base, stylesheet, style)
   if (!saved) return []
   if (saved.invalid) {
     return [
@@ -318,7 +319,9 @@ export async function init(options) {
     }
   }
 
-  const registry = await fetchRegistry(options.base ?? detectBase(project.cwd))
+  const base = options.base ?? detectBase(project.cwd)
+  const style = options.style ?? detectStyle(project.cwd)
+  const registry = await fetchRegistry(base)
   const css = stylesheetFor(project, await fetchStylesheet())
 
   const tsconfigs =
@@ -339,8 +342,8 @@ export async function init(options) {
   mkdirSync(path.dirname(stylesheet), { recursive: true })
   writeFileSync(stylesheet, css)
   step(`Wrote ${relative(project, stylesheet)}`)
-  if (options.base)
-    manual.push(...rememberBase(project, options.base, stylesheet))
+  if (options.base || options.style)
+    manual.push(...rememberBase(project, base, stylesheet, options.style))
   if (!importsStylesheet(project, stylesheet)) {
     manual.push(
       `Import ${relative(project, stylesheet)} in ${project.framework === "next" ? "your root layout" : "src/main.tsx"}.`
@@ -352,7 +355,7 @@ export async function init(options) {
     findAliasRoot(project.cwd) ?? sourceRoot,
     registry,
     ["button"],
-    { overwrite: options.overwrite }
+    { overwrite: options.overwrite, base, style }
   )
 
   for (const message of manual) note(message)

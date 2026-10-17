@@ -7,8 +7,10 @@ import { CliError } from "../lib/output.mjs"
 import {
   detectBase,
   detectProject,
+  detectStyle,
   findAliasRoot,
   install,
+  saveBase,
 } from "../lib/project.mjs"
 import { ensureAlias } from "../lib/shared/project.mjs"
 import { createProject } from "./helpers.mjs"
@@ -44,6 +46,52 @@ describe("detectBase", () => {
 
   it("uses the default base when components.json is unreadable", () => {
     expect(detectBase(createProject({ "components.json": "{" }))).toBe("base")
+  })
+})
+
+describe("detectStyle", () => {
+  it.each([
+    ["radix-nova", "nova"],
+    ["base-vega", "vega"],
+    ["aria-suiss", "suiss"],
+    ["base-plain", "suiss"],
+    ["new-york", "suiss"],
+  ])("reads the %s style as %s", (style, name) => {
+    expect(detectStyle(createProject({ "components.json": { style } }))).toBe(
+      name
+    )
+  })
+
+  it("uses suiss without components.json", () => {
+    expect(detectStyle(createProject({}))).toBe("suiss")
+  })
+})
+
+describe("saveBase", () => {
+  const project = (config) => ({
+    cwd: createProject(config ? { "components.json": config } : {}),
+    framework: "vite",
+  })
+  const style = (cwd) =>
+    JSON.parse(readFileSync(path.join(cwd, "components.json"), "utf8")).style
+
+  it("saves a new style with the base", () => {
+    const target = project({ style: "base-suiss" })
+    expect(saveBase(target, "radix", "src/index.css", "nova")).toMatchObject({
+      style: "radix-nova",
+    })
+    expect(style(target.cwd)).toBe("radix-nova")
+  })
+
+  it("keeps the style when only the base changes", () => {
+    const target = project({ style: "base-vega" })
+    saveBase(target, "aria", "src/index.css")
+    expect(style(target.cwd)).toBe("aria-vega")
+  })
+
+  it("does nothing when the style is already saved", () => {
+    const target = project({ style: "base-nova" })
+    expect(saveBase(target, "base", "src/index.css", "nova")).toBeNull()
   })
 })
 
