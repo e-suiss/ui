@@ -30,6 +30,7 @@ import com.esuiss.catalog.stories.components.textareaStories
 import com.esuiss.catalog.stories.components.themeStories
 import com.esuiss.catalog.stories.components.toggleGroupStories
 import com.esuiss.catalog.stories.components.toggleStories
+import com.esuiss.catalog.stories.components.traceStories
 import com.esuiss.catalog.stories.components.wheelPickerStories
 import com.esuiss.catalog.stories.components.widgetStories
 
@@ -62,6 +63,7 @@ val componentsB: List<StoryGroup> = listOf(
     textareaStories,
     themeStories,
     toggleStories,
+    traceStories,
     toggleGroupStories,
     wheelPickerStories,
     widgetStories,

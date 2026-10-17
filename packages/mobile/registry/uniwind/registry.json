@@ -1878,6 +1878,36 @@
       }
     },
     {
+      "name": "trace",
+      "type": "registry:ui",
+      "title": "Trace",
+      "description": "Rows for the steps an agent takes: reasoning, tool calls, sources, plans and file edits.",
+      "dependencies": [
+        "cn",
+        "phosphor-react-native",
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "@esuiss-rn/icon",
+        "@esuiss-rn/primitives-collapsible",
+        "@esuiss-rn/primitives-use-render",
+        "@esuiss-rn/text"
+      ],
+      "files": [
+        {
+          "path": "uniwind/components/ui/trace.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/trace"
+        }
+      }
+    },
+    {
       "name": "wheel-picker",
       "type": "registry:ui",
       "title": "Wheel Picker",

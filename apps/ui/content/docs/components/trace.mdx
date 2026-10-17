@@ -2,7 +2,7 @@
 title: Trace
 description: "Rows for the steps an agent takes: reasoning, tool calls, sources, plans and file edits."
 eyebrow: Component
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -325,5 +325,370 @@ Also accepts the props of `CollapsibleContent`.
 
 - Styling hooks: `data-slot="trace"`, `"trace-line"`, `"trace-icon"`, `"trace-title"`, `"trace-description"`, `"trace-collapsible"`, `"trace-collapsible-trigger"` and `"trace-collapsible-content"`, plus `data-status` on the row.
 - `TraceCollapsibleContent` mutes its text. Give a block with a muted background inside it `text-foreground` to keep its contrast; [Code Block](/docs/components/code-block) sets its own text color.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="components-trace--default" />
+
+A `Trace` is a column of `TraceLine` rows. Each row has a `TraceIcon`, a `TraceTitle` and an optional `TraceDescription` and status. Wrap a row in `TraceCollapsible` to show more detail when it expands, or in a `Pressable` to open a link or a sheet.
+
+Use Trace for the steps an agent takes, such as calling a tool, running a command or editing a file. Use [Message](/docs/components/message) for its reply and [Marker](/docs/components/marker) for notes between turns.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss-rn/trace
+```
+
+See [Installation](/docs/installation) for the `components.json` setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace --platform kotlin
+```
+
+</Only>
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+### Manual
+
+<Only platform="rn">
+
+<Tabs items={["Uniwind","NativeWind","StyleSheet"]}>
+
+<div>
+
+1. Install the dependencies:
+
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/collapsible.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/trace.tsx`:
+
+<ComponentSource path="uniwind/components/ui/trace.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+```bash title="Terminal"
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/collapsible.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/trace.tsx`:
+
+<ComponentSource path="nativewind/components/ui/trace.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+<div>
+
+1. Install the dependencies:
+
+```bash title="Terminal"
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
+```
+
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/collapsible.tsx`, `components/primitives/use-render.tsx`.
+
+3. Copy the source into `components/ui/trace.tsx`:
+
+<ComponentSource path="stylesheet/components/ui/trace.tsx" />
+
+4. Update the import paths to match your project.
+
+</div>
+
+</Tabs>
+
+</Only>
+
+<Only platform="swift">
+
+1. Target iOS 17 or later.
+
+2. Copy the theme files every view uses:
+
+<ComponentSource path="swift/Theme/Theme.swift" />
+
+<ComponentSource path="swift/Theme/Tokens.swift" />
+
+3. Copy the source and every file it uses:
+
+<ComponentSource path="swift/Components/Trace.swift" />
+
+<ComponentSource path="swift/Components/Collapsible.swift" />
+
+4. Add the files to your app target.
+
+</Only>
+
+<Only platform="kotlin">
+
+1. Set `minSdk` to 24 or higher and add the dependencies:
+
+```kotlin title="build.gradle.kts"
+implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+implementation("androidx.compose.foundation:foundation")
+implementation("androidx.compose.ui:ui")
+```
+
+2. Copy the theme files every view uses:
+
+<ComponentSource path="kotlin/theme/Theme.kt" />
+
+<ComponentSource path="kotlin/theme/Tokens.kt" />
+
+3. Copy the source and every file it uses:
+
+<ComponentSource path="kotlin/components/Trace.kt" />
+
+<ComponentSource path="kotlin/components/Button.kt" />
+
+<ComponentSource path="kotlin/components/ButtonGroup.kt" />
+
+<ComponentSource path="kotlin/components/Collapsible.kt" />
+
+<ComponentSource path="kotlin/components/Content.kt" />
+
+<ComponentSource path="kotlin/components/Icon.kt" />
+
+4. Update the `com.esuiss.ui` package names to match your project.
+
+</Only>
+
+
+## Usage
+
+```tsx
+import { Trace, TraceCollapsible, TraceCollapsibleContent, TraceCollapsibleTrigger, TraceDescription, TraceIcon, TraceLine, TraceTitle } from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <Icon as={TerminalIcon} />
+        </TraceIcon>
+        <TraceTitle>Ran node --version</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Text>v24.18.0</Text>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+Rows start closed. Set `defaultOpen` on `TraceCollapsible` to start open, or pass `open` with `onOpenChange` to control it. In SwiftUI use `TraceCollapsible(initiallyExpanded:)` or `TraceCollapsible(isExpanded:)`; in Compose pass `initiallyExpanded` or `expanded` with `onExpandedChange`.
+
+## Examples
+
+### Static
+
+A `TraceLine` on its own, for a step with no detail to show.
+
+<NativeExample id="components-trace--static" />
+
+### Status
+
+`running` pulses the title, `error` turns the row destructive and `pending` dims it. Say the state in the title too.
+
+<NativeExample id="components-trace--status" />
+
+### Description
+
+Secondary text such as a diff stat, a duration or a count after the title.
+
+<NativeExample id="components-trace--description" />
+
+### Collapsible
+
+A row that expands to show the command output.
+
+<NativeExample id="components-trace--collapsible" />
+
+### Controlled
+
+Opens and closes a row from outside with `open` and `onOpenChange`.
+
+<NativeExample id="components-trace--controlled" />
+
+### Link
+
+Wraps the `TraceLine` in a `Pressable` that opens a URL.
+
+<NativeExample id="components-trace--link" />
+
+### Group
+
+Rows next to each other in one `Trace`.
+
+<NativeExample id="components-trace--group" />
+
+### Sources
+
+A collapsible row whose detail is a `Trace` of link rows.
+
+<NativeExample id="components-trace--sources" />
+
+### Steps
+
+A summary row with step rows inside.
+
+<NativeExample id="components-trace--steps" />
+
+### Commit
+
+A row for each changed file, with the line counts in the description.
+
+<NativeExample id="components-trace--commit" />
+
+### Whole turn
+
+Three levels: the turn, a summary and the rows, with text between the steps.
+
+<NativeExample id="components-trace--turn" />
+
+### Reasoning
+
+A thinking row that expands into the reasoning text.
+
+<NativeExample id="components-trace--reasoning" />
+
+### Tool calls
+
+Tool calls with their output, including a failed call.
+
+<NativeExample id="components-trace--tool-calls" />
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Trace
+
+A column of rows.
+
+Also accepts the props of `ViewProps`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TraceLine
+
+One row: an icon, a title and an optional description.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `status` | `"running" \| "error" \| "pending"` | — | The state of the work the row reports. |
+
+Also accepts the props of `ViewProps`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TraceIcon
+
+A 16 pt icon slot, hidden from assistive technology.
+
+Also accepts the props of `ViewProps`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TraceTitle
+
+One line of text that truncates. It pulses while the row is running unless the reader prefers reduced motion.
+
+Also accepts the props of `Text`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TraceDescription
+
+Secondary text after the title, with tabular numbers.
+
+Also accepts the props of `Text`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TraceCollapsible
+
+A row that expands.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | — | The controlled open state. Pass it with `onOpenChange`. |
+| `defaultOpen` | `boolean` | `false` | Whether the row starts open. |
+| `onOpenChange` | `(open: boolean) => void` | — | Called when the open state changes. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TraceCollapsibleTrigger
+
+The pressable row that opens and closes the detail. It adds a chevron after the line.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TraceCollapsibleContent
+
+The detail of a row, indented under the title with a leading rule.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `keepMounted` | `boolean` | `false` | Keeps the detail mounted while closed, so nested rows keep their state. |
+
+</ApiPart>
+
+## Accessibility
+
+- The trigger is a button whose state reads as expanded or collapsed.
+- `TraceIcon` is hidden from assistive technology, so write the title as a sentence that says what happened.
+- Status is shown with color and motion, so put it in the title too.
 
 </Only>

@@ -57,6 +57,7 @@ module.exports = {
         "muted-60": "var(--muted-60)",
         "muted-foreground-50": "var(--muted-foreground-50)",
         "muted-foreground-60": "var(--muted-foreground-60)",
+        "muted-foreground-70": "var(--muted-foreground-70)",
         "primary-10": "var(--primary-10)",
         "primary-12": "var(--primary-12)",
         "primary-20": "var(--primary-20)",

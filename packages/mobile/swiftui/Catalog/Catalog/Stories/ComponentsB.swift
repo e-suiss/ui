@@ -29,6 +29,7 @@ enum ComponentsB {
     ThemeStories.group,
     ToggleGroupStories.group,
     ToggleStories.group,
+    TraceStories.group,
     WheelPickerStories.group,
     WidgetStories.group,
   ]

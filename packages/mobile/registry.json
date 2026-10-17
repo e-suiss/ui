@@ -3424,6 +3424,59 @@
       ]
     },
     {
+      "name": "trace",
+      "type": "ui",
+      "title": "Trace",
+      "dependencies": {
+        "uniwind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "nativewind": [
+          "cn",
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ],
+        "stylesheet": [
+          "phosphor-react-native",
+          "react-native-reanimated",
+          "react-native-svg",
+          "react-native-worklets"
+        ]
+      },
+      "requires": [
+        "icon",
+        "primitives/collapsible",
+        "primitives/use-render",
+        "text"
+      ],
+      "files": [
+        "components/ui/trace.tsx"
+      ],
+      "overrides": [
+        "uniwind",
+        "nativewind",
+        "stylesheet"
+      ],
+      "swift": [
+        "Components/Trace.swift",
+        "Components/Collapsible.swift"
+      ],
+      "kotlin": [
+        "components/Trace.kt",
+        "components/Button.kt",
+        "components/ButtonGroup.kt",
+        "components/Collapsible.kt",
+        "components/Content.kt",
+        "components/Icon.kt"
+      ]
+    },
+    {
       "name": "wheel-picker",
       "type": "ui",
       "title": "Wheel Picker",
