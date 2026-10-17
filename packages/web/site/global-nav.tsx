@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { flushSync } from "react-dom"
 import { cn } from "@/lib/utils"
 
 export type NavLink = { label: string; href: string }
@@ -265,6 +264,8 @@ export function GlobalNav({
   const [query, setQuery] = React.useState("")
   const closeTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined)
   const panelsRef = React.useRef<HTMLDivElement>(null)
+  const [shown, setShown] = React.useState<string | null>(null)
+  const [panelHeight, setPanelHeight] = React.useState(0)
   const searchRef = React.useRef<HTMLInputElement>(null)
   const { navRef, logoRef, collapse, collapsed } = useProgress(
     isHome,
@@ -299,17 +300,16 @@ export function GlobalNav({
 
   const openPanel = (name: string | null) => {
     clearTimeout(closeTimer.current)
-    if (panel && name && panel !== name && panelsRef.current) {
-      const nodes =
-        panelsRef.current.querySelectorAll<HTMLElement>("[data-nav-panel]")
-      for (const node of nodes) node.style.transition = "none"
-      flushSync(() => setPanel(name))
-      panelsRef.current.getBoundingClientRect()
-      for (const node of nodes) node.style.transition = ""
-      return
-    }
     setPanel(name)
+    if (name) setShown(name)
   }
+
+  React.useLayoutEffect(() => {
+    const active = panelsRef.current?.querySelector<HTMLElement>(
+      "[data-nav-panel]:not([hidden])"
+    )
+    setPanelHeight(panel && active ? active.offsetHeight : 0)
+  }, [panel])
 
   const closeMobile = React.useCallback(() => {
     setMobile((value) => (value === "open" ? "closing" : value))
@@ -520,13 +520,18 @@ export function GlobalNav({
           </div>
         </div>
 
-        <div ref={panelsRef}>
+        <div
+          ref={panelsRef}
+          style={{ height: panelHeight }}
+          className="nav-panels absolute inset-x-0 top-11 overflow-hidden bg-background"
+        >
           {menus.map((item) => (
             <div
               key={item.label}
               data-nav-panel
               data-open={panel === item.label || undefined}
-              className="nav-panel absolute inset-x-0 top-11 bg-background"
+              hidden={shown !== item.label}
+              className="nav-panel"
             >
               <div className="mx-auto flex max-w-[1680px] gap-20 px-5 py-10 md:px-10">
                 <div>
@@ -587,7 +592,8 @@ export function GlobalNav({
             <div
               data-nav-panel
               data-open={panel === SEARCH || undefined}
-              className="nav-panel absolute inset-x-0 top-11 bg-background"
+              hidden={shown !== SEARCH}
+              className="nav-panel"
             >
               <div className="mx-auto max-w-[680px] px-5 py-8">
                 <div className="flex items-center gap-3 border-b border-border pb-3 text-foreground">

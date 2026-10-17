@@ -22,14 +22,8 @@
   background-color: var(--background);
 }
 
-.nav-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-}
-
-.nav-panel[data-open] {
-  max-height: 560px;
+.nav-panels {
+  transition: height 0.3s ease-out;
 }
 
 .nav-panel .fade-item {
@@ -223,7 +217,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nav-panel,
+  .nav-panels,
   .mobile-menu,
   .mm-row,
   .mm-label,
