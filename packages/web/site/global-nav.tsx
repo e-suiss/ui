@@ -25,6 +25,7 @@ const COMPACT_SIZE = 29
 const BAR_HEIGHT = 44
 const COLLAPSED = 0.999
 const LOGO_GAP = 48
+const EXPAND_DURATION = 320
 
 const heroTones = {
   light: {
@@ -212,7 +213,21 @@ function useProgress(isHome: boolean, storageKey: string) {
     }
   }, [isHome, storageKey, target, tween, write])
 
-  return { navRef, logoRef, collapsed }
+  const expand = React.useCallback(
+    (open: boolean) => {
+      state.current.locked = true
+      if (open) {
+        tween(0, EXPAND_DURATION)
+        return
+      }
+      tween(isHome ? target() : 1, EXPAND_DURATION, () => {
+        state.current.locked = !isHome
+      })
+    },
+    [isHome, target, tween]
+  )
+
+  return { navRef, logoRef, collapsed, expand }
 }
 
 export function GlobalNav({
@@ -265,10 +280,14 @@ export function GlobalNav({
       const box = frame.getBoundingClientRect()
       const offset = (rect: DOMRect) =>
         rtl ? box.right - rect.right : rect.left - box.left
-      const end = (rect: DOMRect) =>
-        rtl ? box.right - rect.left : rect.right - box.left
       const linksStart = offset(links.getBoundingClientRect())
-      const logoEnd = logo ? end(logo.getBoundingClientRect()) + LOGO_GAP : 0
+      const logoBox = logo?.getBoundingClientRect()
+      const logoEnd =
+        logo && logoBox
+          ? (rtl ? box.right - logoBox.right : logoBox.left - box.left) +
+            logo.offsetWidth +
+            LOGO_GAP
+          : 0
       setLinksStart(Math.max(0, linksStart, logoEnd))
     }
     measure()
@@ -277,7 +296,7 @@ export function GlobalNav({
   }, [panel])
   const [panelHeight, setPanelHeight] = React.useState(0)
   const searchRef = React.useRef<HTMLInputElement>(null)
-  const { navRef, logoRef, collapsed } = useProgress(isHome, storageKey)
+  const { navRef, logoRef, collapsed, expand } = useProgress(isHome, storageKey)
   const words = React.useMemo(() => taglineWords(tagline), [tagline])
   const menus = items.filter((item) => item.explore?.length)
   const open = panel !== null || mobile === "open"
@@ -287,6 +306,14 @@ export function GlobalNav({
   let position = "relative"
   if (hero) position = "fixed inset-x-0 top-0"
   else if (isHome) position = "sticky top-0"
+
+  const panelOpen = panel !== null
+  const wasPanelOpen = React.useRef(false)
+  React.useEffect(() => {
+    if (panelOpen === wasPanelOpen.current) return
+    wasPanelOpen.current = panelOpen
+    expand(panelOpen)
+  }, [panelOpen, expand])
 
   const wasOpen = React.useRef(false)
   React.useEffect(() => {
