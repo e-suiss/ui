@@ -575,7 +575,7 @@ export const Icon = () => (
         ...files,
         "components/ui/button.tsx": `import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
-export const menu = "cn-menu-target cn-menu-translucent z-50"
+export const menu = "cn-menu-target cn-menu-translucent z-50 cn-font-heading"
 export const Icon = () => <IconPlaceholder lucide="CheckIcon" tabler="IconCheck" hugeicons="Tick02Icon" phosphor="CheckIcon" remixicon="RiCheckLine" />
 `,
       })

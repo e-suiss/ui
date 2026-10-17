@@ -79,6 +79,7 @@ export function applyMenuColor(source, menuColor = "default") {
   return replaceMarkers(source, {
     "cn-menu-target": menuColor.startsWith("inverted") ? "dark" : "",
     "cn-menu-translucent": menuColor.endsWith("translucent") ? TRANSLUCENT : "",
+    "cn-font-heading": "",
   })
 }
 
