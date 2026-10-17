@@ -112,7 +112,9 @@ export async function ogImage({
   )
 }
 
-export async function iconImage(size: number) {
+const LOGO_DOT = "#6e6e73"
+
+export function iconImage(size: number, { tile = false } = {}) {
   return new ImageResponse(
     <div
       style={{
@@ -121,17 +123,18 @@ export async function iconImage(size: number) {
         justifyContent: "center",
         width: "100%",
         height: "100%",
-        borderRadius: size * 0.22,
-        color: "#ffffff",
-        backgroundColor: "#1d1d1f",
-        fontFamily: "Inter",
-        fontSize: size * 0.5,
-        fontWeight: 600,
-        letterSpacing: -size * 0.03,
+        backgroundColor: tile ? "#ffffff" : "transparent",
       }}
     >
-      s
+      <div
+        style={{
+          width: tile ? size * 0.42 : size,
+          height: tile ? size * 0.42 : size,
+          borderRadius: "50%",
+          backgroundColor: LOGO_DOT,
+        }}
+      />
     </div>,
-    { width: size, height: size, fonts: await fonts() }
+    { width: size, height: size }
   )
 }
