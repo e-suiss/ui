@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 
 import { Anchor } from "@/components/anchor"
 import { Arrow, ease, Label, Pill } from "@/components/arrow"
-import { Gradient } from "@/components/gradient"
+import { HeroImage } from "@/components/hero-image"
 import {
   type Dictionary,
   getDictionary,
@@ -42,7 +42,7 @@ function Hero({
 }) {
   return (
     <section className="relative flex flex-col overflow-hidden text-[#1d1d1f]">
-      <Gradient preset="Halo" />
+      <HeroImage />
       <div
         className={cn(
           frame,
