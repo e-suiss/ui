@@ -1,0 +1,3 @@
+@import "../../../../../packages/web/styles/generated/style-nova.css"
+  layer(base);
+@reference "../../../app/globals.css";

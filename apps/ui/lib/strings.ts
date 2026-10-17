@@ -27,6 +27,7 @@ export const strings = {
   copied: "Copied",
   codeOptions: "Code options",
   iconLibrary: "Icon library",
+  style: "Style",
   primitiveBase: "Primitive base",
   codeOptionsHint: "Changes the code on this site. Installs follow your",
   codeOptionsLink: "components.json",

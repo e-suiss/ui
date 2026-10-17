@@ -6,7 +6,12 @@ import { useBaseItems } from "@/components/site/base-items"
 import { useCodeOptions } from "@/components/site/code-options"
 import { CodeScroll } from "@/components/site/code-scroll"
 import { copyText } from "@/lib/clipboard"
-import { ICON_PACKAGES, type IconLibrary } from "@/lib/code-options"
+import {
+  DEFAULT_STYLE,
+  ICON_PACKAGES,
+  type IconLibrary,
+  type StyleName,
+} from "@/lib/code-options"
 import type { Swap } from "@/lib/dependencies"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
@@ -21,6 +26,8 @@ const CHANGE_EVENT = "package-manager-change"
 const NPX = /^npx\s+(?!expo\s)/
 const NPM_INSTALL = /^npm\s+(?:install|i)(?=\s|$)/
 const SAVE_DEV = /\s--save-dev\b/
+const SUISS_CLI = /^npx\s+@esuiss\/ui@latest\s+(?:add|init)\b/
+const PLATFORM_FLAG = /\s--platform\b/
 
 function withBase(
   line: string,
@@ -39,6 +46,12 @@ function withBase(
     rest.every((name) => packages.from.includes(name))
   if (!matches) return line
   return ["npm install", ...own, ...icons, ...flags].join(" ")
+}
+
+function withStyle(line: string, style: StyleName) {
+  if (style === DEFAULT_STYLE || !SUISS_CLI.test(line)) return line
+  if (PLATFORM_FLAG.test(line) || line.includes("--style")) return line
+  return `${line} --style ${style}`
 }
 
 function withIcons(line: string, icons: IconLibrary) {
@@ -81,14 +94,16 @@ const hasPackages = (line: string) =>
     .some((word) => word && !word.startsWith("-"))
 
 export function usePackageLines(command: string) {
-  const { icons, base } = useCodeOptions()
+  const { icons, base, style } = useCodeOptions()
   const { packages } = useBaseItems()
   return command
     .trim()
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean)
-    .map((line) => withIcons(withBase(line, base, packages), icons))
+    .map((line) =>
+      withStyle(withIcons(withBase(line, base, packages), icons), style)
+    )
     .filter(hasPackages)
 }
 
