@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import NotFound from "@/app/[lang]/not-found"
+import NotFound from "@/app//not-found"
 
 export const metadata: Metadata = {
   title: "Page not found",

@@ -1,15 +1,14 @@
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
-import { notFound } from "next/navigation"
 
 import { Footer } from "@/components/footer"
 import { GlobalNav } from "@/components/global-nav"
 import { JsonLd } from "@/components/json-ld"
 import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
-import { getDictionary, isLocale, localePath, locales } from "@/lib/i18n"
+import { dictionary } from "@/lib/dictionary"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
-import "../globals.css"
+import "./globals.css"
 
 const fontInter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -45,24 +44,13 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 }
 
-export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }))
-}
-
-export default async function RootLayout({
-  children,
-  params,
-}: LayoutProps<"/[lang]">) {
-  const { lang } = await params
-  if (!isLocale(lang)) notFound()
-  const dictionary = getDictionary(lang)
-
+export default function RootLayout({ children }: LayoutProps<"/">) {
   const items = products.map((product) => ({
     label: product.name,
-    href: localePath(lang, `/${product.slug}`),
+    href: `/${product.slug}`,
   }))
   const navItems = products.map((product) => {
-    const href = localePath(lang, `/${product.slug}`)
+    const href = `/${product.slug}`
     const section = (id: string, label: string) => ({
       label,
       href: `${href}#${id}`,
@@ -87,7 +75,7 @@ export default async function RootLayout({
           ? [
               {
                 label: related.name,
-                href: localePath(lang, `/${related.slug}`),
+                href: `/${related.slug}`,
               },
             ]
           : []
@@ -109,13 +97,7 @@ export default async function RootLayout({
     },
     {
       title: dictionary.company,
-      links: [
-        { label: dictionary.allProducts, href: localePath(lang, "/#products") },
-        {
-          label: dictionary.switchLanguage,
-          href: localePath(lang === "en" ? "tr" : "en", "/"),
-        },
-      ],
+      links: [{ label: dictionary.allProducts, href: "/#products" }],
     },
   ]
 
@@ -128,7 +110,7 @@ export default async function RootLayout({
         name: site.name,
         url: site.url,
         logo: absolute("/icon"),
-        description: getDictionary("en").description,
+        description: dictionary.description,
         sameAs: [site.github, site.npm],
       },
       {
@@ -136,18 +118,14 @@ export default async function RootLayout({
         "@id": absolute("/#website"),
         name: site.name,
         url: site.url,
-        inLanguage: [...locales],
+        inLanguage: "en",
         publisher: { "@id": absolute("/#organization") },
       },
     ],
   }
 
   return (
-    <html
-      lang={dictionary.htmlLang}
-      className={fontInter.variable}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={fontInter.variable} suppressHydrationWarning>
       <head>
         <ThemeScript />
         <JsonLd data={structuredData} />
@@ -155,17 +133,16 @@ export default async function RootLayout({
       <body className="flex min-h-svh flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
           <GlobalNav
-            locale={lang}
             items={navItems}
             quickLinks={[
               ...items,
               {
                 label: dictionary.allProducts,
-                href: localePath(lang, "/#products"),
+                href: "/#products",
               },
               {
                 label: dictionary.developers,
-                href: localePath(lang, "/#developers"),
+                href: "/#developers",
               },
             ]}
             tagline={[dictionary.taglineStart, dictionary.taglineEnd]}
@@ -178,7 +155,6 @@ export default async function RootLayout({
               quickLinks: dictionary.quickLinks,
               home: dictionary.home,
               developers: dictionary.developers,
-              switchLanguage: dictionary.switchLanguage,
             }}
           />
           <div className="flex flex-1 flex-col">{children}</div>

@@ -72,7 +72,7 @@
       "ignoreDependencies": ["expo-updates"]
     },
     "apps/www": {
-      "entry": ["scripts/*.mjs", "lib/image-loader.ts"],
+      "entry": ["lib/image-loader.ts"],
       "ignoreDependencies": ["@esuiss/web", "@fontsource/inter"]
     },
     "apps/ui": {

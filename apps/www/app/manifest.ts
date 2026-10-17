@@ -1,10 +1,9 @@
 import type { MetadataRoute } from "next"
 
-import { getDictionary } from "@/lib/i18n"
+import { dictionary } from "@/lib/dictionary"
 import { site } from "@/lib/site"
 
 export default function manifest(): MetadataRoute.Manifest {
-  const dictionary = getDictionary("en")
   return {
     name: dictionary.title,
     short_name: site.name,
