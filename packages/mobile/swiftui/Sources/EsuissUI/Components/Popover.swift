@@ -16,7 +16,7 @@ public struct PopoverContent<Content: View>: View {
     }
     .scaledFont(TextStyle.base)
     .foregroundStyle(EsuissColor.foreground)
-    .padding(16)
+    .padding(Metrics.Padding.popover)
     .frame(width: width, alignment: .leading)
     .fixedSize(horizontal: width == nil, vertical: true)
     .presentationCompactAdaptation(.popover)

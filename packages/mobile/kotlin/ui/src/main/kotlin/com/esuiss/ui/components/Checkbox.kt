@@ -26,6 +26,7 @@ import com.adamglin.phosphoricons.regular.Check
 import com.adamglin.phosphoricons.regular.Minus
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.shadow
 
 @Composable
@@ -61,7 +62,7 @@ fun TriStateCheckbox(
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
     val on = state != ToggleableState.Off
-    val shape = RoundedCornerShape(4.dp)
+    val shape = RoundedCornerShape(Metrics.Radius.checkbox)
     val look = selectionControlLook(colors, on, enabled, invalid, pressed)
     val toggle = if (onClick != null) {
         Modifier

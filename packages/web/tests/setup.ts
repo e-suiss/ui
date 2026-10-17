@@ -1,5 +1,4 @@
-import "../styles/globals.css"
-import "../styles/theme.css"
+import "./styles.css"
 
 import { beforeEach } from "vitest"
 import { cdp, page, server, userEvent } from "vitest/browser"
@@ -21,5 +20,7 @@ async function parkPointer() {
   await userEvent.hover(page.getByTestId("pointer-park"), { force: true })
   corner.remove()
 }
+
+document.documentElement.classList.add("style-suiss")
 
 beforeEach(parkPointer)

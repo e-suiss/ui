@@ -1,0 +1,3 @@
+@import "../../../../../packages/web/styles/generated/style-vega.css"
+  layer(base);
+@reference "../../../app/globals.css";

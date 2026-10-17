@@ -14,11 +14,14 @@ import {
 } from "./native-registry.mjs"
 import {
   buildStandardRegistries,
+  presetFiles,
   STANDARD_STYLINGS,
   standardProblems,
   UNIWIND_THEME,
   uniwindTheme,
+  uniwindThemeFile,
 } from "./standard-registry.mjs"
+import { DEFAULT_STYLE, loadStyles } from "./theme.mjs"
 
 const SCRIPT_EXTENSION = /\.(tsx?|jsx?)$/
 
@@ -195,7 +198,20 @@ for (const [platform, config] of Object.entries(PLATFORMS)) {
   }
 }
 
-const standard = await buildStandardRegistries(ROOT, items, STYLES)
+const PRESET_STYLES = Object.keys(loadStyles()).filter(
+  (style) => style !== DEFAULT_STYLE
+)
+for (const style of PRESET_STYLES) {
+  for (const file of Object.values(presetFiles(style))) {
+    if (!existsSync(path.join(ROOT, file))) problems.push(`missing ${file}`)
+  }
+}
+const standard = await buildStandardRegistries(
+  ROOT,
+  items,
+  STYLES,
+  PRESET_STYLES
+)
 problems.push(
   ...(await standardProblems(standard, {
     schema: process.argv.includes("--schema"),
@@ -211,6 +227,10 @@ const registry = {
   name: "esuiss-ui-mobile",
   homepage: "https://suiss.app/ui",
   styles: STYLES,
+  defaultStyle: DEFAULT_STYLE,
+  presets: Object.fromEntries(
+    PRESET_STYLES.map((style) => [style, presetFiles(style)])
+  ),
   platforms,
   items,
 }
@@ -224,6 +244,12 @@ const outputs = [
     path.join(ROOT, UNIWIND_THEME),
     await uniwindTheme(ROOT, STYLES.uniwind.stylesheet),
   ],
+  ...(await Promise.all(
+    PRESET_STYLES.map(async (style) => [
+      path.join(ROOT, uniwindThemeFile(style)),
+      await uniwindTheme(ROOT, presetFiles(style).uniwind),
+    ])
+  )),
 ]
 const serialize = (content) =>
   typeof content === "string"

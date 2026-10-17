@@ -6,7 +6,7 @@ import * as PopoverPrimitive from "@/components/primitives/popover"
 import type { Side } from "@/components/primitives/types"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 const Popover = PopoverPrimitive.Root
 
@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
     width: 288,
     flexDirection: "column",
     gap: 16,
-    borderRadius: radius["2xl"],
+    borderRadius: metrics.radius.popover,
     borderWidth: 1,
-    padding: 16,
-    ...shadow.lg,
+    padding: metrics.padding.popover,
+    ...metrics.shadow.popover,
   },
   header: { flexDirection: "column", gap: 4 },
-  title: { ...fontSize.base, fontWeight: "600" },
+  title: { ...fontSize.base, fontWeight: metrics.fontWeight.title },
   description: { ...fontSize.sm },
 })
 

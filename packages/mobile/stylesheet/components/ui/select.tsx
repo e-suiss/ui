@@ -16,7 +16,7 @@ import { resolveStyle } from "@/components/primitives/use-render"
 import { AnimatedView } from "@/components/ui/animated-view"
 import { Icon } from "@/components/ui/icon"
 import { TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, radius, useTheme } from "@/components/ui/theme"
 
 interface Option {
   value: string
@@ -29,19 +29,19 @@ const FullWindowOverlay =
   Platform.OS === "ios" ? RNFullWindowOverlay : React.Fragment
 
 const styles = StyleSheet.create({
-  group: { padding: 6 },
+  group: { padding: metrics.padding.menu },
   value: { flex: 1, textAlign: "left", ...fontSize.base },
   trigger: {
-    height: 44,
+    height: metrics.height.input,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     alignSelf: "flex-start",
     gap: 6,
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.input,
     borderWidth: 1,
     borderColor: "transparent",
-    paddingHorizontal: 12,
+    paddingHorizontal: metrics.paddingX.input,
     paddingVertical: 8,
   },
   triggerSm: { height: 36, borderRadius: radius.md },
@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
     position: "relative",
     minWidth: 144,
     overflow: "hidden",
-    borderRadius: radius.xl,
+    borderRadius: metrics.radius.menu,
     borderWidth: 1,
-    ...shadow.lg,
+    ...metrics.shadow.menu,
   },
   list: { position: "relative", width: "100%" },
   label: {
@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: radius.md,
-    paddingVertical: 8,
+    borderRadius: metrics.radius.menuItem,
+    paddingVertical: metrics.paddingY.menuItem,
     paddingRight: 32,
-    paddingLeft: 12,
+    paddingLeft: metrics.paddingX.menuItem,
   },
   indicator: {
     position: "absolute",

@@ -11,7 +11,12 @@ import path from "node:path"
 
 import {
   convertColors,
+  DEFAULT_STYLE,
+  FONT_WEIGHTS,
+  loadStyles,
   loadTokens,
+  metricVariables,
+  SHADOWS,
   scopedBiome,
   toRgb,
   toRgba,
@@ -29,8 +34,49 @@ const CSS = "styles/uniwind.css"
 const THEME = "stylesheet/components/ui/theme.ts"
 const SWIFT = "swiftui/Sources/EsuissUI/Theme/Tokens.swift"
 const KOTLIN = "kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt"
-const OUTPUTS = [CSS, THEME, SWIFT, KOTLIN]
-const FORMATTED = [CSS, THEME]
+const PRESETS = "styles/presets"
+const PRESET_FILES = {
+  [CSS]: "uniwind.css",
+  [THEME]: "theme.ts",
+  [SWIFT]: "Tokens.swift",
+  [KOTLIN]: "Tokens.kt",
+}
+const STYLE_NAMES = Object.keys(loadStyles()).filter(
+  (name) => name !== DEFAULT_STYLE
+)
+const OUTPUTS = [
+  CSS,
+  THEME,
+  SWIFT,
+  KOTLIN,
+  ...STYLE_NAMES.flatMap((style) =>
+    Object.values(PRESET_FILES).map((file) =>
+      path.posix.join(PRESETS, style, file)
+    )
+  ),
+]
+const FORMATTED = OUTPUTS.filter(
+  (file) => file.endsWith(".css") || file.endsWith(".ts")
+)
+const SWIFT_WEIGHTS = {
+  normal: ".regular",
+  medium: ".medium",
+  semibold: ".semibold",
+  bold: ".bold",
+}
+const KOTLIN_WEIGHTS = {
+  normal: "FontWeight.Normal",
+  medium: "FontWeight.Medium",
+  semibold: "FontWeight.SemiBold",
+  bold: "FontWeight.Bold",
+}
+const METRIC_GROUPS = {
+  radius: "Radius",
+  height: "Height",
+  "padding-x": "PaddingX",
+  "padding-y": "PaddingY",
+  padding: "Padding",
+}
 const DEFAULT_SHADOWS = {
   xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
   sm: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
@@ -72,7 +118,7 @@ function parseShadow(value) {
   })
 }
 
-function buildCss(tokens) {
+function buildCss(tokens, metrics) {
   const colors = (mode) =>
     Object.entries(tokens.color)
       .map(([name, value]) => `      --color-${name}: ${value[mode]};`)
@@ -88,6 +134,9 @@ function buildCss(tokens) {
     .join("\n")
   const radius = Object.entries(tokens.radius)
     .map(([name, value]) => `  --radius-${name}: ${value};`)
+    .join("\n")
+  const style = metricVariables(metrics)
+    .map(([name, value]) => `  ${name}: ${value};`)
     .join("\n")
 
   return `@import "tailwindcss";
@@ -110,6 +159,8 @@ ${text}
 ${shadow}
 
 ${radius}
+
+${style}
 }
 `
 }
@@ -120,7 +171,40 @@ function colorObject(colors) {
     .join("\n")
 }
 
-function buildTheme(theme) {
+function metricEntries(values, format) {
+  return Object.entries(values)
+    .map(([name, value]) => `    ${camelCase(name)}: ${format(value)},`)
+    .join("\n")
+}
+
+function buildMetrics(metrics) {
+  const groups = Object.keys(METRIC_GROUPS)
+    .map(
+      (group) =>
+        `  ${camelCase(group)}: {\n${metricEntries(metrics[group], String)}\n  },`
+    )
+    .join("\n")
+  const fontWeight = metricEntries(
+    metrics["font-weight"],
+    (value) => `"${FONT_WEIGHTS[value]}" as const`
+  )
+  const shadow = metricEntries(metrics.shadow, (value) =>
+    value === "none"
+      ? "undefined"
+      : `{ boxShadow: "${convertColors(SHADOWS[value])}" }`
+  )
+  return `const metrics = {
+${groups}
+  fontWeight: {
+${fontWeight}
+  },
+  shadow: {
+${shadow}
+  },
+}`
+}
+
+function buildTheme(theme, metrics) {
   const radius = Object.entries({ ...theme.radius, full: 9999 })
     .map(([name, value]) => `  ${key(name)}: ${value},`)
     .join("\n")
@@ -205,6 +289,8 @@ ${fontSize}
 const shadow = {
 ${shadow}
 } satisfies Record<string, { boxShadow: string | BoxShadowValue[] }>
+
+${buildMetrics(metrics)}
 
 type Theme = "light" | "dark" | "system"
 
@@ -795,6 +881,7 @@ function useTheme() {
     radius,
     fontSize,
     shadow,
+    metrics,
     theme,
     resolvedTheme,
     setTheme,
@@ -913,6 +1000,7 @@ export {
   dark,
   fontSize,
   light,
+  metrics,
   palette,
   radius,
   shadow,
@@ -935,7 +1023,39 @@ function swiftShadowColor({ channels, alpha }) {
   return `Color(uiColor: RGBA(0x${hex(channels)}, ${alpha}).uiColor)`
 }
 
-function buildSwift(theme) {
+function swiftShadow(value) {
+  const layers = parseShadow(value).map((layer) => {
+    const offsets = [
+      layer.x !== 0 ? `, x: ${layer.x}` : "",
+      layer.y !== 0 ? `, y: ${layer.y}` : "",
+    ].join("")
+    return `.init(color: ${swiftShadowColor(layer)}, radius: ${layer.blur / 2}${offsets})`
+  })
+  return `Shadow(${layers.join(", ")})`
+}
+
+function buildSwiftMetrics(metrics) {
+  const group = (name, values, type, format) =>
+    `  public enum ${name} {\n${Object.entries(values)
+      .map(
+        ([key, value]) =>
+          `    public static let ${camelCase(key)}: ${type} = ${format(value)}`
+      )
+      .join("\n")}\n  }`
+  return `public enum Metrics {
+${Object.entries(METRIC_GROUPS)
+  .map(([key, name]) => group(name, metrics[key], "CGFloat", String))
+  .join("\n\n")}
+
+${group("Weight", metrics["font-weight"], "Font.Weight", (value) => SWIFT_WEIGHTS[value])}
+
+${group("Elevation", metrics.shadow, "Shadow", (value) =>
+  value === "none" ? "Shadow()" : swiftShadow(SHADOWS[value])
+)}
+}`
+}
+
+function buildSwift(theme, metrics) {
   const colors = Object.keys(theme.light)
     .map(
       (name) =>
@@ -997,6 +1117,8 @@ ${text}
 extension Shadow {
 ${shadow}
 }
+
+${buildSwiftMetrics(metrics)}
 `
 }
 
@@ -1022,7 +1144,33 @@ function kotlinColors(colors, isDark) {
     .join("\n")}\n    isDark = ${isDark},`
 }
 
-function buildKotlin(theme) {
+function kotlinShadow(value) {
+  const layers = parseShadow(value).map(
+    (layer) =>
+      `ShadowLayer(${dp(layer.x)}, ${dp(layer.y)}, ${dp(layer.blur)}, ${dp(layer.spread)}, ${kotlinShadowColor(layer)})`
+  )
+  return `Shadow(${layers.join(", ")})`
+}
+
+function buildKotlinMetrics(metrics) {
+  const group = (name, values, format) =>
+    `    object ${name} {\n${Object.entries(values)
+      .map(([key, value]) => `        val ${camelCase(key)}${format(value)}`)
+      .join("\n")}\n    }`
+  return `object Metrics {
+${Object.entries(METRIC_GROUPS)
+  .map(([key, name]) => group(name, metrics[key], (value) => ` = ${value}.dp`))
+  .join("\n\n")}
+
+${group("Weight", metrics["font-weight"], (value) => ` = ${KOTLIN_WEIGHTS[value]}`)}
+
+${group("Elevation", metrics.shadow, (value) =>
+  value === "none" ? " = Shadow()" : ` = ${kotlinShadow(SHADOWS[value])}`
+)}
+}`
+}
+
+function buildKotlin(theme, metrics) {
   const fields = Object.keys(theme.light)
     .map((name) => `    val ${camelCase(name)}: Color,`)
     .join("\n")
@@ -1055,6 +1203,7 @@ function buildKotlin(theme) {
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Immutable
@@ -1088,16 +1237,30 @@ ${text}
 object Shadows {
 ${shadow}
 }
+
+${buildKotlinMetrics(metrics)}
 `
+}
+
+function filesFor(theme, metrics) {
+  return {
+    [CSS]: buildCss(theme.source, metrics),
+    [THEME]: buildTheme(theme, metrics),
+    [SWIFT]: buildSwift(theme, metrics),
+    [KOTLIN]: buildKotlin(theme, metrics),
+  }
 }
 
 function generate(target) {
   const theme = loadTokens()
-  const files = {
-    [CSS]: buildCss(theme.source),
-    [THEME]: buildTheme(theme),
-    [SWIFT]: buildSwift(theme),
-    [KOTLIN]: buildKotlin(theme),
+  const styles = loadStyles()
+  const files = filesFor(theme, styles[DEFAULT_STYLE])
+  for (const style of STYLE_NAMES) {
+    for (const [file, content] of Object.entries(
+      filesFor(theme, styles[style])
+    )) {
+      files[path.posix.join(PRESETS, style, PRESET_FILES[file])] = content
+    }
   }
   for (const [file, content] of Object.entries(files)) {
     mkdirSync(path.dirname(path.join(target, file)), { recursive: true })

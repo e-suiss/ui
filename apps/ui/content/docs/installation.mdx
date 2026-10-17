@@ -227,6 +227,8 @@ npx shadcn@latest add @esuiss-rn/theme-suiss
 - NativeWind: adds the color variables to `global.css` and the colors, type scale, shadows and radius scale to `tailwind.config.js`.
 - StyleSheet: writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. Every component that needs it adds it on its own.
 
+For another [style](/docs/theming#styles), add `@esuiss-rn/theme-vega`, `@esuiss-rn/theme-luma` and so on instead of `theme-suiss`, or use `https://suiss.app/ui/r/rn-uniwind-vega/{name}.json` as the `@esuiss-rn` registry so the theme that components pull in matches the style.
+
 ### Render the portal host
 
 Dialogs, sheets, menus and toasts render into a portal host. Render it once, as the last child of your root component:
@@ -278,6 +280,12 @@ npx @esuiss/ui@latest init --styling stylesheet
 
 StyleSheet needs no Tailwind. `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
 
+Pass `--style` or a preset code to start with another [style](/docs/theming#styles):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --style vega
+```
+
 ### Add components with the suiss/ui CLI
 
 ```bash title="Terminal"
@@ -313,6 +321,8 @@ Run `init` in the folder that holds your Xcode project or `Package.swift`. It co
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --platform swift
 ```
+
+Add `--style vega` or another [style](/docs/theming#styles) to copy that style's `Tokens.swift`.
 
 ## Add components
 
@@ -365,6 +375,8 @@ Run `init` in the folder that holds your Android Gradle module. It copies the th
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --platform kotlin
 ```
+
+Add `--style vega` or another [style](/docs/theming#styles) to copy that style's `Tokens.kt`.
 
 ## Add components
 

@@ -74,7 +74,7 @@ public struct CheckboxStyle: ToggleStyle {
         SelectionIndicator(
           checked: configuration.isOn || configuration.isMixed,
           pressed: pressed,
-          cornerRadius: 4
+          cornerRadius: Metrics.Radius.checkbox
         ) {
           (configuration.isMixed ? Ph.minus.regular : Ph.check.regular)
             .frame(width: 14, height: 14)

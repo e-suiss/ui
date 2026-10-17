@@ -6,7 +6,7 @@ import { IconClassContext } from "@/components/ui/icon"
 import { TextClassContext } from "@/components/ui/text"
 
 const buttonVariants = cva(
-  "shrink-0 flex-row items-center justify-center rounded-full border border-transparent",
+  "shrink-0 flex-row items-center justify-center rounded-button border border-transparent",
   {
     variants: {
       variant: {
@@ -23,15 +23,15 @@ const buttonVariants = cva(
         link: "active:opacity-80 disabled:opacity-50",
       },
       size: {
-        default: "h-9 gap-1.5 px-4",
-        xs: "h-6 gap-1 px-[0.6875rem]",
-        sm: "h-8 gap-1 px-3",
-        lg: "h-11 gap-1.5 px-[1.375rem]",
+        default: "h-button gap-1.5 px-button-x",
+        xs: "h-button-xs gap-1 px-button-xs-x",
+        sm: "h-button-sm gap-1 px-button-sm-x",
+        lg: "h-button-lg gap-1.5 px-button-lg-x",
         xl: "h-14 gap-2 px-[1.9375rem]",
-        icon: "size-9",
-        "icon-xs": "size-6",
-        "icon-sm": "size-8",
-        "icon-lg": "size-11",
+        icon: "size-button",
+        "icon-xs": "size-button-xs",
+        "icon-sm": "size-button-sm",
+        "icon-lg": "size-button-lg",
         "icon-xl": "size-14",
       },
       block: {
@@ -51,7 +51,7 @@ const buttonVariants = cva(
   }
 )
 
-const buttonTextVariants = cva("text-sm text-foreground", {
+const buttonTextVariants = cva("font-button text-sm text-foreground", {
   variants: {
     variant: {
       default: "text-primary-foreground",

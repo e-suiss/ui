@@ -10,20 +10,20 @@ public struct VariantButtonStyle: ButtonStyle {
 
     var height: CGFloat {
       switch self {
-      case .xs, .iconXs: 24
-      case .sm, .iconSm: 32
-      case .default, .icon: 36
-      case .lg, .iconLg: 44
+      case .xs, .iconXs: Metrics.Height.buttonXs
+      case .sm, .iconSm: Metrics.Height.buttonSm
+      case .default, .icon: Metrics.Height.button
+      case .lg, .iconLg: Metrics.Height.buttonLg
       case .xl, .iconXl: 56
       }
     }
 
     var horizontalPadding: CGFloat {
       switch self {
-      case .xs: 11
-      case .sm: 12
-      case .default: 16
-      case .lg: 22
+      case .xs: Metrics.PaddingX.buttonXs
+      case .sm: Metrics.PaddingX.buttonSm
+      case .default: Metrics.PaddingX.button
+      case .lg: Metrics.PaddingX.buttonLg
       case .xl: 31
       case .icon, .iconXs, .iconSm, .iconLg, .iconXl: 0
       }
@@ -113,13 +113,13 @@ private struct StyledButton: View {
   var body: some View {
     let joined = group != nil && variant != .ghost && variant != .plain
     let rounded = RoundedRectangle(
-      cornerRadius: block ? size.blockRadius : Radius.full,
+      cornerRadius: block ? size.blockRadius : Metrics.Radius.button,
       style: .continuous
     )
     let shape = joined ? AnyShape(Rectangle()) : AnyShape(rounded)
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: metrics?.spacing ?? size.spacing, iconSize: metrics?.iconSize ?? size.iconSize))
-    .scaledFont(metrics?.textStyle ?? size.textStyle)
+    .scaledFont(metrics?.textStyle ?? size.textStyle, weight: Metrics.Weight.button)
     .underline(variant == .link && pressed && isEnabled)
     .lineLimit(1)
     .foregroundStyle(foreground)

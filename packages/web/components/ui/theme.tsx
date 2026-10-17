@@ -333,10 +333,7 @@ function ThemeToggle({
       onClick={() =>
         setTheme(dark ? "light" : "dark", { effect, origin, blur })
       }
-      className={cn(
-        "group/theme-toggle rounded-full bg-foreground p-0 transition-[scale,background-color] duration-300 hover:bg-foreground/90 active:scale-95",
-        className
-      )}
+      className={cn("cn-theme-toggle group/theme-toggle", className)}
       {...props}
     >
       <svg aria-hidden viewBox="0 0 240 240" fill="none" className="size-full">

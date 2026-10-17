@@ -131,7 +131,7 @@ function DialogContent({
             <DialogPrimitive.Popup
               className={(state) =>
                 cn(
-                  "z-50 w-full flex-col gap-6 rounded-2xl border border-foreground/5 bg-popover p-6 shadow-xl dark:border-foreground/10",
+                  "z-50 w-full flex-col gap-6 rounded-dialog border border-foreground/5 bg-popover p-dialog shadow-dialog dark:border-foreground/10",
                   resolveClassName(className, state)
                 )
               }
@@ -198,7 +198,7 @@ function DialogTitle({
     <DialogPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-semibold text-foreground",
+          "text-base font-title text-foreground",
           resolveClassName(className, state)
         )
       }

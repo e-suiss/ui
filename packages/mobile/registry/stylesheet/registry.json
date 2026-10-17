@@ -6834,6 +6834,190 @@
           "target": "@ui/theme.ts"
         }
       ]
+    },
+    {
+      "name": "theme-vega",
+      "title": "suiss/ui Theme (Vega)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the vega style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/vega/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-nova",
+      "title": "suiss/ui Theme (Nova)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the nova style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/nova/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-maia",
+      "title": "suiss/ui Theme (Maia)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the maia style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/maia/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-lyra",
+      "title": "suiss/ui Theme (Lyra)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the lyra style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/lyra/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-mira",
+      "title": "suiss/ui Theme (Mira)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the mira style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/mira/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-luma",
+      "title": "suiss/ui Theme (Luma)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the luma style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/luma/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-sera",
+      "title": "suiss/ui Theme (Sera)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the sera style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/sera/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "theme-rhea",
+      "title": "suiss/ui Theme (Rhea)",
+      "description": "The suiss/ui theme object with the colors for light and dark mode, the type scale and radius scale, and the useTheme hook. Uses the rhea style for radius, sizes, spacing, weights and shadows.",
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/theming"
+        }
+      },
+      "type": "registry:lib",
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "files": [
+        {
+          "path": "styles/presets/rhea/theme.ts",
+          "type": "registry:lib",
+          "target": "@ui/theme.ts"
+        }
+      ]
     }
   ]
 }

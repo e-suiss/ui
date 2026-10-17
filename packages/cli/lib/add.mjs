@@ -1,19 +1,24 @@
 import { readFileSync, writeFileSync } from "node:fs"
 
-import {
-  ICON_PACKAGE,
-  toPhosphorIcons,
-  usesIconPlaceholders,
-} from "./icons.mjs"
+import { iconPackages, toIcons, usesIconPlaceholders } from "./icons.mjs"
 import { CliError, note, step } from "./output.mjs"
 import {
   detectBase,
+  detectIcons,
+  detectMenuColor,
   detectProject,
+  detectStyle,
   findAliasRoot,
   findStylesheet,
   install,
 } from "./project.mjs"
-import { fetchRegistry, fetchText, resolveItems, toCss } from "./registry.mjs"
+import {
+  fetchRegistry,
+  fetchStyles,
+  fetchText,
+  resolveItems,
+  toCss,
+} from "./registry.mjs"
 import {
   mapLimit,
   printDiff,
@@ -23,6 +28,13 @@ import {
 } from "./shared/files.mjs"
 import { relative } from "./shared/project.mjs"
 import { chooseNames } from "./shared/select.mjs"
+import {
+  applyMenuColor,
+  applyStyleMap,
+  composeStyleMap,
+  DEFAULT_STYLE,
+  styleMarkers,
+} from "./styles.mjs"
 
 const COMMENT = /\/\*[\s\S]*?\*\//g
 const WHITESPACE = /\s+/g
@@ -32,7 +44,17 @@ const RULE_HEAD_END = /[{;]/
 
 const scopeOf = (item) => item.scope
 
-function fetchFiles(root, items) {
+async function styled(source, { base = "base", style = DEFAULT_STYLE }) {
+  if (styleMarkers(source).length === 0) return source
+  const map = composeStyleMap(await fetchStyles(), base, style)
+  const { output, unknown } = applyStyleMap(source, map)
+  if (unknown.length) {
+    throw new CliError(`Unknown style markers: ${unknown.join(", ")}`)
+  }
+  return output
+}
+
+function fetchFiles(root, items, styling = {}) {
   const files = items.flatMap((item) =>
     item.files.map((file, index) => ({
       file,
@@ -41,10 +63,13 @@ function fetchFiles(root, items) {
     }))
   )
   return mapLimit(files, async (entry) => {
-    const source = await fetchText(entry.source)
+    const source = applyMenuColor(
+      await styled(await fetchText(entry.source), styling),
+      styling.menuColor
+    )
     return {
       ...entry,
-      content: toPhosphorIcons(source),
+      content: toIcons(source, styling.icons),
       icons: usesIconPlaceholders(source),
     }
   })
@@ -93,21 +118,24 @@ export async function installItems(
   root,
   registry,
   names,
-  { overwrite = false } = {}
+  { overwrite = false, base, style, icons, menuColor } = {}
 ) {
   const items = resolveItems(registry, names)
-  const files = await fetchFiles(root, items)
+  const files = await fetchFiles(root, items, { base, style, icons, menuColor })
   const result = writeFiles(project.cwd, files, overwrite)
   const installed = install(project, [
     ...items.flatMap((item) => item.dependencies),
-    ...(files.some((file) => file.icons) ? [ICON_PACKAGE] : []),
+    ...(files.some((file) => file.icons) ? iconPackages(icons) : []),
   ])
   reportFiles(result, installed)
   addStyles(project, items)
 }
 
-async function showDiff(project, root, registry, names) {
-  printDiff(project.cwd, await fetchFiles(root, resolveItems(registry, names)))
+async function showDiff(project, root, registry, names, styling) {
+  printDiff(
+    project.cwd,
+    await fetchFiles(root, resolveItems(registry, names), styling)
+  )
 }
 
 export async function add(names, options) {
@@ -119,11 +147,25 @@ export async function add(names, options) {
     )
   }
 
-  const registry = await fetchRegistry(options.base ?? detectBase(project.cwd))
+  const base = options.base ?? detectBase(project.cwd)
+  const style = options.style ?? detectStyle(project.cwd)
+  const styling = {
+    base,
+    style,
+    icons: detectIcons(project.cwd),
+    menuColor: detectMenuColor(project.cwd),
+  }
+  const registry = await fetchRegistry(base)
   const selected = await chooseNames(registry.items, names, options, {
     scopeOf,
   })
 
-  if (options.diff) await showDiff(project, root, registry, selected)
-  else await installItems(project, root, registry, selected, options)
+  if (options.diff) {
+    await showDiff(project, root, registry, selected, styling)
+  } else {
+    await installItems(project, root, registry, selected, {
+      ...options,
+      ...styling,
+    })
+  }
 }

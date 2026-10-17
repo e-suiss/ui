@@ -85,8 +85,8 @@ function InputGroup({
       <View
         role="group"
         className={cn(
-          "relative h-11 w-full min-w-0 flex-row items-center rounded-lg border border-transparent bg-secondary",
-          (block || multiline) && "h-auto rounded-xl",
+          "relative h-input w-full min-w-0 flex-row items-center rounded-input border border-transparent bg-secondary",
+          (block || multiline) && "h-auto rounded-textarea",
           block && "flex-col items-stretch",
           focused && "border-ring ring ring-ring-50",
           isInvalid &&

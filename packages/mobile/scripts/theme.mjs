@@ -9,6 +9,7 @@ const OKLCH_COLOR =
 const PALETTE_COLOR = /--color-([a-z]+(?:-\d+)?):\s*([^;]+);/g
 
 const TOKENS = path.join(import.meta.dirname, "../../tokens/tokens.json")
+const STYLE_TOKENS = path.join(import.meta.dirname, "../../tokens/styles.json")
 const TAILWIND_THEME = createRequire(import.meta.url).resolve(
   "tailwindcss/theme.css"
 )
@@ -189,4 +190,53 @@ function scopedBiome(config) {
   }
 }
 
-export { convertColors, loadTokens, scopedBiome, toRgb, toRgba }
+const DEFAULT_STYLE = "suiss"
+
+const SHADOWS = {
+  none: "0 0 #0000",
+  xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  sm: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+  md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+  "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+}
+
+const FONT_WEIGHTS = { normal: 400, medium: 500, semibold: 600, bold: 700 }
+
+function loadStyles() {
+  return JSON.parse(readFileSync(STYLE_TOKENS, "utf8"))
+}
+
+function metricVariables(metrics) {
+  const variables = []
+  const add = (prefix, suffix, values, format) => {
+    for (const [name, value] of Object.entries(values)) {
+      variables.push([`--${prefix}-${name}${suffix}`, format(value)])
+    }
+  }
+  const pixels = (value) => `${value}px`
+  add("radius", "", metrics.radius, pixels)
+  add("spacing", "", metrics.height, pixels)
+  add("spacing", "-x", metrics["padding-x"], pixels)
+  add("spacing", "-y", metrics["padding-y"], pixels)
+  add("spacing", "", metrics.padding, pixels)
+  add("font-weight", "", metrics["font-weight"], (value) =>
+    String(FONT_WEIGHTS[value])
+  )
+  add("shadow", "", metrics.shadow, (value) => SHADOWS[value])
+  return variables
+}
+
+export {
+  convertColors,
+  DEFAULT_STYLE,
+  FONT_WEIGHTS,
+  loadStyles,
+  loadTokens,
+  metricVariables,
+  SHADOWS,
+  scopedBiome,
+  toRgb,
+  toRgba,
+}

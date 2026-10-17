@@ -30,14 +30,14 @@ function ScrollArea({
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
-      className={cn("relative", className)}
+      className={cn("cn-scroll-area relative", className)}
       {...props}
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
         ref={viewportRef}
         tabIndex={scrollable ? 0 : -1}
-        className="size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1"
+        className="cn-scroll-area-viewport size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-ring/50 focus-visible:outline-1"
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
@@ -57,14 +57,14 @@ function ScrollBar({
       data-slot="scroll-area-scrollbar"
       orientation={orientation}
       className={cn(
-        "z-10 flex touch-none p-px transition-colors select-none data-horizontal:mx-2 data-horizontal:mb-1 data-horizontal:h-2.25 data-horizontal:flex-col data-horizontal:border-t data-horizontal:border-t-transparent data-vertical:my-2 data-vertical:me-1 data-vertical:w-2.25 data-vertical:border-s data-vertical:border-s-transparent",
+        "cn-scroll-area-scrollbar flex touch-none p-px transition-colors select-none",
         className
       )}
       {...props}
     >
       <ScrollAreaPrimitive.ScrollAreaThumb
         data-slot="scroll-area-thumb"
-        className="relative flex-1 rounded-full bg-border"
+        className="cn-scroll-area-thumb relative flex-1 bg-border"
       />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   )

@@ -88,7 +88,7 @@ function PopoverContent({
               }
               className={(state) =>
                 cn(
-                  "z-50 w-72 flex-col gap-4 rounded-2xl border border-foreground-5 bg-popover p-4 shadow-lg dark:border-foreground-10",
+                  "z-50 w-72 flex-col gap-4 rounded-popover border border-foreground-5 bg-popover p-popover shadow-popover dark:border-foreground-10",
                   resolveClassName(className, state)
                 )
               }
@@ -117,7 +117,7 @@ function PopoverTitle({
     <PopoverPrimitive.Title
       className={(state) =>
         cn(
-          "text-base font-semibold text-foreground",
+          "text-base font-title text-foreground",
           resolveClassName(className, state)
         )
       }

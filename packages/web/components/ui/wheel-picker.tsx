@@ -99,10 +99,7 @@ function WheelPicker({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="wheel-picker"
-      className={cn(
-        "relative flex items-stretch justify-center [--wheel-picker-item-height:--spacing(8)] before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:h-(--wheel-picker-item-height) before:-translate-y-1/2 before:rounded-lg before:bg-secondary",
-        className
-      )}
+      className={cn("cn-wheel-picker", className)}
       {...props}
     />
   )
@@ -391,10 +388,7 @@ function WheelPickerColumn({
         onPointerDown={releaseTarget}
         onClickCapture={handleClick}
         onKeyDownCapture={handleKeyDown}
-        className={cn(
-          "no-scrollbar relative h-[calc(var(--wheel-picker-item-height)*6.75)] min-w-max snap-y snap-mandatory overflow-y-auto overscroll-contain rounded-lg py-[calc(var(--wheel-picker-item-height)*2.875)] outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-          className
-        )}
+        className={cn("cn-wheel-picker-column", className)}
         {...props}
       >
         {children}
@@ -424,10 +418,7 @@ function WheelPickerItem({
       data-value={value}
       data-selected={selected ? "" : undefined}
       data-disabled={disabled ? "" : undefined}
-      className={cn(
-        "flex h-(--wheel-picker-item-height) cursor-default snap-center items-center justify-center px-3 text-xl whitespace-nowrap text-foreground tabular-nums select-none data-disabled:opacity-50",
-        className
-      )}
+      className={cn("cn-wheel-picker-item", className)}
       {...props}
     >
       <span className="opacity-0">{children}</span>

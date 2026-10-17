@@ -144,10 +144,7 @@ function TabBar({
         data-open={open ? "" : undefined}
         data-overflowing={overflow.length > 0 ? "" : undefined}
         data-sections={hasSections ? "" : undefined}
-        className={cn(
-          "group/tab-bar fixed inset-x-0 [--tab-bar-spring:linear(0,0.032,0.112,0.219,0.338,0.459,0.573,0.676,0.766,0.84,0.9,0.947,0.982,1.007,1.023,1.033,1.037,1.038,1.037,1.033,1.029,1.024,1.02,1.015,1.012,1.008,1.006,1.003,1.002,1,1,0.999,1)] bottom-[max(--spacing(4),env(safe-area-inset-bottom))] z-20 mx-auto grid max-h-[calc(100%-(--spacing(8)))] w-fit max-w-[calc(100%-(--spacing(8)))] grid-cols-[minmax(0,1fr)_auto] grid-rows-[minmax(0,1fr)_auto] rounded-3xl border border-foreground/5 bg-card p-1 shadow-lg data-overflowing:w-full dark:border-foreground/10",
-          className
-        )}
+        className={cn("cn-tab-bar group/tab-bar", className)}
         style={
           {
             width: open || present ? closedWidth : undefined,
@@ -241,10 +238,7 @@ function TabBarList({
       }}
       data-slot="tab-bar-list"
       inert={open || undefined}
-      className={cn(
-        "relative col-start-1 row-start-2 flex min-w-0 gap-1 overflow-hidden rounded-full transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-100 group-data-open/tab-bar:pointer-events-none group-data-open/tab-bar:invisible group-data-open/tab-bar:opacity-0 group-has-[[data-slot=tab-bar-trigger]:not([data-idle])]/tab-bar:me-1 motion-reduce:transition-none",
-        className
-      )}
+      className={cn("cn-tab-bar-list", className)}
       {...props}
     >
       {items.map((item, index) =>
@@ -327,10 +321,7 @@ function TabBarTrigger({
       aria-expanded={open}
       aria-controls={contentId}
       variant="secondary"
-      className={cn(
-        "col-start-2 row-start-2 w-auto justify-self-end gap-2 data-idle:pointer-events-none data-idle:invisible data-idle:absolute transition-[width,color] duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/tab-bar:duration-650 group-data-open/tab-bar:ease-(--tab-bar-spring) [interpolate-size:allow-keywords] group-data-open/tab-bar:w-[calc(var(--tab-bar-width,auto)-(--spacing(2)))] max-w-[calc(var(--tab-bar-width,100vw)-(--spacing(2)))] motion-reduce:transition-none text-muted-foreground hover:text-foreground",
-        className
-      )}
+      className={cn("cn-tab-bar-trigger", className)}
       onClick={(event) => {
         onClick?.(event)
         if (!event.defaultPrevented) setOpen(!open)
@@ -399,7 +390,7 @@ function TabBarContent({
         if (event.target === event.currentTarget && open) setSettled(true)
       }}
       className={cn(
-        "col-span-2 row-start-1 mb-1 grid h-auto max-h-full self-end [interpolate-size:allow-keywords] min-h-0 w-full overflow-hidden overscroll-contain data-settled:overflow-y-auto grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-x-4 gap-y-5 px-3 py-3 transition-[height,opacity,margin,padding] duration-650 ease-(--tab-bar-spring) data-closing:duration-400 data-closing:ease-[cubic-bezier(0.32,0.72,0,1)] starting:mb-0 starting:h-0 starting:py-0 starting:opacity-0 data-closing:mb-0 data-closing:h-0 data-closing:py-0 data-closing:opacity-0 *:transition-[opacity,filter,scale] *:delay-100 *:duration-450 *:ease-[cubic-bezier(0.32,0.72,0,1)] *:starting:scale-95 *:starting:opacity-0 *:starting:blur-sm data-closing:*:scale-95 data-closing:*:opacity-0 data-closing:*:blur-sm data-closing:*:delay-0 data-closing:*:duration-150 motion-reduce:transition-none motion-reduce:*:transition-none md:px-4",
+        "cn-tab-bar-content *:transition-[opacity,filter,scale] *:delay-100 *:duration-450 *:ease-[cubic-bezier(0.32,0.72,0,1)] *:starting:scale-95 *:starting:opacity-0 *:starting:blur-sm data-closing:*:scale-95 data-closing:*:opacity-0 data-closing:*:blur-sm data-closing:*:delay-0 data-closing:*:duration-150 motion-reduce:*:transition-none",
         className
       )}
       {...props}
@@ -418,7 +409,7 @@ function TabBarSection({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="tab-bar-section"
-      className={cn("flex min-w-0 flex-col", className)}
+      className={cn("cn-tab-bar-section", className)}
       {...props}
     />
   )
@@ -431,10 +422,7 @@ function TabBarSectionTitle({
   return (
     <div
       data-slot="tab-bar-section-title"
-      className={cn(
-        "relative flex h-7 items-center ps-4 text-sm text-muted-foreground before:absolute before:inset-s-0 before:top-1/2 before:size-1.5 before:-translate-y-1/2 before:rounded-full before:bg-muted-foreground",
-        className
-      )}
+      className={cn("cn-tab-bar-section-title", className)}
       {...props}
     />
   )

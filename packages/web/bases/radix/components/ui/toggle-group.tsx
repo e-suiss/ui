@@ -93,7 +93,7 @@ function ToggleGroup({
       data-orientation={orientation}
       style={{ "--gap": spacing } as React.CSSProperties}
       className={cn(
-        "group/toggle-group relative flex w-fit flex-row items-center gap-[--spacing(var(--gap))] data-[spacing=0]:data-[variant=outline]:rounded-lg data-[spacing=0]:data-[variant=default]:rounded-xl data-[spacing=0]:data-[variant=default]:bg-secondary data-[spacing=0]:data-[variant=default]:gap-1 data-[spacing=0]:data-[variant=default]:p-1 data-vertical:flex-col data-vertical:items-stretch",
+        "cn-toggle-group group/toggle-group flex w-fit flex-row items-center data-vertical:flex-col data-vertical:items-stretch",
         className
       )}
       {...props}
@@ -102,7 +102,7 @@ function ToggleGroup({
         <span
           aria-hidden
           data-slot="toggle-group-indicator"
-          className="pointer-events-none absolute top-(--active-toggle-top) left-(--active-toggle-left) hidden h-(--active-toggle-height) w-(--active-toggle-width) rounded-md bg-card shadow-sm group-data-indicator/toggle-group:block group-data-indicator-ready/toggle-group:transition-[left,top,width,height] group-data-indicator-ready/toggle-group:duration-300 group-data-indicator-ready/toggle-group:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none dark:bg-border"
+          className="cn-toggle-group-indicator"
         />
       )}
       <ToggleGroupContext.Provider
@@ -131,7 +131,7 @@ function ToggleGroupItem({
       data-size={context.size || size}
       data-spacing={context.spacing}
       className={cn(
-        "shrink-0 data-[state=on]:bg-accent data-[state=on]:text-primary data-[state=on]:hover:bg-accent data-[state=on]:hover:text-primary group-data-[spacing=0]/toggle-group:relative group-data-[spacing=0]/toggle-group:data-[variant=default]:active:scale-100! group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-indicator/toggle-group:data-[state=on]:shadow-none! dark:group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-[spacing=0]/toggle-group:data-[variant=default]:rounded-md! group-data-[spacing=0]/toggle-group:data-[variant=default]:hover:bg-transparent group-data-[spacing=0]/toggle-group:data-[variant=default]:hover:text-muted-foreground group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:bg-card group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:text-card-foreground group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:shadow-sm group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:bg-card group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:text-card-foreground dark:group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:bg-border dark:group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:bg-border group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-3 group-data-[spacing=0]/toggle-group:shadow-none focus:z-10 focus-visible:z-10 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pe-2.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:ps-2.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-s-lg group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-xl group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-e-lg group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-xl group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-s-0 group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:border-t-0 group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-s group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-t",
+        "cn-toggle-group-item shrink-0 focus:z-10 focus-visible:z-10 group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:border-t-0 group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-t",
         toggleVariants({
           variant: context.variant || variant,
           size: context.size || size,

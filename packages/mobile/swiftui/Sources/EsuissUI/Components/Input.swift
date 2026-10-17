@@ -6,18 +6,18 @@ public struct InputStyle: TextFieldStyle {
 
     var height: CGFloat {
       switch self {
-      case .default: 44
+      case .default: Metrics.Height.input
       case .md: 36
       case .sm: 32
       }
     }
 
     var horizontalPadding: CGFloat {
-      self == .sm ? 10 : 12
+      self == .sm ? 10 : Metrics.PaddingX.input
     }
 
     var radius: CGFloat {
-      self == .sm ? Radius.md : Radius.lg
+      self == .sm ? Radius.md : Metrics.Radius.input
     }
 
     var textStyle: TextStyle {

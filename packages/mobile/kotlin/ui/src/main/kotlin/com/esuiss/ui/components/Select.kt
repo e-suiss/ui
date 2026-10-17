@@ -54,11 +54,12 @@ import com.adamglin.phosphoricons.regular.CaretUpDown
 import com.adamglin.phosphoricons.regular.Check
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
 enum class SelectSize(val height: Dp, val radius: Dp) {
-    Default(44.dp, Radius.lg),
+    Default(Metrics.Height.input, Metrics.Radius.input),
     Sm(36.dp, Radius.md),
 }
 
@@ -192,7 +193,7 @@ fun Select(
                 Column(
                     modifier = Modifier
                         .width(max(anchorWidth, 144.dp))
-                        .raisedSurface(colors, RoundedCornerShape(Radius.xl))
+                        .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.menu), Metrics.Elevation.menu)
                         .verticalScroll(rememberScrollState()),
                     content = content,
                 )
@@ -206,7 +207,7 @@ fun SelectGroup(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Column(modifier = modifier.fillMaxWidth().padding(6.dp), content = content)
+    Column(modifier = modifier.fillMaxWidth().padding(Metrics.Padding.menu), content = content)
 }
 
 @Composable
@@ -241,7 +242,7 @@ fun SelectItem(
     val selected = select.value == value
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val shape = RoundedCornerShape(Radius.md)
+    val shape = RoundedCornerShape(Metrics.Radius.menuItem)
     Box(
         modifier = modifier
             .fillMaxWidth()

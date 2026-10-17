@@ -90,7 +90,7 @@ function AlertDialogContent({
             <AlertDialogPrimitive.Popup
               className={(state) =>
                 cn(
-                  "z-50 w-full flex-col gap-6 rounded-2xl border border-foreground-5 bg-popover p-6 shadow-xl dark:border-foreground-10",
+                  "z-50 w-full flex-col gap-6 rounded-dialog border border-foreground-5 bg-popover p-dialog shadow-dialog dark:border-foreground-10",
                   resolveClassName(className, state)
                 )
               }
@@ -144,7 +144,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       className={(state) =>
         cn(
-          "text-center text-lg font-semibold text-foreground",
+          "text-center text-lg font-title text-foreground",
           resolveClassName(className, state)
         )
       }

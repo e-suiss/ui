@@ -332,6 +332,7 @@ export function llmsIndex() {
       `- License: ${site.license}`,
       `- Source: ${site.repository}`,
       `- Full documentation in one file: ${absolute("/llms-full.txt")}`,
+      `- Styles: suiss (default), vega, nova, maia, lyra, mira, luma, sera and rhea; pick one with \`--style\` or on ${absolute("/create")}, which also turns style, colors, radius and icons into a preset code for \`init --preset\``,
       "- Every page is also available as Markdown by appending `.md` to its URL or sending `Accept: text/markdown`.",
     ].join("\n"),
   ]

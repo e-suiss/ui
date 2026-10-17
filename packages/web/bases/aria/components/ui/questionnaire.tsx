@@ -164,7 +164,10 @@ function Questionnaire({
         {...stateAttributes(questionnaire.state)}
         data-slot="questionnaire"
         {...mergeHandlers(questionnaire.props, props)}
-        className={cn("flex w-full min-w-0 flex-col gap-6", className)}
+        className={cn(
+          "cn-questionnaire flex w-full min-w-0 flex-col",
+          className
+        )}
       />
     </QuestionnaireContext.Provider>
   )
@@ -197,7 +200,7 @@ function QuestionnaireProgress({
       role="progressbar"
       data-slot="questionnaire-progress"
       className={cn(
-        "min-h-[1lh] w-fit min-w-[14ch] text-xs text-muted-foreground tabular-nums",
+        "cn-questionnaire-progress min-h-[1lh] w-fit min-w-[14ch] text-muted-foreground tabular-nums",
         className
       )}
       {...props}
@@ -248,7 +251,7 @@ function QuestionnaireItem({
           {...questionnaireItem.props}
           data-slot="questionnaire-item"
           className={cn(
-            "flex min-w-0 flex-col gap-5 border-0 p-0 outline-none",
+            "cn-questionnaire-item min-w-0 border-0 p-0 outline-none",
             className
           )}
           {...props}
@@ -277,7 +280,7 @@ function QuestionnaireTitle({
       id={titleId}
       data-slot="questionnaire-title"
       className={cn(
-        "text-base font-semibold text-pretty [&:not(:has(~[data-slot=questionnaire-description]))]:mb-5",
+        "cn-font-heading cn-questionnaire-title text-pretty [&:not(:has(~[data-slot=questionnaire-description]))]:mb-5",
         className
       )}
       {...props}
@@ -302,7 +305,10 @@ function QuestionnaireDescription({
       render={render}
       id={id}
       data-slot="questionnaire-description"
-      className={cn("text-sm text-pretty text-muted-foreground", className)}
+      className={cn(
+        "cn-questionnaire-description text-pretty text-muted-foreground",
+        className
+      )}
       {...props}
     />
   )
@@ -322,7 +328,10 @@ function QuestionnaireChoices({
       render={render}
       {...stateAttributes({ shortcuts })}
       data-slot="questionnaire-choices"
-      className={cn("grid min-w-0 gap-3", className)}
+      className={cn(
+        "cn-questionnaire-choices grid min-w-0 group/questionnaire-choices",
+        className
+      )}
       {...props}
     />
   )
@@ -364,7 +373,7 @@ function QuestionnaireChoice({
       {...attributes}
       data-slot="questionnaire-choice"
       className={cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-xl border border-border px-4 py-3 text-start text-base transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary hover:text-accent-foreground",
+        "cn-questionnaire-choice group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start text-start transition-colors outline-none select-none",
         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
         className
       )}
@@ -375,16 +384,16 @@ function QuestionnaireChoice({
         {...inputProps}
         aria-describedby={described ? descriptionId : undefined}
         data-slot="questionnaire-choice-input"
-        className="absolute inset-0 z-10 size-full cursor-pointer opacity-0"
+        className="cn-questionnaire-choice-input absolute inset-0 z-10 size-full cursor-pointer opacity-0"
       />
       <span
         aria-hidden="true"
         data-slot="questionnaire-choice-indicator"
-        className="pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-xs border border-transparent bg-border group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-primary-foreground dark:group-data-checked/questionnaire-choice:bg-primary"
+        className="cn-questionnaire-choice-indicator pointer-events-none relative flex shrink-0 items-center justify-center border"
       >
         <span
           data-slot="questionnaire-choice-indicator-dot"
-          className="hidden size-2 rounded-full bg-primary-foreground group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block dark:size-2.5"
+          className="cn-questionnaire-choice-indicator-dot hidden rounded-full group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
         />
         <IconPlaceholder
           lucide="CheckIcon"
@@ -393,12 +402,12 @@ function QuestionnaireChoice({
           phosphor="CheckIcon"
           remixicon="RiCheckLine"
           data-slot="questionnaire-choice-indicator-check"
-          className="hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
+          className="cn-questionnaire-choice-indicator-check hidden group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
         />
       </span>
       <span
         data-slot="questionnaire-choice-label"
-        className="flex min-w-0 flex-1 flex-col gap-1"
+        className="cn-questionnaire-choice-label cn-questionnaire-choice-content flex min-w-0 flex-1 flex-col"
       >
         <QuestionnaireChoiceContext.Provider value={choice}>
           {children}
@@ -409,7 +418,7 @@ function QuestionnaireChoice({
         hidden={state.shortcut === null}
         data-shortcut={state.shortcut ?? undefined}
         data-slot="questionnaire-choice-shortcut"
-        className="pointer-events-none ms-auto hidden size-5 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-primary/10 bg-background/80 font-mono text-xs leading-none text-muted-foreground group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex max-md:hidden!"
+        className="cn-questionnaire-choice-shortcut cn-questionnaire-shortcut pointer-events-none ms-auto shrink-0"
       >
         {state.shortcut}
       </span>
@@ -434,7 +443,7 @@ function QuestionnaireChoiceDescription({
       id={choice?.descriptionId}
       aria-hidden={choice ? true : undefined}
       data-slot="questionnaire-choice-description"
-      className={cn("text-muted-foreground", className)}
+      className={cn("cn-questionnaire-choice-description", className)}
       {...props}
     />
   )
@@ -468,7 +477,7 @@ function QuestionnaireInput({
   return (
     <div
       data-slot="questionnaire-input-wrapper"
-      className="relative w-full min-w-0"
+      className="cn-questionnaire-input-wrapper relative min-w-0 group/questionnaire-input"
     >
       <Element
         as={as}
@@ -481,7 +490,7 @@ function QuestionnaireInput({
         {...questionnaireInput.inputProps}
         data-slot="questionnaire-input"
         className={cn(
-          "h-11 w-full min-w-0 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 disabled:opacity-50",
+          "cn-questionnaire-input w-full min-w-0 transition-[color,box-shadow,background-color] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
           "selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground",
           className
         )}
@@ -513,7 +522,7 @@ function QuestionnaireError({
       id={id}
       role={invalid ? "alert" : undefined}
       data-slot="questionnaire-error"
-      className={cn("mt-2 text-sm text-destructive", className)}
+      className={cn("cn-questionnaire-error text-destructive", className)}
       {...props}
     >
       {children ??
@@ -532,7 +541,7 @@ function QuestionnaireActions({
     <div
       data-slot="questionnaire-actions"
       className={cn(
-        "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:min-h-9",
+        "cn-questionnaire-actions grid w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center",
         className
       )}
       {...props}

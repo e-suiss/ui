@@ -4,7 +4,14 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 
-import { loadTokens, scopedBiome, toRgb } from "./theme.mjs"
+import {
+  DEFAULT_STYLE,
+  loadStyles,
+  loadTokens,
+  metricVariables,
+  scopedBiome,
+  toRgb,
+} from "./theme.mjs"
 
 const STYLED_ICON =
   /const StyledIcon = withUniwind\(IconImpl, \{[\s\S]*?\n\}\)\n/
@@ -26,6 +33,13 @@ const OUTPUT_ROOT = "nativewind/components"
 const COMPONENT_DIRS = ["ui", "patterns", "interactions", "blocks", "charts"]
 const OUTPUT_STYLESHEET = "styles/nativewind.css"
 const OUTPUT_CONFIG = "styles/nativewind.config.js"
+const PRESETS = "styles/presets"
+const METRIC_KEYS = {
+  "--radius-": "borderRadius",
+  "--spacing-": "spacing",
+  "--font-weight-": "fontWeight",
+  "--shadow-": "boxShadow",
+}
 const V3_SPACING = new Set([
   "0",
   "0.5",
@@ -294,7 +308,23 @@ ${lines({ ...solid(theme.dark), ...tokenValues("dark") })}
 `
 }
 
-function buildConfig(theme, tokens) {
+function metricConfig(metrics) {
+  const groups = Object.fromEntries(
+    Object.values(METRIC_KEYS).map((key) => [key, []])
+  )
+  for (const [variable, value] of metricVariables(metrics)) {
+    const prefix = Object.keys(METRIC_KEYS).find((key) =>
+      variable.startsWith(key)
+    )
+    groups[METRIC_KEYS[prefix]].push(
+      `        "${variable.slice(prefix.length)}": "${value}",`
+    )
+  }
+  return groups
+}
+
+function buildConfig(theme, tokens, metrics) {
+  const style = metricConfig(metrics)
   const hues = new Map()
   for (const [name, value] of Object.entries(theme.palette)) {
     const [hue, shade] = name.split("-")
@@ -309,18 +339,24 @@ function buildConfig(theme, tokens) {
       ([hue, shades]) => `        ${hue}: { ${shades.join(", ")} },`
     ),
   ].join("\n")
-  const radius = Object.entries(theme.radius)
-    .map(([name, value]) => `        "${name}": "${value}px",`)
-    .join("\n")
+  const radius = [
+    ...Object.entries(theme.radius).map(
+      ([name, value]) => `        "${name}": "${value}px",`
+    ),
+    ...style.borderRadius,
+  ].join("\n")
   const fontSize = Object.entries(theme.text)
     .map(
       ([name, size]) =>
         `        "${name}": ["${size.fontSize}px", { lineHeight: "${size.lineHeight}px" }],`
     )
     .join("\n")
-  const boxShadow = Object.entries(theme.shadow)
-    .map(([name, value]) => `        "${name}": "${value}",`)
-    .join("\n")
+  const boxShadow = [
+    ...Object.entries(theme.shadow).map(
+      ([name, value]) => `        "${name}": "${value}",`
+    ),
+    ...style.boxShadow,
+  ].join("\n")
 
   return `module.exports = {
   darkMode: "class",
@@ -344,6 +380,12 @@ ${fontSize}
       },
       boxShadow: {
 ${boxShadow}
+      },
+      spacing: {
+${style.spacing.join("\n")}
+      },
+      fontWeight: {
+${style.fontWeight.join("\n")}
       },
     },
   },
@@ -401,11 +443,33 @@ async function generate(target) {
     path.join(target, OUTPUT_STYLESHEET),
     buildStylesheet(theme, tokens)
   )
-  await writeFile(path.join(target, OUTPUT_CONFIG), buildConfig(theme, tokens))
+  const styles = loadStyles()
+  await writeFile(
+    path.join(target, OUTPUT_CONFIG),
+    buildConfig(theme, tokens, styles[DEFAULT_STYLE])
+  )
+  const presets = []
+  for (const [style, metrics] of Object.entries(styles)) {
+    if (style === DEFAULT_STYLE) continue
+    const file = path.posix.join(PRESETS, style, "nativewind.config.js")
+    await mkdir(path.join(target, path.dirname(file)), { recursive: true })
+    await writeFile(
+      path.join(target, file),
+      buildConfig(theme, tokens, metrics)
+    )
+    presets.push(file)
+  }
 
   execFileSync(
     path.join(ROOT, "../../node_modules/.bin/biome"),
-    ["check", "--write", OUTPUT_ROOT, OUTPUT_STYLESHEET, OUTPUT_CONFIG],
+    [
+      "check",
+      "--write",
+      OUTPUT_ROOT,
+      OUTPUT_STYLESHEET,
+      OUTPUT_CONFIG,
+      ...presets,
+    ],
     { cwd: target, stdio: "ignore" }
   )
   return { files: [...outputs.keys()], tokens: tokens.length }
@@ -427,10 +491,18 @@ async function snapshot(base) {
     existsSync(path.join(base, file))
       ? await readFile(path.join(base, file), "utf8")
       : ""
+  const presets = []
+  for (const style of Object.keys(loadStyles())) {
+    if (style === DEFAULT_STYLE) continue
+    presets.push(
+      await read(path.posix.join(PRESETS, style, "nativewind.config.js"))
+    )
+  }
   return JSON.stringify({
     files: entries,
     stylesheet: await read(OUTPUT_STYLESHEET),
     config: await read(OUTPUT_CONFIG),
+    presets,
   })
 }
 

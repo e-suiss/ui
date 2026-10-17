@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -131,7 +132,7 @@ fun Item(
     content: @Composable () -> Unit,
 ) {
     val inset = LocalItemGroupVariant.current == ItemGroupVariant.Inset
-    val shape = if (inset) RectangleShape else RoundedCornerShape(Radius.xl)
+    val shape = if (inset) RectangleShape else RoundedCornerShape(Metrics.Radius.item)
     ItemFrame(
         modifier = modifier,
         variant = variant,

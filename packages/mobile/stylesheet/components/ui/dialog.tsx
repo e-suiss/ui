@@ -19,7 +19,7 @@ import { AnimatedView } from "@/components/ui/animated-view"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 const Dialog = DialogPrimitive.Root
 
@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     gap: 24,
-    borderRadius: radius["2xl"],
+    borderRadius: metrics.radius.dialog,
     borderWidth: 1,
-    padding: 24,
-    ...shadow.xl,
+    padding: metrics.padding.dialog,
+    ...metrics.shadow.dialog,
   },
   close: { position: "absolute", top: 19, right: 16 },
   closeLabel: { ...fontSize.base },
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   headerCloseLabel: { paddingRight: 72 },
   footer: { flexDirection: "column-reverse", gap: 8 },
   footerSm: { flexDirection: "row", justifyContent: "flex-end" },
-  title: { ...fontSize.base, fontWeight: "600" },
+  title: { ...fontSize.base, fontWeight: metrics.fontWeight.title },
   description: { ...fontSize.sm },
 })
 

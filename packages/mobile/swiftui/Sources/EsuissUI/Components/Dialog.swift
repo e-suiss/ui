@@ -56,10 +56,10 @@ public struct DialogContent<Content: View>: View {
     VStack(alignment: .leading, spacing: 24) {
       content
     }
-    .padding(24)
+    .padding(Metrics.Padding.dialog)
     .frame(maxWidth: 448, alignment: .leading)
     .environment(\.overlayCloseInset, showCloseButton ? (closeLabel == nil ? 32 : 72) : 0)
-    .popupSurface(radius: Radius.xl2)
+    .popupSurface(radius: Metrics.Radius.dialog)
     .overlay(alignment: .topTrailing) {
       if showCloseButton {
         OverlayCloseButton(label: closeLabel)
@@ -131,7 +131,7 @@ public struct DialogTitle: View {
 
   public var body: some View {
     text
-      .textStyle(.base, weight: .semibold)
+      .textStyle(.base, weight: Metrics.Weight.title)
       .foregroundStyle(EsuissColor.foreground)
       .fixedSize(horizontal: false, vertical: true)
       .accessibilityAddTraits(.isHeader)

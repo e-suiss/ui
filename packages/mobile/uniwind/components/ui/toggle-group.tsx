@@ -83,7 +83,7 @@ function ToggleGroup({
         cn(
           "relative flex-row items-center self-start",
           orientation === "vertical" && "flex-col items-stretch",
-          spacing === 0 && variant === "outline" && "rounded-lg",
+          spacing === 0 && variant === "outline" && "rounded-toggle",
           segmented && "rounded-xl bg-secondary p-1",
           resolveClassName(className, state)
         )

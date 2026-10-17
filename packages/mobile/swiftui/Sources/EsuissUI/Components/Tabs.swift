@@ -91,7 +91,7 @@ public struct TabsList<Content: View>: View {
     .padding(variant == .line && vertical ? .trailing : [], 5)
     .background {
       if variant == .default {
-        RoundedRectangle(cornerRadius: Radius.xl, style: .continuous).fill(EsuissColor.secondary)
+        RoundedRectangle(cornerRadius: Metrics.Radius.tabs, style: .continuous).fill(EsuissColor.secondary)
       }
     }
     .environment(\.tabsListVariant, variant)
@@ -152,7 +152,7 @@ public struct TabsTrigger<Label: View>: View {
         .frame(width: vertical ? 2 : nil, height: vertical ? nil : 2)
         .offset(x: vertical ? 4 : 0, y: vertical ? 0 : 5)
     } else {
-      RoundedRectangle(cornerRadius: Radius.md, style: .continuous)
+      RoundedRectangle(cornerRadius: Metrics.Radius.tabsTrigger, style: .continuous)
         .fill(colorScheme == .dark ? EsuissColor.border : EsuissColor.card)
         .shadow(color: .black.opacity(colorScheme == .dark ? 0 : 0.08), radius: 1.5, y: 1)
     }

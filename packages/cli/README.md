@@ -122,6 +122,9 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. `init` saves it there |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
+| `--style <name>` | The visual style, one of `suiss` (default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is read from and saved to the `style` in `components.json`, and `add` follows it; for React Native, SwiftUI and Compose `init` sets radius, control sizes, paddings, weights and shadows through the theme |
+| `--preset <code>` | `init` only: a preset code from suiss.app/ui/create. React applies its style, colors, radius, icon library and menu color; React Native, SwiftUI and Compose use its style like `--style` |
+| `--theme suiss` | `init` only: keep the suiss/ui colors when applying a preset |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help, or the help of a command with `init --help` and `add --help` |

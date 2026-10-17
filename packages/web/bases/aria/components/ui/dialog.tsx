@@ -69,7 +69,7 @@ function DialogOverlay({
     <ModalOverlayPrimitive
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-black/50 duration-100 data-entering:animate-in data-entering:fade-in-0 data-exiting:animate-out data-exiting:fade-out-0",
+        "cn-dialog-overlay-aria fixed inset-0 isolate z-50",
         className
       )}
       {...props}
@@ -110,7 +110,7 @@ function DialogContent({
           data-slot="dialog-content"
           aria-describedby={described ? descriptionId : undefined}
           className={cn(
-            "has-[>[data-slot=dialog-close]]:*:first:pe-8 has-[>[data-slot=dialog-close][data-label]]:*:first:pe-18 fixed top-1/2 inset-s-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 rtl:translate-x-1/2 -translate-y-1/2 gap-6 rounded-2xl bg-popover p-6 text-base text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 in-data-entering:animate-in in-data-entering:fade-in-0 in-data-entering:zoom-in-95 in-data-exiting:animate-out in-data-exiting:fade-out-0 in-data-exiting:zoom-out-95",
+            "cn-dialog-content-aria fixed top-1/2 z-50 w-full -translate-y-1/2 outline-none has-[>[data-slot=dialog-close]]:*:first:pe-8 has-[>[data-slot=dialog-close][data-label]]:*:first:pe-18",
             className
           )}
           {...props}
@@ -125,7 +125,7 @@ function DialogContent({
               data-label={closeLabel ? "" : undefined}
               variant={closeLabel ? "plain" : "ghost"}
               className={cn(
-                "absolute top-4.75 inset-e-4",
+                "cn-dialog-close",
                 closeLabel && "text-base",
                 !closeLabel &&
                   "bg-secondary hover:bg-[color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]"
@@ -156,7 +156,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1.5", className)}
+      className={cn("cn-dialog-header flex flex-col", className)}
       {...props}
     />
   )
@@ -174,7 +174,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+        "cn-dialog-footer flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -198,7 +198,7 @@ function DialogTitle({
       slot="title"
       level={2}
       data-slot="dialog-title"
-      className={cn("text-base font-semibold", className)}
+      className={cn("cn-font-heading cn-dialog-title", className)}
       {...props}
     />
   )
@@ -218,7 +218,7 @@ function DialogDescription({ className, ...props }: React.ComponentProps<"p">) {
       id={context?.id}
       data-slot="dialog-description"
       className={cn(
-        "text-sm text-muted-foreground *:[a]:underline *:[a]:hover:text-foreground",
+        "cn-dialog-description *:[a]:underline *:[a]:hover:text-foreground",
         className
       )}
       {...props}

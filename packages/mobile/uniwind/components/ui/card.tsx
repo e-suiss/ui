@@ -26,11 +26,11 @@ function Card({
       <TextClassContext.Provider value="text-base text-foreground">
         <View
           className={cn(
-            "flex-col overflow-hidden rounded-2xl",
+            "flex-col overflow-hidden rounded-card",
             size === "sm" ? "gap-4 py-4" : "gap-6 py-6",
             variant === "filled"
               ? "bg-muted"
-              : "border border-foreground/5 bg-card shadow-md dark:border-foreground/10",
+              : "border border-foreground/5 bg-card shadow-card dark:border-foreground/10",
             className
           )}
           {...props}
@@ -84,7 +84,7 @@ function CardTitle({
     <Text
       ref={ref}
       role="heading"
-      className={cn("text-base font-semibold", className)}
+      className={cn("text-base font-title", className)}
       {...props}
     />
   )

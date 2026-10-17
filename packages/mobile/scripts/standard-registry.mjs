@@ -20,6 +20,22 @@ const NAMESPACE = "@esuiss-rn"
 const DOCS = path.resolve(import.meta.dirname, "../../../apps/ui/content/docs")
 const THEME = "theme-suiss"
 export const UNIWIND_THEME = "registry/uniwind/theme-suiss.css"
+export const PRESETS = "styles/presets"
+
+export function uniwindThemeFile(style) {
+  return `registry/uniwind/theme-${style}.css`
+}
+
+export function presetFiles(style) {
+  const directory = path.posix.join(PRESETS, style)
+  return {
+    uniwind: path.posix.join(directory, "uniwind.css"),
+    nativewind: path.posix.join(directory, "nativewind.config.js"),
+    stylesheet: path.posix.join(directory, "theme.ts"),
+    swift: path.posix.join(directory, "Tokens.swift"),
+    kotlin: path.posix.join(directory, "Tokens.kt"),
+  }
+}
 const THEME_IMPORT = "@/components/ui/theme"
 const IGNORED_PACKAGES = new Set(["react", "react-native"])
 const COMPANIONS = {
@@ -186,15 +202,22 @@ async function tailwindConfig(root, file) {
   return { darkMode, theme: { extend: theme.extend } }
 }
 
-async function themeItem(root, styling, styles) {
+function styleTitle(style) {
+  return `${style[0].toUpperCase()}${style.slice(1)}`
+}
+
+async function themeItem(root, styling, styles, style) {
+  const preset = style ? presetFiles(style) : undefined
   const base = {
-    name: THEME,
-    title: "suiss/ui Theme",
-    description: THEME_DESCRIPTIONS[styling],
+    name: style ? `theme-${style}` : THEME,
+    title: style ? `suiss/ui Theme (${styleTitle(style)})` : "suiss/ui Theme",
+    description: style
+      ? `${THEME_DESCRIPTIONS[styling]} Uses the ${style} style for radius, sizes, spacing, weights and shadows.`
+      : THEME_DESCRIPTIONS[styling],
     meta: { links: { docs: `${SITE}/docs/theming` } },
   }
   if (styling === "stylesheet") {
-    const file = styles.stylesheet.theme
+    const file = preset?.stylesheet ?? styles.stylesheet.theme
     const analysis = await analyze(root, THEME, styling, file)
     return {
       ...base,
@@ -215,7 +238,7 @@ async function themeItem(root, styling, styles) {
       type: "registry:theme",
       files: [
         {
-          path: UNIWIND_THEME,
+          path: style ? uniwindThemeFile(style) : UNIWIND_THEME,
           type: "registry:file",
           target: `~/${path.posix.basename(UNIWIND_THEME)}`,
         },
@@ -228,14 +251,22 @@ async function themeItem(root, styling, styles) {
     type: "registry:theme",
     ...(styling === "nativewind" && {
       tailwind: {
-        config: await tailwindConfig(root, styles.nativewind.config),
+        config: await tailwindConfig(
+          root,
+          preset?.nativewind ?? styles.nativewind.config
+        ),
       },
     }),
     css: await cssOf(root, styles[styling].stylesheet),
   }
 }
 
-export async function buildStandardRegistries(root, items, styles) {
+export async function buildStandardRegistries(
+  root,
+  items,
+  styles,
+  presets = []
+) {
   const registries = {}
   for (const styling of STANDARD_STYLINGS) {
     registries[styling] = {
@@ -247,6 +278,9 @@ export async function buildStandardRegistries(root, items, styles) {
           items.map((item) => toStandard(root, item, styling))
         )),
         await themeItem(root, styling, styles),
+        ...(await Promise.all(
+          presets.map((style) => themeItem(root, styling, styles, style))
+        )),
       ],
     }
   }

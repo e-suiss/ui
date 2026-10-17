@@ -12,7 +12,7 @@ import { IconSizeContext } from "@/components/ui/icon"
 import { Input } from "@/components/ui/input"
 import { Text, TextStyleContext } from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, radius, useTheme } from "@/components/ui/theme"
 
 type InputGroupAlign =
   | "inline-start"
@@ -44,16 +44,16 @@ const START: InputGroupAlign[] = ["inline-start", "block-start"]
 const styles = StyleSheet.create({
   root: {
     position: "relative",
-    height: 44,
+    height: metrics.height.input,
     width: "100%",
     minWidth: 0,
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.input,
     borderWidth: 1,
     borderColor: "transparent",
   },
-  auto: { height: "auto", borderRadius: radius.xl },
+  auto: { height: "auto", borderRadius: metrics.radius.textarea },
   block: { flexDirection: "column", alignItems: "stretch" },
   addon: {
     flexDirection: "row",

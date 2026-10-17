@@ -71,7 +71,7 @@ function FullscreenMenuIcon({ className }: { className?: string }) {
       aria-hidden
       data-slot="fullscreen-menu-icon"
       className={cn(
-        "relative size-4.5 *:absolute *:inset-x-0 *:top-1/2 *:-mt-px *:h-0.5 *:rounded-full *:bg-current *:transition-[translate,rotate] *:duration-500 *:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:*:transition-none",
+        "cn-fullscreen-menu-icon *:absolute *:inset-x-0 *:top-1/2 *:-mt-px *:h-0.5 *:rounded-full *:bg-current *:transition-[translate,rotate] *:duration-500 *:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:*:transition-none",
         className
       )}
     >
@@ -88,7 +88,10 @@ function FullscreenMenuTrigger({
   return (
     <DialogPrimitive.Trigger
       data-slot="fullscreen-menu-trigger"
-      className={cn("group/fullscreen-menu-trigger", className)}
+      className={cn(
+        "cn-fullscreen-menu-trigger group/fullscreen-menu-trigger",
+        className
+      )}
       asChild
       {...props}
     >
@@ -114,7 +117,7 @@ function FullscreenMenuContent({
       <DialogPrimitive.Content
         data-slot="fullscreen-menu-content"
         className={cn(
-          "group/fullscreen-menu no-scrollbar fixed inset-0 z-50 flex flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-background pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-foreground outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] starting:[clip-path:inset(0_0_100%_0)] data-closed:animate-out data-closed:duration-350 data-closed:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none",
+          "cn-fullscreen-menu-content group/fullscreen-menu",
           className
         )}
         {...props}
@@ -122,7 +125,7 @@ function FullscreenMenuContent({
         {showCloseButton && <FullscreenMenuHeader closeLabel={closeLabel} />}
         <div
           data-slot="fullscreen-menu-body"
-          className="flex flex-col gap-8 px-8 pt-2 *:nth-2:[--fullscreen-menu-section:1] *:nth-3:[--fullscreen-menu-section:2] *:nth-4:[--fullscreen-menu-section:3] *:nth-5:[--fullscreen-menu-section:4] *:nth-6:[--fullscreen-menu-section:5]"
+          className="cn-fullscreen-menu-body *:nth-2:[--fullscreen-menu-section:1] *:nth-3:[--fullscreen-menu-section:2] *:nth-4:[--fullscreen-menu-section:3] *:nth-5:[--fullscreen-menu-section:4] *:nth-6:[--fullscreen-menu-section:5]"
         >
           {children}
         </div>
@@ -135,7 +138,7 @@ function FullscreenMenuHeader({ closeLabel }: { closeLabel?: string }) {
   return (
     <div
       data-slot="fullscreen-menu-header"
-      className="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-end bg-background px-4"
+      className="cn-fullscreen-menu-header"
     >
       <DialogPrimitive.Close
         data-slot="fullscreen-menu-close"
@@ -164,7 +167,7 @@ function FullscreenMenuTitle({
   return (
     <DialogPrimitive.Title
       data-slot="fullscreen-menu-title"
-      className={cn("sr-only", className)}
+      className={cn("cn-fullscreen-menu-title", className)}
       {...props}
     />
   )
@@ -178,7 +181,7 @@ function FullscreenMenuGroup({
     <div
       data-slot="fullscreen-menu-group"
       className={cn(
-        "group/fullscreen-menu-group flex flex-col gap-1 *:nth-1:[--fullscreen-menu-index:1] *:nth-2:[--fullscreen-menu-index:2] *:nth-3:[--fullscreen-menu-index:3] *:nth-4:[--fullscreen-menu-index:4] *:nth-5:[--fullscreen-menu-index:5] *:nth-6:[--fullscreen-menu-index:6] *:nth-7:[--fullscreen-menu-index:7] *:nth-8:[--fullscreen-menu-index:8] *:nth-9:[--fullscreen-menu-index:9] *:nth-10:[--fullscreen-menu-index:10]",
+        "cn-fullscreen-menu-group group/fullscreen-menu-group *:nth-1:[--fullscreen-menu-index:1] *:nth-2:[--fullscreen-menu-index:2] *:nth-3:[--fullscreen-menu-index:3] *:nth-4:[--fullscreen-menu-index:4] *:nth-5:[--fullscreen-menu-index:5] *:nth-6:[--fullscreen-menu-index:6] *:nth-7:[--fullscreen-menu-index:7] *:nth-8:[--fullscreen-menu-index:8] *:nth-9:[--fullscreen-menu-index:9] *:nth-10:[--fullscreen-menu-index:10]",
         className
       )}
       {...props}
@@ -193,10 +196,7 @@ function FullscreenMenuLabel({
   return (
     <div
       data-slot="fullscreen-menu-label"
-      className={cn(
-        "pb-1 text-sm text-muted-foreground transition-[opacity,translate] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] group-data-closed/fullscreen-menu:-translate-y-2 group-data-closed/fullscreen-menu:opacity-0 group-data-closed/fullscreen-menu:delay-0 group-data-closed/fullscreen-menu:duration-200 starting:-translate-y-2 starting:opacity-0 motion-reduce:transition-none",
-        className
-      )}
+      className={cn("cn-fullscreen-menu-label", className)}
       {...props}
     />
   )
@@ -224,10 +224,7 @@ function FullscreenMenuLink({
         onClick?.(event)
         setOpen(false)
       }}
-      className={cn(
-        "flex min-h-11 items-center rounded-lg text-2xl font-semibold text-foreground outline-none transition-[opacity,translate,color] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] select-none [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:text-primary group-data-closed/fullscreen-menu:-translate-y-2 group-data-closed/fullscreen-menu:opacity-0 group-data-closed/fullscreen-menu:delay-0 group-data-closed/fullscreen-menu:duration-200 starting:-translate-y-2 starting:opacity-0 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:min-h-10 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:text-lg group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:font-medium motion-reduce:transition-none",
-        className
-      )}
+      className={cn("cn-fullscreen-menu-link", className)}
       {...props}
     />
   )

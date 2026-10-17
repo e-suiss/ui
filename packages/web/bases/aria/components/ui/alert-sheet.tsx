@@ -70,10 +70,7 @@ function AlertSheetOverlay({
   return (
     <ModalOverlayPrimitive
       data-slot="alert-sheet-overlay"
-      className={cn(
-        "fixed inset-0 isolate z-50 bg-black/50 transition-opacity duration-300 data-exiting:opacity-0 data-entering:opacity-0",
-        className
-      )}
+      className={cn("cn-alert-sheet-overlay", className)}
       {...props}
     />
   )
@@ -102,10 +99,7 @@ function AlertSheetContent({
           role={dismissible ? "dialog" : "alertdialog"}
           data-slot="alert-sheet-content"
           aria-describedby={described ? descriptionId : undefined}
-          className={cn(
-            "fixed inset-x-0 bottom-0 z-50 mx-auto flex w-full max-w-md flex-col gap-2 p-2 pb-[max(--spacing(2),env(safe-area-inset-bottom))] text-center outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] in-data-exiting:translate-y-full in-data-entering:translate-y-full",
-            className
-          )}
+          className={cn("cn-alert-sheet-content", className)}
           {...props}
         >
           <AlertSheetDescriptionContext.Provider value={description}>
@@ -122,7 +116,7 @@ function AlertSheetGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-sheet-group"
       className={cn(
-        "flex flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground *:col-span-full *:not-first:border-t has-[>button>svg]:grid has-[>button>svg]:grid-cols-[1fr_auto_auto_1fr]",
+        "cn-alert-sheet-group *:col-span-full *:not-first:border-t",
         className
       )}
       {...props}
@@ -137,7 +131,7 @@ function AlertSheetHeader({
   return (
     <div
       data-slot="alert-sheet-header"
-      className={cn("flex flex-col gap-1 p-4", className)}
+      className={cn("cn-alert-sheet-header", className)}
       {...props}
     />
   )
@@ -152,10 +146,7 @@ function AlertSheetTitle({
       slot="title"
       level={2}
       data-slot="alert-sheet-title"
-      className={cn(
-        "text-sm font-semibold text-muted-foreground text-balance",
-        className
-      )}
+      className={cn("cn-alert-sheet-title", className)}
       {...props}
     />
   )
@@ -177,19 +168,19 @@ function AlertSheetDescription({
     <p
       id={context?.id}
       data-slot="alert-sheet-description"
-      className={cn("text-sm text-muted-foreground text-balance", className)}
+      className={cn("cn-alert-sheet-description", className)}
       {...props}
     />
   )
 }
 
 const alertSheetActionVariants = cva(
-  "flex min-h-14 w-full cursor-pointer items-center justify-center gap-2 px-4 text-lg has-[>svg]:grid has-[>svg]:grid-cols-subgrid has-[>svg]:gap-x-3 has-[>svg]:text-start [&>svg]:col-start-2 [&_svg:not([class*='size-'])]:size-5 outline-none hover:bg-[color-mix(in_oklab,var(--popover),var(--foreground)_5%)] focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
+  "cn-alert-sheet-action [&>svg]:col-start-2 [&_svg:not([class*='size-'])]:size-5",
   {
     variants: {
       variant: {
-        default: "text-primary",
-        destructive: "text-destructive",
+        default: "cn-alert-sheet-action-variant-default",
+        destructive: "cn-alert-sheet-action-variant-destructive",
       },
     },
     defaultVariants: {

@@ -33,7 +33,7 @@ public struct Card<Content: View>: View {
   }
 
   public var body: some View {
-    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Metrics.Radius.card, style: .continuous)
     VStack(alignment: .leading, spacing: size.spacing) {
       content
     }
@@ -49,7 +49,7 @@ public struct Card<Content: View>: View {
         shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
       }
     }
-    .shadow(variant == .default ? .md : Shadow(color: .clear, radius: 0))
+    .shadow(variant == .default ? Metrics.Elevation.card : Shadow(color: .clear, radius: 0))
   }
 }
 
@@ -104,7 +104,7 @@ public struct CardTitle: View {
 
   public var body: some View {
     Text(title)
-      .textStyle(.base, weight: .semibold)
+      .textStyle(.base, weight: Metrics.Weight.title)
       .foregroundStyle(EsuissColor.foreground)
   }
 }

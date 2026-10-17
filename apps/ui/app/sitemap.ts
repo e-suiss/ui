@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   })
   return [
     { url: absolute("/"), changeFrequency: "weekly", priority: 1 },
+    { url: absolute("/create"), changeFrequency: "weekly", priority: 0.9 },
     ...pages,
   ]
 }

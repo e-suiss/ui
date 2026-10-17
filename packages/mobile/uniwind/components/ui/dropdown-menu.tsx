@@ -53,7 +53,7 @@ function DropdownMenuContent({
               <MenuPrimitive.Popup
                 className={(state) =>
                   cn(
-                    "min-w-48 rounded-xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
+                    "min-w-48 rounded-menu border border-foreground/5 bg-popover p-menu shadow-menu dark:border-foreground/10",
                     resolveClassName(className, state)
                   )
                 }
@@ -86,7 +86,7 @@ function DropdownMenuSubTrigger({
       <MenuPrimitive.SubmenuTrigger
         className={(state) =>
           cn(
-            "group flex-row items-center gap-2 rounded-md px-3 py-2",
+            "group flex-row items-center gap-2 rounded-menu-item px-menu-item-x py-menu-item-y",
             props.disabled && "opacity-50",
             state.highlighted && "opacity-80",
             state.open && !state.highlighted && "bg-accent",
@@ -114,7 +114,7 @@ function DropdownMenuSubContent({
       <MenuPrimitive.Popup
         className={(state) =>
           cn(
-            "min-w-36 rounded-xl border border-foreground/5 bg-popover p-1.5 shadow-lg dark:border-foreground/10",
+            "min-w-36 rounded-menu border border-foreground/5 bg-popover p-menu shadow-menu dark:border-foreground/10",
             resolveClassName(className, state)
           )
         }
@@ -144,7 +144,7 @@ function DropdownMenuItem({
       <MenuPrimitive.Item
         className={(state) =>
           cn(
-            "group relative flex-row items-center gap-2.5 rounded-md px-3 py-2",
+            "group relative flex-row items-center gap-2.5 rounded-menu-item px-menu-item-x py-menu-item-y",
             props.disabled && "opacity-50",
             state.highlighted && "opacity-80",
             inset && "pl-9.5",
@@ -173,7 +173,7 @@ function DropdownMenuCheckboxItem({
       <MenuPrimitive.CheckboxItem
         className={(state) =>
           cn(
-            "group relative flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
+            "group relative flex-row items-center gap-2.5 rounded-menu-item py-menu-item-y pr-8 pl-menu-item-x",
             props.disabled && "opacity-50",
             state.highlighted && "opacity-80",
             inset && "pl-9.5",
@@ -209,7 +209,7 @@ function DropdownMenuRadioItem({
       <MenuPrimitive.RadioItem
         className={(state) =>
           cn(
-            "group relative flex-row items-center gap-2.5 rounded-md py-2 pr-8 pl-3",
+            "group relative flex-row items-center gap-2.5 rounded-menu-item py-menu-item-y pr-8 pl-menu-item-x",
             props.disabled && "opacity-50",
             state.highlighted && "opacity-80",
             inset && "pl-9.5",

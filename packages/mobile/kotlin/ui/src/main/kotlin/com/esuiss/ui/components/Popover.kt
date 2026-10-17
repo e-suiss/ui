@@ -18,6 +18,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -53,9 +54,9 @@ fun Popover(
                 Column(
                     modifier = modifier
                         .width(288.dp)
-                        .raisedSurface(colors, RoundedCornerShape(Radius.xl2))
+                        .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.popover), Metrics.Elevation.popover)
                         .semantics { paneTitle.value?.let { this.paneTitle = it } }
-                        .padding(16.dp),
+                        .padding(Metrics.Padding.popover),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     content = content,
                 )

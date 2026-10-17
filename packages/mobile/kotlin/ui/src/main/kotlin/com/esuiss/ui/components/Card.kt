@@ -17,12 +17,11 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
-import com.esuiss.ui.theme.Shadows
 import com.esuiss.ui.theme.Typography
 import com.esuiss.ui.theme.shadow
 
@@ -43,12 +42,12 @@ fun Card(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = EsuissTheme.colors
-    val shape = RoundedCornerShape(Radius.xl2)
+    val shape = RoundedCornerShape(Metrics.Radius.card)
     val filled = variant == CardVariant.Filled
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .then(if (filled) Modifier else Modifier.shadow(Shadows.md, shape))
+            .then(if (filled) Modifier else Modifier.shadow(Metrics.Elevation.card, shape))
             .clip(shape)
             .background(if (filled) colors.muted else colors.card, shape)
             .then(
@@ -100,7 +99,7 @@ fun CardTitle(text: String, modifier: Modifier = Modifier) {
     BasicText(
         text,
         modifier = modifier,
-        style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = FontWeight.SemiBold),
+        style = Typography.base.copy(color = EsuissTheme.colors.foreground, fontWeight = Metrics.Weight.title),
     )
 }
 
