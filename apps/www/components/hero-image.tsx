@@ -1,6 +1,8 @@
 import { getImageProps } from "next/image"
+import { preload } from "react-dom"
 
 const DESKTOP_QUERY = "(min-width: 768px)"
+const MOBILE_QUERY = "(max-width: 767px)"
 
 export function HeroImage() {
   const common = {
@@ -11,7 +13,7 @@ export function HeroImage() {
     fetchPriority: "high",
   } as const
   const {
-    props: { srcSet: mobile },
+    props: { srcSet: mobile, src: mobileSrc },
   } = getImageProps({
     ...common,
     src: "/images/hero/halo-mobile.jpg",
@@ -25,6 +27,21 @@ export function HeroImage() {
     src: "/images/hero/halo-desktop.jpg",
     width: 2880,
     height: 1600,
+  })
+
+  preload(mobileSrc, {
+    as: "image",
+    imageSrcSet: mobile,
+    imageSizes: common.sizes,
+    fetchPriority: "high",
+    media: MOBILE_QUERY,
+  })
+  preload(image.src, {
+    as: "image",
+    imageSrcSet: desktop,
+    imageSizes: common.sizes,
+    fetchPriority: "high",
+    media: DESKTOP_QUERY,
   })
 
   return (
