@@ -5,6 +5,7 @@ import { strings } from "@/lib/strings"
 import type { NavItem, NavLink } from "@/site/global-nav"
 
 const EXPLORE_LIMIT = 6
+const CREATE_PATH = "/create"
 const DOCS_PREFIX = /^\/docs\/?/
 
 const featured: Record<string, string[]> = {
@@ -65,10 +66,12 @@ export function navItems(): NavItem[] {
     pageLink("/docs/theming"),
     { label: strings.github, href: repository },
   ]
-  return sections.map((section) => ({
-    label: section.label,
-    href: section.path,
-    explore: explore(section.path),
-    quick: section.path === "/docs" ? quick.slice(3) : quick,
-  }))
+  return sections
+    .filter((section) => section.path !== CREATE_PATH)
+    .map((section) => ({
+      label: section.label,
+      href: section.path,
+      explore: explore(section.path),
+      quick: section.path === "/docs" ? quick.slice(3) : quick,
+    }))
 }
