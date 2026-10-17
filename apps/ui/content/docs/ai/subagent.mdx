@@ -2,7 +2,7 @@
 title: Subagent
 description: "A subagent run, with the tool calls it made and what it found."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -97,5 +97,43 @@ Each yield is a preliminary output: the part is `output-available` with `prelimi
 ## API Reference
 
 See [Trace](/docs/components/trace), [Code Block](/docs/components/code-block) and [Badge](/docs/components/badge).
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-subagent--default" />
+
+Subagent on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

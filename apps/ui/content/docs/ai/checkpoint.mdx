@@ -2,7 +2,7 @@
 title: Checkpoint
 description: "Marks a point in the conversation that you can return to, dropping every message after it."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -87,5 +87,43 @@ See [Marker](/docs/components/marker#api-reference) and [Button](/docs/component
 ## Accessibility
 
 - Name each Restore button after its checkpoint with `aria-label`, such as "Restore to Button renamed", so several buttons can be told apart.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-checkpoint--default" />
+
+Checkpoint on mobile is built from the same parts as on the web: [Message](/docs/components/message), [Bubble](/docs/components/bubble), [Marker](/docs/components/marker), [Button](/docs/components/button). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble marker button
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble marker button --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble marker button --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Message](/docs/components/message), [Bubble](/docs/components/bubble), [Marker](/docs/components/marker), [Button](/docs/components/button).
 
 </Only>

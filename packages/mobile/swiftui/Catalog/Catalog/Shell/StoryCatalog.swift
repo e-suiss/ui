@@ -13,6 +13,7 @@ enum StoryCatalog {
       + ComponentsB.groups
       + PatternsInteractions.groups
       + BlocksCharts.groups
+      + AIStories.groups
   )
   .sorted { $0.title.lowercased() < $1.title.lowercased() }
 

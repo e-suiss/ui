@@ -2,7 +2,7 @@
 title: Context
 description: "Shows how much of the model's context window the conversation has used, with a breakdown on hover."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -127,5 +127,43 @@ See [Hover Card](/docs/components/hover-card#api-reference) and [Progress](/docs
 - The trigger is a button, so the breakdown opens on focus as well as on hover.
 - Give the progress bar an accessible name with `aria-label`, such as "Context used".
 - Put the share in the trigger text, so it is announced without opening the card.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-context--default" />
+
+Context on mobile is built from the same parts as on the web: [Popover](/docs/components/popover), [Progress](/docs/components/progress), [Button](/docs/components/button). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover progress button
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover progress button --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover progress button --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Popover](/docs/components/popover), [Progress](/docs/components/progress), [Button](/docs/components/button).
 
 </Only>

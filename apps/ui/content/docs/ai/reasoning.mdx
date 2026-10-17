@@ -2,7 +2,7 @@
 title: Reasoning
 description: "A line for the agent's thinking that opens while the model thinks and closes when it is done."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -128,5 +128,43 @@ See [Trace](/docs/components/trace#api-reference).
 
 - The line is a button with `aria-expanded` once there is text to show.
 - The running shimmer stops when the reader prefers reduced motion; the title still says "Thinking".
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-reasoning--default" />
+
+Reasoning on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

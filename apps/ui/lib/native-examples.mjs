@@ -414,6 +414,7 @@ const sections = {
     interactions: "Interactions",
     blocks: "Blocks",
     charts: "Charts",
+    ai: "AI",
   },
   kotlin: {
     Components: "Components",
@@ -421,6 +422,7 @@ const sections = {
     Interactions: "Interactions",
     Blocks: "Blocks",
     Charts: "Charts",
+    AI: "AI",
   },
 }
 

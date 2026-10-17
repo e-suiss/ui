@@ -2,7 +2,7 @@
 title: Confirmation
 description: "Asks for approval before an agent runs a tool, then shows the call as a step once the person answers."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -107,5 +107,43 @@ See [Item](/docs/components/item#api-reference), [Button](/docs/components/butto
 - Put the command in the item title, so the question names what will run.
 - Deny comes before Approve, so the safe answer is reached first with Tab.
 - Once answered, the buttons are removed and the row title says the outcome in words.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-confirmation--default" />
+
+Confirmation on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Button](/docs/components/button), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block button message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block button message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block button message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Button](/docs/components/button), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

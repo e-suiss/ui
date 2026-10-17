@@ -6,6 +6,7 @@ enum StorySection: String, CaseIterable, Identifiable {
   case interactions = "Interactions"
   case blocks = "Blocks"
   case charts = "Charts"
+  case ai = "AI"
 
   var id: String { rawValue }
 }

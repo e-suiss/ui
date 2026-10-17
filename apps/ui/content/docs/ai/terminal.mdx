@@ -2,7 +2,7 @@
 title: Terminal
 description: "A shell command an agent runs, such as a lint, a test run or a build, with its output underneath."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -115,5 +115,43 @@ See [Trace](/docs/components/trace#api-reference) and [Code Block](/docs/compone
 
 - Say the result in the title, not only with color: "Ran pnpm build" or "pnpm lint exited with code 1".
 - Each row is a button with `aria-expanded`, and the output is reachable by keyboard so long lines can be scrolled.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-terminal--default" />
+
+Terminal on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

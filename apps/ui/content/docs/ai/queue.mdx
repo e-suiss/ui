@@ -2,7 +2,7 @@
 title: Queue
 description: "The agent's todo list, split into what is left and what is done."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -130,5 +130,43 @@ Set `running` on the todo in progress only while the chat streams, so its title 
 ## API Reference
 
 See [Trace](/docs/components/trace) for every part and prop.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-queue--default" />
+
+Queue on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

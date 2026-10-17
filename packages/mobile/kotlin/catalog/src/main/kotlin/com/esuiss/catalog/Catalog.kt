@@ -1,6 +1,7 @@
 package com.esuiss.catalog
 
 import androidx.compose.runtime.Composable
+import com.esuiss.catalog.stories.aiStories
 import com.esuiss.catalog.stories.blocksCharts
 import com.esuiss.catalog.stories.componentsA
 import com.esuiss.catalog.stories.componentsB
@@ -12,6 +13,7 @@ enum class Section(val title: String) {
     Interactions("Interactions"),
     Blocks("Blocks"),
     Charts("Charts"),
+    AI("AI"),
 }
 
 class Story(
@@ -47,7 +49,7 @@ fun matches(text: String, query: String): Boolean = text.lowercase().contains(qu
 
 object Catalog {
     val groups: List<StoryGroup> by lazy {
-        (componentsA + componentsB + patternsInteractions + blocksCharts)
+        (componentsA + componentsB + patternsInteractions + blocksCharts + aiStories)
             .sortedWith(compareBy({ it.section.ordinal }, { it.displayTitle.lowercase() }))
     }
 

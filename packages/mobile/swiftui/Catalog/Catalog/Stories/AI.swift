@@ -1,0 +1,25 @@
+enum AIStories {
+  static let groups: [StoryGroup] = [
+    ChainOfThoughtAIStories.group,
+    ChatAIStories.group,
+    CheckpointAIStories.group,
+    ConfirmationAIStories.group,
+    ContextAIStories.group,
+    FileTreeAIStories.group,
+    InlineCitationAIStories.group,
+    MessageAIStories.group,
+    ModelSelectorAIStories.group,
+    PlanAIStories.group,
+    PromptInputAIStories.group,
+    QueueAIStories.group,
+    ReasoningAIStories.group,
+    SourcesAIStories.group,
+    StackTraceAIStories.group,
+    SubagentAIStories.group,
+    SuggestionAIStories.group,
+    TaskAIStories.group,
+    TerminalAIStories.group,
+    TestResultsAIStories.group,
+    ToolAIStories.group,
+  ]
+}

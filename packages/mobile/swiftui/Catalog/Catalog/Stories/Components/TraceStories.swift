@@ -288,7 +288,7 @@ enum TraceStories {
         }
       }
     },
-    Story("Tool calls") {
+    Story("ToolCalls") {
       Trace {
         TraceCollapsible {
           TraceCollapsibleTrigger {

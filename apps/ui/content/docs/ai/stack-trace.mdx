@@ -2,7 +2,7 @@
 title: Stack Trace
 description: "A failed tool call with its stack frames, linking your own frames and folding the framework ones."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -111,5 +111,43 @@ Map the other tool states as in [Tool](/docs/ai/tool).
 ## API Reference
 
 See [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block).
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-stack-trace--default" />
+
+Stack Trace on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

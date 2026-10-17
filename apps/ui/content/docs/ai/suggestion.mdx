@@ -2,7 +2,7 @@
 title: Suggestion
 description: "Short prompts that people can send to an agent in one click, in a row above the prompt input."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -65,5 +65,43 @@ See [Button](/docs/components/button#api-reference).
 
 - Each suggestion is a button whose label is the prompt, so it is announced as written.
 - Keep labels short and specific, so the row can be scanned quickly.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-suggestion--default" />
+
+Suggestion on mobile is built from the same parts as on the web: [Button](/docs/components/button). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Button](/docs/components/button).
 
 </Only>

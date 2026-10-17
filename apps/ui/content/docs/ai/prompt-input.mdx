@@ -2,7 +2,7 @@
 title: Prompt Input
 description: "The field people type into to message an agent, with attachments, model menus and a send button."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -105,5 +105,43 @@ See [Input Group](/docs/components/input-group#api-reference), [Attachment](/doc
 - Give the textarea an accessible name such as "Message", since the placeholder is not a label.
 - Name each remove button after its file, such as "Remove settings-page.tsx".
 - Disable the send button while the field is empty.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-prompt-input--default" />
+
+Prompt Input on mobile is built from the same parts as on the web: [Input Group](/docs/components/input-group), [Attachment](/docs/components/attachment). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-group attachment
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-group attachment --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add input-group attachment --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Input Group](/docs/components/input-group), [Attachment](/docs/components/attachment).
 
 </Only>

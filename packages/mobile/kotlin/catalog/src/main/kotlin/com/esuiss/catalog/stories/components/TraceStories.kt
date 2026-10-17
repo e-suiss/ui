@@ -79,7 +79,7 @@ val traceStories = StoryGroup(
         Story("Commit") { TraceCommit() },
         Story("Turn") { TraceTurn() },
         Story("Reasoning") { TraceReasoning() },
-        Story("Tool calls") { TraceToolCalls() },
+        Story("ToolCalls") { TraceToolCalls() },
     ),
 )
 

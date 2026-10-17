@@ -2,7 +2,7 @@
 title: Sources
 description: "The links the agent used for a reply, in a row that opens into a list of links."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -98,5 +98,43 @@ See [Trace](/docs/components/trace) for every part and prop.
 - Links open in a new tab. Add `sr-only` text, such as "(opens in a new tab)", so screen readers announce it.
 - The arrow icon is decorative, so the title is the name of the link.
 - The count in the trigger, such as "Used 3 sources", says what opens before the list is opened.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-sources--default" />
+
+Sources on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

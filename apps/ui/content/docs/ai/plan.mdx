@@ -2,7 +2,7 @@
 title: Plan
 description: "The steps the agent plans to take, and how far it has got, under one line with a progress count."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -120,5 +120,43 @@ See [Trace](/docs/components/trace#api-reference).
 
 - The plan line is a button with `aria-expanded`, and its accessible name includes the progress count.
 - Pending steps are muted and the running step shimmers, so the step icons also differ by state.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-plan--default" />
+
+Plan on mobile is built from the same parts as on the web: [Trace](/docs/components/trace). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace).
 
 </Only>

@@ -2,7 +2,7 @@
 title: Model Selector
 description: "Two menus in the prompt input: one picks the model the agent runs, the other picks how much effort it spends."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -149,5 +149,43 @@ Each provider reads its own key in `providerOptions` and ignores the rest.
 ## API Reference
 
 See [Dropdown Menu](/docs/components/dropdown-menu#api-reference) and [Input Group](/docs/components/input-group#api-reference).
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-model-selector--default" />
+
+Model Selector on mobile is built from the same parts as on the web: [Dropdown Menu](/docs/components/dropdown-menu), [Button](/docs/components/button). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add dropdown-menu button
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add dropdown-menu button --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add dropdown-menu button --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Dropdown Menu](/docs/components/dropdown-menu), [Button](/docs/components/button).
 
 </Only>

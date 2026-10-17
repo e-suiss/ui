@@ -2,7 +2,7 @@
 title: Inline Citation
 description: "A source link inside the sentence it supports, with a preview of the page on hover."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -75,5 +75,43 @@ See [Hover Card](/docs/components/hover-card#api-reference) and [Button](/docs/c
 - The trigger is a real link, so the source opens with a click or Enter, and the preview opens on focus as well as on hover.
 - Add "(opens in a new tab)" to the link text with `sr-only`.
 - The hover card repeats what the link names, so readers who cannot hover lose nothing.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-inline-citation--default" />
+
+Inline Citation on mobile is built from the same parts as on the web: [Popover](/docs/components/popover), [Button](/docs/components/button). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover button
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover button --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add popover button --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Popover](/docs/components/popover), [Button](/docs/components/button).
 
 </Only>

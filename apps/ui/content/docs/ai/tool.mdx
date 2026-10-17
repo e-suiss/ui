@@ -2,7 +2,7 @@
 title: Tool
 description: "A tool call the agent makes, from input to output, including errors, approvals and output in a sheet."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -204,5 +204,43 @@ See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components
 - A call with output is a button with `aria-expanded`; a call in a sheet takes the sheet trigger's focus and Escape behavior.
 - Write the state into the title, such as "Failed to run pnpm dev", so it does not rely on color.
 - The approval buttons are regular buttons with visible labels, and they are not inside the `Trace` row.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-tool--default" />
+
+Tool on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace code-block message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

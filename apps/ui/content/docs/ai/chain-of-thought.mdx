@@ -2,7 +2,7 @@
 title: Chain of Thought
 description: "A summary line that expands into the steps an agent took, such as reads, searches and tool calls."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -148,5 +148,43 @@ See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components
 - The summary and each expandable step are buttons with `aria-expanded`.
 - Say the state in each title, such as "Searching" or "Failed to search", since status is otherwise shown with color and motion.
 - Add "(opens in a new tab)" with `sr-only` to links that open a new tab.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-chain-of-thought--default" />
+
+Chain of Thought on mobile is built from the same parts as on the web: [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace message bubble --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Trace](/docs/components/trace), [Message](/docs/components/message), [Bubble](/docs/components/bubble).
 
 </Only>

@@ -2,7 +2,7 @@
 title: Chat
 description: "A conversation thread where each turn holds a message, the agent's steps and its reply, inside a Message Scroller."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -83,5 +83,43 @@ See [Message Scroller](/docs/components/message-scroller#api-reference), [Messag
 - Give the textarea an accessible name such as "Message", since the placeholder is not a label.
 - Give icon-only buttons, such as reset, add context and send, an `aria-label`.
 - Enter sends the message and Shift+Enter adds a new line.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-chat--default" />
+
+Chat on mobile is built from the same parts as on the web: [Message](/docs/components/message), [Bubble](/docs/components/bubble), [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Input Group](/docs/components/input-group). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble trace code-block input-group
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble trace code-block input-group --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble trace code-block input-group --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Message](/docs/components/message), [Bubble](/docs/components/bubble), [Trace](/docs/components/trace), [Code Block](/docs/components/code-block), [Input Group](/docs/components/input-group).
 
 </Only>

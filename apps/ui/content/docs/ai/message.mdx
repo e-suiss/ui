@@ -2,7 +2,7 @@
 title: Message
 description: "One turn of a conversation: the person's message, and the agent's reply with actions to copy, rate and retry it."
 eyebrow: AI
-platforms: [web]
+platforms: [web, rn, swift, kotlin]
 ---
 
 <Only platform="web">
@@ -109,5 +109,43 @@ See [Message](/docs/components/message#api-reference), [Bubble](/docs/components
 - Every action is an icon button, so give each an `aria-label`; the tooltip repeats it for pointer users.
 - Change the label when the state changes, such as "Copy" to "Copied", so the change is announced.
 - Feedback buttons are toggles and set `aria-pressed`.
+
+</Only>
+
+<Only platform="rn swift kotlin">
+
+<NativeExample id="ai-message--default" />
+
+Message on mobile is built from the same parts as on the web: [Message](/docs/components/message), [Bubble](/docs/components/bubble), [Code Block](/docs/components/code-block), [Button](/docs/components/button). The example above is a static demo; connect it to your agent by rendering the same parts from your messages.
+
+## Installation
+
+<Only platform="rn">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble code-block button
+```
+
+</Only>
+
+<Only platform="swift">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble code-block button --platform swift
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add message bubble code-block button --platform kotlin
+```
+
+</Only>
+
+## API Reference
+
+See [Message](/docs/components/message), [Bubble](/docs/components/bubble), [Code Block](/docs/components/code-block), [Button](/docs/components/button).
 
 </Only>
