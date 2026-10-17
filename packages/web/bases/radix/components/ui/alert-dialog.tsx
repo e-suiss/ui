@@ -34,10 +34,7 @@ function AlertDialogOverlay({
   return (
     <AlertDialogPrimitive.Overlay
       data-slot="alert-dialog-overlay"
-      className={cn(
-        "fixed inset-0 isolate z-50 bg-black/50 duration-100 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
-        className
-      )}
+      className={cn("cn-alert-dialog-overlay fixed inset-0 z-50", className)}
       {...props}
     />
   )
@@ -57,7 +54,7 @@ function AlertDialogContent({
         data-slot="alert-dialog-content"
         data-size={size}
         className={cn(
-          "fixed top-1/2 inset-s-1/2 z-50 grid w-full -translate-x-1/2 rtl:translate-x-1/2 -translate-y-1/2 gap-6 rounded-2xl bg-popover p-6 text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none max-w-xs data-[size=default]:max-w-85 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "cn-alert-dialog-content fixed top-1/2 z-50 grid w-full -translate-y-1/2 outline-none group/alert-dialog-content",
           className
         )}
         {...props}
@@ -73,10 +70,7 @@ function AlertDialogHeader({
   return (
     <div
       data-slot="alert-dialog-header"
-      className={cn(
-        "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-6",
-        className
-      )}
+      className={cn("cn-alert-dialog-header", className)}
       {...props}
     />
   )
@@ -89,7 +83,7 @@ function AlertDialogFooter({
   return (
     <div
       data-slot="alert-dialog-footer"
-      className={cn("grid grid-cols-2 gap-2", className)}
+      className={cn("cn-alert-dialog-footer gap-2", className)}
       {...props}
     />
   )
@@ -103,7 +97,7 @@ function AlertDialogMedia({
     <div
       data-slot="alert-dialog-media"
       className={cn(
-        "mb-2 inline-flex size-16 items-center justify-center rounded-full bg-muted *:[svg:not([class*='size-'])]:size-8",
+        "cn-alert-dialog-media *:[svg:not([class*='size-'])]:size-8",
         className
       )}
       {...props}
@@ -118,7 +112,7 @@ function AlertDialogTitle({
   return (
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
-      className={cn("text-lg font-semibold", className)}
+      className={cn("cn-font-heading cn-alert-dialog-title", className)}
       {...props}
     />
   )
@@ -132,7 +126,7 @@ function AlertDialogDescription({
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
       className={cn(
-        "text-sm text-balance text-muted-foreground md:text-pretty *:[a]:underline *:[a]:hover:text-foreground",
+        "cn-alert-dialog-description *:[a]:underline *:[a]:hover:text-foreground",
         className
       )}
       {...props}

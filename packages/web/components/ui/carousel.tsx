@@ -249,7 +249,7 @@ function Carousel({
         }}
         tabIndex={-1}
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative outline-none", className)}
+        className={cn("cn-carousel relative", className)}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -290,7 +290,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       ref={carouselRef}
-      className="overflow-hidden"
+      className="cn-carousel-content overflow-hidden"
       data-slot="carousel-content"
     >
       <div
@@ -314,7 +314,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
+        "cn-carousel-item min-w-0 shrink-0 grow-0 basis-full",
         orientation === "horizontal" ? "ps-4" : "pt-4",
         className
       )}
@@ -337,7 +337,7 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full in-data-[slot=carousel-controls]:static in-data-[slot=carousel-controls]:m-0 in-data-[slot=carousel-controls]:translate-x-0 in-data-[slot=carousel-controls]:rotate-0",
+        "cn-carousel-previous touch-manipulation",
         orientation === "horizontal"
           ? "inset-y-0 -inset-s-12 my-auto"
           : "-top-12 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 rotate-90",
@@ -378,7 +378,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full in-data-[slot=carousel-controls]:static in-data-[slot=carousel-controls]:m-0 in-data-[slot=carousel-controls]:translate-x-0 in-data-[slot=carousel-controls]:rotate-0",
+        "cn-carousel-next touch-manipulation",
         orientation === "horizontal"
           ? "inset-y-0 -inset-e-12 my-auto"
           : "-bottom-12 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 rotate-90",
@@ -412,7 +412,7 @@ function CarouselControls({
   return (
     <div
       data-slot="carousel-controls"
-      className={cn("mt-6 flex items-center gap-3", className)}
+      className={cn("cn-carousel-controls", className)}
       {...props}
     />
   )
@@ -476,10 +476,7 @@ function CarouselDots({
       data-slot="carousel-dots"
       data-variant={variant}
       data-autoplay={autoplay.enabled ? "" : undefined}
-      className={cn(
-        "group/carousel-dots flex h-9 items-center gap-4 rounded-full bg-secondary px-4 backdrop-blur-xl data-[variant=plain]:bg-transparent data-[variant=plain]:px-0 data-[variant=plain]:backdrop-blur-none",
-        className
-      )}
+      className={cn("cn-carousel-dots group/carousel-dots", className)}
       {...props}
     >
       {Array.from({ length: count }, (_, position) => position).map((index) => (
@@ -524,7 +521,7 @@ function CarouselPlayButton({
       variant={variant}
       size={size}
       aria-label={autoplay.playing ? "Pause slideshow" : "Play slideshow"}
-      className={cn("touch-manipulation rounded-full", className)}
+      className={cn("cn-carousel-play-button", className)}
       onClick={() => autoplay.setPlaying(!autoplay.playing)}
       {...props}
     >

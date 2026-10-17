@@ -6,31 +6,31 @@ function BubbleGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="bubble-group"
-      className={cn("flex min-w-0 flex-col gap-2", className)}
+      className={cn("cn-bubble-group flex min-w-0 flex-col", className)}
       {...props}
     />
   )
 }
 
 const bubbleVariants = cva(
-  "group/bubble relative flex w-fit has-[>[data-slot=bubble-reactions][data-side=bottom]]:mb-5 has-[>[data-slot=bubble-reactions][data-side=top]]:mt-5 max-w-[80%] min-w-0 flex-col gap-1 group-data-[align=end]/message:self-end data-[align=end]:self-end data-[variant=ghost]:max-w-full",
+  "cn-bubble group/bubble relative flex w-fit min-w-0 flex-col",
   {
     variants: {
       variant: {
         default:
-          "[--bubble-bg:var(--primary)] *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_80%,transparent)]",
+          "cn-bubble-variant-default *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_80%,transparent)]",
         secondary:
-          "[--bubble-bg:var(--secondary)] *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--secondary)_80%,transparent)]",
+          "cn-bubble-variant-secondary *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--secondary)_80%,transparent)]",
         muted:
-          "[--bubble-bg:var(--muted)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--muted),var(--foreground)_5%)]",
+          "cn-bubble-variant-muted [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--muted),var(--foreground)_5%)]",
         tinted:
-          "[--bubble-bg:color-mix(in_oklab,var(--primary)_12%,transparent)] *:data-[slot=bubble-content]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_20%,transparent)]",
+          "cn-bubble-variant-tinted *:data-[slot=bubble-content]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--primary)_20%,transparent)]",
         outline:
-          "[--bubble-bg:var(--background)] *:data-[slot=bubble-content]:border-border [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground",
+          "cn-bubble-variant-outline *:data-[slot=bubble-content]:border-border [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground",
         ghost:
-          "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent [&>[data-slot=bubble-content]:is(button,a):hover]:text-accent-foreground",
+          "cn-bubble-variant-ghost *:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent [&>[data-slot=bubble-content]:is(button,a):hover]:text-accent-foreground",
         destructive:
-          "[--bubble-bg:color-mix(in_oklab,var(--destructive)_10%,transparent)] dark:[--bubble-bg:color-mix(in_oklab,var(--destructive)_20%,transparent)] *:data-[slot=bubble-content]:text-destructive [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_20%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_30%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-destructive",
+          "cn-bubble-variant-destructive *:data-[slot=bubble-content]:text-destructive [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_20%,transparent)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--destructive)_30%,transparent)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-destructive",
       },
     },
     defaultVariants: {
@@ -79,16 +79,16 @@ function BubbleContent({
 }
 
 const bubbleReactionsVariants = cva(
-  "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 text-sm ring-3 ring-[var(--bubble-surface,var(--background))] has-[button]:p-0",
+  "cn-bubble-reactions absolute z-10 flex w-fit items-center justify-center",
   {
     variants: {
       side: {
-        top: "top-0 -translate-y-3/4",
-        bottom: "bottom-0 translate-y-3/4",
+        top: "cn-bubble-reactions-side-top",
+        bottom: "cn-bubble-reactions-side-bottom",
       },
       align: {
-        start: "start-3",
-        end: "end-3",
+        start: "cn-bubble-reactions-align-start",
+        end: "cn-bubble-reactions-align-end",
       },
     },
     defaultVariants: {

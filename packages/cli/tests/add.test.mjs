@@ -505,4 +505,92 @@ export const Icon = () => (
       "menu needs popup, which is not in the registry."
     )
   })
+
+  describe("styles", () => {
+    const styles = {
+      known: ["cn-button-variant-default"],
+      suiss: { "cn-button": "rounded-full px-4" },
+      overrides: { radix: { "cn-button": "rounded-full px-5" } },
+      vendors: { vega: { "cn-button": "rounded-md px-2.5" } },
+    }
+    const marked = {
+      ...files,
+      "registry/styles.json": styles,
+      "components/ui/button.tsx":
+        'export const button = "cn-button inline-flex cn-button-variant-default"\n',
+    }
+
+    it("expands markers into the suiss style by default", async () => {
+      serveRegistry(marked)
+      const cwd = viteProject()
+      await add(["button"], { cwd })
+      expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+        'export const button = "rounded-full px-4 inline-flex"\n'
+      )
+    })
+
+    it("uses the style passed with --style", async () => {
+      serveRegistry(marked)
+      const cwd = viteProject()
+      await add(["button"], { cwd, style: "vega" })
+      expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+        'export const button = "rounded-md px-2.5 inline-flex"\n'
+      )
+    })
+
+    it("reads the style and base from components.json", async () => {
+      serveRegistry({ ...marked, "registry/radix/registry.json": registry })
+      const cwd = viteProject({
+        "components.json": { style: "radix-nova" },
+      })
+      await add(["button"], { cwd })
+      expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+        'export const button = "rounded-full px-5 inline-flex"\n'
+      )
+    })
+
+    it("falls back to suiss for an unknown style in components.json", async () => {
+      serveRegistry(marked)
+      const cwd = viteProject({ "components.json": { style: "base-plain" } })
+      await add(["button"], { cwd })
+      expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+        'export const button = "rounded-full px-4 inline-flex"\n'
+      )
+    })
+
+    it("does not download styles for files without markers", async () => {
+      const fetch = serveRegistry(files)
+      const cwd = viteProject()
+      await add(["button"], { cwd })
+      expect(fetch).not.toHaveBeenCalledWith(
+        expect.stringContaining("styles.json"),
+        expect.anything()
+      )
+    })
+  })
+
+  describe("components.json", () => {
+    it("applies the saved icon library and menu color", async () => {
+      serveRegistry({
+        ...files,
+        "components/ui/button.tsx": `import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+
+export const menu = "cn-menu-target cn-menu-translucent z-50 cn-font-heading"
+export const Icon = () => <IconPlaceholder lucide="CheckIcon" tabler="IconCheck" hugeicons="Tick02Icon" phosphor="CheckIcon" remixicon="RiCheckLine" />
+`,
+      })
+      const cwd = viteProject({
+        "components.json": { iconLibrary: "lucide", menuColor: "inverted" },
+      })
+      await add(["button"], { cwd })
+      const button = read(cwd, "src/components/ui/button.tsx")
+      expect(button).toContain('export const menu = "dark z-50"')
+      expect(button).toContain('from "lucide-react"')
+      expect(spawnSync).toHaveBeenCalledWith(
+        "npm",
+        ["install", "@base-ui/react", "lucide-react"],
+        expect.objectContaining({ cwd })
+      )
+    })
+  })
 })

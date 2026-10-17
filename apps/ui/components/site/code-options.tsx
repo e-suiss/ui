@@ -5,6 +5,7 @@ import { RadioGroup } from "@base-ui/react/radio-group"
 import { SlidersHorizontalIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { Anchor } from "@/components/site/anchor"
+import { showStyle } from "@/components/site/style-sheet"
 import {
   Popover,
   PopoverContent,
@@ -18,6 +19,9 @@ import {
   DEFAULT_OPTIONS,
   ICON_LABELS,
   ICON_LIBRARIES,
+  STYLE_LABELS,
+  STYLES,
+  type StyleName,
 } from "@/lib/code-options"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
@@ -37,7 +41,9 @@ function readStored(): CodeOptions {
 }
 
 function apply(options: CodeOptions) {
-  document.documentElement.dataset.base = options.base
+  const root = document.documentElement
+  root.dataset.base = options.base
+  if (root.dataset.create === undefined) void showStyle(options.style)
 }
 
 function snapshot() {
@@ -134,7 +140,12 @@ export function CodeOptionsMenu() {
   const options = useCodeOptions()
   const changed =
     options.icons !== DEFAULT_OPTIONS.icons ||
-    options.base !== DEFAULT_OPTIONS.base
+    options.base !== DEFAULT_OPTIONS.base ||
+    options.style !== DEFAULT_OPTIONS.style
+  React.useEffect(() => {
+    if (document.documentElement.dataset.create !== undefined) return
+    if (options.style !== DEFAULT_OPTIONS.style) void showStyle(options.style)
+  }, [options.style])
   return (
     <Popover>
       <PopoverTrigger
@@ -151,6 +162,15 @@ export function CodeOptionsMenu() {
         sideOffset={8}
         className="w-[min(20rem,calc(100vw-2rem))] gap-5 p-5"
       >
+        <Options
+          label={strings.style}
+          value={options.style}
+          options={STYLES.map((value) => ({
+            value,
+            label: STYLE_LABELS[value],
+          }))}
+          onChange={(style) => select({ style: style as StyleName })}
+        />
         <Options
           label={strings.iconLibrary}
           value={options.icons}

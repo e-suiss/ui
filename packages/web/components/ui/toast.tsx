@@ -21,7 +21,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
     <ToastPrimitive.Viewport
       data-slot="toast-viewport"
       className={cn(
-        "pointer-events-none fixed inset-x-4 bottom-4 z-50 mx-auto w-auto max-w-sm outline-none sm:inset-e-4 sm:inset-s-auto sm:mx-0 sm:w-full",
+        "cn-toast-viewport pointer-events-none fixed bottom-4 z-50 mx-auto w-auto max-w-sm outline-none sm:mx-0 sm:w-full",
         className
       )}
       {...props}
@@ -34,7 +34,7 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "pointer-events-auto absolute inset-e-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-xl bg-popover text-popover-foreground shadow-[0_8px_32px_rgb(0_0_0/0.14)] ring-1 ring-foreground/5 dark:shadow-lg dark:ring-0 will-change-transform outline-none select-none focus-visible:ring-3 focus-visible:ring-ring/50",
+        "cn-toast pointer-events-auto absolute bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom bg-popover text-popover-foreground will-change-transform outline-none select-none group/toast",
         "[--gap:0.75rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))] [--peek:0.75rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
         "h-(--height) transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--peek))-(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms,filter_500ms] dark:not-data-expanded:brightness-[calc(1-var(--toast-index)*0.18)]",
         "after:absolute after:top-full after:inset-s-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
@@ -61,7 +61,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
     <ToastPrimitive.Content
       data-slot="toast-content"
       className={cn(
-        "flex h-full items-center gap-3 overflow-hidden p-4 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
+        "cn-toast-content flex h-full items-center gap-3 overflow-hidden p-4 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
         className
       )}
       {...props}
@@ -73,7 +73,7 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
   return (
     <ToastPrimitive.Title
       data-slot="toast-title"
-      className={cn("text-sm font-semibold", className)}
+      className={cn("cn-toast-title text-sm", className)}
       {...props}
     />
   )
@@ -86,7 +86,10 @@ function ToastDescription({
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn(
+        "cn-toast-description text-sm text-muted-foreground",
+        className
+      )}
       {...props}
     />
   )
@@ -101,7 +104,7 @@ function ToastAction({
     <ToastPrimitive.Action
       data-slot="toast-action"
       render={render}
-      className={cn("shrink-0", className)}
+      className={cn("cn-toast-action shrink-0", className)}
       {...props}
     />
   )
@@ -119,7 +122,7 @@ function ToastClose({
       aria-label="Close toast"
       render={render}
       className={cn(
-        "relative shrink-0 text-muted-foreground after:absolute after:-inset-2 after:content-[''] hover:text-foreground",
+        "cn-toast-close relative shrink-0 text-muted-foreground after:absolute after:-inset-2 after:content-[''] hover:text-foreground",
         className
       )}
       {...props}
@@ -244,10 +247,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   if (!tracked) return badge ?? null
 
   return (
-    <span
-      data-slot="toast-icon"
-      className="relative flex size-6 shrink-0 items-center justify-center"
-    >
+    <span data-slot="toast-icon" className="cn-toast-icon shrink-0">
       <svg
         aria-hidden
         viewBox="0 0 32 32"

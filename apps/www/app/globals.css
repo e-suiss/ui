@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "../../../packages/web/styles/theme.css";
+@import "../../../packages/web/styles/generated/style-suiss.css" layer(base);
 @import "../../../packages/web/site/global-nav.css";
 
 @custom-variant dark (&:is(.dark *));

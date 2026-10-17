@@ -66,7 +66,7 @@ function ResizablePanelGroup({
       data-slot="resizable-panel-group"
       data-variant={variant}
       className={cn(
-        "group/resizable flex h-full w-full data-[variant=cards]:*:data-[slot=resizable-panel]:rounded-2xl data-[variant=cards]:*:data-[slot=resizable-panel]:bg-muted",
+        "cn-resizable-panel-group flex h-full w-full group/resizable data-[variant=cards]:*:data-[slot=resizable-panel]:rounded-2xl data-[variant=cards]:*:data-[slot=resizable-panel]:bg-muted",
         className
       )}
       elementRef={(node: HTMLDivElement | null) => {
@@ -97,7 +97,7 @@ function ResizablePanel({
       data-slot="resizable-panel"
       data-empty={empty ? "" : undefined}
       inert={empty}
-      className={cn("overflow-hidden!", className)}
+      className={cn("cn-resizable-panel", className)}
       onResize={(size, id, previous) => {
         setEmpty(size.inPixels < 1)
         onResize?.(size, id, previous)
@@ -118,7 +118,7 @@ function ResizableHandle({
     <ResizablePrimitive.Separator
       data-slot="resizable-handle"
       className={cn(
-        "group/resizable-handle relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:inset-s-1/2 after:w-1 after:-translate-x-1/2 rtl:after:translate-x-1/2 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-hidden aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full aria-[orientation=horizontal]:after:inset-s-0 aria-[orientation=horizontal]:after:h-1 aria-[orientation=horizontal]:after:w-full aria-[orientation=horizontal]:after:translate-x-0 rtl:aria-[orientation=horizontal]:after:translate-x-0 aria-[orientation=horizontal]:after:-translate-y-1/2 [&[aria-orientation=horizontal]>div]:rotate-90",
+        "cn-resizable-handle relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:w-1 focus-visible:outline-hidden aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full aria-[orientation=horizontal]:after:h-1 aria-[orientation=horizontal]:after:w-full aria-[orientation=horizontal]:after:-translate-y-1/2 [&[aria-orientation=horizontal]>div]:rotate-90 group/resizable-handle",
         "group-data-[variant=cards]/resizable:w-3.5 group-data-[variant=cards]/resizable:rounded-full group-data-[variant=cards]/resizable:bg-transparent group-data-[variant=cards]/resizable:aria-[orientation=horizontal]:h-3.5 group-data-[variant=cards]/resizable:aria-[orientation=horizontal]:w-full",
         "transition-[width,height,background-color] duration-500 ease-[cubic-bezier(0.45,0,0.2,1)] data-collapsed:bg-transparent aria-[orientation=vertical]:data-collapsed:after:w-4 aria-[orientation=horizontal]:data-collapsed:after:h-4 group-data-[variant=cards]/resizable:aria-[orientation=vertical]:data-collapsed:w-0 group-data-[variant=cards]/resizable:aria-[orientation=horizontal]:data-collapsed:h-0 motion-reduce:transition-none",
         className

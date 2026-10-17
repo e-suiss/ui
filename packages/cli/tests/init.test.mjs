@@ -368,3 +368,74 @@ const inter = Inter({ variable: "--font-inter" })
     )
   })
 })
+
+describe("init with a preset", () => {
+  const themed = `@import "tailwindcss";
+
+:root {
+  --radius: 0.625rem;
+  --primary: oklch(0.56 0.19 256);
+  --background: oklch(1 0 0);
+}
+
+.dark {
+  --primary: oklch(0.6 0.19 256);
+  --background: oklch(0 0 0);
+}
+`
+  const themes = [
+    {
+      name: "stone",
+      light: {
+        background: "oklch(1 0 0 / 1)",
+        primary: "oklch(0.2 0 0)",
+        radius: "0.625rem",
+      },
+      dark: { background: "oklch(0.1 0 0)", primary: "oklch(0.9 0 0)" },
+    },
+    {
+      name: "emerald",
+      light: { primary: "oklch(0.6 0.13 163)" },
+      dark: { primary: "oklch(0.7 0.15 162)" },
+    },
+  ]
+
+  beforeEach(() => {
+    serveRegistry({
+      ...files,
+      "styles/globals.css": themed,
+      "registry/themes.json": themes,
+    })
+  })
+
+  it("applies the colors, radius, style and icons of the code", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true, preset: "bJ4oV1t" })
+    const css = read(cwd, "src/index.css")
+    expect(css).toContain("--radius: 0;")
+    expect(css).toContain("--primary: oklch(0.6 0.13 163);")
+    expect(css).toContain("--background: oklch(1 0 0 / 1);")
+    expect(css).toContain("--primary: oklch(0.7 0.15 162);")
+    const config = JSON.parse(read(cwd, "components.json"))
+    expect(config).toMatchObject({
+      style: "base-vega",
+      iconLibrary: "lucide",
+      menuColor: "inverted",
+    })
+  })
+
+  it("keeps the suiss colors with --theme suiss", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({
+      cwd,
+      yes: true,
+      preset: "bJ4oV1t",
+      theme: "suiss",
+      style: "suiss",
+    })
+    const css = read(cwd, "src/index.css")
+    expect(css).toContain("--primary: oklch(0.56 0.19 256);")
+    expect(css).toContain("--radius: 0;")
+    expect(JSON.parse(read(cwd, "components.json")).style).toBe("base-suiss")
+  })
+})

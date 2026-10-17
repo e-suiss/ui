@@ -37,7 +37,7 @@ function Progress({
   return (
     <ProgressPrimitive
       data-slot="progress"
-      className={cn("flex flex-wrap gap-3", className)}
+      className={cn("cn-progress-root flex flex-wrap gap-3", className)}
       {...props}
     >
       {({ percentage, valueText, isIndeterminate }) => (
@@ -58,7 +58,7 @@ function ProgressTrack({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-muted",
+        "cn-progress-track relative flex w-full items-center overflow-x-hidden",
         className
       )}
       data-slot="progress-track"
@@ -77,7 +77,7 @@ function ProgressIndicator({
   return (
     <div
       data-slot="progress-indicator"
-      className={cn("h-full bg-primary transition-[width]", className)}
+      className={cn("cn-progress-indicator h-full", className)}
       style={{
         width: isIndeterminate ? undefined : `${percentage ?? 0}%`,
         ...style,
@@ -93,7 +93,7 @@ function ProgressLabel({
 }: Omit<LabelPrimitiveProps, "className"> & { className?: string }) {
   return (
     <LabelPrimitive
-      className={cn("text-sm", className)}
+      className={cn("cn-progress-label", className)}
       data-slot="progress-label"
       {...props}
     />
@@ -111,10 +111,7 @@ function ProgressValue({
 
   return (
     <span
-      className={cn(
-        "ms-auto text-sm text-muted-foreground tabular-nums",
-        className
-      )}
+      className={cn("cn-progress-value", className)}
       data-slot="progress-value"
       {...props}
     >

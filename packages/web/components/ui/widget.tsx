@@ -62,7 +62,7 @@ function WidgetHandle({
       data-placement={placement}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
-      className="group/widget-handle absolute cursor-nwse-resize touch-none after:absolute after:-inset-3 after:content-[''] data-[placement=inside]:inset-e-0 data-[placement=inside]:bottom-0 data-[placement=inside]:size-7 data-[placement=outside]:-inset-e-1.5 data-[placement=outside]:-bottom-1.5 data-[placement=outside]:size-8.5 rtl:-scale-x-100 rtl:cursor-nesw-resize"
+      className="cn-widget-handle group/widget-handle"
     >
       <svg
         aria-hidden
@@ -192,7 +192,7 @@ function Widget({
         freeSize ? { ...style, width: freeSize[0], height: freeSize[1] } : style
       }
       className={cn(
-        "group/widget @container/widget flex max-w-full min-w-0 flex-col gap-3 overflow-hidden rounded-3xl bg-muted p-4 text-base text-foreground transition-[width,height] duration-500 ease-in-out data-[align=center]:items-center data-[align=center]:justify-center data-[align=center]:text-center data-resizing:transition-none data-[resizing=snap]:*:shrink-0 data-[size=auto]:size-full data-[size=extra-large]:h-88 data-[size=extra-large]:w-180 data-[size=large]:size-88 data-[size=medium]:h-42 data-[size=medium]:w-88 data-[size=small]:size-42 motion-reduce:transition-none",
+        "cn-widget group/widget data-[resizing=snap]:*:shrink-0",
         className
       )}
       {...props}
@@ -205,13 +205,13 @@ function Widget({
     <div
       data-slot="widget-container"
       data-size={current}
-      className="relative w-fit max-w-full data-[size=auto]:size-full"
+      className="cn-widget-container"
     >
       {preview && (
         <span
           aria-hidden="true"
           data-slot="widget-preview"
-          className="pointer-events-none absolute inset-s-0 top-0 z-10 animate-in transition-[width,height] duration-500 ease-in-out fade-in-0 motion-reduce:transition-none"
+          className="cn-widget-preview"
           style={{
             width: WIDGET_DIMENSIONS[preview][0],
             height: WIDGET_DIMENSIONS[preview][1],
@@ -247,10 +247,7 @@ function WidgetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="widget-header"
-      className={cn(
-        "flex max-w-full min-w-0 items-center gap-2 group-data-[align=center]/widget:flex-col group-data-[align=center]/widget:gap-3",
-        className
-      )}
+      className={cn("cn-widget-header", className)}
       {...props}
     />
   )
@@ -269,7 +266,7 @@ function WidgetIcon({
       data-size={size}
       aria-hidden="true"
       className={cn(
-        "flex shrink-0 items-center justify-center text-foreground data-[size=default]:size-8 data-[size=default]:rounded-lg data-[size=default]:bg-secondary data-[size=lg]:size-13 data-[size=lg]:rounded-2xl data-[size=lg]:bg-secondary [&_svg]:pointer-events-none data-[size=default]:[&_svg:not([class*='size-'])]:size-4.5 data-[size=lg]:[&_svg:not([class*='size-'])]:size-6 data-[size=sm]:[&_svg:not([class*='size-'])]:size-3.5",
+        "cn-widget-icon [&_svg]:pointer-events-none data-[size=default]:[&_svg:not([class*='size-'])]:size-4.5 data-[size=lg]:[&_svg:not([class*='size-'])]:size-6 data-[size=sm]:[&_svg:not([class*='size-'])]:size-3.5",
         className
       )}
       {...props}
@@ -281,10 +278,7 @@ function WidgetTitle({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="widget-title"
-      className={cn(
-        "max-w-full min-w-0 truncate text-sm font-semibold",
-        className
-      )}
+      className={cn("cn-widget-title", className)}
       {...props}
     />
   )
@@ -294,10 +288,7 @@ function WidgetAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="widget-action"
-      className={cn(
-        "ms-auto flex shrink-0 items-center group-data-[align=center]/widget:hidden",
-        className
-      )}
+      className={cn("cn-widget-action", className)}
       {...props}
     />
   )
@@ -307,7 +298,7 @@ function WidgetDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="widget-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("cn-widget-description", className)}
       {...props}
     />
   )
@@ -317,10 +308,7 @@ function WidgetValue({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="widget-value"
-      className={cn(
-        "text-3xl font-semibold tracking-tight tabular-nums",
-        className
-      )}
+      className={cn("cn-widget-value", className)}
       {...props}
     />
   )
@@ -330,7 +318,7 @@ function WidgetContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="widget-content"
-      className={cn("flex min-h-0 flex-1 flex-col gap-1", className)}
+      className={cn("cn-widget-content", className)}
       {...props}
     />
   )
@@ -341,7 +329,7 @@ function WidgetFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="widget-footer"
       className={cn(
-        "mt-auto flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground group-data-[align=center]/widget:mt-0 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+        "cn-widget-footer [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
         className
       )}
       {...props}

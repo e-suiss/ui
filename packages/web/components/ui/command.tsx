@@ -21,7 +21,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "flex size-full flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground in-data-[slot=dialog-content]:rounded-none in-data-[slot=dialog-content]:bg-transparent",
+        "cn-command flex size-full flex-col overflow-hidden",
         className
       )}
       {...props}
@@ -67,10 +67,7 @@ function CommandInput({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
-    <div
-      data-slot="command-input-wrapper"
-      className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-4"
-    >
+    <div data-slot="command-input-wrapper" className="cn-command-input-wrapper">
       <IconPlaceholder
         lucide="SearchIcon"
         tabler="IconSearch"
@@ -83,7 +80,7 @@ function CommandInput({
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          "h-full w-full min-w-0 bg-transparent text-xl caret-primary outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+          "cn-command-input outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         {...props}
@@ -100,7 +97,7 @@ function CommandList({
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "no-scrollbar max-h-80 scroll-py-1.5 overflow-x-hidden overflow-y-auto p-1.5 outline-none",
+        "cn-command-list overflow-x-hidden overflow-y-auto",
         className
       )}
       {...props}
@@ -115,10 +112,7 @@ function CommandEmpty({
   return (
     <CommandPrimitive.Empty
       data-slot="command-empty"
-      className={cn(
-        "py-10 text-center text-base text-muted-foreground",
-        className
-      )}
+      className={cn("cn-command-empty", className)}
       {...props}
     />
   )
@@ -132,7 +126,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "overflow-hidden text-foreground not-first:pt-2 **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-1 **:[[cmdk-group-heading]]:pb-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:text-muted-foreground",
+        "cn-command-group **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-1 **:[[cmdk-group-heading]]:pb-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:text-muted-foreground",
         className
       )}
       {...props}
@@ -147,7 +141,7 @@ function CommandSeparator({
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
-      className={cn("mx-3 my-2 h-px bg-border", className)}
+      className={cn("cn-command-separator", className)}
       {...props}
     />
   )
@@ -162,7 +156,7 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "group/command-item relative flex h-10 cursor-default items-center gap-3 rounded-lg px-3 text-base outline-hidden select-none data-[disabled=true]:pointer-events-none data-selected:bg-primary data-selected:text-primary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 [&_svg]:text-muted-foreground data-selected:[&_svg]:text-primary-foreground data-[disabled=true]:opacity-50",
+        "cn-command-item group/command-item data-[disabled=true]:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[disabled=true]:opacity-50 [&_svg:not([class*='size-'])]:size-5 [&_svg]:text-muted-foreground data-selected:[&_svg]:text-primary-foreground",
         className
       )}
       {...props}
@@ -191,10 +185,7 @@ function CommandShortcut({
   return (
     <span
       data-slot="command-shortcut"
-      className={cn(
-        "max-md:hidden ms-auto text-sm tracking-widest text-muted-foreground group-data-selected/command-item:text-primary-foreground",
-        className
-      )}
+      className={cn("cn-command-shortcut", className)}
       {...props}
     >
       {mod && modifier}

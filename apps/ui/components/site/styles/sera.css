@@ -1,0 +1,3 @@
+@import "../../../../../packages/web/styles/generated/style-sera.css"
+  layer(base);
+@reference "../../../app/globals.css";

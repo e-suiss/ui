@@ -12,10 +12,12 @@ import {
   initNative,
 } from "./lib/mobile/native.mjs"
 import { CliError, color, step } from "./lib/output.mjs"
+import { decodePreset } from "./lib/preset.mjs"
 import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
 import { name, version } from "./lib/shared/package.mjs"
 import { readJson } from "./lib/shared/project.mjs"
+import { STYLE_NAMES } from "./lib/styles.mjs"
 
 const OPTIONS = {
   overwrite:
@@ -29,6 +31,13 @@ const OPTIONS = {
                    the primitive base of React components (read from the
                    style in components.json when omitted, otherwise base);
                    init saves it as the style in components.json`,
+  style: `  --style <name>   the visual style of React components: suiss, vega, nova,
+                   maia, lyra, mira, luma, sera or rhea (read from the style
+                   in components.json when omitted, otherwise suiss); init
+                   saves it as the style in components.json`,
+  preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
+                   colors, radius, icons and menu color (init only)`,
+  theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
   platform: `  -p, --platform <web|rn|swift|kotlin>
                    web, React Native, SwiftUI or Jetpack Compose sources
                    (detected from the project when omitted)`,
@@ -66,6 +75,7 @@ const ADD_OPTIONS = optionLines(
   "all",
   "yes",
   "base",
+  "style",
   "platform",
   "styling",
   "path",
@@ -78,6 +88,9 @@ const INIT_OPTIONS = optionLines(
   "overwrite",
   "yes",
   "base",
+  "style",
+  "preset",
+  "theme",
   "platform",
   "styling",
   "path",
@@ -166,6 +179,30 @@ function parseArgs(args) {
           )
         }
         options.base = base
+        break
+      }
+      case "--preset": {
+        const code = queue.next().value
+        if (!decodePreset(code)) {
+          throw new CliError(`${arg} needs a preset code from the create page.`)
+        }
+        options.preset = code
+        break
+      }
+      case "--theme": {
+        const theme = queue.next().value
+        if (theme !== "suiss") throw new CliError(`${arg} needs suiss.`)
+        options.theme = theme
+        break
+      }
+      case "--style": {
+        const style = queue.next().value
+        if (!STYLE_NAMES.includes(style)) {
+          throw new CliError(
+            `${arg} needs ${STYLE_NAMES.slice(0, -1).join(", ")} or ${STYLE_NAMES.at(-1)}.`
+          )
+        }
+        options.style = style
         break
       }
       case "-p":

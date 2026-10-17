@@ -22,7 +22,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-3 text-sm wrap-break-word text-muted-foreground",
+        "cn-breadcrumb-list flex flex-wrap items-center wrap-break-word",
         className
       )}
       {...props}
@@ -34,7 +34,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
       data-slot="breadcrumb-item"
-      className={cn("inline-flex items-center gap-1.5", className)}
+      className={cn("cn-breadcrumb-item inline-flex items-center", className)}
       {...props}
     />
   )
@@ -68,7 +68,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
     <span
       data-slot="breadcrumb-page"
       aria-current="page"
-      className={cn("text-foreground", className)}
+      className={cn("cn-breadcrumb-page", className)}
       {...props}
     />
   )
@@ -84,7 +84,7 @@ function BreadcrumbSeparator({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn("[&>svg]:size-3", className)}
+      className={cn("cn-breadcrumb-separator [&>svg]:size-3", className)}
       {...props}
     >
       {children ?? (
@@ -110,7 +110,7 @@ function BreadcrumbEllipsis({
     <span
       data-slot="breadcrumb-ellipsis"
       className={cn(
-        "flex size-5 items-center justify-center [&>svg]:size-4",
+        "cn-breadcrumb-ellipsis flex items-center justify-center [&>svg]:size-4",
         className
       )}
       {...props}

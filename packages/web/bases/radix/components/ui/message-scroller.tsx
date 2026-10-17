@@ -48,7 +48,7 @@ function MessageScroller({
       ref={rootRef}
       data-slot="message-scroller"
       className={cn(
-        "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
+        "cn-message-scroller group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
         className
       )}
       {...props}
@@ -90,7 +90,7 @@ function MessageScrollerViewport({
         aria-label={ariaLabel}
         tabIndex={tabIndex}
         className={cn(
-          "size-full min-h-0 min-w-0 overscroll-contain contain-content outline-none *:h-full *:block! focus-visible:ring-3 focus-visible:ring-ring/50 data-scrollable:scroll-fade-b data-pending-scroll:invisible",
+          "cn-message-scroller-viewport size-full min-h-0 min-w-0 overscroll-contain contain-content data-pending-scroll:invisible *:h-full *:block!",
           className
         )}
         onKeyDown={(event) => {
@@ -142,7 +142,10 @@ function MessageScrollerContent({
       data-slot="message-scroller-content"
       role={role}
       aria-relevant={ariaRelevant}
-      className={cn("flex h-max min-h-full flex-col gap-8", className)}
+      className={cn(
+        "cn-message-scroller-content flex h-max min-h-full flex-col",
+        className
+      )}
       {...props}
     >
       {children}
@@ -186,7 +189,7 @@ function MessageScrollerItem({
       data-message-id={messageId}
       data-scroll-anchor={scrollAnchor ? "true" : "false"}
       className={cn(
-        "min-w-0 shrink-0 px-2.5 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
+        "cn-message-scroller-item min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
         className
       )}
       {...props}

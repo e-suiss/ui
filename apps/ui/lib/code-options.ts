@@ -34,11 +34,34 @@ export const CODE_OPTIONS_KEY = "suiss-code"
 
 export const baseScript = `(()=>{try{const b=new URLSearchParams(location.search).get("base")||JSON.parse(localStorage.getItem("${CODE_OPTIONS_KEY}")||"{}").base;if(${JSON.stringify(BASES)}.includes(b))document.documentElement.dataset.base=b}catch(e){}})()`
 
-export type CodeOptions = { icons: IconLibrary; base: string }
+export const STYLE_LABELS = {
+  suiss: "Suiss",
+  vega: "Vega",
+  nova: "Nova",
+  maia: "Maia",
+  lyra: "Lyra",
+  mira: "Mira",
+  luma: "Luma",
+  sera: "Sera",
+  rhea: "Rhea",
+} as const
+
+export type StyleName = keyof typeof STYLE_LABELS
+
+export const STYLES = Object.keys(STYLE_LABELS) as StyleName[]
+
+export const DEFAULT_STYLE = "suiss" satisfies StyleName
+
+export type CodeOptions = {
+  icons: IconLibrary
+  base: string
+  style: StyleName
+}
 
 export const DEFAULT_OPTIONS: CodeOptions = {
   icons: DEFAULT_ICONS,
   base: DEFAULT_BASE,
+  style: DEFAULT_STYLE,
 }
 
 export const isIconLibrary = (value: unknown): value is IconLibrary =>
@@ -47,15 +70,20 @@ export const isIconLibrary = (value: unknown): value is IconLibrary =>
 export const isBase = (value: unknown): value is string =>
   BASES.includes(value as string)
 
+export const isStyle = (value: unknown): value is StyleName =>
+  STYLES.includes(value as StyleName)
+
 export function codeOptions(
   params: URLSearchParams,
   fallback: Partial<CodeOptions> = {}
 ): CodeOptions {
   const icons = params.get("icons") ?? fallback.icons
   const base = params.get("base") ?? fallback.base
+  const style = params.get("style") ?? fallback.style
   return {
     icons: isIconLibrary(icons) ? icons : DEFAULT_ICONS,
     base: isBase(base) ? base : DEFAULT_BASE,
+    style: isStyle(style) ? style : DEFAULT_STYLE,
   }
 }
 

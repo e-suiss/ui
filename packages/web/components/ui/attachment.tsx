@@ -7,18 +7,17 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-muted text-foreground transition-colors has-[[data-slot=attachment-trigger]:focus-visible]:ring-3 has-[[data-slot=attachment-trigger]:focus-visible]:ring-ring/50 has-[>a,>button]:hover:bg-[color-mix(in_oklab,var(--muted),var(--foreground)_5%)] not-in-data-[slot=attachment-group]:data-[state=idle]:border not-in-data-[slot=attachment-group]:data-[state=idle]:border-dashed not-in-data-[slot=attachment-group]:data-[state=idle]:border-input not-in-data-[slot=attachment-group]:data-[state=idle]:bg-transparent not-in-data-[slot=attachment-group]:data-[state=idle]:has-[>a,>button]:hover:bg-accent in-data-[slot=attachment-group]:w-full in-data-[slot=attachment-group]:rounded-none in-data-[slot=attachment-group]:not-first:before:absolute in-data-[slot=attachment-group]:not-first:before:inset-e-0 in-data-[slot=attachment-group]:not-first:before:top-0 in-data-[slot=attachment-group]:not-first:before:start-4 in-data-[slot=attachment-group]:not-first:before:border-t in-data-[slot=attachment-group]:not-first:before:border-border in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-16 not-in-data-[slot=attachment-group]:data-[state=idle]:has-[>a,>button]:hover:text-accent-foreground",
+  "cn-attachment group/attachment flex max-w-full shrink-0 flex-wrap transition-colors",
   {
     variants: {
       size: {
-        default:
-          "gap-3 px-4 py-3 text-sm data-[orientation=vertical]:gap-2 data-[orientation=vertical]:has-data-[slot=attachment-content]:px-2.5 data-[orientation=vertical]:has-data-[slot=attachment-content]:py-2 data-[orientation=vertical]:has-data-[slot=attachment-media]:p-2",
-        sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5 in-data-[slot=attachment-group]:not-first:before:start-2 in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-12",
-        xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1 in-data-[slot=attachment-group]:not-first:before:start-1.5 in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-9.5",
+        default: "cn-attachment-size-default",
+        sm: "cn-attachment-size-sm",
+        xs: "cn-attachment-size-xs",
       },
       orientation: {
-        horizontal: "min-w-40 items-center",
-        vertical: "w-24 flex-col has-data-[slot=attachment-content]:w-30",
+        horizontal: "cn-attachment-orientation-horizontal",
+        vertical: "cn-attachment-orientation-vertical",
       },
     },
   }
@@ -47,15 +46,14 @@ function Attachment({
 }
 
 const attachmentMediaVariants = cva(
-  "relative flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted group-data-[orientation=vertical]/attachment:w-full group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-sm group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5",
+  "cn-attachment-media relative flex shrink-0 justify-center overflow-hidden [&_svg]:pointer-events-none group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! [&_svg:not([class*='size-'])]:size-4 group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5",
   {
     variants: {
       variant: {
-        icon: "h-11 w-9 rounded-sm border bg-background text-muted-foreground group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
-        document:
-          "h-11 w-9 items-end rounded-sm border bg-background pb-1.5 group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
+        icon: "cn-attachment-media-variant-icon",
+        document: "cn-attachment-media-variant-document",
         image:
-          "h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5 *:[img]:size-full *:[img]:object-cover",
+          "cn-attachment-media-variant-image *:[img]:size-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
@@ -71,10 +69,7 @@ function AttachmentLabel({
   return (
     <span
       data-slot="attachment-label"
-      className={cn(
-        "rounded-xs bg-primary px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-primary-foreground uppercase",
-        className
-      )}
+      className={cn("cn-attachment-label", className)}
       {...props}
     />
   )
@@ -103,7 +98,7 @@ function AttachmentContent({
     <div
       data-slot="attachment-content"
       className={cn(
-        "max-w-full min-w-0 flex-1 group-data-[orientation=vertical]/attachment:px-1 has-data-[slot=attachment-progress]:*:data-[slot=attachment-title]:pe-12",
+        "cn-attachment-content max-w-full min-w-0 flex-1 has-data-[slot=attachment-progress]:*:data-[slot=attachment-title]:pe-12",
         className
       )}
       {...props}
@@ -119,7 +114,7 @@ function AttachmentTitle({
     <span
       data-slot="attachment-title"
       className={cn(
-        "block max-w-full min-w-0 truncate group-data-[size=default]/attachment:text-base group-data-[size=sm]/attachment:font-semibold group-data-[size=xs]/attachment:font-semibold",
+        "cn-attachment-title block max-w-full min-w-0 truncate",
         className
       )}
       {...props}
@@ -135,7 +130,7 @@ function AttachmentDescription({
     <span
       data-slot="attachment-description"
       className={cn(
-        "mt-0.5 block max-w-full min-w-0 truncate text-xs text-muted-foreground group-data-[size=default]/attachment:text-sm group-data-[state=error]/attachment:text-destructive",
+        "cn-attachment-description block min-w-0 truncate",
         className
       )}
       {...props}
@@ -150,14 +145,14 @@ function AttachmentProgress({
   return (
     <ProgressPrimitive.Root
       data-slot="attachment-progress"
-      className={cn("relative mt-2", className)}
+      className={cn("cn-attachment-progress", className)}
       {...props}
     >
       <ProgressPrimitive.Value className="absolute inset-e-0 bottom-full mb-2 text-sm text-muted-foreground tabular-nums" />
       <ProgressPrimitive.Track className="h-1 overflow-hidden rounded-full bg-foreground/10">
         <ProgressPrimitive.Indicator
           data-slot="attachment-progress-indicator"
-          className="h-full rounded-full bg-primary transition-[width]"
+          className="cn-attachment-progress-indicator"
         />
       </ProgressPrimitive.Track>
     </ProgressPrimitive.Root>
@@ -172,7 +167,7 @@ function AttachmentActions({
     <div
       data-slot="attachment-actions"
       className={cn(
-        "relative z-20 flex shrink-0 items-center group-data-[orientation=vertical]/attachment:absolute group-data-[orientation=vertical]/attachment:top-3 group-data-[orientation=vertical]/attachment:inset-e-3 group-data-[orientation=vertical]/attachment:gap-1",
+        "cn-attachment-actions flex shrink-0 items-center",
         className
       )}
       {...props}
@@ -230,10 +225,7 @@ function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="attachment-group"
-      className={cn(
-        "flex w-full min-w-0 flex-col overflow-hidden rounded-2xl bg-muted",
-        className
-      )}
+      className={cn("cn-attachment-group flex min-w-0", className)}
       {...props}
     />
   )
