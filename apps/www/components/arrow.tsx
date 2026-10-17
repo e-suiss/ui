@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 export const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
 
@@ -7,7 +7,7 @@ export function Arrow({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "flex size-12 shrink-0 items-center justify-center rounded-full border border-current/20 transition-[rotate,background-color,color,border-color] duration-700 group-hover:rotate-45 group-hover:border-transparent group-hover:bg-label group-hover:text-surface",
+        "flex size-12 shrink-0 items-center justify-center rounded-full border border-current/20 transition-[rotate,background-color,color,border-color] duration-700 group-hover:rotate-45 group-hover:border-transparent group-hover:bg-foreground group-hover:text-background",
         ease,
         className
       )}
@@ -60,7 +60,7 @@ export function Label({
   return (
     <p
       className={cn(
-        "font-mono text-xs tracking-[0.02em] text-label-secondary uppercase",
+        "font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase",
         className
       )}
     >

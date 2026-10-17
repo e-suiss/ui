@@ -1,8 +1,6 @@
-import { cn } from "cn"
 import type { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
-
 import { Anchor } from "@/components/anchor"
 import { Arrow, ease, Label, Pill } from "@/components/arrow"
 import { HeroBackground } from "@/components/hero-background"
@@ -15,6 +13,7 @@ import {
 } from "@/lib/i18n"
 import { pageMetadata } from "@/lib/metadata"
 import { libraries, type Product, products } from "@/lib/products"
+import { cn } from "@/lib/utils"
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
 
@@ -59,13 +58,13 @@ function Hero({
           <div className="flex flex-wrap gap-3">
             <Anchor
               href={localePath(locale, "/#products")}
-              className="group rounded-full outline-none focus-visible:focus-ring"
+              className="group rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <Pill dark>{dictionary.exploreProducts}</Pill>
             </Anchor>
             <Anchor
               href={localePath(locale, "/#developers")}
-              className="group rounded-full outline-none focus-visible:focus-ring"
+              className="group rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <Pill className="bg-white/55 backdrop-blur-2xl">
                 {dictionary.forDevelopers}
@@ -86,11 +85,11 @@ function Approach({ dictionary }: { dictionary: Dictionary }) {
       <Label index="01">{dictionary.approachLabel}</Label>
       <p className="text-[clamp(2rem,4.4vw,4.5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance">
         {dictionary.approachLead}{" "}
-        <span className="text-label-tertiary">
+        <span className="text-foreground/45">
           {dictionary.approachLeadMuted}
         </span>{" "}
         {dictionary.approachBody}{" "}
-        <span className="text-label-tertiary">
+        <span className="text-foreground/45">
           {dictionary.approachBodyMuted}
         </span>
       </p>
@@ -115,7 +114,7 @@ function Tile({
     <Anchor
       href={localePath(locale, `/${product.slug}`)}
       className={cn(
-        "group relative flex flex-col justify-between overflow-hidden rounded-[28px] bg-black p-6 text-white outline-none focus-visible:focus-ring md:p-10",
+        "group relative flex flex-col justify-between overflow-hidden rounded-[28px] bg-black p-6 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:p-10",
         featured ? "min-h-[min(88svh,52rem)]" : "min-h-[34rem] md:min-h-[40rem]"
       )}
     >
@@ -208,7 +207,7 @@ function Products({
         <Label index="02">{dictionary.productsLabel}</Label>
         <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] font-semibold tracking-[-0.055em] text-balance">
           {dictionary.productsTitle}{" "}
-          <span className="text-label-tertiary">
+          <span className="text-foreground/45">
             {dictionary.productsTitleMuted}
           </span>
         </h2>
@@ -268,13 +267,13 @@ function Verbs({
         {products.map((product) => (
           <li
             key={product.slug}
-            className="border-t border-label/15 last:border-b"
+            className="border-t border-foreground/15 last:border-b"
           >
             <Anchor
               href={localePath(locale, `/${product.slug}`)}
-              className="group grid items-center gap-3 py-7 outline-none focus-visible:focus-ring md:grid-cols-[1fr_3fr] md:gap-6 md:py-9"
+              className="group grid items-center gap-3 py-7 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:grid-cols-[1fr_3fr] md:gap-6 md:py-9"
             >
-              <span className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+              <span className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
                 {product.name}
               </span>
               <span className="flex items-center justify-between gap-6">
@@ -287,7 +286,7 @@ function Verbs({
                   >
                     {product.verb[locale]}.
                   </span>
-                  <span className="max-w-2xl text-[17px] leading-[1.4] tracking-[-0.02em] text-label-secondary">
+                  <span className="max-w-2xl text-[17px] leading-[1.4] tracking-[-0.02em] text-muted-foreground">
                     {product.question[locale]}
                   </span>
                 </span>
@@ -321,7 +320,7 @@ function Developers({
           <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
             {dictionary.developersTitle}
           </h2>
-          <p className="max-w-md text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-label-secondary">
+          <p className="max-w-md text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-muted-foreground">
             {dictionary.developersBody}
           </p>
         </div>
@@ -331,7 +330,7 @@ function Developers({
           <Anchor
             key={library.slug}
             href={library.url}
-            className="group relative flex min-h-[34rem] flex-col justify-between overflow-hidden rounded-[28px] bg-black p-6 text-white outline-none focus-visible:focus-ring md:min-h-[40rem] md:p-10"
+            className="group relative flex min-h-[34rem] flex-col justify-between overflow-hidden rounded-[28px] bg-black p-6 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:min-h-[40rem] md:p-10"
           >
             <Image
               src={library.image}

@@ -1,10 +1,8 @@
 import { PlusIcon } from "@phosphor-icons/react/dist/ssr"
-import { cn } from "cn"
 import type { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import type * as React from "react"
-
 import { Anchor } from "@/components/anchor"
 import { Arrow, ease, Label } from "@/components/arrow"
 import { JsonLd } from "@/components/json-ld"
@@ -18,6 +16,7 @@ import {
 import { pageMetadata } from "@/lib/metadata"
 import { getProduct, type Product, products } from "@/lib/products"
 import { absolute, localeUrl, site } from "@/lib/site"
+import { cn } from "@/lib/utils"
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
 
@@ -176,7 +175,7 @@ export default async function ProductPage({
         </p>
       </Section>
 
-      <div className="dark bg-surface text-label dark:bg-surface-secondary">
+      <div className="dark bg-background text-foreground dark:bg-muted">
         <Section index={nextIndex()} label={dictionary.questionLabel}>
           <blockquote className="text-[clamp(2.5rem,6vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.055em] text-balance">
             “{product.question[locale]}”
@@ -189,15 +188,15 @@ export default async function ProductPage({
           {product.principles.map((principle, index) => (
             <li
               key={principle.title.en}
-              className="flex flex-col gap-4 border-t border-label/15 pt-6"
+              className="flex flex-col gap-4 border-t border-foreground/15 pt-6"
             >
-              <span className="font-mono text-xs text-label-tertiary">
+              <span className="font-mono text-xs text-foreground/45">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <h2 className="text-[clamp(1.5rem,2.2vw,2.25rem)] leading-[1.02] font-semibold tracking-[-0.045em] text-balance">
                 {principle.title[locale]}
               </h2>
-              <p className="text-[17px] leading-[1.45] tracking-[-0.02em] text-label-secondary">
+              <p className="text-[17px] leading-[1.45] tracking-[-0.02em] text-muted-foreground">
                 {principle.body[locale]}
               </p>
             </li>
@@ -210,7 +209,7 @@ export default async function ProductPage({
           {product.groups.map((group) => (
             <div
               key={group.title.en}
-              className="flex flex-col gap-5 border-t border-label/15 pt-6"
+              className="flex flex-col gap-5 border-t border-foreground/15 pt-6"
             >
               <h2 className="text-[clamp(1.75rem,2.4vw,2.5rem)] leading-none font-semibold tracking-[-0.045em]">
                 {group.title[locale]}
@@ -219,7 +218,7 @@ export default async function ProductPage({
                 {group.items[locale].map((item) => (
                   <li
                     key={item}
-                    className="text-[17px] leading-[1.4] tracking-[-0.02em] text-label-secondary"
+                    className="text-[17px] leading-[1.4] tracking-[-0.02em] text-muted-foreground"
                   >
                     {item}
                   </li>
@@ -269,7 +268,7 @@ export default async function ProductPage({
               <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
                 {product.rules.title[locale]}
               </h2>
-              <p className="max-w-xl text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-label-secondary">
+              <p className="max-w-xl text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.35] tracking-[-0.02em] text-muted-foreground">
                 {product.rules.lead[locale]}
               </p>
             </div>
@@ -277,9 +276,9 @@ export default async function ProductPage({
               {product.rules.items[locale].map((item, index) => (
                 <li
                   key={item}
-                  className="flex items-baseline gap-4 border-t border-label/15 py-5"
+                  className="flex items-baseline gap-4 border-t border-foreground/15 py-5"
                 >
-                  <span className="font-mono text-xs text-label-tertiary">
+                  <span className="font-mono text-xs text-foreground/45">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[clamp(1.25rem,1.6vw,1.5rem)] leading-[1.2] font-semibold tracking-[-0.035em]">
@@ -298,7 +297,7 @@ export default async function ProductPage({
             {product.standards.map((standard) => (
               <li
                 key={standard}
-                className="rounded-full border border-label/15 px-5 py-2.5 text-[clamp(1.0625rem,1.4vw,1.375rem)] font-medium tracking-[-0.02em]"
+                className="rounded-full border border-foreground/15 px-5 py-2.5 text-[clamp(1.0625rem,1.4vw,1.375rem)] font-medium tracking-[-0.02em]"
               >
                 {standard}
               </li>
@@ -312,9 +311,9 @@ export default async function ProductPage({
           {product.facts.map((fact) => (
             <div
               key={fact.label.en}
-              className="flex flex-col gap-2 border-t border-label/15 py-6 sm:pe-10"
+              className="flex flex-col gap-2 border-t border-foreground/15 py-6 sm:pe-10"
             >
-              <dt className="font-mono text-xs tracking-[0.02em] text-label-tertiary uppercase">
+              <dt className="font-mono text-xs tracking-[0.02em] text-foreground/45 uppercase">
                 {fact.label[locale]}
               </dt>
               <dd className="text-[clamp(1.25rem,1.6vw,1.5rem)] leading-[1.25] font-semibold tracking-[-0.035em]">
@@ -334,7 +333,7 @@ export default async function ProductPage({
               <Anchor
                 key={connection.slug}
                 href={localePath(locale, `/${item.slug}`)}
-                className="group relative flex min-h-80 flex-col justify-between gap-10 overflow-hidden rounded-[24px] bg-black p-6 text-white outline-none focus-visible:focus-ring md:p-8"
+                className="group relative flex min-h-80 flex-col justify-between gap-10 overflow-hidden rounded-[24px] bg-black p-6 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:p-8"
               >
                 <Image
                   src={item.image}
@@ -371,21 +370,21 @@ export default async function ProductPage({
       </Section>
 
       <Section index={nextIndex()} label={dictionary.faqLabel}>
-        <div className="flex flex-col border-b border-label/15">
+        <div className="flex flex-col border-b border-foreground/15">
           {product.faq.map((item) => (
             <details
               key={item.question.en}
-              className="group border-t border-label/15"
+              className="group border-t border-foreground/15"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 outline-none focus-visible:focus-ring [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 [&::-webkit-details-marker]:hidden">
                 <h2 className="text-[clamp(1.375rem,2vw,2rem)] leading-[1.15] font-semibold tracking-[-0.04em]">
                   {item.question[locale]}
                 </h2>
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-label/15 transition-transform duration-500 group-open:rotate-45">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 transition-transform duration-500 group-open:rotate-45">
                   <PlusIcon className="size-4" />
                 </span>
               </summary>
-              <p className="max-w-3xl pb-8 text-[clamp(1.0625rem,1.3vw,1.25rem)] leading-[1.45] tracking-[-0.02em] text-label-secondary">
+              <p className="max-w-3xl pb-8 text-[clamp(1.0625rem,1.3vw,1.25rem)] leading-[1.45] tracking-[-0.02em] text-muted-foreground">
                 {item.answer[locale]}
               </p>
             </details>
@@ -399,10 +398,10 @@ export default async function ProductPage({
       >
         <Anchor
           href={localePath(locale, `/${next.slug}`)}
-          className="group flex items-center justify-between gap-6 border-y border-label/15 py-8 outline-none focus-visible:focus-ring md:py-12"
+          className="group flex items-center justify-between gap-6 border-y border-foreground/15 py-8 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:py-12"
         >
           <span className="flex flex-col gap-3">
-            <span className="font-mono text-xs tracking-[0.02em] text-label-tertiary uppercase">
+            <span className="font-mono text-xs tracking-[0.02em] text-foreground/45 uppercase">
               {dictionary.nextProduct}
             </span>
             <span

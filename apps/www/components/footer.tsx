@@ -1,12 +1,10 @@
 "use client"
 
 import { ArrowUpIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-
 import { Anchor } from "@/components/anchor"
 import { ease } from "@/components/arrow"
 import { FitWord } from "@/components/fit-word"
-import { ThemeToggle } from "@/components/theme"
+import { cn } from "@/lib/utils"
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10"
 
@@ -15,14 +13,12 @@ type Column = { title: string; links: { label: string; href: string }[] }
 export function Footer({
   columns,
   labels,
-  themeLabels,
 }: {
   columns: Column[]
   labels: { copyright: string; backToTop: string }
-  themeLabels: { system: string; light: string; dark: string }
 }) {
   return (
-    <footer className="dark overflow-hidden bg-surface text-label dark:border-t dark:border-label/15">
+    <footer className="dark overflow-hidden bg-background text-foreground dark:border-t dark:border-foreground/15">
       <div
         className={cn(
           frame,
@@ -35,7 +31,7 @@ export function Footer({
             aria-label={column.title}
             className="flex flex-col gap-4"
           >
-            <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
+            <p className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
               {column.title}
             </p>
             <ul className="flex flex-col gap-2.5">
@@ -43,7 +39,7 @@ export function Footer({
                 <li key={link.href + link.label}>
                   <Anchor
                     href={link.href}
-                    className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label"
+                    className="text-[17px] tracking-[-0.02em] text-foreground/80 transition-colors hover:text-foreground"
                   >
                     {link.label}
                   </Anchor>
@@ -57,21 +53,17 @@ export function Footer({
       <div
         className={cn(
           frame,
-          "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary"
+          "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-foreground/15 py-6 text-sm text-muted-foreground"
         )}
       >
         <span>{labels.copyright}</span>
-        <ThemeToggle
-          labels={themeLabels}
-          className="ms-auto size-8 bg-label/10 text-label hover:bg-label/15"
-        />
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="group flex h-8 items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-label outline-none transition-colors hover:bg-label/15 focus-visible:focus-ring"
+          className="group flex h-8 items-center gap-2 rounded-full bg-foreground/10 ps-3.5 pe-1 text-foreground outline-none transition-colors hover:bg-foreground/15 focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {labels.backToTop}
-          <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
+          <span className="flex size-6 items-center justify-center rounded-full bg-foreground text-background">
             <ArrowUpIcon
               weight="bold"
               className={cn(

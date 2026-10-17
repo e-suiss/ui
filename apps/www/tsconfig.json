@@ -19,6 +19,9 @@
       }
     ],
     "paths": {
+      "@/components/ui/*": ["../../packages/web/components/ui/*"],
+      "@/hooks/*": ["../../packages/web/hooks/*"],
+      "@/lib/utils": ["../../packages/web/lib/utils"],
       "@/*": ["./*"]
     }
   },

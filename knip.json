@@ -71,7 +71,7 @@
     },
     "apps/www": {
       "entry": ["scripts/*.mjs", "lib/image-loader.ts"],
-      "ignoreDependencies": ["@fontsource/inter"]
+      "ignoreDependencies": ["@esuiss/web", "@fontsource/inter"]
     },
     "apps/ui": {
       "entry": ["components/site/icon-placeholder.tsx", "scripts/*.mjs"],

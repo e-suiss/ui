@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import { Footer } from "@/components/footer"
 import { GlobalNav } from "@/components/global-nav"
 import { JsonLd } from "@/components/json-ld"
-import { ThemeScript } from "@/components/theme"
+import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
 import { getDictionary, isLocale, localePath, locales } from "@/lib/i18n"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
@@ -57,11 +57,6 @@ export default async function RootLayout({
   if (!isLocale(lang)) notFound()
   const dictionary = getDictionary(lang)
 
-  const themeLabels = {
-    system: dictionary.themeSystem,
-    light: dictionary.themeLight,
-    dark: dictionary.themeDark,
-  }
   const items = products.map((product) => ({
     label: product.name,
     href: localePath(lang, `/${product.slug}`),
@@ -124,27 +119,27 @@ export default async function RootLayout({
         <ThemeScript />
         <JsonLd data={structuredData} />
       </head>
-      <body className="flex min-h-svh flex-col bg-surface text-label antialiased">
-        <GlobalNav
-          locale={lang}
-          items={items}
-          labels={{
-            menu: dictionary.menu,
-            close: dictionary.close,
-            developers: dictionary.developers,
-            switchLanguage: dictionary.switchLanguage,
-          }}
-          themeLabels={themeLabels}
-        />
-        <div className="flex flex-1 flex-col">{children}</div>
-        <Footer
-          columns={columns}
-          labels={{
-            copyright: dictionary.copyright,
-            backToTop: dictionary.backToTop,
-          }}
-          themeLabels={themeLabels}
-        />
+      <body className="flex min-h-svh flex-col bg-background text-foreground antialiased">
+        <ThemeProvider>
+          <GlobalNav
+            locale={lang}
+            items={items}
+            labels={{
+              menu: dictionary.menu,
+              close: dictionary.close,
+              developers: dictionary.developers,
+              switchLanguage: dictionary.switchLanguage,
+            }}
+          />
+          <div className="flex flex-1 flex-col">{children}</div>
+          <Footer
+            columns={columns}
+            labels={{
+              copyright: dictionary.copyright,
+              backToTop: dictionary.backToTop,
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   )
