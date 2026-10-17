@@ -30,6 +30,7 @@
       "@/components/charts/*": ["../../packages/web/components/charts/*"],
       "@/components/blocks/*": ["../../packages/web/components/blocks/*"],
       "@/hooks/*": ["../../packages/web/hooks/*"],
+      "@/lib/highlighter": ["../../packages/web/lib/highlighter"],
       "@/lib/utils": ["../../packages/web/lib/utils"],
       "@/examples/*": ["../../packages/web/examples/*"],
       "@/*": ["./*"]

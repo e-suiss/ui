@@ -258,6 +258,22 @@
       "icons": true
     },
     {
+      "name": "code-block",
+      "type": "ui",
+      "title": "Code Block",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "requires": [
+        "button",
+        "utils"
+      ],
+      "files": [
+        "components/ui/code-block.tsx"
+      ],
+      "icons": true
+    },
+    {
       "name": "collapsible",
       "type": "ui",
       "title": "Collapsible",
@@ -972,6 +988,20 @@
       "files": [
         "components/ui/tooltip.tsx"
       ]
+    },
+    {
+      "name": "trace",
+      "type": "ui",
+      "title": "Trace",
+      "dependencies": [],
+      "requires": [
+        "collapsible",
+        "utils"
+      ],
+      "files": [
+        "components/ui/trace.tsx"
+      ],
+      "icons": true
     },
     {
       "name": "wheel-picker",
@@ -3320,6 +3350,18 @@
       "icons": true
     },
     {
+      "name": "use-highlighted-code",
+      "type": "hook",
+      "title": "Use Highlighted Code",
+      "dependencies": [],
+      "requires": [
+        "highlighter"
+      ],
+      "files": [
+        "hooks/use-highlighted-code.ts"
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "hook",
       "title": "Use Message Scroller",
@@ -3367,6 +3409,18 @@
       "requires": [],
       "files": [
         "hooks/use-scrollbar-gap.ts"
+      ]
+    },
+    {
+      "name": "highlighter",
+      "type": "lib",
+      "title": "Highlighter",
+      "dependencies": [
+        "shiki"
+      ],
+      "requires": [],
+      "files": [
+        "lib/highlighter.tsx"
       ]
     },
     {

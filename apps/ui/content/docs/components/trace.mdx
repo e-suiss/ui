@@ -1,0 +1,329 @@
+---
+title: Trace
+description: "Rows for the steps an agent takes: reasoning, tool calls, sources, plans and file edits."
+eyebrow: Component
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="trace-demo" />
+
+A `Trace` is a list of `TraceLine` rows. Each row has a `TraceIcon`, a `TraceTitle`, and an optional `TraceDescription` and status. A row can expand to show more detail, link to a page, or open a dialog or sheet.
+
+Every row has the same shape, so reasoning, tool calls, sources and plans built from Trace look and behave the same. Use Trace for the steps an agent takes, such as calling a tool, running a subagent or editing a file. Use [Message](/docs/components/message) for its reply and [Marker](/docs/components/marker) for notes and dividers between turns.
+
+## Installation
+
+### CLI
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/trace
+```
+
+Works in any project with a `components.json`. See [Installation](/docs/installation#add-components) for the one-line registry setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add trace
+```
+
+### Manual
+
+1. Add [Collapsible](/docs/components/collapsible) and the [`cn` helper](/docs/installation#the-cn-helper).
+
+2. Copy the source into `components/ui/trace.tsx`:
+
+<ComponentSource path="components/ui/trace.tsx" />
+
+3. Update the import paths to match your project.
+
+## Usage
+
+```tsx
+import { Trace, TraceIcon, TraceLine, TraceTitle } from "@/components/ui/trace"
+```
+
+```tsx
+<Trace>
+  <TraceLine>
+    <TraceIcon>
+      <SearchIcon />
+    </TraceIcon>
+    <TraceTitle>Searched for minimumReleaseAge</TraceTitle>
+  </TraceLine>
+</Trace>
+```
+
+Wrap the row in a `TraceCollapsible` to show more detail when it expands. Put the `TraceLine` inside `TraceCollapsibleTrigger` and the detail in `TraceCollapsibleContent`:
+
+```tsx
+<Trace>
+  <TraceCollapsible>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceIcon>
+          <TerminalIcon />
+        </TraceIcon>
+        <TraceTitle>Ran node --version</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>v24.18.0</TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
+
+`TraceLine` is always the row. To make a row do something, wrap it in that thing's trigger: a link, a `DialogTrigger`, a `SheetTrigger`, a drawer or a popover.
+
+<OnlyBase base="base">
+
+Rows start closed. Set `defaultOpen` on `TraceCollapsible` to start open, or pass `open` with `onOpenChange` to control it. Set `keepMounted` on `TraceCollapsibleContent` so nested rows keep their open state while the parent is closed.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Rows start closed. Set `defaultOpen` on `TraceCollapsible` to start open, or pass `open` with `onOpenChange` to control it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Rows start closed. Set `defaultExpanded` on `TraceCollapsible` to start open, or pass `isExpanded` with `onExpandedChange` to control it.
+
+</OnlyBase>
+
+## Examples
+
+### Static
+
+A `TraceLine` on its own, for a step with no detail to show. It reads as plain text.
+
+<ComponentPreview name="trace-static" />
+
+### Status
+
+Set `status` on `TraceLine` to `running`, `error` or `pending`. Leave it unset for finished work, and say the state in the title too: "Running pnpm build", "Failed to run pnpm lint", "Run pnpm test".
+
+<ComponentPreview name="trace-status" />
+
+### Description
+
+Secondary text such as a diff stat, a duration or a count, after the title. It does not truncate.
+
+<ComponentPreview name="trace-description" />
+
+### Collapsible
+
+A row that expands to show the command output.
+
+<ComponentPreview name="trace-collapsible" />
+
+### Controlled
+
+Opens and closes a row from outside. To open a row while it streams and still let the reader close it, pass the reader's choice and fall back to the running state.
+
+<ComponentPreview name="trace-open" />
+
+### Link
+
+Wraps the `TraceLine` in an anchor. For a new tab, use an arrow icon and add "(opens in a new tab)" to the title with `sr-only`.
+
+<ComponentPreview name="trace-link" />
+
+### Dialog
+
+Wraps the `TraceLine` in a `DialogTrigger`. The dialog owns its open state, Escape and focus return.
+
+<ComponentPreview name="trace-dialog" />
+
+### Sheet
+
+The same shape as the dialog, in a sheet.
+
+<ComponentPreview name="trace-sheet" />
+
+### Group
+
+Rows next to each other in one `Trace`, which also styles any trigger or link that wraps a `TraceLine`.
+
+<ComponentPreview name="trace-group" />
+
+### Sources
+
+A collapsible row whose detail is a `Trace` of link rows.
+
+<ComponentPreview name="trace-sources" />
+
+### Steps
+
+A summary row with step rows inside. The parent's status and title come from its children.
+
+<ComponentPreview name="trace-steps" />
+
+### Commit
+
+A row for each changed file, with the line counts in the description. Each file opens its diff in a sheet.
+
+<ComponentPreview name="trace-commit" />
+
+### Whole turn
+
+Three levels: the turn, a summary and the rows. Text between steps sits between two `Trace` lists.
+
+<ComponentPreview name="trace-turn" />
+
+### Reasoning
+
+A thinking row that expands into the reasoning text.
+
+<ComponentPreview name="trace-thinking" />
+
+### Tool calls
+
+Tool calls with their input and output, including a failed call.
+
+<ComponentPreview name="trace-tool-calls" />
+
+## API Reference
+
+<Anatomy>
+
+- [Trace](#trace)
+  - [TraceLine](#traceline)
+    - [TraceIcon](#traceicon)
+    - [TraceTitle](#tracetitle)
+    - [TraceDescription](#tracedescription)
+  - [TraceCollapsible](#tracecollapsible)
+    - [TraceCollapsibleTrigger](#tracecollapsibletrigger)
+      - [TraceLine](#traceline)
+    - [TraceCollapsibleContent](#tracecollapsiblecontent)
+
+</Anatomy>
+
+<ApiPart index={1}>
+
+### Trace
+
+A list of rows. It also styles any trigger or link that wraps a `TraceLine`.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TraceLine
+
+One row: an icon and a title. It is a `span`, so it is not a button or a tab stop.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `status` | `"running" \| "error" \| "pending"` | — | The state of the work the row reports. `running` shimmers the title, `error` turns it destructive and `pending` mutes it. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TraceIcon
+
+A decorative icon slot, hidden from assistive tech. Before the title it names the action; after it, it is the indicator.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TraceTitle
+
+One sentence on one line. It truncates, and shimmers while the row is running.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TraceDescription
+
+Secondary text after the title, such as a count or a duration. It does not truncate.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TraceCollapsible
+
+A row that expands.
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | — | The controlled open state. Pass it with `onOpenChange`. |
+| `defaultOpen` | `boolean` | `false` | Whether the row starts open. |
+| `onOpenChange` | `(open: boolean) => void` | — | Called when the open state changes. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isExpanded` | `boolean` | — | The controlled open state. Pass it with `onExpandedChange`. |
+| `defaultExpanded` | `boolean` | `false` | Whether the row starts open. |
+| `onExpandedChange` | `(isExpanded: boolean) => void` | — | Called when the open state changes. |
+
+</OnlyBase>
+
+Also accepts the props of [Collapsible](/docs/components/collapsible).
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TraceCollapsibleTrigger
+
+The button that opens and closes the row. Put a `TraceLine` inside it; it adds a chevron after the line.
+
+Also accepts the props of `CollapsibleTrigger`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TraceCollapsibleContent
+
+The detail of a row that expands, indented under the title.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `keepMounted` | `boolean` | `false` | Keeps the detail mounted while closed, so nested rows keep their open state. |
+
+</OnlyBase>
+
+Also accepts the props of `CollapsibleContent`.
+
+</ApiPart>
+
+## Accessibility
+
+- Trace adds no roles of its own. Each row gets its semantics from the element that wraps it.
+- A `TraceLine` on its own is read as text and is not a tab stop.
+- Inside `TraceCollapsibleTrigger` the row is a button with `aria-expanded`. Inside a link or a dialog or sheet trigger, it takes that element's keyboard and focus behavior.
+- `TraceIcon` is hidden from assistive tech, so `TraceTitle` is the accessible name. Write it as a sentence that says what happened, such as "Edited trace.tsx", not just "trace.tsx".
+- Status is shown with color and motion, so put it in the title too.
+- The running shimmer stops when the reader prefers reduced motion.
+
+## Notes
+
+- Styling hooks: `data-slot="trace"`, `"trace-line"`, `"trace-icon"`, `"trace-title"`, `"trace-description"`, `"trace-collapsible"`, `"trace-collapsible-trigger"` and `"trace-collapsible-content"`, plus `data-status` on the row.
+- `TraceCollapsibleContent` mutes its text. Give a block with a muted background inside it `text-foreground` to keep its contrast; [Code Block](/docs/components/code-block) sets its own text color.
+
+</Only>

@@ -404,6 +404,30 @@
       }
     },
     {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "A surface for code, terminal output and diffs, with copy, line numbers, line states and streaming syntax highlighting.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@esuiss/button",
+        "@esuiss/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/code-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/code-block"
+        }
+      }
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
@@ -1575,6 +1599,27 @@
       "meta": {
         "links": {
           "docs": "https://suiss.app/ui/docs/components/tooltip"
+        }
+      }
+    },
+    {
+      "name": "trace",
+      "type": "registry:ui",
+      "title": "Trace",
+      "description": "Rows for the steps an agent takes: reasoning, tool calls, sources, plans and file edits.",
+      "registryDependencies": [
+        "@esuiss/collapsible",
+        "@esuiss/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/trace.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/trace"
         }
       }
     },
@@ -5939,6 +5984,21 @@
       }
     },
     {
+      "name": "use-highlighted-code",
+      "type": "registry:hook",
+      "title": "Use Highlighted Code",
+      "description": "Highlights code with Shiki and returns the tokens for each line.",
+      "registryDependencies": [
+        "@esuiss/highlighter"
+      ],
+      "files": [
+        {
+          "path": "hooks/use-highlighted-code.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-message-scroller",
       "type": "registry:hook",
       "title": "Use Message Scroller",
@@ -5995,6 +6055,21 @@
         {
           "path": "hooks/use-scrollbar-gap.ts",
           "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "highlighter",
+      "type": "registry:lib",
+      "title": "Highlighter",
+      "description": "A shared Shiki highlighter that loads languages and themes on demand.",
+      "dependencies": [
+        "shiki"
+      ],
+      "files": [
+        {
+          "path": "lib/highlighter.tsx",
+          "type": "registry:lib"
         }
       ]
     },

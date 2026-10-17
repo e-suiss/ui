@@ -41,8 +41,12 @@ const THEME = {
 }
 
 const DESCRIPTIONS = {
+  highlighter:
+    "A shared Shiki highlighter that loads languages and themes on demand.",
   theme:
     "A theme provider with a light, dark and system toggle and an animated switch between them.",
+  "use-highlighted-code":
+    "Highlights code with Shiki and returns the tokens for each line.",
   "use-message-scroller":
     "The scroll state and controls behind the message scroller.",
   "use-mobile":

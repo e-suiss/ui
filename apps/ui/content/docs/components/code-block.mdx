@@ -1,0 +1,388 @@
+---
+title: Code Block
+description: "A surface for code, terminal output and diffs, with copy, line numbers, line states and streaming syntax highlighting."
+eyebrow: Component
+platforms: [web]
+---
+
+<Only platform="web">
+
+<ComponentPreview name="code-block-demo" />
+
+`CodeBlock` shows code and command output in a rounded surface. Put the code in `CodeBlockContent` and, optionally, a `CodeBlockHeader` with a title and actions above it and a `CodeBlockFooter` below it.
+
+Pass a string to `CodeBlockContent` for plain output, or a list of `CodeBlockLine` when lines need a state or highlighted tokens. `useHighlightedCode` highlights with [Shiki](https://shiki.style) and keeps working while the code streams in.
+
+## Installation
+
+### CLI
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/code-block
+```
+
+Works in any project with a `components.json`. See [Installation](/docs/installation#add-components) for the one-line registry setup. Or use the [suiss/ui CLI](/docs/cli):
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add code-block
+```
+
+### Manual
+
+1. Install the dependencies, add the [`cn` helper](/docs/installation#the-cn-helper) and the [Button](/docs/components/button) component:
+
+```bash title="Terminal"
+npm install class-variance-authority shiki
+```
+
+2. Copy the source into `components/ui/code-block.tsx`:
+
+<ComponentSource path="components/ui/code-block.tsx" />
+
+3. For syntax highlighting, copy the highlighter into `lib/highlighter.tsx`:
+
+<ComponentSource path="lib/highlighter.tsx" />
+
+4. Copy the hook into `hooks/use-highlighted-code.ts`:
+
+<ComponentSource path="hooks/use-highlighted-code.ts" />
+
+5. Update the import paths to match your project.
+
+## Usage
+
+```tsx
+import {
+  CodeBlock,
+  CodeBlockActions,
+  CodeBlockContent,
+  CodeBlockCopyButton,
+  CodeBlockFooter,
+  CodeBlockHeader,
+  CodeBlockLine,
+  CodeBlockTitle,
+} from "@/components/ui/code-block"
+```
+
+```tsx
+<CodeBlock>
+  <CodeBlockHeader>
+    <CodeBlockTitle>Terminal</CodeBlockTitle>
+    <CodeBlockActions>
+      <CodeBlockCopyButton value={output} />
+    </CodeBlockActions>
+  </CodeBlockHeader>
+  <CodeBlockContent>{output}</CodeBlockContent>
+</CodeBlock>
+```
+
+A string child renders as a single text node, so streamed output stays cheap. Line numbers and diff markers are left out of a selection, and the content always reads left to right, while the header follows the page direction.
+
+## Examples
+
+### Basic
+
+A string passed straight to `CodeBlockContent`.
+
+<ComponentPreview name="code-block-basic" />
+
+### Header
+
+A `CodeBlockHeader` with a title and a copy button. Long titles truncate.
+
+<ComponentPreview name="code-block-header" />
+
+### Actions
+
+Extra buttons next to the copy button. The wrap toggle keeps its own state and passes it to `wrap`.
+
+<ComponentPreview name="code-block-actions" />
+
+### Floating actions
+
+Without a header, place `CodeBlockActions` directly in `CodeBlock`. The actions float at the top end and appear on hover or focus, and always on touch screens.
+
+<ComponentPreview name="code-block-floating-actions" />
+
+### Line numbers
+
+Set `lineNumbers` on `CodeBlockContent`. A string child is split into lines.
+
+<ComponentPreview name="code-block-line-numbers" />
+
+### Start line
+
+Set `startLine` to number a snippet from the middle of a file. The gutter widens to fit the largest number.
+
+<ComponentPreview name="code-block-start-line" />
+
+### Wrap
+
+Lines scroll by default. Set `wrap` for tool output and error messages.
+
+<ComponentPreview name="code-block-wrap" />
+
+### Highlighted lines
+
+Render each line as a `CodeBlockLine` and set `variant="highlighted"` on the ones to call out.
+
+<ComponentPreview name="code-block-highlighted-lines" />
+
+### Diff
+
+`variant="added"` and `variant="removed"` tint a line and add a `+` or `−` marker.
+
+<ComponentPreview name="code-block-diff" />
+
+### Height
+
+A `max-h-*` class on `CodeBlockContent` caps the block. The content scrolls inside and its edges fade with [`scroll-fade`](/docs/utils/scroll-fade).
+
+<ComponentPreview name="code-block-height" />
+
+### Show more
+
+Cap the content while collapsed and toggle it from a ghost button in `CodeBlockFooter`.
+
+<ComponentPreview name="code-block-show-more" />
+
+### Show more with max height
+
+Raise the cap instead of removing it, so a long expanded block still scrolls inside the page.
+
+<ComponentPreview name="code-block-show-more-scroll" />
+
+### Size
+
+`size="sm"` tightens the padding and uses `text-xs`, for tool and trace output.
+
+<ComponentPreview name="code-block-size" />
+
+### Destructive
+
+`variant="destructive"` for errors and failed output.
+
+<ComponentPreview name="code-block-destructive" />
+
+### Trace
+
+A small, wrapping `CodeBlock` inside a collapsible trace step for terminal output.
+
+<ComponentPreview name="code-block-trace" />
+
+### Tabs
+
+Several files in [Tabs](/docs/components/tabs), one `CodeBlock` per panel.
+
+<ComponentPreview name="code-block-tabs" />
+
+### Message
+
+A `CodeBlock` between paragraphs of a [Message](/docs/components/message).
+
+<ComponentPreview name="code-block-chat" />
+
+### Syntax highlighting
+
+`useHighlightedCode` returns one React node per line, ready for `CodeBlockLine`.
+
+<ComponentPreview name="code-block-highlighting" />
+
+```tsx
+const lines = useHighlightedCode(code, "json")
+
+<CodeBlock>
+  <CodeBlockContent>
+    {lines.map((line, index) => (
+      <CodeBlockLine key={index}>{line}</CodeBlockLine>
+    ))}
+  </CodeBlockContent>
+</CodeBlock>
+```
+
+Shiki runs on its JavaScript regex engine, so there is no WASM to load.
+
+### Languages
+
+Each language loads on first use. The list lives in `lib/highlighter.tsx` and ships with `bash`, `css`, `diff`, `html`, `javascript`, `json`, `jsx`, `markdown`, `python`, `sql`, `tsx`, `typescript` and `yaml`, plus aliases such as `ts`, `js`, `sh` and `yml`. Any other language renders as plain text.
+
+<ComponentPreview name="code-block-languages" />
+
+### Terminal output
+
+Pass `"ansi"` as the language to turn escape codes into colors. Colors do not carry over from one line to the next.
+
+<ComponentPreview name="code-block-ansi" />
+
+### Streaming
+
+While code streams in, the hook tokenizes only the new lines. Unchanged lines keep their nodes, so React skips them.
+
+<ComponentPreview name="code-block-streaming" />
+
+### Server rendering
+
+`highlightCode` is async and runs in a Server Component, which keeps Shiki out of the client bundle.
+
+```tsx
+import { highlightCode } from "@/lib/highlighter"
+
+export async function ServerCode({ code }: { code: string }) {
+  const lines = (await highlightCode(code, "tsx")) ?? code.split("\n")
+
+  return (
+    <CodeBlock>
+      <CodeBlockContent lineNumbers>
+        {lines.map((line, index) => (
+          <CodeBlockLine key={index}>{line}</CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
+  )
+}
+```
+
+## API Reference
+
+<Anatomy>
+
+- [CodeBlock](#codeblock)
+  - [CodeBlockHeader](#codeblockheader)
+    - [CodeBlockTitle](#codeblocktitle)
+    - [CodeBlockActions](#codeblockactions)
+      - [CodeBlockCopyButton](#codeblockcopybutton)
+  - [CodeBlockContent](#codeblockcontent)
+    - [CodeBlockLine](#codeblockline)
+  - [CodeBlockFooter](#codeblockfooter)
+
+</Anatomy>
+
+<ApiPart index={1}>
+
+### CodeBlock
+
+The surface that holds the header, the content and the footer.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` | The tone of the block. |
+| `size` | `"default" \| "sm"` | `"default"` | `sm` uses tighter padding and `text-xs`, for tool output. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CodeBlockHeader
+
+A row above the content for a title and actions.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CodeBlockTitle
+
+A filename or label with an optional icon. It truncates.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CodeBlockActions
+
+Buttons at the end of the header. As a direct child of `CodeBlock`, it floats over the content.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CodeBlockCopyButton
+
+A ghost icon button that copies `value` and announces "Copied" in a polite live region.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | Required. The text to copy. |
+
+Also accepts the props of [`Button`](/docs/components/button).
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CodeBlockContent
+
+The `pre` and `code` pair that scrolls or wraps.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - | A string, or a list of `CodeBlockLine`. |
+| `wrap` | `boolean` | `false` | Wraps long lines instead of scrolling. |
+| `lineNumbers` | `boolean` | `false` | Numbers each line. A string child is split into lines. |
+| `startLine` | `number` | `1` | The number of the first line when `lineNumbers` is set. |
+| `tabIndex` | `number` | `0` | Keeps the content focusable so it scrolls by keyboard. |
+
+Also accepts the props of `React.ComponentProps<"pre">`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CodeBlockLine
+
+One line of code.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "added" \| "removed" \| "highlighted"` | `"default"` | The state of the line. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CodeBlockFooter
+
+A row below the content, such as for a Show more button.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</ApiPart>
+
+### useHighlightedCode
+
+```tsx
+const lines = useHighlightedCode(code, language)
+```
+
+Returns one React node per line. Until the first pass finishes, and for a language outside the list, it returns plain lines.
+
+| Argument | Type | Description |
+| --- | --- | --- |
+| `code` | `string` | The code to highlight. A trailing newline is ignored. |
+| `language` | `string` | A language or alias from `lib/highlighter.tsx`, or `"ansi"`. |
+
+## Accessibility
+
+- `CodeBlockContent` renders a `pre` with a `code` element and always sets `dir="ltr"`, so code reads left to right on a right-to-left page.
+- The content has `tabIndex={0}` so keyboard users can focus and scroll it. Pass `tabIndex={-1}` to remove the tab stop.
+- Floating actions appear when focus is inside the block, not only on hover.
+- Line numbers are hidden from screen readers.
+- Added and removed lines carry a `+` or `−` marker as well as a tint, so the change does not rely on color.
+- `CodeBlockCopyButton` is labelled "Copy" and announces "Copied" after a successful copy.
+- Give a wrap toggle `aria-pressed`, and a Show more button `aria-expanded` with `aria-controls` pointing at the content `id`.
+
+## Notes
+
+- Styling hooks: `data-slot="code-block"`, `code-block-header`, `code-block-title`, `code-block-actions`, `code-block-copy-button`, `code-block-content`, `code-block-code`, `code-block-line` and `code-block-footer`. The root exposes `data-variant` and `data-size`, and each line exposes `data-variant`.
+
+</Only>
