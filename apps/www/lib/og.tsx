@@ -128,8 +128,8 @@ export function iconImage(size: number, { tile = false } = {}) {
     >
       <div
         style={{
-          width: size * (tile ? 0.42 : 0.5),
-          height: size * (tile ? 0.42 : 0.5),
+          width: size * (tile ? 0.42 : 0.75),
+          height: size * (tile ? 0.42 : 0.75),
           borderRadius: "50%",
           backgroundColor: LOGO_DOT,
         }}
