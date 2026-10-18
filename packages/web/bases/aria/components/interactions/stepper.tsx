@@ -62,6 +62,8 @@ function Stepper({
   disabled?: boolean
   format?: Intl.NumberFormatOptions
 }) {
+  const generatedId = React.useId()
+  const inputId = props.id ?? generatedId
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue)
   const value = valueProp ?? uncontrolledValue
   const valueRef = React.useRef(value)
@@ -114,6 +116,8 @@ function Stepper({
         isDisabled={isDisabled}
         formatOptions={format}
         className={cn("flex items-center gap-3", className)}
+        id={inputId}
+        aria-labelledby={props["aria-label"] ? undefined : inputId}
         {...props}
       />
     </StepperContext.Provider>
