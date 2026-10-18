@@ -66,7 +66,7 @@ Restyles a project that already ran `init`, on every platform.
 npx @esuiss/ui@latest apply --preset <code> [--only theme|font] [options]
 ```
 
-Without `--only`, React applies the colors, radius, font, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. The colors and radius start again from the suiss/ui values, so a preset with the suiss colors or the default radius undoes an earlier one. React Native, SwiftUI and Compose rewrite their theme files and fonts, and switch the icons of installed components to the icon library of the preset.
+Without `--only`, React applies the colors, radius, font, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. When it cannot ask, because there is no terminal and no `--yes`, it stops before changing any file. `--only theme` keeps the style unless `--style` is given and saves the base color in `components.json`. The colors and radius start again from the suiss/ui values, so a preset with the suiss colors or the default radius undoes an earlier one. React Native, SwiftUI and Compose rewrite their theme files and fonts, and switch the icons of installed components to the icon library of the preset.
 
 | Option | Description |
 | --- | --- |
@@ -74,7 +74,7 @@ Without `--only`, React applies the colors, radius, font, style, icon library an
 | `--only <theme\|font>` | Apply only the colors and radius, or only the fonts |
 | `--primary <color>` | A custom primary color, on its own or over the preset |
 | `--theme suiss` | Keep the suiss/ui grays when applying a preset; a colored theme in the preset still sets the primary, chart and accent colors |
-| `--style <name>` | Change the visual style; works without `--only` |
+| `--style <name>` | Change the visual style; not with `--only font` |
 | `--pointer` | React only: show the pointer cursor on enabled buttons |
 | `--rtl` | React only: print how to run the components right to left |
 | `-y, --yes` | Restyle installed components without asking |

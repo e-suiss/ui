@@ -94,7 +94,7 @@ npx @esuiss/ui@latest init
 2. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
 3. Installs and wires up Tailwind CSS if needed: `postcss.config.mjs` for Next.js, `vite.config.ts` for Vite.
 4. Writes the theme stylesheet to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
-5. Sets up the font. Text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
+5. Sets up the font. Text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite). A preset with Inter picked on Create uses Inter everywhere. In the Pages Router the font is loaded in `pages/_app`.
 6. Installs `tw-animate-css` and `shadcn`, whose stylesheets provide the animations, variants and utilities the components rely on. The stylesheet imports them, as in any project set up with the registry CLI.
 7. Adds the `button` component and the [`cn` helper](#the-cn-helper) it uses.
 
