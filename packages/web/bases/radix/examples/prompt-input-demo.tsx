@@ -182,9 +182,9 @@ export default function PromptInputDemo() {
                   size="sm"
                   variant="outline"
                   aria-label={`Model: ${modelName}`}
-                  className="ms-auto"
+                  className="ms-auto min-w-0 shrink"
                 >
-                  {modelName}
+                  <span className="truncate">{modelName}</span>
                   <IconPlaceholder
                     lucide="ChevronDownIcon"
                     tabler="IconChevronDown"
@@ -223,7 +223,9 @@ export default function PromptInputDemo() {
                   variant="outline"
                   aria-label={`Effort: ${effortName}`}
                 >
-                  <span className="text-muted-foreground">Effort</span>
+                  <span className="text-muted-foreground max-sm:hidden">
+                    Effort
+                  </span>
                   {effortName}
                   <IconPlaceholder
                     lucide="ChevronDownIcon"
