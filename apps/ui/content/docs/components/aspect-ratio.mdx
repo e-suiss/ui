@@ -411,6 +411,62 @@ A placeholder surface with an icon instead of an image.
 
 <NativeExample id="components-aspect-ratio--placeholder" />
 
+## API Reference
+
+<Only platform="rn">
+
+<ApiPart index={1}>
+
+### AspectRatio
+
+A view that keeps its width and height at a fixed ratio.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `number` | `1` | Width divided by height, such as `16 / 9`. |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `View`. |
+
+Also accepts the props of `View`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### AspectRatio
+
+A view that keeps its width and height at a fixed ratio.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `CGFloat` | `1` | Width divided by height, such as `16 / 9`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AspectRatio
+
+A view that keeps its width and height at a fixed ratio.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `Float` | - | Width divided by height, such as `16 / 9`. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
 <Only platform="rn">
 
 ## Accessibility

@@ -769,6 +769,152 @@ A disabled collapsible whose trigger cannot toggle it.
 
 <NativeExample id="components-collapsible--disabled" />
 
+## API Reference
+
+<Only platform="rn">
+
+<ApiPart index={1}>
+
+### Collapsible
+
+Root that holds the open state.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | The controlled open state. Pass it with `onOpenChange`. |
+| `defaultOpen` | `boolean` | `false` | Whether it starts open when uncontrolled. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when it opens or closes. |
+| `disabled` | `boolean` | `false` | Whether the trigger ignores presses. |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `View`. |
+
+Also accepts the props of `View`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CollapsibleTrigger
+
+Pressable that opens and closes the content.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `Pressable`. |
+
+Also accepts the props of `Pressable`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CollapsibleContent
+
+The content shown while open.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `keepMounted` | `boolean` | `false` | Keeps the content mounted while closed. |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `View`. |
+
+Also accepts the props of `View`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Collapsible
+
+Root that holds the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isExpanded` | `Binding<Bool>` | - | - |
+| `spacing` | `CGFloat` | `0` | - |
+| `content` | `() -> Content` | - | The content. |
+
+Overloads: `init(isExpanded:spacing:content:)`, `init(spacing:content:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CollapsibleTrigger
+
+The button that toggles the content open and closed.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(label:)`, `init(_:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CollapsibleContent
+
+The content shown while open.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Collapsible
+
+Root that holds the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `expanded` | `Boolean` | - | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CollapsibleTrigger
+
+The button that toggles the content open and closed.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CollapsibleContent
+
+The content shown while open.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
 <Only platform="rn">
 
 ## Accessibility
