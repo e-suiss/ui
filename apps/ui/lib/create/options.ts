@@ -223,8 +223,8 @@ const CLI = "@esuiss/ui@latest"
 function presetFlags(state: CreateState, mode: ApplyMode = "setup") {
   const flags = [`--preset ${presetCode(state)}`]
   const own = state.baseColor === OWN || state.theme === OWN
-  if (mode === "theme") flags.push(`--style ${state.style}`)
-  else if (state.style === OWN && mode !== "font") flags.push(`--style ${OWN}`)
+  const restyles = mode === "setup" || mode === "full"
+  if (state.style === OWN && restyles) flags.push(`--style ${OWN}`)
   if (own && mode !== "font") flags.push(`--theme ${OWN}`)
   if (state.primary && mode !== "font") {
     flags.push(`--primary "${state.primary}"`)
@@ -246,9 +246,7 @@ export function cliCommand(
   options: ProjectOptions
 ) {
   const flags = [`--platform ${state.platform}`]
-  if (state.platform === "web" && state.base !== "base") {
-    flags.push(`--base ${state.base}`)
-  }
+  if (state.platform === "web") flags.push(`--base ${state.base}`)
   if (!isDefault(state)) flags.push(...presetFlags(state))
   else if (state.primary) flags.push(`--primary "${state.primary}"`)
   flags.push(...webFlags(state, options))
