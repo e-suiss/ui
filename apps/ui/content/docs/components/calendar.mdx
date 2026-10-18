@@ -149,7 +149,7 @@ Also accepts the props of `DayButtonProps` from `react-day-picker`.
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="components-calendar--default" />
+<NativeExample name="calendar-demo" />
 
 <Only platform="rn">
 
@@ -441,10 +441,8 @@ function SingleCalendar(
   )
 }
 
-export function CalendarExample() {
-  return (
-    <SingleCalendar />
-  )
+export default function CalendarDemo() {
+  return <SingleCalendar />
 }
 ```
 
@@ -478,10 +476,8 @@ function SingleCalendar(
   )
 }
 
-export function CalendarExample() {
-  return (
-    <SingleCalendar />
-  )
+export default function CalendarDemo() {
+  return <SingleCalendar />
 }
 ```
 
@@ -648,13 +644,13 @@ Set `locale` for month and weekday names, and `weekStartsOn` to change the first
 
 The `sm`, `default` and `lg` sizes.
 
-<NativeExample id="components-calendar--sizes" />
+<NativeExample name="calendar-sizes" />
 
 ### Range
 
 Range selection across two months.
 
-<NativeExample id="components-calendar--range" />
+<NativeExample name="calendar-range" />
 
 ### Multiple
 
@@ -664,19 +660,19 @@ Several separate dates selected with `mode="multiple"`.
 
 </Only>
 
-<NativeExample id="components-calendar--multiple" />
+<NativeExample name="calendar-multiple" />
 
 ### Dropdown caption
 
 Month and year dropdowns in the caption.
 
-<NativeExample id="components-calendar--dropdown-caption" />
+<NativeExample name="calendar-dropdown-caption" />
 
 ### Week numbers
 
 Week numbers in a leading column.
 
-<NativeExample id="components-calendar--week-numbers" />
+<NativeExample name="calendar-week-numbers" />
 
 ### Disabled days
 
@@ -686,19 +682,19 @@ Weekends disabled with a `dayOfWeek` matcher.
 
 </Only>
 
-<NativeExample id="components-calendar--disabled-days" />
+<NativeExample name="calendar-disabled-days" />
 
 ### Outside days
 
 Days from adjacent months shown with `showOutsideDays`.
 
-<NativeExample id="components-calendar--outside-days" />
+<NativeExample name="calendar-outside-days" />
 
 ### Button variants
 
 Navigation buttons in the `ghost`, `secondary` and `tinted` variants.
 
-<NativeExample id="components-calendar--button-variants" />
+<NativeExample name="calendar-button-variants" />
 
 ### Locale
 
@@ -708,7 +704,7 @@ Turkish month and weekday names with `locale="tr-TR"`.
 
 </Only>
 
-<NativeExample id="components-calendar--locale" />
+<NativeExample name="calendar-locale" />
 
 ## API Reference
 

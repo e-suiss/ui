@@ -32,8 +32,8 @@ const decode = (text: string) =>
 
 const COMPONENT_SOURCE = /<ComponentSource path="([^"]+)"[^>]*\/>/g
 const COMPONENT_PREVIEW = /^<ComponentPreview\b([^>]*?)\/>$/gm
-const NATIVE_EXAMPLE = /^<NativeExample id="([^"]+)"[^>]*\/>$/gm
-const NATIVE_OPEN = /^<NativeExample id="([^"]+)"/
+const NATIVE_EXAMPLE = /^<NativeExample name="([^"]+)"[^>]*\/>$/gm
+const NATIVE_OPEN = /^<NativeExample name="([^"]+)"/
 const ANATOMY_ITEM = /^(\s*)[-*] (?:\[([^\]]+)\]\([^)]*\)|(.+))$/
 
 const repositoryRoot = path.join(process.cwd(), "../..")

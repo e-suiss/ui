@@ -8,7 +8,7 @@ const ROOT = path.resolve(import.meta.dirname, "..")
 const DOCS = path.join(ROOT, "content/docs")
 const MOBILE = path.resolve(ROOT, "../../packages/mobile")
 const RN_COMPONENTS = path.join(MOBILE, "uniwind/components")
-const STORIES = path.join(MOBILE, "stories")
+const EXAMPLES = path.join(MOBILE, "examples")
 const NATIVE_SECTION = '<Only platform="rn swift kotlin">'
 const ALL = ["rn", "swift", "kotlin"]
 const NATIVE = ["swift", "kotlin"]
@@ -41,7 +41,7 @@ const LINE_COMMENT = /(^|[^:"])\/\/.*$/gm
 const CLI_ALSO = "The CLI also adds what it builds on"
 const RN_ALSO = "On React Native it also adds"
 const MANUAL_HEADING = "### Manual"
-const DEFAULT_STORY = "--default"
+const DEFAULT_EXAMPLE = /-(?:demo|chart-default)$/
 const SOURCE_EXTENSION = /\.tsx?$/
 const SLUG = /\.mdx$/
 const ADD_COMMAND =
@@ -60,7 +60,7 @@ const LOCAL_DECLARATION = /\b(?:function|const|let|class)\s+([A-Z]\w*)/g
 const EXPORT_LIST = /export\s*(?:type\s*)?\{([^}]*)\}/g
 const EXPORT_DECLARATION =
   /export\s+(?:default\s+)?(?:async\s+)?(?:function|const|let|class)\s+(\w+)/g
-const NATIVE_EXAMPLE = /<NativeExample id="([^"]+)"([^>]*)>/g
+const NATIVE_EXAMPLE = /<NativeExample name="([^"]+)"([^>]*)>/g
 const SWIFT_PACKAGE_IMPORT = (product) => new RegExp(`^import ${product}$`, "m")
 const STYLINGS = {
   uniwind: "Uniwind",
@@ -785,7 +785,7 @@ async function generate(file, context, report) {
   const usageCodes = {}
   for (const platform of [...NATIVE, "rn"]) {
     const usable = ids.filter((item) => context.examples.get(item)?.[platform])
-    const id = usable.find((item) => item.endsWith(DEFAULT_STORY)) ?? usable[0]
+    const id = usable.find((item) => DEFAULT_EXAMPLE.test(item)) ?? usable[0]
     usageCodes[platform] = id ? context.examples.get(id)[platform] : undefined
   }
 
@@ -841,8 +841,8 @@ async function exportOwners() {
 
 async function builtins() {
   const names = new Set()
-  for (const file of await readdir(STORIES)) {
-    const imports = importsOf(await readFile(path.join(STORIES, file), "utf8"))
+  for (const file of await readdir(EXAMPLES)) {
+    const imports = importsOf(await readFile(path.join(EXAMPLES, file), "utf8"))
     for (const item of imports.get("react-native") ?? []) names.add(item)
   }
   return names

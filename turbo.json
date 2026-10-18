@@ -31,7 +31,7 @@
         "$TURBO_ROOT$/packages/cli/lib/**",
         "$TURBO_ROOT$/packages/cli/index.mjs",
         "$TURBO_ROOT$/packages/mobile/registry.json",
-        "$TURBO_ROOT$/packages/mobile/stories/**",
+        "$TURBO_ROOT$/packages/mobile/examples/**",
         "$TURBO_ROOT$/packages/mobile/uniwind/components/**",
         "$TURBO_ROOT$/packages/mobile/swiftui/Catalog/Catalog/Stories/**",
         "$TURBO_ROOT$/packages/mobile/kotlin/catalog/src/**",

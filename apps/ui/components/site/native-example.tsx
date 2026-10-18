@@ -14,11 +14,11 @@ import { strings } from "@/lib/strings"
 const LABELS = { swift: "SwiftUI", kotlin: "Compose" } as const
 
 export function NativeExample({
-  id,
+  name: id,
   platforms,
   children,
 }: {
-  id: string
+  name: string
   platforms?: string[]
   children?: React.ReactNode
 }) {

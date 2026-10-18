@@ -20,7 +20,7 @@ pnpm knip            # unused files, exports, and dependencies in every package
 pnpm registry        # regenerate the web and mobile registries
 pnpm registry:check  # fail if a registry is out of date
 pnpm --filter @esuiss/web exec vitest --project examples  # render every web example and run its tests in the browser
-pnpm --filter @esuiss/mobile start                        # the React Native Storybook app
+pnpm --filter @esuiss/mobile start                        # the React Native example gallery
 ```
 
 Layout:
@@ -40,7 +40,7 @@ Layout:
 4. Add the page to `apps/ui/content/docs/<section>/<name>.mdx` and its name to that section's `meta.json`. The page uses:
    - `<ComponentPreview name="button-variants" />` for a web example, with the Preview and Code tabs. The code shown is the example file. Add `layout="padded"` or `layout="fullscreen"` when the example should not be centered, and `responsive` to preview it in a resizable frame. Charts and blocks use `<ComponentPreview type="chart" name="area-chart-default" />` and `type="block"`.
    - `<ComponentSource path="components/ui/button.tsx" />` for the source to copy under Manual installation. Mobile sources use paths such as `uniwind/components/ui/button.tsx`, `swift/Components/Button.swift` and `kotlin/components/Button.kt`.
-   - `<NativeExample id="components-button--variants" />` for a mobile example. The id is the React Native Storybook id. The React Native, SwiftUI and Compose code is read from `packages/mobile/stories` and the catalog apps, and the preview from `apps/ui/public/previews/<id>.light.webp` and `.dark.webp` (or `.mp4`).
+   - `<NativeExample name="button-variants" />` for a mobile example. Mobile examples live in `packages/mobile/examples/`, one file per example with a single default-exported component, named like the web ones: `button-demo.tsx` for the first one, then `button-variants.tsx` and so on. The React Native code shown is the example file. The SwiftUI and Compose code comes from the catalog apps, matched by section, title and story name (`Components` / `Button` / `variants` is `button-variants`), and the preview of an example without a web twin from `apps/ui/public/previews/<name>.light.webp` and `.dark.webp` (or `.mp4`).
    - `<Only platform="web">` and `<Only platform="rn swift kotlin">` around the parts for each platform, with `platforms` in the frontmatter listing the tabs the page has.
    - Plain Markdown tables for the API reference, inside `<ApiPart index={1}>`, and `<Anatomy>` around a nested list of the parts.
 
@@ -93,7 +93,7 @@ Git hooks are installed by `pnpm install`:
 
 - pre-commit: Biome fixes and checks the staged files (warnings fail too). Changed web components, hooks, styles, bases or docs pages regenerate the web registries in `packages/web/registry/`; changed mobile components or primitives, the Uniwind stylesheet, the tokens or docs pages regenerate the NativeWind files, the themes, `packages/mobile/registry.json` and the registries in `packages/mobile/registry/`.
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
-- pre-push: Biome, the registry checks and the tests in parallel with Knip and then typecheck, which run one after the other because both generate the mobile Storybook files.
+- pre-push: Biome, the registry checks and the tests in parallel with Knip and then typecheck, which run one after the other because both generate the mobile Uniwind types.
 
 GitHub Actions runs the same checks in `.github/workflows/ci.yml` on every push to `main` and every pull request, and builds the SwiftUI library (and runs its tests on a simulator) and the Compose library when `packages/mobile/swiftui`, `packages/mobile/kotlin` or the tokens change.
 

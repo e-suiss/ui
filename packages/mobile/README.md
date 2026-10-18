@@ -90,7 +90,7 @@ Yes. [suiss.app/ui/llms.txt](https://suiss.app/ui/llms.txt) lists every page, [s
 Run `pnpm install` once at the repository root, then run these in `packages/mobile`:
 
 ```bash
-pnpm ios             # build the Storybook app and open it in the simulator
+pnpm ios             # build the example gallery and open it in the simulator
 pnpm android         # same for Android
 pnpm typecheck
 pnpm nativewind      # regenerate the NativeWind components and stylesheet
@@ -109,7 +109,7 @@ The git hooks live at the repository root and run these checks for the mobile li
 - `stylesheet/components/ui/`: the StyleSheet versions, written by hand with `theme.ts`. Keep them in step with the Uniwind components when you change one.
 - `swiftui/`: the SwiftUI package `EsuissUI` and its catalog app, published to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) on every release.
 - `kotlin/`: the Jetpack Compose library and its catalog app, published to [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) on every release.
-- `stories/`: one Storybook file per component, rendered on the device. Light and dark mode follow the system appearance.
+- `examples/`: one file per example, the code the docs show. `App.tsx` lists them in a searchable gallery on the device; start Metro with `EXPO_PUBLIC_EXAMPLE=button-variants` to open one example directly. Light and dark mode follow the system appearance.
 
 ## Release
 

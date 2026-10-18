@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 
 import { highlightCode } from "@/lib/highlight"
-import { NATIVE_LANGUAGES, nativeCode, nativeIds } from "@/lib/native"
+import { NATIVE_LANGUAGES, nativeCode, nativeNames } from "@/lib/native"
 
 export async function GET(
   _request: Request,
@@ -16,7 +16,7 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return nativeIds().flatMap((id) =>
+  return nativeNames().flatMap((id) =>
     Object.keys(NATIVE_LANGUAGES)
       .filter(
         (platform) => nativeCode(id)[platform as keyof typeof NATIVE_LANGUAGES]

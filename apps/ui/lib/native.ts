@@ -38,7 +38,7 @@ export function nativeCode(id: string): NativeCode {
   return allExamples().get(id) ?? {}
 }
 
-export function nativeIds() {
+export function nativeNames() {
   return [...allExamples().keys()]
 }
 

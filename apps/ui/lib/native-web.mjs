@@ -7,15 +7,15 @@ const OPEN = /^<Only platform="([^"]+)">$/
 const CLOSE = "</Only>"
 const HEADING = /^#{2,4} (.+)$/
 const PREVIEW_TAG = /<ComponentPreview\b([^>]*?)\/>/g
-const NATIVE_TAG = /<NativeExample\b[^>]*\bid="([^"]+)"/g
+const NATIVE_TAG = /<NativeExample\b[^>]*\bname="([^"]+)"/g
 const RESPONSIVE = /\bresponsive\b/
 
 const HEADING_ALIASES = {
-  "components-combobox--with-clear": "with clear button",
-  "components-drawer--snap-points": "with snap points",
-  "components-drawer--sides": "directions",
-  "components-slider--step": "steps",
-  "components-widget--auto": "auto resize",
+  "combobox-with-clear": "with clear button",
+  "drawer-snap-points": "with snap points",
+  "drawer-sides": "directions",
+  "slider-step": "steps",
+  "widget-auto": "auto resize",
 }
 
 const attribute = (tag, name) =>

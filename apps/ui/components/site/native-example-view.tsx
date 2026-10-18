@@ -16,15 +16,9 @@ import type { Preview } from "@/lib/previews"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
-function previewAlt(id: string, scheme: string) {
-  const [component = "", story = ""] = id.split("--")
-  const words = (value: string) => value.split("-").filter(Boolean)
-  const name = words(component)
-    .slice(1)
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ")
-  const variant = words(story).join(" ")
-  return `${name}${variant && variant !== "default" ? ` (${variant})` : ""} in ${PLATFORM_LABELS.rn}, ${scheme} mode`
+function previewAlt(name: string, scheme: string) {
+  const text = name.replaceAll("-", " ")
+  return `${text[0]?.toUpperCase()}${text.slice(1)} in ${PLATFORM_LABELS.rn}, ${scheme} mode`
 }
 
 const CODE_PLATFORMS: Record<string, Platform> = {

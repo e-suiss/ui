@@ -18,7 +18,7 @@ const REPO = path.join(ROOT, "../..")
 const MODULES = path.join(ROOT, "node_modules")
 const MAP = "icons/map.json"
 const SOURCES = {
-  rn: ["uniwind", "stylesheet", "stories"],
+  rn: ["uniwind", "stylesheet", "examples"],
   swift: ["swiftui"],
   kotlin: ["kotlin"],
 }

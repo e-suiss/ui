@@ -98,7 +98,7 @@ describe("the standard React Native registries", () => {
 })
 
 describe("React Native sources", () => {
-  it.each([...STYLINGS.map((styling) => `${styling}/components`), "stories"])(
+  it.each([...STYLINGS.map((styling) => `${styling}/components`), "examples"])(
     "type the timer promises in %s for the React Native timer types",
     (directory) => {
       const untyped = sourcesOf(directory).filter((file) =>

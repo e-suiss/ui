@@ -147,7 +147,7 @@ Styling hooks: `data-slot="paged-list"`, `paged-list-items`, `paged-list-item`, 
 
 <Only platform="rn swift kotlin">
 
-<NativeExample id="patterns-paged-list--default" />
+<NativeExample name="paged-list-demo" />
 
 `PagedList` takes the full `items` array and renders only the first `pageSize` items. When the user scrolls near the end, or presses the Load more button in the footer, the next page is appended.
 
@@ -345,7 +345,13 @@ dependencies {
 import { ChatCircleIcon } from "phosphor-react-native"
 import { PagedList } from "@/components/patterns/paged-list"
 import { Icon } from "@/components/ui/icon"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
 
 type Topic = { id: number; title: string; replies: number }
 
@@ -380,9 +386,14 @@ function TopicRow({ topic }: { topic: Topic }) {
   )
 }
 
-export function PagedListExample() {
+export default function PagedListDemo() {
   return (
-    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />
+    <PagedList<Topic>
+      items={topics}
+      pageSize={10}
+      getKey={(topic: Topic) => topic.id}
+      renderItem={(topic: Topic) => <TopicRow topic={topic} />}
+    />
   )
 }
 ```
@@ -538,19 +549,19 @@ Other `FlatList` props pass through, except `data`, `keyExtractor`, `onEndReache
 
 Uses a `pageSize` of 3 so pages load sooner.
 
-<NativeExample id="patterns-paged-list--small-pages" />
+<NativeExample name="paged-list-small-pages" />
 
 ### Single page
 
 Fewer items than one page, so no Load more button appears.
 
-<NativeExample id="patterns-paged-list--single-page" />
+<NativeExample name="paged-list-single-page" />
 
 ### Custom labels
 
 Renames the button with `loadMoreLabel`.
 
-<NativeExample id="patterns-paged-list--custom-labels" />
+<NativeExample name="paged-list-custom-labels" />
 
 ## API Reference
 

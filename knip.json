@@ -49,8 +49,7 @@
       "entry": [
         "uniwind/components/**/*.tsx",
         "scripts/*.mjs",
-        "stories/**/*.stories.tsx",
-        ".rnstorybook/*.{ts,tsx}",
+        "examples/*.tsx",
         "nativewind/components/**/*.tsx",
         "stylesheet/components/**/*.{ts,tsx}",
         "components/primitives/*.{ts,tsx}",
@@ -59,8 +58,7 @@
       "project": [
         "uniwind/**/*.{ts,tsx}",
         "scripts/**/*.mjs",
-        ".rnstorybook/**/*.{ts,tsx}",
-        "stories/**/*.tsx",
+        "examples/*.tsx",
         "*.{ts,tsx}",
         "nativewind/**/*.tsx",
         "stylesheet/**/*.{ts,tsx}",

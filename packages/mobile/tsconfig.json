@@ -8,12 +8,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".rnstorybook/**/*.ts",
-    ".rnstorybook/**/*.tsx",
-    "uniwind-types.d.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "uniwind-types.d.ts"],
   "exclude": ["node_modules", "nativewind", "stylesheet"]
 }
