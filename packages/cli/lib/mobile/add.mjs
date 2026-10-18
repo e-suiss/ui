@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { CliError, note } from "../output.mjs"
 import { SCOPES } from "../registry.mjs"
@@ -11,7 +11,13 @@ import {
 } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { ensureBabelPlugin } from "./babel.mjs"
-import { iconDependencies, iconLibraryFor, withIcons } from "./icons.mjs"
+import { keepFontModule } from "./fonts.mjs"
+import {
+  iconDependencies,
+  iconLibraryFor,
+  switchIcons,
+  withIcons,
+} from "./icons.mjs"
 import { ensurePodDeploymentTarget } from "./ios.mjs"
 import {
   detectProject,
@@ -37,6 +43,48 @@ export function fetchFiles(root, entries, kind = "rn") {
   }))
 }
 
+const FONT_MODULE = path.join("components", "primitives", "font.ts")
+
+function withLocalFonts(root, files) {
+  const module = path.join(root, FONT_MODULE)
+  return files.map((file) =>
+    file.target === module && existsSync(module)
+      ? {
+          ...file,
+          content: keepFontModule(file.content, readFileSync(module, "utf8")),
+        }
+      : file
+  )
+}
+
+async function itemFiles(root, registry, items, styling, library) {
+  return withLocalFonts(
+    root,
+    await withIcons(
+      { platform: "rn", root, registry, library, fetchText },
+      await fetchFiles(root, itemEntries(registry, items, styling))
+    )
+  )
+}
+
+export async function useIconLibrary(project, root, registry, iconLibrary) {
+  if (!iconLibrary) return []
+  const switched = await switchIcons({
+    platform: "rn",
+    root,
+    registry,
+    library: iconLibrary,
+    fetchText,
+  })
+  if (!switched) return []
+  install(project, switched.dependencies)
+  return switched.unused.length
+    ? [
+        `${switched.unused.join(", ")} ${switched.unused.length === 1 ? "is" : "are"} no longer used by the components. Remove ${switched.unused.length === 1 ? "it" : "them"} with your package manager if nothing else needs ${switched.unused.length === 1 ? "it" : "them"}.`,
+      ]
+    : []
+}
+
 function itemEntries(registry, items, styling) {
   return items.flatMap((item) =>
     (item.styleFiles?.[styling] ?? item.files).map((file) => ({
@@ -54,13 +102,11 @@ export async function installItems(
   { overwrite = false, styling, iconLibrary }
 ) {
   const items = resolveItems(registry, names)
+  const switched = await useIconLibrary(project, root, registry, iconLibrary)
   const library = iconLibraryFor("rn", root, { iconLibrary })
   const result = writeFiles(
     project.cwd,
-    await withIcons(
-      { platform: "rn", root, registry, library, fetchText },
-      await fetchFiles(root, itemEntries(registry, items, styling))
-    ),
+    await itemFiles(root, registry, items, styling, library),
     overwrite
   )
 
@@ -71,6 +117,7 @@ export async function installItems(
   )
   const installed = install(project, dependencies)
   const manual = [
+    ...switched,
     ...(dependencies.includes("react-native-reanimated") &&
     styling !== "nativewind"
       ? ensureBabelPlugin(
@@ -124,18 +171,12 @@ export async function add(names, options) {
   if (options.diff) {
     printDiff(
       project.cwd,
-      await withIcons(
-        {
-          platform: "rn",
-          root,
-          registry,
-          library: iconLibraryFor("rn", root, options),
-          fetchText,
-        },
-        await fetchFiles(
-          root,
-          itemEntries(registry, resolveItems(registry, selected), styling)
-        )
+      await itemFiles(
+        root,
+        registry,
+        resolveItems(registry, selected),
+        styling,
+        iconLibraryFor("rn", root, options)
       )
     )
   } else {

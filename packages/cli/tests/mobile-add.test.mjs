@@ -285,3 +285,39 @@ describe("mobile add", () => {
     )
   })
 })
+
+describe("the font primitive", () => {
+  const FONT_FILE = `type Fonts = { sans?: string; heading?: string }
+
+const fonts: Fonts = {}
+`
+  const GEIST = FONT_FILE.replace("= {}", '= { sans: "Geist" }')
+  const fontRegistry = {
+    ...registry,
+    items: [
+      ...registry.items,
+      {
+        name: "primitives/font",
+        type: "primitive",
+        dependencies: { uniwind: [], nativewind: [], stylesheet: [] },
+        requires: [],
+        files: ["components/primitives/font.ts"],
+      },
+    ],
+  }
+
+  it("keeps the preset fonts on add --overwrite", async () => {
+    serveRegistry({
+      ...files,
+      "registry.json": fontRegistry,
+      "components/primitives/font.ts": FONT_FILE,
+    })
+    const cwd = expoProject(
+      { uniwind: "1.0.0" },
+      { "src/components/primitives/font.ts": GEIST }
+    )
+    await add(["primitives/font"], { cwd, overwrite: true })
+    expect(read(cwd, "src/components/primitives/font.ts")).toBe(GEIST)
+    expect(output()).toContain("Already up to date.")
+  })
+})

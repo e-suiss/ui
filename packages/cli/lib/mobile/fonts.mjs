@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs"
 import path from "node:path"
+import { CliError } from "../output.mjs"
 import { decodePreset } from "../shared/style.mjs"
 
 const WHITESPACE = /\s+/g
@@ -13,6 +14,7 @@ const DEFAULT_FONT = "inter"
 const INHERIT = "inherit"
 const CDN = "https://cdn.jsdelivr.net/npm/@expo-google-fonts"
 const PACKAGE_RANGE = "0.4"
+const DOWNLOAD_TIMEOUT = 30_000
 const FACES = [
   { weight: 400, name: "400Regular" },
   { weight: 500, name: "500Medium" },
@@ -64,18 +66,35 @@ function fontOf(id) {
   }
 }
 
+function isSystemFont(preset) {
+  return (
+    preset.font === DEFAULT_FONT &&
+    (!preset.fontHeading || preset.fontHeading === INHERIT)
+  )
+}
+
 export function presetFonts(options) {
   if (!options.preset) return null
   const preset = decodePreset(options.preset)
   if (!preset) return null
-  const sans = preset.font === DEFAULT_FONT ? null : fontOf(preset.font)
+  const sans = isSystemFont(preset) ? null : fontOf(preset.font)
   const heading =
     !preset.fontHeading ||
     preset.fontHeading === INHERIT ||
     preset.fontHeading === preset.font
       ? null
       : fontOf(preset.fontHeading)
-  return sans || heading ? { sans, heading } : null
+  return { sans, heading }
+}
+
+export function hasFonts(fonts) {
+  return Boolean(fonts?.sans || fonts?.heading)
+}
+
+export function fontFiles() {
+  return Object.keys(FAMILIES).flatMap((id) =>
+    fontOf(id).faces.map((face) => face.file)
+  )
 }
 
 export function fontList(fonts) {
@@ -124,7 +143,7 @@ export function fontModule(fonts) {
   ].filter(Boolean)
   return `type Fonts = { sans?: string; heading?: string }
 
-const fonts: Fonts = { ${entries.join(", ")} }
+const fonts: Fonts = ${entries.length ? `{ ${entries.join(", ")} }` : "{}"}
 
 function fontFamily(heading = false) {
   const family = heading ? (fonts.heading ?? fonts.sans) : fonts.sans
@@ -133,6 +152,24 @@ function fontFamily(heading = false) {
 
 export { fontFamily, fonts }
 `
+}
+
+const FONT_CONFIG = /^const fonts: Fonts = .*$/m
+const FAMILY_ENTRY = /(?:sans|heading): "([^"]+)"/g
+
+export function keepFontModule(fresh, current) {
+  const kept = current.match(FONT_CONFIG)?.[0]
+  return kept && FONT_CONFIG.test(fresh)
+    ? fresh.replace(FONT_CONFIG, () => kept)
+    : fresh
+}
+
+export function fontPackagesIn(text) {
+  const config = text.match(FONT_CONFIG)?.[0] ?? ""
+  const families = [...config.matchAll(FAMILY_ENTRY)].map((match) => match[1])
+  return Object.keys(FAMILIES)
+    .filter((id) => families.includes(FAMILIES[id]))
+    .map((id) => `@expo-google-fonts/${id}`)
 }
 
 export function assetName(face) {
@@ -173,18 +210,32 @@ export function keepFonts(text, current, platform) {
   }, text)
 }
 
+async function downloadFace(face) {
+  try {
+    const response = await fetch(face.url, {
+      signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT),
+    })
+    if (!response.ok) return { status: response.status }
+    return { bytes: new Uint8Array(await response.arrayBuffer()) }
+  } catch (error) {
+    return { status: error.name === "TimeoutError" ? "timeout" : "offline" }
+  }
+}
+
 export async function downloadFaces(fonts) {
   const faces = []
-  for (const font of fontList(fonts)) {
+  const failed = []
+  for (const font of fontList(fonts ?? {})) {
     for (const face of font.faces) {
-      const response = await fetch(face.url)
-      if (!response.ok) continue
-      faces.push({
-        ...face,
-        font,
-        bytes: new Uint8Array(await response.arrayBuffer()),
-      })
+      const { bytes, status } = await downloadFace(face)
+      if (bytes) faces.push({ ...face, font, bytes })
+      else if (status !== 404) failed.push(face.file)
     }
+  }
+  if (failed.length) {
+    throw new CliError(
+      `Could not download ${failed.join(", ")}. Check your connection and run the command again.`
+    )
   }
   return faces
 }

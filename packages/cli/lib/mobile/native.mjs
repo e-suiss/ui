@@ -3,10 +3,11 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
+  rmSync,
   writeFileSync,
 } from "node:fs"
 import path from "node:path"
-import { CliError, list, note, step } from "../output.mjs"
+import { CliError, confirm, list, note, step } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
 import { fetchThemes } from "../registry.mjs"
 import {
@@ -21,17 +22,19 @@ import {
   applyFonts,
   assetName,
   downloadFaces,
+  fontFiles,
   keepFonts,
   presetFonts,
 } from "./fonts.mjs"
 import {
   iconLibraryFor,
   isPhosphorRequirement,
+  switchIcons,
   usesCustomIcons,
   withIcons,
 } from "./icons.mjs"
 import { fetchRegistry, fetchText, presetFile } from "./registry.mjs"
-import { themed, themeOptionsFor } from "./theme.mjs"
+import { keepColors, themed, themeOptionsFor } from "./theme.mjs"
 
 const ANDROID_PLUGIN =
   /com\.android\.(?:application|library)|android[.-](?:application|library)|androidApplication|androidLibrary/
@@ -220,7 +223,7 @@ async function setup(options) {
     `${platform.title} files go to ${path.relative(project.cwd, project.root) || "."}`
   )
   const library = iconLibraryFor(options.platform, project.root, options)
-  const download = async (files) =>
+  const download = async (files, { always = false } = {}) =>
     withIcons(
       {
         platform: options.platform,
@@ -228,10 +231,26 @@ async function setup(options) {
         registry,
         library,
         fetchText,
+        always,
       },
       await fetchFiles(project.root, entries(files), options.platform)
     )
   return { platform, project, registry, spec, download, library }
+}
+
+function useIconLibrary({ project, registry, library }, options) {
+  if (!options.iconLibrary) return null
+  return switchIcons({
+    platform: options.platform,
+    root: project.root,
+    registry,
+    library,
+    fetchText,
+  })
+}
+
+function isTokens(file) {
+  return path.basename(file).startsWith("Tokens.")
 }
 
 function requirementsFor(spec, library) {
@@ -272,27 +291,81 @@ function fontDirectory(project, platform) {
   )
 }
 
+function fontName(platform, face) {
+  return platform === "swift" ? face.file : assetName(face)
+}
+
+function knownFontNames(platform) {
+  return fontFiles().map((file) => fontName(platform, { file }))
+}
+
+function packageResources(project, directory) {
+  const sources = path.join(project.cwd, "Sources")
+  const inside = path.relative(sources, directory)
+  if (inside.startsWith("..") || path.isAbsolute(inside)) {
+    return `Declare ${path.relative(project.cwd, directory)} as a resource of its target in Package.swift with .process so the fonts are bundled.`
+  }
+  const [target, ...rest] = inside.split(path.sep)
+  return `Add resources: [.process("${rest.join("/")}")] to the ${target} target in Package.swift so the fonts are bundled.`
+}
+
 function writeFonts(project, platform, faces) {
   const directory = fontDirectory(project, platform)
   if (!directory) {
-    note(
-      "Copy the font files into src/main/assets/fonts of your app module so Compose can load them."
-    )
+    if (faces.length) {
+      note(
+        "Copy the font files into src/main/assets/fonts of your app module so Compose can load them."
+      )
+    }
     return
   }
+  const names = new Set(faces.map((face) => fontName(platform, face)))
+  const stale = knownFontNames(platform).filter(
+    (name) => !names.has(name) && existsSync(path.join(directory, name))
+  )
+  for (const name of stale) {
+    rmSync(targetFor(directory, name, "font"), { force: true })
+  }
+  if (stale.length) {
+    step(
+      `Removed ${stale.length} unused font file${stale.length === 1 ? "" : "s"} from ${path.relative(project.cwd, directory)}`
+    )
+  }
+  if (!faces.length) return
   mkdirSync(directory, { recursive: true })
   for (const face of faces) {
-    const name = platform === "swift" ? face.file : assetName(face)
-    writeFileSync(targetFor(directory, name, "font"), face.bytes)
+    writeFileSync(
+      targetFor(directory, fontName(platform, face), "font"),
+      face.bytes
+    )
   }
   step(
     `Added ${faces.length} font file${faces.length === 1 ? "" : "s"} to ${path.relative(project.cwd, directory)}`
   )
-  if (platform === "swift") {
-    note(
-      `Make sure ${path.relative(project.cwd, directory)} is part of your app target so the fonts are copied into the app.`
-    )
-  }
+  if (platform !== "swift") return
+  note(
+    project.xcode
+      ? `Make sure ${path.relative(project.cwd, directory)} is part of your app target so the fonts are copied into the app.`
+      : packageResources(project, directory)
+  )
+}
+
+async function replaceTokens(project, files, options) {
+  const changed = files.filter(
+    (file) =>
+      isTokens(file.target) &&
+      existsSync(file.target) &&
+      readFileSync(file.target, "utf8") !== file.content
+  )
+  if (!changed.length || options.yes || options.overwrite) return true
+  const names = changed
+    .map((file) => path.relative(project.cwd, file.target))
+    .join(", ")
+  if (await confirm(`Replace ${names} with the new theme?`)) return true
+  note(
+    `Kept ${names}. Run again with --yes to replace it, or use npx @esuiss/ui apply --platform ${options.platform}.`
+  )
+  return false
 }
 
 export async function initNative(options) {
@@ -310,8 +383,9 @@ export async function initNative(options) {
   )
   const fonts = presetFonts(options)
   const faces = fonts ? await downloadFaces(fonts) : []
-  const downloaded = (await download(files)).map((file) => {
-    if (!path.basename(file.target).startsWith("Tokens.")) return file
+  await useIconLibrary(context, options)
+  const downloaded = (await download(files, { always: true })).map((file) => {
+    if (!isTokens(file.target)) return file
     const content = themed(file.content, options.platform, theme)
     return {
       ...file,
@@ -320,8 +394,24 @@ export async function initNative(options) {
         : content,
     }
   })
-  reportFiles(writeFiles(project.cwd, downloaded, options.overwrite))
-  if (faces.length) writeFonts(project, options.platform, faces)
+  const tokens = await replaceTokens(project, downloaded, options)
+  reportFiles(
+    writeFiles(
+      project.cwd,
+      downloaded.filter((file) => !isTokens(file.target)),
+      options.overwrite
+    )
+  )
+  if (tokens) {
+    reportFiles(
+      writeFiles(
+        project.cwd,
+        downloaded.filter((file) => isTokens(file.target)),
+        true
+      )
+    )
+    if (fonts) writeFonts(project, options.platform, faces)
+  }
   printRequirements(context)
   if (project.xcode) {
     note(
@@ -357,14 +447,17 @@ export async function applyNative(options) {
   const targets = new Set(
     tokens.map((file) => targetFor(project.root, file, options.platform))
   )
+  if (!only) await useIconLibrary(context, options)
   const downloaded = (await download(tokens))
     .filter((file) => targets.has(file.target))
     .map((file) => {
       const current = readFileSync(file.target, "utf8")
-      const fresh = themed(file.content, options.platform, theme)
-      let base = fresh
+      let base = themed(file.content, options.platform, theme)
       if (only === "font") base = current
-      if (only === "theme") base = keepFonts(fresh, current, options.platform)
+      else {
+        if (!theme) base = keepColors(base, current, options.platform)
+        if (!fonts) base = keepFonts(base, current, options.platform)
+      }
       return {
         ...file,
         content: fonts
@@ -373,7 +466,8 @@ export async function applyNative(options) {
       }
     })
   reportFiles(writeFiles(project.cwd, downloaded, true))
-  if (faces.length) writeFonts(project, options.platform, faces)
+  if (fonts) writeFonts(project, options.platform, faces)
+  if (!only) printRequirements(context)
   step("Applied.")
 }
 
@@ -423,6 +517,7 @@ export async function addNative(names, options) {
   const files = [
     ...new Set(selected.flatMap((name) => byName.get(name)[options.platform])),
   ]
+  if (!options.diff) await useIconLibrary(context, options)
   const downloaded = await download(files)
   if (options.diff) {
     printDiff(project.cwd, downloaded)

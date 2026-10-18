@@ -1,7 +1,8 @@
 import { spawnSync } from "node:child_process"
+import { encodePreset } from "shadcn/preset"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { apply } from "../lib/mobile/init.mjs"
+import { apply, init } from "../lib/mobile/init.mjs"
 import {
   createProject,
   read,
@@ -33,6 +34,7 @@ const uniwind = `@import "tailwindcss";
 `
 
 const files = {
+  "registry/themes.json": [],
   "registry.json": {
     name: "esuiss-ui-mobile",
     homepage: "https://suiss.app/ui",
@@ -59,9 +61,11 @@ function expoProject(packages, extra) {
   })
 }
 
+let output
+
 beforeEach(() => {
   serveRegistry(files)
-  silenceOutput()
+  output = silenceOutput()
   vi.mocked(spawnSync).mockClear()
 })
 
@@ -108,5 +112,155 @@ describe("React Native apply", () => {
     expect(read(cwd, "components/ui/theme.ts")).toBe(
       "export const theme = {}\n"
     )
+  })
+
+  it("keeps the colors when only the style changes", async () => {
+    const cwd = expoProject(
+      { uniwind: "1.0.0" },
+      {
+        "global.css": uniwind.replace(
+          "oklch(0.56 0.19 256)",
+          "oklch(0.7 0.15 162)"
+        ),
+      }
+    )
+    await apply({ cwd, style: "suiss" })
+    expect(read(cwd, "global.css")).toContain(
+      "--color-primary: oklch(0.7 0.15 162);"
+    )
+  })
+
+  it("resets the fonts for a preset with the system font", async () => {
+    const geist = `type Fonts = { sans?: string; heading?: string }
+
+const fonts: Fonts = { sans: "Geist" }
+`
+    const cwd = expoProject(
+      { uniwind: "1.0.0", "@expo-google-fonts/geist": "0.4.0" },
+      {
+        "global.css": uniwind,
+        "components/primitives/font.ts": geist,
+        "app.json": {
+          expo: {
+            plugins: [
+              "expo-router",
+              [
+                "expo-font",
+                {
+                  ios: {
+                    fonts: [
+                      "./node_modules/@expo-google-fonts/geist/400Regular/Geist_400Regular.ttf",
+                    ],
+                  },
+                },
+              ],
+            ],
+          },
+        },
+      }
+    )
+    await apply({ cwd, preset: encodePreset({ font: "inter" }) })
+    expect(read(cwd, "components/primitives/font.ts")).toContain(
+      "const fonts: Fonts = {}"
+    )
+    expect(JSON.parse(read(cwd, "app.json")).expo.plugins).toEqual([
+      "expo-router",
+    ])
+    expect(output()).toContain("@expo-google-fonts/geist is no longer used")
+    expect(output()).not.toContain("--overwrite")
+  })
+
+  it("installs Inter when the preset names it", async () => {
+    const cwd = expoProject(
+      { uniwind: "1.0.0" },
+      { "global.css": uniwind, "components/primitives/font.ts": "" }
+    )
+    await apply({
+      cwd,
+      preset: encodePreset({ font: "inter", fontHeading: "inter" }),
+      only: "font",
+    })
+    expect(read(cwd, "components/primitives/font.ts")).toContain(
+      'const fonts: Fonts = { sans: "Inter" }'
+    )
+    expect(spawnSync).toHaveBeenCalledWith(
+      "npx",
+      ["expo", "install", "expo-font", "@expo-google-fonts/inter"],
+      expect.objectContaining({ cwd })
+    )
+  })
+})
+
+const INIT_ITEMS = [
+  "button",
+  "primitives/hooks",
+  "primitives/portal",
+  "primitives/toggle",
+  "primitives/toggle-group",
+].map((name) => ({
+  name,
+  type: "ui",
+  dependencies: { uniwind: [], nativewind: [], stylesheet: [] },
+  requires: [],
+  files: [],
+}))
+
+describe("React Native init again", () => {
+  const theme = 'const light = {\n  primary: "#0071e3",\n}\n'
+
+  beforeEach(() => {
+    serveRegistry({
+      ...files,
+      "registry.json": { ...files["registry.json"], items: INIT_ITEMS },
+      "stylesheet/components/ui/theme.ts": theme,
+    })
+  })
+
+  it("keeps a changed StyleSheet theme without --yes", async () => {
+    const cwd = expoProject({}, { "components/ui/theme.ts": "old\n" })
+    await init({ cwd, styling: "stylesheet" })
+    expect(read(cwd, "components/ui/theme.ts")).toBe("old\n")
+    expect(output()).toContain("Kept components/ui/theme.ts")
+  })
+
+  it("replaces the StyleSheet theme with --yes like the CSS stylings", async () => {
+    const cwd = expoProject({}, { "components/ui/theme.ts": "old\n" })
+    await init({ cwd, styling: "stylesheet", yes: true })
+    expect(read(cwd, "components/ui/theme.ts")).toBe(theme)
+  })
+})
+
+describe("NativeWind apply", () => {
+  it("asks before replacing the Tailwind config", async () => {
+    serveRegistry({
+      ...files,
+      "registry.json": {
+        ...files["registry.json"],
+        styles: {
+          ...files["registry.json"].styles,
+          nativewind: {
+            stylesheet: "styles/nativewind.css",
+            config: "styles/nativewind.config.js",
+            directory: "nativewind",
+          },
+        },
+      },
+      "styles/nativewind.css": ":root {\n  --primary: #0071e3;\n  }\n",
+      "styles/nativewind.config.js": "module.exports = {}\n",
+    })
+    const cwd = expoProject(
+      { nativewind: "4.2.0" },
+      {
+        "global.css": "old\n",
+        "tailwind.config.js": "module.exports = { mine: true }\n",
+      }
+    )
+    await apply({ cwd, primary: "#e11d48" })
+    expect(read(cwd, "tailwind.config.js")).toBe(
+      "module.exports = { mine: true }\n"
+    )
+    expect(output()).toContain("Kept tailwind.config.js")
+    await apply({ cwd, primary: "#e11d48", yes: true })
+    expect(read(cwd, "tailwind.config.js")).toBe("module.exports = {}\n")
   })
 })

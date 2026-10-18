@@ -4,9 +4,16 @@ import { CliError, confirm, note, step } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
 import { fetchThemes } from "../registry.mjs"
 import { ensureAlias, relative } from "../shared/project.mjs"
-import { installItems } from "./add.mjs"
+import { installItems, useIconLibrary } from "./add.mjs"
 import { configureNativewindBabel, ensureBabelPlugin } from "./babel.mjs"
-import { expoFontPlugin, fontList, fontModule, presetFonts } from "./fonts.mjs"
+import {
+  expoFontPlugin,
+  fontList,
+  fontModule,
+  fontPackagesIn,
+  hasFonts,
+  presetFonts,
+} from "./fonts.mjs"
 import {
   detectProject,
   detectStyling,
@@ -21,7 +28,7 @@ import {
   fetchText,
   presetFile,
 } from "./registry.mjs"
-import { themed, themeOptionsFor } from "./theme.mjs"
+import { keepColors, themed, themeOptionsFor } from "./theme.mjs"
 
 const METRO_CONFIGS = ["metro.config.js", "metro.config.cjs"]
 const ROOT_COMPONENTS = [
@@ -56,6 +63,11 @@ const STYLING_SETUP = {
     metroImport: 'const { withNativeWind } = require("nativewind/metro")',
     metroMarker: "withNativeWind",
   },
+}
+const THEME_FORMATS = {
+  uniwind: "uniwind",
+  nativewind: "nativewind-css",
+  stylesheet: "stylesheet",
 }
 const TAILWIND_CONFIGS = [
   "tailwind.config.js",
@@ -236,7 +248,13 @@ function writeNativewindTypes(project) {
   step(`Created ${relative(project, file)}`)
 }
 
-async function writeTailwindConfig(project, registry, options, theme) {
+async function writeTailwindConfig(
+  project,
+  registry,
+  options,
+  theme,
+  { keep = false } = {}
+) {
   const existing = TAILWIND_CONFIGS.map((name) =>
     path.join(project.cwd, name)
   ).find(existsSync)
@@ -254,6 +272,12 @@ async function writeTailwindConfig(project, registry, options, theme) {
     const replace = await confirm(
       `Replace ${relative(project, existing)} with the esuiss Tailwind config?`
     )
+    if (!replace && keep) {
+      note(
+        `Kept ${relative(project, existing)}. Run again with --yes to replace it with the radius of the new style.`
+      )
+      return
+    }
     if (!replace) {
       throw new CliError("Cancelled. Run again with --yes to replace it.")
     }
@@ -275,26 +299,33 @@ function pickStyling(project, options) {
   return choose("How should components be styled?", STYLING_CHOICES)
 }
 
-async function writeTheme(project, registry, root, style, options) {
+async function writeTheme(project, registry, root, style, theme, options) {
   const file = path.join(root, "components", "ui", "theme.ts")
-  const theme = themed(
+  const text = themed(
     await fetchText(
       presetFile(registry, "stylesheet", style) ??
         registry.styles.stylesheet.theme
     ),
     "stylesheet",
-    options
+    theme
   )
   if (existsSync(file)) {
-    if (readFileSync(file, "utf8") !== theme) {
+    if (readFileSync(file, "utf8") === text) return
+    const replace =
+      options.yes ||
+      options.overwrite ||
+      (await confirm(
+        `Replace ${relative(project, file)} with the esuiss theme?`
+      ))
+    if (!replace) {
       note(
-        `Kept ${relative(project, file)}. Compare it with the registry theme if components look off.`
+        `Kept ${relative(project, file)}. Run again with --yes to replace it, or use npx @esuiss/ui apply.`
       )
+      return
     }
-    return
   }
   mkdirSync(path.dirname(file), { recursive: true })
-  writeFileSync(file, theme)
+  writeFileSync(file, text)
   step(`Wrote ${relative(project, file)}`)
 }
 
@@ -306,34 +337,94 @@ function readJsonFile(file) {
   }
 }
 
+function writeExpoFonts(project, fonts) {
+  const appJson = path.join(project.cwd, "app.json")
+  const app = project.framework === "expo" && readJsonFile(appJson)
+  if (!app?.expo) return false
+  const plugins = (app.expo.plugins ?? []).filter(
+    (entry) => (Array.isArray(entry) ? entry[0] : entry) !== "expo-font"
+  )
+  const managed = (app.expo.plugins ?? []).find(
+    (entry) => Array.isArray(entry) && entry[0] === "expo-font"
+  )
+  if (!hasFonts(fonts)) {
+    if (!managed || !isGoogleFontPlugin(managed)) return true
+    app.expo.plugins = plugins
+    writeFileSync(appJson, `${JSON.stringify(app, null, 2)}\n`)
+    step("Removed the preset fonts from the expo-font plugin in app.json")
+    return true
+  }
+  app.expo.plugins = [...plugins, expoFontPlugin(project.cwd, fonts)]
+  writeFileSync(appJson, `${JSON.stringify(app, null, 2)}\n`)
+  step("Added the fonts to the expo-font plugin in app.json")
+  return true
+}
+
+function isGoogleFontPlugin([, config]) {
+  const files = [
+    ...(config?.fonts ?? []),
+    ...(config?.ios?.fonts ?? []),
+    ...(config?.android?.fonts ?? []).flatMap((family) =>
+      typeof family === "string"
+        ? [family]
+        : (family.fontDefinitions ?? []).map((face) => face.path)
+    ),
+  ]
+  return files.every(
+    (file) =>
+      typeof file === "string" &&
+      file.includes("node_modules/@expo-google-fonts/")
+  )
+}
+
 function configureFonts(project, root, fonts) {
   if (!fonts) return []
   const manual = []
-  install(project, [
-    ...(project.framework === "expo" ? ["expo-font"] : []),
-    ...fontList(fonts).map((font) => font.package),
-  ])
   const module = path.join(root, "components", "primitives", "font.ts")
-  mkdirSync(path.dirname(module), { recursive: true })
-  writeFileSync(module, fontModule(fonts))
-  step(`Set the fonts in ${relative(project, module)}`)
+  const current = existsSync(module) ? readFileSync(module, "utf8") : ""
+  const next = fontModule(fonts)
+  const wanted = fontList(fonts).map((font) => font.package)
+  const unused = fontPackagesIn(current).filter(
+    (name) => !wanted.includes(name)
+  )
 
-  const plugin = expoFontPlugin(project.cwd, fonts)
-  const appJson = path.join(project.cwd, "app.json")
-  const app = project.framework === "expo" && readJsonFile(appJson)
-  if (app?.expo) {
-    const plugins = (app.expo.plugins ?? []).filter(
-      (entry) => (Array.isArray(entry) ? entry[0] : entry) !== "expo-font"
+  if (hasFonts(fonts)) {
+    install(project, [
+      ...(project.framework === "expo" ? ["expo-font"] : []),
+      ...wanted,
+    ])
+  }
+  if (current !== next && (current || hasFonts(fonts))) {
+    mkdirSync(path.dirname(module), { recursive: true })
+    writeFileSync(module, next)
+    step(
+      hasFonts(fonts)
+        ? `Set the fonts in ${relative(project, module)}`
+        : `Set the system font in ${relative(project, module)}`
     )
-    app.expo.plugins = [...plugins, plugin]
-    writeFileSync(appJson, `${JSON.stringify(app, null, 2)}\n`)
-    step("Added the fonts to the expo-font plugin in app.json")
+  }
+  if (unused.length) {
+    manual.push(
+      `${unused.join(", ")} ${unused.length === 1 ? "is" : "are"} no longer used. Remove ${unused.length === 1 ? "it" : "them"} with your package manager.`
+    )
+  }
+
+  const expoConfig = writeExpoFonts(project, fonts)
+  if (!hasFonts(fonts)) {
+    if (unused.length) {
+      manual.push(
+        "Rebuild the app (npx expo prebuild, then run it again) to drop the embedded fonts."
+      )
+    }
+    return manual
+  }
+  if (expoConfig) {
     manual.push(
       "The fonts are embedded at build time. Rebuild the app (npx expo prebuild, then run it again) to see them."
     )
   } else if (project.framework === "expo") {
     manual.push(
-      `Add this entry to the plugins of your Expo config, then rebuild the app:\n${JSON.stringify(plugin, null, 2)}`
+      `Add this entry to the plugins of your Expo config, then rebuild the app:\n${JSON.stringify(expoFontPlugin(project.cwd, fonts), null, 2)}`
     )
   } else {
     manual.push(
@@ -416,7 +507,8 @@ export async function init(options) {
       registry,
       findAliasRoot(project.cwd) ?? sourceRoot,
       options.style,
-      theme
+      theme,
+      options
     )
   }
 
@@ -502,50 +594,35 @@ export async function apply(options) {
   }
   const only = options.only
   const manual = []
+  const registry = await fetchRegistry()
 
   if (only !== "font") {
-    const registry = await fetchRegistry()
     const theme = await themeOptionsFor(options, fetchThemes, registry.colors)
-    if (usesCss) {
-      writeFileSync(
-        stylesheet,
-        themed(
-          await fetchStylesheet(registry, project.styling, options.style),
-          project.styling === "uniwind" ? "uniwind" : "nativewind-css",
-          theme
+    const format = THEME_FORMATS[project.styling]
+    const fresh = usesCss
+      ? await fetchStylesheet(registry, project.styling, options.style)
+      : await fetchText(
+          presetFile(registry, "stylesheet", options.style) ??
+            registry.styles.stylesheet.theme
         )
-      )
-      step(`Updated ${relative(project, stylesheet)}`)
-      if (project.styling === "nativewind") {
-        await writeTailwindConfig(
-          project,
-          registry,
-          { ...options, yes: true },
-          theme
-        )
-      }
-    } else {
-      writeFileSync(
-        themeFile,
-        themed(
-          await fetchText(
-            presetFile(registry, "stylesheet", options.style) ??
-              registry.styles.stylesheet.theme
-          ),
-          "stylesheet",
-          theme
-        )
-      )
-      step(`Updated ${relative(project, themeFile)}`)
+    const text = theme
+      ? themed(fresh, format, theme)
+      : keepColors(fresh, readFileSync(target, "utf8"), format)
+    writeFileSync(target, text)
+    step(`Updated ${relative(project, target)}`)
+    if (project.styling === "nativewind") {
+      await writeTailwindConfig(project, registry, options, theme, {
+        keep: true,
+      })
     }
+  }
+  if (!only) {
+    manual.push(
+      ...(await useIconLibrary(project, root, registry, options.iconLibrary))
+    )
   }
   if (only !== "theme") {
     manual.push(...configureFonts(project, root, presetFonts(options)))
-  }
-  if (!only && options.style) {
-    manual.push(
-      "Run npx @esuiss/ui add <name> --overwrite to restyle installed components."
-    )
   }
 
   for (const message of manual) note(message)

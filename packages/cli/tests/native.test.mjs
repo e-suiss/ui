@@ -462,4 +462,66 @@ describe("native apply", () => {
     expect(text).toContain('public static let sans: String? = "Geist"')
     expect(text.split("Fonts")[0]).toBe(before.split("Fonts")[0])
   })
+
+  const plain = encodePreset({
+    style: "suiss",
+    baseColor: "zinc",
+    theme: "zinc",
+    radius: "default",
+    font: "inter",
+    iconLibrary: "lucide",
+    menuColor: "default",
+    menuAccent: "subtle",
+  })
+
+  it("keeps the colors and fonts when only the style changes", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", preset })
+    await applyNative({ cwd, platform: "swift", style: "suiss" })
+    const text = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    expect(text).toContain(blue)
+    expect(text).toContain('public static let sans: String? = "Geist"')
+  })
+
+  it("resets the fonts and removes the old font files", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", preset })
+    await applyNative({ cwd, platform: "swift", preset: plain })
+    const text = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    expect(text).toContain("public static let sans: String? = nil")
+    expect(text).toContain("public static let files: [String] = []")
+    expect(
+      existsSync(path.join(cwd, "EsuissUI/Fonts/Geist_400Regular.ttf"))
+    ).toBe(false)
+  })
+
+  it("keeps the tokens and fonts when init runs again without --yes", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", preset })
+    await initNative({ cwd, platform: "swift", preset: plain })
+    expect(read(cwd, "EsuissUI/Theme/Tokens.swift")).toContain(blue)
+    expect(
+      existsSync(path.join(cwd, "EsuissUI/Fonts/Geist_400Regular.ttf"))
+    ).toBe(true)
+    expect(output()).toContain("Kept EsuissUI/Theme/Tokens.swift")
+    await initNative({ cwd, platform: "swift", preset: plain, yes: true })
+    expect(read(cwd, "EsuissUI/Theme/Tokens.swift")).not.toContain(blue)
+    expect(
+      existsSync(path.join(cwd, "EsuissUI/Fonts/Geist_400Regular.ttf"))
+    ).toBe(false)
+  })
+
+  it("tells Swift packages to bundle the fonts", async () => {
+    const cwd = createProject({
+      "Package.swift": "",
+      "Sources/App/App.swift": "",
+    })
+    await initNative({ cwd, platform: "swift", preset })
+    expect(read(cwd, "Sources/App/EsuissUI/Fonts/Geist_400Regular.ttf")).toBe(
+      "font"
+    )
+    expect(output()).toContain(
+      'Add resources: [.process("EsuissUI/Fonts")] to the App target in Package.swift'
+    )
+  })
 })

@@ -1,4 +1,6 @@
 import { spawnSync } from "node:child_process"
+import { existsSync, readdirSync, readFileSync } from "node:fs"
+import path from "node:path"
 import { encodePreset } from "shadcn/preset"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { add } from "../lib/mobile/add.mjs"
@@ -6,9 +8,12 @@ import {
   checkIconLibrary,
   detectIconLibrary,
   resolveIconLibrary,
+  restoreIcons,
+  switchIcons,
   transformIcons,
 } from "../lib/mobile/icons.mjs"
-import { addNative } from "../lib/mobile/native.mjs"
+import { apply as applyMobile } from "../lib/mobile/init.mjs"
+import { addNative, applyNative, initNative } from "../lib/mobile/native.mjs"
 import {
   createProject,
   read,
@@ -120,6 +125,7 @@ const registry = {
 
 const files = {
   "registry.json": registry,
+  "registry/themes.json": [],
   "components/ui/button.tsx": RN_BUTTON,
   "icons/rn/lucide.tsx": 'import {} from "lucide-react-native"\n',
   "icons/rn/tabler.tsx": 'import {} from "@tabler/icons-react-native"\n',
@@ -308,5 +314,212 @@ describe("native add with an icon library", () => {
       files["icons/kotlin/lucide/icons/bold/Bold.kt"]
     )
     expect(output()).not.toContain("phosphor-icon-android")
+  })
+})
+
+const MOBILE = path.join(import.meta.dirname, "../../mobile")
+
+function sourcesOf(directory, extension) {
+  const found = []
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const file = path.join(dir, entry.name)
+      if (entry.isDirectory()) walk(file)
+      else if (file.endsWith(extension)) found.push(file)
+    }
+  }
+  walk(path.join(MOBILE, directory))
+  return found
+}
+
+describe("restoreIcons", () => {
+  it.each([
+    ["rn", "uniwind/components", ".tsx"],
+    ["rn", "stylesheet/components", ".tsx"],
+    ["swift", "swiftui/Sources/EsuissUI", ".swift"],
+    ["kotlin", "kotlin/ui/src/main/kotlin/com/esuiss/ui", ".kt"],
+  ])(
+    "undoes the %s icon transform of every registry source in %s",
+    (platform, directory, extension) => {
+      const sources = sourcesOf(directory, extension)
+      expect(sources.length).toBeGreaterThan(0)
+      for (const file of sources) {
+        const original = readFileSync(file, "utf8")
+        expect(
+          restoreIcons(platform, transformIcons(platform, original, "lucide")),
+          file
+        ).toBe(original)
+      }
+    }
+  )
+})
+
+const LUCIDE_BUTTON = transformIcons("rn", RN_BUTTON, "lucide")
+
+describe("switching the icon library", () => {
+  it("swaps the React Native icons file between custom libraries", async () => {
+    serveRegistry(files)
+    const cwd = createProject({
+      "components/ui/icons.tsx": files["icons/rn/lucide.tsx"],
+      "components/ui/button.tsx": LUCIDE_BUTTON,
+    })
+    const result = await switchIcons({
+      platform: "rn",
+      root: cwd,
+      registry,
+      library: "tabler",
+      fetchText: (source) =>
+        fetch(`https://registry.test/mobile/${source}`).then((response) =>
+          response.text()
+        ),
+    })
+    expect(read(cwd, "components/ui/icons.tsx")).toBe(
+      files["icons/rn/tabler.tsx"]
+    )
+    expect(read(cwd, "components/ui/button.tsx")).toBe(LUCIDE_BUTTON)
+    expect(result.dependencies).toEqual(["@tabler/icons-react-native"])
+    expect(result.unused).toEqual(["lucide-react-native"])
+  })
+
+  it("does nothing when the library is already installed", async () => {
+    const cwd = createProject({
+      "components/ui/icons.tsx": files["icons/rn/lucide.tsx"],
+    })
+    expect(
+      await switchIcons({
+        platform: "rn",
+        root: cwd,
+        registry,
+        library: "lucide",
+      })
+    ).toBeNull()
+  })
+
+  it("moves React Native components back to Phosphor on apply", async () => {
+    serveRegistry({
+      ...files,
+      "styles/uniwind.css": "@variant light {\n}\n@variant dark {\n}\n",
+    })
+    const cwd = expoProject({
+      "src/global.css": "@variant light {\n}\n@variant dark {\n}\n",
+      "src/components/ui/icons.tsx": files["icons/rn/lucide.tsx"],
+      "src/components/ui/button.tsx": LUCIDE_BUTTON,
+      "src/components/patterns/picker.tsx": LUCIDE_BUTTON,
+    })
+    await applyMobile({
+      cwd,
+      preset: encodePreset({ iconLibrary: "phosphor" }),
+      iconLibrary: "phosphor",
+    })
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(RN_BUTTON)
+    expect(read(cwd, "src/components/patterns/picker.tsx")).toBe(RN_BUTTON)
+    expect(existsSync(`${cwd}/src/components/ui/icons.tsx`)).toBe(false)
+    expect(spawnSync).toHaveBeenCalledWith(
+      "npx",
+      ["expo", "install", "phosphor-react-native"],
+      expect.objectContaining({ cwd })
+    )
+    expect(output()).toContain("lucide-react-native is no longer used")
+  })
+
+  it("switches the installed components when add gets another library", async () => {
+    serveRegistry(files)
+    const cwd = expoProject({
+      "src/components/ui/icons.tsx": files["icons/rn/lucide.tsx"],
+      "src/components/ui/card.tsx": LUCIDE_BUTTON,
+    })
+    await add(["button"], { cwd, iconLibrary: "tabler" })
+    expect(read(cwd, "src/components/ui/icons.tsx")).toBe(
+      files["icons/rn/tabler.tsx"]
+    )
+    expect(read(cwd, "src/components/ui/card.tsx")).toBe(LUCIDE_BUTTON)
+    expect(spawnSync).toHaveBeenCalledWith(
+      "npx",
+      ["expo", "install", "@tabler/icons-react-native"],
+      expect.objectContaining({ cwd })
+    )
+  })
+
+  it("switches SwiftUI components to a custom library on apply", async () => {
+    serveRegistry({
+      ...files,
+      "swiftui/Sources/EsuissUI/Theme/Tokens.swift": "struct Tokens {}\n",
+    })
+    const cwd = createProject({
+      "App.xcodeproj/project.pbxproj": "",
+      "EsuissUI/Theme/Theme.swift": "",
+      "EsuissUI/Theme/Tokens.swift": "struct Tokens {}\n",
+      "EsuissUI/Components/Button.swift": SWIFT_BUTTON,
+    })
+    await applyNative({
+      cwd,
+      platform: "swift",
+      preset: encodePreset({ iconLibrary: "lucide" }),
+      iconLibrary: "lucide",
+    })
+    expect(read(cwd, "EsuissUI/Components/Button.swift")).toBe(
+      transformIcons("swift", SWIFT_BUTTON, "lucide")
+    )
+    expect(read(cwd, "EsuissUI/Icons/EsuissIcons.swift")).toBe(
+      files["icons/swift/lucide/Icons/EsuissIcons.swift"]
+    )
+    expect(output()).not.toContain("phosphor-icons")
+  })
+
+  it("moves Compose components back to Phosphor and removes the icon files", async () => {
+    serveRegistry({
+      ...files,
+      "kotlin/ui/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt":
+        "object Tokens\n",
+    })
+    const root = "src/main/kotlin/com/esuiss/ui"
+    const cwd = createProject({
+      "build.gradle.kts":
+        'plugins { id("com.android.application") }\nandroid { defaultConfig { minSdk = 26 } }\n',
+      [`${root}/theme/Theme.kt`]: "",
+      [`${root}/theme/Tokens.kt`]: "object Tokens\n",
+      [`${root}/components/Button.kt`]: transformIcons(
+        "kotlin",
+        KOTLIN_BUTTON,
+        "lucide"
+      ),
+      [`${root}/icons/EsuissIcons.kt`]:
+        files["icons/kotlin/lucide/icons/EsuissIcons.kt"],
+      [`${root}/icons/bold/Bold.kt`]:
+        files["icons/kotlin/lucide/icons/bold/Bold.kt"],
+    })
+    await applyNative({
+      cwd,
+      platform: "kotlin",
+      preset: encodePreset({ iconLibrary: "phosphor" }),
+      iconLibrary: "phosphor",
+    })
+    expect(read(cwd, `${root}/components/Button.kt`)).toBe(KOTLIN_BUTTON)
+    expect(existsSync(`${cwd}/${root}/icons/EsuissIcons.kt`)).toBe(false)
+    expect(existsSync(`${cwd}/${root}/icons/bold/Bold.kt`)).toBe(false)
+    expect(existsSync(`${cwd}/${root}/icons`)).toBe(false)
+    expect(output()).toContain("com.adamglin:phosphor-icon-android:1.0.0")
+  })
+})
+
+describe("native init with an icon library", () => {
+  it("writes the icon files even when the init files use no icons", async () => {
+    serveRegistry({
+      ...files,
+      "swiftui/Sources/EsuissUI/Theme/Theme.swift": "struct Theme {}\n",
+      "swiftui/Sources/EsuissUI/Theme/Tokens.swift": "struct Tokens {}\n",
+      "swiftui/Sources/EsuissUI/Components/Button.swift":
+        "import SwiftUI\n\nstruct EsuissButton {}\n",
+    })
+    const cwd = createProject({ "App.xcodeproj/project.pbxproj": "" })
+    await initNative({ cwd, platform: "swift", iconLibrary: "lucide" })
+    expect(read(cwd, "EsuissUI/Icons/EsuissIcons.swift")).toBe(
+      files["icons/swift/lucide/Icons/EsuissIcons.swift"]
+    )
+    serveRegistry(files)
+    await addNative(["button"], { cwd, platform: "swift", overwrite: true })
+    expect(read(cwd, "EsuissUI/Components/Button.swift")).not.toContain(
+      "PhosphorSwift"
+    )
   })
 })
