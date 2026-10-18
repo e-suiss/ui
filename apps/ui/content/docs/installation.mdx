@@ -323,7 +323,8 @@ cd ios && pod install
 ## Requirements
 
 - iOS 17 or later.
-- Components with icons use the [Phosphor](https://github.com/phosphor-icons/swift) Swift package.
+- Components with icons use the [Phosphor](https://github.com/phosphor-icons/swift) Swift package. With another icon library (`--icon-library` or a preset) they need no icon package.
+- In a Swift package, preset fonts go to `EsuissUI/Fonts`. Declare that folder as a `.process` resource of its target so the fonts are bundled.
 - Charts are drawn with Apple's Swift Charts framework, which ships with iOS.
 
 ## Set up your project
@@ -378,7 +379,7 @@ Every color in `Tokens.swift` has a light and a dark value, so views follow the 
 
 - `minSdk` 24 or higher.
 - Jetpack Compose Foundation and UI. The components do not depend on Material.
-- Components with icons use the Phosphor icons library for Android.
+- Components with icons use the Phosphor icons library for Android. With another icon library (`--icon-library` or a preset) they need no icon library.
 
 ## Set up your project
 

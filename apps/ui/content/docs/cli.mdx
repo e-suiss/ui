@@ -66,7 +66,7 @@ Restyles a project that already ran `init`, on every platform.
 npx @esuiss/ui@latest apply --preset <code> [--only theme|font] [options]
 ```
 
-Without `--only`, React applies the colors, radius, font, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. The colors and radius start again from the suiss/ui values, so a preset with the suiss colors or the default radius undoes an earlier one. React Native, SwiftUI and Compose rewrite their theme files and fonts.
+Without `--only`, React applies the colors, radius, font, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. The colors and radius start again from the suiss/ui values, so a preset with the suiss colors or the default radius undoes an earlier one. React Native, SwiftUI and Compose rewrite their theme files and fonts, and switch the icons of installed components to the icon library of the preset.
 
 | Option | Description |
 | --- | --- |
@@ -207,7 +207,7 @@ npx @esuiss/ui@latest init --platform rn --icon-library lucide
 npx @esuiss/ui@latest add dialog --platform swift --icon-library tabler
 ```
 
-The CLI rewrites the icon imports of every file it adds and writes one icons file next to the components. Later `add` runs read the library back from that file.
+The CLI rewrites the icon imports of every file it adds and writes one icons file next to the components. Later `add` runs read the library back from that file. `apply --preset`, or `add` with a different `--icon-library`, switches the installed components and the icons file to the new library.
 
 | Library | React Native | SwiftUI and Compose |
 | --- | --- | --- |
