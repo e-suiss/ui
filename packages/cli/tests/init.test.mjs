@@ -146,7 +146,7 @@ describe("init in a Vite project", () => {
     const commands = vi
       .mocked(spawnSync)
       .mock.calls.map(([, args]) => args.join(" "))
-    expect(commands).toContain("install tw-animate-css shadcn")
+    expect(commands).toContain("install -- tw-animate-css shadcn")
   })
 
   it("installs the tooling and the packages the stylesheet imports", async () => {
@@ -156,9 +156,9 @@ describe("init in a Vite project", () => {
       .mocked(spawnSync)
       .mock.calls.map(([, args]) => args.join(" "))
     expect(commands).toEqual([
-      "install --save-dev @tailwindcss/vite @types/node",
-      "install @fontsource-variable/inter",
-      "install @base-ui/react",
+      "install --save-dev -- @tailwindcss/vite @types/node",
+      "install -- @fontsource-variable/inter",
+      "install -- @base-ui/react",
     ])
   })
 

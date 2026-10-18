@@ -1,6 +1,6 @@
 import { CliError } from "../output.mjs"
 import {
-  assertPackageNames,
+  assertPackageSpecs,
   detectProject as detect,
   installPackages,
   spawn,
@@ -67,7 +67,7 @@ export function install(project, packages, { dev = false } = {}) {
     (spec) => !project.packages[packageOf(spec)]
   )
   if (!missing.length) return []
-  assertPackageNames(missing.map(packageOf))
+  assertPackageSpecs(missing)
   if (project.framework === "expo" && !dev) {
     run(project, ["expo", "install", ...missing])
   } else {

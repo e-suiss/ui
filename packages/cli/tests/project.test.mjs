@@ -337,7 +337,7 @@ describe("install", () => {
     expect(installed).toEqual(["cmdk", "recharts"])
     expect(spawnSync).toHaveBeenCalledWith(
       "pnpm",
-      ["add", "cmdk", "recharts"],
+      ["add", "--", "cmdk", "recharts"],
       expect.objectContaining({ cwd: "/project" })
     )
     expect(target.packages.cmdk).toBe("*")
@@ -349,10 +349,10 @@ describe("install", () => {
   })
 
   it.each([
-    ["npm", ["install", "--save-dev", "tailwindcss"]],
-    ["pnpm", ["add", "--save-dev", "tailwindcss"]],
-    ["yarn", ["add", "--dev", "tailwindcss"]],
-    ["bun", ["add", "--dev", "tailwindcss"]],
+    ["npm", ["install", "--save-dev", "--", "tailwindcss"]],
+    ["pnpm", ["add", "--save-dev", "--", "tailwindcss"]],
+    ["yarn", ["add", "--dev", "--", "tailwindcss"]],
+    ["bun", ["add", "--dev", "--", "tailwindcss"]],
   ])("uses the dev flag of %s", (manager, args) => {
     install(project(manager), ["tailwindcss"], { dev: true })
     expect(spawnSync).toHaveBeenCalledWith(manager, args, expect.anything())
@@ -361,7 +361,7 @@ describe("install", () => {
   it("fails when the package manager fails", () => {
     vi.mocked(spawnSync).mockReturnValue({ status: 1 })
     expect(() => install(project("npm"), ["cmdk"])).toThrow(
-      "npm install cmdk failed."
+      "npm install -- cmdk failed."
     )
   })
 
@@ -397,7 +397,7 @@ describe("mobile install", () => {
     expect(installed).toEqual(["nativewind", "@scope/name"])
     expect(spawnSync).toHaveBeenCalledWith(
       "npm",
-      ["install", "nativewind@^4.2.7", "@scope/name@1.0.0"],
+      ["install", "--", "nativewind@^4.2.7", "@scope/name@1.0.0"],
       expect.anything()
     )
   })

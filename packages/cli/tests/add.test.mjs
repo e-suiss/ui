@@ -115,7 +115,7 @@ describe("add", () => {
     await add(["dialog"], { cwd })
     expect(spawnSync).toHaveBeenCalledWith(
       "npm",
-      ["install", "@base-ui/react"],
+      ["install", "--", "@base-ui/react"],
       expect.objectContaining({ cwd })
     )
   })
@@ -152,7 +152,7 @@ export const Icon = () => (
     )
     expect(spawnSync).toHaveBeenCalledWith(
       "npm",
-      ["install", "@base-ui/react", "@phosphor-icons/react"],
+      ["install", "--", "@base-ui/react", "@phosphor-icons/react"],
       expect.objectContaining({ cwd })
     )
   })
@@ -193,7 +193,7 @@ export const Icon = () => (
       )
       expect(spawnSync).toHaveBeenCalledWith(
         "npm",
-        ["install", "@base-ui/react", "radix-ui"],
+        ["install", "--", "@base-ui/react", "radix-ui"],
         expect.objectContaining({ cwd })
       )
     })
@@ -254,7 +254,7 @@ export const Icon = () => (
       )
       expect(spawnSync).toHaveBeenCalledWith(
         "npm",
-        ["install", "@base-ui/react", "react-aria-components"],
+        ["install", "--", "@base-ui/react", "react-aria-components"],
         expect.objectContaining({ cwd })
       )
     })
@@ -588,7 +588,7 @@ export const Icon = () => <IconPlaceholder lucide="CheckIcon" tabler="IconCheck"
       expect(button).toContain('from "lucide-react"')
       expect(spawnSync).toHaveBeenCalledWith(
         "npm",
-        ["install", "@base-ui/react", "lucide-react"],
+        ["install", "--", "@base-ui/react", "lucide-react"],
         expect.objectContaining({ cwd })
       )
     })

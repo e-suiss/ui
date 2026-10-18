@@ -4,7 +4,8 @@ import path from "node:path"
 
 import { CliError } from "../output.mjs"
 
-const PACKAGE_NAME = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/
+const PACKAGE_NAME = /^(@[a-z0-9~][a-z0-9-._~]*\/)?[a-z0-9~][a-z0-9-._~]*$/
+const PACKAGE_RANGE = /^[a-z0-9.^~<>=|*+-]+$/i
 
 const LOCKFILES = [
   ["pnpm-lock.yaml", "pnpm"],
@@ -235,11 +236,22 @@ export function assertPackageNames(names) {
   }
 }
 
+export function assertPackageSpecs(specs) {
+  for (const spec of specs) {
+    const at = spec.indexOf("@", 1)
+    assertPackageNames([at === -1 ? spec : spec.slice(0, at)])
+    if (at !== -1 && !PACKAGE_RANGE.test(spec.slice(at + 1))) {
+      throw new CliError(`Refusing to install an invalid package spec: ${spec}`)
+    }
+  }
+}
+
 export function installPackages(project, packages, dev) {
   const { command, dev: devFlag } = INSTALL_ARGS[project.packageManager]
   spawn(project, project.packageManager, [
     command,
     ...(dev ? [devFlag] : []),
+    "--",
     ...packages,
   ])
 }
