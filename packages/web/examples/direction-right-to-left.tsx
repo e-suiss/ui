@@ -18,13 +18,15 @@ function DirectionPreview() {
       <CardHeader>
         <CardTitle>Reading direction</CardTitle>
         <CardDescription>
-          Current direction is {direction.toUpperCase()}.
+          <bdi>Current direction is {direction.toUpperCase()}.</bdi>
         </CardDescription>
       </CardHeader>
       <CardContent>
         <p>
-          Components that use logical properties flip their layout when the
-          direction changes.
+          <bdi>
+            Components that use logical properties flip their layout when the
+            direction changes.
+          </bdi>
         </p>
       </CardContent>
       <CardFooter className="justify-end gap-2">
