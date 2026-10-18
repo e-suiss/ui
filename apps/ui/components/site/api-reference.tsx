@@ -146,7 +146,7 @@ export function ApiPart({
   children: React.ReactNode
 }) {
   return (
-    <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-foreground/10 [&>:not([data-slot=table])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [&>[data-slot=table]]:mt-5 [&>[data-slot=table]]:rounded-none [&>[data-slot=table]]:border-t [&>[data-slot=table]]:border-foreground/10 [&>[data-slot=table]]:ring-0 [&>[data-slot=table]_:is(th,td):first-child]:ps-6! [&>[data-slot=table]_:is(th,td):last-child]:pe-6! [&>:last-child:not([data-slot=table])]:mb-6">
+    <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-foreground/10 [:is(&,&>[data-only-base])>:not([data-slot=table],[data-only-base])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [:is(&,&>[data-only-base])>[data-slot=table]]:mt-5 [:is(&,&>[data-only-base])>[data-slot=table]]:rounded-none [:is(&,&>[data-only-base])>[data-slot=table]]:border-t [:is(&,&>[data-only-base])>[data-slot=table]]:border-foreground/10 [:is(&,&>[data-only-base])>[data-slot=table]]:ring-0 [:is(&,&>[data-only-base])>[data-slot=table]_:is(th,td):first-child]:ps-6! [:is(&,&>[data-only-base])>[data-slot=table]_:is(th,td):last-child]:pe-6! [:is(&,&>[data-only-base]:last-child)>:last-child:not([data-slot=table],[data-only-base])]:mb-6">
       <span
         aria-hidden
         className="absolute top-[1.9rem] right-6 font-mono text-[12px] leading-none text-muted-foreground"
