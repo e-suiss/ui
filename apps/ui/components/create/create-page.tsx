@@ -5,8 +5,8 @@ import { RadioGroup } from "@base-ui/react/radio-group"
 import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { ColorPicker } from "@/components/create/color-picker"
-import { CommandLine } from "@/components/create/command-line"
 import { FRAME_HEIGHT, FRAME_MESSAGE } from "@/components/create/frame"
+import { GetCode } from "@/components/create/get-code"
 import {
   Popover,
   PopoverContent,
@@ -20,7 +20,6 @@ import { parseColor } from "@/lib/create/color"
 import {
   BASE_COLORS,
   type CreateState,
-  cliCommand,
   DEFAULT_STATE,
   FONTS,
   fromParams,
@@ -33,8 +32,8 @@ import {
   PRESET_RADII,
   PRIMITIVE_BASES,
   STYLES,
-  shadcnCommand,
   swatchOf,
+  type ThemeDefaults,
   themeOptions,
   toParams,
 } from "@/lib/create/options"
@@ -208,7 +207,11 @@ function useFrame(state: CreateState) {
   return { ref, height, send }
 }
 
-export function CreatePage() {
+export function CreatePage({
+  themeDefaults,
+}: {
+  themeDefaults: ThemeDefaults
+}) {
   const [state, setState] = React.useState<CreateState>(DEFAULT_STATE)
   const [preview, setPreview] = React.useState<Partial<CreateState>>({})
   const [ready, setReady] = React.useState(false)
@@ -357,29 +360,15 @@ export function CreatePage() {
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col gap-8">
-        <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-3">
           <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
             {strings.createInstall}
           </p>
-          <CommandLine command={cliCommand(state)} />
-          {state.platform === "web" && (
-            <>
-              <p className="text-[13px] leading-[1.5] text-muted-foreground">
-                {strings.createShadcnNote}
-              </p>
-              <CommandLine command={shadcnCommand(state)} />
-              {state.primary && (
-                <p className="text-[13px] leading-[1.5] text-muted-foreground">
-                  {strings.createCustomNote}
-                </p>
-              )}
-            </>
-          )}
-          {state.platform !== "web" && (
-            <p className="text-[13px] leading-[1.5] text-muted-foreground">
-              {strings.createNativeNote}
-            </p>
-          )}
+          <GetCode
+            state={state}
+            themeDefaults={themeDefaults}
+            onBaseChange={(base) => update("base", base)}
+          />
         </div>
         <iframe
           ref={frame.ref}

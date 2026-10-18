@@ -13,11 +13,12 @@ import {
   type StyleName,
 } from "@/lib/code-options"
 import type { Swap } from "@/lib/dependencies"
+import {
+  type PackageManager as Manager,
+  PACKAGE_MANAGERS as managers,
+} from "@/lib/package-managers"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
-
-const managers = ["pnpm", "npm", "yarn", "bun"] as const
-type Manager = (typeof managers)[number]
 
 const RESET_AFTER = 1500
 const STORAGE_KEY = "package-manager"
@@ -130,7 +131,7 @@ function writeStored(value: Manager) {
   }
 }
 
-function useManager() {
+export function usePackageManager() {
   const [manager, setManager] = React.useState<Manager>("pnpm")
 
   React.useEffect(() => {
@@ -199,7 +200,7 @@ function Line({ line }: { line: string }) {
 }
 
 export function PackageCommand({ command }: { command: string }) {
-  const [manager, choose] = useManager()
+  const [manager, choose] = usePackageManager()
   const lines = usePackageLines(command).map((line) =>
     convertLine(line, manager)
   )
