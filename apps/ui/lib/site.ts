@@ -15,7 +15,7 @@ export const site = {
   title: `${strings.brand} – React, React Native, SwiftUI and Compose components`,
   description: strings.heroSubtitle,
   summary:
-    "suiss/ui is an open-source collection of components, patterns, interactions, charts and blocks with a clean, minimal design, for React, React Native, SwiftUI and Jetpack Compose. React components are built with Tailwind CSS v4 on three interchangeable primitive bases; React Native components come in Uniwind, NativeWind and StyleSheet flavors with the same API; SwiftUI and Compose versions share the same design tokens. Every component is copied into your project with the @esuiss/ui CLI, so you own and can change the code.",
+    "suiss/ui is an open-source collection of components, patterns, interactions, charts and blocks with a clean, minimal design, for React, React Native, SwiftUI and Jetpack Compose. React components are built with Tailwind CSS v4 on three interchangeable primitive bases; React Native components come in Uniwind, NativeWind and StyleSheet flavors with the same components (StyleSheet takes `style` where the others take `className`); SwiftUI and Compose versions share the same design tokens. Every component is copied into your project with the @esuiss/ui CLI, so you own and can change the code.",
   packageName: "@esuiss/ui",
   install: "npx @esuiss/ui@latest init",
   repository,
