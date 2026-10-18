@@ -6,8 +6,9 @@
     "dev": "pnpm build:registry && next dev --port 3000",
     "build": "pnpm build:registry && node scripts/content-dates.mjs && next build && node scripts/markdown-files.mjs",
     "start": "next start",
-    "typecheck": "node scripts/preview-icons.mjs --check && next typegen && tsc --noEmit",
+    "typecheck": "node scripts/preview-icons.mjs --check && node scripts/native-previews.mjs --check && next typegen && tsc --noEmit",
     "icons": "node scripts/preview-icons.mjs",
+    "previews": "node scripts/native-previews.mjs",
     "build:registry": "shadcn build ../../packages/web/registry/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/base && shadcn build ../../packages/web/registry/radix/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/radix && shadcn build ../../packages/web/registry/aria/registry.json --cwd ../../packages/web --output ../../apps/ui/public/r/aria && node ../../packages/web/scripts/style-registry.mjs public/r base radix aria && shadcn build ../../packages/mobile/registry/uniwind/registry.json --cwd ../../packages/mobile --output ../../apps/ui/public/r/rn-uniwind && shadcn build ../../packages/mobile/registry/nativewind/registry.json --cwd ../../packages/mobile --output ../../apps/ui/public/r/rn-nativewind && shadcn build ../../packages/mobile/registry/stylesheet/registry.json --cwd ../../packages/mobile --output ../../apps/ui/public/r/rn-stylesheet"
   },
   "dependencies": {
