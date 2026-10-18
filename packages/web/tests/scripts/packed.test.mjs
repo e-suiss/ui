@@ -59,25 +59,34 @@ describe("registry paths", () => {
     expect(registryPath(rest)).toEqual({ path, style })
   })
 
-  it("passes native registries through", () => {
-    expect(registryPath("rn-uniwind/button.json")).toEqual({
-      path: "rn-uniwind/button.json",
-    })
+  it.each([
+    "rn-uniwind/button.json",
+    "swift/button.json",
+    "kotlin/button.json",
+  ])("passes the native registry path %s through", (rest) => {
+    expect(registryPath(rest)).toEqual({ path: rest })
   })
 
   it.each([
     ["rn-nativewind-suiss/theme-suiss.json", "rn-nativewind/theme-suiss.json"],
     ["rn-stylesheet-rhea/button.json", "rn-stylesheet/button.json"],
+    ["swift-suiss/theme-suiss.json", "swift/theme-suiss.json"],
+    ["swift-luma/button.json", "swift/button.json"],
+    ["kotlin-nova/accordion.json", "kotlin/accordion.json"],
   ])("maps the native style path %s", (rest, path) => {
     expect(registryPath(rest)).toEqual({ path })
   })
 
-  it("keeps the requested name for a styled native theme", () => {
-    expect(registryPath("rn-uniwind-vega/theme-suiss.json")).toEqual({
-      path: "rn-uniwind/theme-vega.json",
-      name: "theme-suiss",
-    })
-  })
+  it.each([
+    ["rn-uniwind-vega/theme-suiss.json", "rn-uniwind/theme-vega.json"],
+    ["swift-vega/theme-suiss.json", "swift/theme-vega.json"],
+    ["kotlin-rhea/theme-suiss.json", "kotlin/theme-rhea.json"],
+  ])(
+    "keeps the requested name for the styled native theme %s",
+    (rest, path) => {
+      expect(registryPath(rest)).toEqual({ path, name: "theme-suiss" })
+    }
+  )
 
   it("resolves base and style names", () => {
     expect(resolveStyle("aria-rhea")).toEqual({ base: "aria", style: "rhea" })

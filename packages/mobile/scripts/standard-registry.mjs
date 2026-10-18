@@ -88,12 +88,15 @@ export function standardName(name) {
   return name.replace("/", "-")
 }
 
-async function docsPage(kind, name) {
+async function docsPage(kind, name, platform = "rn") {
   if (!kind.docs) return undefined
   const file = path.join(DOCS, kind.docs, `${name}.mdx`)
   if (!existsSync(file)) return undefined
   const frontmatter = (await readFile(file, "utf8")).match(FRONTMATTER)?.[1]
-  if (!frontmatter?.match(PLATFORMS)?.[1].includes("rn")) return undefined
+  const platforms = frontmatter?.match(PLATFORMS)?.[1].split(",")
+  if (!platforms?.map((entry) => entry.trim()).includes(platform)) {
+    return undefined
+  }
   return {
     url: `${SITE}/docs/${kind.docs}/${name}`,
     title: frontmatterValue(frontmatter, "title"),
@@ -313,4 +316,160 @@ export async function standardProblems(registries, { schema = false } = {}) {
     }
   }
   return problems
+}
+
+export const NATIVE_PLATFORMS = ["swift", "kotlin"]
+
+const NATIVE_TARGETS = {
+  swift: "~/EsuissUI",
+  kotlin: "~/app/src/main/kotlin/com/esuiss/ui",
+}
+
+const NATIVE_THEME_FILES = {
+  swift: "Tokens.swift",
+  kotlin: "Tokens.kt",
+}
+
+const NATIVE_ITEM = "registry:item"
+
+const SWIFT_IMPORT = /^import\s+(\w+)\s*$/gm
+
+const NATIVE_THEME_DESCRIPTIONS = {
+  swift:
+    "The suiss/ui theme for SwiftUI: Theme.swift with the environment and modifiers, and Tokens.swift with the colors for light and dark mode, the type scale and radius scale.",
+  kotlin:
+    "The suiss/ui theme for Jetpack Compose: EsuissTheme in Theme.kt, and Tokens.kt with the colors for light and dark mode, the type scale and radius scale.",
+}
+
+function nativeFile(platform, directory, file) {
+  return {
+    path: path.posix.join(directory, file),
+    type: "registry:file",
+    target: path.posix.join(NATIVE_TARGETS[platform], file),
+  }
+}
+
+function swiftPackagesFor(code, requirements) {
+  const imports = new Set([...code.matchAll(SWIFT_IMPORT)].map((m) => m[1]))
+  return requirements.packages.filter(({ products }) =>
+    products.some((product) => imports.has(product))
+  )
+}
+
+function kotlinDependenciesFor(code, requirements) {
+  return requirements.dependencies.filter((dependency) => {
+    const [group] = dependency.split(":")
+    return !group.startsWith("androidx.") && code.includes(`import ${group}`)
+  })
+}
+
+function nativeNotes(platform, code, requirements) {
+  if (platform === "swift") {
+    return swiftPackagesFor(code, requirements).map(
+      ({ url, from, products }) =>
+        `Add the Swift package ${url} from ${from} (${products.join(", ")}) to your app target.`
+    )
+  }
+  return kotlinDependenciesFor(code, requirements).map(
+    (dependency) =>
+      `Add implementation("${dependency}") to the dependencies of your app module.`
+  )
+}
+
+function nativeThemeNotes(platform, requirements) {
+  if (platform === "swift") {
+    return [
+      `Needs iOS ${requirements.ios} or later.`,
+      "The files go to EsuissUI/. Add that folder to your app target in Xcode.",
+    ]
+  }
+  const core = requirements.dependencies.filter((dependency) =>
+    dependency.startsWith("androidx.")
+  )
+  return [
+    `Needs minSdk ${requirements.minSdk} or higher, the org.jetbrains.kotlin.plugin.compose plugin and buildFeatures { compose = true }.`,
+    `Add implementation(platform("${requirements.bom}")) and ${core.map((dependency) => `implementation("${dependency}")`).join(", ")} to the dependencies of your app module.`,
+    "The files go to app/src/main/kotlin/com/esuiss/ui/.",
+  ]
+}
+
+async function toNative(root, item, platform, spec) {
+  const kind = TYPES[item.type]
+  const name = standardName(item.name)
+  const files = item[platform].map((file) =>
+    nativeFile(platform, spec.directory, file)
+  )
+  const code = (
+    await Promise.all(
+      files.map((file) => readFile(path.join(root, file.path), "utf8"))
+    )
+  ).join("\n")
+  const notes = nativeNotes(platform, code, spec.requirements)
+  const page = await docsPage(kind, item.name, platform)
+  const title = page?.title ?? toTitle(path.posix.basename(item.name))
+  return {
+    name,
+    type: NATIVE_ITEM,
+    title,
+    description:
+      page?.description ??
+      DESCRIPTIONS[item.name] ??
+      `The ${title.toLowerCase()} component.`,
+    registryDependencies: [`${NAMESPACE}/${THEME}`],
+    files,
+    ...(notes.length && { docs: notes.join("\n") }),
+    ...(kind.categories && { categories: kind.categories(item.name) }),
+    ...(page && { meta: { links: { docs: page.url } } }),
+  }
+}
+
+function nativeThemeItem(platform, spec, style) {
+  const preset = style ? presetFiles(style)[platform] : undefined
+  const tokens = NATIVE_THEME_FILES[platform]
+  return {
+    name: style ? `theme-${style}` : THEME,
+    type: NATIVE_ITEM,
+    title: style ? `suiss/ui Theme (${styleTitle(style)})` : "suiss/ui Theme",
+    description: style
+      ? `${NATIVE_THEME_DESCRIPTIONS[platform]} Uses the ${style} style for radius, sizes, spacing, weights and shadows.`
+      : NATIVE_THEME_DESCRIPTIONS[platform],
+    files: spec.base.map((file) =>
+      preset && path.posix.basename(file) === tokens
+        ? {
+            path: preset,
+            type: "registry:file",
+            target: path.posix.join(NATIVE_TARGETS[platform], file),
+          }
+        : nativeFile(platform, spec.directory, file)
+    ),
+    docs: nativeThemeNotes(platform, spec.requirements).join("\n"),
+    meta: { links: { docs: `${SITE}/docs/installation` } },
+  }
+}
+
+export async function buildNativeRegistries(
+  root,
+  items,
+  platforms,
+  presets = []
+) {
+  const registries = {}
+  for (const platform of NATIVE_PLATFORMS) {
+    const spec = platforms[platform]
+    registries[platform] = {
+      $schema: `${SCHEMA_URL}/registry.json`,
+      name: `esuiss-${platform}`,
+      homepage: SITE,
+      items: [
+        ...(await Promise.all(
+          items
+            .filter((item) => item[platform])
+            .map((item) => toNative(root, item, platform, spec))
+        )),
+        nativeThemeItem(platform, spec),
+        ...presets.map((style) => nativeThemeItem(platform, spec, style)),
+      ],
+    }
+  }
+  return registries
 }

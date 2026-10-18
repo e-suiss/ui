@@ -14,7 +14,9 @@ import {
   PLATFORMS,
 } from "./native-registry.mjs"
 import {
+  buildNativeRegistries,
   buildStandardRegistries,
+  NATIVE_PLATFORMS,
   presetFiles,
   STANDARD_STYLINGS,
   standardProblems,
@@ -214,10 +216,19 @@ const standard = await buildStandardRegistries(
   STYLES,
   PRESET_STYLES
 )
+const native = await buildNativeRegistries(
+  ROOT,
+  items,
+  platforms,
+  PRESET_STYLES
+)
 problems.push(
-  ...(await standardProblems(standard, {
-    schema: process.argv.includes("--schema"),
-  }))
+  ...(await standardProblems(
+    { ...standard, ...native },
+    {
+      schema: process.argv.includes("--schema"),
+    }
+  ))
 )
 
 if (problems.length) {
@@ -253,6 +264,10 @@ const outputs = [
   ...STANDARD_STYLINGS.map((styling) => [
     path.join(ROOT, "registry", styling, "registry.json"),
     standard[styling],
+  ]),
+  ...NATIVE_PLATFORMS.map((platform) => [
+    path.join(ROOT, "registry", platform, "registry.json"),
+    native[platform],
   ]),
   [
     path.join(ROOT, UNIWIND_THEME),
@@ -291,6 +306,6 @@ if (process.argv.includes("--check")) {
     await writeFile(file, serialize(content))
   }
   console.log(
-    `registry.json and the ${STANDARD_STYLINGS.join(", ")} registries: ${items.length} items`
+    `registry.json and the ${[...STANDARD_STYLINGS, ...NATIVE_PLATFORMS].join(", ")} registries: ${items.length} items`
   )
 }

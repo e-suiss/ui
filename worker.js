@@ -15,9 +15,9 @@ const STYLES = [
 ]
 const DEFAULT_STYLE = "suiss"
 const LEGACY_RADIX = new Set(["new-york", "new-york-v4", "default"])
-const NATIVE = /^rn-.+$/
+const NATIVE = /^(?:rn-.+|swift|kotlin)$/
 const NATIVE_STYLED =
-  /^(rn-(?:uniwind|nativewind|stylesheet))-(suiss|vega|nova|maia|lyra|mira|luma|sera|rhea)$/
+  /^(rn-(?:uniwind|nativewind|stylesheet)|swift|kotlin)-(suiss|vega|nova|maia|lyra|mira|luma|sera|rhea)$/
 const NATIVE_THEME_NAME = "theme-suiss"
 const NATIVE_THEME = `${NATIVE_THEME_NAME}.json`
 const FAILED = 400
