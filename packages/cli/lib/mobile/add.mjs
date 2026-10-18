@@ -11,6 +11,7 @@ import {
 } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { ensureBabelPlugin } from "./babel.mjs"
+import { iconDependencies, iconLibraryFor, withIcons } from "./icons.mjs"
 import { ensurePodDeploymentTarget } from "./ios.mjs"
 import {
   detectProject,
@@ -46,16 +47,24 @@ export async function installItems(
   root,
   registry,
   names,
-  { overwrite = false, styling }
+  { overwrite = false, styling, iconLibrary }
 ) {
   const items = resolveItems(registry, names)
+  const library = iconLibraryFor("rn", root, { iconLibrary })
   const result = writeFiles(
     project.cwd,
-    await fetchFiles(root, itemEntries(registry, items, styling)),
+    await withIcons(
+      { platform: "rn", root, registry, library, fetchText },
+      await fetchFiles(root, itemEntries(registry, items, styling))
+    ),
     overwrite
   )
 
-  const dependencies = items.flatMap((item) => item.dependencies[styling])
+  const dependencies = iconDependencies(
+    registry,
+    items.flatMap((item) => item.dependencies[styling]),
+    library
+  )
   const installed = install(project, dependencies)
   const manual = [
     ...(dependencies.includes("react-native-reanimated") &&
@@ -111,15 +120,25 @@ export async function add(names, options) {
   if (options.diff) {
     printDiff(
       project.cwd,
-      await fetchFiles(
-        root,
-        itemEntries(registry, resolveItems(registry, selected), styling)
+      await withIcons(
+        {
+          platform: "rn",
+          root,
+          registry,
+          library: iconLibraryFor("rn", root, options),
+          fetchText,
+        },
+        await fetchFiles(
+          root,
+          itemEntries(registry, resolveItems(registry, selected), styling)
+        )
       )
     )
   } else {
     await installItems(project, root, registry, selected, {
       overwrite: options.overwrite,
       styling,
+      iconLibrary: options.iconLibrary,
     })
   }
 }

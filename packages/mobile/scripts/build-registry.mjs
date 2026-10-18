@@ -6,6 +6,7 @@ import {
   packageName,
   toTitle,
 } from "../../../scripts/lib/registry.mjs"
+import { iconLibraries } from "./build-icons.mjs"
 import {
   buildNativeGraph,
   nativeFileOf,
@@ -232,6 +233,7 @@ const registry = {
     PRESET_STYLES.map((style) => [style, presetFiles(style)])
   ),
   platforms,
+  icons: iconLibraries(),
   items,
 }
 const outputs = [
