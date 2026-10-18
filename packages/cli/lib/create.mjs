@@ -26,6 +26,7 @@ const RUNNERS = {
 }
 
 const PROJECT_NAME = /^[a-z0-9][a-z0-9._-]*$/
+const WINDOWS_RESERVED = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/
 
 function creatorArgs(template, name, packageManager) {
   if (template === "next") {
@@ -93,6 +94,11 @@ export function createProject(
   if (!PROJECT_NAME.test(projectName)) {
     throw new CliError(
       `${projectName} is not a valid project name. Use lowercase letters, numbers, dots, dashes or underscores.`
+    )
+  }
+  if (WINDOWS_RESERVED.test(projectName) || projectName.endsWith(".")) {
+    throw new CliError(
+      `${projectName} is a reserved name on Windows. Pick another folder name.`
     )
   }
   const target = path.join(cwd, projectName)

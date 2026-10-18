@@ -44,7 +44,7 @@ npx @esuiss/ui@latest init --template next --name my-app
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. Saved as the `style` in `components.json` |
 | `--style <name>` | Visual style: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is saved as the `style` in `components.json`; for React Native, SwiftUI and Compose it picks the theme or tokens file |
 | `--preset <code>` | A preset code from [Create](/create): style, colors, radius, fonts, icon library and menus. React Native, SwiftUI and Compose apply it to their theme files; see [Theming](/docs/theming#styles) |
-| `--theme suiss` | Keep the suiss/ui colors when applying a preset |
+| `--theme suiss` | Keep the suiss/ui grays when applying a preset; a colored theme in the preset still sets the primary, chart and accent colors |
 | `--primary <color>` | A custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. Replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | Icons of React Native, SwiftUI and Compose components: `phosphor` (the default), `lucide`, `tabler`, `hugeicons` or `remixicon`. Read from `--preset` or the installed icons file when omitted |
 | `-t, --template <next\|vite\|expo>` | Create a Next.js, Vite or Expo app in a new folder first |
@@ -66,14 +66,14 @@ Restyles a project that already ran `init`, on every platform.
 npx @esuiss/ui@latest apply --preset <code> [--only theme|font] [options]
 ```
 
-Without `--only`, React applies the colors, radius, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. React Native, SwiftUI and Compose rewrite their theme files and fonts.
+Without `--only`, React applies the colors, radius, font, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. The colors and radius start again from the suiss/ui values, so a preset with the suiss colors or the default radius undoes an earlier one. React Native, SwiftUI and Compose rewrite their theme files and fonts.
 
 | Option | Description |
 | --- | --- |
 | `--preset <code>` | A preset code from [Create](/create) |
 | `--only <theme\|font>` | Apply only the colors and radius, or only the fonts |
 | `--primary <color>` | A custom primary color, on its own or over the preset |
-| `--theme suiss` | Keep the suiss/ui colors when applying a preset |
+| `--theme suiss` | Keep the suiss/ui grays when applying a preset; a colored theme in the preset still sets the primary, chart and accent colors |
 | `--style <name>` | Change the visual style; works without `--only` |
 | `--pointer` | React only: show the pointer cursor on enabled buttons |
 | `--rtl` | React only: print how to run the components right to left |
@@ -196,7 +196,7 @@ npx @esuiss/ui@latest apply --style vega
 npx @esuiss/ui@latest init --platform swift --style luma
 ```
 
-Pick a style, colors, radius and icons on the [Create](/create) page, then run the command it shows. `init --preset` applies the code and saves the style, `iconLibrary` and `menuColor` in `components.json`, so later `add` runs follow them. With `--platform rn`, `swift` or `kotlin`, `init --preset` writes the colors, radius, menu colors and fonts into the theme files instead. A preset whose theme is a different gray than its base color is rejected; use the base color itself or a colored theme.
+Pick a style, colors, radius and icons on the [Create](/create) page, then run the command it shows. `init --preset` applies the code, loads its font (with `next/font/google` in Next.js and a Fontsource package in Vite) and saves the style, `iconLibrary`, `menuColor` and `menuAccent` in `components.json`, so later `add` runs follow them. A bold menu accent highlights menu items with the primary color. With `--platform rn`, `swift` or `kotlin`, `init --preset` writes the colors, radius, menu colors and fonts into the theme files instead. A preset whose theme is a different gray than its base color is rejected; use the base color itself or a colored theme. The `gray` base color is not available.
 
 ## Icon libraries
 

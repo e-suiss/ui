@@ -1,6 +1,5 @@
 "use client"
 
-import { mergeProps } from "@base-ui/react/merge-props"
 import * as React from "react"
 import {
   AlertSheet,
@@ -113,45 +112,69 @@ function ContextActionsTrigger({
     startRef.current = null
   }
 
+  const {
+    onKeyDown,
+    onContextMenu,
+    onPointerDown,
+    onPointerMove,
+    onPointerUp,
+    onPointerCancel,
+    onPointerLeave,
+    ...rest
+  } = props
+
   return (
     <div
-      {...mergeProps<"div">(props, {
-        onKeyDown: (event) => {
-          if (
-            event.key === "ContextMenu" ||
-            (event.shiftKey && event.key === "F10")
-          ) {
-            event.preventDefault()
-            setOpen(true)
-          }
-        },
-        onContextMenu: (event) => {
+      {...rest}
+      onKeyDown={(event) => {
+        if (
+          event.key === "ContextMenu" ||
+          (event.shiftKey && event.key === "F10")
+        ) {
           event.preventDefault()
-          cancel()
           setOpen(true)
-        },
-        onPointerDown: (event) => {
-          if (event.pointerType === "mouse") return
+        }
+        onKeyDown?.(event)
+      }}
+      onContextMenu={(event) => {
+        event.preventDefault()
+        cancel()
+        setOpen(true)
+        onContextMenu?.(event)
+      }}
+      onPointerDown={(event) => {
+        if (event.pointerType !== "mouse") {
           startRef.current = { x: event.clientX, y: event.clientY }
           clearTimeout(timerRef.current)
           timerRef.current = setTimeout(() => {
             startRef.current = null
             setOpen(true)
           }, LONG_PRESS_DELAY)
-        },
-        onPointerMove: (event) => {
-          const start = startRef.current
-          if (!start) return
-          const moved = Math.hypot(
-            event.clientX - start.x,
-            event.clientY - start.y
-          )
-          if (moved > LONG_PRESS_TOLERANCE) cancel()
-        },
-        onPointerUp: cancel,
-        onPointerCancel: cancel,
-        onPointerLeave: cancel,
-      })}
+        }
+        onPointerDown?.(event)
+      }}
+      onPointerMove={(event) => {
+        const start = startRef.current
+        if (
+          start &&
+          Math.hypot(event.clientX - start.x, event.clientY - start.y) >
+            LONG_PRESS_TOLERANCE
+        )
+          cancel()
+        onPointerMove?.(event)
+      }}
+      onPointerUp={(event) => {
+        cancel()
+        onPointerUp?.(event)
+      }}
+      onPointerCancel={(event) => {
+        cancel()
+        onPointerCancel?.(event)
+      }}
+      onPointerLeave={(event) => {
+        cancel()
+        onPointerLeave?.(event)
+      }}
       data-slot="context-actions-trigger"
       role="button"
       tabIndex={0}

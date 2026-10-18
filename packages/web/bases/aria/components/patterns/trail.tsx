@@ -37,6 +37,13 @@ function renderAnchor(props: React.ComponentProps<"a">) {
   return <TrailAnchor {...props} />
 }
 
+function TrailLink({
+  render,
+  ...props
+}: React.ComponentProps<"a"> & { render: TrailRender }) {
+  return render(props)
+}
+
 function collapse(items: TrailItem[], maxItems: number | undefined) {
   const [first] = items
   if (!first || !maxItems || items.length <= maxItems) {
@@ -100,71 +107,76 @@ function Trail({
     }, 300)
   }
 
-  const back = render({
-    ref: backRef,
-    href: parent?.href,
-    "data-slot": "trail-back",
-    ...(hasHistory && {
-      "aria-haspopup": "menu" as const,
-      "aria-expanded": historyOpen,
-      onClick: (event: React.MouseEvent) => {
-        if (pressedRef.current) event.preventDefault()
-      },
-      onContextMenu: (event: React.MouseEvent) => {
-        event.preventDefault()
-        cancelPress()
-        openHistory()
-      },
-      onKeyDown: (event: React.KeyboardEvent) => {
-        if (
-          event.key === "ContextMenu" ||
-          (event.shiftKey && event.key === "F10")
-        ) {
-          event.preventDefault()
-          setHistoryOpen(true)
-        }
-      },
-      onPointerDown: (event: React.PointerEvent) => {
-        pressedRef.current = false
-        if (event.pointerType === "mouse") return
-        touchingRef.current = true
-        startRef.current = { x: event.clientX, y: event.clientY }
-        clearTimeout(timerRef.current)
-        timerRef.current = setTimeout(() => {
-          startRef.current = null
-          openHistory()
-        }, LONG_PRESS_DELAY)
-      },
-      onPointerMove: (event: React.PointerEvent) => {
-        const start = startRef.current
-        if (!start) return
-        const moved = Math.hypot(
-          event.clientX - start.x,
-          event.clientY - start.y
-        )
-        if (moved > LONG_PRESS_TOLERANCE) cancelPress()
-      },
-      onPointerUp: release,
-      onPointerCancel: release,
-      onPointerLeave: cancelPress,
-    }),
-    className:
-      "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-primary outline-none select-none [-webkit-touch-callout:none] focus-visible:ring-3 focus-visible:ring-ring/50",
-    children: (
-      <>
-        <IconPlaceholder
-          lucide="ChevronLeftIcon"
-          tabler="IconChevronLeft"
-          hugeicons="ArrowLeft01Icon"
-          phosphor="CaretLeftIcon"
-          remixicon="RiArrowLeftSLine"
-          className="size-4.5 shrink-0 rtl:rotate-180"
-          aria-hidden
-        />
-        <span className="truncate">{backLabel ?? parent?.label}</span>
-      </>
-    ),
-  } as React.ComponentProps<"a">)
+  const back = (
+    <TrailLink
+      render={render}
+      {...({
+        ref: backRef,
+        href: parent?.href,
+        "data-slot": "trail-back",
+        ...(hasHistory && {
+          "aria-haspopup": "menu" as const,
+          "aria-expanded": historyOpen,
+          onClick: (event: React.MouseEvent) => {
+            if (pressedRef.current) event.preventDefault()
+          },
+          onContextMenu: (event: React.MouseEvent) => {
+            event.preventDefault()
+            cancelPress()
+            openHistory()
+          },
+          onKeyDown: (event: React.KeyboardEvent) => {
+            if (
+              event.key === "ContextMenu" ||
+              (event.shiftKey && event.key === "F10")
+            ) {
+              event.preventDefault()
+              setHistoryOpen(true)
+            }
+          },
+          onPointerDown: (event: React.PointerEvent) => {
+            pressedRef.current = false
+            if (event.pointerType === "mouse") return
+            touchingRef.current = true
+            startRef.current = { x: event.clientX, y: event.clientY }
+            clearTimeout(timerRef.current)
+            timerRef.current = setTimeout(() => {
+              startRef.current = null
+              openHistory()
+            }, LONG_PRESS_DELAY)
+          },
+          onPointerMove: (event: React.PointerEvent) => {
+            const start = startRef.current
+            if (!start) return
+            const moved = Math.hypot(
+              event.clientX - start.x,
+              event.clientY - start.y
+            )
+            if (moved > LONG_PRESS_TOLERANCE) cancelPress()
+          },
+          onPointerUp: release,
+          onPointerCancel: release,
+          onPointerLeave: cancelPress,
+        }),
+        className:
+          "-ms-1.5 inline-flex min-h-11 touch-manipulation items-center gap-0.5 rounded-md pe-1.5 text-base text-primary outline-none select-none [-webkit-touch-callout:none] focus-visible:ring-3 focus-visible:ring-ring/50",
+        children: (
+          <>
+            <IconPlaceholder
+              lucide="ChevronLeftIcon"
+              tabler="IconChevronLeft"
+              hugeicons="ArrowLeft01Icon"
+              phosphor="CaretLeftIcon"
+              remixicon="RiArrowLeftSLine"
+              className="size-4.5 shrink-0 rtl:rotate-180"
+              aria-hidden
+            />
+            <span className="truncate">{backLabel ?? parent?.label}</span>
+          </>
+        ),
+      } as React.ComponentProps<"a">)}
+    />
+  )
 
   if (isMobile) {
     if (!parent) return null

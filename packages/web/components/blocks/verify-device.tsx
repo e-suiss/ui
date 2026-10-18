@@ -204,7 +204,7 @@ export function VerifyDevice() {
                   482 913
                 </p>
                 <p className="text-sm leading-snug text-muted-foreground">
-                  Enter this code in the browser you're signing in to.
+                  Enter this code in the browser you&apos;re signing in to.
                 </p>
               </div>
               <AlertAction primary>OK</AlertAction>
@@ -215,7 +215,7 @@ export function VerifyDevice() {
               <div className="px-4 pt-5 pb-4.5">
                 <p className="text-lg font-semibold">Sign-in blocked</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  If this wasn't you, change your password.
+                  If this wasn&apos;t you, change your password.
                 </p>
               </div>
               <AlertAction onClick={() => setPhase("ask")}>
@@ -242,7 +242,7 @@ export function VerifyDevice() {
                 Allow
               </AlertAction>
               <AlertAction onClick={() => setPhase("deny")}>
-                Don't Allow
+                Don&apos;t Allow
               </AlertAction>
             </>
           )}

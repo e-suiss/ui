@@ -90,9 +90,56 @@ describe("presetProblem", () => {
     expect(presetProblem({ baseColor: "stone", theme: "zinc" })).toContain(
       "The zinc theme needs the zinc base color"
     )
+  })
+
+  it("ignores the chart color, which no platform reads", () => {
     expect(
-      presetProblem({ baseColor: "stone", theme: "blue", chartColor: "zinc" })
-    ).toContain("chart color")
+      presetProblem({
+        baseColor: "stone",
+        theme: "blue",
+        chartColor: "neutral",
+      })
+    ).toBeNull()
+    expect(
+      presetProblem({ baseColor: "stone", theme: "stone", chartColor: "zinc" })
+    ).toBeNull()
+  })
+
+  it("accepts every preset code the create page made before chartColor", () => {
+    for (const code of ["bK9Yuv", "buqttVb", "bJMUSIjR", "b1QXkO"]) {
+      expect(presetProblem(decodePreset(code))).toBeNull()
+    }
+  })
+
+  it("rejects the gray base color and theme with a clear message", () => {
+    expect(presetProblem(decodePreset("bw5OFzsG"))).toContain(
+      "The gray base color is not available in suiss/ui."
+    )
+    expect(presetProblem({ baseColor: "neutral", theme: "gray" })).toContain(
+      "The gray theme is not available"
+    )
+  })
+})
+
+describe("resolveStyle with --only", () => {
+  it("keeps the project style instead of the preset style", () => {
+    const preset = encodePreset({ style: "vega" })
+    expect(resolveStyle({ preset, only: "theme" })).toBeUndefined()
+    expect(resolveStyle({ preset, only: "font" })).toBeUndefined()
+  })
+
+  it("uses --style when it is given", () => {
+    const preset = encodePreset({ style: "vega" })
+    expect(resolveStyle({ preset, only: "theme", style: "suiss" })).toBe(
+      "suiss"
+    )
+    expect(resolveStyle({ preset, only: "theme", style: "vega" })).toBe("vega")
+  })
+
+  it("still takes the preset style without --only", () => {
+    expect(resolveStyle({ preset: encodePreset({ style: "vega" }) })).toBe(
+      "vega"
+    )
   })
 })
 

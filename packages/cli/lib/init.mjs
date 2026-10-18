@@ -1,14 +1,20 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
-import { installItems } from "./add.mjs"
-import { withPrimary } from "./color.mjs"
+import { addStyles, installedItems, installItems } from "./add.mjs"
+import {
+  configureNextFont,
+  NEXT_LAYOUTS,
+  webFontOf,
+  withFont,
+} from "./fonts.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
-import { decodePreset, RADIUS_VALUES } from "./preset.mjs"
+import { decodePreset } from "./preset.mjs"
 import {
   configuredStylesheet,
   detectBase,
   detectIcons,
+  detectMenuAccent,
   detectMenuColor,
   detectProject,
   detectStyle,
@@ -18,8 +24,12 @@ import {
   saveBase,
   VITE_STYLESHEET,
 } from "./project.mjs"
-import { fetchRegistry, fetchStylesheet, fetchThemes } from "./registry.mjs"
+import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
 import { ensureAlias, relative } from "./shared/project.mjs"
+import { DEFAULT_STYLE } from "./styles.mjs"
+import { applyPreset, presetPalette, withPointer } from "./theme.mjs"
+
+export { POINTER_CSS } from "./theme.mjs"
 
 const NEXT_APP_DIRS = ["src/app", "app"]
 const VITE_CONFIGS = [
@@ -47,36 +57,15 @@ const TOOLING = {
   vite: ["tailwindcss", "@tailwindcss/vite", "@types/node"],
 }
 const MINIMUM_TAILWIND = [4, 2]
-const FONT_IMPORT = '@import "@fontsource-variable/inter";\n'
-const FONT_FAMILY =
-  '--font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;'
-const NEXT_FONT_FAMILY =
-  "--font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;"
-const NEXT_LAYOUTS = [
-  "src/app/layout.tsx",
-  "app/layout.tsx",
-  "src/app/layout.jsx",
-  "app/layout.jsx",
-]
-const NEXT_FONT_NOTE =
-  'Load the fonts in your root layout with next/font/google: Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" }), and add its .variable value to the <html> className.'
 
 const VERSION_NUMBER = /(\d+)(?:\.(\d+))?/
+const OPEN_RANGE = /^\s*(\^|>=?)/
 const VITE_PLUGINS = /plugins\s*:\s*\[/
 const VITE_ALIAS = /["']@["']\s*:/
 const VITE_DEFINE_CONFIG = /defineConfig\(\{/
 const VITE_RESOLVE = /\bresolve\s*:/
-const INTER_VARIABLE = /variable:\s*["']--font-inter["']/
-const HTML_TAG = /<html\b[^>]*>/
-const CLASSNAME_LITERAL = /className="([^"]*)"/
-const CLASSNAME_TEMPLATE = /className=\{`([^`]*)`\}/
 const TURBOPACK_TAILWIND = /@tailwindcss\/turbopack/
 const NEXT_CONFIGS = ["next.config.ts", "next.config.mjs", "next.config.js"]
-const CLASSNAME_ATTRIBUTE = /className=/
-const HTML_TAG_START = /<html\b/
-const SEMICOLON_IMPORT = /from\s+["'][^"']+["'];/
-const NEXT_FONT_IMPORT =
-  /import\s*\{([^}]*)\}\s*from\s*["']next\/font\/google["']/
 
 const VITE_ENTRIES = [
   "src/main.tsx",
@@ -85,6 +74,9 @@ const VITE_ENTRIES = [
   "src/main.js",
 ]
 const REGEXP_SPECIAL = /[.*+?^${}()|[\]\\]/g
+
+export const RTL_NOTE =
+  'suiss/ui components use logical properties, so they already work right to left. Set dir="rtl" on <html> for a right-to-left app.'
 
 function stylesheetPath(project) {
   const configured = configuredStylesheet(project.cwd)
@@ -104,21 +96,28 @@ function stylesheetPath(project) {
 function installedVersion(project, name) {
   const manifest = path.join(project.cwd, "node_modules", name, "package.json")
   if (existsSync(manifest)) {
-    return JSON.parse(readFileSync(manifest, "utf8")).version
+    return {
+      version: JSON.parse(readFileSync(manifest, "utf8")).version,
+      installed: true,
+    }
   }
-  return project.packages[name]
+  return { version: project.packages[name], installed: false }
 }
 
 function assertTailwindVersion(project) {
-  const version = installedVersion(project, "tailwindcss")
+  const { version, installed } = installedVersion(project, "tailwindcss")
   const match = version?.match(VERSION_NUMBER)
   if (!match) return
   const major = Number(match[1])
   const minor = match[2] === undefined ? undefined : Number(match[2])
   const [requiredMajor, requiredMinor] = MINIMUM_TAILWIND
+  const open = !installed && OPEN_RANGE.test(version)
   const tooOld =
     major < requiredMajor ||
-    (major === requiredMajor && minor !== undefined && minor < requiredMinor)
+    (!open &&
+      major === requiredMajor &&
+      minor !== undefined &&
+      minor < requiredMinor)
   if (tooOld) {
     throw new CliError(
       `Tailwind CSS ${requiredMajor}.${requiredMinor} or later is required, this project uses ${version}. Upgrade tailwindcss and run init again.`
@@ -126,7 +125,7 @@ function assertTailwindVersion(project) {
   }
 }
 
-function stylesheetPackages(css) {
+export function stylesheetPackages(css) {
   return [...css.matchAll(/@import\s+["']([^"']+)["']/g)]
     .map(([, specifier]) => specifier)
     .filter(
@@ -187,69 +186,18 @@ function configureVite(project) {
   return manual
 }
 
-function stylesheetFor(project, css) {
-  if (project.framework !== "next") return css
-  return css.replace(FONT_IMPORT, "").replace(FONT_FAMILY, NEXT_FONT_FAMILY)
-}
-
-function fontClassName(extra) {
-  return `className={\`\${fontInter.variable}${extra}\`}`
-}
-
-function configureNextFont(project) {
-  const file = NEXT_LAYOUTS.map((name) => path.join(project.cwd, name)).find(
-    existsSync
-  )
-  if (!file) return [NEXT_FONT_NOTE]
-
-  let text = readFileSync(file, "utf8")
-  if (INTER_VARIABLE.test(text)) return []
-
-  const html = text.match(HTML_TAG)
-  if (!html) return [NEXT_FONT_NOTE]
-  let tag = html[0]
-  const literal = tag.match(CLASSNAME_LITERAL)
-  const template = tag.match(CLASSNAME_TEMPLATE)
-  if (literal) {
-    tag = tag.replace(literal[0], fontClassName(` ${literal[1]}`))
-  } else if (template) {
-    tag = tag.replace(template[0], fontClassName(` ${template[1]}`))
-  } else if (!CLASSNAME_ATTRIBUTE.test(tag)) {
-    tag = tag.replace(HTML_TAG_START, `<html ${fontClassName("")}`)
-  } else {
-    return [NEXT_FONT_NOTE]
-  }
-  text = text.replace(html[0], tag)
-
-  const semi = SEMICOLON_IMPORT.test(text) ? ";" : ""
-  const fontImport = text.match(NEXT_FONT_IMPORT)
-  if (fontImport) {
-    text = text.replace(
-      fontImport[0],
-      fontImport[0].replace(fontImport[1], `${fontImport[1].trimEnd()}, Inter `)
-    )
-  } else {
-    text = `import { Inter } from "next/font/google"${semi}\n${text}`
-  }
-
-  const imports = [
-    ...text.matchAll(/^import\s[\s\S]*?["'][^"']+["'];?[ \t]*\n/gm),
-  ]
-  const last = imports.at(-1)
-  const at = last ? last.index + last[0].length : 0
-  const declaration = `\nconst fontInter = Inter({\n  subsets: ["latin", "latin-ext"],\n  variable: "--font-inter",\n})${semi}\n`
-  text = text.slice(0, at) + declaration + text.slice(at)
-
-  writeFileSync(file, text)
-  step(`Loaded Inter in ${relative(project, file)}`)
-  return []
-}
-
 function usesTurbopackTailwind(project) {
   return NEXT_CONFIGS.map((name) => path.join(project.cwd, name)).some(
     (file) =>
       existsSync(file) && TURBOPACK_TAILWIND.test(readFileSync(file, "utf8"))
   )
+}
+
+function toolingFor(project) {
+  if (project.framework === "next" && usesTurbopackTailwind(project)) {
+    return ["tailwindcss"]
+  }
+  return TOOLING[project.framework]
 }
 
 function configureNext(project) {
@@ -281,53 +229,12 @@ function importsStylesheet(project, stylesheet) {
     )
 }
 
-const ROOT_BLOCK = /(:root\s*\{)([\s\S]*?)(\n\})/
-const DARK_BLOCK = /(\.dark\s*\{)([\s\S]*?)(\n\})/
-export const OWN_THEME = "suiss"
-export const DEFAULT_FONT = "inter"
-export const POINTER_CSS = `@layer base {
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]) {
-    cursor: pointer;
-  }
-}
-`
-export const RTL_NOTE =
-  'suiss/ui components use logical properties, so they already work right to left. Set dir="rtl" on <html> for a right-to-left app.'
-
-export function withPointer(css) {
-  if (css.includes(POINTER_CSS.trim())) return css
-  return `${css.trimEnd()}\n\n${POINTER_CSS}`
+export function presetFont(preset) {
+  return preset ? webFontOf(preset.font) : null
 }
 
-function withVariables(block, variables) {
-  return Object.entries(variables).reduce(
-    (text, [name, value]) =>
-      text.replace(new RegExp(`(--${name}:\\s*)[^;]+;`), `$1${value};`),
-    block
-  )
-}
-
-export function paletteOf(themes, preset) {
-  const find = (name) => themes.find((theme) => theme.name === name)
-  const base = find(preset.baseColor)
-  const accent = find(preset.theme)
-  const { radius: _light, ...light } = { ...base?.light, ...accent?.light }
-  const { radius: _dark, ...dark } = { ...base?.dark, ...accent?.dark }
-  return { light, dark }
-}
-
-export function applyPreset(css, preset, palette) {
-  const radius = preset ? RADIUS_VALUES[preset.radius] : undefined
-  const light = { ...(palette?.light ?? {}), ...(radius ? { radius } : {}) }
-  const dark = palette?.dark ?? {}
-  return css
-    .replace(ROOT_BLOCK, (_, head, body, tail) =>
-      [head, withVariables(body, light), tail].join("")
-    )
-    .replace(DARK_BLOCK, (_, head, body, tail) =>
-      [head, withVariables(body, dark), tail].join("")
-    )
+export function configureFont(project, font) {
+  return project.framework === "next" ? configureNextFont(project, font) : []
 }
 
 function rememberBase(project, base, stylesheet, style, extra) {
@@ -335,13 +242,36 @@ function rememberBase(project, base, stylesheet, style, extra) {
   if (!saved) return []
   if (saved.invalid) {
     return [
-      `Could not read ${relative(project, saved.file)}. Set its style to ${base}-suiss so add keeps using the ${base} base.`,
+      `Could not read ${relative(project, saved.file)}. Set its style to ${base}-${style ?? DEFAULT_STYLE} so add keeps using the ${base} base.`,
     ]
   }
   step(
     `${saved.created ? "Created" : "Updated"} ${relative(project, saved.file)} with the ${saved.style} style`
   )
   return []
+}
+
+function stylingOf(cwd) {
+  return {
+    base: detectBase(cwd),
+    style: detectStyle(cwd),
+    icons: detectIcons(cwd),
+    menuColor: detectMenuColor(cwd),
+    menuAccent: detectMenuAccent(cwd),
+  }
+}
+
+function styleWarning(options, preset) {
+  if (
+    preset &&
+    options.style &&
+    options.style !== DEFAULT_STYLE &&
+    options.style !== preset.style
+  ) {
+    note(
+      `The preset uses the ${preset.style} style, --style ${options.style} replaces it.`
+    )
+  }
 }
 
 export async function init(options) {
@@ -373,18 +303,25 @@ export async function init(options) {
   }
 
   const preset = options.preset ? decodePreset(options.preset) : null
-  const base = options.base ?? detectBase(project.cwd)
-  const style = options.style ?? preset?.style ?? detectStyle(project.cwd)
-  const icons = preset?.iconLibrary ?? detectIcons(project.cwd)
-  const menuColor = preset?.menuColor ?? detectMenuColor(project.cwd)
+  styleWarning(options, preset)
+  const previous = stylingOf(project.cwd)
+  const base = options.base ?? previous.base
+  const style = options.style ?? preset?.style ?? previous.style
+  const styling = {
+    base,
+    style,
+    icons: preset?.iconLibrary ?? previous.icons,
+    menuColor: preset?.menuColor ?? previous.menuColor,
+    menuAccent: preset?.menuAccent ?? previous.menuAccent,
+  }
   const registry = await fetchRegistry(base)
-  const palette = withPrimary(
-    preset && options.theme !== OWN_THEME
-      ? paletteOf(await fetchThemes(), preset)
-      : null,
-    options.primary
+  const palette = await presetPalette(options, preset)
+  const font = presetFont(preset)
+  const stylesheetCss = withFont(
+    await fetchStylesheet(),
+    project.framework,
+    font
   )
-  const stylesheetCss = stylesheetFor(project, await fetchStylesheet())
   const themedCss =
     preset || palette
       ? applyPreset(stylesheetCss, preset, palette)
@@ -398,52 +335,68 @@ export async function init(options) {
   if (ensureAlias(project, sourceRoot, tsconfigs))
     step("Added the @/* import alias to tsconfig")
 
-  install(project, TOOLING[project.framework], { dev: true })
+  install(project, toolingFor(project), { dev: true })
   install(project, stylesheetPackages(css))
 
   const manual =
     project.framework === "vite"
       ? configureVite(project)
-      : [...configureNext(project), ...configureNextFont(project)]
+      : [...configureNext(project), ...configureFont(project, font)]
 
   mkdirSync(path.dirname(stylesheet), { recursive: true })
   writeFileSync(stylesheet, css)
   step(`Wrote ${relative(project, stylesheet)}`)
-  if (options.base || options.style || preset) {
-    manual.push(
-      ...rememberBase(
-        project,
-        base,
-        stylesheet,
-        options.style ?? preset?.style,
-        preset
-          ? {
-              iconLibrary: icons,
-              menuColor,
-              menuAccent: preset.menuAccent,
-            }
-          : {}
-      )
+  manual.push(
+    ...rememberBase(
+      project,
+      base,
+      stylesheet,
+      options.style ?? preset?.style,
+      preset
+        ? {
+            iconLibrary: styling.icons,
+            menuColor: styling.menuColor,
+            menuAccent: styling.menuAccent,
+            baseColor: preset.baseColor,
+          }
+        : {}
     )
-  }
-  if (preset && preset.font !== DEFAULT_FONT) {
-    manual.push(
-      `Load the ${preset.font} font and point --font-sans at it in ${relative(project, stylesheet)}.`
-    )
-  }
+  )
   if (!importsStylesheet(project, stylesheet)) {
     manual.push(
       `Import ${relative(project, stylesheet)} in ${project.framework === "next" ? "your root layout" : "src/main.tsx"}.`
     )
   }
 
-  await installItems(
+  const root = findAliasRoot(project.cwd) ?? sourceRoot
+  const installed = installedItems(registry, root)
+  addStyles(
     project,
-    findAliasRoot(project.cwd) ?? sourceRoot,
-    registry,
-    ["button"],
-    { overwrite: options.overwrite, base, style, icons, menuColor }
+    registry.items.filter((item) => item.css && installed.includes(item.name))
   )
+  const restyled = Object.keys(styling).some(
+    (key) => styling[key] !== previous[key]
+  )
+  const others = installed.filter((name) => name !== "button")
+  let names = ["button"]
+  let overwrite = options.overwrite
+  if (restyled && others.length) {
+    const restyle =
+      options.yes ||
+      (await confirm(
+        `Restyle the ${installed.length} installed components? Local changes to them are replaced.`
+      ))
+    if (restyle) {
+      names = [...new Set(["button", ...installed])]
+      overwrite = true
+    } else {
+      manual.push(
+        "Run npx @esuiss/ui add <name> --overwrite to restyle installed components later."
+      )
+    }
+  }
+
+  await installItems(project, root, registry, names, { overwrite, ...styling })
 
   if (options.rtl) manual.push(RTL_NOTE)
   for (const message of manual) note(message)

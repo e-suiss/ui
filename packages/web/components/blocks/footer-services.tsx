@@ -171,7 +171,7 @@ export function FooterServices() {
                 remixicon="RiCheckLine"
                 className="size-4.5 text-green-500"
               />
-              You're subscribed. Thank you.
+              You&apos;re subscribed. Thank you.
             </p>
           ) : (
             <form

@@ -110,13 +110,33 @@ describe("themeOptionsFor", () => {
     expect(await themeOptionsFor({}, () => THEMES)).toBeNull()
   })
 
-  it("keeps the suiss colors with --theme suiss", async () => {
+  it("keeps the suiss grays but adds the colored theme with --theme suiss", async () => {
     const options = await themeOptionsFor(
       { preset, theme: "suiss" },
       () => THEMES
     )
-    expect(options.palette).toBeNull()
+    const blue = THEMES.find((theme) => theme.name === "blue")
+    expect(options.palette.light.primary).toBe(blue.light.primary)
+    expect(options.palette.light.background).toBeUndefined()
     expect(options.factor).toBe(radiusFactor("large"))
+  })
+
+  it("keeps every suiss color with --theme suiss and a gray theme", async () => {
+    const gray = encodePreset({
+      style: "nova",
+      baseColor: "neutral",
+      theme: "neutral",
+      radius: "large",
+      font: "inter",
+      iconLibrary: "lucide",
+      menuColor: "default",
+      menuAccent: "subtle",
+    })
+    const options = await themeOptionsFor(
+      { preset: gray, theme: "suiss" },
+      () => THEMES
+    )
+    expect(options.palette).toBeNull()
   })
 
   it("merges the base color and the theme", async () => {

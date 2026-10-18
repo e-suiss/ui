@@ -117,7 +117,9 @@ function WheelPickerColumn({
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue)
   const value = valueProp ?? uncontrolledValue
   const valueRef = React.useRef(value)
-  valueRef.current = value
+  React.useLayoutEffect(() => {
+    valueRef.current = value
+  })
 
   const columnRef = React.useRef<HTMLDivElement>(null)
   const frameRef = React.useRef(0)

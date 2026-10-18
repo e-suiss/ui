@@ -184,7 +184,7 @@ export function LoginAccount() {
             Forgot password? ›
           </a>
           <p className="flex flex-wrap justify-center gap-x-1 text-muted-foreground">
-            <span>Don't have a suiss Account?</span>
+            <span>Don&apos;t have a suiss Account?</span>
             <a href="#create" className="text-primary hover:underline">
               Create yours now ›
             </a>

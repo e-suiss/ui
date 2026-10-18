@@ -96,7 +96,7 @@ export function NavCategories() {
         <p className="text-2xl font-semibold tracking-tight text-balance">
           The latest.{" "}
           <span className="text-muted-foreground">
-            Take a look at what's new in {selected}.
+            Take a look at what&apos;s new in {selected}.
           </span>
         </p>
       </div>

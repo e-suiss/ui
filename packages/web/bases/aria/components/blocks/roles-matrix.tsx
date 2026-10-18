@@ -236,7 +236,7 @@ export function RolesMatrix() {
                 Permissions
               </h1>
               <p className="text-sm text-muted-foreground">
-                Admin permissions can't be changed.
+                Admin permissions can&apos;t be changed.
               </p>
             </div>
             <Button

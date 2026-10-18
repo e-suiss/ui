@@ -146,7 +146,7 @@ function Questionnaire({
   onItemChange?: (item: string) => void
   shortcuts?: QuestionnaireShortcutMode
 }) {
-  const questionnaire = useQuestionnaire({
+  const { ref: questionnaireRef, ...questionnaire } = useQuestionnaire({
     defaultItem,
     item,
     items,
@@ -160,7 +160,7 @@ function Questionnaire({
   return (
     <QuestionnaireContext.Provider value={questionnaire.context}>
       <form
-        ref={questionnaire.ref}
+        ref={questionnaireRef}
         {...stateAttributes(questionnaire.state)}
         data-slot="questionnaire"
         {...mergeHandlers(questionnaire.props, props)}
@@ -230,23 +230,24 @@ function QuestionnaireItem({
   onStatusChange?: (status: QuestionnaireItemStatus) => void
   required?: boolean
 }) {
-  const questionnaireItem = useQuestionnaireItem({
-    "aria-describedby": ariaDescribedBy,
-    "aria-keyshortcuts": ariaKeyShortcuts,
-    disabled,
-    invalid,
-    multiple,
-    name,
-    onStatusChange,
-    ref,
-    required,
-  })
+  const { ref: questionnaireItemRef, ...questionnaireItem } =
+    useQuestionnaireItem({
+      "aria-describedby": ariaDescribedBy,
+      "aria-keyshortcuts": ariaKeyShortcuts,
+      disabled,
+      invalid,
+      multiple,
+      name,
+      onStatusChange,
+      ref,
+      required,
+    })
   const titleId = React.useId()
   return (
     <QuestionnaireItemContext.Provider value={questionnaireItem.context}>
       <QuestionnaireTitleIdContext.Provider value={titleId}>
         <fieldset
-          ref={questionnaireItem.ref}
+          ref={questionnaireItemRef}
           {...stateAttributes(questionnaireItem.state)}
           {...questionnaireItem.props}
           data-slot="questionnaire-item"
@@ -463,14 +464,15 @@ function QuestionnaireInput({
   render?: RenderProp
   type?: QuestionnaireInputType
 }) {
-  const questionnaireInput = useQuestionnaireInput({
-    defaultValue,
-    disabled,
-    onChange,
-    ref,
-    type,
-    value,
-  })
+  const { ref: questionnaireInputRef, ...questionnaireInput } =
+    useQuestionnaireInput({
+      defaultValue,
+      disabled,
+      onChange,
+      ref,
+      type,
+      value,
+    })
   const titleId = React.useContext(QuestionnaireTitleIdContext)
   const as = "input"
 
@@ -482,7 +484,7 @@ function QuestionnaireInput({
       <Element
         as={as}
         render={render}
-        ref={questionnaireInput.ref}
+        ref={questionnaireInputRef}
         {...stateAttributes(questionnaireInput.state, filledAttributes)}
         {...(props["aria-label"] === undefined && {
           "aria-labelledby": titleId,

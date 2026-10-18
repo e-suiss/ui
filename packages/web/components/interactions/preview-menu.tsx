@@ -14,12 +14,30 @@ type PreviewMenuFrame = {
   source: { width: number; height: number; scale: number }
 }
 
+function createContentStore() {
+  let content: React.ReactNode = null
+  const listeners = new Set<() => void>()
+  return {
+    get: () => content,
+    set: (next: React.ReactNode) => {
+      content = next
+      for (const listener of listeners) listener()
+    },
+    subscribe: (listener: () => void) => {
+      listeners.add(listener)
+      return () => {
+        listeners.delete(listener)
+      }
+    },
+  }
+}
+
 type PreviewMenuContextProps = {
   open: boolean
   lifted: boolean
   frame: PreviewMenuFrame | null
   triggerRef: React.RefObject<HTMLElement | null>
-  contentRef: React.RefObject<React.ReactNode>
+  content: ReturnType<typeof createContentStore>
 }
 
 const PreviewMenuContext = React.createContext<PreviewMenuContextProps | null>(
@@ -108,7 +126,7 @@ function PreviewMenu({
   const open = openProp ?? uncontrolledOpen
   const [frame, setFrame] = React.useState<PreviewMenuFrame | null>(null)
   const triggerRef = React.useRef<HTMLElement | null>(null)
-  const contentRef = React.useRef<React.ReactNode>(null)
+  const [content] = React.useState(createContentStore)
 
   const [lifted, setLifted] = React.useState(open)
 
@@ -128,7 +146,7 @@ function PreviewMenu({
 
   return (
     <PreviewMenuContext.Provider
-      value={{ open, lifted, frame, triggerRef, contentRef }}
+      value={{ open, lifted, frame, triggerRef, content }}
     >
       <ContextMenuPrimitive.Root
         open={open}
@@ -147,8 +165,12 @@ function PreviewMenuTrigger({
   ref,
   ...props
 }: ContextMenuPrimitive.Trigger.Props) {
-  const { open, lifted, triggerRef, contentRef } = usePreviewMenu()
-  contentRef.current = children as React.ReactNode
+  const { open, lifted, triggerRef, content } = usePreviewMenu()
+
+  React.useLayoutEffect(
+    () => content.set(children as React.ReactNode),
+    [content, children]
+  )
 
   return (
     <ContextMenuPrimitive.Trigger
@@ -181,7 +203,12 @@ function PreviewMenuContent({
   preview?: React.ReactNode
   previewClassName?: string
 }) {
-  const { open, frame, contentRef, triggerRef } = usePreviewMenu()
+  const { open, frame, content, triggerRef } = usePreviewMenu()
+  const triggerContent = React.useSyncExternalStore(
+    content.subscribe,
+    content.get,
+    content.get
+  )
   const previewRef = React.useRef<HTMLDivElement>(null)
   const custom = preview !== undefined
 
@@ -237,7 +264,7 @@ function PreviewMenuContent({
               previewClassName
             )}
           >
-            {preview ?? contentRef.current}
+            {preview ?? triggerContent}
           </div>
           {custom && (
             <div

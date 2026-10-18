@@ -110,3 +110,30 @@ describe("primaryColors", () => {
     expect(withPrimary(null, undefined)).toBeNull()
   })
 })
+
+describe("the primary foreground of the create page", () => {
+  const steps = Array.from({ length: 16 }, (_, index) => index * 17)
+
+  it("matches the CLI for every color on a 16-step grid", async () => {
+    const site = await import("../../../apps/ui/lib/create/color.ts")
+    const mismatches = []
+    for (const r of steps) {
+      for (const g of steps) {
+        for (const b of steps) {
+          const primary = site.oklchString({ r, g, b })
+          const fromSite = site.foregroundFor(site.parseColor(primary))
+          const fromCli = foregroundFor(normalizeColor(primary))
+          if (fromSite !== fromCli) mismatches.push(primary)
+        }
+      }
+    }
+    expect(mismatches).toEqual([])
+  })
+
+  it("picks the same text color for #0088cc on both sides", async () => {
+    const site = await import("../../../apps/ui/lib/create/color.ts")
+    expect(site.foregroundFor(site.parseColor("#0088cc"))).toBe(
+      foregroundFor("#0088cc")
+    )
+  })
+})

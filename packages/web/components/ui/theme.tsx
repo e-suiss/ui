@@ -98,6 +98,17 @@ function systemTheme(): ResolvedTheme {
   return window.matchMedia(DARK_QUERY).matches ? "dark" : "light"
 }
 
+function resolveTheme(theme: Theme, systemDark: boolean | null): ResolvedTheme {
+  if (theme !== "system") return theme
+  return systemDark ? "dark" : "light"
+}
+
+function subscribeSystemTheme(onChange: () => void) {
+  const query = window.matchMedia(DARK_QUERY)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+
 function applyTheme(resolved: ResolvedTheme) {
   const root = document.documentElement
   root.classList.toggle("dark", resolved === "dark")
@@ -169,40 +180,46 @@ function ThemeProvider({
   storageKey?: string
   children?: React.ReactNode
 }) {
-  const [theme, setThemeState] = React.useState<Theme>(defaultTheme)
-  const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>()
+  const [choice, setChoice] = React.useState<{
+    storageKey: string
+    theme: Theme
+  } | null>(null)
   const transitionRef = React.useRef<ViewTransition | null>(null)
   const cleanupRef = React.useRef<(() => void) | null>(null)
   const requestRef = React.useRef(0)
 
-  React.useEffect(() => {
-    const stored = readStoredTheme(storageKey, defaultTheme)
-    setThemeState(stored)
-    setResolvedTheme(stored === "system" ? systemTheme() : stored)
-  }, [storageKey, defaultTheme])
+  const subscribeStored = React.useCallback(
+    (onChange: () => void) => {
+      const sync = (event: StorageEvent) => {
+        if (event.key !== storageKey) return
+        setChoice(null)
+        onChange()
+      }
+      window.addEventListener("storage", sync)
+      return () => window.removeEventListener("storage", sync)
+    },
+    [storageKey]
+  )
+  const stored = React.useSyncExternalStore(
+    subscribeStored,
+    () => readStoredTheme(storageKey, defaultTheme),
+    () => null
+  )
+  const systemDark = React.useSyncExternalStore(
+    subscribeSystemTheme,
+    () => systemTheme() === "dark",
+    () => null
+  )
+  const chosen = choice?.storageKey === storageKey ? choice.theme : null
+  const theme = chosen ?? stored ?? defaultTheme
+  const resolvedTheme =
+    chosen === null && stored === null
+      ? undefined
+      : resolveTheme(theme, systemDark)
 
   React.useEffect(() => {
     if (resolvedTheme) applyTheme(resolvedTheme)
   }, [resolvedTheme])
-
-  React.useEffect(() => {
-    if (theme !== "system") return
-    const query = window.matchMedia(DARK_QUERY)
-    const update = () => setResolvedTheme(query.matches ? "dark" : "light")
-    query.addEventListener("change", update)
-    return () => query.removeEventListener("change", update)
-  }, [theme])
-
-  React.useEffect(() => {
-    const sync = (event: StorageEvent) => {
-      if (event.key !== storageKey) return
-      const next = readStoredTheme(storageKey, defaultTheme)
-      setThemeState(next)
-      setResolvedTheme(next === "system" ? systemTheme() : next)
-    }
-    window.addEventListener("storage", sync)
-    return () => window.removeEventListener("storage", sync)
-  }, [storageKey, defaultTheme])
 
   const setTheme = React.useCallback(
     (next: Theme, transition?: ThemeTransition) => {
@@ -213,8 +230,7 @@ function ThemeProvider({
       const commit = () => {
         if (request !== requestRef.current) return
         applyTheme(resolved)
-        setThemeState(next)
-        setResolvedTheme(resolved)
+        setChoice({ storageKey, theme: next })
       }
 
       const reduced = window.matchMedia(

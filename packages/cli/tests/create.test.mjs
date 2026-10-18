@@ -135,3 +135,27 @@ describe("createProject", () => {
     ).toThrow("failed.")
   })
 })
+
+describe("createProject on Windows", () => {
+  it.each(["con", "nul", "aux", "prn", "com1", "lpt9", "con.app", "app."])(
+    "rejects the reserved name %s",
+    (name) => {
+      const cwd = temporaryDirectory("esuiss-create-")
+      const run = vi.fn(() => true)
+      expect(() => createProject({ template: "next", name, cwd }, run)).toThrow(
+        `${name} is a reserved name on Windows.`
+      )
+      expect(run).not.toHaveBeenCalled()
+    }
+  )
+
+  it("accepts names that only start like a reserved one", () => {
+    const cwd = temporaryDirectory("esuiss-create-")
+    const run = vi.fn(() => true)
+    createProject(
+      { template: "next", name: "console", cwd, packageManager: "npm" },
+      run
+    )
+    expect(run).toHaveBeenCalled()
+  })
+})

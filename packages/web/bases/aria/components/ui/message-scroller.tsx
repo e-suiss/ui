@@ -76,7 +76,9 @@ function MessageScrollerViewport({
     controller.setViewportElement,
     ref
   )
-  controller.preserveScrollOnPrepend = preserveScrollOnPrepend
+  React.useInsertionEffect(() => {
+    controller.setPreserveScrollOnPrepend(preserveScrollOnPrepend)
+  }, [controller, preserveScrollOnPrepend])
   useFrameThrottledResizeObserver(viewportElementRef, controller.handleResize)
 
   return (
@@ -121,15 +123,16 @@ function MessageScrollerContent({
   spacerClassName,
   ...props
 }: React.ComponentProps<"div"> & { spacerClassName?: string }) {
-  const controller = useMessageScrollerContext()
+  const {
+    handleContentChange,
+    handleResize,
+    setContentElement,
+    setSpacerElement,
+  } = useMessageScrollerContext()
   const contentElementRef = React.useRef<HTMLDivElement>(null)
-  const contentRef = useMergedRefs(
-    contentElementRef,
-    controller.setContentElement,
-    ref
-  )
-  useChildListObserver(contentElementRef, controller.handleContentChange)
-  useFrameThrottledResizeObserver(contentElementRef, controller.handleResize)
+  const contentRef = useMergedRefs(contentElementRef, setContentElement, ref)
+  useChildListObserver(contentElementRef, handleContentChange)
+  useFrameThrottledResizeObserver(contentElementRef, handleResize)
 
   return (
     <div
@@ -145,7 +148,7 @@ function MessageScrollerContent({
     >
       {children}
       <div
-        ref={controller.setSpacerElement}
+        ref={setSpacerElement}
         aria-hidden="true"
         data-message-scroller-spacer=""
         hidden

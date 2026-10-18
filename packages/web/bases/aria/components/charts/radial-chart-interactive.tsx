@@ -54,26 +54,29 @@ const NO_ACTIVITY = RINGS.map(() => 0)
 function useMorph(target: number[]) {
   const [values, setValues] = React.useState(() => target.map(() => 0))
   const valuesRef = React.useRef(values)
-  valuesRef.current = values
 
   React.useEffect(() => {
     const from = valuesRef.current
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setValues(target)
-      return
-    }
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
     const start = performance.now()
     let frame = 0
     const step = () => {
-      const progress = Math.min(1, (performance.now() - start) / FILL_DURATION)
+      const progress = reduced
+        ? 1
+        : Math.min(1, (performance.now() - start) / FILL_DURATION)
       const eased =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
-      setValues(
-        target.map((value, index) => {
-          const origin = from[index] ?? value
-          return origin + (value - origin) * eased
-        })
-      )
+      const next =
+        progress < 1
+          ? target.map((value, index) => {
+              const origin = from[index] ?? value
+              return origin + (value - origin) * eased
+            })
+          : target
+      valuesRef.current = next
+      setValues(next)
       if (progress < 1) frame = requestAnimationFrame(step)
     }
     frame = requestAnimationFrame(step)

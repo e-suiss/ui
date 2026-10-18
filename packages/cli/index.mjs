@@ -63,7 +63,8 @@ const OPTIONS = {
   rtl: "  --rtl            note how to run React components right to left",
   pointer: "  --pointer        show the pointer cursor on buttons (React only)",
   only: `  --only <theme|font>
-                   apply only the colors and radius, or only the fonts`,
+                   apply only the colors and radius, or only the fonts; the
+                   project keeps its style unless --style is given`,
   cwd: "  -c, --cwd <dir>  project directory (defaults to the current directory)",
   help: "  -h, --help       show this help",
   version: "  -v, --version    show the version",
@@ -244,7 +245,13 @@ function parseArgs(args) {
         break
       }
       case "--primary": {
-        options.primary = normalizeColor(queue.next().value)
+        const value = queue.next().value
+        if (value === undefined || value.startsWith("-")) {
+          throw new CliError(
+            `${arg} needs a color, e.g. ${arg} "#2563eb", "rgb(37 99 235)" or "oklch(0.55 0.2 260)".`
+          )
+        }
+        options.primary = normalizeColor(value)
         break
       }
       case "--theme": {
@@ -469,8 +476,10 @@ async function main() {
           `apply needs --preset, --primary, --style or --pointer.\n\n${COMMAND_USAGE.apply}`
         )
       }
-      if (options.only && options.style) {
-        throw new CliError("--style changes components; drop --only to use it.")
+      if (options.only === "font" && options.style) {
+        throw new CliError(
+          "--style changes components and themes; drop --only font to use it."
+        )
       }
       await resolvePlatform(options)
       if (options.platform === "web") await apply(options)

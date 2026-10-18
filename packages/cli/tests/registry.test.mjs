@@ -113,6 +113,7 @@ describe("fetchRegistry", () => {
         requires: [],
         dependencies: [],
         files: ["hooks/use-mobile.ts"],
+        listed: false,
       },
     ])
   })

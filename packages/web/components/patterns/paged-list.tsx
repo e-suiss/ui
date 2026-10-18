@@ -90,14 +90,15 @@ function PagedList<T>({
   const end = isMobile ? loaded * pageSize : page * pageSize
   const visible = items.slice(start, end)
 
-  const link = (target: number) => ({
-    href: getPageHref?.(target) ?? "#",
-    onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!getPageHref || target < 1 || target > pageCount)
-        event.preventDefault()
-      setPage(target)
-    },
-  })
+  const hrefFor = (target: number) => getPageHref?.(target) ?? "#"
+
+  const navigate = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    target: number
+  ) => {
+    if (!getPageHref || target < 1 || target > pageCount) event.preventDefault()
+    setPage(target)
+  }
 
   return (
     <div
@@ -135,7 +136,8 @@ function PagedList<T>({
                   <PaginationPrevious
                     text={previousLabel}
                     aria-disabled={page === 1 || undefined}
-                    {...link(page - 1)}
+                    href={hrefFor(page - 1)}
+                    onClick={(event) => navigate(event, page - 1)}
                   />
                 </PaginationItem>
                 {pageRange(page, pageCount).map((entry, index, pages) =>
@@ -147,7 +149,8 @@ function PagedList<T>({
                     <PaginationItem key={entry}>
                       <PaginationLink
                         isActive={entry === page}
-                        {...link(entry)}
+                        href={hrefFor(entry)}
+                        onClick={(event) => navigate(event, entry)}
                       >
                         {entry}
                       </PaginationLink>
@@ -158,7 +161,8 @@ function PagedList<T>({
                   <PaginationNext
                     text={nextLabel}
                     aria-disabled={page === pageCount || undefined}
-                    {...link(page + 1)}
+                    href={hrefFor(page + 1)}
+                    onClick={(event) => navigate(event, page + 1)}
                   />
                 </PaginationItem>
               </PaginationContent>

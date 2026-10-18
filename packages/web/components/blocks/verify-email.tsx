@@ -90,7 +90,7 @@ export function VerifyEmail() {
           </Button>
         </div>
         <p className="mt-6.5 flex flex-wrap justify-center gap-x-1 text-sm text-muted-foreground">
-          <span>Didn't get it? Check your junk folder or</span>
+          <span>Didn&apos;t get it? Check your junk folder or</span>
           <a href="#change" className="text-primary hover:underline">
             change the address ›
           </a>

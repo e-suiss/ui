@@ -34,6 +34,22 @@ function Avatar({
   )
 }
 
+const loadedImages = new Set<string>()
+const loadedListeners = new Set<() => void>()
+
+function markImageLoaded(key: string) {
+  if (loadedImages.has(key)) return
+  loadedImages.add(key)
+  for (const listener of loadedListeners) listener()
+}
+
+function subscribeLoadedImages(listener: () => void) {
+  loadedListeners.add(listener)
+  return () => {
+    loadedListeners.delete(listener)
+  }
+}
+
 function AvatarImage({
   alt,
   className,
@@ -45,12 +61,23 @@ function AvatarImage({
   ...props
 }: React.ComponentProps<"img">) {
   const context = React.useContext(AvatarContext)
-  const [status, setStatus] = React.useState<ImageStatus>("idle")
+  const [result, setResult] = React.useState<{
+    key: string
+    status: ImageStatus
+  } | null>(null)
   const report = context?.setStatus
+  const key = JSON.stringify([src, srcSet, sizes, crossOrigin, referrerPolicy])
+  const cached = React.useSyncExternalStore(
+    subscribeLoadedImages,
+    () => loadedImages.has(key),
+    () => false
+  )
+  let status: ImageStatus = cached ? "loaded" : "loading"
+  if (result?.key === key) status = result.status
+  if (!src && !srcSet) status = "error"
 
   React.useLayoutEffect(() => {
     if (!src && !srcSet) {
-      setStatus("error")
       report?.("error")
       return
     }
@@ -58,10 +85,10 @@ function AvatarImage({
     const image = new window.Image()
     const update = (next: ImageStatus) => {
       if (!active) return
-      setStatus(next)
+      if (next === "loaded") markImageLoaded(key)
+      setResult({ key, status: next })
       report?.(next)
     }
-    setStatus("loading")
     report?.("loading")
     image.onload = () => update("loaded")
     image.onerror = () => update("error")
@@ -70,11 +97,14 @@ function AvatarImage({
     if (sizes) image.sizes = sizes
     if (srcSet) image.srcset = srcSet
     if (typeof src === "string") image.src = src
-    if (image.complete && image.naturalWidth > 0) update("loaded")
+    if (image.complete && image.naturalWidth > 0) {
+      markImageLoaded(key)
+      report?.("loaded")
+    }
     return () => {
       active = false
     }
-  }, [src, srcSet, sizes, crossOrigin, referrerPolicy, report])
+  }, [key, src, srcSet, sizes, crossOrigin, referrerPolicy, report])
 
   if (status !== "loaded") return null
 

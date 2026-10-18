@@ -35,7 +35,7 @@ export function TooltipChartLine() {
     <Card variant="filled" size="sm">
       <CardHeader>
         <CardTitle>Line indicator</CardTitle>
-        <CardDescription>indicator="line"</CardDescription>
+        <CardDescription>indicator=&quot;line&quot;</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer

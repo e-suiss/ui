@@ -144,23 +144,41 @@ export function decodePreset(code) {
   return preset
 }
 
+const UNAVAILABLE_COLORS = ["gray"]
+const OWN_THEME = "suiss"
+
 export function presetProblem(preset) {
-  for (const key of ["theme", "chartColor"]) {
-    const value = preset[key]
-    if (value && BASE_COLORS.includes(value) && value !== preset.baseColor) {
-      return `The ${value} ${key === "theme" ? "theme" : "chart color"} needs the ${value} base color, the preset uses ${preset.baseColor}. Pick a colored theme or the base color itself.`
+  for (const key of ["baseColor", "theme"]) {
+    if (UNAVAILABLE_COLORS.includes(preset[key])) {
+      return `The ${preset[key]} ${key === "theme" ? "theme" : "base color"} is not available in suiss/ui. Pick ${BASE_COLORS.filter((name) => !UNAVAILABLE_COLORS.includes(name)).join(", ")} or a colored theme on suiss.app/ui/create.`
     }
+  }
+  const { theme, baseColor } = preset
+  if (theme && BASE_COLORS.includes(theme) && theme !== baseColor) {
+    return `The ${theme} theme needs the ${theme} base color, the preset uses ${baseColor}. Pick a colored theme or the base color itself.`
   }
   return null
 }
 
-export function resolveStyle({ style, preset }) {
+export function paletteOf(themes, preset, { theme } = {}) {
+  const own = theme === OWN_THEME
+  const find = (name) => themes.find((entry) => entry.name === name)
+  const base = own ? undefined : find(preset.baseColor)
+  const accent =
+    own && BASE_COLORS.includes(preset.theme) ? undefined : find(preset.theme)
+  const { radius: _light, ...light } = { ...base?.light, ...accent?.light }
+  const { radius: _dark, ...dark } = { ...base?.dark, ...accent?.dark }
+  return { light, dark }
+}
+
+export function resolveStyle({ style, preset, only }) {
   if (style !== undefined && !STYLES.includes(style)) {
     throw new CliError(
       `Unknown style ${style}. Pick one of ${STYLES.join(", ")}.`
     )
   }
   if (preset === undefined) return style ?? DEFAULT_STYLE
+  if (only && style === undefined) return undefined
   const decoded = decodePreset(preset)
   if (!decoded) throw new CliError(`${preset} is not a valid preset code.`)
   if (style === DEFAULT_STYLE) return DEFAULT_STYLE

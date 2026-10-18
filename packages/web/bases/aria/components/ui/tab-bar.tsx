@@ -56,6 +56,22 @@ function useTabBar() {
   return context
 }
 
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)"
+
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+
+function useReducedMotion() {
+  return React.useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION).matches,
+    () => false
+  )
+}
+
 function TabBar({
   open: openProp,
   defaultOpen = false,
@@ -75,22 +91,20 @@ function TabBar({
   const [overflow, setOverflow] = React.useState<React.ReactElement[]>([])
   const [hasSections, setHasSections] = React.useState(false)
   const [present, setPresent] = React.useState(open)
+  const [previousOpen, setPreviousOpen] = React.useState(open)
+  const reducedMotion = useReducedMotion()
+
+  if (open !== previousOpen) {
+    setPreviousOpen(open)
+    if (open) setPresent(true)
+    else if (reducedMotion) setPresent(false)
+  }
 
   React.useEffect(() => {
-    if (open) {
-      setPresent(true)
-      return
-    }
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
-    if (reducedMotion) {
-      setPresent(false)
-      return
-    }
+    if (open || !present) return
     const timeout = setTimeout(() => setPresent(false), 400)
     return () => clearTimeout(timeout)
-  }, [open])
+  }, [open, present])
 
   React.useLayoutEffect(() => {
     const nav = ref.current
@@ -379,17 +393,15 @@ function TabBarContent({
 }: React.ComponentProps<"div">) {
   const { open, present, contentId, overflow, setHasSections } = useTabBar()
   const hasSections = React.Children.toArray(children).length > 0
-  const [settled, setSettled] = React.useState(false)
+  const [transitioned, setTransitioned] = React.useState(false)
+  const [previousOpen, setPreviousOpen] = React.useState(open)
+  const reducedMotion = useReducedMotion()
+  const settled = open && (transitioned || reducedMotion)
 
-  React.useEffect(() => {
-    if (!open) {
-      setSettled(false)
-      return
-    }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setSettled(true)
-    }
-  }, [open])
+  if (open !== previousOpen) {
+    setPreviousOpen(open)
+    if (!open) setTransitioned(false)
+  }
 
   React.useEffect(() => {
     setHasSections(hasSections)
@@ -405,7 +417,9 @@ function TabBarContent({
       data-closing={open ? undefined : ""}
       data-settled={settled ? "" : undefined}
       onTransitionEnd={(event) => {
-        if (event.target === event.currentTarget && open) setSettled(true)
+        if (event.target === event.currentTarget && open) {
+          setTransitioned(true)
+        }
       }}
       className={cn(
         "cn-tab-bar-content *:transition-[opacity,filter,scale] *:delay-100 *:duration-450 *:ease-[cubic-bezier(0.32,0.72,0,1)] *:starting:scale-95 *:starting:opacity-0 *:starting:blur-sm data-closing:*:scale-95 data-closing:*:opacity-0 data-closing:*:blur-sm data-closing:*:delay-0 data-closing:*:duration-150 motion-reduce:*:transition-none",
