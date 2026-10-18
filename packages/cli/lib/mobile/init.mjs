@@ -6,6 +6,7 @@ import { fetchThemes } from "../registry.mjs"
 import { ensureAlias, relative } from "../shared/project.mjs"
 import { installItems } from "./add.mjs"
 import { configureNativewindBabel, ensureBabelPlugin } from "./babel.mjs"
+import { expoFontPlugin, fontList, fontModule, presetFonts } from "./fonts.mjs"
 import {
   detectProject,
   detectStyling,
@@ -297,6 +298,55 @@ async function writeTheme(project, registry, root, style, options) {
   step(`Wrote ${relative(project, file)}`)
 }
 
+function readJsonFile(file) {
+  try {
+    return JSON.parse(readFileSync(file, "utf8"))
+  } catch {
+    return null
+  }
+}
+
+function configureFonts(project, root, fonts) {
+  if (!fonts) return []
+  const manual = []
+  install(project, [
+    ...(project.framework === "expo" ? ["expo-font"] : []),
+    ...fontList(fonts).map((font) => font.package),
+  ])
+  const module = path.join(root, "components", "primitives", "font.ts")
+  mkdirSync(path.dirname(module), { recursive: true })
+  writeFileSync(module, fontModule(fonts))
+  step(`Set the fonts in ${relative(project, module)}`)
+
+  const plugin = expoFontPlugin(project.cwd, fonts)
+  const appJson = path.join(project.cwd, "app.json")
+  const app = project.framework === "expo" && readJsonFile(appJson)
+  if (app?.expo) {
+    const plugins = (app.expo.plugins ?? []).filter(
+      (entry) => (Array.isArray(entry) ? entry[0] : entry) !== "expo-font"
+    )
+    app.expo.plugins = [...plugins, plugin]
+    writeFileSync(appJson, `${JSON.stringify(app, null, 2)}\n`)
+    step("Added the fonts to the expo-font plugin in app.json")
+    manual.push(
+      "The fonts are embedded at build time. Rebuild the app (npx expo prebuild, then run it again) to see them."
+    )
+  } else if (project.framework === "expo") {
+    manual.push(
+      `Add this entry to the plugins of your Expo config, then rebuild the app:\n${JSON.stringify(plugin, null, 2)}`
+    )
+  } else {
+    manual.push(
+      `Link the font files from ${fontList(fonts)
+        .map((font) => `node_modules/${font.package}`)
+        .join(
+          " and "
+        )} into the native projects (for example with react-native-asset), then rebuild the app.`
+    )
+  }
+  return manual
+}
+
 export async function init(options) {
   const project = detectProject(options.cwd)
   project.styling = await pickStyling(project, options)
@@ -394,6 +444,14 @@ export async function init(options) {
           "primitives/toggle-group",
         ],
     { styling: project.styling, overwrite: options.overwrite }
+  )
+
+  manual.push(
+    ...configureFonts(
+      project,
+      findAliasRoot(project.cwd) ?? sourceRoot,
+      presetFonts(options)
+    )
   )
 
   if (project.styling === "uniwind") {

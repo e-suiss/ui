@@ -12,6 +12,7 @@ import {
   createChangeEventDetails,
   createGenericEventDetails,
 } from "./event-details"
+import { fontFamily } from "./font"
 import { useHaptics } from "./haptics"
 import { useEffectEvent } from "./hooks"
 import type {
@@ -464,6 +465,7 @@ function Input({ render, className, style, ref, ...elementProps }: InputProps) {
     ref: [ref, context.inputRef],
     props: [
       {
+        style: fontFamily(),
         value: context.inputValue,
         editable: !context.disabled && !context.readOnly,
         keyboardType: context.keyboardType,

@@ -329,7 +329,7 @@ private struct UsersDetailAvatar: View {
 
   var body: some View {
     Text(verbatim: user.name.split(separator: " ").compactMap(\.first).map(String.init).joined())
-      .font(.system(size: size * 0.38, weight: .semibold))
+      .font(EsuissFont.font(size: size * 0.38, weight: .semibold))
       .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(user.tint, in: Circle())

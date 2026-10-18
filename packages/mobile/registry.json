@@ -3250,6 +3250,7 @@
         "stylesheet": []
       },
       "requires": [
+        "primitives/font",
         "primitives/types",
         "primitives/use-render"
       ],
@@ -11033,6 +11034,7 @@
       "requires": [
         "primitives/event-details",
         "primitives/floating-root",
+        "primitives/font",
         "primitives/positioner",
         "primitives/types",
         "primitives/use-controllable-state",
@@ -11142,6 +11144,7 @@
       "requires": [
         "primitives/event-details",
         "primitives/fieldset",
+        "primitives/font",
         "primitives/form",
         "primitives/hooks",
         "primitives/types",
@@ -11187,6 +11190,20 @@
       ],
       "files": [
         "components/primitives/floating-root.tsx"
+      ]
+    },
+    {
+      "name": "primitives/font",
+      "type": "primitive",
+      "title": "Font",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/font.ts"
       ]
     },
     {
@@ -11362,6 +11379,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/font",
         "primitives/haptics",
         "primitives/hooks",
         "primitives/types",

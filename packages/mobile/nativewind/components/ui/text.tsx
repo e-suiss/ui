@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 import * as React from "react"
 import { Text as RNText, type Role } from "react-native"
+import { fontFamily } from "@/components/primitives/font"
 import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
 
@@ -38,6 +39,8 @@ const ROLE: Partial<Record<TextVariant, Role>> = {
   h4: "heading",
 }
 
+const HEADINGS = new Set<string | null | undefined>(["h1", "h2", "h3", "h4"])
+
 const TextClassContext = React.createContext<string | undefined>(undefined)
 
 function Text({
@@ -57,6 +60,8 @@ function Text({
     props: [
       {
         className: cn(textVariants({ variant }), textClass, className),
+        style:
+          variant === "code" ? undefined : fontFamily(HEADINGS.has(variant)),
         role: variant ? ROLE[variant] : undefined,
       },
       props,

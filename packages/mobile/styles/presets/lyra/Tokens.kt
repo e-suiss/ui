@@ -163,15 +163,20 @@ object Radius {
 }
 
 object Typography {
-    val xs = textStyle(12.0, 16.0)
-    val sm = textStyle(14.0, 20.0)
-    val base = textStyle(16.0, 24.0)
-    val lg = textStyle(18.0, 28.0)
-    val xl = textStyle(20.0, 28.0)
-    val xl2 = textStyle(24.0, 32.0)
-    val xl3 = textStyle(30.0, 36.0)
+    val xs get() = textStyle(12.0, 16.0)
+    val sm get() = textStyle(14.0, 20.0)
+    val base get() = textStyle(16.0, 24.0)
+    val lg get() = textStyle(18.0, 28.0)
+    val xl get() = textStyle(20.0, 28.0)
+    val xl2 get() = textStyle(24.0, 32.0)
+    val xl3 get() = textStyle(30.0, 36.0)
 
-    val all = listOf(xs, sm, base, lg, xl, xl2, xl3)
+    val all get() = listOf(xs, sm, base, lg, xl, xl2, xl3)
+}
+
+object Fonts {
+    val sans: List<FontFile> = emptyList()
+    val heading: List<FontFile> = emptyList()
 }
 
 object Shadows {

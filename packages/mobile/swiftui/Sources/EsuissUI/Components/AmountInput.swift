@@ -111,8 +111,8 @@ struct AmountDisplay: View {
   }
 
   private func text(empty: Bool) -> AttributedString {
-    let symbolFont = Font.system(size: TextStyle.xl3.size * scale, weight: .semibold)
-    let numberFont = Font.system(size: 60 * scale, weight: .semibold)
+    let symbolFont = EsuissFont.font(size: TextStyle.xl3.size * scale, weight: .semibold)
+    let numberFont = EsuissFont.font(size: 60 * scale, weight: .semibold)
     let symbolColor: Color = EsuissColor.mutedForeground
     let numberColor: Color = empty ? EsuissColor.mutedForeground : EsuissColor.foreground
     var prefix = AttributedString(format.prefix)

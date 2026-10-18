@@ -26,6 +26,7 @@ import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
+import com.esuiss.ui.theme.headingFontFamily
 
 enum class TextVariant { Default, H1, H2, H3, H4, P, Blockquote, Code, Lead, Large, Small, Muted }
 
@@ -78,10 +79,10 @@ fun Text(
 
 private fun textVariantStyle(variant: TextVariant, colors: Colors): TextStyle = when (variant) {
     TextVariant.Default, TextVariant.P -> TextStyle.Default
-    TextVariant.H1 -> Typography.xl3.copy(fontWeight = FontWeight.Bold)
-    TextVariant.H2 -> Typography.xl2.copy(fontWeight = FontWeight.Bold)
-    TextVariant.H3 -> Typography.xl.copy(fontWeight = FontWeight.SemiBold)
-    TextVariant.H4 -> Typography.lg.copy(fontWeight = FontWeight.SemiBold)
+    TextVariant.H1 -> Typography.xl3.copy(fontFamily = headingFontFamily, fontWeight = FontWeight.Bold)
+    TextVariant.H2 -> Typography.xl2.copy(fontFamily = headingFontFamily, fontWeight = FontWeight.Bold)
+    TextVariant.H3 -> Typography.xl.copy(fontFamily = headingFontFamily, fontWeight = FontWeight.SemiBold)
+    TextVariant.H4 -> Typography.lg.copy(fontFamily = headingFontFamily, fontWeight = FontWeight.SemiBold)
     TextVariant.Blockquote -> TextStyle(fontStyle = FontStyle.Italic)
     TextVariant.Code -> Typography.sm.copy(fontFamily = FontFamily.Monospace, fontWeight = FontWeight.SemiBold)
     TextVariant.Lead -> Typography.lg.copy(color = colors.mutedForeground)

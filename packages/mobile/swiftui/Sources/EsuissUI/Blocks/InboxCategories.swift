@@ -253,7 +253,7 @@ private struct InboxCategoriesAvatar: View {
   var body: some View {
     let initials = mail.from.split(separator: " ").compactMap(\.first).map(String.init).joined()
     Text(verbatim: mail.tint == nil ? "s" : initials)
-      .font(.system(size: size * 0.4, weight: .semibold))
+      .font(EsuissFont.font(size: size * 0.4, weight: .semibold))
       .foregroundStyle(mail.tint == nil ? EsuissColor.background : EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(mail.tint ?? EsuissColor.foreground, in: Circle())

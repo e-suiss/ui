@@ -98,7 +98,7 @@ public struct GridAccessories: View {
               .overlay(alignment: .bottomTrailing) {
                 if !bag.isEmpty {
                   Text(verbatim: "\(bag.count)")
-                    .font(.system(size: TextStyle.xs.size, weight: .semibold))
+                    .font(EsuissFont.font(size: TextStyle.xs.size, weight: .semibold))
                     .monospacedDigit()
                     .foregroundStyle(EsuissColor.background)
                     .padding(.horizontal, 4)

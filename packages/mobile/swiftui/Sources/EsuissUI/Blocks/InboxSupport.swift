@@ -228,7 +228,7 @@ private struct InboxSupportAvatar: View {
 
   var body: some View {
     Text(verbatim: ticket.requester.split(separator: " ").compactMap(\.first).map(String.init).joined())
-      .font(.system(size: size * 0.4, weight: .semibold))
+      .font(EsuissFont.font(size: size * 0.4, weight: .semibold))
       .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(ticket.tint, in: Circle())

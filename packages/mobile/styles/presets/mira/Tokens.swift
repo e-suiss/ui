@@ -90,6 +90,12 @@ extension Shadow {
   public static let lg = Shadow(.init(color: .black.opacity(0.1), radius: 7.5, y: 10), .init(color: .black.opacity(0.1), radius: 3, y: 4))
 }
 
+public enum Fonts {
+  public static let sans: String? = nil
+  public static let heading: String? = nil
+  public static let files: [String] = []
+}
+
 public enum Metrics {
   public enum Radius {
     public static let button: CGFloat = 8

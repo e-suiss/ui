@@ -429,7 +429,7 @@ public struct AttachmentLabel: View {
   public var body: some View {
     text
       .textCase(.uppercase)
-      .font(.system(size: fontSize, weight: .semibold))
+      .font(EsuissFont.font(size: fontSize, weight: .semibold))
       .lineLimit(1)
       .fixedSize()
       .foregroundStyle(EsuissColor.primaryForeground)

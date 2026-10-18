@@ -1,5 +1,6 @@
 package com.esuiss.ui.theme
 
+import android.content.res.AssetManager
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -10,14 +11,37 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.shadow.Shadow as DropShadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+data class FontFile(val path: String, val weight: Int)
+
+internal object LoadedFonts {
+    var sans: FontFamily? = null
+    var heading: FontFamily? = null
+
+    fun load(assets: AssetManager) {
+        if (sans == null && Fonts.sans.isNotEmpty()) sans = family(Fonts.sans, assets)
+        if (heading == null && Fonts.heading.isNotEmpty()) heading = family(Fonts.heading, assets)
+    }
+
+    private fun family(files: List<FontFile>, assets: AssetManager) =
+        FontFamily(files.map { Font(it.path, assets, FontWeight(it.weight)) })
+}
+
+internal val headingFontFamily: FontFamily?
+    get() = LoadedFonts.heading ?: LoadedFonts.sans
+
 internal fun textStyle(size: Double, lineHeight: Double) = TextStyle(
+    fontFamily = LoadedFonts.sans,
     fontSize = size.sp,
     lineHeight = lineHeight.sp,
     lineHeightStyle = LineHeightStyle(
@@ -77,6 +101,7 @@ fun EsuissTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
+    LoadedFonts.load(LocalContext.current.assets)
     CompositionLocalProvider(
         LocalColors provides if (darkTheme) DarkColors else LightColors,
         content = content,

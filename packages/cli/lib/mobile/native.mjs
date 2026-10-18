@@ -1,4 +1,10 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs"
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs"
 import path from "node:path"
 import { CliError, list, note, step } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
@@ -6,6 +12,7 @@ import { fetchThemes } from "../registry.mjs"
 import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { fetchFiles, scopeOf } from "./add.mjs"
+import { applyFonts, assetName, downloadFaces, presetFonts } from "./fonts.mjs"
 import { fetchRegistry, presetFile } from "./registry.mjs"
 import { themed, themeOptionsFor } from "./theme.mjs"
 
@@ -205,6 +212,41 @@ function printRequirements({ platform, project, spec }) {
   list(missing)
 }
 
+function fontDirectory(project, platform) {
+  if (platform === "swift") return path.join(project.root, "Fonts")
+  const main = `${path.sep}src${path.sep}main${path.sep}`
+  const index = project.root.indexOf(main)
+  if (index === -1) return null
+  return path.join(
+    project.root.slice(0, index + main.length),
+    "assets",
+    "fonts"
+  )
+}
+
+function writeFonts(project, platform, faces) {
+  const directory = fontDirectory(project, platform)
+  if (!directory) {
+    note(
+      "Copy the font files into src/main/assets/fonts of your app module so Compose can load them."
+    )
+    return
+  }
+  mkdirSync(directory, { recursive: true })
+  for (const face of faces) {
+    const name = platform === "swift" ? face.file : assetName(face)
+    writeFileSync(path.join(directory, name), face.bytes)
+  }
+  step(
+    `Added ${faces.length} font file${faces.length === 1 ? "" : "s"} to ${path.relative(project.cwd, directory)}`
+  )
+  if (platform === "swift") {
+    note(
+      `Make sure ${path.relative(project.cwd, directory)} is part of your app target so the fonts are copied into the app.`
+    )
+  }
+}
+
 export async function initNative(options) {
   const context = await setup(options)
   const { project, registry, spec, entries } = context
@@ -218,16 +260,22 @@ export async function initNative(options) {
     fetchThemes,
     context.registry.colors
   )
+  const fonts = presetFonts(options)
+  const faces = fonts ? await downloadFaces(fonts) : []
   const downloaded = (await fetchFiles(project.root, entries(files))).map(
-    (file) =>
-      path.basename(file.target).startsWith("Tokens.")
-        ? {
-            ...file,
-            content: themed(file.content, options.platform, theme),
-          }
-        : file
+    (file) => {
+      if (!path.basename(file.target).startsWith("Tokens.")) return file
+      const content = themed(file.content, options.platform, theme)
+      return {
+        ...file,
+        content: fonts
+          ? applyFonts(content, options.platform, fonts, faces)
+          : content,
+      }
+    }
   )
   reportFiles(writeFiles(project.cwd, downloaded, options.overwrite))
+  if (faces.length) writeFonts(project, options.platform, faces)
   printRequirements(context)
   if (project.xcode) {
     note(
