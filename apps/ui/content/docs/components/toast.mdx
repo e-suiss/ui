@@ -256,6 +256,12 @@ Also accepts the props of `ToastProvider`.
 
 </Only>
 
+<Only platform="swift">
+
+`.toaster()` overlays the toast stack at the bottom of a view and shows the toasts of its `ToastManager`.
+
+</Only>
+
 <Only platform="rn kotlin">
 
 `Toaster` wraps your app in a toast provider and renders the queue into a full-screen viewport. Each toast slides in from the bottom edge, fades out downward, and is capped at 384 points wide.
@@ -504,9 +510,9 @@ dependencies {
 
 </Only>
 
-<Only platform="rn">
-
 ## Usage
+
+<Only platform="rn">
 
 <OnlyStyling styling="uniwind nativewind">
 
@@ -705,6 +711,56 @@ Render `Toaster` once near the root, then call the exported `toast` manager from
 Pass `actionProps` (for example `{ children: "Undo", onPress }`) to show an action button. Set `priority: "high"` for urgent messages and `timeout` to override the provider default; `loading` toasts stay until updated.
 
 Use `createToastManager` to create a separate manager and pass it to `Toaster` as `toastManager`, and `useToastManager` to read the current toasts and actions inside the provider. The lower-level parts are exported for building a custom toast layout.
+
+</Only>
+
+<Only platform="swift">
+
+Add `.toaster()` once near the root. It overlays the toast stack at the bottom of the view and puts its `ToastManager` in the environment as `toastManager`. Call `show`, `success`, `info`, `warning`, `error` or `loading` to add a toast, `update` to change it and `dismiss` to remove it.
+
+```swift
+import SwiftUI
+
+struct ContentView: View {
+  @Environment(\.toastManager) private var toasts
+
+  var body: some View {
+    Button("Save") {
+      toasts.success("Saved", description: "Your changes are stored.")
+    }
+    .buttonStyle(.variant())
+    .toaster()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+Create the state with `rememberToastState()` and wrap your content in `Toaster`. Call `show`, `success`, `info`, `warning`, `error` or `loading` on the state to add a toast, `update` to change it and `dismiss` to remove it.
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.Toaster
+import com.esuiss.ui.components.rememberToastState
+import com.esuiss.ui.theme.EsuissTheme
+
+@Composable
+fun App() {
+    val toasts = rememberToastState()
+    EsuissTheme {
+        Toaster(toasts) {
+            Button("Save", onClick = { toasts.success("Saved", "Your changes are stored.") })
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 ## Examples
 

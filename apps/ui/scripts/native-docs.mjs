@@ -420,14 +420,23 @@ function stylingUsage(leaves) {
 function usageLeaves(leaves, codes) {
   const usage = leaves.filter((leaf) => leaf.zone === "Usage")
   if (!usage.length) return leaves
+  const written = new Set()
   for (const leaf of usage)
-    if (leaf.kind === "fence" && NATIVE.includes(leaf.lang)) leaf.scope = []
+    if (leaf.kind === "fence" && NATIVE.includes(leaf.lang)) {
+      if (codes[leaf.lang]) leaf.scope = []
+      else for (const platform of leaf.scope) written.add(platform)
+    }
   const generated = []
   const heading = usage.find(
     (leaf) => leaf.kind === "heading" && leaf.level === 2
   )
   for (const platform of NATIVE) {
     const code = codes[platform]
+    if (!(code || written.has(platform))) continue
+    if (heading && !heading.scope.includes(platform))
+      heading.scope = ALL.filter(
+        (item) => heading.scope.includes(item) || item === platform
+      )
     if (!code) continue
     if (heading && !heading.scope.includes(platform))
       heading.scope = ALL.filter(
