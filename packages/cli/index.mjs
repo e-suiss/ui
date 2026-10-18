@@ -36,7 +36,7 @@ const OPTIONS = {
                    luma, sera or rhea (defaults to suiss); for React it is
                    read from and saved to the style in components.json`,
   preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
-                   colors, radius, icons and menu color (init only)`,
+                   colors, radius, fonts, icons and menus (init only)`,
   theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
   platform: `  -p, --platform <web|rn|swift|kotlin>
                    web, React Native, SwiftUI or Jetpack Compose sources

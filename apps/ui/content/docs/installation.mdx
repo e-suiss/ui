@@ -280,10 +280,11 @@ npx @esuiss/ui@latest init --styling stylesheet
 
 StyleSheet needs no Tailwind. `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
 
-Pass `--style` or a preset code to start with another [style](/docs/theming#styles):
+Pass `--style` or a preset code from [Create](/create) to start with another [style](/docs/theming#styles), colors, radius, menus and fonts:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --style vega
+npx @esuiss/ui@latest init --preset <code>
 ```
 
 ### Add components with the suiss/ui CLI

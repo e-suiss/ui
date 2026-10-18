@@ -217,7 +217,17 @@ npx @esuiss/ui@latest init --platform swift --style luma
 npx @esuiss/ui@latest init --preset <code>
 ```
 
-`--preset` takes a preset code from a style configurator and uses its style. With the registry CLI, add `@esuiss-rn/theme-<style>` instead of `theme-suiss`, or point `@esuiss-rn` at `https://suiss.app/ui/r/rn-<styling>-<style>/{name}.json` so every component that needs the theme gets the right one. The previews in these docs use the `suiss` style.
+`--preset` takes a preset code from [Create](/create) and applies all of it on React Native, SwiftUI and Compose too:
+
+| Option | What `init` changes |
+| --- | --- |
+| Style | The theme or tokens file of the style |
+| Base color and theme | The light and dark colors in the theme file. A gray theme only goes with the same base color; pick a colored theme to add an accent |
+| Radius | Scales every radius in the theme file; pill shapes stay round |
+| Menu color and accent | The `menu`, `menu-foreground`, `menu-muted-foreground`, `menu-accent`, `menu-accent-foreground` and `menu-border` colors that dropdown menus, context menus, selects and comboboxes use. Inverted menus take the other mode's colors, translucent ones get 70% opacity, a bold accent uses the primary color |
+| Font and heading font | React Native installs `expo-font` and the font package and adds them to the `expo-font` plugin in `app.json`; SwiftUI gets the font files in `EsuissUI/Fonts`, Compose in `src/main/assets/fonts`. Rebuild the app to embed them. Without a font, text uses the system font |
+
+Add `--theme suiss` to keep the suiss/ui colors and apply only the rest. With the registry CLI, add `@esuiss-rn/theme-<style>` instead of `theme-suiss`, or point `@esuiss-rn` at `https://suiss.app/ui/r/rn-<styling>-<style>/{name}.json` so every component that needs the theme gets the right one. The previews in these docs use the `suiss` style.
 
 ## Radius
 
