@@ -43,6 +43,9 @@ npx @esuiss/ui@latest add patterns panel
 
 ```tsx
 import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescription, PanelBody, PanelFooter, PanelClose } from "@/components/patterns/panel"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 ```
 
 <OnlyBase base="base aria">
@@ -53,7 +56,22 @@ import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescri
     <PanelTrigger render={<Button variant="outline" />}>
       Edit profile
     </PanelTrigger>
-    <ProfilePanel />
+    <PanelContent>
+      <PanelHeader>
+        <PanelTitle>Edit profile</PanelTitle>
+        <PanelDescription>
+          Update your details and save when you are done.
+        </PanelDescription>
+      </PanelHeader>
+      <PanelBody className="grid gap-2">
+        <Label htmlFor="panel-name">Name</Label>
+        <Input id="panel-name" defaultValue="Jordan Lee" />
+      </PanelBody>
+      <PanelFooter>
+        <Button>Save changes</Button>
+        <PanelClose render={<Button variant="secondary" />}>Cancel</PanelClose>
+      </PanelFooter>
+    </PanelContent>
   </Panel>
 </div>
 ```
@@ -68,7 +86,24 @@ import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescri
     <PanelTrigger asChild>
       <Button variant="outline">Edit profile</Button>
     </PanelTrigger>
-    <ProfilePanel />
+    <PanelContent>
+      <PanelHeader>
+        <PanelTitle>Edit profile</PanelTitle>
+        <PanelDescription>
+          Update your details and save when you are done.
+        </PanelDescription>
+      </PanelHeader>
+      <PanelBody className="grid gap-2">
+        <Label htmlFor="panel-name">Name</Label>
+        <Input id="panel-name" defaultValue="Jordan Lee" />
+      </PanelBody>
+      <PanelFooter>
+        <Button>Save changes</Button>
+        <PanelClose asChild>
+          <Button variant="secondary">Cancel</Button>
+        </PanelClose>
+      </PanelFooter>
+    </PanelContent>
   </Panel>
 </div>
 ```
@@ -141,10 +176,11 @@ The root that chooses Sheet or Drawer and holds the open state.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the panel is open, for controlled use. |
+| `defaultOpen` | `boolean` | - | Whether the panel starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called with the new open state when the panel opens or closes. |
 | `floating` | `boolean` | - | Insets the mobile drawer from the screen edges. Has no effect on desktop. |
-
-Also accepts the props of `React.ComponentProps<typeof Sheet>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -158,7 +194,17 @@ The button that opens the panel.
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -174,7 +220,17 @@ The popup surface, with an optional close button.
 | `showCloseButton` | `boolean` | `true` | Shows the built-in close button. |
 | `closeLabel` | `string` | - | Text for the close button in place of the icon. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `style`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -194,7 +250,17 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The panel's heading, which names the dialog.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLHeadingElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -204,7 +270,17 @@ Also accepts the props of `React.HTMLAttributes<HTMLHeadingElement>`.
 
 Supporting text that describes the dialog.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLParagraphElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -238,7 +314,17 @@ A button that closes the panel.
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 

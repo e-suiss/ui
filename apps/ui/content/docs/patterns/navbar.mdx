@@ -101,7 +101,22 @@ The header that renders the brand, navigation items and actions.
 | `menuLabel` | `string` | `"Menu"` | Accessible label of the compact menu button and title of the fullscreen menu. |
 | `closeLabel` | `string` | - | Text for the fullscreen menu's close button. |
 | `layout` | `"popover" \| "panel"` | `"popover"` | With `popover`, dropdowns float beneath their trigger; with `panel`, they open as a full-width panel anchored to the header. |
-| `render` | `React.ReactElement` | `<NavbarAnchor />` | The element used for every link, defaulting to a plain anchor; replace it with your router's link component. |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `React.ReactElement` | A plain `a` | The element used for every link; replace it with your router's link component. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` | Renders every link from the props it receives; return your router's link component. |
+
+</OnlyBase>
 
 Also accepts the props of `React.ComponentProps<"header">`.
 

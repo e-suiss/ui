@@ -50,13 +50,30 @@ import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBar
 ```
 
 ```tsx
-<div className="min-h-96">
-  <ActionBar>
-    <FileMenu />
-    <EditMenu />
-    <ViewMenu />
-  </ActionBar>
-</div>
+<ActionBar>
+  <ActionBarMenu>
+    <ActionBarTrigger>File</ActionBarTrigger>
+    <ActionBarContent>
+      <ActionBarItem>
+        New tab
+        <ActionBarShortcut mod>T</ActionBarShortcut>
+      </ActionBarItem>
+      <ActionBarSeparator />
+      <ActionBarItem>
+        Print
+        <ActionBarShortcut mod>P</ActionBarShortcut>
+      </ActionBarItem>
+    </ActionBarContent>
+  </ActionBarMenu>
+  <ActionBarMenu>
+    <ActionBarTrigger>View</ActionBarTrigger>
+    <ActionBarContent>
+      <ActionBarLabel>Appearance</ActionBarLabel>
+      <ActionBarItem>Zoom in</ActionBarItem>
+      <ActionBarItem>Zoom out</ActionBarItem>
+    </ActionBarContent>
+  </ActionBarMenu>
+</ActionBar>
 ```
 
 Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`; the bar uses the child index to pair the mobile row with its sheet. `open`, `defaultOpen` and `onOpenChange` on `ActionBar` control the mobile More actions drawer only; on desktop they have no effect. `ActionBarMenu` accepts its own `open`, `defaultOpen` and `onOpenChange` for an individual menu, which apply on desktop and to the mobile sheet. Use `ActionBarShortcut` with `mod` to prefix the platform modifier key.
@@ -123,10 +140,10 @@ One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether this menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | - | Whether this menu starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when this menu opens or closes. |
 | `children` | `React.ReactNode` | - | The menu's `ActionBarTrigger` and `ActionBarContent`. |
-
-Also accepts the props of `React.ComponentProps<typeof MenubarMenu>`.
 
 </ApiPart>
 
@@ -146,7 +163,17 @@ Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
 
 The menu's items; a `MenubarContent` popup on desktop and an `AlertSheetContent` with a Cancel button on mobile.
 
-Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentProps<typeof MenubarContent>`.
+<OnlyBase base="base radix">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `MenubarContent`, which position the desktop popup, and the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `MenubarContent`, which position the desktop popup, and `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -156,7 +183,17 @@ Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentP
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -171,11 +208,15 @@ An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mob
 | `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
 | `disabled` | `boolean` | - | Prevents the item from being chosen. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
 
 <OnlyBase base="aria">
 
-On the `aria` base, respond to the item with `onAction`.
+Respond to the item with `onAction`. Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
@@ -187,7 +228,17 @@ On the `aria` base, respond to the item with `onAction`.
 
 A divider between item groups, rendered on desktop only.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`.
+
+</OnlyBase>
 
 </ApiPart>
 

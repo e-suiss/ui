@@ -50,7 +50,9 @@ import { Preview, PreviewTrigger, PreviewContent } from "@/components/patterns/p
   <Preview>
     <PreviewTrigger href="#">@nextjs</PreviewTrigger>
     <PreviewContent>
-      <ProfileCard />
+      <p className="text-sm">
+        The React framework, created and maintained by @vercel.
+      </p>
     </PreviewContent>
   </Preview>
 </div>
@@ -99,10 +101,11 @@ The root that chooses HoverCard or Drawer and holds the open state.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the preview is open, for controlled use. |
+| `defaultOpen` | `boolean` | - | Whether the preview starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called with the new open state when the preview opens or closes. |
 | `floating` | `boolean` | `true` | Insets the mobile drawer from the screen edges. Has no effect on desktop. |
-
-Also accepts the props of `React.ComponentProps<typeof HoverCard>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -116,7 +119,17 @@ The link-styled element that opens the preview.
 | --- | --- | --- | --- |
 | `href` | `string` | - | The link destination on desktop. Ignored on mobile. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -131,7 +144,17 @@ The card or drawer that holds the preview.
 | `showCloseButton` | `boolean` | - | Shows a close button in the mobile drawer. |
 | `closeLabel` | `string` | - | Text for the mobile close button in place of the icon. |
 
-Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentProps<typeof HoverCardContent>`.
+<OnlyBase base="base radix">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `HoverCardContent`, which position the desktop card, and the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `HoverCardContent`, which position the desktop card, and `className`, `style`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 

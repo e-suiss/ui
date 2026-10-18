@@ -42,13 +42,36 @@ npx @esuiss/ui@latest add interactions undo-bar
 ## Usage
 
 ```tsx
-import { UndoBarProvider } from "@/components/interactions/undo-bar"
+import { UndoBarProvider, useUndoBar } from "@/components/interactions/undo-bar"
+import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
 <UndoBarProvider>
-  <NotesList />
+  <DeleteButton note={note} />
 </UndoBarProvider>
+```
+
+```tsx
+function DeleteButton({ note }: { note: Note }) {
+  const { show } = useUndoBar()
+
+  return (
+    <Button
+      variant="destructive"
+      onClick={() => {
+        hideNote(note.id)
+        show({
+          title: `“${note.title}” deleted`,
+          onUndo: () => restoreNote(note.id),
+          onCommit: () => deleteNote(note.id),
+        })
+      }}
+    >
+      Delete
+    </Button>
+  )
+}
 ```
 
 - Wrap the app or screen in `UndoBarProvider` and call `show({ title, actionLabel, onUndo, onCommit })` from `useUndoBar` after performing the action.

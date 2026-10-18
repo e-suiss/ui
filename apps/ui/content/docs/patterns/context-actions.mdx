@@ -106,8 +106,7 @@ The root that renders a `ContextMenu` on desktop and an `AlertSheet` on mobile.
 | --- | --- | --- | --- |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the menu or sheet opens or closes. |
 | `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenu>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -131,7 +130,17 @@ The popup holding the actions; on mobile it adds a Cancel button below them.
 | --- | --- | --- | --- |
 | `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -141,7 +150,17 @@ Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -156,11 +175,15 @@ An actionable entry that closes the actions when chosen.
 | `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
 | `disabled` | `boolean` | - | Prevents the item from being chosen. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
 
 <OnlyBase base="aria">
 
-On the `aria` base, respond to the item with `onAction`.
+Respond to the item with `onAction`. Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
@@ -172,7 +195,17 @@ On the `aria` base, respond to the item with `onAction`.
 
 A divider between groups of items, rendered on desktop only.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`.
+
+</OnlyBase>
 
 </ApiPart>
 

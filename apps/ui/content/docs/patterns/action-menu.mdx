@@ -41,6 +41,7 @@ npx @esuiss/ui@latest add patterns action-menu
 
 ```tsx
 import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from "@/components/patterns/action-menu"
+import { Button } from "@/components/ui/button"
 ```
 
 <OnlyBase base="base radix">
@@ -85,7 +86,19 @@ import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, Acti
 
 </OnlyBase>
 
-Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
+`open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled.
+
+<OnlyBase base="base radix">
+
+Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Place your own `Button` inside `ActionMenu` to open it. `placement`, `offset` and `crossOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
+
+</OnlyBase>
 
 ## Examples
 
@@ -122,10 +135,11 @@ The root that renders a `DropdownMenu` on desktop and an `AlertSheet` on mobile.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the menu or sheet is open, for controlled use. |
+| `defaultOpen` | `boolean` | - | Whether the menu or sheet starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the menu or sheet opens or closes. |
 | `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
-
-Also accepts the props of `React.ComponentProps<typeof DropdownMenu>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -135,11 +149,21 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenu>`.
 
 The button that opens the menu or sheet.
 
+<OnlyBase base="base radix">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
 
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `DropdownMenuTrigger`. You can also leave it out and place a `Button` directly inside `ActionMenu`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -153,7 +177,17 @@ The popup holding the actions; on mobile it adds a Cancel button below them.
 | --- | --- | --- | --- |
 | `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
 
-Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentProps<typeof DropdownMenuContent>`.
+<OnlyBase base="base radix">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `DropdownMenuContent`, which position the desktop popup, and the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `placement`, `offset` and `crossOffset` from `DropdownMenuContent`, which position the desktop popup, and `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -163,7 +197,17 @@ Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentP
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -178,11 +222,15 @@ An actionable entry that closes the menu when chosen.
 | `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
 | `disabled` | `boolean` | - | Prevents the item from being chosen. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
 
 <OnlyBase base="aria">
 
-On the `aria` base, respond to the item with `onAction`.
+Respond to the item with `onAction`. Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
@@ -194,7 +242,17 @@ On the `aria` base, respond to the item with `onAction`.
 
 A divider between groups of items, rendered on desktop only.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`.
+
+</OnlyBase>
 
 </ApiPart>
 

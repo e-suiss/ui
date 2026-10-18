@@ -41,10 +41,25 @@ npx @esuiss/ui@latest add interactions section-index
 
 ```tsx
 import { SectionIndex, SectionIndexSection, SectionIndexHeader, SectionIndexBar } from "@/components/interactions/section-index"
+import { ScrollArea } from "@/components/ui/scroll-area"
 ```
 
 ```tsx
-<ContactsExample className="h-[min(36rem,calc(100dvh-7rem))]" />
+<SectionIndex className="h-96">
+  <ScrollArea className="h-full">
+    {groups.map(({ letter, names }) => (
+      <SectionIndexSection key={letter} value={letter}>
+        <SectionIndexHeader>{letter}</SectionIndexHeader>
+        <ul>
+          {names.map((name) => (
+            <li key={name}>{name}</li>
+          ))}
+        </ul>
+      </SectionIndexSection>
+    ))}
+  </ScrollArea>
+  <SectionIndexBar />
+</SectionIndex>
 ```
 
 - Wrap the scrolling list and `SectionIndexBar` in `SectionIndex`, which positions the bar. The list can scroll in its own container, such as `ScrollArea`, or in the page.

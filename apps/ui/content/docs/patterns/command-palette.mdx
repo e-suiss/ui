@@ -43,14 +43,31 @@ npx @esuiss/ui@latest add patterns command-palette
 
 ```tsx
 import { CommandPalette, CommandPaletteTrigger, CommandPaletteContent } from "@/components/patterns/command-palette"
+import { Button } from "@/components/ui/button"
+import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandShortcut } from "@/components/ui/command"
 ```
 
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <CommandPalette>
-    <Trigger />
+    <CommandPaletteTrigger render={<Button variant="outline" />}>
+      Search
+    </CommandPaletteTrigger>
     <CommandPaletteContent>
-      <PaletteItems />
+      <CommandInput placeholder="Type a command or search..." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Settings">
+          <CommandItem>
+            Profile
+            <CommandShortcut mod>P</CommandShortcut>
+          </CommandItem>
+          <CommandItem>
+            Billing
+            <CommandShortcut mod>B</CommandShortcut>
+          </CommandItem>
+        </CommandGroup>
+      </CommandList>
     </CommandPaletteContent>
   </CommandPalette>
 </div>
@@ -95,11 +112,12 @@ The root that renders a `Dialog` on desktop and a `Drawer` on mobile and registe
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the palette is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the palette starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the palette opens or closes, including through the hotkey. |
 | `hotkey` | `string \| false` | `"k"` | The letter that toggles the palette together with `Cmd` on macOS or `Ctrl` elsewhere; `false` disables it. |
 | `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
-
-Also accepts the props of `React.ComponentProps<typeof Dialog>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -113,7 +131,17 @@ The button that opens the palette.
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 

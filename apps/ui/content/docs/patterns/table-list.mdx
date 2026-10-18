@@ -42,11 +42,24 @@ npx @esuiss/ui@latest add patterns table-list
 ## Usage
 
 ```tsx
-import { TableList } from "@/components/patterns/table-list"
+import { TableList, type TableListColumn } from "@/components/patterns/table-list"
 ```
 
 ```tsx
-<TableList<Order> rows={orders} columns={columns} getKey={(order: Order) => order.id} title="Orders" className="mx-auto w-full max-w-3xl" />
+type Order = { id: number; product: string; total: string }
+
+const orders: Order[] = [
+  { id: 1042, product: "Wireless earbuds", total: "$249.00" },
+  { id: 1041, product: "Magnetic charger", total: "$49.00" },
+]
+
+const columns: TableListColumn<Order>[] = [
+  { key: "product", header: "Product", cell: (order) => order.product, slot: "title" },
+  { key: "id", header: "Order", cell: (order) => `#${order.id}`, slot: "description" },
+  { key: "total", header: "Total", cell: (order) => order.total, slot: "trailing", align: "end" },
+]
+
+<TableList rows={orders} columns={columns} getKey={(order) => order.id} title="Orders" />
 ```
 
 - Each `TableListColumn` has a `key`, a `header` and a `cell` renderer. Optional fields are `mobileCell`, `slot` (`title`, `description`, `trailing` or `hidden`) and `align` (`start` or `end`).

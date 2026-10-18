@@ -47,10 +47,26 @@ npm install @phosphor-icons/react
 
 ```tsx
 import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from "@/components/interactions/otp-autofill"
+import { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
 ```
 
 ```tsx
-<VerificationExample incoming={CODE} />
+<OtpAutofill maxLength={6} onVerify={verifyCode}>
+  <OtpAutofillInput aria-label="Verification code">
+    <InputOTPGroup>
+      <InputOTPSlot index={0} />
+      <InputOTPSlot index={1} />
+      <InputOTPSlot index={2} />
+    </InputOTPGroup>
+    <InputOTPSeparator />
+    <InputOTPGroup>
+      <InputOTPSlot index={3} />
+      <InputOTPSlot index={4} />
+      <InputOTPSlot index={5} />
+    </InputOTPGroup>
+  </OtpAutofillInput>
+  <OtpAutofillSuggestion code={receivedCode} />
+</OtpAutofill>
 ```
 
 - Place `OtpAutofillInput` and `OtpAutofillSuggestion` inside `OtpAutofill`. Pass `InputOTPGroup`, `InputOTPSlot`, and `InputOTPSeparator` from `input-otp` as the input's children.

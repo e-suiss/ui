@@ -43,6 +43,9 @@ npx @esuiss/ui@latest add patterns modal
 
 ```tsx
 import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from "@/components/patterns/modal"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 ```
 
 <OnlyBase base="base aria">
@@ -179,10 +182,11 @@ The root that renders a `Dialog` on desktop and a `Drawer` on mobile.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the modal is open, for controlled use. |
+| `defaultOpen` | `boolean` | - | Whether the modal starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the modal opens or closes. |
 | `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
-
-Also accepts the props of `React.ComponentProps<typeof Dialog>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -196,7 +200,17 @@ The button that opens the modal.
 | --- | --- | --- | --- |
 | `className` | `string` | - | Classes applied to the trigger. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ComponentProps<typeof DialogTrigger>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass `render` to replace the button with your own element, such as a `Button`. Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -211,7 +225,17 @@ The popup window, with a close button by default.
 | `className` | `string` | - | Classes applied to the dialog or drawer popup. |
 | `style` | `React.CSSProperties` | - | Inline styles applied to the dialog or drawer popup. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ComponentProps<typeof DialogContent>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `showCloseButton`, `closeLabel`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -251,7 +275,17 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The modal's title, used as its accessible name.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ComponentProps<typeof DialogTitle>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -261,7 +295,17 @@ Also accepts the props of `React.ComponentProps<typeof DialogTitle>`.
 
 Supporting text, used as the modal's accessible description.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ComponentProps<typeof DialogDescription>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -271,7 +315,17 @@ Also accepts the props of `React.ComponentProps<typeof DialogDescription>`.
 
 A button that closes the modal.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ComponentProps<typeof DialogClose>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass `render` to replace the button with your own element, such as a `Button`. Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 

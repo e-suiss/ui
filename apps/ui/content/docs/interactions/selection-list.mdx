@@ -50,7 +50,17 @@ import { SelectionList, SelectionListTrigger, SelectionListItem, SelectionListBa
 ```
 
 ```tsx
-<NotesExample />
+<SelectionList>
+  <SelectionListTrigger />
+  {notes.map((note) => (
+    <SelectionListItem key={note.id} value={note.id}>
+      {note.title}
+    </SelectionListItem>
+  ))}
+  <SelectionListBar aria-label="Selection actions">
+    <SelectionListCount />
+  </SelectionListBar>
+</SelectionList>
 ```
 
 - Place `SelectionListTrigger`, the `SelectionListItem` rows, and `SelectionListBar` inside `SelectionList`. Put your own action buttons and `SelectionListCount` inside the bar.

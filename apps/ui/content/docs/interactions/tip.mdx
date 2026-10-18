@@ -45,10 +45,40 @@ npm install @base-ui/react @phosphor-icons/react
 
 ```tsx
 import { TipGroup, Tip, TipCard, TipAnchor, TipPopover, TipIcon, TipContent, TipTitle, TipDescription, TipClose } from "@/components/interactions/tip"
+import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
-<TipsExample />
+<TipGroup>
+  <Tip id="notes-pin">
+    <TipCard>
+      <TipIcon>
+        <PushPinIcon />
+      </TipIcon>
+      <TipContent>
+        <TipTitle>Pin your favorites</TipTitle>
+        <TipDescription>
+          Swipe right on a note to keep it at the top of the list.
+        </TipDescription>
+      </TipContent>
+      <TipClose />
+    </TipCard>
+  </Tip>
+  <Tip id="notes-compose">
+    <TipAnchor>
+      <Button size="icon" aria-label="New note">
+        <NotePencilIcon />
+      </Button>
+    </TipAnchor>
+    <TipPopover>
+      <TipContent>
+        <TipTitle>Start a note fast</TipTitle>
+        <TipDescription>Tap here any time to begin a new note.</TipDescription>
+      </TipContent>
+      <TipClose />
+    </TipPopover>
+  </Tip>
+</TipGroup>
 ```
 
 - Give every `Tip` a stable, unique `id`. Place either a `TipCard`, or a `TipAnchor` with a `TipPopover`, inside it.

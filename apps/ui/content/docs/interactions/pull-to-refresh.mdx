@@ -46,7 +46,13 @@ import { PullToRefresh } from "@/components/interactions/pull-to-refresh"
 ```
 
 ```tsx
-<InboxExample />
+<PullToRefresh onRefresh={fetchMessages} className="h-96">
+  <ul>
+    {messages.map((message) => (
+      <li key={message.id}>{message.subject}</li>
+    ))}
+  </ul>
+</PullToRefresh>
 ```
 
 - Give `PullToRefresh` a bounded height so its content scrolls inside it.

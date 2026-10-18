@@ -50,7 +50,19 @@ import { SplitView, SplitViewSidebar, SplitViewList, SplitViewDetail, SplitViewI
 ```
 
 ```tsx
-<MailExample />
+<SplitView>
+  <SplitViewSidebar title="Mailboxes">
+    <SplitViewItem isActive>Inbox</SplitViewItem>
+    <SplitViewItem>Sent</SplitViewItem>
+  </SplitViewSidebar>
+  <SplitViewList title="Inbox">
+    <SplitViewItem isActive>Your order has shipped</SplitViewItem>
+    <SplitViewItem>Tomorrow's meeting</SplitViewItem>
+  </SplitViewList>
+  <SplitViewDetail title="Your order has shipped">
+    <p>Order #1042 will be delivered tomorrow.</p>
+  </SplitViewDetail>
+</SplitView>
 ```
 
 - Place `SplitViewSidebar`, `SplitViewList` and `SplitViewDetail` as direct children of `SplitView`. Leave out the sidebar for a two-column layout.
@@ -143,7 +155,31 @@ A button row that marks the current selection and advances to the next column on
 | --- | --- | --- | --- |
 | `isActive` | `boolean` | `false` | Marks the item as the current selection with `aria-current` and `data-active`. |
 
-Also accepts the props of `useRender.ComponentProps<"button">`, `React.ComponentProps<"button">`.
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a link, in place of the button. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | - | Renders your own element, such as a link, with the props it receives. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+</OnlyBase>
 
 </ApiPart>
 

@@ -48,7 +48,26 @@ import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, P
 ```
 
 ```tsx
-<PhotoGrid />
+<PreviewMenu>
+  <PreviewMenuTrigger className="aspect-square overflow-hidden rounded-2xl">
+    <img src="/photo.jpg" alt="Photo" className="size-full object-cover" />
+  </PreviewMenuTrigger>
+  <PreviewMenuContent>
+    <PreviewMenuItem onClick={copy}>
+      Copy
+      <CopyIcon />
+    </PreviewMenuItem>
+    <PreviewMenuItem onClick={share}>
+      Share
+      <ShareNetworkIcon />
+    </PreviewMenuItem>
+    <PreviewMenuSeparator />
+    <PreviewMenuItem variant="destructive" onClick={remove}>
+      Delete
+      <TrashIcon />
+    </PreviewMenuItem>
+  </PreviewMenuContent>
+</PreviewMenu>
 ```
 
 - Compose `PreviewMenuTrigger` and `PreviewMenuContent` inside `PreviewMenu`, with `PreviewMenuItem` and `PreviewMenuSeparator` inside the content.
@@ -131,6 +150,22 @@ An action in the menu.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `"default" \| "destructive"` | `"default"` | The item style; `destructive` renders the label in the destructive color. |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `disabled` | `boolean` | - | Prevents the item from being chosen. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isDisabled` | `boolean` | - | Prevents the item from being chosen. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 

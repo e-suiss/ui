@@ -48,7 +48,21 @@ import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } f
 ```
 
 ```tsx
-<MailExample />
+<SwipeActions>
+  <SwipeActionsContent className="px-4 py-3">
+    Your order has shipped
+  </SwipeActionsContent>
+  <SwipeActionsActions>
+    <SwipeAction variant="archive" onClick={archive}>
+      <ArchiveIcon />
+      Archive
+    </SwipeAction>
+    <SwipeAction variant="destructive" fullSwipe onClick={remove}>
+      <TrashIcon />
+      Delete
+    </SwipeAction>
+  </SwipeActionsActions>
+</SwipeActions>
 ```
 
 - Place `SwipeActionsContent` inside `SwipeActions`, with a `SwipeActionsActions` for each side that has actions. Rows can have leading actions, trailing actions, or both.

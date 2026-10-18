@@ -40,19 +40,35 @@ npx @esuiss/ui@latest add interactions island
 ## Usage
 
 ```tsx
-import { IslandProvider, Island, IslandCompact, IslandExpanded, IslandRing } from "@/components/interactions/island"
+import { IslandProvider, Island, IslandCompact, IslandExpanded, IslandRing, useIsland } from "@/components/interactions/island"
+import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
 <IslandProvider>
-  <div className="flex min-h-[60dvh] flex-col items-center justify-center gap-4 text-center">
-    <Island />
-    <p className="max-w-xs text-sm text-muted-foreground">
-      The pill grows to show the notification and shrinks back on its own.
-    </p>
-    <NotifyButtons />
-  </div>
+  <Island />
+  <NotifyButton />
 </IslandProvider>
+```
+
+```tsx
+function NotifyButton() {
+  const { notify } = useIsland()
+
+  return (
+    <Button
+      onClick={() =>
+        notify({
+          icon: <ChatCircleIcon />,
+          title: "Jordan Lee",
+          description: "Are we still on for Saturday?",
+        })
+      }
+    >
+      Notify
+    </Button>
+  )
+}
 ```
 
 - Wrap the app, or the part of it that posts notifications, in `IslandProvider`. `Island`, `IslandCompact`, `IslandExpanded`, and `useIsland` throw outside of it.

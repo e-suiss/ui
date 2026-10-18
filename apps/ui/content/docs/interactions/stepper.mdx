@@ -96,6 +96,9 @@ The Number Field root that holds the value and its limits.
 | `value` | `number` | - | The current value, for controlled use. |
 | `defaultValue` | `number` | `0` | The initial value when uncontrolled. |
 | `onValueChange` | `(value: number) => void` | - | Called with the new value when it changes. |
+| `min` | `number` | - | The lowest value. No limit by default. |
+| `max` | `number` | - | The highest value. No limit by default. |
+| `disabled` | `boolean` | `false` | Disables the input and both buttons. |
 
 Also accepts the props of the primitive part it wraps.
 

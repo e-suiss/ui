@@ -42,11 +42,22 @@ npx @esuiss/ui@latest add patterns app-shell
 ## Usage
 
 ```tsx
-import { AppShell, AppShellTrigger } from "@/components/patterns/app-shell"
+import { AppShell, type AppShellItem, AppShellTrigger } from "@/components/patterns/app-shell"
 ```
 
 ```tsx
-<ShellExample items={items} />
+const items: AppShellItem[] = [
+  { value: "home", label: "Home", icon: <HouseIcon /> },
+  { value: "inbox", label: "Inbox", icon: <TrayIcon />, badge: 12 },
+  { value: "settings", label: "Settings", icon: <GearIcon /> },
+]
+
+<AppShell items={items}>
+  <header className="flex h-14 items-center gap-2 border-b px-4">
+    <AppShellTrigger />
+    <h1 className="text-base font-semibold">Home</h1>
+  </header>
+</AppShell>
 ```
 
 Each `AppShellItem` has a `value`, `label` and `icon`, plus optional `href`, `badge`, `group` and `disabled`. Items with the same `group` render under a shared `SidebarGroupLabel`. The selected item is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`; it defaults to the first item. Items with an `href` render through `render`, which defaults to a plain anchor, so you can pass your router's link component.
@@ -133,9 +144,25 @@ The root layout that renders the sidebar or tab bar from `items` and wraps the p
 | `defaultOpen` | `boolean` | `true` | Whether the sidebar starts expanded when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the sidebar expands or collapses. |
 | `moreLabel` | `string` | `"More"` | Text of the More tab on mobile. |
-| `render` | `React.ReactElement` | `<AppShellLink />` | The element items with an `href` render as, such as your router's link. |
+| `label` | `string` | `"Main"` | The accessible name of the tab bar on mobile. |
+| `className` | `string` | - | Classes for the content area. |
+| `children` | `React.ReactNode` | - | The page content. |
 
-Also accepts the props of `React.ComponentProps<typeof AppShellLayout>`.
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `React.ReactElement` | A plain `a` | The element items with an `href` render as, such as your router's link. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` | Renders items with an `href`, such as your router's link. It receives the link props, including `href`. |
+
+</OnlyBase>
 
 </ApiPart>
 

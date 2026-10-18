@@ -47,6 +47,9 @@ npm install @base-ui/react
 
 ```tsx
 import { Flyout, FlyoutTrigger, FlyoutContent, FlyoutHeader, FlyoutTitle, FlyoutDescription, FlyoutBody, FlyoutClose } from "@/components/patterns/flyout"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 ```
 
 <OnlyBase base="base aria">
@@ -180,10 +183,11 @@ The root that renders a `Popover` on desktop and a `Drawer` on mobile.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `open` | `boolean` | - | Whether the flyout is open, for controlled use. |
+| `defaultOpen` | `boolean` | - | Whether the flyout starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the flyout opens or closes. |
 | `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
-
-Also accepts the props of `React.ComponentProps<typeof Popover>`.
+| `children` | `React.ReactNode` | - | The trigger and content. |
 
 </ApiPart>
 
@@ -197,7 +201,17 @@ The button that opens the flyout.
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 <OnlyBase base="radix">
 
@@ -218,7 +232,17 @@ The popup; a `PopoverContent` on desktop and a `DrawerContent` on mobile.
 | `showCloseButton` | `boolean` | - | Shows a close button in the mobile drawer. |
 | `closeLabel` | `string` | - | Replaces the drawer's close icon with this text; requires `showCloseButton`. |
 
-Also accepts the props of `React.HTMLAttributes<HTMLElement>`, `React.ComponentProps<typeof PopoverContent>`.
+<OnlyBase base="base radix">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `PopoverContent`, which position the desktop popover, and the props of `React.HTMLAttributes<HTMLElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `PopoverContent`, which position the desktop popover, and `className`, `style`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -238,7 +262,17 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The flyout's title, used as its accessible name.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLHeadingElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -248,7 +282,17 @@ Also accepts the props of `React.HTMLAttributes<HTMLHeadingElement>`.
 
 Supporting text, used as the flyout's accessible description.
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.HTMLAttributes<HTMLParagraphElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children` and `id`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -272,7 +316,17 @@ A button that closes the flyout.
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
 
+<OnlyBase base="base radix">
+
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts `className`, `children`, `id` and `aria-label`.
+
+</OnlyBase>
 
 <OnlyBase base="radix">
 

@@ -44,11 +44,26 @@ npm install @phosphor-icons/react
 ## Usage
 
 ```tsx
+import * as React from "react"
 import { SearchReveal, SearchRevealField, SearchRevealContent } from "@/components/interactions/search-reveal"
 ```
 
 ```tsx
-<NotesExample count={12} />
+const [query, setQuery] = React.useState("")
+const results = notes.filter((note) =>
+  note.title.toLowerCase().includes(query.toLowerCase())
+)
+
+<SearchReveal className="h-96">
+  <SearchRevealField value={query} onValueChange={setQuery} />
+  <SearchRevealContent>
+    <ul>
+      {results.map((note) => (
+        <li key={note.id}>{note.title}</li>
+      ))}
+    </ul>
+  </SearchRevealContent>
+</SearchReveal>
 ```
 
 - Place `SearchRevealField` first and `SearchRevealContent` after it inside `SearchReveal`, and give the container a bounded height.

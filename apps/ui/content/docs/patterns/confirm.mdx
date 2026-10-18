@@ -41,7 +41,10 @@ npx @esuiss/ui@latest add patterns confirm
 
 ```tsx
 import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from "@/components/patterns/confirm"
+import { Button } from "@/components/ui/button"
 ```
+
+<OnlyBase base="base">
 
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
@@ -66,7 +69,73 @@ import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, 
 </div>
 ```
 
-Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them. `Confirm` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use. The mobile sheet is not dismissible by default; pass `dismissible` to let an outside press close it.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Confirm>
+    <ConfirmTrigger asChild>
+      <Button variant="outline">Delete order</Button>
+    </ConfirmTrigger>
+    <ConfirmContent>
+      <ConfirmHeader>
+        <ConfirmTitle>Delete order?</ConfirmTitle>
+        <ConfirmDescription>
+          Order #1042 will be permanently deleted. This action cannot be
+          undone.
+        </ConfirmDescription>
+      </ConfirmHeader>
+      <ConfirmFooter>
+        <ConfirmCancel>Cancel</ConfirmCancel>
+        <ConfirmAction variant="destructive">Delete</ConfirmAction>
+      </ConfirmFooter>
+    </ConfirmContent>
+  </Confirm>
+</div>
+```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <Confirm>
+    <Button variant="outline">Delete order</Button>
+    <ConfirmContent>
+      <ConfirmHeader>
+        <ConfirmTitle>Delete order?</ConfirmTitle>
+        <ConfirmDescription>
+          Order #1042 will be permanently deleted. This action cannot be
+          undone.
+        </ConfirmDescription>
+      </ConfirmHeader>
+      <ConfirmFooter>
+        <ConfirmCancel>Cancel</ConfirmCancel>
+        <ConfirmAction variant="destructive">Delete</ConfirmAction>
+      </ConfirmFooter>
+    </ConfirmContent>
+  </Confirm>
+</div>
+```
+
+</OnlyBase>
+
+Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them. The mobile sheet is not dismissible by default; pass `dismissible` to let an outside press close it.
+
+<OnlyBase base="base radix">
+
+`Confirm` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`Confirm` accepts `isOpen`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use. A `Button` placed inside `Confirm` opens it.
+
+</OnlyBase>
 
 ## Examples
 
@@ -97,6 +166,10 @@ Sets `dismissible` so the mobile sheet also closes when the user presses outside
 ### Confirm
 
 The root that renders an `AlertDialog` on desktop and an `AlertSheet` on mobile.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dismissible` | `boolean` | `false` | Lets a press outside close the mobile sheet. It has no effect on desktop. |
 
 Also accepts the props of `React.ComponentProps<typeof AlertSheet>`.
 

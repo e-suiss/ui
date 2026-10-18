@@ -46,16 +46,32 @@ npm install @base-ui/react @phosphor-icons/react
 ## Usage
 
 ```tsx
-import { Trail } from "@/components/patterns/trail"
+import { Trail, type TrailItem } from "@/components/patterns/trail"
 ```
 
 ```tsx
-<TrailExample items={article} />
+const items: TrailItem[] = [
+  { label: "Support", href: "/support" },
+  { label: "Account", href: "/support/account" },
+  { label: "Turn on two-factor authentication" },
+]
+
+<Trail items={items} />
 ```
 
 - Pass `items` in order from the root to the current page. Each `TrailItem` has a `label` and an optional `href`; the last item is the current page.
 - On mobile, nothing renders when there is only one item.
+<OnlyBase base="base radix">
+
 - Use `render` to output links through your router, for example a framework `Link` element. It applies to breadcrumb links, the mobile back link and the history menu items.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- Pass a `render` function to output links through your router. It receives the link props, including `href`, and applies to breadcrumb links, the mobile back link and the history menu items.
+
+</OnlyBase>
 
 ## Examples
 
@@ -91,7 +107,22 @@ The navigation element that renders the breadcrumbs or the mobile back link.
 | `maxItems` | `number` | - | The maximum number of items shown on desktop before the middle collapses into an ellipsis. |
 | `backLabel` | `string` | - | Text for the mobile back link; defaults to the parent's label. |
 | `ellipsisLabel` | `string` | `"More"` | The accessible label of the collapsed ellipsis. |
-| `render` | `React.ReactElement` | `<TrailAnchor />` | The element used to render links. |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `React.ReactElement` | A plain `a` | The element used to render links. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` | Renders each link from the props it receives. |
+
+</OnlyBase>
 
 Also accepts the props of `React.ComponentProps<"nav">`.
 
