@@ -70,6 +70,7 @@ export function CreateFrame() {
   React.useEffect(() => {
     const onMessage = (event: MessageEvent<FrameMessage>) => {
       if (event.origin !== window.location.origin) return
+      if (event.source !== window.parent) return
       if (event.data?.type !== FRAME_MESSAGE) return
       setState(event.data.state)
       document.documentElement.classList.toggle("dark", event.data.dark)
