@@ -223,6 +223,11 @@ async function themeItem(root, styling, styles, style) {
       ...base,
       type: "registry:lib",
       dependencies: analysis.dependencies,
+      ...(analysis.requires.length && {
+        registryDependencies: analysis.requires
+          .sort()
+          .map((required) => `${NAMESPACE}/${standardName(required)}`),
+      }),
       files: [
         {
           path: file,
