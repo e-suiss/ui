@@ -27,11 +27,14 @@ import {
   install,
 } from "./project.mjs"
 import {
+  detectStyle,
   fetchRegistry,
   fetchText,
+  presetFile,
   resolveItems,
   sourceOf,
 } from "./registry.mjs"
+import { keepTheme } from "./theme.mjs"
 
 export function fetchFiles(root, entries, kind = "rn") {
   const targets = entries.map(({ file, source }) => ({
@@ -58,14 +61,42 @@ function withLocalFonts(root, files) {
   )
 }
 
+const THEME_MODULE = path.join("components", "ui", "theme.ts")
+
+async function withLocalTheme(root, registry, files) {
+  const module = path.join(root, THEME_MODULE)
+  if (!files.some((file) => file.target === module) || !existsSync(module)) {
+    return files
+  }
+  const current = readFileSync(module, "utf8")
+  const fallback = registry.styles.stylesheet.theme
+  const style = await detectStyle(
+    registry,
+    "stylesheet",
+    fallback,
+    current,
+    "stylesheet"
+  )
+  const original = await fetchText(
+    presetFile(registry, "stylesheet", style) ?? fallback
+  )
+  const content = keepTheme(original, current, original, "stylesheet")
+  return files.map((file) =>
+    file.target === module ? { ...file, content } : file
+  )
+}
+
 async function itemFiles(root, registry, items, styling, library) {
-  return withLocalFonts(
+  const files = withLocalFonts(
     root,
     await withIcons(
       { platform: "rn", root, registry, library, fetchText },
       await fetchFiles(root, itemEntries(registry, items, styling))
     )
   )
+  return styling === "stylesheet"
+    ? withLocalTheme(root, registry, files)
+    : files
 }
 
 export async function useIconLibrary(project, root, registry, iconLibrary) {
