@@ -1,7 +1,14 @@
 "use client"
 
 import { cva, type VariantProps } from "class-variance-authority"
-import { useId, useLayoutEffect, useMemo, useRef } from "react"
+import {
+  createContext,
+  useContext,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
@@ -74,12 +81,15 @@ const FIELD_CONTROL =
 const FIELD_NOTE = "[data-slot=field-description], [data-slot=field-error]"
 const WHITESPACE = /\s+/
 
+const FieldLabelContext = createContext(false)
+
 function Field({
   className,
   orientation = "vertical",
   ref,
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+  const inLabel = useContext(FieldLabelContext)
   const fieldRef = useRef<HTMLDivElement | null>(null)
   const linkedRef = useRef<string[]>([])
   const noteId = useId()
@@ -122,7 +132,7 @@ function Field({
         if (typeof ref === "function") return ref(node)
         if (ref) ref.current = node
       }}
-      role="group"
+      role={inLabel ? undefined : "group"}
       data-slot="field"
       data-orientation={orientation}
       className={cn(fieldVariants({ orientation }), className)}
@@ -149,15 +159,17 @@ function FieldLabel({
   ...props
 }: React.ComponentProps<typeof Label>) {
   return (
-    <Label
-      data-slot="field-label"
-      className={cn(
-        "cn-field-label group/field-label flex w-fit peer/field-label *:data-[slot=field]:p-4",
-        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
-        className
-      )}
-      {...props}
-    />
+    <FieldLabelContext.Provider value>
+      <Label
+        data-slot="field-label"
+        className={cn(
+          "cn-field-label group/field-label flex w-fit peer/field-label *:data-[slot=field]:p-4",
+          "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
+          className
+        )}
+        {...props}
+      />
+    </FieldLabelContext.Provider>
   )
 }
 
