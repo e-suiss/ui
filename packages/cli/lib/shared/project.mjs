@@ -5,7 +5,10 @@ import path from "node:path"
 import { CliError } from "../output.mjs"
 
 const PACKAGE_NAME = /^(@[a-z0-9~][a-z0-9-._~]*\/)?[a-z0-9~][a-z0-9-._~]*$/
-const PACKAGE_RANGE = /^[a-z0-9.^~<>=|*+-]+$/i
+const PACKAGE_RANGE = /^[a-z0-9.^~=*+-]+$/i
+const CMD_META = /([()\][%!^"`<>&|;, *?])/g
+const TRAILING_BACKSLASHES = /(\\*)$/
+const QUOTE_WITH_BACKSLASHES = /(\\*)"/g
 
 const LOCKFILES = [
   ["pnpm-lock.yaml", "pnpm"],
@@ -216,12 +219,27 @@ export function ensureAlias(project, sourceRoot, files = ["tsconfig.json"]) {
   return true
 }
 
+function quoteForCmd(arg) {
+  const quoted = `"${arg
+    .replace(QUOTE_WITH_BACKSLASHES, '$1$1\\"')
+    .replace(TRAILING_BACKSLASHES, "$1$1")}"`
+  return quoted.replace(CMD_META, "^$1")
+}
+
+export function runCommand(command, args, cwd, platform = process.platform) {
+  if (platform !== "win32") {
+    return spawnSync(command, args, { cwd, stdio: "inherit" })
+  }
+  const line = [command.replace(CMD_META, "^$1"), ...args.map(quoteForCmd)]
+  return spawnSync(
+    process.env.comspec || "cmd.exe",
+    ["/d", "/s", "/c", `"${line.join(" ")}"`],
+    { cwd, stdio: "inherit", windowsVerbatimArguments: true }
+  )
+}
+
 export function spawn(project, command, args) {
-  const result = spawnSync(command, args, {
-    cwd: project.cwd,
-    stdio: "inherit",
-    shell: process.platform === "win32",
-  })
+  const result = runCommand(command, args, project.cwd)
   if (result.status !== 0) {
     throw new CliError(`${command} ${args.join(" ")} failed.`)
   }

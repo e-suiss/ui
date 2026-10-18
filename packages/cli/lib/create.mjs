@@ -1,9 +1,8 @@
-import { spawnSync } from "node:child_process"
 import { existsSync, readdirSync } from "node:fs"
 import path from "node:path"
 
 import { CliError, step } from "./output.mjs"
-import { agentPackageManager } from "./shared/project.mjs"
+import { agentPackageManager, runCommand } from "./shared/project.mjs"
 
 export const TEMPLATES = {
   next: { title: "Next.js", platform: "web" },
@@ -64,12 +63,7 @@ function creatorArgs(template, name, packageManager) {
 }
 
 function defaultRun(command, args, cwd) {
-  const result = spawnSync(command, args, {
-    cwd,
-    stdio: "inherit",
-    shell: process.platform === "win32",
-  })
-  return result.status === 0
+  return runCommand(command, args, cwd).status === 0
 }
 
 function packageManagerOf() {
