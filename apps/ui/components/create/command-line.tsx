@@ -18,9 +18,14 @@ export function CommandLine({ command }: { command: string }) {
 
   return (
     <div className="flex items-center gap-3 rounded-2xl bg-foreground/5 py-2 ps-4 pe-2">
-      <code className="min-w-0 flex-1 overflow-x-auto font-mono text-[13px] whitespace-nowrap">
+      <code className="min-w-0 flex-1 font-mono text-[13px] leading-[1.6] break-words">
         <span className="text-muted-foreground select-none">$ </span>
-        {command}
+        {command.split(" ").map((word, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && " "}
+            <span className="whitespace-nowrap">{word}</span>
+          </React.Fragment>
+        ))}
       </code>
       <button
         type="button"

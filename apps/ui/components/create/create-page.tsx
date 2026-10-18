@@ -298,38 +298,33 @@ export function CreatePage() {
             picker("base", strings.primitiveBase, [
               PRIMITIVE_BASES.map((value) => ({ value, label: value })),
             ])}
-          {web &&
-            picker("baseColor", strings.createBaseColor, [
-              options(BASE_COLORS, true),
-            ])}
-          {web &&
-            picker("theme", strings.createTheme, [
-              [
-                {
-                  value: defaultTheme ?? state.baseColor,
-                  label: strings.createDefault,
-                  swatch: swatchOf(defaultTheme ?? state.baseColor),
-                },
-              ],
-              options(colorThemes, true),
-            ])}
-          {web && picker("font", strings.createFont, [options(FONTS)])}
-          {web &&
-            picker("radius", strings.createRadius, [options(PRESET_RADII)])}
+          {picker("baseColor", strings.createBaseColor, [
+            options(BASE_COLORS, true),
+          ])}
+          {picker("theme", strings.createTheme, [
+            [
+              {
+                value: defaultTheme ?? state.baseColor,
+                label: strings.createDefault,
+                swatch: swatchOf(defaultTheme ?? state.baseColor),
+              },
+            ],
+            options(colorThemes, true),
+          ])}
+          {picker("font", strings.createFont, [options(FONTS)])}
+          {picker("radius", strings.createRadius, [options(PRESET_RADII)])}
           {picker("iconLibrary", strings.iconLibrary, [
             PRESET_ICON_LIBRARIES.map((value) => ({
               value,
               label: ICON_LABELS[value as IconLibrary],
             })),
           ])}
-          {web &&
-            picker("menuColor", strings.createMenuColor, [
-              options(PRESET_MENU_COLORS),
-            ])}
-          {web &&
-            picker("menuAccent", strings.createMenuAccent, [
-              options(PRESET_MENU_ACCENTS),
-            ])}
+          {picker("menuColor", strings.createMenuColor, [
+            options(PRESET_MENU_COLORS),
+          ])}
+          {picker("menuAccent", strings.createMenuAccent, [
+            options(PRESET_MENU_ACCENTS),
+          ])}
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col gap-8">
