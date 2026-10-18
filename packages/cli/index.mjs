@@ -16,7 +16,7 @@ import {
   detectNativePlatforms,
   initNative,
 } from "./lib/mobile/native.mjs"
-import { CliError, color, step } from "./lib/output.mjs"
+import { CliError, color, printable, step } from "./lib/output.mjs"
 import { decodePreset } from "./lib/preset.mjs"
 import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
@@ -521,7 +521,7 @@ async function main() {
 
 main().catch((error) => {
   if (error instanceof CliError) {
-    console.error(color.red(error.message))
+    console.error(color.red(printable(error.message)))
     process.exit(1)
   }
   throw error

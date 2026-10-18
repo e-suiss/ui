@@ -1,6 +1,6 @@
 import { emitKeypressEvents } from "node:readline"
 
-import { CliError, color } from "./output.mjs"
+import { CliError, color, printable } from "./output.mjs"
 
 const HIDE_CURSOR = "\x1b[?25l"
 const SHOW_CURSOR = "\x1b[?25h"
@@ -14,7 +14,8 @@ export function isInteractive() {
   return Boolean(process.stdin.isTTY && process.stdout.isTTY)
 }
 
-function clip(text, width) {
+function clip(value, width) {
+  const text = printable(value)
   return text.length > width ? `${text.slice(0, width - 1)}…` : text
 }
 

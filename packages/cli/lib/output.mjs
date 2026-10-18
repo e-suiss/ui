@@ -3,6 +3,8 @@ import { createInterface } from "node:readline/promises"
 const useColor = process.stdout.isTTY && !process.env.NO_COLOR
 
 const YES_ANSWER = /^y(es)?$/i
+const TAB = 9
+const NEWLINE = 10
 
 function paint(code, text) {
   return useColor ? `\x1b[${code}m${text}\x1b[0m` : text
@@ -18,16 +20,28 @@ export const color = {
 
 export class CliError extends Error {}
 
+function isControl(char) {
+  const code = char.charCodeAt(0)
+  if (code === TAB || code === NEWLINE) return false
+  return code < 32 || (code >= 127 && code < 160)
+}
+
+export function printable(text) {
+  return Array.from(String(text))
+    .filter((char) => !isControl(char))
+    .join("")
+}
+
 export function step(message) {
-  console.log(`${color.green("✔")} ${message}`)
+  console.log(`${color.green("✔")} ${printable(message)}`)
 }
 
 export function note(message) {
-  console.log(`${color.yellow("•")} ${message}`)
+  console.log(`${color.yellow("•")} ${printable(message)}`)
 }
 
 export function list(paths) {
-  for (const item of paths) console.log(color.dim(`  - ${item}`))
+  for (const item of paths) console.log(color.dim(`  - ${printable(item)}`))
 }
 
 export async function confirm(question) {
