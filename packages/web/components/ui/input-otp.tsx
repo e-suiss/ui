@@ -27,7 +27,10 @@ function InputOTP({
         if (value === undefined) setUncontrolledValue(next)
         onChange?.(next)
       }}
-      containerClassName={cn("flex items-center", containerClassName)}
+      containerClassName={cn(
+        "flex items-center [direction:ltr] rtl:justify-end",
+        containerClassName
+      )}
       spellCheck={false}
       className={cn(
         "cn-input-otp-input disabled:cursor-not-allowed",
