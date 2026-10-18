@@ -20,9 +20,21 @@ function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
 export default function CalendarSizes() {
   return (
     <div className="flex flex-wrap items-start gap-6">
-      <SingleCalendar buttonVariant="plain" size="sm" />
-      <SingleCalendar buttonVariant="plain" size="default" />
-      <SingleCalendar buttonVariant="plain" size="lg" />
+      <SingleCalendar
+        buttonVariant="plain"
+        size="sm"
+        labels={{ labelNav: () => "Small calendar navigation" }}
+      />
+      <SingleCalendar
+        buttonVariant="plain"
+        size="default"
+        labels={{ labelNav: () => "Default calendar navigation" }}
+      />
+      <SingleCalendar
+        buttonVariant="plain"
+        size="lg"
+        labels={{ labelNav: () => "Large calendar navigation" }}
+      />
     </div>
   )
 }

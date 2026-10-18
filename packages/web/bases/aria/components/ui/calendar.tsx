@@ -106,7 +106,7 @@ function Calendar({
           defaultClassNames.week_number_header
         ),
         week_number: cn(
-          "text-xs text-muted-foreground select-none",
+          "text-xs font-normal text-muted-foreground select-none",
           defaultClassNames.week_number
         ),
         day: cn(
@@ -201,11 +201,11 @@ function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
 
 function CalendarWeekNumber({ children, week, ...props }: WeekNumberProps) {
   return (
-    <td {...props}>
+    <th {...props}>
       <div className="flex size-(--cell-size) items-center justify-center text-center">
         {children}
       </div>
-    </td>
+    </th>
   )
 }
 
