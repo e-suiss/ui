@@ -81,6 +81,7 @@ const PAGE_SECTIONS = {
 }
 const STYLING_DIRECTORY = new RegExp(`^(?:${Object.keys(STYLINGS).join("|")})/`)
 const ALIAS_PREFIX = /^@/
+const MORE_EXAMPLES = "The React Native tab shows"
 const COMPOSE_PLUGIN = "org.jetbrains.kotlin.plugin.compose"
 const TAILWIND_STYLINGS = "uniwind nativewind"
 const STYLESHEET_BLOCK =
@@ -415,6 +416,33 @@ function stylingUsage(leaves) {
     leaf.kind = "element"
     leaf.text = `<OnlyStyling styling="${TAILWIND_STYLINGS}">\n\n${leaf.text}\n\n</OnlyStyling>\n\n<OnlyStyling styling="stylesheet">\n\n${variant}\n\n</OnlyStyling>`
   }
+}
+
+function examplesNote(leaves) {
+  const kept = leaves.filter(
+    (leaf) => !(leaf.kind === "text" && leaf.text.startsWith(MORE_EXAMPLES))
+  )
+  const zone = kept.filter((leaf) => leaf.zone === "Examples")
+  if (!zone.length) return kept
+  const headings = zone.filter(
+    (leaf) => leaf.kind === "heading" && leaf.level === 3
+  )
+  const notes = []
+  for (const platform of NATIVE) {
+    const count = headings.filter(
+      (heading) =>
+        heading.scope.includes("rn") && !heading.scope.includes(platform)
+    ).length
+    if (!count) continue
+    notes.push({
+      kind: "text",
+      zone: "Examples",
+      scope: [platform],
+      text: `${MORE_EXAMPLES} ${count} more ${count === 1 ? "example" : "examples"}.`,
+    })
+  }
+  const at = kept.indexOf(zone.at(-1)) + 1
+  return [...kept.slice(0, at), ...notes, ...kept.slice(at)]
 }
 
 function usageLeaves(leaves, codes) {
@@ -777,6 +805,7 @@ async function generate(file, context, report) {
   leaves = usageLeaves(leaves, usageCodes)
   stylingUsage(leaves)
   settleHeadings(leaves)
+  leaves = examplesNote(leaves)
   const next = render(leaves)
   checkExamples(next, ALL, context.examples, report, name)
   return `${source.slice(0, nativeStart)}${NATIVE_SECTION}${next}${source.slice(nativeEnd)}`
