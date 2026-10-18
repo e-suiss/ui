@@ -9,7 +9,15 @@ import {
 import path from "node:path"
 
 import { formatDiff } from "../diff.mjs"
-import { CliError, color, list, note, printable, step } from "../output.mjs"
+import {
+  CliError,
+  color,
+  list,
+  note,
+  printable,
+  revealed,
+  step,
+} from "../output.mjs"
 
 const CONCURRENCY = 8
 const SEPARATORS = /[\\/]/
@@ -17,6 +25,18 @@ const SEGMENT = /^[A-Za-z0-9_-][A-Za-z0-9._-]*$/
 const EXECUTABLE_NAME = /^package\.swift$|\.config\.[a-z]+$/i
 const SOURCE_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx", ".css"]
 const SOURCE_DIRECTORIES = ["components", "hooks", "lib"]
+const WINDOWS_RESERVED = /^(?:con|prn|aux|nul|com\d|lpt\d)(?:\.|$)/i
+const MAX_SEGMENT = 100
+const MAX_PATH = 200
+const BUILD_DIRECTORIES = [
+  "build",
+  "buildsrc",
+  "carthage",
+  "deriveddata",
+  "gradle",
+  "node_modules",
+  "pods",
+]
 
 const TARGETS = {
   web: {
@@ -27,15 +47,23 @@ const TARGETS = {
     directories: SOURCE_DIRECTORIES,
     extensions: SOURCE_EXTENSIONS,
   },
-  swift: { extensions: [".swift"] },
-  kotlin: { extensions: [".kt"] },
-  font: { extensions: [".ttf"] },
+  swift: { extensions: [".swift"], excluded: BUILD_DIRECTORIES },
+  kotlin: { extensions: [".kt"], excluded: BUILD_DIRECTORIES },
+  font: { extensions: [".ttf"], excluded: BUILD_DIRECTORIES },
 }
 
 export function isRegistryPath(file) {
   return (
     typeof file === "string" &&
-    file.split("/").every((segment) => SEGMENT.test(segment))
+    file.length <= MAX_PATH &&
+    file
+      .split("/")
+      .every(
+        (segment) =>
+          SEGMENT.test(segment) &&
+          segment.length <= MAX_SEGMENT &&
+          !WINDOWS_RESERVED.test(segment)
+      )
   )
 }
 
@@ -54,6 +82,9 @@ function realTarget(target, file) {
     try {
       return path.join(realpathSync(current), ...rest)
     } catch (error) {
+      if (error.code === "ENAMETOOLONG") {
+        throw new CliError(`Refusing to write ${file}: the path is too long.`)
+      }
       if (error.code !== "ENOENT" || path.dirname(current) === current) {
         throw error
       }
@@ -65,22 +96,26 @@ function realTarget(target, file) {
   }
 }
 
-function allowedTarget(file, { directories, extensions }) {
+function allowedTarget(file, { directories, extensions, excluded = [] }) {
   const segments = file.split("/")
   const name = segments.at(-1)
   return (
     (!directories ||
       (segments.length > 1 && directories.includes(segments[0]))) &&
+    !segments
+      .slice(0, -1)
+      .some((segment) => excluded.includes(segment.toLowerCase())) &&
     extensions.includes(path.extname(name)) &&
     !EXECUTABLE_NAME.test(name)
   )
 }
 
-function describeTargets({ directories, extensions }) {
+function describeTargets({ directories, extensions, excluded }) {
   const kinds = extensions.join(", ")
-  return directories
-    ? `${kinds} files in ${directories.map((dir) => `${dir}/`).join(", ")}`
-    : `${kinds} files`
+  if (directories) {
+    return `${kinds} files in ${directories.map((dir) => `${dir}/`).join(", ")}`
+  }
+  return excluded ? `${kinds} files outside build folders` : `${kinds} files`
 }
 
 export function targetFor(root, file, kind = "web") {
@@ -97,7 +132,7 @@ export function targetFor(root, file, kind = "web") {
   const rules = TARGETS[kind]
   if (!isRegistryPath(file) || !allowedTarget(file, rules)) {
     throw new CliError(
-      `Refusing to write ${file}. Registry files can only be ${describeTargets(rules)}.`
+      `Refusing to write ${file}. Registry files can only be ${describeTargets(rules)} with short, portable names.`
     )
   }
   if (!isInside(realTarget(root, file), realTarget(target, file))) {
@@ -175,8 +210,8 @@ export function printDiff(cwd, files) {
       continue
     }
     const diff = formatDiff(
-      printable(readFileSync(target, "utf8")),
-      printable(content)
+      revealed(readFileSync(target, "utf8")),
+      revealed(content)
     )
     if (!diff) continue
     changes++

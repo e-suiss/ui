@@ -5,16 +5,18 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { withIcons } from "../lib/mobile/icons.mjs"
 import { install as installMobile } from "../lib/mobile/project.mjs"
-import { printable } from "../lib/output.mjs"
+import { printable, revealed } from "../lib/output.mjs"
 import { install } from "../lib/project.mjs"
 import { checkCss, checkStylesheet } from "../lib/registry.mjs"
 import { targetFor } from "../lib/shared/files.mjs"
+import { runCommand } from "../lib/shared/project.mjs"
 import { serveRegistry, silenceOutput, temporaryDirectory } from "./helpers.mjs"
 
 vi.mock("node:child_process", () => ({
   spawnSync: vi.fn(() => ({ status: 0 })),
 }))
 
+const CMD_EXE = /cmd\.exe$/i
 const VERSION_PATH = /\/v\d+\.\d+\.\d+\//
 const TAG_NOTE = /Using the v\d+\.\d+\.\d+ registry\./
 
@@ -53,6 +55,12 @@ describe("targetFor", () => {
     "components/ui/but ton.tsx",
     "components//button.tsx",
     "components/%2e%2e/button.tsx",
+    "components/ui/CON.tsx",
+    "components/ui/nul.ts",
+    "components/lpt1/button.tsx",
+    "components/ui/Com9.d.ts",
+    `components/ui/${"a".repeat(120)}.tsx`,
+    `components/${"abcdefghij/".repeat(20)}button.tsx`,
   ])("refuses %s outside the component folders", (file) => {
     expect(() => targetFor(root, file)).toThrow(`Refusing to write ${file}.`)
   })
@@ -103,6 +111,36 @@ describe("targetFor", () => {
     )
     expect(() => targetFor(cwd, "lib/utils.ts")).toThrow(
       "Refusing to write lib/utils.ts through a broken link."
+    )
+  })
+})
+
+describe("native targets", () => {
+  const root = path.resolve("/project/App")
+
+  it.each([
+    ["buildSrc/src/main/kotlin/Evil.kt", "kotlin"],
+    ["build/generated/Evil.kt", "kotlin"],
+    ["gradle/Evil.kt", "kotlin"],
+    ["Pods/Evil.swift", "swift"],
+    ["DerivedData/Evil.swift", "swift"],
+    ["build/Fonts/Inter.ttf", "font"],
+  ])("refuses %s in a build folder", (file, kind) => {
+    expect(() => targetFor(root, file, kind)).toThrow(
+      `Refusing to write ${file}.`
+    )
+  })
+
+  it("keeps source folders", () => {
+    expect(targetFor(root, "Components/Button.swift", "swift")).toBe(
+      path.join(root, "Components", "Button.swift")
+    )
+  })
+
+  it("names an overlong project path instead of crashing", () => {
+    const deep = path.join(temporaryDirectory("esuiss-long-"), "x".repeat(300))
+    expect(() => targetFor(deep, "components/ui/button.tsx")).toThrow(
+      "the path is too long"
     )
   })
 })
@@ -205,6 +243,52 @@ describe("package names from the registry", () => {
     }
   )
 
+  it.each([
+    "react-native-svg@1|calc",
+    "react-native-svg@>file",
+    "react-native-svg@<file",
+    "react-native-svg@1&calc",
+    "react-native-svg@1;calc",
+    "react-native-svg@`calc`",
+    "react-native-svg@$(calc)",
+    'react-native-svg@"1"',
+    "react-native-svg@^1 || ^2",
+  ])("refuses the shell characters in %s", (spec) => {
+    expect(() => installMobile(project("react-native"), [spec])).toThrow(
+      `Refusing to install an invalid package spec: ${spec}`
+    )
+    expect(spawnSync).not.toHaveBeenCalled()
+  })
+
+  it("keeps caret and tilde ranges", () => {
+    installMobile(project("react-native"), [
+      "nativewind@^4.2.7",
+      "react-native-css-interop@~0.2.7",
+    ])
+    expect(spawnSync).toHaveBeenCalledWith(
+      "npm",
+      ["install", "--", "nativewind@^4.2.7", "react-native-css-interop@~0.2.7"],
+      expect.not.objectContaining({ shell: true })
+    )
+  })
+
+  it("quotes every argument for cmd.exe instead of using a shell", () => {
+    runCommand(
+      "npx",
+      ["expo", "install", "nativewind@^4.2.7", 'a"b&c'],
+      "/p",
+      "win32"
+    )
+    const [command, args, options] = vi.mocked(spawnSync).mock.calls[0]
+    expect(command).toMatch(CMD_EXE)
+    expect(args.slice(0, 3)).toEqual(["/d", "/s", "/c"])
+    expect(args[3]).toBe(
+      '"npx ^"expo^" ^"install^" ^"nativewind@^^4.2.7^" ^"a\\^"b^&c^""'
+    )
+    expect(options).toMatchObject({ windowsVerbatimArguments: true })
+    expect(options.shell).toBeUndefined()
+  })
+
   it("ends the options before the package names", () => {
     install(project(), ["left-pad"])
     expect(spawnSync).toHaveBeenCalledWith(
@@ -244,6 +328,44 @@ describe("registry styles", () => {
         },
       })
     ).not.toThrow()
+  })
+
+  it.each([
+    { ".x": { "background-image": "\\75 rl(ht\\74ps://evil.example/a.png)" } },
+    {
+      ".a": { "background-image": "u\\72l(https:\\2f\\2f evil.example/p.png)" },
+    },
+    { '@\\69mport "https:\\2f\\2f evil/x.css"': {} },
+    { ' @import "../../x.css"': {} },
+    { '@import "tailwindcss/../../../../etc/hosts"': {} },
+    { ".a": { color: "red /*" } },
+  ])("refuses escaped or hidden css %j", (css) => {
+    expect(() => checkCss({ name: "evil", css })).toThrow(
+      "Refusing the styles of evil"
+    )
+  })
+
+  it.each([
+    '@import"https://attacker.example/x.css";',
+    '@\\69mport "https://attacker.example/x.css";',
+    "@import '\\68ttps://attacker.example/x.css';",
+    ".a{background:u\\72l(https://attacker.example/a.png)}",
+    '.x { background-image: image-set("https://attacker.example/a.png" 1x); }',
+    ".x { background-image: -webkit-image-set(url(//attacker.example/a.png) 1x); }",
+    '.x { mask: src("https://attacker.example/a.svg"); }',
+    "@import/**/url(x.css);",
+    '.a::before { content: "/*"; } @import url(https://attacker.example/x.css); .b::before { content: "*/"; }',
+    "@font-face { src: URL( javascript:alert(1) ) }",
+  ])("refuses the base stylesheet %s", (css) => {
+    expect(() => checkStylesheet(css, "styles/globals.css")).toThrow(
+      "Refusing styles/globals.css"
+    )
+  })
+
+  it("keeps relative images and inline data in the base stylesheet", () => {
+    const css =
+      '@import "tailwindcss";\n.a { background: url(/grain.png), image-set("a.png" 1x); }\n.b { mask: url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'/>"); }\n'
+    expect(checkStylesheet(css, "styles/globals.css")).toBe(css)
   })
 
   it("refuses a base stylesheet that loads remote files", () => {
@@ -344,5 +466,15 @@ describe("terminal output", () => {
       printable("button\u001b]8;;https://evil.test\u0007x\u001b[2J\r.tsx")
     ).toBe("button]8;;https://evil.testx[2J.tsx")
     expect(printable("a\tb\nc")).toBe("a\tb\nc")
+  })
+
+  it("drops bidi and zero-width characters", () => {
+    expect(printable("access\u202e\u2066level\u2069\u200b\ufeff.tsx")).toBe(
+      "accesslevel.tsx"
+    )
+  })
+
+  it("shows bidi characters in diffs instead of hiding them", () => {
+    expect(revealed("if (a\u202e) {}")).toBe("if (a<U+202E>) {}")
   })
 })
