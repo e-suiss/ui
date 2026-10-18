@@ -6,7 +6,7 @@ export { resolveItems } from "./shared/registry.mjs"
 const NAMESPACE = "@esuiss/"
 const STYLESHEET = "styles/globals.css"
 const BASE_FOLDER = /^bases\/[^/]+\//
-const AT_RULE = /^@([a-z-]+)/
+const AT_RULE = /^\s*@([a-z-]+)/
 const AT_RULES = [
   "apply",
   "container",
@@ -23,14 +23,20 @@ const AT_RULES = [
 ]
 const IMPORT = /^@(?:import|plugin)\s+(?:"([^"]+)"|'([^']+)')$/
 const MODULE_SPECIFIER =
-  /^(?:@[a-z0-9~][\w.~-]*\/)?[a-z0-9~][\w.~-]*(?:\/[\w.~-]+)*$/i
+  /^(?:@[a-z0-9~][\w.~-]*\/)?[a-z0-9~][\w.~-]*(?:\/(?!\.\.?(?:\/|$))[\w.~-]+)*$/i
 const DATA_URL = /url\(\s*(?:'data:[^']*'|"data:[^"]*"|data:[^)'"\s]*)\s*\)/gi
 const URL_FUNCTION = /\burl\(|\bimage-set\(|\bsrc\(/i
 const REMOTE = /(?:^|["'(\s,])(?:[a-z][a-z0-9+.-]*:\/\/|\/\/)/i
 const BLOCK = /[{};]/
-const REMOTE_STYLESHEET =
-  /@import\s+url\(|@import\s+["'](?:[a-z][a-z0-9+.-]*:|\/\/)|url\(\s*["']?(?:[a-z][a-z0-9+.-]*:|\/\/)/i
+const ESCAPE_OR_COMMENT = /\\|\/\*|\*\//
+const COMMENT = /\/\*[\s\S]*?\*\//g
+const REMOTE_IMPORT = /@import\s*(?:url\(|["']\s*(?:[a-z][a-z0-9+.-]*:|\/\/))/i
+const LOADING_FUNCTION = /\b(?:url|src|image-set)\(([^;{}]*)/gi
+const REMOTE_ARGUMENT = /(?:^|["'(\s,])(?:[a-z][a-z0-9+.-]*:|\/\/)/i
 const VALUE_BLOCK = /[{}]/
+const THEME_NAME = /^[a-z0-9-]+$/
+const THEME_VALUE = /^[a-z0-9\s().,%#/+-]+$/i
+const THEME_UNSAFE = /\/\/|\/\*|\burl\(/i
 const UNLISTED_TYPES = ["registry:hook", "registry:lib"]
 const INDEXES = {
   base: "registry/registry.json",
@@ -92,7 +98,28 @@ function scopeOfFile(file = "") {
   return entry ? entry[0] : "ui"
 }
 
+function validItem(item) {
+  return (
+    item &&
+    typeof item.name === "string" &&
+    Array.isArray(item.files) &&
+    item.files.every((file) => typeof file?.path === "string") &&
+    (item.registryDependencies === undefined ||
+      (Array.isArray(item.registryDependencies) &&
+        item.registryDependencies.every((name) => typeof name === "string"))) &&
+    (item.dependencies === undefined ||
+      (Array.isArray(item.dependencies) &&
+        item.dependencies.every((name) => typeof name === "string")))
+  )
+}
+
 function toItem(item) {
+  if (!validItem(item)) {
+    const name = typeof item?.name === "string" ? item.name : "an item"
+    throw new CliError(
+      `The registry entry for ${name} is malformed. Update @esuiss/ui or check ESUISS_REGISTRY.`
+    )
+  }
   const sources = item.files.map((file) => file.path)
   const files = sources.map((source) => source.replace(BASE_FOLDER, ""))
   return {
@@ -114,13 +141,43 @@ function toItem(item) {
 
 export async function fetchRegistry(base = "base") {
   const { items } = await fetchJson(INDEXES[base])
-  return { items: items.filter((item) => item.files?.length).map(toItem) }
+  if (!Array.isArray(items)) {
+    throw new CliError(`${INDEXES[base]} has no item list.`)
+  }
+  return {
+    items: items
+      .filter((item) => item?.files != null && item.files.length !== 0)
+      .map(toItem),
+  }
 }
 
 let styles
 
-export function fetchThemes() {
-  return fetchJson("registry/themes.json")
+function checkThemes(themes) {
+  if (!Array.isArray(themes)) {
+    throw new CliError("Refusing registry/themes.json: it is not a list.")
+  }
+  for (const theme of themes) {
+    for (const mode of ["light", "dark"]) {
+      for (const [name, value] of Object.entries(theme?.[mode] ?? {})) {
+        if (
+          !THEME_NAME.test(name) ||
+          typeof value !== "string" ||
+          !THEME_VALUE.test(value) ||
+          THEME_UNSAFE.test(value)
+        ) {
+          throw new CliError(
+            `Refusing registry/themes.json: --${name} is not a plain color or size.`
+          )
+        }
+      }
+    }
+  }
+  return themes
+}
+
+export async function fetchThemes() {
+  return checkThemes(await fetchJson("registry/themes.json"))
 }
 
 export function fetchStyles() {
@@ -128,8 +185,25 @@ export function fetchStyles() {
   return styles
 }
 
+function loadsRemote(css) {
+  return [css, css.replace(COMMENT, "")].some((text) => {
+    const rest = text.replace(DATA_URL, "")
+    return (
+      REMOTE_IMPORT.test(rest) ||
+      [...rest.matchAll(LOADING_FUNCTION)].some(([, argument]) =>
+        REMOTE_ARGUMENT.test(argument)
+      )
+    )
+  })
+}
+
 export function checkStylesheet(css, file) {
-  if (REMOTE_STYLESHEET.test(css.replace(DATA_URL, ""))) {
+  if (css.includes("\\")) {
+    throw new CliError(
+      `Refusing ${file}: it contains CSS escapes, which can hide what it loads.`
+    )
+  }
+  if (loadsRemote(css)) {
     throw new CliError(
       `Refusing ${file}: it loads files from outside the project.`
     )
@@ -144,6 +218,7 @@ export async function fetchStylesheet() {
 function unsafeCss(text, value) {
   const rest = text.replace(DATA_URL, "")
   return (
+    ESCAPE_OR_COMMENT.test(text) ||
     URL_FUNCTION.test(rest) ||
     REMOTE.test(rest) ||
     (value ? VALUE_BLOCK : BLOCK).test(rest)

@@ -24,7 +24,10 @@ export function withPointer(css) {
 function withVariables(block, variables) {
   return Object.entries(variables).reduce(
     (text, [name, value]) =>
-      text.replace(new RegExp(`(--${name}:\\s*)[^;]+;`), `$1${value};`),
+      text.replace(
+        new RegExp(`(--${name}:\\s*)[^;]+;`),
+        (_, head) => `${head}${value};`
+      ),
     block
   )
 }
