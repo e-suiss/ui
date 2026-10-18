@@ -79,10 +79,28 @@ async function ownSheet(base) {
   return sheet
 }
 
+const MEASURED = /--[\w-]*-(?:left|right)\b/
+const KEPT = /\bkeptphysical(\d+)\b/g
+
 async function logical(values) {
-  const source = values.map((value) => `cva(${JSON.stringify(value)})`)
+  const kept = []
+  const masked = values.map((value) =>
+    value
+      .split(" ")
+      .map((token) => {
+        if (!MEASURED.test(token)) return token
+        kept.push(token)
+        return `keptphysical${kept.length - 1}`
+      })
+      .join(" ")
+  )
+  const source = masked.map((value) => `cva(${JSON.stringify(value)})`)
   const output = await transformDirection(source.join("\n"), true)
-  return output.split("\n").map((line) => JSON.parse(line.slice(4, -1)))
+  return output
+    .split("\n")
+    .map((line) =>
+      JSON.parse(line.slice(4, -1)).replace(KEPT, (_, index) => kept[index])
+    )
 }
 
 async function logicalMap(map) {
