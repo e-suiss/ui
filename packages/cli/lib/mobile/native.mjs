@@ -266,8 +266,23 @@ function isTokens(file) {
   return path.basename(file).startsWith("Tokens.")
 }
 
-function requirementsFor(spec, library) {
-  if (!usesCustomIcons(library)) return spec.requirements
+const PHOSPHOR_IMPORT = /^import (?:PhosphorSwift$|com\.adamglin\.)/m
+const NATIVE_SOURCE = /\.(?:swift|kt)$/
+
+function importsPhosphor(root) {
+  if (!existsSync(root)) return false
+  return readdirSync(root, { recursive: true }).some((entry) => {
+    const file = path.join(root, String(entry))
+    return (
+      NATIVE_SOURCE.test(file) &&
+      PHOSPHOR_IMPORT.test(readFileSync(file, "utf8"))
+    )
+  })
+}
+
+function requirementsFor(spec, library, root) {
+  if (!usesCustomIcons(library) && importsPhosphor(root))
+    return spec.requirements
   const { packages, dependencies, ...rest } = spec.requirements
   return {
     ...rest,
@@ -285,7 +300,7 @@ function requirementsFor(spec, library) {
 function printRequirements({ platform, project, spec, library }) {
   const { title, missing } = platform.requirements(
     project,
-    requirementsFor(spec, library)
+    requirementsFor(spec, library, project.root)
   )
   if (!missing.length) return
   note(title)

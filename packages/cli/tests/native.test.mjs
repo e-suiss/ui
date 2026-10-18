@@ -143,6 +143,22 @@ describe("native init and add", () => {
     expect(read(cwd, "EsuissUI/Components/Button.swift")).toBe(
       files[`${SWIFT_SOURCES}/Components/Button.swift`]
     )
+    expect(output()).not.toContain("phosphor-icons/swift")
+  })
+
+  it("lists the Phosphor package once a written file imports it", async () => {
+    serveRegistry({
+      ...files,
+      [`${SWIFT_SOURCES}/Patterns/DatePicker.swift`]:
+        "import PhosphorSwift\nstruct DatePicker {}\n",
+    })
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    await addNative(["date-picker"], {
+      cwd,
+      platform: "swift",
+      scope: "pattern",
+    })
     expect(output()).toContain(
       "Swift package https://github.com/phosphor-icons/swift from 2.1.0 (PhosphorSwift)"
     )
