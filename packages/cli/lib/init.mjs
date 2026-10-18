@@ -283,8 +283,22 @@ function importsStylesheet(project, stylesheet) {
 
 const ROOT_BLOCK = /(:root\s*\{)([\s\S]*?)(\n\})/
 const DARK_BLOCK = /(\.dark\s*\{)([\s\S]*?)(\n\})/
-const OWN_THEME = "suiss"
-const DEFAULT_FONT = "inter"
+export const OWN_THEME = "suiss"
+export const DEFAULT_FONT = "inter"
+export const POINTER_CSS = `@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+`
+export const RTL_NOTE =
+  'suiss/ui components use logical properties, so they already work right to left. Set dir="rtl" on <html> for a right-to-left app.'
+
+export function withPointer(css) {
+  if (css.includes(POINTER_CSS.trim())) return css
+  return `${css.trimEnd()}\n\n${POINTER_CSS}`
+}
 
 function withVariables(block, variables) {
   return Object.entries(variables).reduce(
@@ -294,7 +308,7 @@ function withVariables(block, variables) {
   )
 }
 
-function paletteOf(themes, preset) {
+export function paletteOf(themes, preset) {
   const find = (name) => themes.find((theme) => theme.name === name)
   const base = find(preset.baseColor)
   const accent = find(preset.theme)
@@ -303,7 +317,7 @@ function paletteOf(themes, preset) {
   return { light, dark }
 }
 
-function applyPreset(css, preset, palette) {
+export function applyPreset(css, preset, palette) {
   const radius = preset ? RADIUS_VALUES[preset.radius] : undefined
   const light = { ...(palette?.light ?? {}), ...(radius ? { radius } : {}) }
   const dark = palette?.dark ?? {}
@@ -371,10 +385,11 @@ export async function init(options) {
     options.primary
   )
   const stylesheetCss = stylesheetFor(project, await fetchStylesheet())
-  const css =
+  const themedCss =
     preset || palette
       ? applyPreset(stylesheetCss, preset, palette)
       : stylesheetCss
+  const css = options.pointer ? withPointer(themedCss) : themedCss
 
   const tsconfigs =
     project.framework === "vite"
@@ -430,6 +445,7 @@ export async function init(options) {
     { overwrite: options.overwrite, base, style, icons, menuColor }
   )
 
+  if (options.rtl) manual.push(RTL_NOTE)
   for (const message of manual) note(message)
   step("Ready. Add components with npx @esuiss/ui add <name>")
 }

@@ -27,6 +27,16 @@ Sets up Tailwind CSS, the `@/*` import alias, the theme stylesheet, the font, th
 npx @esuiss/ui@latest init [options]
 ```
 
+### New project
+
+`--template` creates the app in a new folder with the official creator, then sets it up. The creator runs through the package manager that runs the CLI: `npx`, `pnpm dlx`, `yarn dlx` or `bunx`.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest init --template next --name my-app
+```
+
+`next` runs `create-next-app` (TypeScript, Tailwind CSS, App Router, `src/`), `vite` runs `create-vite` with `react-ts`, and `expo` runs `create-expo-app` with `blank-typescript` for React Native. TanStack Start, React Router, Astro and Laravel templates and `--monorepo` are not available yet: create those apps yourself and run `init` in them. SwiftUI and Compose apps start in Xcode or Android Studio.
+
 | Option | Description |
 | --- | --- |
 | `-o, --overwrite` | Replace a local `button` that differs from the registry |
@@ -37,12 +47,38 @@ npx @esuiss/ui@latest init [options]
 | `--theme suiss` | Keep the suiss/ui colors when applying a preset |
 | `--primary <color>` | A custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. Replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | Icons of React Native, SwiftUI and Compose components: `phosphor` (the default), `lucide`, `tabler`, `hugeicons` or `remixicon`. Read from `--preset` or the installed icons file when omitted |
+| `-t, --template <next\|vite\|expo>` | Create a Next.js, Vite or Expo app in a new folder first |
+| `-n, --name <name>` | The folder of the new app, `<template>-app` by default |
+| `--pointer` | React only: show the pointer cursor on enabled buttons |
+| `--rtl` | React only: the components use logical properties and already work right to left; set `dir="rtl"` on `<html>` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help for `init` |
 | `-v, --version` | Show the version |
+
+## apply
+
+Restyles a project that already ran `init`, on every platform.
+
+```bash title="Terminal"
+npx @esuiss/ui@latest apply --preset <code> [--only theme|font] [options]
+```
+
+Without `--only`, React applies the colors, radius, style, icon library and menu colors of the preset, saves them in `components.json` and reinstalls the installed components in the new style after asking, since local changes to them are replaced. React Native, SwiftUI and Compose rewrite their theme files and fonts.
+
+| Option | Description |
+| --- | --- |
+| `--preset <code>` | A preset code from [Create](/create) |
+| `--only <theme\|font>` | Apply only the colors and radius, or only the fonts |
+| `--primary <color>` | A custom primary color, on its own or over the preset |
+| `--theme suiss` | Keep the suiss/ui colors when applying a preset |
+| `--style <name>` | Change the visual style; works without `--only` |
+| `--pointer` | React only: show the pointer cursor on enabled buttons |
+| `-y, --yes` | Restyle installed components without asking |
+| `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-c, --cwd <dir>` | Run in another project directory |
 
 ## add
 

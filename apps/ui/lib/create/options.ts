@@ -14,6 +14,7 @@ import {
 import { STYLES, type StyleName } from "@/lib/code-options"
 import { foregroundFor, oklchString, parseColor } from "@/lib/create/color"
 import fonts from "@/lib/create/fonts.json"
+import type { PackageManager } from "@/lib/package-managers"
 import themes from "../../../../packages/web/registry/themes.json"
 
 export const OWN = "suiss"
@@ -188,24 +189,117 @@ export function toParams(state: CreateState) {
   return params
 }
 
-export function cliCommand(state: CreateState) {
+const RUNNERS: Record<PackageManager, string> = {
+  pnpm: "pnpm dlx",
+  npm: "npx",
+  yarn: "yarn dlx",
+  bun: "bunx",
+}
+
+export const TEMPLATES = {
+  web: ["next", "vite"],
+  rn: ["expo"],
+  swift: [],
+  kotlin: [],
+} as const satisfies Record<Platform, readonly string[]>
+
+export type Template = (typeof TEMPLATES)[keyof typeof TEMPLATES][number]
+
+export const APPLY_MODES = ["setup", "full", "theme", "font"] as const
+
+export type ApplyMode = (typeof APPLY_MODES)[number]
+
+export type ProjectOptions = { pointer: boolean; rtl: boolean }
+
+const CLI = "@esuiss/ui@latest"
+
+function presetFlags(state: CreateState, mode: ApplyMode = "setup") {
+  const flags = [`--preset ${presetCode(state)}`]
+  const own = state.baseColor === OWN || state.theme === OWN
+  if (state.style === OWN && mode !== "theme" && mode !== "font") {
+    flags.push(`--style ${OWN}`)
+  }
+  if (own && mode !== "font") flags.push(`--theme ${OWN}`)
+  if (state.primary && mode !== "font") {
+    flags.push(`--primary "${state.primary}"`)
+  }
+  return flags
+}
+
+function webFlags(state: CreateState, options: ProjectOptions) {
+  if (state.platform !== "web") return []
+  return [
+    ...(options.rtl ? ["--rtl"] : []),
+    ...(options.pointer ? ["--pointer"] : []),
+  ]
+}
+
+export function cliCommand(
+  state: CreateState,
+  packageManager: PackageManager,
+  options: ProjectOptions
+) {
   const flags = [`--platform ${state.platform}`]
   if (state.platform === "web" && state.base !== "base") {
     flags.push(`--base ${state.base}`)
   }
-  if (!isDefault(state)) {
-    flags.push(`--preset ${presetCode(state)}`)
-    if (state.style === OWN) flags.push(`--style ${OWN}`)
-    if (state.baseColor === OWN || state.theme === OWN) {
-      flags.push(`--theme ${OWN}`)
-    }
-  }
-  if (state.primary) flags.push(`--primary "${state.primary}"`)
-  return `npx @esuiss/ui@latest init ${flags.join(" ")}`
+  if (!isDefault(state)) flags.push(...presetFlags(state))
+  else if (state.primary) flags.push(`--primary "${state.primary}"`)
+  flags.push(...webFlags(state, options))
+  return `${RUNNERS[packageManager]} ${CLI} init ${flags.join(" ")}`
 }
 
-export function shadcnCommand(state: CreateState) {
-  return `npx shadcn@latest init --preset ${presetCode(state)} --base ${state.base}`
+export function newProjectCommand(
+  state: CreateState,
+  template: Template,
+  packageManager: PackageManager,
+  options: ProjectOptions
+) {
+  const flags = [`--template ${template}`]
+  if (state.platform === "web" && state.base !== "base") {
+    flags.push(`--base ${state.base}`)
+  }
+  if (!isDefault(state)) flags.push(...presetFlags(state))
+  else if (state.primary) flags.push(`--primary "${state.primary}"`)
+  flags.push(...webFlags(state, options))
+  return `${RUNNERS[packageManager]} ${CLI} init ${flags.join(" ")}`
+}
+
+export function applyCommand(
+  state: CreateState,
+  mode: Exclude<ApplyMode, "setup">,
+  packageManager: PackageManager
+) {
+  const flags = [`--platform ${state.platform}`, ...presetFlags(state, mode)]
+  if (mode !== "full") flags.push(`--only ${mode}`)
+  return `${RUNNERS[packageManager]} ${CLI} apply ${flags.join(" ")}`
+}
+
+export function shadcnCommand(
+  state: CreateState,
+  packageManager: PackageManager
+) {
+  return `${RUNNERS[packageManager]} shadcn@latest init --preset ${presetCode(state)} --base ${state.base}`
+}
+
+export type ThemeDefaults = {
+  light: Record<string, string>
+  dark: Record<string, string>
+}
+
+function cssRule(selector: string, variables: Record<string, string>) {
+  const lines = Object.entries(variables).map(
+    ([name, value]) => `  --${name}: ${value};`
+  )
+  return `${selector} {\n${lines.join("\n")}\n}`
+}
+
+export function themeCss(state: CreateState, defaults: ThemeDefaults) {
+  const { light, dark } = themeVariables(state)
+  return [
+    cssRule(":root", { ...defaults.light, ...light }),
+    cssRule(".dark", { ...defaults.dark, ...dark }),
+  ].join("\n\n")
 }
 
 function themeOf(name: string) {

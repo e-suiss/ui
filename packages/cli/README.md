@@ -41,6 +41,12 @@ Set up a project once:
 npx @esuiss/ui@latest init
 ```
 
+Or start a new app and set it up in one step:
+
+```bash
+npx @esuiss/ui@latest init --template next --name my-app
+```
+
 Then add components:
 
 ```bash
@@ -94,7 +100,25 @@ Every item is published for three primitive bases under the same name. A `radix-
 
 ```bash
 npx @esuiss/ui@latest init [options]
+npx @esuiss/ui@latest init --template <next|vite|expo> [--name <name>] [options]
 ```
+
+With `--template`, `init` first creates the app in a new folder (`<template>-app`, or `--name`) inside `--cwd` with the official creator, run through the package manager that runs the CLI (`npx`, `pnpm dlx`, `yarn dlx` or `bunx`): `create-next-app` (TypeScript, Tailwind CSS, App Router, `src/`), `create-vite` (`react-ts`) or `create-expo-app` (`blank-typescript`). It then sets the new app up with the rest of the options, replacing the starter stylesheet without asking.
+
+`next` and `vite` create React apps and `expo` a React Native app. TanStack Start, React Router, Astro and Laravel templates are not available yet, since `init` sets up Next.js and Vite projects; create those apps yourself and run `init` in them. `--monorepo` is not available yet either. SwiftUI and Compose have no templates: create the app in Xcode or Android Studio, then run `init` in it.
+
+### `apply`
+
+```bash
+npx @esuiss/ui@latest apply --preset <code> [--only theme|font] [options]
+npx @esuiss/ui@latest apply --primary <color>
+```
+
+`apply` restyles a project that already ran `init`, on every platform:
+
+- **Without `--only`**, React gets the colors, radius, style, icon library and menu colors of the preset, saves them in `components.json`, and reinstalls the components that are already installed so they follow the new style (it asks first, since local changes to them are replaced; `--yes` skips the question). React Native, SwiftUI and Compose rewrite their theme files and fonts.
+- **`--only theme`** changes only the colors and radius (and keeps the fonts on SwiftUI and Compose).
+- **`--only font`** changes only the fonts (React notes the font to load, since the stylesheet keeps `--font-sans`).
 
 ### `add`
 
@@ -123,13 +147,18 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
 | `--style <name>` | The visual style, one of `suiss` (default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is read from and saved to the `style` in `components.json`, and `add` follows it; for React Native, SwiftUI and Compose `init` sets radius, control sizes, paddings, weights and shadows through the theme |
-| `--preset <code>` | `init` only: a preset code from suiss.app/ui/create. React applies its style, colors, radius, icon library and menu color; React Native, SwiftUI and Compose apply its style, colors, radius, menu color, menu accent and fonts to their theme files. A gray theme must match the base color |
-| `--theme suiss` | `init` only: keep the suiss/ui colors when applying a preset |
-| `--primary <color>` | `init` only: a custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. It replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
+| `--preset <code>` | `init` and `apply`: a preset code from suiss.app/ui/create. React applies its style, colors, radius, icon library and menu color; React Native, SwiftUI and Compose apply its style, colors, radius, menu color, menu accent and fonts to their theme files. A gray theme must match the base color |
+| `--theme suiss` | `init` and `apply`: keep the suiss/ui colors when applying a preset |
+| `--primary <color>` | `init` and `apply`: a custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. It replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | React Native, SwiftUI and Compose icons: `phosphor` (default), `lucide`, `tabler`, `hugeicons` or `remixicon`; read from `--preset` or the installed icons file when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
+| `-t, --template <next\|vite\|expo>` | `init` only: create a Next.js, Vite or Expo app in a new folder first |
+| `-n, --name <name>` | `init --template` only: the folder of the new app, `<template>-app` by default |
+| `--only <theme\|font>` | `apply` only: apply just the colors and radius, or just the fonts |
+| `--pointer` | React `init` and `apply`: show the pointer cursor on enabled buttons with a base layer rule in the stylesheet |
+| `--rtl` | React `init` and `apply`: the components use logical properties, so they already work right to left; the CLI reminds you to set `dir="rtl"` on `<html>` |
 | `-c, --cwd <dir>` | Run in another project directory |
-| `-h, --help` | Show help, or the help of a command with `init --help` and `add --help` |
+| `-h, --help` | Show help, or the help of a command with `init --help`, `apply --help` and `add --help` |
 | `-v, --version` | Show the version |
 
 ## Updating components

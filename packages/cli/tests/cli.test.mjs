@@ -36,7 +36,73 @@ describe("esuiss-ui command", () => {
   it("keeps --primary to init", () => {
     const result = run("add", "button", "--primary", "#2563eb")
     expect(result.code).not.toBe(0)
-    expect(result.stderr).toContain("--primary work with init")
+    expect(result.stderr).toContain("work with init or apply")
+  })
+
+  it("lists the apply command in the usage", () => {
+    expect(run("--help").stdout).toContain("apply --preset <code>")
+    const help = run("apply", "--help").stdout
+    expect(help).toContain("--only <theme|font>")
+    expect(help).toContain("--pointer")
+  })
+
+  it("lists --template in the init help", () => {
+    const help = run("init", "--help").stdout
+    expect(help).toContain("--template <next|vite|expo>")
+    expect(help).toContain("--rtl")
+  })
+
+  it.each([
+    ["astro", "The Astro template is not available yet."],
+    ["start", "The TanStack Start template is not available yet."],
+    ["react-router", "The React Router template is not available yet."],
+    ["laravel", "The Laravel template is not available yet."],
+    ["remix", "--template needs next, vite, expo."],
+  ])("rejects --template %s", (template, message) => {
+    const result = run("init", "--template", template)
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain(message)
+  })
+
+  it("explains that --monorepo is not available yet", () => {
+    const result = run("init", "--template", "next", "--monorepo")
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain("--monorepo is not available yet")
+  })
+
+  it("rejects an unknown --only", () => {
+    const result = run("apply", "--only", "colors")
+    expect(result.stderr).toContain("--only needs theme or font.")
+  })
+
+  it("keeps --only to apply", () => {
+    const result = run("init", "--only", "theme")
+    expect(result.stderr).toContain("--only works with apply.")
+  })
+
+  it("keeps --name to --template", () => {
+    const result = run("init", "--name", "web")
+    expect(result.stderr).toContain("--name works with --template.")
+  })
+
+  it("needs something to apply", () => {
+    const result = run("apply")
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain(
+      "apply needs --preset, --primary, --style or --pointer."
+    )
+  })
+
+  it("keeps --style out of --only", () => {
+    const result = run("apply", "--only", "theme", "--style", "vega")
+    expect(result.stderr).toContain("drop --only to use it")
+  })
+
+  it("rejects --template with another platform", () => {
+    const result = run("init", "--template", "expo", "--platform", "web")
+    expect(result.stderr).toContain(
+      "--template expo creates a React Native app."
+    )
   })
 
   it("lists --primary in the init help", () => {

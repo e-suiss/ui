@@ -58,8 +58,42 @@ export const strings = {
   createMenuColor: "Menu color",
   createMenuAccent: "Menu accent",
   createInstall: "Set up your project",
+  getCode: "Get code",
+  getCodeTitle: "Get the code",
+  getCodeTabs: "Project type",
+  getCodeNew: "New project",
+  getCodeExisting: "Existing project",
+  getCodeTheme: "Theme",
+  getCodeTemplate: "Template",
+  getCodeBase: "Base",
+  getCodeOptions: "Options",
+  getCodePointer: "Use pointer on buttons",
+  getCodeMonorepo: "Create a monorepo",
+  getCodeMonorepoNote: "Not available yet",
+  getCodeRtl: "Enable RTL support",
+  getCodeApply: "Apply preset",
+  getCodeApplyDescription: "Pick which parts of the preset to apply.",
+  getCodeSetup: "Set up",
+  getCodeSetupDescription:
+    "Add suiss/ui to a project that does not use it yet: the theme, the fonts and the button.",
+  getCodeFull: "Full preset",
+  getCodeFullDescription:
+    "Everything from the preset, including the style of installed components, the theme and the fonts.",
+  getCodeThemeOnly: "Theme only",
+  getCodeThemeOnlyDescription:
+    "Colors and radius only. Components stay as they are.",
+  getCodeFontsOnly: "Fonts only",
+  getCodeFontsOnlyDescription:
+    "Only the preset fonts. Components stay as they are.",
+  getCodePackageManager: "Package manager",
+  getCodeCommand: "Command",
+  getCodeCopyCommand: "Copy command",
+  getCodeThemeTokens: "Theme tokens",
+  getCodeThemeDescription:
+    "Copy the CSS variables for this preset into your stylesheet.",
+  getCodeCopyTheme: "Copy theme",
   createShadcnNote:
-    "The shadcn CLI resolves a preset code on ui.shadcn.com, so it installs the shadcn/ui design system, not suiss/ui. Use it only for a project without suiss/ui components; the suiss/ui CLI above reads the same code.",
+    "The shadcn CLI resolves a preset code on ui.shadcn.com, so it installs the shadcn/ui design system, not suiss/ui. Use it only for a project without suiss/ui components; the suiss/ui CLI below reads the same code.",
   createNativeNote:
     "The CLI writes the colors, radius, menus, fonts and icon library into your app. Fonts are embedded at build time, so rebuild the app after init.",
   createAccountTitle: "Create an account",

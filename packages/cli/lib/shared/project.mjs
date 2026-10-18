@@ -93,7 +93,7 @@ function declaredPackageManager(dirs) {
   return null
 }
 
-function agentPackageManager() {
+export function agentPackageManager() {
   return managerOf(process.env.npm_config_user_agent?.split("/")[0])
 }
 

@@ -483,3 +483,71 @@ export async function init(options) {
   for (const message of manual) note(message)
   step("Ready. Add components with npx @esuiss/ui add <name>")
 }
+
+export async function apply(options) {
+  const project = detectProject(options.cwd)
+  project.styling = detectStyling(project, options.styling) ?? "stylesheet"
+  const sourceRoot = existsSync(path.join(project.cwd, "src"))
+    ? path.join(project.cwd, "src")
+    : project.cwd
+  const root = findAliasRoot(project.cwd) ?? sourceRoot
+  const usesCss = project.styling !== "stylesheet"
+  const stylesheet = path.join(sourceRoot, "global.css")
+  const themeFile = path.join(root, "components", "ui", "theme.ts")
+  const target = usesCss ? stylesheet : themeFile
+  if (!existsSync(target)) {
+    throw new CliError(
+      `No esuiss theme found at ${relative(project, target)}. Run npx @esuiss/ui init first.`
+    )
+  }
+  const only = options.only
+  const manual = []
+
+  if (only !== "font") {
+    const registry = await fetchRegistry()
+    const theme = await themeOptionsFor(options, fetchThemes, registry.colors)
+    if (usesCss) {
+      writeFileSync(
+        stylesheet,
+        themed(
+          await fetchStylesheet(registry, project.styling, options.style),
+          project.styling === "uniwind" ? "uniwind" : "nativewind-css",
+          theme
+        )
+      )
+      step(`Updated ${relative(project, stylesheet)}`)
+      if (project.styling === "nativewind") {
+        await writeTailwindConfig(
+          project,
+          registry,
+          { ...options, yes: true },
+          theme
+        )
+      }
+    } else {
+      writeFileSync(
+        themeFile,
+        themed(
+          await fetchText(
+            presetFile(registry, "stylesheet", options.style) ??
+              registry.styles.stylesheet.theme
+          ),
+          "stylesheet",
+          theme
+        )
+      )
+      step(`Updated ${relative(project, themeFile)}`)
+    }
+  }
+  if (only !== "theme") {
+    manual.push(...configureFonts(project, root, presetFonts(options)))
+  }
+  if (!only && options.style) {
+    manual.push(
+      "Run npx @esuiss/ui add <name> --overwrite to restyle installed components."
+    )
+  }
+
+  for (const message of manual) note(message)
+  step("Applied.")
+}

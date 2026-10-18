@@ -162,6 +162,17 @@ export function applyFonts(text, platform, fonts, faces) {
     .replace(KOTLIN_HEADING, `$1${list(fonts.heading)}`)
 }
 
+export function keepFonts(text, current, platform) {
+  const patterns =
+    platform === "swift"
+      ? [SWIFT_SANS, SWIFT_HEADING, SWIFT_FILES]
+      : [KOTLIN_SANS, KOTLIN_HEADING]
+  return patterns.reduce((next, pattern) => {
+    const kept = current.match(pattern)?.[0]
+    return kept === undefined ? next : next.replace(pattern, () => kept)
+  }, text)
+}
+
 export async function downloadFaces(fonts) {
   const faces = []
   for (const font of fontList(fonts)) {
