@@ -167,6 +167,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--spacing) * 17);
+  scrollbar-gutter: stable;
 }
 
 body {
