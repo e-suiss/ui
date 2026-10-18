@@ -76,7 +76,7 @@ function Backdrop() {
         (card) => (
           <div
             key={card}
-            className="flex aspect-[4/3] items-end rounded-2xl bg-primary/15 p-4 text-sm font-semibold text-primary odd:bg-secondary odd:text-foreground"
+            className="flex aspect-[4/3] items-end rounded-2xl bg-primary/15 p-4 text-sm font-semibold text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] odd:bg-secondary odd:text-foreground"
           >
             {card}
           </div>

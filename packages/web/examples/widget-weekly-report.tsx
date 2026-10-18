@@ -42,10 +42,10 @@ export default function WidgetWeeklyReport() {
     <div>
       <Widget resizable defaultSize="extra-large" className="flex-row gap-6">
         <div className="flex min-w-0 flex-1 flex-col gap-3">
-          <WidgetHeader className="gap-1.5 text-green-600 dark:text-green-400">
+          <WidgetHeader className="gap-1.5 text-green-700 dark:text-green-400">
             <WidgetIcon
               size="sm"
-              className="text-green-600 dark:text-green-400"
+              className="text-green-700 dark:text-green-400"
             >
               <IconPlaceholder
                 lucide="ChartColumnIcon"
@@ -60,7 +60,7 @@ export default function WidgetWeeklyReport() {
           <div className="flex min-h-0 flex-col gap-3 group-data-[size=medium]/widget:flex-1 group-data-[size=medium]/widget:flex-row group-data-[size=medium]/widget:items-end">
             <div className="shrink-0">
               <WidgetValue>₺121,900</WidgetValue>
-              <p className="flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
+              <p className="flex items-center gap-1 text-xs font-medium text-green-700 dark:text-green-400">
                 <IconPlaceholder
                   lucide="TriangleIcon"
                   tabler="IconTriangle"

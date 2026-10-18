@@ -34,13 +34,25 @@ const aliases: Record<string, keyof typeof languages> = {
   zsh: "bash",
 }
 
+const HALF_ALPHA = /^(#[\da-f]{6})80$/i
+
+function legible(style: Record<string, string> | undefined) {
+  if (!style) return style
+  return Object.fromEntries(
+    Object.entries(style).map(([key, value]) => [
+      key,
+      value.replace(HALF_ALPHA, "$199"),
+    ])
+  )
+}
+
 let highlighter: Promise<HighlighterCore> | undefined
 
 function getHighlighter() {
   highlighter ??= createHighlighterCore({
     themes: [
-      import("shiki/themes/github-light.mjs"),
-      import("shiki/themes/github-dark.mjs"),
+      import("shiki/themes/github-light-high-contrast.mjs"),
+      import("shiki/themes/github-dark-high-contrast.mjs"),
     ],
     langs: [],
     engine: createJavaScriptRegexEngine({ forgiving: true }),
@@ -80,7 +92,10 @@ export async function loadHighlighter(language: string) {
       const tokenize = (text: string) =>
         shiki.codeToTokens(text, {
           lang,
-          themes: { light: "github-light", dark: "github-dark" },
+          themes: {
+            light: "github-light-high-contrast",
+            dark: "github-dark-high-contrast",
+          },
           defaultColor: false,
           grammarState: state,
         }).tokens
@@ -94,7 +109,7 @@ export async function loadHighlighter(language: string) {
           line.map((token, index) => (
             <span
               key={index}
-              style={token.htmlStyle as React.CSSProperties}
+              style={legible(token.htmlStyle) as React.CSSProperties}
               className="text-(--shiki-light) dark:text-(--shiki-dark)"
             >
               {token.content}

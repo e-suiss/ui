@@ -26,8 +26,8 @@ export default function WidgetSales() {
   return (
     <div>
       <Widget resizable defaultSize="large">
-        <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
-          <WidgetIcon size="sm" className="text-amber-600 dark:text-amber-400">
+        <WidgetHeader className="gap-1.5 text-amber-700 dark:text-amber-400">
+          <WidgetIcon size="sm" className="text-amber-700 dark:text-amber-400">
             <IconPlaceholder
               lucide="CalculatorIcon"
               tabler="IconCashRegister"

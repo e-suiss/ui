@@ -164,7 +164,7 @@ function FreeResizeExample() {
               >
                 <span
                   aria-hidden="true"
-                  className="text-amber-600 dark:text-amber-400 [&_svg]:size-6"
+                  className="text-amber-700 dark:text-amber-400 [&_svg]:size-6"
                 >
                   {item.icon}
                 </span>

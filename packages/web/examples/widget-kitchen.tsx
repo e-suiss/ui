@@ -33,10 +33,10 @@ export default function WidgetKitchen() {
         className="flex-row gap-4"
       >
         <div className="flex w-32 shrink-0 flex-col gap-1 group-data-[size=small]/widget:w-full">
-          <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
+          <WidgetHeader className="gap-1.5 text-amber-700 dark:text-amber-400">
             <WidgetIcon
               size="sm"
-              className="text-amber-600 dark:text-amber-400"
+              className="text-amber-700 dark:text-amber-400"
             >
               <IconPlaceholder
                 lucide="CookingPotIcon"

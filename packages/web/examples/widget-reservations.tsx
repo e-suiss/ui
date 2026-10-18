@@ -17,7 +17,7 @@ export default function WidgetReservations() {
   return (
     <div>
       <Widget resizable defaultSize="medium" sizes={["small", "medium"]}>
-        <WidgetHeader className="gap-1.5 text-primary">
+        <WidgetHeader className="gap-1.5 text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))]">
           <WidgetIcon size="sm" className="text-primary">
             <IconPlaceholder
               lucide="CalendarIcon"

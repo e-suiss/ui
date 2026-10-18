@@ -56,8 +56,8 @@ export default function WidgetDashboard() {
         <WidgetDescription>5 tickets</WidgetDescription>
       </Widget>
       <Widget className="col-span-2">
-        <WidgetHeader className="gap-1.5 text-amber-600 dark:text-amber-400">
-          <WidgetIcon size="sm" className="text-amber-600 dark:text-amber-400">
+        <WidgetHeader className="gap-1.5 text-amber-700 dark:text-amber-400">
+          <WidgetIcon size="sm" className="text-amber-700 dark:text-amber-400">
             <IconPlaceholder
               lucide="CalculatorIcon"
               tabler="IconCashRegister"
@@ -72,7 +72,7 @@ export default function WidgetDashboard() {
         <WidgetFooter>Today's revenue · 42 orders</WidgetFooter>
       </Widget>
       <Widget className="col-span-2 row-span-2">
-        <WidgetHeader className="gap-1.5 text-primary">
+        <WidgetHeader className="gap-1.5 text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))]">
           <WidgetIcon size="sm" className="text-primary">
             <IconPlaceholder
               lucide="CalendarIcon"
