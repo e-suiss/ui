@@ -27,8 +27,8 @@ const CHANGE_EVENT = "package-manager-change"
 const NPX = /^npx\s+(?!expo\s)/
 const NPM_INSTALL = /^npm\s+(?:install|i)(?=\s|$)/
 const SAVE_DEV = /\s--save-dev\b/
-const SUISS_CLI = /^npx\s+@esuiss\/ui@latest\s+(?:add|init)\b/
-const PLATFORM_FLAG = /\s--platform\b/
+const SUISS_INIT = /^npx\s+@esuiss\/ui@latest\s+init\b/
+const KEEPS_STYLE = /\s--(?:platform|preset|style)\b/
 
 function withBase(
   line: string,
@@ -50,8 +50,8 @@ function withBase(
 }
 
 function withStyle(line: string, style: StyleName) {
-  if (style === DEFAULT_STYLE || !SUISS_CLI.test(line)) return line
-  if (PLATFORM_FLAG.test(line) || line.includes("--style")) return line
+  if (style === DEFAULT_STYLE || !SUISS_INIT.test(line)) return line
+  if (KEEPS_STYLE.test(line)) return line
   return `${line} --style ${style}`
 }
 
