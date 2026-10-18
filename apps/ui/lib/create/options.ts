@@ -57,6 +57,12 @@ const OWN_SWATCH = {
 export const isGray = (name: string) =>
   (PRESET_BASE_COLORS as readonly string[]).includes(name) || name === OWN
 
+export function primarySwatchOf(name: string) {
+  if (name === OWN) return OWN_SWATCH.primary
+  const palette = themeOf(name)?.light as Record<string, string> | undefined
+  return palette?.primary
+}
+
 export function themeOptions(baseColor: string) {
   return [baseColor, ...THEMES.filter((theme) => !isGray(theme))]
 }
@@ -131,6 +137,7 @@ function isDefault(state: CreateState) {
   return (Object.keys(DEFAULT_STATE) as (keyof CreateState)[]).every(
     (key) =>
       key === "platform" ||
+      key === "base" ||
       key === "primary" ||
       state[key] === DEFAULT_STATE[key]
   )

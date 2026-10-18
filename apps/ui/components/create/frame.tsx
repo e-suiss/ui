@@ -31,6 +31,9 @@ function declarations(variables: Record<string, string>) {
     .join("")
 }
 
+const MENU_TARGET = ".cn-menu-target"
+const INVERTED = "dark"
+
 const BOLD_ACCENT =
   "html[data-menu-accent=bold] .cn-menu-target{--accent:var(--primary)!important;--accent-foreground:var(--primary-foreground)!important}"
 
@@ -57,7 +60,7 @@ function applyTheme(state: CreateState) {
   }
   element.textContent = [
     `html:root{${declarations(light)}${font ? `--font-sans:'${fontFamilyOf(font.google)}',${font.family.split(",").at(-1)?.trim()};` : ""}}`,
-    `html.dark:root{${declarations(dark)}}`,
+    `html.dark:root,html ${MENU_TARGET}.${INVERTED}{${declarations(dark)}}`,
     font ? "html body{font-family:var(--font-sans)}" : "",
     BOLD_ACCENT,
   ].join("")
@@ -80,6 +83,14 @@ function applyTheme(state: CreateState) {
   }
 }
 
+function invertMenus(inverted: boolean) {
+  for (const menu of document.querySelectorAll(MENU_TARGET)) {
+    if (menu.classList.contains(INVERTED) !== inverted) {
+      menu.classList.toggle(INVERTED, inverted)
+    }
+  }
+}
+
 export function CreateFrame() {
   const [state, setState] = React.useState<CreateState>(DEFAULT_STATE)
   const content = React.useRef<HTMLDivElement>(null)
@@ -88,7 +99,7 @@ export function CreateFrame() {
     const onMessage = (event: MessageEvent<FrameMessage>) => {
       if (event.origin !== window.location.origin) return
       if (event.source !== window.parent) return
-      if (event.data?.type !== FRAME_MESSAGE) return
+      if (event.data?.type !== FRAME_MESSAGE || !event.data.state) return
       setState(event.data.state)
       document.documentElement.classList.toggle("dark", event.data.dark)
     }
@@ -101,6 +112,19 @@ export function CreateFrame() {
     applyTheme(state)
     void showStyle(state.style)
   }, [state])
+
+  const inverted = state.menuColor.startsWith("inverted")
+  React.useEffect(() => {
+    invertMenus(inverted)
+    const observer = new MutationObserver(() => invertMenus(inverted))
+    observer.observe(document.body, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+    return () => observer.disconnect()
+  }, [inverted])
 
   React.useEffect(() => {
     const element = content.current

@@ -172,9 +172,14 @@ function CommandBox({
             <div className="overflow-x-auto border-t border-border bg-muted p-3">
               <code
                 dir="ltr"
-                className="block font-mono text-[13px] whitespace-nowrap"
+                className="block font-mono text-[13px] leading-[1.6] break-words"
               >
-                {commands[item]}
+                {commands[item].split(" ").map((word, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && " "}
+                    <span className="whitespace-nowrap">{word}</span>
+                  </React.Fragment>
+                ))}
               </code>
             </div>
           </TabsContent>

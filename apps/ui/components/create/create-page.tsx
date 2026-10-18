@@ -31,6 +31,7 @@ import {
   PRESET_MENU_COLORS,
   PRESET_RADII,
   PRIMITIVE_BASES,
+  primarySwatchOf,
   STYLES,
   swatchOf,
   type ThemeDefaults,
@@ -316,7 +317,7 @@ export function CreatePage({
                 {
                   value: defaultTheme ?? state.baseColor,
                   label: strings.createDefault,
-                  swatch: swatchOf(defaultTheme ?? state.baseColor),
+                  swatch: primarySwatchOf(defaultTheme ?? state.baseColor),
                 },
               ],
               options(colorThemes, true),
@@ -333,7 +334,8 @@ export function CreatePage({
                 <ColorPicker
                   value={state.primary}
                   fallback={
-                    parseColor(swatchOf(state.theme) ?? "") ?? FALLBACK_PRIMARY
+                    parseColor(primarySwatchOf(state.theme) ?? "") ??
+                    FALLBACK_PRIMARY
                   }
                   onChange={(primary) => {
                     setPreview({})
