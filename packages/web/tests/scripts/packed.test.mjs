@@ -49,6 +49,7 @@ describe("registry paths", () => {
     ["aria-suiss/button.json", "aria/button.json", "suiss"],
     ["new-york/button.json", "radix/button.json", "suiss"],
     ["default/button.json", "radix/button.json", "suiss"],
+    ["new-york-v4/button.json", "radix/button.json", "suiss"],
     ["radix/button.json", "radix/button.json", "suiss"],
     ["base-unknown/button.json", "base/button.json", "suiss"],
     ["nova/button.json", "base/button.json", "nova"],
@@ -65,11 +66,17 @@ describe("registry paths", () => {
   })
 
   it.each([
-    ["rn-uniwind-vega/theme-suiss.json", "rn-uniwind/theme-vega.json"],
     ["rn-nativewind-suiss/theme-suiss.json", "rn-nativewind/theme-suiss.json"],
     ["rn-stylesheet-rhea/button.json", "rn-stylesheet/button.json"],
   ])("maps the native style path %s", (rest, path) => {
     expect(registryPath(rest)).toEqual({ path })
+  })
+
+  it("keeps the requested name for a styled native theme", () => {
+    expect(registryPath("rn-uniwind-vega/theme-suiss.json")).toEqual({
+      path: "rn-uniwind/theme-vega.json",
+      name: "theme-suiss",
+    })
   })
 
   it("resolves base and style names", () => {
