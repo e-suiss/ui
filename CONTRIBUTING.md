@@ -95,7 +95,7 @@ Git hooks are installed by `pnpm install`:
 - commit-msg: commitlint enforces [Conventional Commits](https://www.conventionalcommits.org), e.g. `fix: correct dialog padding`.
 - pre-push: Biome, the registry checks and the tests in parallel with Knip and then typecheck, which run one after the other because both generate the mobile Storybook files.
 
-GitHub Actions runs the same checks in `.github/workflows/ci.yml` on every push to `main` and every pull request, and builds the SwiftUI library (and runs its tests on an iOS simulator) and the Compose library when `packages/mobile/swiftui`, `packages/mobile/kotlin` or the tokens change.
+GitHub Actions runs the same checks in `.github/workflows/ci.yml` on every push to `main` and every pull request, and builds the SwiftUI library (and runs its tests on a simulator) and the Compose library when `packages/mobile/swiftui`, `packages/mobile/kotlin` or the tokens change.
 
 ## Deploy
 
@@ -119,7 +119,7 @@ pnpm indexnow --since=2026-01-01     # pages changed since a date
 pnpm indexnow --all                  # every page in the sitemaps
 ```
 
-`wrangler dev` cannot watch the full `dist/` folder on macOS (more than 10,000 files fail with `spawn EBADF`); to try the Worker locally, serve a copy without `dist/ui/source`.
+`wrangler dev` cannot watch the full `dist/` folder (more than 10,000 files fail with `spawn EBADF`); to try the Worker locally, serve a copy without `dist/ui/source`.
 
 ## Release
 

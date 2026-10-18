@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](https://github.com/e-suiss/ui/blob/main/LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-suiss.app%2Fui-black)](https://suiss.app/ui)
 
-**This package holds the mobile side of suiss/ui, an open-source library of copy-paste components with a clean, minimal design,** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same API: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet. The `@esuiss/ui` command-line tool, shared with the web library, copies each component's source into your app, so you own the code and can change anything.
+**This package holds the mobile side of suiss/ui, an open-source library of copy-paste components with a clean, minimal design,** for React Native and Expo projects with TypeScript, with matching SwiftUI and Jetpack Compose libraries. Every React Native component comes in three styling flavors with the same components and props: [Uniwind](https://uniwind.dev) (Tailwind CSS v4), [NativeWind](https://www.nativewind.dev) v4 (Tailwind CSS v3) and plain React Native StyleSheet, where `style` takes the place of `className`. The `@esuiss/ui` command-line tool, shared with the web library, copies each component's source into your app, so you own the code and can change anything.
 
 **[Documentation](https://suiss.app/ui/docs)** · [Components](https://suiss.app/ui/docs/components) · [Patterns](https://suiss.app/ui/docs/patterns) · [Interactions](https://suiss.app/ui/docs/interactions) · [CLI](https://suiss.app/ui/docs/cli)
 
@@ -40,7 +40,7 @@ export function Example() {
 }
 ```
 
-`init` sets up Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) or plain React Native StyleSheet, the `@/*` import alias, the theme stylesheet, the Metro config, the portal host in the root layout, and the button. `add` copies components into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. In React Native projects without Expo, `init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `cd ios && pod install` after adding components there.
+`init` sets up Uniwind (Tailwind CSS v4), NativeWind v4 (Tailwind CSS v3) or plain React Native StyleSheet, the `@/*` import alias, the theme stylesheet, the Metro config, the portal host in the root layout, and the button. `add` copies components into `components/ui/` together with the components and packages they depend on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. In React Native projects without Expo, `init` also adds the `@/*` alias to Babel with `babel-plugin-module-resolver`, and `add` adds the Reanimated Babel plugin when a component needs it. Run `pod install` in the native project folder after adding components there.
 
 The styling library is detected from the project. When neither is installed, `init` asks; pass `--styling uniwind`, `--styling nativewind` or `--styling stylesheet` to choose up front. StyleSheet needs no Tailwind; `init` writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. For NativeWind, `init` also writes `tailwind.config.js` and the NativeWind Babel preset.
 

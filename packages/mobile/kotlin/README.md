@@ -35,6 +35,7 @@ Requires Android API 24 or later.
 ## Usage
 
 ```kotlin
+import androidx.compose.runtime.Composable
 import com.esuiss.ui.components.Button
 import com.esuiss.ui.theme.EsuissTheme
 
