@@ -31,6 +31,21 @@ function declarations(variables: Record<string, string>) {
     .join("")
 }
 
+const BOLD_ACCENT =
+  "html[data-menu-accent=bold] .cn-menu-target{--accent:var(--primary)!important;--accent-foreground:var(--primary-foreground)!important}"
+
+function fontFamilyOf(google: string) {
+  return google.replace(/_/g, " ")
+}
+
+function fontUrl(google: string, dependency: string) {
+  const family = fontFamilyOf(google).replace(/ /g, "+")
+  const axis = dependency.startsWith("@fontsource-variable/")
+    ? ":wght@400..700"
+    : ""
+  return `https://fonts.googleapis.com/css2?family=${family}${axis}&display=swap`
+}
+
 function applyTheme(state: CreateState) {
   const { light, dark } = themeVariables(state)
   const font = fontOf(state.font)
@@ -41,9 +56,10 @@ function applyTheme(state: CreateState) {
     document.head.append(element)
   }
   element.textContent = [
-    `html:root{${declarations(light)}${font ? `--font-sans:'${font.google}',sans-serif;` : ""}}`,
+    `html:root{${declarations(light)}${font ? `--font-sans:'${fontFamilyOf(font.google)}',${font.family.split(",").at(-1)?.trim()};` : ""}}`,
     `html.dark:root{${declarations(dark)}}`,
     font ? "html body{font-family:var(--font-sans)}" : "",
+    BOLD_ACCENT,
   ].join("")
   if (font) {
     let link = document.getElementById(FONT_LINK) as HTMLLinkElement | null
@@ -53,9 +69,10 @@ function applyTheme(state: CreateState) {
       link.rel = "stylesheet"
       document.head.append(link)
     }
-    link.href = `https://fonts.googleapis.com/css2?family=${font.google.replace(/ /g, "+")}:wght@400..700&display=swap`
+    link.href = fontUrl(font.google, font.dependency)
   }
   const root = document.documentElement
+  root.dataset.menuAccent = state.menuAccent
   if (state.menuColor.endsWith("translucent")) {
     root.dataset.menuTranslucent = ""
   } else {

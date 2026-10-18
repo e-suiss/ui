@@ -129,8 +129,25 @@ export function oklchString(rgb: Rgb) {
   return `oklch(${l.toFixed(4)} ${c.toFixed(4)} ${h.toFixed(2)})`
 }
 
+const LIGHT_FOREGROUND = "oklch(1 0 0)"
+const DARK_FOREGROUND = "oklch(0.2316 0.0038 286.09)"
+
+const luminance = ({ r, g, b }: Rgb) =>
+  0.2126 * toLinear(r / 255) +
+  0.7152 * toLinear(g / 255) +
+  0.0722 * toLinear(b / 255)
+
+function contrast(first: Rgb, second: Rgb) {
+  const [high, low] = [luminance(first), luminance(second)].sort(
+    (a, b) => b - a
+  ) as [number, number]
+  return (high + 0.05) / (low + 0.05)
+}
+
 export function foregroundFor(rgb: Rgb) {
-  return rgbToOklch(rgb).l > 0.65
-    ? "oklch(0.2316 0.0038 286.09)"
-    : "oklch(1 0 0)"
+  const light = oklchToRgb({ l: 1, c: 0, h: 0 })
+  const dark = oklchToRgb({ l: 0.2316, c: 0.0038, h: 286.09 })
+  return contrast(rgb, light) >= contrast(rgb, dark)
+    ? LIGHT_FOREGROUND
+    : DARK_FOREGROUND
 }
