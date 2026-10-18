@@ -6,6 +6,7 @@ import {
   fetchRegistry,
   fetchStylesheet,
   fetchText,
+  fetchThemes,
   resolveItems,
   toCss,
 } from "../lib/registry.mjs"
@@ -300,5 +301,116 @@ describe("registry errors", () => {
     expect(() =>
       resolveItems({ items: [item("menu", ["popup"])] }, ["menu"])
     ).toThrow(new CliError("menu needs popup, which is not in the registry."))
+  })
+})
+
+describe("malformed registry entries", () => {
+  it.each([
+    [{ name: "x", files: ["components/ui/x.tsx"] }],
+    [{ name: "x", files: [{ type: "registry:ui" }] }],
+    [{ name: "x", files: "components/ui/x.tsx" }],
+    [
+      {
+        name: "x",
+        files: [{ path: "components/ui/x.tsx" }],
+        dependencies: [1],
+      },
+    ],
+  ])("names the bad item %j instead of crashing", async (entry) => {
+    serveRegistry({
+      "registry/registry.json": {
+        items: [
+          entry,
+          { name: "button", files: [{ path: "components/ui/button.tsx" }] },
+        ],
+      },
+    })
+    await expect(fetchRegistry()).rejects.toThrow(
+      new CliError(
+        "The registry entry for x is malformed. Update @esuiss/ui or check ESUISS_REGISTRY."
+      )
+    )
+  })
+})
+
+describe("registry themes", () => {
+  it.each([
+    'red; } @import url("https://evil.example/x.css"); :root { --x: y',
+    "oklch(0.5 0.2 $1)",
+    "url(https://evil.example/a.png)",
+    "oklch(0.5 0.2 1) /* x",
+    "\\72 ed",
+  ])("refuses the value %s", async (value) => {
+    serveRegistry({
+      "registry/themes.json": [
+        { name: "blue", light: { primary: value }, dark: {} },
+      ],
+    })
+    await expect(fetchThemes()).rejects.toThrow(
+      "Refusing registry/themes.json: --primary is not a plain color or size."
+    )
+  })
+
+  it("keeps colors with alpha, hex and sizes", async () => {
+    const themes = [
+      {
+        name: "blue",
+        light: {
+          border: "oklch(1 0 0 / 10%)",
+          ring: "#2563eb",
+          radius: "0.625rem",
+        },
+        dark: { primary: "oklch(0.488 0.243 264.376)" },
+      },
+    ]
+    serveRegistry({ "registry/themes.json": themes })
+    await expect(fetchThemes()).resolves.toEqual(themes)
+  })
+})
+
+describe("registry redirects", () => {
+  function redirectTo(location, body = "export {}") {
+    const fetch = vi.fn(async (url) =>
+      url === location
+        ? new Response(body, { status: 200 })
+        : new Response(null, { status: 302, headers: { location } })
+    )
+    vi.stubGlobal("fetch", fetch)
+    return fetch
+  }
+
+  it.each([
+    ["https://registry.example/web", "http://evil.example/web/a.tsx"],
+    ["http://127.0.0.1:4712/web", "http://localhost.:4711/web/a.tsx"],
+    ["https://registry.example/web", "ftp://registry.example/web/a.tsx"],
+  ])("refuses a redirect from %s to %s", async (override, location) => {
+    vi.stubEnv("ESUISS_REGISTRY", override)
+    const fetch = redirectTo(location)
+    await expect(fetchText("a.tsx")).rejects.toThrow("it must use https")
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch.mock.calls[0][1]).toMatchObject({ redirect: "manual" })
+  })
+
+  it("follows a redirect that stays on https", async () => {
+    vi.stubEnv("ESUISS_REGISTRY", "https://registry.example/web")
+    redirectTo("https://cdn.registry.example/web/a.tsx")
+    await expect(fetchText("a.tsx")).resolves.toBe("export {}")
+  })
+
+  it("stops after too many redirects", async () => {
+    vi.stubEnv("ESUISS_REGISTRY", "https://registry.example/web")
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(null, {
+            status: 307,
+            headers: { location: "https://registry.example/web/loop" },
+          })
+      )
+    )
+    await expect(fetchText("a.tsx")).rejects.toThrow(
+      "The registry redirected a.tsx too many times."
+    )
   })
 })

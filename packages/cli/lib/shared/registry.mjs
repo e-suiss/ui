@@ -6,6 +6,8 @@ const TRAILING_SLASH = /\/$/
 const REF = "{ref}"
 const TIMEOUT = 30_000
 const LOCAL_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
+const REDIRECTS = [301, 302, 303, 307, 308]
+const MAX_REDIRECTS = 5
 
 const DEFAULT_BRANCH = "main"
 const TAG = `v${version}`
@@ -14,6 +16,13 @@ const REFS = [TAG, DEFAULT_BRANCH]
 let chosenRef = null
 let pending = null
 
+function isSecure(url) {
+  return (
+    url.protocol === "https:" ||
+    (url.protocol === "http:" && LOCAL_HOSTS.includes(url.hostname))
+  )
+}
+
 function checkOverride(override, env) {
   let url
   try {
@@ -21,8 +30,7 @@ function checkOverride(override, env) {
   } catch {
     throw new CliError(`${env} must be a URL.`)
   }
-  const local = url.protocol === "http:" && LOCAL_HOSTS.includes(url.hostname)
-  if (url.protocol !== "https:" && !local) {
+  if (!isSecure(url)) {
     throw new CliError(
       `${env} must use https (http works only for localhost and 127.0.0.1).`
     )
@@ -30,15 +38,38 @@ function checkOverride(override, env) {
   return override.replace(TRAILING_SLASH, "")
 }
 
-async function request(url, file) {
+async function fetchOnce(url, file, signal) {
   try {
-    return await fetch(url, { signal: AbortSignal.timeout(TIMEOUT) })
+    return await fetch(url, { signal, redirect: "manual" })
   } catch (error) {
     if (error?.name === "TimeoutError") {
       throw new CliError(`Timed out downloading ${file} from the registry.`)
     }
     throw new CliError(`Could not reach the registry to download ${file}.`)
   }
+}
+
+async function request(url, file) {
+  const signal = AbortSignal.timeout(TIMEOUT)
+  let current = url
+  for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
+    const response = await fetchOnce(current, file, signal)
+    const location = response.headers?.get?.("location")
+    if (!REDIRECTS.includes(response.status) || !location) return response
+    let next
+    try {
+      next = new URL(location, current)
+    } catch {
+      throw new CliError(`The registry sent an invalid redirect for ${file}.`)
+    }
+    if (!isSecure(next)) {
+      throw new CliError(
+        `Refusing to follow the registry to ${next.origin} for ${file}: it must use https.`
+      )
+    }
+    current = next.href
+  }
+  throw new CliError(`The registry redirected ${file} too many times.`)
 }
 
 function announce(ref) {
