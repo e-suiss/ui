@@ -42,6 +42,8 @@ const files = {
     title: "suiss/ui Theme (Vega)",
   },
   "/ui/r/rn-uniwind/theme-suiss.json": { name: "theme-suiss" },
+  "/ui/r/base/button.json": { name: "button" },
+  "/ui/r/rn-uniwind/button.json": { name: "button" },
 }
 
 describe("registry worker", () => {
@@ -101,6 +103,82 @@ describe("registry worker", () => {
       { ASSETS: assets(files) }
     )
     expect(response.status).toBe(200)
+  })
+})
+
+describe("registry worker paths", () => {
+  it.each([
+    "/ui/r/",
+    "/ui/r/radix-vega/",
+    "/ui/r/radix-vega",
+    "/ui/r/radix-vega/button.json/anything",
+    "/ui/r/radix-vega/button.json/",
+    "/ui/r/radix-vega//button.json",
+    "/ui/r/rn-uniwind-vega/%2e%2e%2fbase%2fbutton.json",
+    "/ui/r/rn-uniwind%2f..%2fbase/button.json",
+    "/ui/r/radix/.hidden.json",
+    "/ui/r/radix/button.txt",
+  ])("answers %s with a 404 without reading other folders", async (path) => {
+    const env = { ASSETS: assets(files) }
+    const response = await worker.fetch(get(path), env)
+    expect(response.status).toBe(404)
+    expect(response.headers.get("Cache-Control")).toBe("no-store")
+    expect(env.ASSETS.fetch).not.toHaveBeenCalled()
+  })
+
+  it("never passes an asset redirect on", async () => {
+    const env = {
+      ASSETS: {
+        fetch: vi.fn(
+          async () =>
+            new Response(null, {
+              status: 307,
+              headers: { Location: "/ui/r/radix" },
+            })
+        ),
+      },
+    }
+    const response = await worker.fetch(get("/ui/r/radix/x.json"), env)
+    expect(response.status).toBe(404)
+    expect(response.headers.get("Location")).toBeNull()
+  })
+
+  it("keeps the style placeholder and short item paths working", async () => {
+    for (const path of ["/ui/r/%7Bstyle%7D/button.json", "/ui/r/button.json"]) {
+      const response = await worker.fetch(get(path), { ASSETS: assets(files) })
+      expect(response.status).toBe(200)
+      expect(await response.json()).toEqual({ name: "button" })
+    }
+  })
+
+  it("forwards only the method and the URL to the asset store", async () => {
+    const env = { ASSETS: assets(files) }
+    await worker.fetch(
+      get("/ui/r/radix-vega/button.json", {
+        headers: {
+          Range: "bytes=0-10",
+          "If-None-Match": '"abc"',
+          Cookie: "a=b",
+        },
+      }),
+      env
+    )
+    const [forwarded] = env.ASSETS.fetch.mock.calls[0]
+    expect(forwarded.url).toBe(`${ORIGIN}/ui/r/radix/button.json`)
+    expect(forwarded.method).toBe("GET")
+    expect([...forwarded.headers.keys()]).toEqual([])
+  })
+
+  it("answers HEAD without a body or the stored length", async () => {
+    const env = { ASSETS: assets(files) }
+    const response = await worker.fetch(
+      get("/ui/r/radix/button.json", { method: "HEAD" }),
+      env
+    )
+    expect(response.status).toBe(200)
+    expect(response.headers.get("Content-Length")).toBeNull()
+    expect(await response.text()).toBe("")
+    expect(env.ASSETS.fetch.mock.calls[0][0].method).toBe("GET")
   })
 })
 

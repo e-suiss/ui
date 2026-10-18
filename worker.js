@@ -21,6 +21,10 @@ const NATIVE_STYLED =
 const NATIVE_THEME_NAME = "theme-suiss"
 const NATIVE_THEME = `${NATIVE_THEME_NAME}.json`
 const FAILED = 400
+const NOT_FOUND = 404
+const SEGMENT = /^[a-z0-9][a-z0-9._-]*$/i
+const ITEM = /^[a-z0-9][a-z0-9._-]*\.json$/i
+const STYLE_PLACEHOLDER = /^%7Bstyle%7D$/i
 const JSON_TYPE = "application/json; charset=utf-8"
 
 const common = {
@@ -55,8 +59,14 @@ export function resolveStyle(name) {
 }
 
 export function registryPath(rest) {
-  const [first, file] = rest.split("/")
+  const segments = rest.split("/")
+  if (segments.length > 2 || !ITEM.test(segments.at(-1))) return null
+  const [first, file] = segments
   if (file === undefined) return { path: `base/${first}`, style: DEFAULT_STYLE }
+  if (STYLE_PLACEHOLDER.test(first)) {
+    return { path: `base/${file}`, style: DEFAULT_STYLE }
+  }
+  if (!SEGMENT.test(first)) return null
   const native = first.match(NATIVE_STYLED)
   if (native) {
     const [, styling, style] = native
@@ -73,6 +83,10 @@ export function registryPath(rest) {
   return { path: `${base}/${file}`, style }
 }
 
+function withoutBody(request, response) {
+  return request.method === "HEAD" ? new Response(null, response) : response
+}
+
 async function styled(response, style) {
   if (!response.ok || !style) return new Response(response.body, response)
   const bytes = new Uint8Array(await response.arrayBuffer())
@@ -87,10 +101,8 @@ async function styled(response, style) {
   return result
 }
 
-async function renamed(request, response, name) {
-  if (!name || request.method !== "GET" || response.status !== 200) {
-    return response
-  }
+async function renamed(response, name) {
+  if (!name || response.status !== 200) return response
   const item = await response.json()
   const result = new Response(JSON.stringify({ ...item, name }), response)
   result.headers.set("Content-Type", JSON_TYPE)
@@ -122,16 +134,19 @@ export default {
       })
     }
     const url = new URL(request.url)
-    const { path, style, name } = registryPath(
-      url.pathname.slice(PREFIX.length)
+    const resolved = registryPath(url.pathname.slice(PREFIX.length))
+    if (!resolved) return failure(NOT_FOUND)
+    const { path, style, name } = resolved
+    const response = await env.ASSETS.fetch(
+      new Request(new URL(`${PREFIX}${path}`, url.origin), { method: "GET" })
     )
-    url.pathname = `${PREFIX}${path}`
-    const response = await env.ASSETS.fetch(new Request(url, request))
     if (response.status >= FAILED) return failure(response.status)
-    const registry = await renamed(request, await styled(response, style), name)
+    if (response.status !== 200) return failure(NOT_FOUND)
+    const registry = await renamed(await styled(response, style), name)
+    registry.headers.delete("Content-Length")
     for (const [key, value] of Object.entries(cached)) {
       registry.headers.set(key, value)
     }
-    return registry
+    return withoutBody(request, registry)
   },
 }
