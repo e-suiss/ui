@@ -94,6 +94,19 @@ export function ResponsivePreview({
 }) {
   const stage = React.useRef<HTMLDivElement>(null)
   const [dragging, setDragging] = React.useState(false)
+  const [shown, setShown] = React.useState(false)
+
+  React.useEffect(() => {
+    const element = stage.current
+    if (!element) return
+    const observer = new ResizeObserver(([entry]) => {
+      if (!entry || entry.contentRect.width === 0) return
+      setShown(true)
+      observer.disconnect()
+    })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
 
   const startDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
     const element = stage.current
@@ -134,7 +147,7 @@ export function ResponsivePreview({
           <div className="h-full min-w-0 flex-1 overflow-hidden rounded-[24px] bg-background ring-1 ring-foreground/10">
             <iframe
               key={state.key}
-              src={src}
+              src={shown ? src : undefined}
               title="Preview"
               loading="lazy"
               className={cn(
