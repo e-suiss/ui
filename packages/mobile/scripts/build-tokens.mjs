@@ -190,7 +190,7 @@ function buildMetrics(metrics) {
   )
   const shadow = metricEntries(metrics.shadow, (value) =>
     value === "none"
-      ? "undefined"
+      ? "{}"
       : `{ boxShadow: "${convertColors(SHADOWS[value])}" }`
   )
   return `const metrics = {

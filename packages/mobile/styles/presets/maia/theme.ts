@@ -230,8 +230,8 @@ const metrics = {
     title: "500" as const,
   },
   shadow: {
-    card: undefined,
-    dialog: undefined,
+    card: {},
+    dialog: {},
     popover: { boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" },
     menu: { boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" },
   },
