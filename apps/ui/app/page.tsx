@@ -4,6 +4,7 @@ import type * as React from "react"
 import { Anchor } from "@/components/site/anchor"
 import { Bento } from "@/components/site/bento"
 import { InstallCommand } from "@/components/site/install-command"
+import { pieceCounts } from "@/lib/collections"
 import { site } from "@/lib/site"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
@@ -45,6 +46,12 @@ const collections = [
     href: "/docs/blocks",
     description:
       "Complete screens, from checkout and inbox to dashboards and settings.",
+  },
+  {
+    title: "AI",
+    href: "/docs/ai",
+    description:
+      "Messages, reasoning, tools and prompts for agent and chat interfaces.",
   },
 ]
 
@@ -120,7 +127,8 @@ function Manifesto() {
   )
 }
 
-function Interface() {
+async function Interface() {
+  const counts = await pieceCounts()
   return (
     <section className="pb-32 md:pb-48">
       <div
@@ -142,7 +150,7 @@ function Interface() {
       </div>
 
       <div className={frame}>
-        <Bento />
+        <Bento counts={counts} />
       </div>
 
       <div className={frame}>
@@ -168,7 +176,7 @@ function Library() {
       >
         <Label index="03">Library</Label>
         <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
-          Five collections.{" "}
+          Six collections.{" "}
           <span className="text-muted-foreground">One design language.</span>
         </h2>
       </div>

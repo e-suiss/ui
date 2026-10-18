@@ -19,6 +19,7 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { ThemeToggle } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import type { PieceCounts } from "@/lib/collections"
 import { cn } from "@/lib/utils"
 
 function Tile({
@@ -47,48 +48,37 @@ function Tile({
   )
 }
 
-const pieces = [
-  {
-    kind: "components",
-    label: "Components",
-    count: 67,
-    color: "var(--chart-1)",
-  },
-  {
-    kind: "charts",
-    label: "Charts",
-    count: 70,
-    color: "var(--color-purple-500)",
-  },
-  { kind: "blocks", label: "Blocks", count: 54, color: "var(--chart-4)" },
-  {
-    kind: "patterns",
-    label: "Patterns",
-    count: 19,
-    color: "var(--color-green-500)",
-  },
+const pieceKinds = [
+  { kind: "components", label: "Components", color: "var(--chart-1)" },
+  { kind: "charts", label: "Charts", color: "var(--color-purple-500)" },
+  { kind: "blocks", label: "Blocks", color: "var(--chart-4)" },
+  { kind: "patterns", label: "Patterns", color: "var(--color-green-500)" },
+  { kind: "ai", label: "AI", color: "var(--chart-3)" },
   {
     kind: "interactions",
     label: "Interactions",
-    count: 11,
     color: "var(--color-pink-500)",
   },
-  { kind: "hooks", label: "Hooks", count: 4, color: "var(--chart-2)" },
-].map((piece) => ({ ...piece, fill: `var(--color-${piece.kind})` }))
+  { kind: "hooks", label: "Hooks", color: "var(--chart-2)" },
+]
 
 const chartConfig: ChartConfig = {
   count: { label: "Pieces" },
   ...Object.fromEntries(
-    pieces.map((piece) => [
+    pieceKinds.map((piece) => [
       piece.kind,
       { label: piece.label, color: piece.color },
     ])
   ),
 }
 
-const total = pieces.reduce((sum, piece) => sum + piece.count, 0)
-
-function ChartTile() {
+function ChartTile({ counts }: { counts: PieceCounts }) {
+  const pieces = pieceKinds.map((piece) => ({
+    ...piece,
+    count: counts[piece.kind] ?? 0,
+    fill: `var(--color-${piece.kind})`,
+  }))
+  const total = pieces.reduce((sum, piece) => sum + piece.count, 0)
   return (
     <Tile file="pie-chart.tsx" className="md:col-span-7 md:row-span-2">
       <div className="grid flex-1 items-center gap-8 pt-6 md:grid-cols-[1fr_1.15fr]">
@@ -191,10 +181,10 @@ function AppearanceTile() {
   )
 }
 
-export function Bento() {
+export function Bento({ counts }: { counts: PieceCounts }) {
   return (
     <ul className="grid auto-rows-[minmax(11rem,auto)] gap-3 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-12">
-      <ChartTile />
+      <ChartTile counts={counts} />
 
       <Tile file="switch.tsx" className="md:col-span-3">
         <div className="flex flex-1 items-center justify-center">
