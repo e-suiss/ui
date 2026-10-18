@@ -63,7 +63,7 @@ function LiveFrame({
   return (
     <iframe
       ref={ref}
-      src={`${basePath}/live/index.html?file=${file}&story=${story}&theme=${initial}`}
+      src={`${basePath}/live?file=${file}&story=${story}&theme=${initial}`}
       title={previewAlt(id, initial)}
       loading="lazy"
       onLoad={() =>

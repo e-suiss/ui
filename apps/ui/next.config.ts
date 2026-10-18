@@ -31,6 +31,7 @@ const nextConfig: NextConfig = {
     rewrites: () =>
       Promise.resolve({
         beforeFiles: [
+          { source: "/live", destination: "/live/index.html" },
           { source: "/docs.md", destination: "/llms.mdx/docs.md" },
           {
             source: "/docs/:path*.md",
