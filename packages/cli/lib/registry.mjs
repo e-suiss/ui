@@ -31,6 +31,7 @@ const BLOCK = /[{};]/
 const REMOTE_STYLESHEET =
   /@import\s+url\(|@import\s+["'](?:[a-z][a-z0-9+.-]*:|\/\/)|url\(\s*["']?(?:[a-z][a-z0-9+.-]*:|\/\/)/i
 const VALUE_BLOCK = /[{}]/
+const UNLISTED_TYPES = ["registry:hook", "registry:lib"]
 const INDEXES = {
   base: "registry/registry.json",
   radix: "registry/radix/registry.json",
@@ -107,6 +108,7 @@ function toItem(item) {
     }),
     ...(item.css && { css: item.css }),
     ...(item.meta?.optIn && { optIn: true }),
+    ...(UNLISTED_TYPES.includes(item.type) && { listed: false }),
   }
 }
 

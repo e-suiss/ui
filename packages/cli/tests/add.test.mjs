@@ -373,14 +373,14 @@ export const Icon = () => (
   it("lists the available items for an unknown name", async () => {
     const cwd = viteProject()
     await expect(add(["buton"], { cwd, scope: "ui" })).rejects.toThrow(
-      "Unknown component: buton.\nAvailable: button, dialog, theme"
+      "Unknown component: buton.\nAvailable: button, dialog"
     )
   })
 
   it("asks for at least one name and lists the choices outside a terminal", async () => {
     const cwd = viteProject()
     await expect(add([], { cwd, scope: "ui" })).rejects.toThrow(
-      "Name at least one component, e.g. npx @esuiss/ui add button\nAvailable: button, dialog, theme"
+      "Name at least one component, e.g. npx @esuiss/ui add button\nAvailable: button, dialog"
     )
     expect(choose).not.toHaveBeenCalled()
   })

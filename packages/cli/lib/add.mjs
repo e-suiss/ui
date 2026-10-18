@@ -1,10 +1,12 @@
-import { readFileSync, writeFileSync } from "node:fs"
+import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import path from "node:path"
 
 import { iconPackages, toIcons, usesIconPlaceholders } from "./icons.mjs"
 import { CliError, note, step } from "./output.mjs"
 import {
   detectBase,
   detectIcons,
+  detectMenuAccent,
   detectMenuColor,
   detectProject,
   detectStyle,
@@ -66,7 +68,8 @@ function fetchFiles(root, items, styling = {}) {
   return mapLimit(files, async (entry) => {
     const source = applyMenuColor(
       await styled(await fetchText(entry.source), styling),
-      styling.menuColor
+      styling.menuColor,
+      styling.menuAccent
     )
     return {
       ...entry,
@@ -94,7 +97,7 @@ function hasRule(css, rule) {
   )
 }
 
-function addStyles(project, items) {
+export function addStyles(project, items) {
   const styled = items.filter((item) => item.css)
   if (!styled.length) return
   const names = styled.map((item) => item.name).join(", ")
@@ -114,20 +117,45 @@ function addStyles(project, items) {
   step(`Added the styles for ${names} to ${relative(project, file)}`)
 }
 
+export function installedItems(registry, root) {
+  return registry.items
+    .filter(
+      (item) =>
+        item.files.length > 0 &&
+        item.files.every((file) => existsSync(targetFor(root, file)))
+    )
+    .map((item) => item.name)
+}
+
 export async function installItems(
   project,
   root,
   registry,
   names,
-  { overwrite = false, base, style, icons, menuColor } = {}
+  { overwrite = false, base, style, icons, menuColor, menuAccent } = {}
 ) {
   const items = resolveItems(registry, names)
   for (const item of items) checkCss(item)
-  const files = await fetchFiles(root, items, { base, style, icons, menuColor })
+  const files = await fetchFiles(root, items, {
+    base,
+    style,
+    icons,
+    menuColor,
+    menuAccent,
+  })
   const result = writeFiles(project.cwd, files, overwrite)
+  const kept = new Set(
+    result.skipped.map((file) => path.resolve(project.cwd, file))
+  )
+  const written = files.filter((file) => !kept.has(path.resolve(file.target)))
+  const used = items.filter((item) =>
+    item.files.some((file) =>
+      written.some((entry) => entry.target === targetFor(root, file))
+    )
+  )
   const installed = install(project, [
-    ...items.flatMap((item) => item.dependencies),
-    ...(files.some((file) => file.icons) ? iconPackages(icons) : []),
+    ...used.flatMap((item) => item.dependencies),
+    ...(written.some((file) => file.icons) ? iconPackages(icons) : []),
   ])
   reportFiles(result, installed)
   addStyles(project, items)
@@ -156,6 +184,7 @@ export async function add(names, options) {
     style,
     icons: detectIcons(project.cwd),
     menuColor: detectMenuColor(project.cwd),
+    menuAccent: detectMenuAccent(project.cwd),
   }
   const registry = await fetchRegistry(base)
   const selected = await chooseNames(registry.items, names, options, {

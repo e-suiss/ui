@@ -13,8 +13,8 @@ import {
 } from "shadcn/preset"
 import { STYLES, type StyleName } from "@/lib/code-options"
 import { foregroundFor, oklchString, parseColor } from "@/lib/create/color"
-import fonts from "@/lib/create/fonts.json"
 import type { PackageManager } from "@/lib/package-managers"
+import fonts from "../../../../packages/cli/lib/fonts.json"
 import themes from "../../../../packages/web/registry/themes.json"
 
 export const OWN = "suiss"
@@ -109,14 +109,16 @@ const isOneOf = <T extends string>(list: readonly T[], value: unknown) =>
 
 function presetCode(state: CreateState) {
   const style = state.style === OWN ? "nova" : state.style
+  const theme = (
+    state.theme === OWN ? "neutral" : state.theme
+  ) as PresetConfig["theme"]
   return encodePreset({
     style: style as PresetConfig["style"],
     baseColor: (state.baseColor === OWN
       ? "neutral"
       : state.baseColor) as PresetConfig["baseColor"],
-    theme: (state.theme === OWN
-      ? "neutral"
-      : state.theme) as PresetConfig["theme"],
+    theme,
+    chartColor: theme as PresetConfig["chartColor"],
     iconLibrary: state.iconLibrary,
     font: (state.font === OWN ? "inter" : state.font) as PresetConfig["font"],
     radius: state.radius,
@@ -163,10 +165,7 @@ export function fromParams(params: URLSearchParams): CreateState {
   if (isOneOf(PRIMITIVE_BASES, base)) state.base = base as Base
   const style = params.get("style")
   if (isOneOf(STYLES, style)) state.style = style as StyleName
-  if (params.get("theme") === OWN) {
-    state.baseColor = OWN
-    state.theme = OWN
-  }
+  if (params.get("theme") === OWN) state.baseColor = OWN
   if (params.get("font") === OWN) state.font = OWN
   if (isGray(state.theme)) state.theme = state.baseColor
   const primary = parseColor(params.get("primary") ?? "")
@@ -184,7 +183,7 @@ export function toParams(state: CreateState) {
   if (isDefault(state)) return params
   params.set("preset", presetCode(state))
   if (state.style === OWN) params.set("style", OWN)
-  if (state.baseColor === OWN || state.theme === OWN) params.set("theme", OWN)
+  if (state.baseColor === OWN) params.set("theme", OWN)
   if (state.font === OWN) params.set("font", OWN)
   return params
 }
@@ -216,9 +215,8 @@ const CLI = "@esuiss/ui@latest"
 function presetFlags(state: CreateState, mode: ApplyMode = "setup") {
   const flags = [`--preset ${presetCode(state)}`]
   const own = state.baseColor === OWN || state.theme === OWN
-  if (state.style === OWN && mode !== "theme" && mode !== "font") {
-    flags.push(`--style ${OWN}`)
-  }
+  if (mode === "theme") flags.push(`--style ${state.style}`)
+  else if (state.style === OWN && mode !== "font") flags.push(`--style ${OWN}`)
   if (own && mode !== "font") flags.push(`--theme ${OWN}`)
   if (state.primary && mode !== "font") {
     flags.push(`--primary "${state.primary}"`)

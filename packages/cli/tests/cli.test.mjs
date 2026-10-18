@@ -33,6 +33,22 @@ describe("esuiss-ui command", () => {
     expect(result.stderr).toContain('"blue" is not a color')
   })
 
+  it.each([
+    ["init", "--primary"],
+    ["init", "--primary", "--yes"],
+  ])("asks for a value after a bare --primary in %j", (...args) => {
+    const result = run(...args)
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain("--primary needs a color")
+    expect(result.stderr).not.toContain("undefined")
+  })
+
+  it("rejects a preset with the gray base color", () => {
+    const result = run("init", "--platform", "web", "--preset", "bw5OFzsG")
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain("The gray base color is not available")
+  })
+
   it("keeps --primary to init", () => {
     const result = run("add", "button", "--primary", "#2563eb")
     expect(result.code).not.toBe(0)
@@ -102,9 +118,22 @@ describe("esuiss-ui command", () => {
     )
   })
 
-  it("keeps --style out of --only", () => {
-    const result = run("apply", "--only", "theme", "--style", "vega")
-    expect(result.stderr).toContain("drop --only to use it")
+  it("keeps --style out of --only font", () => {
+    const result = run("apply", "--only", "font", "--style", "vega")
+    expect(result.stderr).toContain("drop --only font to use it")
+  })
+
+  it("takes --style with --only theme", () => {
+    const result = run(
+      "apply",
+      "--only",
+      "theme",
+      "--style",
+      "vega",
+      "--cwd",
+      "missing-folder-for-the-test"
+    )
+    expect(result.stderr).not.toContain("drop --only")
   })
 
   it("rejects --template with another platform", () => {

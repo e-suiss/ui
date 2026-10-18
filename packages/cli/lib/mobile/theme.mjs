@@ -1,5 +1,9 @@
 import { withPrimary } from "../color.mjs"
-import { decodePreset } from "../shared/style.mjs"
+import { decodePreset, paletteOf } from "../shared/style.mjs"
+
+export { paletteOf }
+
+const OWN_THEME = "suiss"
 
 const HEX_COLOR = /^#([\da-f]{3}|[\da-f]{6})$/i
 const OKLCH_COLOR =
@@ -7,7 +11,6 @@ const OKLCH_COLOR =
 const DEFAULT_RADIUS = 0.625
 const RADIUS_REMS = { none: 0, small: 0.45, medium: 0.625, large: 0.875 }
 const PILL = 9999
-const OWN_THEME = "suiss"
 
 function fraction(value) {
   if (value === undefined) return 1
@@ -93,15 +96,6 @@ function camelCase(name) {
 
 function escapeRegExp(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-}
-
-export function paletteOf(themes, preset) {
-  const find = (name) => themes.find((theme) => theme.name === name)
-  const base = find(preset.baseColor)
-  const accent = find(preset.theme)
-  const { radius: _light, ...light } = { ...base?.light, ...accent?.light }
-  const { radius: _dark, ...dark } = { ...base?.dark, ...accent?.dark }
-  return { light, dark }
 }
 
 export function radiusFactor(radius) {
@@ -306,6 +300,12 @@ export function menuColorsOf(
   )
 }
 
+function nonEmpty(palette) {
+  return MODES.some((mode) => Object.keys(palette[mode]).length)
+    ? palette
+    : null
+}
+
 function isDefaultMenu(preset) {
   return preset.menuColor === "default" && preset.menuAccent === "subtle"
 }
@@ -313,13 +313,23 @@ function isDefaultMenu(preset) {
 export async function themeOptionsFor(options, fetchThemes, ownColors) {
   const preset = options.preset ? decodePreset(options.preset) : null
   if (!preset && !options.primary) return null
-  const presetPalette =
-    preset && options.theme !== OWN_THEME
-      ? paletteOf(await fetchThemes(), preset)
-      : null
+  const presetPalette = preset
+    ? nonEmpty(paletteOf(await fetchThemes(), preset, options))
+    : null
   let palette = withPrimary(presetPalette, options.primary)
-  if (preset && (presetPalette || (ownColors && !isDefaultMenu(preset)))) {
-    const colors = withPrimary(presetPalette ?? ownColors, options.primary)
+  const complete = presetPalette && options.theme !== OWN_THEME
+  const menus =
+    complete || (ownColors && (presetPalette || !isDefaultMenu(preset)))
+  if (preset && menus) {
+    const colors = withPrimary(
+      Object.fromEntries(
+        MODES.map((mode) => [
+          mode,
+          { ...(ownColors?.[mode] ?? {}), ...(presetPalette?.[mode] ?? {}) },
+        ])
+      ),
+      options.primary
+    )
     const menu = menuColorsOf(colors, preset)
     palette = Object.fromEntries(
       MODES.map((mode) => [mode, { ...(palette?.[mode] ?? {}), ...menu[mode] }])

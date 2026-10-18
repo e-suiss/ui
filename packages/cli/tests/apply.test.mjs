@@ -143,21 +143,25 @@ describe("apply", () => {
 
   it("changes only the theme with --only theme", async () => {
     const cwd = await initialized()
+    const config = read(cwd, "components.json")
     writeFileSync(path.join(cwd, "src/components/ui/button.tsx"), "changed\n")
     await apply({ cwd, only: "theme", preset: "bJ4oV1t" })
     expect(read(cwd, "src/index.css")).toContain(
       "--primary: oklch(0.6 0.13 163);"
     )
     expect(read(cwd, "src/components/ui/button.tsx")).toBe("changed\n")
-    expect(() => read(cwd, "components.json")).toThrow()
+    expect(read(cwd, "components.json")).toBe(config)
   })
 
   it("leaves the colors alone with --only font", async () => {
     const cwd = await initialized()
     const before = read(cwd, "src/index.css")
+    const config = read(cwd, "components.json")
     await apply({ cwd, only: "font", preset: "bJ4oV1t" })
     expect(read(cwd, "src/index.css")).toBe(before)
-    expect(() => read(cwd, "components.json")).toThrow()
+    expect(read(cwd, "components.json")).toBe(config)
+    expect(output()).toContain("src/index.css already matches")
+    expect(output()).not.toContain("Updated src/index.css")
   })
 
   it("sets a custom primary on its own", async () => {

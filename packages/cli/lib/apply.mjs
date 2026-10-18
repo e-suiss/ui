@@ -1,41 +1,45 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import { readFileSync, writeFileSync } from "node:fs"
 
-import { installItems } from "./add.mjs"
-import { withPrimary } from "./color.mjs"
+import { installedItems, installItems } from "./add.mjs"
+import { withFont } from "./fonts.mjs"
 import {
-  applyPreset,
-  DEFAULT_FONT,
-  OWN_THEME,
-  paletteOf,
+  configureFont,
+  presetFont,
   RTL_NOTE,
-  withPointer,
+  stylesheetPackages,
 } from "./init.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
 import { decodePreset } from "./preset.mjs"
 import {
   detectBase,
   detectIcons,
+  detectMenuAccent,
   detectMenuColor,
   detectProject,
   detectStyle,
   findAliasRoot,
   findStylesheet,
+  install,
   saveBase,
 } from "./project.mjs"
-import { fetchRegistry, fetchThemes } from "./registry.mjs"
-import { targetFor } from "./shared/files.mjs"
+import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
 import { relative } from "./shared/project.mjs"
+import {
+  applyPreset,
+  presetPalette,
+  themeDefaults,
+  withPointer,
+  withTheme,
+} from "./theme.mjs"
 
 export const APPLY_MODES = ["theme", "font"]
 
-function installedItems(registry, root) {
-  return registry.items
-    .filter(
-      (item) =>
-        item.files.length > 0 &&
-        item.files.every((file) => existsSync(targetFor(root, file)))
-    )
-    .map((item) => item.name)
+async function themed(css, options, preset) {
+  const reset = preset
+    ? withTheme(css, themeDefaults(await fetchStylesheet()))
+    : css
+  const palette = await presetPalette(options, preset)
+  return preset || palette ? applyPreset(reset, preset, palette) : reset
 }
 
 export async function apply(options) {
@@ -49,25 +53,22 @@ export async function apply(options) {
   const preset = options.preset ? decodePreset(options.preset) : null
   const only = options.only
   const manual = []
-  let css = readFileSync(stylesheet, "utf8")
+  const original = readFileSync(stylesheet, "utf8")
+  let css = original
 
-  if (only !== "font") {
-    const palette = withPrimary(
-      preset && options.theme !== OWN_THEME
-        ? paletteOf(await fetchThemes(), preset)
-        : null,
-      options.primary
-    )
-    if (preset || palette) css = applyPreset(css, preset, palette)
+  if (only !== "font") css = await themed(css, options, preset)
+  if (only !== "theme" && preset) {
+    const font = presetFont(preset)
+    css = withFont(css, project.framework, font)
+    install(project, stylesheetPackages(css))
+    manual.push(...configureFont(project, font))
   }
   if (options.pointer) css = withPointer(css)
-  writeFileSync(stylesheet, css)
-  step(`Updated ${relative(project, stylesheet)}`)
-
-  if (only !== "theme" && preset && preset.font !== DEFAULT_FONT) {
-    manual.push(
-      `Load the ${preset.font} font and point --font-sans at it in ${relative(project, stylesheet)}.`
-    )
+  if (css === original) {
+    step(`${relative(project, stylesheet)} already matches`)
+  } else {
+    writeFileSync(stylesheet, css)
+    step(`Updated ${relative(project, stylesheet)}`)
   }
 
   if (!only && (preset || options.style)) {
@@ -75,9 +76,15 @@ export async function apply(options) {
     const style = options.style ?? preset?.style ?? detectStyle(project.cwd)
     const icons = preset?.iconLibrary ?? detectIcons(project.cwd)
     const menuColor = preset?.menuColor ?? detectMenuColor(project.cwd)
+    const menuAccent = preset?.menuAccent ?? detectMenuAccent(project.cwd)
     const saved = saveBase(project, base, stylesheet, style, {
       ...(preset
-        ? { iconLibrary: icons, menuColor, menuAccent: preset.menuAccent }
+        ? {
+            iconLibrary: icons,
+            menuColor,
+            menuAccent,
+            baseColor: preset.baseColor,
+          }
         : {}),
     })
     if (saved?.invalid) {
@@ -105,6 +112,7 @@ export async function apply(options) {
           style,
           icons,
           menuColor,
+          menuAccent,
         })
       } else {
         manual.push(

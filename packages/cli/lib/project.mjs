@@ -71,6 +71,10 @@ export function detectMenuColor(cwd) {
   return typeof color === "string" ? color : "default"
 }
 
+export function detectMenuAccent(cwd) {
+  return readConfig(cwd)?.menuAccent === "bold" ? "bold" : "subtle"
+}
+
 function newConfig(project, style, stylesheet) {
   return {
     $schema: "https://ui.shadcn.com/schema.json",
@@ -98,7 +102,13 @@ function newConfig(project, style, stylesheet) {
   }
 }
 
-export function saveBase(project, base, stylesheet, styleName, extra = {}) {
+export function saveBase(
+  project,
+  base,
+  stylesheet,
+  styleName,
+  { baseColor, ...extra } = {}
+) {
   const file = path.join(project.cwd, CONFIG_FILE)
   const exists = existsSync(file)
   const config = readConfig(project.cwd)
@@ -108,14 +118,20 @@ export function saveBase(project, base, stylesheet, styleName, extra = {}) {
       ? config.style.replace(STYLE_PREFIX, "")
       : DEFAULT_STYLE
   const style = `${base}-${styleName ?? kept}`
-  const changed = Object.entries(extra).some(
-    ([key, value]) => config?.[key] !== value
-  )
+  const changed =
+    Object.entries(extra).some(([key, value]) => config?.[key] !== value) ||
+    (baseColor !== undefined && config?.tailwind?.baseColor !== baseColor)
   if (config?.style === style && !changed) return null
-  if (!styleName && !changed && baseOf(config?.style) === base) return null
+  if (config && !styleName && !changed && baseOf(config.style) === base) {
+    return null
+  }
+  const current = config ?? newConfig(project, style, stylesheet)
   const next = {
-    ...(config ?? newConfig(project, style, stylesheet)),
+    ...current,
     style,
+    ...(baseColor !== undefined && {
+      tailwind: { ...current.tailwind, baseColor },
+    }),
     ...extra,
   }
   writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`)

@@ -17,6 +17,7 @@ const CLIENT_MARKERS = new Set([
   "cn-font-heading",
   "cn-menu-target",
   "cn-menu-translucent",
+  "cn-menu-translucent-aria",
 ])
 
 function isStyleMarker(marker) {
@@ -55,6 +56,11 @@ export function expandMarkers(text, map, unknown = new Set()) {
 const TRANSLUCENT =
   "animate-none! relative bg-popover/70 before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 **:data-[slot$=-item]:focus:bg-foreground/10 **:data-[slot$=-item]:data-highlighted:bg-foreground/10 **:data-[slot$=-separator]:bg-foreground/5 **:data-[slot$=-trigger]:focus:bg-foreground/10 **:data-[slot$=-trigger]:aria-expanded:bg-foreground/10! **:data-[variant=destructive]:focus:bg-foreground/10! **:data-[variant=destructive]:text-accent-foreground! **:data-[variant=destructive]:**:text-accent-foreground!"
 
+const TRANSLUCENT_ARIA = "**:data-[slot$=-item]:data-focused:bg-foreground/10"
+
+export const BOLD_ACCENT =
+  "[--accent:var(--primary)]! [--accent-foreground:var(--primary-foreground)]!"
+
 function replaceMarkers(text, values) {
   let output = ""
   let cursor = 0
@@ -75,10 +81,22 @@ function replaceMarkers(text, values) {
   return output + text.slice(cursor)
 }
 
-export function applyMenuColor(source, menuColor = "default") {
+export function applyMenuColor(
+  source,
+  menuColor = "default",
+  menuAccent = "subtle"
+) {
+  const translucent = menuColor.endsWith("translucent")
+  const target = [
+    menuColor.startsWith("inverted") ? "dark" : "",
+    menuAccent === "bold" ? BOLD_ACCENT : "",
+  ]
+    .filter(Boolean)
+    .join(" ")
   return replaceMarkers(source, {
-    "cn-menu-target": menuColor.startsWith("inverted") ? "dark" : "",
-    "cn-menu-translucent": menuColor.endsWith("translucent") ? TRANSLUCENT : "",
+    "cn-menu-target": target,
+    "cn-menu-translucent": translucent ? TRANSLUCENT : "",
+    "cn-menu-translucent-aria": translucent ? TRANSLUCENT_ARIA : "",
     "cn-font-heading": "",
   })
 }

@@ -14,7 +14,8 @@ function selectNames(
   const inScope = (item) => scopeOf(item) === scope
   const pool = items.filter((item) => inScope(item) && include(item))
   const { kind, command, example } = SCOPES[scope]
-  const available = `Available${title ? ` for ${title}` : ""}: ${pool.map((item) => item.name).join(", ") || "none yet"}`
+  const listed = pool.filter((item) => !item.optIn && item.listed !== false)
+  const available = `Available${title ? ` for ${title}` : ""}: ${listed.map((item) => item.name).join(", ") || "none yet"}`
 
   if (all) {
     if (!pool.length) throw new CliError(`No ${kind}s are available yet.`)

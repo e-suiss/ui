@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process"
 import { existsSync } from "node:fs"
 import path from "node:path"
+import { encodePreset } from "shadcn/preset"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { add } from "../lib/add.mjs"
@@ -193,12 +194,50 @@ export default defineConfig({
     const cwd = viteProject({
       "package.json": {
         dependencies: { react: "19.0.0" },
-        devDependencies: { vite: "7.0.0", tailwindcss: "^4.1.0" },
+        devDependencies: { vite: "7.0.0", tailwindcss: "~4.1.0" },
       },
     })
     await expect(init({ cwd, yes: true })).rejects.toThrow(
-      "Tailwind CSS 4.2 or later is required, this project uses ^4.1.0."
+      "Tailwind CSS 4.2 or later is required, this project uses ~4.1.0."
     )
+  })
+
+  it("rejects an installed Tailwind CSS older than 4.2", async () => {
+    const cwd = viteProject({
+      "package.json": {
+        dependencies: { react: "19.0.0" },
+        devDependencies: { vite: "7.0.0", tailwindcss: "^4.0.0" },
+      },
+      "node_modules/tailwindcss/package.json": { version: "4.1.3" },
+    })
+    await expect(init({ cwd, yes: true })).rejects.toThrow(
+      "this project uses 4.1.3."
+    )
+  })
+
+  it.each(["^4.0.0", "^4", ">=4.0.0"])(
+    "accepts the open range %s before it is installed",
+    async (range) => {
+      const cwd = viteProject({
+        "package.json": {
+          dependencies: { react: "19.0.0" },
+          devDependencies: { vite: "7.0.0", tailwindcss: range },
+        },
+        "vite.config.ts": viteConfig,
+      })
+      await init({ cwd, yes: true })
+      expect(read(cwd, "src/index.css")).toContain('@import "tailwindcss";')
+    }
+  )
+
+  it("rejects Tailwind CSS 3 in any range", async () => {
+    const cwd = viteProject({
+      "package.json": {
+        dependencies: { react: "19.0.0" },
+        devDependencies: { vite: "7.0.0", tailwindcss: "^3.4.0" },
+      },
+    })
+    await expect(init({ cwd, yes: true })).rejects.toThrow("4.2 or later")
   })
 
   it("will not replace an existing stylesheet without --yes", async () => {
@@ -244,10 +283,22 @@ describe("init options", () => {
     })
   })
 
-  it("does not write components.json for the default base", async () => {
+  it("writes components.json with the registries for a plain init", async () => {
     const cwd = viteProject()
-    await init({ cwd, yes: true, base: "base" })
-    expect(existsSync(path.join(cwd, "components.json"))).toBe(false)
+    await init({ cwd, yes: true })
+    const config = JSON.parse(read(cwd, "components.json"))
+    expect(config).toMatchObject({
+      style: "base-suiss",
+      tailwind: { css: "src/index.css", baseColor: "neutral" },
+      registries: { "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json" },
+    })
+  })
+
+  it("keeps a components.json from another style on a plain init", async () => {
+    const config = { style: "new-york", tailwind: { css: "src/index.css" } }
+    const cwd = viteProject({ "components.json": config })
+    await init({ cwd, yes: true })
+    expect(JSON.parse(read(cwd, "components.json"))).toEqual(config)
   })
 
   it("replaces a changed button with --overwrite", async () => {
@@ -424,7 +475,7 @@ describe("init with a preset", () => {
     })
   })
 
-  it("keeps the suiss colors with --theme suiss", async () => {
+  it("keeps the suiss grays but adds a colored theme with --theme suiss", async () => {
     const cwd = viteProject({ "vite.config.ts": viteConfig })
     await init({
       cwd,
@@ -434,9 +485,31 @@ describe("init with a preset", () => {
       style: "suiss",
     })
     const css = read(cwd, "src/index.css")
-    expect(css).toContain("--primary: oklch(0.56 0.19 256);")
+    expect(css).toContain("--primary: oklch(0.6 0.13 163);")
+    expect(css).toContain("--background: oklch(1 0 0);")
+    expect(css).not.toContain("--background: oklch(1 0 0 / 1);")
     expect(css).toContain("--radius: 0;")
     expect(JSON.parse(read(cwd, "components.json")).style).toBe("base-suiss")
+  })
+
+  it("keeps every suiss color with --theme suiss and a gray theme", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    const preset = encodePreset({
+      style: "nova",
+      baseColor: "stone",
+      theme: "stone",
+      chartColor: "stone",
+      iconLibrary: "phosphor",
+      font: "inter",
+      radius: "none",
+      menuAccent: "subtle",
+      menuColor: "default",
+    })
+    await init({ cwd, yes: true, preset, theme: "suiss", style: "suiss" })
+    const css = read(cwd, "src/index.css")
+    expect(css).toContain("--primary: oklch(0.56 0.19 256);")
+    expect(css).toContain("--background: oklch(1 0 0);")
+    expect(css).toContain("--radius: 0;")
   })
 
   it("sets a custom primary over the preset colors", async () => {
