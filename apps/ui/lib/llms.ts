@@ -189,10 +189,28 @@ function cleanMarkdown(body: string, full: boolean) {
   let labels: string[] = []
   let anatomy = false
   let otherBase = false
+  let pending: string | undefined
+  let bare = -1
   const close = () => {
     scopes.pop()
-    const parent = scopes.at(-1)
-    if (parent) output.push("", parent, "")
+    pending = scopes.at(-1)
+  }
+  const enter = (label: string) => {
+    pending = undefined
+    scopes.push(label)
+    if (bare >= 0) output.splice(bare)
+    bare = output.length
+    output.push(label, "")
+  }
+  const emit = (...lines: string[]) => {
+    if (!lines.some((line) => line.trim())) {
+      output.push(...lines)
+      return
+    }
+    if (pending) output.push("", pending, "")
+    pending = undefined
+    bare = -1
+    output.push(...lines)
   }
   for (const raw of body.split("\n")) {
     const isFence = raw.trim().startsWith("```")
@@ -208,7 +226,7 @@ function cleanMarkdown(body: string, full: boolean) {
     const trimmed = line.trim()
     if (isFence) fence = !fence
     if (fence || isFence) {
-      output.push(line)
+      emit(line)
       continue
     }
     const onlyBase = trimmed.match(ONLY_BASE_OPEN)
@@ -219,8 +237,7 @@ function cleanMarkdown(body: string, full: boolean) {
         continue
       }
       const label = scopeLabel(bases, BASE_TITLES)
-      scopes.push(label)
-      output.push(label, "")
+      enter(label)
       continue
     }
     if (trimmed === "</OnlyBase>") {
@@ -230,8 +247,7 @@ function cleanMarkdown(body: string, full: boolean) {
     const onlyStyling = trimmed.match(ONLY_STYLING_OPEN)
     if (onlyStyling) {
       const label = scopeLabel(onlyStyling[1].split(" "), STYLING_LABELS)
-      scopes.push(label)
-      output.push(label, "")
+      enter(label)
       continue
     }
     if (trimmed === "</OnlyStyling>") {
@@ -239,14 +255,13 @@ function cleanMarkdown(body: string, full: boolean) {
       continue
     }
     if (trimmed === "<StylingNote />") {
-      output.push(strings.stylingNote)
+      emit(strings.stylingNote)
       continue
     }
     const only = trimmed.match(ONLY_OPEN)
     if (only) {
       const label = scopeLabel(only[1].split(" "), platformNames)
-      scopes.push(label)
-      output.push(label, "")
+      enter(label)
       continue
     }
     if (trimmed === "</Only>") {
@@ -262,16 +277,16 @@ function cleanMarkdown(body: string, full: boolean) {
     }
     if (trimmed === "</Tabs>" || trimmed === "</div>") continue
     if (trimmed === "<div>") {
-      if (labels.length) output.push(`**${labels.shift()}**`, "")
+      if (labels.length) emit(`**${labels.shift()}**`, "")
       continue
     }
     const open = trimmed.match(BLOCK_OPEN)
     if (open) {
       if (open[1] === "NativeExample")
-        output.push(previewImage(trimmed.match(NATIVE_OPEN)?.[1] ?? ""), "")
+        emit(previewImage(trimmed.match(NATIVE_OPEN)?.[1] ?? ""), "")
       anatomy = open[1] === "Anatomy"
       if (open[1] === "Callout")
-        output.push(
+        emit(
           `> **${(attr(open[2], "type") ?? "note").replace(FIRST_CHAR, (c) => c.toUpperCase())}:**`
         )
       indent += 2
@@ -283,12 +298,10 @@ function cleanMarkdown(body: string, full: boolean) {
       continue
     }
     const item = anatomy ? line.match(ANATOMY_ITEM) : null
-    if (item)
-      output.push(`${item[1]}- \`${(item[2] ?? item[3] ?? "").trim()}\``)
-    else if (trimmed.startsWith("<RegistryIndex"))
-      output.push(registryIndex(trimmed))
+    if (item) emit(`${item[1]}- \`${(item[2] ?? item[3] ?? "").trim()}\``)
+    else if (trimmed.startsWith("<RegistryIndex")) emit(registryIndex(trimmed))
     else
-      output.push(
+      emit(
         line
           .replace(HEADING_ANCHOR, "$1")
           .replace(
