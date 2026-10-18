@@ -508,8 +508,8 @@ Provider that tracks the inputs and renders the bar.
 | `doneLabel` | `React.ReactNode` | `"Done"` | Text or node for the done button. Defaults to `"Done"`. |
 | `onDone` | `() => void` | - | Called after the keyboard is dismissed with done. |
 | `portalHost` | `string` | - | Name of the portal host on Android. |
-| `className` | `string` | - |  |
-| `children` | `React.ReactNode` | - |  |
+| `className` | `string` | - | Classes merged onto the root element. |
+| `children` | `React.ReactNode` | - | The content. |
 
 </ApiPart>
 
@@ -518,6 +518,10 @@ Provider that tracks the inputs and renders the bar.
 ### InputAccessoryBarInput
 
 `Input` connected to the bar.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `order` | `number` | - | Position in the previous and next order. Without it, inputs follow their place on screen. |
 
 Also accepts the props of `React.ComponentProps<typeof Input>`.
 
@@ -551,7 +555,7 @@ Provider that tracks the inputs and renders the bar.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `focus` | `FocusState<Value?>.Binding` | - | - |
-| `order` | `[Value]` | - | - |
+| `order` | `[Value]` | - | Position in the previous and next order. Without it, inputs follow their place on screen. |
 | `previousLabel` | `LocalizedStringKey` | `"Previous"` | Label for the previous button. |
 | `nextLabel` | `LocalizedStringKey` | `"Next"` | Label for the next button. |
 | `doneLabel` | `LocalizedStringKey` | `"Done"` | - |

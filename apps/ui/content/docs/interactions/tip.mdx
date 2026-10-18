@@ -1032,7 +1032,7 @@ Shows its tips one at a time and supplies the storage.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `storage` | `TipStorage` | `memoryStorage` | Adapter with `getItem` and `setItem` for remembering dismissals. Defaults to in-memory storage. |
-| `children` | `React.ReactNode` | - |  |
+| `children` | `React.ReactNode` | - | The content. |
 
 </ApiPart>
 
@@ -1047,7 +1047,7 @@ One hint, identified by `id`.
 | `id` | `string` | Required | Stable key used to remember the dismissal. |
 | `delay` | `number` | `0` | Milliseconds to wait before showing. Defaults to `0`. |
 | `onDismiss` | `() => void` | - | Called when the tip is dismissed. |
-| `children` | `React.ReactNode` | - |  |
+| `children` | `React.ReactNode` | - | The content. |
 
 </ApiPart>
 

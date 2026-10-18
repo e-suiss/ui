@@ -921,7 +921,7 @@ One row: an icon, a title and an optional description.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `status` | `"running" \| "error" \| "pending"` | — | The state of the work the row reports. |
+| `status` | `"running" \| "error" \| "pending"` | - | The state of the work the row reports. |
 
 Also accepts the props of `ViewProps`.
 
@@ -965,9 +965,9 @@ A row that expands.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `open` | `boolean` | — | The controlled open state. Pass it with `onOpenChange`. |
+| `open` | `boolean` | - | The controlled open state. Pass it with `onOpenChange`. |
 | `defaultOpen` | `boolean` | `false` | Whether the row starts open. |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the open state changes. |
+| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the open state changes. |
 
 </ApiPart>
 

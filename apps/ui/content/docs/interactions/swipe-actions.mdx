@@ -693,7 +693,7 @@ The group of actions for one side.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `side` | `SwipeActionsSide` | - | `leading` or `trailing`. Defaults to `trailing`. |
-| `children` | `React.ReactNode` | - |  |
+| `children` | `React.ReactNode` | - | The content. |
 
 Also accepts the props of `ViewProps`.
 
@@ -711,7 +711,7 @@ One action button.
 | `fullSwipe` | `boolean` | `false` | Runs the action when the row is swiped all the way. |
 | `onPress` | `() => void` | - | Called when the action is pressed or fully swiped. |
 
-Also accepts the props of `SwipeActionProps`.
+Also accepts the props of `PressableProps`, except `onPress`, which takes no arguments.
 
 </ApiPart>
 

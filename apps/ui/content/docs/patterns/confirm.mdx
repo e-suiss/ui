@@ -668,6 +668,10 @@ The root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to
 
 The root that owns the open state.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dismissible` | `boolean` | `false` | Lets a press on the scrim close the sheet. |
+
 Also accepts the props of `React.ComponentProps<typeof AlertSheet>`.
 
 </ApiPart>
@@ -763,7 +767,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `dismissible` | `Bool` | `false` | - |
+| `dismissible` | `Bool` | `false` | Lets a press on the scrim close the sheet. |
 | `content` | `() -> Content` | - | The content. |
 
 </ApiPart>
@@ -871,7 +875,7 @@ The root that owns the open state.
 | `open` | `Boolean` | - | - |
 | `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `dismissible` | `Boolean` | `false` | - |
+| `dismissible` | `Boolean` | `false` | Lets a press on the scrim close the sheet. |
 | `content` | `@Composable () -> Unit` | - | The content. |
 
 </ApiPart>

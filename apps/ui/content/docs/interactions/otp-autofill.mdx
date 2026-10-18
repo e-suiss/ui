@@ -784,7 +784,7 @@ The `InputOTP` that shows each state and shakes on an invalid code.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `containerClassName` | `string` | - | Classes for the animated container around the input. |
-| `children` | `React.ReactNode` | Required |  |
+| `children` | `React.ReactNode` | Required | The content. |
 
 Also accepts the props of `React.ComponentProps<typeof InputOTP>`.
 
@@ -801,7 +801,7 @@ A bar above the keyboard that fills the suggested code on press.
 | `code` | `string \| null \| undefined` | Required | The code to suggest, or `null` to hide the bar. |
 | `source` | `React.ReactNode` | `"From Messages"` | Label above the code. Defaults to `From Messages`. |
 | `portalHost` | `string` | - | Name of a portal host to render into. |
-| `className` | `string` | - |  |
+| `className` | `string` | - | Classes merged onto the root element. |
 
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 

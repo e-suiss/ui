@@ -1094,7 +1094,7 @@ Holds the island mode, the notice and the notice timer.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - |  |
+| `children` | `React.ReactNode` | - | The content. |
 
 </ApiPart>
 
@@ -1108,7 +1108,7 @@ A region of the expanded view.
 | --- | --- | --- | --- |
 | `region` | `"leading" \| "trailing" \| "center" \| "bottom"` | Required | Where the content sits in the expanded view. |
 
-Also accepts the props of `IslandExpandedRegionProps`.
+Also accepts the props of `ViewProps`.
 
 </ApiPart>
 
@@ -1120,7 +1120,7 @@ The floating pill, rendered in a portal, with slots for the compact and minimal 
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `className` | `string` | - |  |
+| `className` | `string` | - | Classes merged onto the root element. |
 | `compactLeading` | `React.ReactNode` | - | Content at the start of the compact pill. |
 | `compactTrailing` | `React.ReactNode` | - | Content at the end of the compact pill. |
 | `minimal` | `React.ReactNode` | - | Content of the minimal view. |
@@ -1139,7 +1139,7 @@ A small circular progress ring.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `number` | Required | Progress from `0` to `1`. |
-| `className` | `string` | - |  |
+| `className` | `string` | - | Classes merged onto the root element. |
 
 </ApiPart>
 

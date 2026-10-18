@@ -1077,7 +1077,7 @@ Shows the current question number and total.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `children` | `\| React.ReactNode \| ((state: QuestionnaireState) => React.ReactNode)` | - |  |
+| `children` | `\| React.ReactNode \| ((state: QuestionnaireState) => React.ReactNode)` | - | The content, or a function that receives the questionnaire state. |
 
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
@@ -1108,7 +1108,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttribu
 
 The question heading.
 
-Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
+Also accepts the props of `Text`.
 
 </ApiPart>
 
@@ -1118,7 +1118,7 @@ Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttribu
 
 Secondary text under the title.
 
-Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
+Also accepts the props of `Text`.
 
 </ApiPart>
 
@@ -1145,7 +1145,7 @@ A selectable answer row.
 | `defaultChecked` | `boolean` | `false` | Initial checked state. |
 | `disabled` | `boolean` | `false` | Disables the choice. |
 | `onCheckedChange` | `(checked: boolean) => void` | - | Called with the next checked state. |
-| `children` | `React.ReactNode` | - |  |
+| `children` | `React.ReactNode` | - | The content. |
 
 Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
 
@@ -1157,7 +1157,7 @@ Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAt
 
 Secondary text inside a choice.
 
-Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
+Also accepts the props of `Text`.
 
 </ApiPart>
 
@@ -1181,7 +1181,7 @@ Also accepts the props of `React.ComponentProps<typeof Input>`.
 
 Validation message shown when the item is invalid.
 
-Also accepts the props of `React.ComponentProps<typeof Text>`, `React.RefAttributes<typeof Text>`.
+Also accepts the props of `Text`.
 
 </ApiPart>
 
@@ -1201,7 +1201,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttribu
 
 Goes to the previous question.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+Also accepts the props of `Button`.
 
 </ApiPart>
 
@@ -1211,7 +1211,7 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 Skips the active question when it is optional.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+Also accepts the props of `Button`.
 
 </ApiPart>
 
@@ -1221,7 +1221,7 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 Validates and moves to the next question.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+Also accepts the props of `Button`.
 
 </ApiPart>
 
@@ -1231,7 +1231,7 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 Validates all questions and calls `onSubmit` on the last step.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+Also accepts the props of `Button`.
 
 </ApiPart>
 
