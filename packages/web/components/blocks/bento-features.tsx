@@ -1,5 +1,3 @@
-"use client"
-
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
 const photo = (id: string, width: number) =>
