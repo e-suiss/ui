@@ -226,7 +226,7 @@ Then add components with the registry CLI:
 npx shadcn@latest add @esuiss/button @esuiss/dialog @esuiss/select
 ```
 
-Each item comes with the components, primitives and npm packages it depends on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. Components go to `components/ui/`, the primitives they build on to `components/primitives/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and blocks to `components/blocks/`. Icons use `phosphor-react-native`.
+Each item comes with the components, primitives and npm packages it depends on. The registry CLI installs the npm packages with your package manager, so in Expo projects run `npx expo install --fix` afterwards to move native modules to the versions of your Expo SDK. Components go to `components/ui/`, the primitives they build on to `components/primitives/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and blocks to `components/blocks/`. Icons use `phosphor-react-native`.
 
 ### Add the theme
 
