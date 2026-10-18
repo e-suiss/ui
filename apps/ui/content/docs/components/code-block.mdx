@@ -639,7 +639,19 @@ fun CodeBlockDefault() {
 
 <Only platform="rn">
 
-In SwiftUI and Compose, pass the code as a string or a list of `CodeBlockLine` values to `CodeBlockContent`. The copy button uses `expo-clipboard` in React Native, `UIPasteboard` in SwiftUI and the Compose clipboard on Android.
+The copy button uses `expo-clipboard`.
+
+</Only>
+
+<Only platform="swift">
+
+Pass the code as a string or a list of `CodeBlockLine` values to `CodeBlockContent`. The copy button uses `UIPasteboard`.
+
+</Only>
+
+<Only platform="kotlin">
+
+Pass the code as a string or a list of `CodeBlockLine` values to `CodeBlockContent`. The copy button uses the Compose clipboard.
 
 </Only>
 

@@ -736,7 +736,19 @@ fun TraceDefault() {
 
 <Only platform="rn">
 
-Rows start closed. Set `defaultOpen` on `TraceCollapsible` to start open, or pass `open` with `onOpenChange` to control it. In SwiftUI use `TraceCollapsible(initiallyExpanded:)` or `TraceCollapsible(isExpanded:)`; in Compose pass `initiallyExpanded` or `expanded` with `onExpandedChange`.
+Rows start closed. Set `defaultOpen` on `TraceCollapsible` to start open, or pass `open` with `onOpenChange` to control it.
+
+</Only>
+
+<Only platform="swift">
+
+Rows start closed. Use `TraceCollapsible(initiallyExpanded:)` to start open, or `TraceCollapsible(isExpanded:)` with a binding to control it.
+
+</Only>
+
+<Only platform="kotlin">
+
+Rows start closed. Pass `initiallyExpanded` to start open, or `expanded` with `onExpandedChange` to control it.
 
 </Only>
 

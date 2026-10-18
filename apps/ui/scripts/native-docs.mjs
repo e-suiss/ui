@@ -25,6 +25,8 @@ const LIST_ITEM = /^[-*] /
 const CODE_SPAN = /`([^`]+)`/g
 const RN_WORDS =
   /className|Pressable|accessibility[A-Z]|aria-|data-|\bHTML\b|\bDOM\b|\bref\b|React|Uniwind|NativeWind|StyleSheet|\bExpo\b|Reanimated|\bprops?\b|\bhooks?\b|\bJSX\b|\bSVG\b|Storybook/
+const NAMES_NATIVE = /\bSwiftUI\b|\b(?:in|Jetpack) Compose\b/
+const ANDROID = /\bAndroid\b/
 const NUMBER = /^-?\d+(?:\.\d+)?\s*(?:ms|pt|dp|px|%|s)?$/
 const QUOTED = /^"([^"]*)"$/
 const IDENTIFIER_PATH = /^\.?[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)*(?:\(\))?$/
@@ -206,7 +208,11 @@ function known(span, vocabulary) {
 
 function classify(leaf, vocabularies, builtins) {
   if (!leaf.scope.includes("rn")) return leaf.scope
-  if (RN_WORDS.test(leaf.text.replace(CODE_SPAN, ""))) return ["rn"]
+  const prose = leaf.text.replace(CODE_SPAN, "")
+  if (NAMES_NATIVE.test(prose)) return leaf.scope
+  if (ANDROID.test(prose))
+    leaf.scope = leaf.scope.filter((platform) => platform !== "swift")
+  if (RN_WORDS.test(prose)) return ["rn"]
   const spans = [...leaf.text.matchAll(CODE_SPAN)].map((match) => match[1])
   if (spans.some((span) => builtins.has(span.trim()))) return ["rn"]
   return leaf.scope.filter(
@@ -365,9 +371,16 @@ function usageLeaves(leaves, codes) {
   for (const leaf of usage)
     if (leaf.kind === "fence" && NATIVE.includes(leaf.lang)) leaf.scope = []
   const generated = []
+  const heading = usage.find(
+    (leaf) => leaf.kind === "heading" && leaf.level === 2
+  )
   for (const platform of NATIVE) {
     const code = codes[platform]
     if (!code) continue
+    if (heading && !heading.scope.includes(platform))
+      heading.scope = ALL.filter(
+        (item) => heading.scope.includes(item) || item === platform
+      )
     generated.push({
       kind: "fence",
       lang: LANGUAGES[platform],

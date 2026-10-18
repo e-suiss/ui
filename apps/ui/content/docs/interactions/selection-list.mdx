@@ -163,7 +163,13 @@ Also accepts the props of `React.ComponentProps<"span">`.
 
 `SelectionList` switches a list between normal and editing modes. In editing mode each `SelectionListItem` slides in a check circle at its start, the whole row toggles on press, and selected rows are highlighted.
 
-`SelectionListBar` floats above the bottom safe area while editing, sliding up into view, for actions such as delete or move. Leaving editing mode clears the selection. On Android the hardware back button also leaves it. Use it for mail, notes or photo lists that need bulk actions.
+`SelectionListBar` floats above the bottom safe area while editing, sliding up into view, for actions such as delete or move. Leaving editing mode clears the selection. Use it for mail, notes or photo lists that need bulk actions.
+
+<Only platform="rn kotlin">
+
+On Android the hardware back button also leaves editing mode.
+
+</Only>
 
 ## Installation
 

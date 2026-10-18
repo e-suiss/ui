@@ -223,7 +223,13 @@ Pass a `render` function to `SplitViewItem` that returns a link with the props i
 
 </Only>
 
-Below the breakpoint only the current column is shown, full screen and scrollable, with a large title. Pressing a `SplitViewItem` moves to the next column, and a back button titled with the previous pane returns to it. On Android the hardware back button also goes back. Use it for mail, notes or settings screens that drill down.
+Below the breakpoint only the current column is shown, full screen and scrollable, with a large title. Pressing a `SplitViewItem` moves to the next column, and a back button titled with the previous pane returns to it. Use it for mail, notes or settings screens that drill down.
+
+<Only platform="rn kotlin">
+
+On Android the hardware back button also returns to the previous column.
+
+</Only>
 
 ## Installation
 
