@@ -50,11 +50,38 @@ import { Menubar, MenubarMenu, MenubarGroup, MenubarPortal, MenubarTrigger, Menu
 ```
 
 ```tsx
-<div className="min-h-96">
-  <Menubar>
-    <MenubarExample />
-  </Menubar>
-</div>
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarGroup>
+        <MenubarItem>
+          New tab
+          <MenubarShortcut mod>T</MenubarShortcut>
+        </MenubarItem>
+        <MenubarItem disabled>New private window</MenubarItem>
+      </MenubarGroup>
+      <MenubarSeparator />
+      <MenubarSub>
+        <MenubarSubTrigger>Share</MenubarSubTrigger>
+        <MenubarSubContent>
+          <MenubarItem>Email link</MenubarItem>
+          <MenubarItem>Messages</MenubarItem>
+        </MenubarSubContent>
+      </MenubarSub>
+    </MenubarContent>
+  </MenubarMenu>
+  <MenubarMenu>
+    <MenubarTrigger>View</MenubarTrigger>
+    <MenubarContent>
+      <MenubarCheckboxItem defaultChecked>
+        Show bookmarks bar
+      </MenubarCheckboxItem>
+      <MenubarSeparator />
+      <MenubarItem inset>Reload</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>
 ```
 
 Each `MenubarMenu` accepts the menu root props, such as `open`, `defaultOpen` and `onOpenChange`. `MenubarItem` also accepts `variant="destructive"` and `inset`. Checkbox items use `checked`/`defaultChecked`, and radio groups use `value`/`defaultValue`. Pass `disabled` on `Menubar` to disable the whole bar, or on an individual item.
@@ -93,7 +120,7 @@ Also accepts the props of the primitive part it wraps.
 
 Groups one trigger with its popup and holds that menu's open state.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenu>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -103,7 +130,7 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenu>`.
 
 Groups related items inside a menu.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuGroup>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -113,7 +140,7 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuGroup>`.
 
 Renders menu content into a portal outside the bar.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuPortal>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -123,7 +150,7 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuPortal>`.
 
 The button in the bar that opens its menu.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuTrigger>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -133,7 +160,13 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuTrigger>`.
 
 The positioned popup that holds a menu's items.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuContent>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | How the popup lines up with its trigger. |
+| `alignOffset` | `number` | `-4` | The offset in pixels along the alignment axis. |
+| `sideOffset` | `number` | `8` | The gap in pixels between the trigger and the popup. |
+
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -143,7 +176,12 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuContent>`.
 
 A single command in a menu.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuItem>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` | Use `destructive` for items that delete or remove something. |
+| `inset` | `boolean` | - | Indents the item to align with items that show a leading icon or indicator. |
+
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -167,7 +205,7 @@ Also accepts the props of the primitive part it wraps.
 
 Groups radio items so only one can be selected.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuRadioGroup>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -195,7 +233,7 @@ A non-interactive heading for a section of items.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Indents the label to align with items that show a leading icon or indicator. |
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuLabel>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -205,7 +243,7 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuLabel>`.
 
 A thin divider between groups of items.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuSeparator>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -215,7 +253,11 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuSeparator>`.
 
 A trailing keyboard shortcut hint inside an item.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuShortcut>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `mod` | `boolean` | - | Prepends the platform's primary modifier key. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </ApiPart>
 
@@ -225,7 +267,7 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuShortcut>`.
 
 The root of a nested submenu.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuSub>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -239,7 +281,7 @@ The item that opens a submenu.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Indents the trigger to align with items that show a leading icon or indicator. |
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuSubTrigger>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -249,7 +291,7 @@ Also accepts the props of `React.ComponentProps<typeof DropdownMenuSubTrigger>`.
 
 The popup that holds a submenu's items.
 
-Also accepts the props of `React.ComponentProps<typeof DropdownMenuSubContent>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

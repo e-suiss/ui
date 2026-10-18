@@ -121,7 +121,31 @@ The container row that applies the variant styling.
 | --- | --- | --- | --- |
 | `variant` | `"default" \| "separator" \| "border"` | `"default"` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the marker. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - | Renders your own element with the props it receives. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
 
 </ApiPart>
 

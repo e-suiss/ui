@@ -50,10 +50,38 @@ import { FullscreenMenu, FullscreenMenuTrigger, FullscreenMenuContent, Fullscree
 ```
 
 ```tsx
-<MenuExample />
+<FullscreenMenu>
+  <FullscreenMenuTrigger aria-label="Menu" />
+  <FullscreenMenuContent>
+    <FullscreenMenuTitle>Menu</FullscreenMenuTitle>
+    <FullscreenMenuGroup>
+      <FullscreenMenuLink href="#store" isActive>
+        Store
+      </FullscreenMenuLink>
+      <FullscreenMenuLink href="#products">Products</FullscreenMenuLink>
+    </FullscreenMenuGroup>
+    <FullscreenMenuGroup>
+      <FullscreenMenuLabel>Shop</FullscreenMenuLabel>
+      <FullscreenMenuLink href="#shop-online">Shop online</FullscreenMenuLink>
+      <FullscreenMenuLink href="#order-status">Order status</FullscreenMenuLink>
+    </FullscreenMenuGroup>
+  </FullscreenMenuContent>
+</FullscreenMenu>
 ```
 
-The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Choosing a `FullscreenMenuLink` closes the menu. Set `isActive` on the link for the current page.
+<OnlyBase base="base radix">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`.
+
+</OnlyBase>
+
+Choosing a `FullscreenMenuLink` closes the menu. Set `isActive` on the link for the current page.
 
 Groups that contain a `FullscreenMenuLabel` render their links smaller than groups without one, so the first group reads as primary navigation. `FullscreenMenuLink` can render a router link instead of an anchor.
 
@@ -97,19 +125,27 @@ A menu whose close button shows the text `Done` instead of an icon.
 
 The root that manages the menu's open state.
 
+<OnlyBase base="base radix">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `open` | `boolean` | - | Whether the menu is open, for controlled use. |
 | `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the menu opens or closes. |
 
-Also accepts the props of the primitive part it wraps, plus `FullscreenMenuProps`.
+</OnlyBase>
 
 <OnlyBase base="aria">
 
-On the `aria` base, use `isOpen` instead of `open`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isOpen` | `boolean` | - | Whether the menu is open, for controlled use. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
+| `onOpenChange` | `(isOpen: boolean) => void` | - | Called when the menu opens or closes. |
 
 </OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -178,7 +214,31 @@ A navigation link that closes the menu when chosen.
 | --- | --- | --- | --- |
 | `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"` and `text-primary`. |
 
-Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps<"a">`.
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"a">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a router link, as the link. |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - | Renders your own link, such as a router link, with the props it receives. |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+</OnlyBase>
 
 </ApiPart>
 

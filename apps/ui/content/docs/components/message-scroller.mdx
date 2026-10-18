@@ -47,6 +47,8 @@ npm install @base-ui/react @phosphor-icons/react
 
 ```tsx
 import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerContent, MessageScrollerItem, MessageScrollerButton } from "@/components/ui/message-scroller"
+import { Message, MessageContent } from "@/components/ui/message"
+import { Bubble, BubbleContent } from "@/components/ui/bubble"
 ```
 
 ```tsx
@@ -55,7 +57,17 @@ import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, Mess
     <MessageScroller>
       <MessageScrollerViewport>
         <MessageScrollerContent className="gap-3 p-4">
-          <Messages />
+          {messages.map((message) => (
+            <MessageScrollerItem key={message.id} messageId={message.id}>
+              <Message align={message.from === "me" ? "end" : "start"}>
+                <MessageContent>
+                  <Bubble variant={message.from === "me" ? "default" : "muted"}>
+                    <BubbleContent>{message.text}</BubbleContent>
+                  </Bubble>
+                </MessageContent>
+              </Message>
+            </MessageScrollerItem>
+          ))}
         </MessageScrollerContent>
       </MessageScrollerViewport>
       <MessageScrollerButton />
@@ -88,6 +100,7 @@ A scroller that opens at the first message with `defaultScrollPosition="start"`,
   - [MessageScroller](#messagescroller)
     - [MessageScrollerViewport](#messagescrollerviewport)
       - [MessageScrollerContent](#messagescrollercontent)
+        - [MessageScrollerItem](#messagescrolleritem)
     - [MessageScrollerButton](#messagescrollerbutton)
 
 </Anatomy>
@@ -101,8 +114,11 @@ Creates the scroll controller and provides it to the parts and hooks inside.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `children` | `React.ReactNode` | - | The scroller parts and any components that use the message scroller hooks. |
-
-Also accepts the props of `MessageScrollerOptions`.
+| `defaultScrollPosition` | `"start" \| "end" \| "last-anchor"` | `"end"` | Where the scroller opens: the first item, the last item, or the last item marked with `scrollAnchor`. |
+| `autoScroll` | `boolean` | `false` | Follows new content at the bottom until the user scrolls away. |
+| `scrollEdgeThreshold` | `number` | `8` | Distance in pixels from an edge that still counts as being at that edge. |
+| `scrollPreviousItemPeek` | `number` | `64` | Pixels of the previous item left visible above an anchored item. |
+| `scrollMargin` | `number` | `0` | Extra offset in pixels from the top of the viewport when anchoring an item. |
 
 </ApiPart>
 
@@ -168,9 +184,35 @@ A floating button that appears when the scroller can move toward its direction a
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `behavior` | `ScrollBehavior` | `"smooth"` | The scroll behavior used when jumping, such as `smooth` or `auto`. |
-| `direction` | `MessageScrollerScrollDirection` | `"end"` | Which edge the button scrolls to: `end` or `start`. It also sets the button's position and icon rotation. |
+| `direction` | `"start" \| "end"` | `"end"` | Which edge the button scrolls to: `end` or `start`. It also sets the button's position and icon rotation. |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` | The `Button` size. |
 
-Also accepts the props of `useRender.ComponentProps<"button", MessageScrollerButtonState>`, `React.ComponentProps<typeof Button>`.
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the button. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - | Renders your own element with the props it receives. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+</OnlyBase>
 
 </ApiPart>
 

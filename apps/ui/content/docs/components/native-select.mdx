@@ -110,7 +110,7 @@ The wrapper and native `select` element, with a decorative caret icon.
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "default"` | `"default"` | The control height. |
 
-Also accepts the props of `NativeSelectProps`.
+Also accepts the props of `Omit<React.ComponentProps<"select">, "size">`. They go to the `select` element, except `className`, which goes to the wrapper.
 
 </ApiPart>
 

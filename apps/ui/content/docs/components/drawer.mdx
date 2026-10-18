@@ -47,7 +47,10 @@ npm install @base-ui/react @phosphor-icons/react
 
 ```tsx
 import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerTrigger, DrawerPortal, DrawerClose, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button"
 ```
+
+<OnlyBase base="base aria">
 
 ```tsx
 <Drawer swipeDirection="down" showSwipeHandle modal>
@@ -75,9 +78,53 @@ import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerTri
 </Drawer>
 ```
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<Drawer swipeDirection="down" showSwipeHandle modal>
+  <DrawerTrigger asChild>
+    <Button variant="outline">Open drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Move goal</DrawerTitle>
+      <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+    </DrawerHeader>
+    <div className="flex flex-col items-center gap-1 p-4">
+      <span className="text-5xl font-semibold tracking-tight">350</span>
+      <span className="text-muted-foreground text-xs uppercase">
+        Calories per day
+      </span>
+    </div>
+    <DrawerFooter>
+      <Button>Save goal</Button>
+      <DrawerClose asChild>
+        <Button variant="outline">Cancel</Button>
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+```
+
+</OnlyBase>
+
 The drawer is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `swipeDirection` to `down`, `up`, `left` or `right` to choose the edge it opens from and the direction it is swiped to close.
 
 Pass `snapPoints`, such as `[0.5, 1]`, to let people drag the drawer between heights; it opens at the first snap point unless you set `defaultSnapPoint`, or control it with `snapPoint` and `onSnapPointChange`. Set `modal={false}` to keep the rest of the page interactive; no overlay is rendered in that case.
+
+<OnlyBase base="base aria">
+
+Render the trigger or a close button as another component, such as a `Button`, with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `DrawerTrigger` or `DrawerClose` to render your own `Button` as the trigger or close button.
+
+</OnlyBase>
 
 For the indented page effect, place `DrawerIndentBackground` and `DrawerIndent` inside `DrawerProvider` and put the page content in `DrawerIndent`. The page is scaled while a non-floating drawer that opens from the bottom is open, and, with snap points, only at the last snap point.
 
@@ -191,6 +238,14 @@ Also accepts the props of `DrawerPrimitive.Root.Props`.
 
 The button that opens the drawer.
 
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the trigger instead of a `button`. |
+
+</OnlyBase>
+
 Also accepts the props of `DrawerPrimitive.Trigger.Props`.
 
 </ApiPart>
@@ -210,6 +265,14 @@ Also accepts the props of `DrawerPrimitive.Portal.Props`.
 ### DrawerClose
 
 A button that closes the drawer.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the close button instead of a `button`. |
+
+</OnlyBase>
 
 Also accepts the props of `DrawerPrimitive.Close.Props`.
 
@@ -276,6 +339,14 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The drawer's title, which also names it for assistive technology.
 
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the title. |
+
+</OnlyBase>
+
 Also accepts the props of `DrawerPrimitive.Title.Props`.
 
 </ApiPart>
@@ -285,6 +356,14 @@ Also accepts the props of `DrawerPrimitive.Title.Props`.
 ### DrawerDescription
 
 Supporting text that describes the drawer for assistive technology.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the description. |
+
+</OnlyBase>
 
 Also accepts the props of `DrawerPrimitive.Description.Props`.
 

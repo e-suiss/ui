@@ -45,6 +45,9 @@ npm install @base-ui/react
 
 ```tsx
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 ```
 
 <OnlyBase base="base">
@@ -232,6 +235,28 @@ Also accepts the props of the primitive part it wraps.
 
 The positioned panel that renders in a portal.
 
+<OnlyBase base="base aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the panel opens on. |
+| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the panel. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the panel lines up with the trigger along that side. |
+| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the panel opens on. |
+| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the panel. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the panel lines up with the trigger along that side. |
+| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
@@ -275,7 +300,7 @@ Also accepts the props of the primitive part it wraps.
 
 ## Notes
 
-- Styling hooks: `data-slot` values `popover`, `popover-trigger`, `popover-content`, `popover-header`, `popover-title` and `popover-description`.
+- Styling hooks: `data-slot` values `popover-trigger`, `popover-content`, `popover-header`, `popover-title` and `popover-description`. The `Popover` root renders no element of its own.
 - The panel is `w-72` by default; override it with `className`.
 - The panel animates in from the side it opens on.
 - Uses the `popover`, `popover-foreground` and `muted-foreground` tokens.

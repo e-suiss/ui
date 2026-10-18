@@ -63,6 +63,7 @@ npm install @base-ui/react class-variance-authority
 
 ```tsx
 import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "@/components/ui/item"
+import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
@@ -193,7 +194,31 @@ The row container for media, content and actions.
 | `variant` | `"default" \| "outline" \| "muted"` | `"default"` | `default` has no border or background, `outline` adds a border, and `muted` adds a subtle background. |
 | `size` | `"default" \| "sm" \| "xs"` | `"default"` | Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the item. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - | Renders your own element with the props it receives. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
 
 </ApiPart>
 

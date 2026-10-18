@@ -44,7 +44,7 @@ npm install @base-ui/react @phosphor-icons/react class-variance-authority
 ## Usage
 
 ```tsx
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuPositioner, NavigationMenuPanel, NavigationMenuLink, NavigationMenuLabel, NavigationMenuIndicator } from "@/components/ui/navigation-menu"
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 ```
 
 ```tsx
@@ -129,8 +129,11 @@ The `panel` layout anchored to a sticky header, with columns of labelled links a
     - [NavigationMenuItem](#navigationmenuitem)
       - [NavigationMenuTrigger](#navigationmenutrigger)
       - [NavigationMenuContent](#navigationmenucontent)
+        - [NavigationMenuLabel](#navigationmenulabel)
         - [NavigationMenuLink](#navigationmenulink)
       - [NavigationMenuLink](#navigationmenulink)
+  - [NavigationMenuPositioner](#navigationmenupositioner)
+  - [NavigationMenuPanel](#navigationmenupanel)
 
 </Anatomy>
 
@@ -143,6 +146,23 @@ The root that manages open state and renders the popover or panel popup.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `layout` | `"popover" \| "panel"` | `"popover"` | Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop. |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | How the popover lines up with the bar in the `popover` layout. |
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `anchor` | `Element \| React.RefObject<Element \| null> \| VirtualElement \| (() => Element \| VirtualElement \| null) \| null` | - | The element the popup is positioned against. In the `panel` layout, pass a ref to the full-width bar. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `anchor` | `React.RefObject<HTMLElement \| null>` | - | The element the popup is positioned against. In the `panel` layout, pass a ref to the full-width bar. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive parts it wraps.
 
@@ -154,7 +174,7 @@ Also accepts the props of the primitive parts it wraps.
 
 The horizontal list of top-level items.
 
-Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -164,7 +184,7 @@ Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrim
 
 One top-level entry, holding a trigger with content or a single link.
 
-Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -192,7 +212,27 @@ Also accepts the props of the primitive part it wraps.
 
 ### NavigationMenuPositioner
 
-The floating popover card used by the `popover` layout.
+The floating popover card used by the `popover` layout. `NavigationMenu` renders it for you.
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the bar the card opens on. |
+| `sideOffset` | `number` | `8` | The gap in pixels between the bar and the card. |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | How the card lines up with the bar. |
+| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | How the card lines up with the bar. |
+| `anchor` | `React.RefObject<HTMLElement \| null>` | - | The element the card is positioned against. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -202,7 +242,7 @@ Also accepts the props of the primitive part it wraps.
 
 ### NavigationMenuPanel
 
-The full-width sheet and backdrop used by the `panel` layout.
+The full-width sheet and backdrop used by the `panel` layout. `NavigationMenu` renders it for you.
 
 Also accepts the props of the primitive part it wraps.
 
@@ -238,7 +278,7 @@ Also accepts the props of `React.ComponentProps<"p">`.
 
 A small arrow that fades in while its menu is open.
 
-Also accepts the props of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 

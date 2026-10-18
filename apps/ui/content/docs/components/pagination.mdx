@@ -50,7 +50,30 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 ```
 
 ```tsx
-<NumberedExample />
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="/orders?page=1" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="/orders?page=1">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="/orders?page=2" isActive>
+        2
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="/orders?page=3">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="/orders?page=3" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
 ```
 
 Links render as `a` elements, so pass `href` for real routes, or `href="#"` with an `onClick` that calls `preventDefault()` for client-side state. Mark the current page with `isActive` on `PaginationLink`. To disable an edge link, set `aria-disabled` on it; it becomes non-interactive and dimmed.
@@ -100,6 +123,13 @@ Page links using the larger `icon` button size.
       - [PaginationLink](#paginationlink)
       - [PaginationEllipsis](#paginationellipsis)
       - [PaginationNext](#paginationnext)
+  - [PaginationSummary](#paginationsummary)
+  - [PaginationInput](#paginationinput)
+  - [PaginationGroup](#paginationgroup)
+    - [PaginationFirst](#paginationfirst)
+    - [PaginationPrevious](#paginationprevious)
+    - [PaginationNext](#paginationnext)
+    - [PaginationLast](#paginationlast)
 
 </Anatomy>
 
@@ -142,8 +172,9 @@ A page link styled as a button, highlighted when active.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` | The `Button` size. |
 
-Also accepts the props of `PaginationLinkProps`.
+Also accepts the props of `React.ComponentProps<"a">`.
 
 </ApiPart>
 
@@ -157,6 +188,7 @@ A link to the previous page with a leading caret.
 | --- | --- | --- | --- |
 | `text` | `string` | `"Previous"` | The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link. |
 | `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"sm"` | The `Button` size. Defaults to `"icon-sm"` when `text` is empty. |
 
 Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 
@@ -172,6 +204,7 @@ A link to the next page with a trailing caret.
 | --- | --- | --- | --- |
 | `text` | `string` | `"Next"` | The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link. |
 | `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"sm"` | The `Button` size. Defaults to `"icon-sm"` when `text` is empty. |
 
 Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
 
@@ -250,7 +283,7 @@ Also accepts the props of `React.ComponentProps<"input">`.
 - `Pagination` renders a `nav` with `aria-label="pagination"`.
 - The active `PaginationLink` gets `aria-current="page"`.
 - Arrow links have built-in accessible names: `Go to previous page`, `Go to next page`, `Go to first page` and `Go to last page`. Custom `text` on previous or next replaces the name.
-- `PaginationEllipsis` is hidden from assistive technology.
+- The `PaginationEllipsis` icon is hidden from assistive technology, and its visually hidden text, `More pages`, is read instead.
 - `PaginationGroup` has `role="group"`.
 - `PaginationInput` has no built-in label; associate one with `htmlFor` or `aria-label`.
 

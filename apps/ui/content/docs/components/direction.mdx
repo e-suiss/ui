@@ -44,12 +44,26 @@ npm install @base-ui/react
 ## Usage
 
 ```tsx
-<DirectionProvider direction="ltr">
-  <DirectionPreview />
-</DirectionProvider>
+import { DirectionProvider, useDirection } from "@/components/ui/direction"
 ```
 
-Wrap your app, or a subtree, in `DirectionProvider` with the same direction you set in the `dir` attribute. Read the value with `useDirection` when a component needs to adapt, for example to pass it to a `dir` attribute or to rotate a directional icon.
+```tsx
+<div dir="rtl">
+  <DirectionProvider direction="rtl">
+    <Card />
+  </DirectionProvider>
+</div>
+```
+
+Wrap your app, or a subtree, in `DirectionProvider` with the same direction you set in the `dir` attribute. Read the value with `useDirection` when a component needs to adapt, for example to pass it to a `dir` attribute or to rotate a directional icon:
+
+```tsx
+function Card() {
+  const direction = useDirection()
+
+  return <section dir={direction}>The direction is {direction}.</section>
+}
+```
 
 ## Examples
 
@@ -58,6 +72,50 @@ Wrap your app, or a subtree, in `DirectionProvider` with the same direction you 
 The same card rendered with `direction` set to `rtl`, so its footer buttons appear in reversed order.
 
 <ComponentPreview name="direction-right-to-left" />
+
+## API Reference
+
+<ApiPart index={1}>
+
+### DirectionProvider
+
+Makes the direction available to the components below it.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction` | `"ltr" \| "rtl"` | `"ltr"` | The reading direction. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction` | `"ltr" \| "rtl"` | `"ltr"` | The reading direction. |
+| `dir` | `"ltr" \| "rtl"` | - | Radix's name for the same prop. `direction` wins when both are set. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction` | `"ltr" \| "rtl"` | `"ltr"` | The reading direction. |
+| `locale` | `string` | - | The locale passed to React Aria's `I18nProvider`. When unset, the current locale is used with an Arabic script for `rtl` and a Latin script for `ltr`, so React Aria components follow `direction`. |
+
+</OnlyBase>
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### useDirection
+
+Returns the current direction, `"ltr"` or `"rtl"`, from the nearest `DirectionProvider`.
+
+</ApiPart>
 
 ## Notes
 

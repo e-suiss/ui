@@ -45,6 +45,8 @@ npm install @base-ui/react
 
 ```tsx
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { buttonVariants } from "@/components/ui/button"
 ```
 
 ```tsx
@@ -76,7 +78,19 @@ import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/h
 </HoverCard>
 ```
 
-The trigger renders an anchor, so give it an `href`. Position the card with the `side`, `sideOffset`, `align` and `alignOffset` props on `HoverCardContent`; by default it opens on the `bottom`, centered, with a `4` pixel offset. Set `defaultOpen` on the root to start open, or control it with `open` and `onOpenChange`.
+The trigger renders an anchor, so give it an `href`. Position the card with the `side`, `sideOffset`, `align` and `alignOffset` props on `HoverCardContent`; by default it opens on the `bottom`, centered, `4` pixels from the trigger and shifted `4` pixels along it.
+
+<OnlyBase base="base radix">
+
+Set `defaultOpen` on the root to start open, or control it with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Set `defaultOpen` on the root to start open, or control it with `isOpen` and `onOpenChange`.
+
+</OnlyBase>
 
 ## Examples
 
@@ -121,6 +135,28 @@ Also accepts the props of the primitive part it wraps.
 ### HoverCardContent
 
 The floating card, rendered in a portal and positioned relative to the trigger.
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the card opens on. |
+| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the card. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the card lines up with the trigger along that side. |
+| `alignOffset` | `number` | `4` | The offset in pixels along the alignment axis. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the card opens on. |
+| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the card. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the card lines up with the trigger along that side. |
+| `alignOffset` | `number` | `4` | The offset in pixels along the alignment axis. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive parts it wraps.
 
