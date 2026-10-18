@@ -13,7 +13,13 @@ import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { fetchFiles, scopeOf } from "./add.mjs"
 import { applyFonts, assetName, downloadFaces, presetFonts } from "./fonts.mjs"
-import { fetchRegistry, presetFile } from "./registry.mjs"
+import {
+  iconLibraryFor,
+  isPhosphorRequirement,
+  usesCustomIcons,
+  withIcons,
+} from "./icons.mjs"
+import { fetchRegistry, fetchText, presetFile } from "./registry.mjs"
 import { themed, themeOptionsFor } from "./theme.mjs"
 
 const ANDROID_PLUGIN =
@@ -202,11 +208,42 @@ async function setup(options) {
   step(
     `${platform.title} files go to ${path.relative(project.cwd, project.root) || "."}`
   )
-  return { platform, project, registry, spec, entries }
+  const library = iconLibraryFor(options.platform, project.root, options)
+  const download = async (files) =>
+    withIcons(
+      {
+        platform: options.platform,
+        root: project.root,
+        registry,
+        library,
+        fetchText,
+      },
+      await fetchFiles(project.root, entries(files))
+    )
+  return { platform, project, registry, spec, download, library }
 }
 
-function printRequirements({ platform, project, spec }) {
-  const { title, missing } = platform.requirements(project, spec.requirements)
+function requirementsFor(spec, library) {
+  if (!usesCustomIcons(library)) return spec.requirements
+  const { packages, dependencies, ...rest } = spec.requirements
+  return {
+    ...rest,
+    ...(packages && {
+      packages: packages.filter((entry) => !isPhosphorRequirement(entry)),
+    }),
+    ...(dependencies && {
+      dependencies: dependencies.filter(
+        (entry) => !isPhosphorRequirement(entry)
+      ),
+    }),
+  }
+}
+
+function printRequirements({ platform, project, spec, library }) {
+  const { title, missing } = platform.requirements(
+    project,
+    requirementsFor(spec, library)
+  )
   if (!missing.length) return
   note(title)
   list(missing)
@@ -249,7 +286,7 @@ function writeFonts(project, platform, faces) {
 
 export async function initNative(options) {
   const context = await setup(options)
-  const { project, registry, spec, entries } = context
+  const { project, registry, spec, download } = context
   const button = registry.items.find((item) => item.name === "button")
   const files = [
     ...new Set([...spec.base, ...(button?.[options.platform] ?? [])]),
@@ -262,18 +299,16 @@ export async function initNative(options) {
   )
   const fonts = presetFonts(options)
   const faces = fonts ? await downloadFaces(fonts) : []
-  const downloaded = (await fetchFiles(project.root, entries(files))).map(
-    (file) => {
-      if (!path.basename(file.target).startsWith("Tokens.")) return file
-      const content = themed(file.content, options.platform, theme)
-      return {
-        ...file,
-        content: fonts
-          ? applyFonts(content, options.platform, fonts, faces)
-          : content,
-      }
+  const downloaded = (await download(files)).map((file) => {
+    if (!path.basename(file.target).startsWith("Tokens.")) return file
+    const content = themed(file.content, options.platform, theme)
+    return {
+      ...file,
+      content: fonts
+        ? applyFonts(content, options.platform, fonts, faces)
+        : content,
     }
-  )
+  })
   reportFiles(writeFiles(project.cwd, downloaded, options.overwrite))
   if (faces.length) writeFonts(project, options.platform, faces)
   printRequirements(context)
@@ -289,7 +324,7 @@ export async function initNative(options) {
 
 export async function addNative(names, options) {
   const context = await setup(options)
-  const { platform, project, registry, spec, entries } = context
+  const { platform, project, registry, spec, download } = context
   const relativeRoot = path.relative(project.cwd, project.root) || "."
   if (!spec.base.every((file) => existsSync(path.join(project.root, file)))) {
     throw new CliError(
@@ -333,7 +368,7 @@ export async function addNative(names, options) {
   const files = [
     ...new Set(selected.flatMap((name) => byName.get(name)[options.platform])),
   ]
-  const downloaded = await fetchFiles(project.root, entries(files))
+  const downloaded = await download(files)
   if (options.diff) {
     printDiff(project.cwd, downloaded)
     return

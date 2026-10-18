@@ -35,7 +35,7 @@ export function LocalNav() {
     <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/85 backdrop-blur-xl backdrop-saturate-180">
       <nav
         aria-label={strings.documentation}
-        className="mx-auto flex h-16 w-full max-w-[1680px] items-stretch gap-8 px-5 md:px-10"
+        className="flex h-16 w-full items-stretch gap-8 px-5 md:px-10"
       >
         <button
           type="button"
