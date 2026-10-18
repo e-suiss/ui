@@ -2,7 +2,12 @@ import type * as React from "react"
 
 import { NativeCode } from "@/components/site/component-source"
 import { NativeExampleView } from "@/components/site/native-example-view"
-import { NATIVE_LANGUAGES, nativeCode, nativePreview } from "@/lib/native"
+import {
+  NATIVE_LANGUAGES,
+  nativeCode,
+  nativePreview,
+  webPreviewFor,
+} from "@/lib/native"
 
 const LABELS = { swift: "SwiftUI", kotlin: "Compose" } as const
 
@@ -17,9 +22,11 @@ export function NativeExample({
   platforms?: string[]
   children?: React.ReactNode
 }) {
-  const preview = nativePreview(id)
+  const web = webPreviewFor(id)
+  const preview = web ? undefined : nativePreview(id)
   const view = {
-    id: preview ? id : undefined,
+    id: preview || web ? id : undefined,
+    web,
     width: preview?.width,
     height: preview?.height,
     video: Boolean(preview?.video && !live),

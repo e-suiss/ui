@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 
 import { nativeExamples } from "@/lib/native-examples.mjs"
+import { nativeWebPreviews } from "@/lib/native-web.mjs"
+import type { Preview } from "@/lib/previews"
 
 type NativeCode = { rn?: string; swift?: string; kotlin?: string }
 
@@ -52,4 +54,12 @@ export function nativePreview(id: string) {
     height,
     video: existsSync(path.join(previews, `${id}.light.mp4`)),
   }
+}
+
+let webPreviews: Map<string, Preview> | undefined
+
+export function webPreviewFor(id: string) {
+  webPreviews ??= nativeWebPreviews(path.join(process.cwd(), "content"))
+    .web as Map<string, Preview>
+  return webPreviews.get(id)
 }

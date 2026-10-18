@@ -2,12 +2,19 @@
 
 import Image from "next/image"
 import * as React from "react"
+import { ExamplePreview } from "@/components/site/example-preview"
 import { CodeVisible } from "@/components/site/lazy-source"
 import { useActivePlatform } from "@/components/site/platform"
+import {
+  ResponsivePreview,
+  useResponsivePreview,
+} from "@/components/site/responsive-preview"
 import { SourceCode } from "@/components/site/source-code"
 import { useTheme } from "@/components/ui/theme"
-import { basePath } from "@/lib/base-path"
+import { basePath, withBase } from "@/lib/base-path"
 import type { Platform } from "@/lib/platform"
+import type { Preview } from "@/lib/previews"
+import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
 function previewAlt(id: string, scheme: string) {
@@ -89,9 +96,11 @@ export function NativeExampleView({
   platforms = [],
   video,
   live,
+  web,
   children,
 }: {
   id?: string
+  web?: Preview
   width?: number
   height?: number
   platforms?: string[]
@@ -110,7 +119,8 @@ export function NativeExampleView({
   )
   const active = Math.max(0, codePlatforms.indexOf(selected))
   const mobilePlatform = useActivePlatform(["rn", "swift", "kotlin"])
-  const showLive = Boolean(live) && mobilePlatform === "rn"
+  const showLive = !web && Boolean(live) && mobilePlatform === "rn"
+  const responsive = useResponsivePreview()
 
   return (
     <div data-not-prose className="mt-[1.2em]">
@@ -139,11 +149,31 @@ export function NativeExampleView({
         )}
         {id && (
           <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
-            {showLive ? "Web" : "iOS"}
+            {showLive || web ? "Web" : "iOS"}
           </span>
         )}
       </div>
-      {id && (
+      {id && web && (
+        <div hidden={tab !== "preview"}>
+          {web.responsive ? (
+            <ResponsivePreview
+              src={withBase(`/preview/${web.name}`)}
+              height={web.type === "block" ? 800 : 560}
+              state={responsive}
+            />
+          ) : (
+            <ExamplePreview
+              type={web.type}
+              name={web.name}
+              layout={web.layout}
+            />
+          )}
+          <p className="mt-3 text-center font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
+            {strings.webPreview}
+          </p>
+        </div>
+      )}
+      {id && !web && (
         <div hidden={tab !== "preview"}>
           <div
             data-slot="preview"
@@ -193,7 +223,7 @@ export function NativeExampleView({
             </div>
             {showLive && (
               <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
-                Web preview
+                {strings.webPreview}
               </p>
             )}
           </div>
