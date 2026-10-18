@@ -13,7 +13,7 @@
       "package": "com.esuiss.ui"
     },
     "experiments": {
-      "baseUrl": "/live"
+      "baseUrl": "/ui/live"
     }
   }
 }
