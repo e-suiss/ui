@@ -730,9 +730,15 @@ fun OtpAutofillVerification(incoming: String) {
 
 </Only>
 
-<Only platform="rn kotlin">
+<Only platform="rn">
 
 Pass `maxLength` and `onVerify`, which returns a boolean or a promise of one. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
+
+</Only>
+
+<Only platform="kotlin">
+
+Pass `maxLength` and `onVerify`, a suspending function that returns whether the code is right. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
 
 </Only>
 

@@ -333,6 +333,22 @@ fun VerifyCodeExample() {
 
 </Only>
 
+<Only platform="rn">
+
 `onVerify` receives the code and returns a boolean or a promise; by default it accepts the demo code `482913`. `onHelp` handles the help link.
+
+</Only>
+
+<Only platform="swift">
+
+`onVerify` receives the code and returns whether it is right, and can be `async`; by default it accepts the demo code `482913`. `onHelp` handles the help link.
+
+</Only>
+
+<Only platform="kotlin">
+
+`onVerify` receives the code and returns whether it is right, and can suspend; by default it accepts the demo code `482913`. `onHelp` handles the help link.
+
+</Only>
 
 </Only>
