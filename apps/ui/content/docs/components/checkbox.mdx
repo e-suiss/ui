@@ -81,7 +81,17 @@ Disabled checkboxes, both unchecked and checked, that ignore clicks and are skip
 
 ### Invalid
 
+<OnlyBase base="base radix">
+
 A checkbox marked with `aria-invalid` to show a validation error.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+A checkbox marked with `isInvalid` to show a validation error.
+
+</OnlyBase>
 
 <ComponentPreview name="checkbox-invalid" />
 
@@ -93,6 +103,17 @@ A checkbox marked with `aria-invalid` to show a validation error.
 
 The checkbox control, rendering the box and its check indicator.
 
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | — | Used as `isSelected`, the controlled checked state. |
+| `defaultChecked` | `boolean` | — | Used as `defaultSelected`, the checked state on first render. |
+| `onCheckedChange` | `(checked: boolean) => void` | — | Called with the new checked state, alongside `onChange`. |
+| `disabled` | `boolean` | — | Used as `isDisabled`. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -103,7 +124,18 @@ Also accepts the props of the primitive part it wraps.
 - Toggles on click and with Space when focused.
 - Needs an accessible name: wrap it in a `Label`, associate a `Label` through `htmlFor` and `id`, or set `aria-label`.
 - When `disabled`, it sets `aria-disabled`, ignores clicks, and is removed from the Tab order.
+
+<OnlyBase base="base radix">
+
 - Set `aria-invalid` to communicate a validation error; the border turns to the `destructive` color.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- Set `isInvalid` to communicate a validation error.
+
+</OnlyBase>
 
 ## Notes
 

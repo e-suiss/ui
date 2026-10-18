@@ -44,26 +44,31 @@ npm install recharts
 ## Usage
 
 ```tsx
-import { ChartContainer, ChartTooltipContent, ChartLegendContent } from "@/components/ui/chart"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 ```
 
 ```tsx
-<div className="w-[min(32rem,calc(100vw-2rem))]">
-  <ChartContainer config={visitorsConfig} className="w-full">{(
-        <BarChart accessibilityLayer data={visitors}>
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-            tickFormatter={shortMonth}
-          />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
-        </BarChart>
-      )}</ChartContainer>
-</div>
+const visitors = [
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+]
+
+const visitorsConfig = {
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
+} satisfies ChartConfig
+```
+
+```tsx
+<ChartContainer config={visitorsConfig} className="w-full max-w-lg">
+  <BarChart accessibilityLayer data={visitors}>
+    <CartesianGrid vertical={false} />
+    <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
+    <ChartTooltip content={<ChartTooltipContent />} />
+    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
+  </BarChart>
+</ChartContainer>
 ```
 
 Each key in `config` becomes a CSS custom property scoped to the chart, such as `--color-desktop`. Reference it from your series, as in `fill="var(--color-desktop)"`. Set `color` for a single value, or `theme` with `light` and `dark` values to switch colors with the `.dark` class.
@@ -117,8 +122,9 @@ Provides the config, injects the color variables and makes the chart responsive.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `config` | `ChartConfig` | Required | Maps data keys to a `label`, optional `icon`, and a `color` or per-theme `theme` colors. |
-| `children` | `React.ComponentProps< typeof RechartsPrimitive.ResponsiveContainer >["children"]` | Required | The Recharts chart element to render responsively. |
-| `initialDimension` | `{ width: number height: number }` | `INITIAL_DIMENSION` | Width and height used before the container is measured. Defaults to 320 by 200. |
+| `children` | `React.ReactNode` | Required | The Recharts chart element to render responsively. |
+| `initialDimension` | `{ width: number; height: number }` | `{ width: 320, height: 200 }` | Width and height used before the container is measured. |
+| `aria-label` | `string` | `"Chart of <series labels>"` | The chart's accessible name. Without it, the chart gets "Chart of" followed by the config labels, or "Chart" when there are none. |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -138,7 +144,7 @@ A styled tooltip body that lists each series with its indicator, label and value
 | `nameKey` | `string` | - | Field used to look up each item's config entry instead of its name or data key. |
 | `labelKey` | `string` | - | Field used to look up the heading label in the config. |
 
-Also accepts the props of `React.ComponentProps<typeof RechartsPrimitive.Tooltip>`, `React.ComponentProps<"div">`, `RechartsPrimitive.DefaultTooltipContentProps< TooltipValueType, TooltipNameType >`.
+Also accepts the props of the Recharts `Tooltip` and `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -153,13 +159,14 @@ A styled legend that lists series in config order with a swatch or icon.
 | `hideIcon` | `boolean` | `false` | Shows a color swatch even when the config entry has an `icon`. |
 | `nameKey` | `string` | - | Field used to look up each legend item's config entry instead of its data key. |
 
-Also accepts the props of `React.ComponentProps<"div">`, `RechartsPrimitive.DefaultLegendContentProps`.
+Also accepts the props of `React.ComponentProps<"div">` and the Recharts `DefaultLegendContentProps`.
 
 </ApiPart>
 
 ## Accessibility
 
 - With `accessibilityLayer` on the Recharts chart, the chart is focusable and arrow keys move between data points, showing the tooltip for each.
+- `ChartContainer` gives the chart an `aria-label`: yours, or "Chart of" followed by the config labels. A chart element that already has an `aria-label` keeps it.
 - Charts are visual; provide a nearby summary or table when the exact values matter.
 - Do not rely on color alone to tell series apart; the legend and tooltip pair each color with its label.
 

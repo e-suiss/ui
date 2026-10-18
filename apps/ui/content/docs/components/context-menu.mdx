@@ -49,6 +49,8 @@ npm install @base-ui/react @phosphor-icons/react
 import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuItem, ContextMenuSub, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut } from "@/components/ui/context-menu"
 ```
 
+<OnlyBase base="base radix">
+
 ```tsx
 <ContextMenu>
   <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
@@ -103,6 +105,67 @@ import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent,
   </ContextMenuContent>
 </ContextMenu>
 ```
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger className="text-muted-foreground flex h-40 w-72 items-center justify-center rounded-2xl border border-dashed text-sm">
+    Right click here
+  </ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuGroup>
+      <ContextMenuItem>
+        <ArrowLeftIcon />
+        Back
+        <ContextMenuShortcut mod>[</ContextMenuShortcut>
+      </ContextMenuItem>
+      <ContextMenuItem isDisabled>
+        <ArrowRightIcon />
+        Forward
+        <ContextMenuShortcut mod>]</ContextMenuShortcut>
+      </ContextMenuItem>
+      <ContextMenuItem>
+        <ArrowClockwiseIcon />
+        Reload
+        <ContextMenuShortcut mod>R</ContextMenuShortcut>
+      </ContextMenuItem>
+    </ContextMenuGroup>
+    <ContextMenuSeparator />
+    <ContextMenuSub>
+      <ContextMenuSubTrigger>More tools</ContextMenuSubTrigger>
+      <ContextMenuSubContent>
+        <ContextMenuItem>Save page as...</ContextMenuItem>
+        <ContextMenuItem>Create shortcut...</ContextMenuItem>
+        <ContextMenuItem>Developer tools</ContextMenuItem>
+      </ContextMenuSubContent>
+    </ContextMenuSub>
+    <ContextMenuSeparator />
+    <ContextMenuGroup>
+      <ContextMenuCheckboxItem defaultSelected>
+        Show bookmarks bar
+      </ContextMenuCheckboxItem>
+      <ContextMenuCheckboxItem>Show full URLs</ContextMenuCheckboxItem>
+    </ContextMenuGroup>
+    <ContextMenuSeparator />
+    <ContextMenuRadioGroup defaultValue="ada">
+      <ContextMenuLabel inset>People</ContextMenuLabel>
+      <ContextMenuRadioItem value="ada">Ada Lovelace</ContextMenuRadioItem>
+      <ContextMenuRadioItem value="alan">Alan Turing</ContextMenuRadioItem>
+    </ContextMenuRadioGroup>
+    <ContextMenuSeparator />
+    <ContextMenuItem variant="destructive">
+      <TrashIcon />
+      Delete
+      <ContextMenuShortcut mod>⌫</ContextMenuShortcut>
+    </ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+</OnlyBase>
 
 <OnlyBase base="base radix">
 
@@ -186,6 +249,35 @@ Also accepts the props of the primitive part it wraps.
 ### ContextMenuContent
 
 The menu panel, rendered in a portal at the pointer position.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"inline-end"` | Which side of the pointer the menu opens on. |
+| `sideOffset` | `number` | `0` | Distance from the pointer in pixels. |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment against the pointer. |
+| `alignOffset` | `number` | `4` | Offset along the alignment axis in pixels. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `alignOffset` | `number` | `4` | Offset along the alignment axis in pixels. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `placement` | `Placement` | `"bottom start"` | Where the menu opens relative to the pointer. |
+| `offset` | `number` | `0` | Distance from the pointer in pixels. |
+| `crossOffset` | `number` | `4` | Offset along the cross axis in pixels. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive parts it wraps.
 
@@ -337,8 +429,26 @@ Also accepts the props of `React.ComponentProps<"span">`.
 ## Notes
 
 - Styling hooks: `data-slot` values such as `context-menu-content`, `context-menu-item`, `context-menu-checkbox-item`, `context-menu-radio-item`, `context-menu-sub-trigger`, `context-menu-label`, `context-menu-separator` and `context-menu-shortcut`.
-- Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.
+- Items set `data-inset` and `data-variant`, and disabled items get `data-disabled`.
+
+<OnlyBase base="base">
+
+- An open submenu trigger gets `data-popup-open`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- An open submenu trigger gets `data-state="open"`.
+
+</OnlyBase>
+
+<OnlyBase base="base">
+
 - By default the menu opens on the `inline-end` side of the pointer, aligned to `start`.
+
+</OnlyBase>
+
 - The trigger sets `select-none` so long-pressing does not select its text.
 - Uses the `popover`, `accent`, `destructive` and `border` colors.
 

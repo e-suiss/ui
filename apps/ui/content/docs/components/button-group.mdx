@@ -46,7 +46,9 @@ npm install @base-ui/react class-variance-authority
 ## Usage
 
 ```tsx
-import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { Button } from "@/components/ui/button"
+import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 ```
 
 <OnlyBase base="base">
@@ -369,7 +371,31 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 A static, button-shaped label for text or icons.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element instead of a `div`. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }) => React.ReactNode` | — | Renders your own element, such as a `label`, with the text's props. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -388,11 +414,28 @@ Also accepts the props of `React.ComponentProps<typeof Separator>`.
 - `ButtonGroup` renders with `role="group"`; add an `aria-label` to name it.
 - Each button, input and trigger remains a separate tab stop in document order.
 - Icon-only buttons inside a group need an `aria-label`.
+
+<OnlyBase base="base">
+
 - `ButtonGroupText` renders a `div` and is not focusable; use `render` to render a `label` element if it labels an input.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- `ButtonGroupText` renders a `div` and is not focusable; set `asChild` with a `label` element as the child if it labels an input.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- `ButtonGroupText` renders a `div` and is not focusable; pass a `render` function that returns a `label` element if it labels an input.
+
+</OnlyBase>
 
 ## Notes
 
-- Styling hooks: `data-slot="button-group"`, `"button-group-text"` and `"button-group-separator"`, plus `data-orientation` on the group.
+- Styling hooks: `data-slot="button-group"`, `"button-group-text"` and `"button-group-separator"`, plus `data-orientation` on the group when `orientation` is set.
 - Focused items are raised with `z-10` so their focus ring is not clipped by neighbors.
 - In groups containing `outline` buttons, inputs, input groups and select triggers also get the `border-border` color.
 

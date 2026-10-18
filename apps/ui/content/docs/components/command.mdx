@@ -54,13 +54,41 @@ import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, Comman
   <Command className="ring-foreground/5 shadow-md ring-1">
     <CommandInput placeholder="Type a command or search..." />
     <CommandList>
-      <CommandItems />
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandGroup heading="Suggestions">
+        <CommandItem>
+          <CalendarBlankIcon />
+          Calendar
+        </CommandItem>
+        <CommandItem disabled>
+          <CalculatorIcon />
+          Calculator
+        </CommandItem>
+      </CommandGroup>
+      <CommandSeparator />
+      <CommandGroup heading="Settings">
+        <CommandItem>
+          <UserIcon />
+          Profile
+          <CommandShortcut mod>P</CommandShortcut>
+        </CommandItem>
+      </CommandGroup>
     </CommandList>
   </Command>
 </div>
 ```
 
+<OnlyBase base="base radix">
+
 Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `open` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `isOpen` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.
+
+</OnlyBase>
 
 Set `mod` on `CommandShortcut` to prefix the shortcut with the platform modifier key: `⌘` on Apple platforms and `Ctrl+` elsewhere.
 
@@ -88,10 +116,15 @@ A command palette that is open when the page loads.
 
 <Anatomy>
 
-- [Command](#command)
-  - [CommandInput](#commandinput)
-  - [CommandList](#commandlist)
-    - [CommandEmpty](#commandempty)
+- [CommandDialog](#commanddialog)
+  - [Command](#command)
+    - [CommandInput](#commandinput)
+    - [CommandList](#commandlist)
+      - [CommandEmpty](#commandempty)
+      - [CommandGroup](#commandgroup)
+        - [CommandItem](#commanditem)
+          - [CommandShortcut](#commandshortcut)
+      - [CommandSeparator](#commandseparator)
 
 </Anatomy>
 
@@ -119,7 +152,7 @@ A modal dialog that presents a command menu as a palette.
 | `showCloseButton` | `boolean` | `false` | Shows the dialog's close button. |
 | `children` | `React.ReactNode` | Required | The dialog's content, typically a `Command`. |
 
-Also accepts the props of `React.ComponentProps<typeof Dialog>`.
+Also accepts the props of [Dialog](/docs/components/dialog).
 
 </ApiPart>
 

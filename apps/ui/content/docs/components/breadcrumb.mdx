@@ -159,7 +159,31 @@ Also accepts the props of `React.ComponentProps<"li">`.
 
 A link to an ancestor page.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"a">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element instead of a `a`. |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element with the link's props. |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+</OnlyBase>
 
 </ApiPart>
 

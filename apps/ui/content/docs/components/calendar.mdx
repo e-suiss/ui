@@ -46,11 +46,21 @@ npm install @phosphor-icons/react react-day-picker
 ## Usage
 
 ```tsx
-import { Calendar, CalendarDayButton } from "@/components/ui/calendar"
+import * as React from "react"
+import { Calendar } from "@/components/ui/calendar"
 ```
 
 ```tsx
-<SingleCalendar buttonVariant="plain" />
+const [date, setDate] = React.useState<Date | undefined>(new Date())
+```
+
+```tsx
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+  className="rounded-2xl border"
+/>
 ```
 
 Set `mode` to `single`, `multiple` or `range`, and control the selection with `selected` and `onSelect`. For ranges, `numberOfMonths={2}` shows two months side by side on wider screens.
@@ -106,7 +116,7 @@ The date grid, with month navigation and caption.
 | `buttonVariant` | `React.ComponentProps<typeof Button>["variant"]` | `"plain"` | `Button` variant used for the previous and next month buttons. Defaults to `plain`. |
 | `size` | `"sm" \| "default" \| "lg"` | `"default"` | Cell size and type scale: `sm`, `default` or `lg`. |
 
-Also accepts the props of `React.ComponentProps<typeof DayPicker>`.
+Also accepts the props of `DayPicker` from `react-day-picker`.
 
 </ApiPart>
 
@@ -116,7 +126,7 @@ Also accepts the props of `React.ComponentProps<typeof DayPicker>`.
 
 The button rendered for each day, styled by its selection state.
 
-Also accepts the props of `DayButtonProps`.
+Also accepts the props of `DayButtonProps` from `react-day-picker`.
 
 </ApiPart>
 

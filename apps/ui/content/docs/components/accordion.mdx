@@ -47,6 +47,8 @@ npm install @base-ui/react @phosphor-icons/react class-variance-authority
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <div className="w-96">
   <Accordion>
@@ -64,6 +66,50 @@ Give each `AccordionItem` a unique `value`. By default only one panel is open at
 
 The open state is an array of item values. Use `defaultValue` (for example `["shipping"]`) for uncontrolled use, or `value` with `onValueChange` to control it.
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="w-96">
+  <Accordion type="single" collapsible>
+    {items.map((item) => (
+      <AccordionItem key={item.value} value={item.value}>
+        <AccordionTrigger>{item.title}</AccordionTrigger>
+        <AccordionContent>{item.content}</AccordionContent>
+      </AccordionItem>
+    ))}
+  </Accordion>
+</div>
+```
+
+Give each `AccordionItem` a unique `value`. Set `type` on `Accordion`: `"single"` keeps one panel open at a time, and `"multiple"` lets several stay open. With `"single"`, add `collapsible` so the open panel can be closed again.
+
+With `type="single"` the open state is one item value; with `type="multiple"` it is an array. Use `defaultValue` (for example `"shipping"` or `["shipping"]`) for uncontrolled use, or `value` with `onValueChange` to control it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<div className="w-96">
+  <Accordion>
+    {items.map((item) => (
+      <AccordionItem key={item.value} id={item.value}>
+        <AccordionTrigger>{item.title}</AccordionTrigger>
+        <AccordionContent>{item.content}</AccordionContent>
+      </AccordionItem>
+    ))}
+  </Accordion>
+</div>
+```
+
+Give each `AccordionItem` a unique `id`. By default only one panel is open at a time; opening another closes the previous one. Set `allowsMultipleExpanded` on `Accordion` to let several panels stay open.
+
+The open state is a set of item ids. Use `defaultExpandedKeys` (for example `["shipping"]`) for uncontrolled use, or `expandedKeys` with `onExpandedChange` to control it.
+
+</OnlyBase>
+
 ## Examples
 
 ### Filled
@@ -74,13 +120,39 @@ The `filled` variant places the items on a rounded `bg-muted` surface.
 
 ### By default
 
+<OnlyBase base="base radix">
+
 Opens an item on first render with `defaultValue`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Opens an item on first render with `defaultExpandedKeys`.
+
+</OnlyBase>
 
 <ComponentPreview name="accordion-open-by-default" />
 
 ### Multiple
 
+<OnlyBase base="base">
+
 Keeps several panels open at once with `multiple`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Keeps several panels open at once with `type="multiple"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Keeps several panels open at once with `allowsMultipleExpanded`.
+
+</OnlyBase>
 
 <ComponentPreview name="accordion-multiple" />
 
@@ -105,6 +177,40 @@ The root that groups items and manages which panels are open.
 | --- | --- | --- | --- |
 | `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
 
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `multiple` | `boolean` | `false` | Lets several panels stay open at once. |
+| `defaultValue` | `any[]` | — | The values of the items open on first render. |
+| `value` | `any[]` | — | The controlled open items. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: any[]) => void` | — | Called when an item opens or closes. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `"single" \| "multiple"` | — | Required. Whether one or several panels can be open at once. |
+| `collapsible` | `boolean` | `false` | With `type="single"`, lets the open panel close again. |
+| `defaultValue` | `string \| string[]` | — | The open item on first render: a value for `"single"`, an array for `"multiple"`. |
+| `value` | `string \| string[]` | — | The controlled open item or items. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: string \| string[]) => void` | — | Called when an item opens or closes. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `allowsMultipleExpanded` | `boolean` | `false` | Lets several panels stay open at once. |
+| `defaultExpandedKeys` | `Iterable<Key>` | — | The ids of the items open on first render. |
+| `expandedKeys` | `Iterable<Key>` | — | The controlled open items. Pass it with `onExpandedChange`. |
+| `onExpandedChange` | `(keys: Set<Key>) => void` | — | Called when an item opens or closes. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -113,7 +219,36 @@ Also accepts the props of the primitive part it wraps.
 
 ### AccordionItem
 
-A single section that pairs a trigger with its panel, identified by `value`.
+A single section that pairs a trigger with its panel.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `any` | — | Identifies the item in the open state. |
+| `disabled` | `boolean` | `false` | Stops the item from opening or closing. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Required. Identifies the item in the open state. |
+| `disabled` | `boolean` | `false` | Stops the item from opening or closing. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `Key` | `value` | Identifies the item in the expanded keys. |
+| `value` | `string` | — | Used as the `id` when `id` is not set. |
+| `isDisabled` | `boolean` | `disabled` | Stops the item from opening or closing. |
+| `disabled` | `boolean` | — | Used as `isDisabled` when it is not set. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -149,7 +284,25 @@ Also accepts the props of the primitive part it wraps.
 ## Notes
 
 - Styling hooks: `data-slot="accordion"`, `"accordion-item"`, `"accordion-trigger"`, `"accordion-trigger-icon"` and `"accordion-content"`.
+
+<OnlyBase base="base">
+
 - The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-open` and `data-closed`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-state="open"` and `data-state="closed"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- The panel animates open with `animate-accordion-down` inside an expanded item, and renders its content only while the item is expanded.
+
+</OnlyBase>
+
 - `className` on `AccordionContent` applies to the inner padded wrapper, not the animated panel.
 
 </Only>

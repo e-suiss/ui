@@ -70,7 +70,23 @@ Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outsid
 
 `AttachmentAction` renders a `Button` with the `secondary` variant and an icon size by default. Pass `variant="link"` for a text action such as "Try Again". Icon-only actions need an `aria-label`.
 
+<OnlyBase base="base">
+
 `AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or use `render` to turn it into a link. Actions sit above it, so they remain separately clickable.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or use `asChild` with a link as its child to turn it into a link. Actions sit above it, so they remain separately clickable.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or pass a `render` function that returns a link to turn it into a link. Actions sit above it, so they remain separately clickable.
+
+</OnlyBase>
 
 ## Examples
 
@@ -255,7 +271,12 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 A compact button for actions such as remove, cancel or download.
 
-Also accepts the props of `React.ComponentProps<typeof Button>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. `link` makes a text action. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-xs"` | The `Button` size. Defaults to `"sm"` when `variant="link"`. |
+
+Also accepts the props of [Button](/docs/components/button).
 
 </ApiPart>
 
@@ -265,7 +286,31 @@ Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 An invisible button covering the card to make it clickable.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a link, instead of a `button`. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element, such as a link, with the trigger's props. |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+</OnlyBase>
 
 </ApiPart>
 

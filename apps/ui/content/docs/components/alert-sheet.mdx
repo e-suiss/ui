@@ -47,6 +47,7 @@ npm install @base-ui/react class-variance-authority
 
 ```tsx
 import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from "@/components/ui/alert-sheet"
+import { Button } from "@/components/ui/button"
 ```
 
 <OnlyBase base="base">
@@ -138,7 +139,23 @@ Every sheet needs an `AlertSheetTitle` for its accessible name. If the title sho
 
 By default the sheet is `dismissible` and behaves like a regular dialog. Set `dismissible={false}` to render it as an alert dialog instead.
 
+<OnlyBase base="base">
+
 When the sheet opens, focus moves to `AlertSheetCancel` unless you pass your own `initialFocus` to `AlertSheetContent`. Every action and the cancel button close the sheet. Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+When the sheet opens, focus moves to `AlertSheetCancel` unless your `onOpenAutoFocus` on `AlertSheetContent` calls `event.preventDefault()`. Every action and the cancel button close the sheet. Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+When the sheet opens, focus moves to `AlertSheetCancel`, which sets `autoFocus` by default. Every action and the cancel button close the sheet. Control the open state with `isOpen` and `onOpenChange`, or use `defaultOpen`.
+
+</OnlyBase>
 
 ## Examples
 

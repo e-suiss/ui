@@ -71,7 +71,23 @@ import { Badge } from "@/components/ui/badge"
 
 Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` so the `outline` and `ghost` variants tighten their padding on that side. Icons are sized to `size-3`.
 
+<OnlyBase base="base">
+
 Pass `render` with an anchor element, for example an `a` with an `href`, to make the badge a link. Linked badges get hover styles that depend on the variant.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` and pass an anchor element, for example an `a` with an `href`, as the child to make the badge a link. Linked badges get hover styles that depend on the variant.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns an anchor element, for example an `a` with an `href`, to make the badge a link. Linked badges get hover styles that depend on the variant.
+
+</OnlyBase>
 
 To use a custom color, override the text color with a `className` such as `text-green-600 dark:text-green-400`.
 
@@ -113,7 +129,31 @@ The inline label element.
 | --- | --- | --- | --- |
 | `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` | Visual style. `default`, `secondary`, `destructive` and `link` are text-only; `outline` adds a border and `ghost` adds horizontal padding. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"span">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a link, instead of a `span`. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element, such as a link, with the badge's props. |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -125,7 +165,7 @@ Also accepts the props of `useRender.ComponentProps<"span">`.
 
 ## Notes
 
-- Styling hook: `data-slot="badge"`, plus `data-variant` from the render state.
+- Styling hook: `data-slot="badge"`, plus `data-variant`.
 - The `destructive` variant also tints the focus ring with `ring-destructive/20` (`ring-destructive/40` in dark mode).
 - Badges are a fixed `h-5` with fully rounded corners and do not wrap text.
 

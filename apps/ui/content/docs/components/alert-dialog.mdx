@@ -47,6 +47,7 @@ npm install @base-ui/react
 
 ```tsx
 import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 ```
 
 <OnlyBase base="base">
@@ -123,7 +124,17 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay,
 
 `AlertDialogAction` and `AlertDialogCancel` both close the dialog and render a `Button`; pass `variant` and `size` to style them. Cancel defaults to the `secondary` variant and Action to `default`. Use `variant="destructive"` on the action for irreversible operations.
 
+<OnlyBase base="base radix">
+
 The dialog is uncontrolled by default; use `defaultOpen`, or control it with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The dialog is uncontrolled by default; use `defaultOpen`, or control it with `isOpen` and `onOpenChange`.
+
+</OnlyBase>
 
 ## Examples
 
@@ -246,7 +257,7 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The heading that names the dialog.
 
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Title>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -256,7 +267,7 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Titl
 
 Supporting text that describes the dialog.
 
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Description>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -266,7 +277,22 @@ Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Desc
 
 A button that confirms and closes the dialog.
 
-Also accepts the props of the primitive part it wraps, plus `Button`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | The `Button` variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The `Button` size. |
+
+<OnlyBase base="base radix">
+
+Also accepts the props of the primitive part it wraps.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of [Button](/docs/components/button).
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -276,7 +302,22 @@ Also accepts the props of the primitive part it wraps, plus `Button`.
 
 A button that dismisses the dialog without acting.
 
-Also accepts the props of the primitive part it wraps, plus `Button`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The `Button` size. |
+
+<OnlyBase base="base radix">
+
+Also accepts the props of the primitive part it wraps.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of [Button](/docs/components/button).
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -291,7 +332,24 @@ Also accepts the props of the primitive part it wraps, plus `Button`.
 
 - Styling hooks: `data-slot` values from `alert-dialog` through `alert-dialog-cancel`; the content also sets `data-size`.
 - Surface tokens: `bg-popover` for the dialog, `bg-black/50` for the overlay and `bg-muted` for media.
+
+<OnlyBase base="base">
+
 - Enter and exit use fade and zoom animations keyed to `data-open` and `data-closed`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- Enter and exit use fade and zoom animations keyed to `data-state="open"` and `data-state="closed"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- Enter and exit use fade and zoom animations keyed to `data-entering` and `data-exiting`.
+
+</OnlyBase>
 
 </Only>
 

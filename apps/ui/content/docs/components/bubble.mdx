@@ -149,7 +149,31 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The rounded message body, with the tail.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element instead of a `div`. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element with the bubble's props. |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
 
 </ApiPart>
 

@@ -46,6 +46,7 @@ npm install @phosphor-icons/react embla-carousel-react
 ## Usage
 
 ```tsx
+import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselControls, CarouselDots, CarouselPlayButton } from "@/components/ui/carousel"
 ```
 
@@ -175,13 +176,13 @@ The root region that owns the Embla instance, keyboard handling and autoplay sta
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `opts` | `CarouselOptions` | - | Options passed to Embla Carousel. |
-| `plugins` | `CarouselPlugin` | - | Embla Carousel plugins. |
+| `opts` | `EmblaOptionsType` | - | Options passed to Embla Carousel. |
+| `plugins` | `EmblaPluginType[]` | - | Embla Carousel plugins. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | The scroll direction. |
 | `setApi` | `(api: CarouselApi) => void` | - | Receives the Embla Carousel API once it is ready. |
 | `autoplay` | `boolean \| number` | `false` | Advances the slides automatically; a number sets the delay in milliseconds. |
 
-Also accepts the props of `React.ComponentProps<"div">`, `CarouselProps`.
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </ApiPart>
 
@@ -211,7 +212,12 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 A button that scrolls to the previous slide, disabled at the start.
 
-Also accepts the props of `React.ComponentProps<typeof Button>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon"` | The `Button` size. |
+
+Also accepts the props of [Button](/docs/components/button).
 
 </ApiPart>
 
@@ -221,7 +227,12 @@ Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 A button that scrolls to the next slide, disabled at the end.
 
-Also accepts the props of `React.ComponentProps<typeof Button>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon"` | The `Button` size. |
+
+Also accepts the props of [Button](/docs/components/button).
 
 </ApiPart>
 
@@ -255,7 +266,12 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 Toggles autoplay between playing and paused.
 
-Also accepts the props of `React.ComponentProps<typeof Button>`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` | The `Button` size. |
+
+Also accepts the props of [Button](/docs/components/button).
 
 </ApiPart>
 

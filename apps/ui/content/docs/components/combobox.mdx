@@ -46,7 +46,7 @@ npm install @base-ui/react @phosphor-icons/react
 ## Usage
 
 ```tsx
-import { ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
+import { Combobox, ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput, useComboboxAnchor } from "@/components/ui/combobox"
 ```
 
 ```tsx
@@ -112,6 +112,11 @@ Multiple selection shown as removable chips, with Backspace removing the last ch
 
 - [Combobox](#combobox)
   - [ComboboxInput](#comboboxinput)
+  - [ComboboxTrigger](#comboboxtrigger)
+  - [ComboboxChips](#comboboxchips)
+    - [ComboboxValue](#comboboxvalue)
+      - [ComboboxChip](#comboboxchip)
+      - [ComboboxChipsInput](#comboboxchipsinput)
   - [ComboboxContent](#comboboxcontent)
     - [ComboboxEmpty](#comboboxempty)
     - [ComboboxList](#comboboxlist)
@@ -164,6 +169,7 @@ The text field, rendered inside an `InputGroup` with optional open and clear but
 | --- | --- | --- | --- |
 | `showTrigger` | `boolean` | `true` | Shows the button at the end of the field that opens the list. |
 | `showClear` | `boolean` | `false` | Shows a clear button at the end of the field. When shown, it hides the open button. |
+| `disabled` | `boolean` | `false` | Disables the field and its buttons. |
 
 Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
@@ -175,7 +181,15 @@ Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 The popup, rendered in a portal and positioned below the input.
 
-Also accepts the props of `ComboboxPrimitive.Popup.Props`, `ComboboxPrimitive.Positioner.Props`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Which side of the anchor the popup opens on. |
+| `sideOffset` | `number` | `6` | Distance from the anchor in pixels. |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment against the anchor. |
+| `alignOffset` | `number` | `0` | Offset along the alignment axis in pixels. |
+| `anchor` | `Element \| React.RefObject<Element \| null> \| null` | — | The element to position against, such as the ref from `useComboboxAnchor`. Defaults to the input. |
+
+Also accepts the props of `ComboboxPrimitive.Popup.Props`.
 
 </ApiPart>
 
@@ -255,7 +269,7 @@ Also accepts the props of `ComboboxPrimitive.Separator.Props`.
 
 The field that holds selected values as chips in multiple selection.
 
-Also accepts the props of `React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>`, `ComboboxPrimitive.Chips.Props`.
+Also accepts the props of `ComboboxPrimitive.Chips.Props`, including `ref`.
 
 </ApiPart>
 
@@ -283,6 +297,14 @@ The text field placed after the chips in multiple selection.
 Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 </ApiPart>
+
+### useComboboxAnchor
+
+```tsx
+const anchor = useComboboxAnchor()
+```
+
+Returns a ref for `ComboboxChips`. Pass the same ref as `anchor` to `ComboboxContent` so the popup aligns to the chips field.
 
 ## Accessibility
 
