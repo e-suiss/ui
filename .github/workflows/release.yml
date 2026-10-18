@@ -12,8 +12,7 @@ on:
         type: string
 
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 
 concurrency:
   group: release-${{ inputs.tag || github.ref_name }}
@@ -23,9 +22,12 @@ env:
   TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Check the tag
         run: |
@@ -50,18 +52,17 @@ jobs:
           check "$KOTLIN_MIRROR_KEY" KOTLIN_MIRROR_KEY uim-kotlin
           exit "$missing"
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: refs/tags/${{ env.TAG }}
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-          cache: pnpm
 
       - name: Check versions
         run: |
@@ -89,7 +90,7 @@ jobs:
             exit 0
           fi
           set +e
-          OUTPUT=$(cd packages/cli && npm publish 2>&1)
+          OUTPUT=$(cd packages/cli && npm publish --provenance 2>&1)
           STATUS=$?
           set -e
           echo "$OUTPUT"
@@ -134,6 +135,18 @@ jobs:
           }
           publish packages/mobile/swiftui "$SWIFT_MIRROR_KEY" uim-swift
           publish packages/mobile/kotlin "$KOTLIN_MIRROR_KEY" uim-kotlin
+
+  github-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/tags/${{ env.TAG }}
+          fetch-depth: 0
 
       - name: Create GitHub release
         env:
