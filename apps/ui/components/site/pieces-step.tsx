@@ -30,8 +30,10 @@ export function PiecesStep({
 }: React.ComponentProps<"li"> & { names: string[]; loose: boolean }) {
   const { base } = useCodeOptions()
   const { pieces } = useBaseItems()
+  const section = usePlatformSection()
   const own = pieces?.bases[base]
   const matches =
+    section === "web" &&
     pieces !== undefined &&
     names.length === pieces.from.length &&
     names.every((name) => pieces.from.includes(name))
