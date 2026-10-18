@@ -368,6 +368,15 @@ describe("menu accent", () => {
     expect(applyMenuColor(source, "default", "subtle")).toBe('"z-50"')
   })
 
+  it("keeps the translucent fill ahead of a later popover background", () => {
+    const output = applyMenuColor(
+      '"cn-menu-translucent bg-popover"',
+      "default-translucent"
+    )
+    expect(output).toContain(" bg-popover/70! ")
+    expect(output.endsWith(' bg-popover"')).toBe(true)
+  })
+
   it("only adds the aria translucent highlight to translucent menus", () => {
     const source = '"cn-menu-translucent-aria relative"'
     expect(applyMenuColor(source, "default")).toBe('"relative"')
