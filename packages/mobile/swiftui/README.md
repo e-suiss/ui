@@ -32,7 +32,7 @@ targets: [
 ]
 ```
 
-Requires iOS 17 or later.
+Needs Swift 6 tools and a deployment target of version 17 or later, as declared in `platforms` in `Package.swift`.
 
 ## Usage
 

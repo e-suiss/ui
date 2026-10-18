@@ -16,9 +16,9 @@
 - **Three styling options**: Uniwind, NativeWind or StyleSheet, detected from your project or chosen with `--styling`.
 - **Expo and bare React Native**: packages are installed with `expo install` in Expo projects, and Babel is configured for you in bare projects.
 - **Native feel**: animations with Reanimated, gestures with React Native Gesture Handler.
-- **SwiftUI and Jetpack Compose**: the same components for native iOS and Android apps.
+- **SwiftUI and Jetpack Compose**: the same components as native SwiftUI views and Compose composables.
 - **Themeable**: one token source for every platform, with light and dark colors that match suiss/ui.
-- **Phosphor icons** throughout.
+- **Five icon libraries**: Phosphor by default, or Lucide, Tabler, Hugeicons and Remix with `--icon-library`.
 
 ## Quick start
 
@@ -74,7 +74,7 @@ Use the one your project already has; the CLI detects it. For a new project, Uni
 Yes, with Expo and with bare React Native projects that use TypeScript.
 
 **Does it support dark mode?**
-Yes. Colors follow the system appearance on iOS and Android.
+Yes. Colors follow the system light or dark appearance on every platform.
 
 **Is there a web version?**
 Yes. [suiss/ui](https://github.com/e-suiss/ui) has the same components for React, Next.js and Vite.
@@ -90,7 +90,7 @@ Yes. [suiss.app/ui/llms.txt](https://suiss.app/ui/llms.txt) lists every page, [s
 Run `pnpm install` once at the repository root, then run these in `packages/mobile`:
 
 ```bash
-pnpm ios             # build the Storybook app and open it in the iOS simulator
+pnpm ios             # build the Storybook app and open it in the simulator
 pnpm android         # same for Android
 pnpm typecheck
 pnpm nativewind      # regenerate the NativeWind components and stylesheet

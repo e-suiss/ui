@@ -90,7 +90,7 @@ Every item is published for three primitive bases under the same name. A `radix-
 2. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
 3. Installs and wires up Tailwind CSS if needed (`postcss.config.mjs` for Next.js, `vite.config.ts` for Vite).
 4. Writes the theme stylesheet to the `tailwind.css` file named in `components.json`, otherwise to `app/globals.css` (Next.js) or `src/index.css` (Vite). It asks before replacing a stylesheet that already has content.
-5. Sets up the font: text uses the system font on macOS and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
+5. Sets up the font: text uses the system font where the browser exposes it, and Inter everywhere else. Inter is loaded with `next/font/google` in the root layout (Next.js), or with `@fontsource-variable/inter` imported from the stylesheet (Vite).
 6. Installs `tw-animate-css` and `shadcn`, whose stylesheets provide the animations, variants, and utilities the components rely on.
 7. Adds the `button` component. With `--overwrite` it replaces a local `button` that differs from the registry.
 
@@ -146,7 +146,7 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. `init` saves it there |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
-| `--style <name>` | The visual style, one of `suiss` (default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is read from and saved to the `style` in `components.json`, and `add` follows it; for React Native, SwiftUI and Compose `init` sets radius, control sizes, paddings, weights and shadows through the theme |
+| `--style <name>` | `init` and `apply`: the visual style, one of `suiss` (default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is read from and saved to the `style` in `components.json`, and `add` follows it; for React Native, SwiftUI and Compose `init` sets radius, control sizes, paddings, weights and shadows through the theme |
 | `--preset <code>` | `init` and `apply`: a preset code from suiss.app/ui/create. React applies its style, colors, radius, icon library and menu color; React Native, SwiftUI and Compose apply its style, colors, radius, menu color, menu accent and fonts to their theme files. A gray theme must match the base color |
 | `--theme suiss` | `init` and `apply`: keep the suiss/ui colors when applying a preset |
 | `--primary <color>` | `init` and `apply`: a custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. It replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
@@ -223,7 +223,7 @@ States use opacity rather than extra variables (`hover:bg-primary/80`, `bg-destr
 
 - **Change a color:** edit its value under `:root` (light) and `.dark` (dark).
 - **Add a color:** define it under `:root` and `.dark`, then map it in `@theme inline`, for example `--color-brand: var(--brand);`. Classes such as `bg-brand` and `text-brand` become available.
-- **Change the font:** set `--font-sans` in `@theme inline`. It uses the system font on macOS and Inter elsewhere.
+- **Change the font:** set `--font-sans` in `@theme inline`. It uses the system font where the browser exposes it, and Inter elsewhere.
 - **Corner radius:** `--radius` scales every rounded component.
 
 ## Dark mode
