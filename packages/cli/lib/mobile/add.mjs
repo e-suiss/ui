@@ -26,9 +26,13 @@ import {
   sourceOf,
 } from "./registry.mjs"
 
-export function fetchFiles(root, entries) {
-  return mapLimit(entries, async ({ file, source }) => ({
-    target: targetFor(root, file),
+export function fetchFiles(root, entries, kind = "rn") {
+  const targets = entries.map(({ file, source }) => ({
+    target: targetFor(root, file, kind),
+    source,
+  }))
+  return mapLimit(targets, async ({ target, source }) => ({
+    target,
     content: await fetchText(source),
   }))
 }

@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { CliError } from "../output.mjs"
+import { targetFor } from "../shared/files.mjs"
 import { decodePreset } from "../shared/style.mjs"
 
 const DEFAULT_ICON_LIBRARY = "phosphor"
@@ -22,7 +23,7 @@ const PHOSPHOR_KOTLIN = /\bPhosphorIcons\./g
 const SWIFT_LIBRARY = /static let library = "([a-z]+)"/
 const KOTLIN_LIBRARY = /const val LIBRARY = "([a-z]+)"/
 
-const RN_ICONS_FILE = path.join("components", "ui", "icons.tsx")
+const RN_ICONS_FILE = "components/ui/icons.tsx"
 const RN_ICONS_IMPORT = '"@/components/ui/icons"'
 const SWIFT_ICONS_FILE = path.join("Icons", "EsuissIcons.swift")
 const KOTLIN_ICONS_FILE = path.join("icons", "EsuissIcons.kt")
@@ -113,10 +114,14 @@ function iconEntries(platform, registry, library) {
   const icons = registryIcons(registry, library)
   if (platform === "rn") return [{ file: RN_ICONS_FILE, source: icons.rn }]
   const prefix = `icons/${platform}/${library}/`
-  return icons[platform].map((source) => ({
-    file: source.slice(prefix.length),
-    source,
-  }))
+  return icons[platform].map((source) => {
+    if (typeof source !== "string" || !source.startsWith(prefix)) {
+      throw new CliError(
+        `The registry lists ${source} as a ${library} icon file outside ${prefix}.`
+      )
+    }
+    return { file: source.slice(prefix.length), source }
+  })
 }
 
 export async function withIcons(
@@ -130,9 +135,12 @@ export async function withIcons(
     content: transformIcons(platform, file.content, library),
   }))
   if (!needsIcons) return transformed
+  const entries = iconEntries(platform, registry, library).map(
+    ({ file, source }) => ({ target: targetFor(root, file, platform), source })
+  )
   const extra = await Promise.all(
-    iconEntries(platform, registry, library).map(async ({ file, source }) => ({
-      target: path.resolve(root, file),
+    entries.map(async ({ target, source }) => ({
+      target,
       content: await fetchText(source),
     }))
   )

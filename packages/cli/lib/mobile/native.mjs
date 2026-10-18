@@ -9,7 +9,12 @@ import path from "node:path"
 import { CliError, list, note, step } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
 import { fetchThemes } from "../registry.mjs"
-import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
+import {
+  printDiff,
+  reportFiles,
+  targetFor,
+  writeFiles,
+} from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { fetchFiles, scopeOf } from "./add.mjs"
 import {
@@ -224,7 +229,7 @@ async function setup(options) {
         library,
         fetchText,
       },
-      await fetchFiles(project.root, entries(files))
+      await fetchFiles(project.root, entries(files), options.platform)
     )
   return { platform, project, registry, spec, download, library }
 }
@@ -278,7 +283,7 @@ function writeFonts(project, platform, faces) {
   mkdirSync(directory, { recursive: true })
   for (const face of faces) {
     const name = platform === "swift" ? face.file : assetName(face)
-    writeFileSync(path.join(directory, name), face.bytes)
+    writeFileSync(targetFor(directory, name, "font"), face.bytes)
   }
   step(
     `Added ${faces.length} font file${faces.length === 1 ? "" : "s"} to ${path.relative(project.cwd, directory)}`
@@ -349,17 +354,24 @@ export async function applyNative(options) {
       : await themeOptionsFor(options, fetchThemes, context.registry.colors)
   const fonts = only === "theme" ? null : presetFonts(options)
   const faces = fonts ? await downloadFaces(fonts) : []
-  const downloaded = (await download(tokens)).map((file) => {
-    const current = readFileSync(file.target, "utf8")
-    const fresh = themed(file.content, options.platform, theme)
-    let base = fresh
-    if (only === "font") base = current
-    if (only === "theme") base = keepFonts(fresh, current, options.platform)
-    return {
-      ...file,
-      content: fonts ? applyFonts(base, options.platform, fonts, faces) : base,
-    }
-  })
+  const targets = new Set(
+    tokens.map((file) => targetFor(project.root, file, options.platform))
+  )
+  const downloaded = (await download(tokens))
+    .filter((file) => targets.has(file.target))
+    .map((file) => {
+      const current = readFileSync(file.target, "utf8")
+      const fresh = themed(file.content, options.platform, theme)
+      let base = fresh
+      if (only === "font") base = current
+      if (only === "theme") base = keepFonts(fresh, current, options.platform)
+      return {
+        ...file,
+        content: fonts
+          ? applyFonts(base, options.platform, fonts, faces)
+          : base,
+      }
+    })
   reportFiles(writeFiles(project.cwd, downloaded, true))
   if (faces.length) writeFonts(project, options.platform, faces)
   step("Applied.")
