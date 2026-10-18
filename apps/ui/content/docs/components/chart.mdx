@@ -242,16 +242,22 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 1. Install the dependencies:
 
 ```bash title="Terminal"
-npx expo install cn phosphor-react-native react-native-svg
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/chart.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/chart.tsx`:
+3. Copy the primitives it uses into `components/primitives`:
+
+<ComponentSource path="uniwind/components/primitives/chart.tsx" />
+
+<ComponentSource path="uniwind/components/primitives/haptics.tsx" />
+
+4. Copy the source into `components/ui/chart.tsx`:
 
 <ComponentSource path="uniwind/components/ui/chart.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -260,16 +266,22 @@ npx expo install cn phosphor-react-native react-native-svg
 1. Install the dependencies:
 
 ```bash title="Terminal"
-npx expo install cn phosphor-react-native react-native-svg
+npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/chart.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/chart.tsx`:
+3. Copy the primitives it uses into `components/primitives`:
+
+<ComponentSource path="nativewind/components/primitives/chart.tsx" />
+
+<ComponentSource path="nativewind/components/primitives/haptics.tsx" />
+
+4. Copy the source into `components/ui/chart.tsx`:
 
 <ComponentSource path="nativewind/components/ui/chart.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -278,16 +290,22 @@ npx expo install cn phosphor-react-native react-native-svg
 1. Install the dependencies:
 
 ```bash title="Terminal"
-npx expo install phosphor-react-native react-native-svg
+npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
-2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), and the primitives `components/primitives/chart.tsx`.
+2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/chart.tsx`:
+3. Copy the primitives it uses into `components/primitives`:
+
+<ComponentSource path="stylesheet/components/primitives/chart.tsx" />
+
+<ComponentSource path="stylesheet/components/primitives/haptics.tsx" />
+
+4. Copy the source into `components/ui/chart.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/chart.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 

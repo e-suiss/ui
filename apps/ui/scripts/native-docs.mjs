@@ -61,6 +61,28 @@ const EXPORT_DECLARATION =
   /export\s+(?:default\s+)?(?:async\s+)?(?:function|const|let|class)\s+(\w+)/g
 const NATIVE_EXAMPLE = /<NativeExample id="([^"]+)"([^>]*)>/g
 const SWIFT_PACKAGE_IMPORT = (product) => new RegExp(`^import ${product}$`, "m")
+const STYLINGS = {
+  uniwind: "Uniwind",
+  nativewind: "NativeWind",
+  stylesheet: "StyleSheet",
+}
+const RN_TABS = `<Tabs items={${JSON.stringify(Object.values(STYLINGS))}}>`
+const ITEM_PREFIX = "@esuiss/"
+const PRIMITIVE_PREFIX = "primitives-"
+const SETUP_ITEM = /^theme-/
+const SOURCE_DIRECTORY = /^\w+\/(components\/(\w+)\/[\w-]+\.tsx?)$/
+const PAGE_SECTIONS = {
+  ui: "components",
+  patterns: "patterns",
+  interactions: "interactions",
+  blocks: "blocks",
+  charts: "charts",
+}
+const STYLING_DIRECTORY = new RegExp(`^(?:${Object.keys(STYLINGS).join("|")})/`)
+const ALIAS_PREFIX = /^@/
+const FRONTMATTER_TITLE = /^title: (.+)$/m
+const RN_SOURCE =
+  /<ComponentSource path="(\w+\/components\/\w+\/[\w-]+\.tsx?)" \/>/g
 const LINE_WHITESPACE = /\s+/
 
 const scopeKey = (scope) => ALL.filter((item) => scope.includes(item)).join(" ")
@@ -475,6 +497,129 @@ function kotlinManual(relative, texts, spec) {
   return steps.map((step, index) => `${index + 1}. ${step}`).join("\n\n")
 }
 
+function rnItem(registry, path) {
+  return registry.items.find((item) =>
+    item.files?.some((file) => file.path === path)
+  )
+}
+
+function rnTarget(file) {
+  return (file.target || file.path)
+    .replace(ALIAS_PREFIX, "")
+    .replace(STYLING_DIRECTORY, "")
+}
+
+async function rnPage(item, pages) {
+  const match = item.files?.[0]?.path.match(SOURCE_DIRECTORY)
+  const section = match && PAGE_SECTIONS[match[2]]
+  if (!section) return undefined
+  const name = path.basename(match[1]).replace(SOURCE_EXTENSION, "")
+  const file = path.join(DOCS, section, `${name}.mdx`)
+  if (!pages.has(file)) {
+    const text = await readFile(file, "utf8").catch(() => undefined)
+    pages.set(file, text?.match(FRONTMATTER_TITLE)?.[1].trim())
+  }
+  const title = pages.get(file)
+  return title ? { title, href: `/docs/${section}/${name}` } : undefined
+}
+
+async function rnParts(registry, root, pages) {
+  const byName = new Map(registry.items.map((item) => [item.name, item]))
+  const pieces = []
+  const local = []
+  const seen = new Set([root.name])
+  const queue = [root]
+  while (queue.length) {
+    const current = queue.shift()
+    for (const dependency of current.registryDependencies ?? []) {
+      const name = dependency.replace(ITEM_PREFIX, "")
+      if (seen.has(name) || SETUP_ITEM.test(name)) continue
+      seen.add(name)
+      const item = byName.get(name)
+      if (!item) continue
+      const page = name.startsWith(PRIMITIVE_PREFIX)
+        ? undefined
+        : await rnPage(item, pages)
+      if (page) pieces.push(page)
+      else {
+        local.push(item)
+        queue.push(item)
+      }
+    }
+  }
+  const packages = [
+    ...new Set([root, ...local].flatMap((item) => item.dependencies ?? [])),
+  ].sort()
+  pieces.sort((a, b) => a.title.localeCompare(b.title))
+  return { pieces, local, packages }
+}
+
+const lowerTitle = (title) => title.toLowerCase()
+
+async function rnTab(styling, root, registries, pages) {
+  const registry = registries[styling]
+  const item = registry.items.find((entry) => entry.name === root.name)
+  if (!item) return undefined
+  const { pieces, local, packages } = await rnParts(registry, item, pages)
+  const source = (file) =>
+    `<ComponentSource path="${styling}/${file.path.replace(STYLING_DIRECTORY, "")}" />`
+  const steps = []
+  if (packages.length)
+    steps.push(
+      `Install the dependencies:\n\n\`\`\`bash title="Terminal"\nnpx expo install ${packages.join(" ")}\n\`\`\``
+    )
+  if (pieces.length)
+    steps.push(
+      `Add the pieces it builds on: ${pieces.map((piece) => `[${piece.title}](${piece.href})`).join(", ")}.`
+    )
+  const primitives = local.filter((entry) =>
+    entry.name.startsWith(PRIMITIVE_PREFIX)
+  )
+  for (const entry of local.filter((other) => !primitives.includes(other)))
+    for (const file of entry.files ?? [])
+      steps.push(
+        `Copy the ${lowerTitle(entry.title)} into \`${rnTarget(file)}\`:\n\n${source(file)}`
+      )
+  if (primitives.length) {
+    const files = primitives
+      .flatMap((entry) => entry.files ?? [])
+      .sort((a, b) => a.path.localeCompare(b.path))
+    steps.push(
+      `Copy the primitives it uses into \`components/primitives\`:\n\n${files.map(source).join("\n\n")}`
+    )
+  }
+  for (const file of item.files ?? [])
+    steps.push(`Copy the source into \`${rnTarget(file)}\`:\n\n${source(file)}`)
+  steps.push("Update the import paths to match your project.")
+  return steps.map((step, index) => `${index + 1}. ${step}`).join("\n\n")
+}
+
+async function rnManual(native, registries, pages) {
+  const start = native.indexOf(`\n${MANUAL_HEADING}\n`)
+  if (start < 0) return native
+  const open = '<Only platform="rn">'
+  const from = native.indexOf(open, start)
+  const next = native.indexOf("\n## ", start)
+  if (from < 0 || (next >= 0 && from > next)) return native
+  const end = closingOnly(native, from)
+  const block = native.slice(from, end)
+  if (!block.includes(RN_TABS)) return native
+  const main = [...block.matchAll(RN_SOURCE)]
+    .map((match) => match[1])
+    .find(
+      (file) => file.startsWith("uniwind/") && !file.includes("/animated-view.")
+    )
+  const root = main && rnItem(registries.uniwind, main)
+  if (!root) return native
+  const tabs = []
+  for (const styling of Object.keys(STYLINGS)) {
+    const body = await rnTab(styling, root, registries, pages)
+    if (!body) return native
+    tabs.push(`<div>\n\n${body}\n\n</div>`)
+  }
+  return `${native.slice(0, from)}${open}\n\n${RN_TABS}\n\n${tabs.join("\n\n")}\n\n</Tabs>\n\n${native.slice(end)}`
+}
+
 async function manual(native, items, registry) {
   const start = native.indexOf(`\n${MANUAL_HEADING}\n`)
   if (start < 0 || !items.length) return native
@@ -532,6 +677,7 @@ async function generate(file, context, report) {
   let native = source.slice(nativeStart + NATIVE_SECTION.length, nativeEnd)
   const items = itemsOf(native, slug, context.registry)
   native = await manual(native, items, context.registry)
+  native = await rnManual(native, context.rnRegistries, context.pages)
 
   const vocabularies = {}
   for (const platform of NATIVE)
@@ -616,7 +762,17 @@ const { values } = parseArgs({ options: { check: { type: "boolean" } } })
 const index = JSON.parse(
   await readFile(path.join(MOBILE, "registry.json"), "utf8")
 )
+const rnRegistries = {}
+for (const styling of Object.keys(STYLINGS))
+  rnRegistries[styling] = JSON.parse(
+    await readFile(
+      path.join(MOBILE, "registry", styling, "registry.json"),
+      "utf8"
+    )
+  )
 const context = {
+  rnRegistries,
+  pages: new Map(),
   registry: {
     platforms: index.platforms,
     byName: new Map(index.items.map((item) => [item.name, item])),

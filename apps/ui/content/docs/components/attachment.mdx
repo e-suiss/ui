@@ -403,13 +403,25 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 npx expo install cn
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text), and the primitives `components/primitives/progress.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/attachment.tsx`:
+3. Copy the primitives it uses into `components/primitives`:
+
+<ComponentSource path="uniwind/components/primitives/hooks.ts" />
+
+<ComponentSource path="uniwind/components/primitives/merge-props.ts" />
+
+<ComponentSource path="uniwind/components/primitives/progress.tsx" />
+
+<ComponentSource path="uniwind/components/primitives/types.ts" />
+
+<ComponentSource path="uniwind/components/primitives/use-render.tsx" />
+
+4. Copy the source into `components/ui/attachment.tsx`:
 
 <ComponentSource path="uniwind/components/ui/attachment.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
@@ -421,25 +433,49 @@ npx expo install cn
 npx expo install cn
 ```
 
-2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text), and the primitives `components/primitives/progress.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/attachment.tsx`:
+3. Copy the primitives it uses into `components/primitives`:
+
+<ComponentSource path="nativewind/components/primitives/hooks.ts" />
+
+<ComponentSource path="nativewind/components/primitives/merge-props.ts" />
+
+<ComponentSource path="nativewind/components/primitives/progress.tsx" />
+
+<ComponentSource path="nativewind/components/primitives/types.ts" />
+
+<ComponentSource path="nativewind/components/primitives/use-render.tsx" />
+
+4. Copy the source into `components/ui/attachment.tsx`:
 
 <ComponentSource path="nativewind/components/ui/attachment.tsx" />
 
-4. Update the import paths to match your project.
+5. Update the import paths to match your project.
 
 </div>
 
 <div>
 
-1. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text), and the primitives `components/primitives/progress.tsx`, `components/primitives/types.tsx`, `components/primitives/use-render.tsx`.
+1. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text).
 
-2. Copy the source into `components/ui/attachment.tsx`:
+2. Copy the primitives it uses into `components/primitives`:
+
+<ComponentSource path="stylesheet/components/primitives/hooks.ts" />
+
+<ComponentSource path="stylesheet/components/primitives/merge-props.ts" />
+
+<ComponentSource path="stylesheet/components/primitives/progress.tsx" />
+
+<ComponentSource path="stylesheet/components/primitives/types.ts" />
+
+<ComponentSource path="stylesheet/components/primitives/use-render.tsx" />
+
+3. Copy the source into `components/ui/attachment.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/attachment.tsx" />
 
-3. Update the import paths to match your project.
+4. Update the import paths to match your project.
 
 </div>
 
