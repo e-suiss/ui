@@ -9,6 +9,7 @@ import { presetFile } from "../lib/mobile/registry.mjs"
 import {
   DEFAULT_STYLE,
   decodePreset,
+  presetProblem,
   resolveStyle,
   STYLES,
 } from "../lib/shared/style.mjs"
@@ -76,5 +77,29 @@ describe("presetFile", () => {
     expect(() => presetFile({}, "swift", "luma")).toThrow(
       "This version of the registry has no luma style."
     )
+  })
+})
+
+describe("presetProblem", () => {
+  it("accepts the base color itself or a colored theme", () => {
+    expect(presetProblem({ baseColor: "stone", theme: "stone" })).toBeNull()
+    expect(presetProblem({ baseColor: "stone", theme: "blue" })).toBeNull()
+  })
+
+  it("rejects a gray theme that differs from the base color", () => {
+    expect(presetProblem({ baseColor: "stone", theme: "zinc" })).toContain(
+      "The zinc theme needs the zinc base color"
+    )
+    expect(
+      presetProblem({ baseColor: "stone", theme: "blue", chartColor: "zinc" })
+    ).toContain("chart color")
+  })
+})
+
+describe("resolveStyle with suiss", () => {
+  it("keeps the suiss style with a preset", () => {
+    expect(
+      resolveStyle({ preset: encodePreset({ style: "vega" }), style: "suiss" })
+    ).toBe("suiss")
   })
 })

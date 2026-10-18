@@ -161,10 +161,6 @@ export function cliCommand(state: CreateState) {
   if (state.platform === "web" && state.base !== "base") {
     flags.push(`--base ${state.base}`)
   }
-  if (state.platform !== "web") {
-    if (state.style !== OWN) flags.push(`--style ${state.style}`)
-    return `npx @esuiss/ui@latest init ${flags.join(" ")}`
-  }
   if (!isDefault(state)) {
     flags.push(`--preset ${presetCode(state)}`)
     if (state.style === OWN) flags.push(`--style ${OWN}`)

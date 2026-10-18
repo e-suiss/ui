@@ -17,7 +17,7 @@ import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
 import { name, version } from "./lib/shared/package.mjs"
 import { readJson } from "./lib/shared/project.mjs"
-import { resolveStyle } from "./lib/shared/style.mjs"
+import { presetProblem, resolveStyle } from "./lib/shared/style.mjs"
 import { STYLE_NAMES } from "./lib/styles.mjs"
 
 const OPTIONS = {
@@ -183,9 +183,12 @@ function parseArgs(args) {
       }
       case "--preset": {
         const code = queue.next().value
-        if (!decodePreset(code)) {
+        const decoded = decodePreset(code)
+        if (!decoded) {
           throw new CliError(`${arg} needs a preset code from the create page.`)
         }
+        const problem = presetProblem(decoded)
+        if (problem) throw new CliError(problem)
         options.preset = code
         break
       }
