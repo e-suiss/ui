@@ -17,7 +17,7 @@ const fruits = [
 
 export default function SelectOpen() {
   return (
-    <Select aria-label="Fruit" defaultValue="banana">
+    <Select aria-label="Fruit" defaultOpen defaultValue="banana">
       <SelectTrigger className="w-48">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>

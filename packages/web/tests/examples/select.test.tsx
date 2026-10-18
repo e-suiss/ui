@@ -1,18 +1,11 @@
 import { screen, waitFor, within } from "@testing-library/dom"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test } from "vitest"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import SelectDemo from "@/examples/select-demo"
 import SelectDisabled from "@/examples/select-disabled"
 import SelectGrouped from "@/examples/select-grouped"
 import SelectInvalid from "@/examples/select-invalid"
+import SelectOpen from "@/examples/select-open"
 import SelectSmall from "@/examples/select-small"
 import SelectWithIcons from "@/examples/select-with-icons"
 import SelectWithValue from "@/examples/select-with-value"
@@ -33,41 +26,6 @@ function triggerName(label: string) {
     radix: label,
     aria: new RegExp(`${label}$`),
   })
-}
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-function SelectOpenOpen() {
-  return (
-    <Select
-      {...byBase<object>({
-        base: { items: fruits },
-        radix: {},
-        aria: { "aria-label": "Fruit" },
-      })}
-      defaultOpen
-      defaultValue="banana"
-    >
-      <SelectTrigger aria-label="Fruit" className="w-48">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {fruits.map((fruit) => (
-            <SelectItem key={fruit.value} value={fruit.value}>
-              {fruit.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
 }
 
 test("Default", async () => {
@@ -100,7 +58,7 @@ test("Default", async () => {
   })
 })
 test("Open", async () => {
-  const { canvas, step } = await renderExample(<SelectOpenOpen />)
+  const { canvas, step } = await renderExample(<SelectOpen />)
 
   await step("opens on mount with the value selected", async () => {
     await expect(
