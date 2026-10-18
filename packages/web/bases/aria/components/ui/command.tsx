@@ -143,7 +143,10 @@ function CommandSeparator({
       data-slot="command-separator"
       className={cn("cn-command-separator", className)}
       {...props}
-    />
+      asChild
+    >
+      <div role="none" />
+    </CommandPrimitive.Separator>
   )
 }
 
