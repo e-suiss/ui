@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { CliError, confirm, note, step } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
+import { fetchThemes } from "../registry.mjs"
 import { ensureAlias, relative } from "../shared/project.mjs"
 import { installItems } from "./add.mjs"
 import { configureNativewindBabel, ensureBabelPlugin } from "./babel.mjs"
@@ -19,6 +20,7 @@ import {
   fetchText,
   presetFile,
 } from "./registry.mjs"
+import { themed, themeOptionsFor } from "./theme.mjs"
 
 const METRO_CONFIGS = ["metro.config.js", "metro.config.cjs"]
 const ROOT_COMPONENTS = [
@@ -233,14 +235,18 @@ function writeNativewindTypes(project) {
   step(`Created ${relative(project, file)}`)
 }
 
-async function writeTailwindConfig(project, registry, options) {
+async function writeTailwindConfig(project, registry, options, theme) {
   const existing = TAILWIND_CONFIGS.map((name) =>
     path.join(project.cwd, name)
   ).find(existsSync)
   const file = existing ?? path.join(project.cwd, "tailwind.config.js")
-  const config = await fetchText(
-    presetFile(registry, "nativewind", options.style) ??
-      registry.styles.nativewind.config
+  const config = themed(
+    await fetchText(
+      presetFile(registry, "nativewind", options.style) ??
+        registry.styles.nativewind.config
+    ),
+    "nativewind-config",
+    theme
   )
   if (existing && readFileSync(existing, "utf8") === config) return
   if (existing && !options.yes) {
@@ -268,11 +274,15 @@ function pickStyling(project, options) {
   return choose("How should components be styled?", STYLING_CHOICES)
 }
 
-async function writeTheme(project, registry, root, style) {
+async function writeTheme(project, registry, root, style, options) {
   const file = path.join(root, "components", "ui", "theme.ts")
-  const theme = await fetchText(
-    presetFile(registry, "stylesheet", style) ??
-      registry.styles.stylesheet.theme
+  const theme = themed(
+    await fetchText(
+      presetFile(registry, "stylesheet", style) ??
+        registry.styles.stylesheet.theme
+    ),
+    "stylesheet",
+    options
   )
   if (existsSync(file)) {
     if (readFileSync(file, "utf8") !== theme) {
@@ -318,8 +328,13 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
+  const theme = await themeOptionsFor(options, fetchThemes)
   const css = usesCss
-    ? await fetchStylesheet(registry, project.styling, options.style)
+    ? themed(
+        await fetchStylesheet(registry, project.styling, options.style),
+        project.styling === "uniwind" ? "uniwind" : "nativewind-css",
+        theme
+      )
     : null
 
   if (ensureAlias(project, sourceRoot))
@@ -339,7 +354,7 @@ export async function init(options) {
     if (project.framework === "expo") {
       install(project, ["babel-preset-expo", "expo-system-ui"])
     }
-    await writeTailwindConfig(project, registry, options)
+    await writeTailwindConfig(project, registry, options, theme)
   }
 
   if (css) {
@@ -350,7 +365,8 @@ export async function init(options) {
       project,
       registry,
       findAliasRoot(project.cwd) ?? sourceRoot,
-      options.style
+      options.style,
+      theme
     )
   }
 

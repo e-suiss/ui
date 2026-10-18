@@ -2,10 +2,12 @@ import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { CliError, list, note, step } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
+import { fetchThemes } from "../registry.mjs"
 import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { fetchFiles, scopeOf } from "./add.mjs"
 import { fetchRegistry, presetFile } from "./registry.mjs"
+import { themed, themeOptionsFor } from "./theme.mjs"
 
 const ANDROID_PLUGIN =
   /com\.android\.(?:application|library)|android[.-](?:application|library)|androidApplication|androidLibrary/
@@ -211,13 +213,17 @@ export async function initNative(options) {
     ...new Set([...spec.base, ...(button?.[options.platform] ?? [])]),
   ]
 
-  reportFiles(
-    writeFiles(
-      project.cwd,
-      await fetchFiles(project.root, entries(files)),
-      options.overwrite
-    )
+  const theme = await themeOptionsFor(options, fetchThemes)
+  const downloaded = (await fetchFiles(project.root, entries(files))).map(
+    (file) =>
+      path.basename(file.target).startsWith("Tokens.")
+        ? {
+            ...file,
+            content: themed(file.content, options.platform, theme),
+          }
+        : file
   )
+  reportFiles(writeFiles(project.cwd, downloaded, options.overwrite))
   printRequirements(context)
   if (project.xcode) {
     note(
