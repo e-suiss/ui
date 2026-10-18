@@ -44,9 +44,13 @@ extension Color {
 
 public enum EsuissFont {
   private static let registered: Bool = {
+    let bundles = [Bundle.main] + (Bundle.main.urls(forResourcesWithExtension: "bundle", subdirectory: nil) ?? [])
+      .compactMap(Bundle.init(url:))
     for name in Fonts.files {
-      let url = Bundle.main.url(forResource: name, withExtension: "ttf")
-        ?? Bundle.main.url(forResource: name, withExtension: "otf")
+      let url = bundles.lazy.compactMap { bundle in
+        bundle.url(forResource: name, withExtension: "ttf")
+          ?? bundle.url(forResource: name, withExtension: "otf")
+      }.first
       if let url {
         CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
       }

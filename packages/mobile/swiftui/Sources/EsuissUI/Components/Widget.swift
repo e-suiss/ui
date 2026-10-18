@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 public enum WidgetSize: CaseIterable, Sendable {

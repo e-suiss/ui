@@ -30,7 +30,7 @@ public struct SignupSteps: View {
         content: .emailAddress,
         keyboard: .emailAddress,
         secure: false,
-        valid: { $0.wholeMatch(of: /.+@.+\..+/) != nil }
+        valid: { $0.wholeMatch(of: #/.+@.+\..+/#) != nil }
       ),
       Step(
         title: "Create a password.",

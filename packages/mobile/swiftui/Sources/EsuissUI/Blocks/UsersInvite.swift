@@ -22,7 +22,7 @@ public struct UsersInvite: View {
   static func email(_ value: String) -> String? {
     var email = value.trimmingCharacters(in: .whitespaces)
     if email.hasSuffix(",") { email.removeLast() }
-    return email.wholeMatch(of: /.+@.+\..+/) != nil ? email : nil
+    return email.wholeMatch(of: #/.+@.+\..+/#) != nil ? email : nil
   }
 
   private var onNavigate: ((String) -> Void)?

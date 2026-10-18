@@ -186,7 +186,7 @@ public struct LoginAccount: View {
   private func submit() {
     guard !busy else { return }
     if step == .email {
-      guard email.wholeMatch(of: /.+@.+\..+/) != nil else {
+      guard email.wholeMatch(of: #/.+@.+\..+/#) != nil else {
         return fail("Enter a valid suiss Account.")
       }
       error = nil

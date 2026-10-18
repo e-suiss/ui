@@ -40,7 +40,7 @@ public struct SignupTrial: View {
   }
 
   private var valid: Bool {
-    email.wholeMatch(of: /.+@.+\..+/) != nil && score >= 3 && terms
+    email.wholeMatch(of: #/.+@.+\..+/#) != nil && score >= 3 && terms
   }
 
   public var body: some View {

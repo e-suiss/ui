@@ -1,5 +1,4 @@
 import Observation
-import PhosphorSwift
 import SwiftUI
 
 public struct TopBannerAction: Sendable {

@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 public struct BagReview: View {

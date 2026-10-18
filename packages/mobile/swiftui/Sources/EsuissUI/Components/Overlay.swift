@@ -1,5 +1,5 @@
-import PhosphorSwift
 import Observation
+import PhosphorSwift
 import SwiftUI
 
 public enum PopupAlignment: Sendable, CaseIterable {

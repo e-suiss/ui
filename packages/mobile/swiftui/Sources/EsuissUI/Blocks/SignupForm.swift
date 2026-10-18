@@ -62,7 +62,7 @@ public struct SignupForm: View {
 
   private var valid: Bool {
     !form.first.isEmpty && !form.last.isEmpty && !form.birthday.isEmpty
-      && form.email.wholeMatch(of: /.+@.+\..+/) != nil
+      && form.email.wholeMatch(of: #/.+@.+\..+/#) != nil
       && SignupFormRules.strength(form.password) >= 3
       && form.password == form.confirm
   }
