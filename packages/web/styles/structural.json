@@ -49,5 +49,6 @@
   "cn-textarea": "field-sizing-content min-h-16",
   "cn-toast": "focus-visible:ring-ring/50",
   "cn-toast-viewport": "inset-x-4",
-  "cn-toggle-group": "gap-[--spacing(var(--gap))]"
+  "cn-toggle-group": "gap-[--spacing(var(--gap))] relative",
+  "cn-toggle-group-item": "group-data-[spacing=0]/toggle-group:relative group-data-indicator/toggle-group:aria-pressed:bg-transparent! group-data-indicator/toggle-group:data-[state=on]:bg-transparent!"
 }

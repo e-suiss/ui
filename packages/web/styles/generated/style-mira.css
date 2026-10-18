@@ -1368,11 +1368,15 @@
 
   /* MARK: Toggle Group */
   .cn-toggle-group {
-    @apply gap-[--spacing(var(--gap))] rounded-md data-[size=sm]:rounded-[min(var(--radius-md),8px)];
+    @apply gap-[--spacing(var(--gap))] relative rounded-md data-[size=sm]:rounded-[min(var(--radius-md),8px)];
+  }
+
+  .cn-toggle-group-indicator {
+    @apply pointer-events-none absolute top-(--active-toggle-top) left-(--active-toggle-left) hidden h-(--active-toggle-height) w-(--active-toggle-width) rounded-md bg-muted group-data-indicator/toggle-group:block group-data-indicator-ready/toggle-group:transition-[left,top,width,height] group-data-indicator-ready/toggle-group:duration-300 group-data-indicator-ready/toggle-group:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none;
   }
 
   .cn-toggle-group-item {
-    @apply group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-2 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pe-1.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:ps-1.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-s-md group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-md group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-e-md group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-md;
+    @apply group-data-[spacing=0]/toggle-group:relative group-data-indicator/toggle-group:aria-pressed:bg-transparent! group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-2 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pe-1.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:ps-1.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-s-md group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-md group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-e-md group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-md;
   }
 
   /* MARK: Tooltip */
@@ -2201,10 +2205,6 @@
 
   .cn-toast-icon {
     @apply relative flex size-6 items-center justify-center;
-  }
-
-  .cn-toggle-group-indicator {
-    @apply pointer-events-none absolute top-(--active-toggle-top) left-(--active-toggle-left) hidden h-(--active-toggle-height) w-(--active-toggle-width) rounded-md bg-card shadow-sm group-data-indicator/toggle-group:block group-data-indicator-ready/toggle-group:transition-[left,top,width,height] group-data-indicator-ready/toggle-group:duration-300 group-data-indicator-ready/toggle-group:ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none dark:bg-border;
   }
 
   .cn-trace-title {
