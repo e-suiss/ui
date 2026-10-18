@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
   addNative,
+  applyNative,
   detectNativePlatforms,
   initNative,
 } from "../lib/mobile/native.mjs"
@@ -367,5 +368,98 @@ describe("native init and add", () => {
     await expect(initNative({ cwd, platform: "swift" })).rejects.toThrow(
       "Refusing to write ../../Escape.swift outside the project."
     )
+  })
+})
+
+describe("native apply", () => {
+  const tokens = [
+    "public enum EsuissColor {",
+    "  public static let primary = Color.adaptive(light: .init(0x0071E3), dark: .init(0x2997FF))",
+    "}",
+    "public enum Fonts {",
+    "  public static let sans: String? = nil",
+    "  public static let heading: String? = nil",
+    "  public static let files: [String] = []",
+    "}",
+    "",
+  ].join("\n")
+  const blue =
+    "public static let primary = Color.adaptive(light: .init(0x1447E6), dark: .init(0x193CB8))"
+  const preset = encodePreset({
+    style: "suiss",
+    baseColor: "zinc",
+    theme: "blue",
+    radius: "default",
+    font: "geist",
+    iconLibrary: "lucide",
+    menuColor: "default",
+    menuAccent: "subtle",
+  })
+
+  beforeEach(() => {
+    serveRegistry({
+      ...files,
+      [`${SWIFT_SOURCES}/Theme/Tokens.swift`]: tokens,
+      "registry/themes.json": [
+        {
+          name: "zinc",
+          light: { primary: "oklch(0.21 0.006 285.885)" },
+          dark: { primary: "oklch(0.92 0.004 286.32)" },
+        },
+        {
+          name: "blue",
+          light: { primary: "oklch(0.488 0.243 264.376)" },
+          dark: { primary: "oklch(0.424 0.199 265.638)" },
+        },
+      ],
+      "400Regular/Geist_400Regular.ttf": "font",
+    })
+  })
+
+  it("needs the tokens init writes", async () => {
+    const cwd = xcodeProject()
+    await expect(
+      applyNative({ cwd, platform: "swift", preset })
+    ).rejects.toThrow("Run npx @esuiss/ui init --platform swift first.")
+  })
+
+  it("applies the colors and fonts of a preset", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    await applyNative({ cwd, platform: "swift", preset })
+    const text = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    expect(text).toContain(blue)
+    expect(text).toContain('public static let sans: String? = "Geist"')
+    expect(read(cwd, "EsuissUI/Fonts/Geist_400Regular.ttf")).toBe("font")
+  })
+
+  it("keeps the fonts with --only theme", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", preset })
+    const plain = encodePreset({
+      style: "suiss",
+      baseColor: "zinc",
+      theme: "zinc",
+      radius: "default",
+      font: "inter",
+      iconLibrary: "lucide",
+      menuColor: "default",
+      menuAccent: "subtle",
+    })
+    await applyNative({ cwd, platform: "swift", preset: plain, only: "theme" })
+    const text = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    expect(text).not.toContain(blue)
+    expect(text).toContain('public static let sans: String? = "Geist"')
+  })
+
+  it("keeps the colors with --only font", async () => {
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift" })
+    const before = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    await applyNative({ cwd, platform: "swift", preset, only: "font" })
+    const text = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    expect(text).not.toContain(blue)
+    expect(text).toContain('public static let sans: String? = "Geist"')
+    expect(text.split("Fonts")[0]).toBe(before.split("Fonts")[0])
   })
 })

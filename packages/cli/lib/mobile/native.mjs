@@ -12,7 +12,13 @@ import { fetchThemes } from "../registry.mjs"
 import { printDiff, reportFiles, writeFiles } from "../shared/files.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { fetchFiles, scopeOf } from "./add.mjs"
-import { applyFonts, assetName, downloadFaces, presetFonts } from "./fonts.mjs"
+import {
+  applyFonts,
+  assetName,
+  downloadFaces,
+  keepFonts,
+  presetFonts,
+} from "./fonts.mjs"
 import {
   iconLibraryFor,
   isPhosphorRequirement,
@@ -320,6 +326,43 @@ export async function initNative(options) {
   step(
     `Ready. Add components with npx @esuiss/ui add <name> --platform ${options.platform}`
   )
+}
+
+export async function applyNative(options) {
+  const context = await setup(options)
+  const { project, spec, download } = context
+  const tokens = spec.base.filter((file) =>
+    path.posix.basename(file).startsWith("Tokens.")
+  )
+  const missing = tokens.filter(
+    (file) => !existsSync(path.join(project.root, file))
+  )
+  if (!tokens.length || missing.length) {
+    throw new CliError(
+      `No esuiss tokens found in ${path.relative(project.cwd, project.root) || "."}. Run npx @esuiss/ui init --platform ${options.platform} first.`
+    )
+  }
+  const only = options.only
+  const theme =
+    only === "font"
+      ? null
+      : await themeOptionsFor(options, fetchThemes, context.registry.colors)
+  const fonts = only === "theme" ? null : presetFonts(options)
+  const faces = fonts ? await downloadFaces(fonts) : []
+  const downloaded = (await download(tokens)).map((file) => {
+    const current = readFileSync(file.target, "utf8")
+    const fresh = themed(file.content, options.platform, theme)
+    let base = fresh
+    if (only === "font") base = current
+    if (only === "theme") base = keepFonts(fresh, current, options.platform)
+    return {
+      ...file,
+      content: fonts ? applyFonts(base, options.platform, fonts, faces) : base,
+    }
+  })
+  reportFiles(writeFiles(project.cwd, downloaded, true))
+  if (faces.length) writeFonts(project, options.platform, faces)
+  step("Applied.")
 }
 
 export async function addNative(names, options) {

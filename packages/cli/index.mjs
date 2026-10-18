@@ -3,13 +3,16 @@ import { existsSync } from "node:fs"
 import path from "node:path"
 
 import { add } from "./lib/add.mjs"
+import { APPLY_MODES, apply } from "./lib/apply.mjs"
 import { normalizeColor } from "./lib/color.mjs"
+import { createProject, TEMPLATES, templateProblem } from "./lib/create.mjs"
 import { init } from "./lib/init.mjs"
 import { add as addMobile } from "./lib/mobile/add.mjs"
 import { checkIconLibrary, resolveIconLibrary } from "./lib/mobile/icons.mjs"
-import { init as initMobile } from "./lib/mobile/init.mjs"
+import { apply as applyMobile, init as initMobile } from "./lib/mobile/init.mjs"
 import {
   addNative,
+  applyNative,
   detectNativePlatforms,
   initNative,
 } from "./lib/mobile/native.mjs"
@@ -38,10 +41,10 @@ const OPTIONS = {
                    luma, sera or rhea (defaults to suiss); for React it is
                    read from and saved to the style in components.json`,
   preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
-                   colors, radius, fonts, icons and menus (init only)`,
+                   colors, radius, fonts, icons and menus (init and apply)`,
   theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
   primary: `  --primary <color> a custom primary color as hex, rgb() or oklch(); sets the
-                   primary, its foreground, the focus ring and chart-1 (init only)`,
+                   primary, its foreground, the focus ring and chart-1 (init and apply)`,
   iconLibrary: `  --icon-library <phosphor|lucide|tabler|hugeicons|remixicon>
                    the icons of React Native, SwiftUI and Compose components
                    (read from the preset or the installed icons when omitted,
@@ -53,6 +56,14 @@ const OPTIONS = {
                    React Native styling (detected from the project when omitted)`,
   path: `  --path <dir>     where SwiftUI or Compose files go, relative to --cwd
                    (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)`,
+  template: `  -t, --template <next|vite|expo>
+                   create a Next.js, Vite or Expo app in a new folder first,
+                   then set it up`,
+  name: "  -n, --name <name> the folder of the new app (defaults to <template>-app)",
+  rtl: "  --rtl            note how to run React components right to left",
+  pointer: "  --pointer        show the pointer cursor on buttons (React only)",
+  only: `  --only <theme|font>
+                   apply only the colors and radius, or only the fonts`,
   cwd: "  -c, --cwd <dir>  project directory (defaults to the current directory)",
   help: "  -h, --help       show this help",
   version: "  -v, --version    show the version",
@@ -67,7 +78,11 @@ function optionLines(...keys) {
 }
 
 const INIT_LINES = `
-  npx ${name} init [options]              set up the theme and the button`
+  npx ${name} init [options]              set up the theme and the button
+  npx ${name} init --template next        create a Next.js app and set it up`
+
+const APPLY_LINES = `
+  npx ${name} apply --preset <code>       restyle a project that ran init`
 
 const ADD_LINES = `
   npx ${name} add                         pick what to add from a list
@@ -101,7 +116,28 @@ const INIT_OPTIONS = optionLines(
   "preset",
   "theme",
   "primary",
+  "template",
+  "name",
+  "rtl",
+  "pointer",
   "iconLibrary",
+  "platform",
+  "styling",
+  "path",
+  "cwd",
+  "help",
+  "version"
+)
+
+const APPLY_OPTIONS = optionLines(
+  "preset",
+  "only",
+  "primary",
+  "theme",
+  "style",
+  "pointer",
+  "rtl",
+  "yes",
   "platform",
   "styling",
   "path",
@@ -114,10 +150,11 @@ function page(lines, list) {
   return `${name} ${version}\n\nUsage:${lines}\n\nOptions:\n${list}\n\n${SUPPORTED}`
 }
 
-const usage = page(`${INIT_LINES}${ADD_LINES}`, ADD_OPTIONS)
+const usage = page(`${INIT_LINES}${APPLY_LINES}${ADD_LINES}`, ADD_OPTIONS)
 
 const COMMAND_USAGE = {
   init: page(INIT_LINES, INIT_OPTIONS),
+  apply: page(APPLY_LINES, APPLY_OPTIONS),
   add: page(ADD_LINES, ADD_OPTIONS),
 }
 
@@ -242,6 +279,39 @@ function parseArgs(args) {
         options.path = dir
         break
       }
+      case "-t":
+      case "--template": {
+        const template = queue.next().value
+        const problem = templateProblem(template)
+        if (problem) throw new CliError(problem)
+        options.template = template
+        break
+      }
+      case "-n":
+      case "--name": {
+        const projectName = queue.next().value
+        if (!projectName) throw new CliError(`${arg} needs a folder name.`)
+        options.name = projectName
+        break
+      }
+      case "--monorepo":
+        throw new CliError(
+          "--monorepo is not available yet. Create the app inside your workspace with --template and --cwd."
+        )
+      case "--rtl":
+        options.rtl = true
+        break
+      case "--pointer":
+        options.pointer = true
+        break
+      case "--only": {
+        const only = queue.next().value
+        if (!APPLY_MODES.includes(only)) {
+          throw new CliError(`${arg} needs ${APPLY_MODES.join(" or ")}.`)
+        }
+        options.only = only
+        break
+      }
       case "-c":
       case "--cwd": {
         const dir = queue.next().value
@@ -314,11 +384,36 @@ async function resolvePlatform(options) {
       "--icon-library works with --platform rn, swift or kotlin. React projects pick icons with --preset or the iconLibrary in components.json."
     )
   }
+  if ((options.rtl || options.pointer) && options.platform !== "web") {
+    throw new CliError("--rtl and --pointer work with React projects.")
+  }
   if (options.platform !== "web") {
     options.style = resolveStyle(options)
     options.iconLibrary = resolveIconLibrary(options)
   }
   return options
+}
+
+function rejectOptions(options, keys, message) {
+  if (keys.some((key) => options[key] !== undefined)) {
+    throw new CliError(message)
+  }
+}
+
+function createFromTemplate(options) {
+  const { platform } = TEMPLATES[options.template]
+  if (options.platform && options.platform !== platform) {
+    throw new CliError(
+      `--template ${options.template} creates a ${PLATFORM_TITLES[platform]} app. Drop --platform ${options.platform}.`
+    )
+  }
+  options.cwd = createProject({
+    template: options.template,
+    name: options.name,
+    cwd: options.cwd,
+  })
+  options.platform = platform
+  options.yes = true
 }
 
 function parseCommand(command, args) {
@@ -342,10 +437,46 @@ async function main() {
       const parsed = parseCommand(command, args)
       if (!parsed) break
       const { options } = parsed
+      rejectOptions(options, ["only"], "--only works with apply.")
+      if (options.name !== undefined && !options.template) {
+        throw new CliError("--name works with --template.")
+      }
+      if (options.template) createFromTemplate(options)
       await resolvePlatform(options)
       if (options.platform === "web") await init(options)
       else if (options.platform === "rn") await initMobile(options)
       else await initNative(options)
+      break
+    }
+    case "apply": {
+      const parsed = parseCommand(command, args)
+      if (!parsed) break
+      const { options } = parsed
+      rejectOptions(
+        options,
+        ["template", "name", "base", "iconLibrary"],
+        "apply takes its options from the preset; --template, --name, --base and --icon-library work with init."
+      )
+      if (parsed.names.length) {
+        throw new CliError(`apply takes no names.\n\n${COMMAND_USAGE.apply}`)
+      }
+      if (
+        !options.preset &&
+        !options.primary &&
+        !options.style &&
+        !options.pointer
+      ) {
+        throw new CliError(
+          `apply needs --preset, --primary, --style or --pointer.\n\n${COMMAND_USAGE.apply}`
+        )
+      }
+      if (options.only && options.style) {
+        throw new CliError("--style changes components; drop --only to use it.")
+      }
+      await resolvePlatform(options)
+      if (options.platform === "web") await apply(options)
+      else if (options.platform === "rn") await applyMobile(options)
+      else await applyNative(options)
       break
     }
     case "add": {
@@ -353,15 +484,20 @@ async function main() {
       const parsed = parseCommand(command, scope ? args.slice(1) : args)
       if (!parsed) break
       const options = { ...parsed.options, scope }
-      if (
-        options.style !== undefined ||
-        options.preset !== undefined ||
-        options.primary !== undefined
-      ) {
-        throw new CliError(
-          "--style, --preset and --primary work with init; add keeps the style init set up."
-        )
-      }
+      rejectOptions(
+        options,
+        [
+          "style",
+          "preset",
+          "primary",
+          "template",
+          "name",
+          "rtl",
+          "pointer",
+          "only",
+        ],
+        "--style, --preset, --primary, --template, --name, --rtl, --pointer and --only work with init or apply; add keeps the style init set up."
+      )
       await resolvePlatform(options)
       if (options.platform === "web") await add(parsed.names, options)
       else if (options.platform === "rn") await addMobile(parsed.names, options)
