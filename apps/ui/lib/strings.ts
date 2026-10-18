@@ -43,6 +43,7 @@ export const strings = {
   createOwn: "Suiss",
   createDefault: "Default",
   createCustom: "Custom",
+  createPreview: "Preview of the selected options",
   createCustomNote:
     "Preset codes cannot hold a custom color, so the shadcn CLI uses the theme instead.",
   createSaturation: "Saturation and brightness",

@@ -6,9 +6,7 @@ import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { ColorPicker } from "@/components/create/color-picker"
 import { CommandLine } from "@/components/create/command-line"
-import { CreatePreview } from "@/components/create/preview"
-import { PreviewIconsProvider } from "@/components/site/icon-placeholder"
-import { showStyle } from "@/components/site/style-sheet"
+import { FRAME_HEIGHT, FRAME_MESSAGE } from "@/components/create/frame"
 import {
   Popover,
   PopoverContent,
@@ -16,6 +14,7 @@ import {
 } from "@/components/ui/popover"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { withBase } from "@/lib/base-path"
 import { ICON_LABELS, type IconLibrary, STYLE_LABELS } from "@/lib/code-options"
 import { parseColor } from "@/lib/create/color"
 import {
@@ -24,7 +23,6 @@ import {
   cliCommand,
   DEFAULT_STATE,
   FONTS,
-  fontOf,
   fromParams,
   isGray,
   OWN,
@@ -38,15 +36,12 @@ import {
   shadcnCommand,
   swatchOf,
   themeOptions,
-  themeVariables,
   toParams,
 } from "@/lib/create/options"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
-const THEME_STYLE = "create-theme"
 const FALLBACK_PRIMARY = { r: 0, g: 113, b: 227 }
-const FONT_LINK = "create-font"
 
 const titleCase = (value: string) =>
   value === OWN
@@ -159,55 +154,6 @@ function Picker({
   )
 }
 
-function declarations(variables: Record<string, string>) {
-  return Object.entries(variables)
-    .map(([name, value]) => `--${name}:${value};`)
-    .join("")
-}
-
-function useThemeStyle(state: CreateState) {
-  React.useEffect(() => {
-    const { light, dark } = themeVariables(state)
-    const font = fontOf(state.font)
-    let element = document.getElementById(THEME_STYLE)
-    if (!element) {
-      element = document.createElement("style")
-      element.id = THEME_STYLE
-      document.head.append(element)
-    }
-    element.textContent = [
-      `html:root{${declarations(light)}${font ? `--font-sans:'${font.google}',sans-serif;` : ""}}`,
-      `html.dark:root{${declarations(dark)}}`,
-      font ? "html body{font-family:var(--font-sans)}" : "",
-    ].join("")
-    if (font) {
-      let link = document.getElementById(FONT_LINK) as HTMLLinkElement | null
-      if (!link) {
-        link = document.createElement("link")
-        link.id = FONT_LINK
-        link.rel = "stylesheet"
-        document.head.append(link)
-      }
-      link.href = `https://fonts.googleapis.com/css2?family=${font.google.replace(/ /g, "+")}:wght@400..700&display=swap`
-    }
-    const root = document.documentElement
-    if (state.menuColor.endsWith("translucent")) {
-      root.dataset.menuTranslucent = ""
-    } else {
-      delete root.dataset.menuTranslucent
-    }
-  }, [state])
-
-  React.useEffect(
-    () => () => {
-      document.getElementById(THEME_STYLE)?.remove()
-      document.getElementById(FONT_LINK)?.remove()
-      delete document.documentElement.dataset.menuTranslucent
-    },
-    []
-  )
-}
-
 const label = (value: string) =>
   value === OWN ? strings.createOwn : titleCase(value)
 
@@ -217,6 +163,50 @@ const options = (values: readonly string[], swatches = false): Option[] =>
     label: label(value),
     swatch: swatches ? swatchOf(value) : undefined,
   }))
+
+function useFrame(state: CreateState) {
+  const ref = React.useRef<HTMLIFrameElement>(null)
+  const [height, setHeight] = React.useState(720)
+  const latest = React.useRef(state)
+  latest.current = state
+
+  const send = React.useCallback(() => {
+    ref.current?.contentWindow?.postMessage(
+      {
+        type: FRAME_MESSAGE,
+        state: latest.current,
+        dark: document.documentElement.classList.contains("dark"),
+      },
+      window.location.origin
+    )
+  }, [])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: resend whenever the options change
+  React.useEffect(() => {
+    send()
+  }, [state, send])
+
+  React.useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return
+      if (event.source !== ref.current?.contentWindow) return
+      if (event.data?.type === FRAME_MESSAGE) send()
+      if (event.data?.type === FRAME_HEIGHT) setHeight(event.data.height)
+    }
+    window.addEventListener("message", onMessage)
+    const observer = new MutationObserver(send)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+    return () => {
+      window.removeEventListener("message", onMessage)
+      observer.disconnect()
+    }
+  }, [send])
+
+  return { ref, height, send }
+}
 
 export function CreatePage() {
   const [state, setState] = React.useState<CreateState>(DEFAULT_STATE)
@@ -241,13 +231,7 @@ export function CreatePage() {
     window.history.replaceState(window.history.state, "", url)
   }, [ready, state])
 
-  React.useEffect(() => {
-    if (ready) void showStyle(shown.style)
-  }, [ready, shown.style])
-
-  React.useEffect(() => () => void showStyle("suiss"), [])
-
-  useThemeStyle(shown)
+  const frame = useFrame(shown)
 
   const update = <K extends keyof CreateState>(key: K, value: CreateState[K]) =>
     setState((current) => {
@@ -397,9 +381,14 @@ export function CreatePage() {
             </p>
           )}
         </div>
-        <PreviewIconsProvider icons={shown.iconLibrary as IconLibrary}>
-          <CreatePreview />
-        </PreviewIconsProvider>
+        <iframe
+          ref={frame.ref}
+          src={withBase("/preview/create")}
+          title={strings.createPreview}
+          onLoad={frame.send}
+          style={{ height: frame.height }}
+          className="w-full rounded-3xl border-0 bg-transparent"
+        />
       </div>
     </div>
   )
