@@ -6,7 +6,7 @@
     "dev": "pnpm build:registry && next dev --port 3000",
     "build": "pnpm build:registry && node scripts/content-dates.mjs && next build && node scripts/markdown-files.mjs",
     "start": "next start",
-    "typecheck": "node scripts/preview-icons.mjs --check && node scripts/native-previews.mjs --check && node scripts/native-api.mjs --check && next typegen && tsc --noEmit",
+    "typecheck": "node scripts/cli-options.mjs && node scripts/preview-icons.mjs --check && node scripts/native-previews.mjs --check && node scripts/native-api.mjs --check && next typegen && tsc --noEmit",
     "icons": "node scripts/preview-icons.mjs",
     "previews": "node scripts/native-previews.mjs",
     "native-api": "node scripts/native-api.mjs",

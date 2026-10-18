@@ -29,6 +29,7 @@
         "$TURBO_ROOT$/packages/web/**",
         "!$TURBO_ROOT$/packages/web/node_modules/**",
         "$TURBO_ROOT$/packages/cli/lib/**",
+        "$TURBO_ROOT$/packages/cli/index.mjs",
         "$TURBO_ROOT$/packages/mobile/swiftui/Sources/**",
         "$TURBO_ROOT$/packages/mobile/kotlin/ui/src/**"
       ]

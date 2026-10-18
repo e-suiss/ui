@@ -6,7 +6,7 @@ eyebrow: suiss/ui
 
 ## Overview
 
-`@esuiss/ui` runs with `npx` and is never installed in your project. It has two commands: `init` and `add`. It detects the project in the current folder: a Next.js or Vite app gets React components, an Expo or React Native app gets React Native components, an Xcode project or Swift package gets SwiftUI views and an Android Gradle module gets Jetpack Compose composables.
+`@esuiss/ui` runs with `npx` and is never installed in your project. It has three commands: `init` sets up a project, `apply` restyles it and `add` copies components into it. It detects the project in the current folder: a Next.js or Vite app gets React components, an Expo or React Native app gets React Native components, an Xcode project or Swift package gets SwiftUI views and an Android Gradle module gets Jetpack Compose composables.
 
 ## Registry CLI
 
@@ -42,7 +42,7 @@ npx @esuiss/ui@latest init --template next --name my-app
 | `-o, --overwrite` | Replace a local `button` that differs from the registry |
 | `-y, --yes` | Skip confirmation prompts |
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. Saved as the `style` in `components.json` |
-| `--style <name>` | Visual style: `suiss`, `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is saved as the `style` in `components.json`; for React Native, SwiftUI and Compose it picks the theme or tokens file |
+| `--style <name>` | Visual style: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is saved as the `style` in `components.json`; for React Native, SwiftUI and Compose it picks the theme or tokens file |
 | `--preset <code>` | A preset code from [Create](/create): style, colors, radius, fonts, icon library and menus. React Native, SwiftUI and Compose apply it to their theme files; see [Theming](/docs/theming#styles) |
 | `--theme suiss` | Keep the suiss/ui colors when applying a preset |
 | `--primary <color>` | A custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. Replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
@@ -53,7 +53,7 @@ npx @esuiss/ui@latest init --template next --name my-app
 | `--rtl` | React only: the components use logical properties and already work right to left; set `dir="rtl"` on `<html>` |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
-| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
+| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project, `EsuissUI/` or `src/main/kotlin/com/esuiss/ui/` by default |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help for `init` |
 | `-v, --version` | Show the version |
@@ -76,9 +76,16 @@ Without `--only`, React applies the colors, radius, style, icon library and menu
 | `--theme suiss` | Keep the suiss/ui colors when applying a preset |
 | `--style <name>` | Change the visual style; works without `--only` |
 | `--pointer` | React only: show the pointer cursor on enabled buttons |
+| `--rtl` | React only: print how to run the components right to left |
 | `-y, --yes` | Restyle installed components without asking |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
+| `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
+| `--path <dir>` | Where the SwiftUI or Compose theme files are, relative to the project, `EsuissUI/` or `src/main/kotlin/com/esuiss/ui/` by default |
 | `-c, --cwd <dir>` | Run in another project directory |
+| `-h, --help` | Show help for `apply` |
+| `-v, --version` | Show the version |
+
+`apply` needs at least one of `--preset`, `--primary`, `--style` or `--pointer`. `--template`, `--name`, `--base` and `--icon-library` work with `init`.
 
 ## add
 
@@ -100,13 +107,14 @@ npx @esuiss/ui@latest add blocks <block...> [options]
 | `-a, --all` | Add every component except `theme`, or every pattern, interaction, chart or block with `add patterns`, `add interactions`, `add charts` or `add blocks` |
 | `-y, --yes` | Skip confirmation prompts and the pick list |
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base` |
-| `--style <name>` | Visual style of React components, read from the `style` in `components.json` when omitted, otherwise `suiss` |
 | `--icon-library <name>` | Icons of React Native, SwiftUI and Compose components: `phosphor` (the default), `lucide`, `tabler`, `hugeicons` or `remixicon`. Read from `--preset` or the installed icons file when omitted |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
-| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
+| `--path <dir>` | Where SwiftUI or Compose files go, relative to the project, `EsuissUI/` or `src/main/kotlin/com/esuiss/ui/` by default |
 | `-c, --cwd <dir>` | Run in another project directory |
 | `-h, --help` | Show help for `add` |
+
+`add` keeps the style and preset that `init` or `apply` set up, so `--style`, `--preset`, `--primary`, `--theme`, `--template`, `--name`, `--rtl`, `--pointer` and `--only` are rejected here.
 | `-v, --version` | Show the version |
 
 ### Pick from a list
@@ -180,11 +188,11 @@ The files, folders and names are the same for all three. See [Installation](/doc
 
 ## Styles
 
-Every platform comes in nine styles: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` and `rhea`. For React the style is the part of the `style` in `components.json` after the base, such as `base-suiss` or `radix-nova`; `add` writes components in that style, and the registry serves the same style to `npx shadcn@latest add`. For React Native, SwiftUI and Compose, `init` copies the theme or tokens file of the style:
+Every platform comes in nine styles: `suiss` (the default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` and `rhea`. For React the style is the part of the `style` in `components.json` after the base, such as `base-suiss` or `radix-nova`; `add` writes components in that style, `apply --style` switches it and reinstalls the installed components, and the registry serves the same style to `npx shadcn@latest add`. For React Native, SwiftUI and Compose, `init` copies the theme or tokens file of the style:
 
 ```bash title="Terminal"
 npx @esuiss/ui@latest init --style nova
-npx @esuiss/ui@latest add button --style vega
+npx @esuiss/ui@latest apply --style vega
 npx @esuiss/ui@latest init --platform swift --style luma
 ```
 
