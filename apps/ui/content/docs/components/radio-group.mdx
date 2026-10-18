@@ -44,6 +44,7 @@ npm install @base-ui/react
 ## Usage
 
 ```tsx
+import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 ```
 
@@ -60,7 +61,17 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 </div>
 ```
 
+<OnlyBase base="base radix">
+
 Give each `RadioGroupItem` a unique `value`. The group is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Set `disabled` on the group to disable every item, or on a single item.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Give each `RadioGroupItem` a unique `value`. The group is uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. Set `isDisabled` on the group to disable every item, or on a single item.
+
+</OnlyBase>
 
 Wrap each item and its text in a `Label` so clicking the text selects the option. The label switches to regular weight automatically next to a radio item.
 
@@ -86,7 +97,17 @@ A fully disabled group that ignores clicks.
 
 ### Invalid
 
+<OnlyBase base="base radix">
+
 Items marked with `aria-invalid` and shown with a destructive border.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+A group marked with `isInvalid`, so its items show a destructive border.
+
+</OnlyBase>
 
 <ComponentPreview name="radio-group-invalid" />
 
@@ -105,6 +126,40 @@ Items marked with `aria-invalid` and shown with a destructive border.
 
 The container that manages the selected value and keyboard navigation.
 
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultValue` | `any` | — | The item selected at first, when uncontrolled. |
+| `value` | `any` | — | The controlled selected item. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: any) => void` | — | Called when the selected item changes. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultValue` | `string` | — | The item selected at first, when uncontrolled. |
+| `value` | `string` | — | The controlled selected item. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: string) => void` | — | Called when the selected item changes. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultValue` | `string \| null` | — | The item selected at first, when uncontrolled. |
+| `value` | `string \| null` | — | The controlled selected item. Pass it with `onChange`. |
+| `onChange` | `(value: string) => void` | — | Called when the selected item changes. |
+| `isDisabled` | `boolean` | `false` | Disables every item. |
+| `isInvalid` | `boolean` | `false` | Marks the group as invalid. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -115,6 +170,24 @@ Also accepts the props of the primitive part it wraps.
 
 A single radio button with a checked indicator.
 
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Identifies the item in the group's value. |
+| `disabled` | `boolean` | `false` | Disables this item. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Identifies the item in the group's value. |
+| `isDisabled` | `boolean` | `false` | Disables this item. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -124,7 +197,19 @@ Also accepts the props of the primitive part it wraps.
 - The group has the `radiogroup` role and each item the `radio` role with `aria-checked`.
 - Name the group with `aria-label` or `aria-labelledby`, and name each item with a wrapping `Label` or `aria-labelledby`.
 - Arrow keys move focus and selection between items, skipping disabled ones.
+
+<OnlyBase base="base radix">
+
 - Set `aria-invalid` on items to communicate a validation error.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- Set `isInvalid` on the group to communicate a validation error.
+
+</OnlyBase>
+
 - Each item has an enlarged invisible hit area for easier pointer targeting.
 
 ## Notes

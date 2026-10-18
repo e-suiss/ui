@@ -46,11 +46,39 @@ npm install @base-ui/react @phosphor-icons/react class-variance-authority
 ## Usage
 
 ```tsx
-import { SidebarProvider, Sidebar, SidebarTrigger, SidebarRail, SidebarInset, SidebarInput, SidebarHeader, SidebarFooter, SidebarSeparator, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupAction, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction, SidebarMenuBadge, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton } from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger } from "@/components/ui/sidebar"
 ```
 
 ```tsx
-<AppShell side="left" variant="sidebar" collapsible="icon" />
+<SidebarProvider>
+  <Sidebar side="left" variant="sidebar" collapsible="icon">
+    <SidebarHeader>Acme Inc.</SidebarHeader>
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {items.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton isActive={item.active} tooltip={item.title}>
+                  {item.icon}
+                  <span>{item.title}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+    <SidebarRail />
+  </Sidebar>
+  <SidebarInset>
+    <header className="flex h-14 items-center gap-2 border-b px-4">
+      <SidebarTrigger />
+    </header>
+    <main className="p-4">{children}</main>
+  </SidebarInset>
+</SidebarProvider>
 ```
 
 Use `defaultOpen` on `SidebarProvider` for an uncontrolled sidebar, or `open` with `onOpenChange` to control it. Read and change state from any child with the `useSidebar` hook, which returns `state`, `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile` and `toggleSidebar`.
@@ -243,7 +271,23 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 The title of a group; it fades out when collapsed to icons.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"div">`, `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"div">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"div">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -253,7 +297,23 @@ Also accepts the props of `useRender.ComponentProps<"div">`, `React.ComponentPro
 
 A small button in the corner of a group, such as an add button.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"button">`, `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -300,7 +360,23 @@ The clickable row for a destination or command.
 | `variant` | `"default" \| "outline"` | `"default"` | Uses a plain style or an `outline` style with a background and border. |
 | `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the row height: `sm`, `default` or `lg`. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"button">`, `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -314,7 +390,23 @@ A small button at the end of a menu item, such as a more button.
 | --- | --- | --- | --- |
 | `showOnHover` | `boolean` | `false` | On desktop, hides the action until its item is hovered or focused. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"button">`, `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -373,7 +465,23 @@ The clickable row of a sub-item, rendered as a link by default.
 | `size` | `"sm" \| "md"` | `"md"` | Sets the text size: `sm` or `md`. |
 | `isActive` | `boolean` | `false` | Marks the sub-item as the current page. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps<"a">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"a">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"a">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 

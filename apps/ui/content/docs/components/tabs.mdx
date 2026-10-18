@@ -47,6 +47,8 @@ npm install @base-ui/react class-variance-authority
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 ```
 
+<OnlyBase base="base radix">
+
 ```tsx
 <Tabs defaultValue="account" orientation="horizontal">
   <TabsList variant="default">
@@ -69,6 +71,35 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 ```
 
 Use `defaultValue` on `Tabs` for an uncontrolled set, or `value` with `onValueChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `value`. Set `orientation="vertical"` on `Tabs` to stack the triggers beside the panel.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Tabs defaultSelectedKey="account" orientation="horizontal">
+  <TabsList variant="default">
+    {tabs.map((tab) => (
+      <TabsTrigger key={tab.value} id={tab.value}>
+        {tab.label}
+      </TabsTrigger>
+    ))}
+  </TabsList>
+  {tabs.map((tab) => (
+    <TabsContent
+      key={tab.value}
+      id={tab.value}
+      className="text-muted-foreground"
+    >
+      {tab.content}
+    </TabsContent>
+  ))}
+</Tabs>
+```
+
+Use `defaultSelectedKey` on `Tabs` for an uncontrolled set, or `selectedKey` with `onSelectionChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `id`. Set `orientation="vertical"` on `Tabs` to stack the triggers beside the panel.
+
+</OnlyBase>
 
 ## Examples
 
@@ -125,6 +156,41 @@ Combines a scrolling list with the `line` variant.
 
 The root that holds the selected value and orientation.
 
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultValue` | `any` | — | The tab selected at first, when uncontrolled. |
+| `value` | `any` | — | The controlled selected tab. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: any) => void` | — | Called when the selected tab changes. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the tabs out in a row or a column. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultValue` | `string` | — | The tab selected at first, when uncontrolled. |
+| `value` | `string` | — | The controlled selected tab. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: string) => void` | — | Called when the selected tab changes. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the tabs out in a row or a column. |
+| `activationMode` | `"automatic" \| "manual"` | `"manual"` | Selects a tab when it gets focus (`automatic`), or only on `Enter` or `Space` (`manual`). |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultSelectedKey` | `Key` | — | The tab selected at first, when uncontrolled. |
+| `selectedKey` | `Key \| null` | — | The controlled selected tab. Pass it with `onSelectionChange`. |
+| `onSelectionChange` | `(key: Key) => void` | — | Called when the selected tab changes. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the tabs out in a row or a column. |
+| `keyboardActivation` | `"automatic" \| "manual"` | `"manual"` | Selects a tab when it gets focus (`automatic`), or only on `Enter` or `Space` (`manual`). |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -149,6 +215,24 @@ Also accepts the props of the primitive part it wraps.
 
 A tab that selects its panel.
 
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Matches the `value` of the panel it shows. |
+| `disabled` | `boolean` | `false` | Stops the tab from being selected. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `Key` | — | Matches the `id` of the panel it shows. |
+| `isDisabled` | `boolean` | `false` | Stops the tab from being selected. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -159,6 +243,22 @@ Also accepts the props of the primitive part it wraps.
 
 The panel shown when its tab is selected.
 
+<OnlyBase base="base radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Matches the `value` of its tab. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `Key` | — | Matches the `id` of its tab. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -168,11 +268,30 @@ Also accepts the props of the primitive part it wraps.
 - The list has the `tablist` role with `aria-orientation`; triggers are `tab` elements with `aria-selected`, and panels are `tabpanel` elements.
 - Arrow keys move focus between tabs, wrapping at the ends; `Enter` or `Space` selects the focused tab. Vertical tabs use the up and down arrow keys.
 - `Home` and `End` move focus to the first and last tabs.
-- Disabled tabs set `aria-disabled` and can't be selected by click or keyboard.
+- Disabled tabs can't be selected by click or keyboard.
 
 ## Notes
 
-- Parts carry `data-slot` attributes: `tabs`, `tabs-list`, `tabs-list-content`, `tabs-indicator`, `tabs-trigger` and `tabs-content`. The list and indicator set `data-variant`, and the active trigger sets `data-active`.
+- Parts carry `data-slot` attributes: `tabs`, `tabs-list`, `tabs-list-content`, `tabs-indicator`, `tabs-trigger` and `tabs-content`. The list and indicator set `data-variant`.
+
+<OnlyBase base="base">
+
+- The active trigger sets `data-active`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- The active trigger sets `data-state="active"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- The active trigger sets `data-selected`.
+
+</OnlyBase>
+
 - The edge bleed on small screens is set through the `--tabs-list-bleed-start` and `--tabs-list-bleed-end` properties, which the list measures itself.
 - `className` on `TabsList` styles the inner `tabs-list-content` element, not the scrolling list.
 - Indicator and scroll animations are removed when reduced motion is preferred.

@@ -93,7 +93,12 @@ import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireT
         Enter a company name to continue.
       </QuestionnaireError>
     </QuestionnaireItem>
-    <Actions />
+    <QuestionnaireActions>
+      <QuestionnairePrevious />
+      <QuestionnaireSkip />
+      <QuestionnaireNext />
+      <QuestionnaireSubmit />
+    </QuestionnaireActions>
   </Questionnaire>
 </div>
 ```
@@ -156,6 +161,11 @@ A questionnaire that opens on its second question with `defaultItem`.
         - [QuestionnaireChoiceDescription](#questionnairechoicedescription)
     - [QuestionnaireError](#questionnaireerror)
     - [QuestionnaireInput](#questionnaireinput)
+  - [QuestionnaireActions](#questionnaireactions)
+    - [QuestionnairePrevious](#questionnaireprevious)
+    - [QuestionnaireSkip](#questionnaireskip)
+    - [QuestionnaireNext](#questionnairenext)
+    - [QuestionnaireSubmit](#questionnairesubmit)
 
 </Anatomy>
 
@@ -183,7 +193,23 @@ Also accepts the props of `React.ComponentProps<"form">`.
 
 Shows the position as text, such as `Question 2 of 3`, and exposes it to assistive technology with the `progressbar` role.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"div", QuestionnaireState>`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"div">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"div">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -195,6 +221,7 @@ A `fieldset` for one question, visible only while it is active.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `disabled` | `boolean` | `false` | Leaves the item out of the sequence and disables its choices and input. |
 | `invalid` | `boolean` | `false` | Forces the item into the invalid state. |
 | `multiple` | `boolean` | `false` | Allows several answers, rendering choices as checkboxes. |
 | `name` | `string` | Required | The unique item name, used for navigation and as the form field name. |
@@ -211,7 +238,23 @@ Also accepts the props of `React.ComponentProps<"fieldset">`.
 
 The question text, rendered as the fieldset's `legend`.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"legend">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"legend">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"legend">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -221,7 +264,23 @@ Also accepts the props of `useRender.ComponentProps<"legend">`.
 
 Supporting text that describes the question.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"p">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"p">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"p">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -231,7 +290,23 @@ Also accepts the props of `useRender.ComponentProps<"p">`.
 
 The grid that holds the answer choices.
 
-Also accepts the props of `useRender.ComponentProps< "div", { shortcuts: QuestionnaireShortcutMode | null } >`.
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"div", { shortcuts: QuestionnaireShortcutMode | null }>`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"div">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"div">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -249,7 +324,23 @@ A selectable answer card containing a radio button or checkbox.
 | `onChange` | `React.ChangeEventHandler<HTMLInputElement>` | - | Called when the underlying input changes. |
 | `value` | `string` | Required | The value submitted for this choice. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"label", QuestionnaireChoiceState>`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"label">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"label">`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -273,7 +364,23 @@ A text-style input for free-form answers.
 | --- | --- | --- | --- |
 | `type` | `QuestionnaireInputType` | `"text"` | The input type, such as `text`, `email`, `number`, `date` or `url`. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"input", QuestionnaireInputState>`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"input">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"input">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -283,7 +390,23 @@ Also accepts the props of `useRender.ComponentProps<"input", QuestionnaireInputS
 
 The validation message shown when the question needs an answer.
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"p", { invalid: boolean }>`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"p">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"p">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -303,7 +426,28 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 Goes back to the previous question; hidden on the first.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"outline"` | The [Button](/docs/components/button) variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -313,7 +457,28 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 Skips the current optional question; hidden when the question is required.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"outline"` | The [Button](/docs/components/button) variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -323,7 +488,28 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 Validates the current question and moves to the next; hidden on the last.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | The [Button](/docs/components/button) variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -333,7 +519,29 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 Submits the form; shown only on the last question.
 
-Also accepts the props of `QuestionnaireNavigationProps`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | The [Button](/docs/components/button) variant. |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+| `type` | `"submit" \| "reset" \| "button"` | `"submit"` | The button type. |
+
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 

@@ -46,11 +46,24 @@ npm install @base-ui/react @phosphor-icons/react
 ## Usage
 
 ```tsx
-import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from "@/components/ui/toast"
+import { Button } from "@/components/ui/button"
+import { Toaster, toast } from "@/components/ui/toast"
 ```
 
 ```tsx
-<DefaultExample />
+<Toaster>
+  <Button
+    variant="outline"
+    onClick={() =>
+      toast.add({
+        title: "Event created",
+        description: "Friday, October 3 at 9:00 AM",
+      })
+    }
+  >
+    Show toast
+  </Button>
+</Toaster>
 ```
 
 Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.
@@ -105,7 +118,7 @@ Uses `toast.promise` to move from loading to an error when the promise rejects.
 
 Provides a toast manager to the parts inside it.
 
-Also accepts the props of `ToastPrimitive.Provider.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -115,7 +128,7 @@ Also accepts the props of `ToastPrimitive.Provider.Props`.
 
 Renders the viewport into a portal.
 
-Also accepts the props of `ToastPrimitive.Portal.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -125,7 +138,7 @@ Also accepts the props of `ToastPrimitive.Portal.Props`.
 
 The fixed region at the bottom of the screen that holds the stack.
 
-Also accepts the props of `ToastPrimitive.Viewport.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -135,7 +148,7 @@ Also accepts the props of `ToastPrimitive.Viewport.Props`.
 
 A single toast in the stack, positioned and animated by its index.
 
-Also accepts the props of `ToastPrimitive.Root.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -145,7 +158,7 @@ Also accepts the props of `ToastPrimitive.Root.Props`.
 
 The row that lays out a toast's icon, text and buttons.
 
-Also accepts the props of `ToastPrimitive.Content.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -155,7 +168,7 @@ Also accepts the props of `ToastPrimitive.Content.Props`.
 
 The toast's title, which names it.
 
-Also accepts the props of `ToastPrimitive.Title.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -165,7 +178,7 @@ Also accepts the props of `ToastPrimitive.Title.Props`.
 
 Supporting text, which describes the toast.
 
-Also accepts the props of `ToastPrimitive.Description.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -175,7 +188,7 @@ Also accepts the props of `ToastPrimitive.Description.Props`.
 
 An optional action button, rendered as a small outline `Button`.
 
-Also accepts the props of `ToastPrimitive.Action.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -185,7 +198,7 @@ Also accepts the props of `ToastPrimitive.Action.Props`.
 
 An icon button that dismisses the toast.
 
-Also accepts the props of `ToastPrimitive.Close.Props`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -195,7 +208,11 @@ Also accepts the props of `ToastPrimitive.Close.Props`.
 
 The complete setup: provider, portal, viewport and the rendered toasts.
 
-Also accepts the props of `ToastPrimitive.Provider.Props`.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `toastManager` | `ReturnType<typeof createToastManager>` | `toast` | The manager whose toasts it shows. Defaults to the shared `toast` manager; pass one from `createToastManager()` to keep a separate stack. |
+
+Also accepts the props of `ToastProvider`.
 
 </ApiPart>
 

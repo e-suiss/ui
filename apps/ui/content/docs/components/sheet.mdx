@@ -46,6 +46,9 @@ npm install @base-ui/react @phosphor-icons/react
 ## Usage
 
 ```tsx
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 ```
 
@@ -56,7 +59,22 @@ import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter
   <SheetTrigger render={<Button variant="outline" />}>
     Open sheet
   </SheetTrigger>
-  <ProfileSheet />
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Edit profile</SheetTitle>
+      <SheetDescription>
+        Update your details and save when you are done.
+      </SheetDescription>
+    </SheetHeader>
+    <div className="grid gap-2 px-6">
+      <Label htmlFor="name">Name</Label>
+      <Input id="name" defaultValue="Jordan Lee" />
+    </div>
+    <SheetFooter>
+      <Button type="submit">Save changes</Button>
+      <SheetClose render={<Button variant="secondary" />}>Cancel</SheetClose>
+    </SheetFooter>
+  </SheetContent>
 </Sheet>
 ```
 
@@ -69,7 +87,24 @@ import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter
   <SheetTrigger asChild>
     <Button variant="outline">Open sheet</Button>
   </SheetTrigger>
-  <ProfileSheet />
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Edit profile</SheetTitle>
+      <SheetDescription>
+        Update your details and save when you are done.
+      </SheetDescription>
+    </SheetHeader>
+    <div className="grid gap-2 px-6">
+      <Label htmlFor="name">Name</Label>
+      <Input id="name" defaultValue="Jordan Lee" />
+    </div>
+    <SheetFooter>
+      <Button type="submit">Save changes</Button>
+      <SheetClose asChild>
+        <Button variant="secondary">Cancel</Button>
+      </SheetClose>
+    </SheetFooter>
+  </SheetContent>
 </Sheet>
 ```
 
@@ -80,7 +115,24 @@ import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter
 ```tsx
 <Sheet>
   <Button variant="outline">Open sheet</Button>
-  <ProfileSheet />
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Edit profile</SheetTitle>
+      <SheetDescription>
+        Update your details and save when you are done.
+      </SheetDescription>
+    </SheetHeader>
+    <div className="grid gap-2 px-6">
+      <Label htmlFor="name">Name</Label>
+      <Input id="name" defaultValue="Jordan Lee" />
+    </div>
+    <SheetFooter>
+      <Button type="submit">Save changes</Button>
+      <Button slot="close" variant="secondary">
+        Cancel
+      </Button>
+    </SheetFooter>
+  </SheetContent>
 </Sheet>
 ```
 
@@ -144,6 +196,12 @@ Replaces the icon close button with a text button labelled `Done`.
 
 - [Sheet](#sheet)
   - [SheetTrigger](#sheettrigger)
+  - [SheetContent](#sheetcontent)
+    - [SheetHeader](#sheetheader)
+      - [SheetTitle](#sheettitle)
+      - [SheetDescription](#sheetdescription)
+    - [SheetFooter](#sheetfooter)
+      - [SheetClose](#sheetclose)
 
 </Anatomy>
 
@@ -183,11 +241,27 @@ Also accepts the props of the primitive part it wraps.
 
 The sliding panel, rendered in a portal with a backdrop.
 
+<OnlyBase base="base radix">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Chooses the edge the sheet slides in from. |
 | `showCloseButton` | `boolean` | `true` | Shows the built-in close button in the top corner. |
 | `closeLabel` | `string` | - | Shows this text in the close button instead of an icon. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Chooses the edge the sheet slides in from. |
+| `showCloseButton` | `boolean` | `true` | Shows the built-in close button in the top corner. |
+| `closeLabel` | `string` | - | Shows this text in the close button instead of an icon. |
+| `isDismissable` | `boolean` | `true` | Closes the sheet when the backdrop is pressed. |
+| `isKeyboardDismissDisabled` | `boolean` | `false` | Stops `Escape` from closing the sheet. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -237,7 +311,19 @@ Also accepts the props of the primitive part it wraps.
 
 - The panel has the `dialog` role. `SheetTitle` gives it an accessible name and `SheetDescription` an accessible description.
 - Opening the sheet moves focus inside it.
+
+<OnlyBase base="base radix">
+
 - `Escape` closes the sheet, and focus returns to the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- `Escape` closes the sheet, and focus returns to the trigger. Set `isKeyboardDismissDisabled` on `SheetContent` to turn `Escape` off.
+
+</OnlyBase>
+
 - The icon close button has the hidden label `Close`.
 
 ## Notes

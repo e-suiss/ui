@@ -49,6 +49,8 @@ npm install @base-ui/react class-variance-authority
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 ```
 
+<OnlyBase base="base">
+
 ```tsx
 <ToggleGroup spacing={2} orientation="horizontal" multiple defaultValue={["bold"]}>
   <ToggleGroupItem value="bold" aria-label="Toggle bold">
@@ -64,6 +66,48 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 ```
 
 The group's value is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it. Set `multiple` to let several items be pressed at once; without it, pressing an item releases the others.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<ToggleGroup spacing={2} orientation="horizontal" type="multiple" defaultValue={["bold"]}>
+  <ToggleGroupItem value="bold" aria-label="Toggle bold">
+    <TextBIcon />
+  </ToggleGroupItem>
+  <ToggleGroupItem value="italic" aria-label="Toggle italic">
+    <TextItalicIcon />
+  </ToggleGroupItem>
+  <ToggleGroupItem value="underline" aria-label="Toggle underline">
+    <TextUnderlineIcon />
+  </ToggleGroupItem>
+</ToggleGroup>
+```
+
+Set `type` to `"single"` or `"multiple"`; it is required. With `"single"` the value is one item value, and pressing an item releases the others. With `"multiple"` it is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<ToggleGroup spacing={2} orientation="horizontal" selectionMode="multiple" defaultSelectedKeys={["bold"]}>
+  <ToggleGroupItem id="bold" aria-label="Toggle bold">
+    <TextBIcon />
+  </ToggleGroupItem>
+  <ToggleGroupItem id="italic" aria-label="Toggle italic">
+    <TextItalicIcon />
+  </ToggleGroupItem>
+  <ToggleGroupItem id="underline" aria-label="Toggle underline">
+    <TextUnderlineIcon />
+  </ToggleGroupItem>
+</ToggleGroup>
+```
+
+Give each item an `id`. The selection is a set of item ids. Use `defaultSelectedKeys` for an uncontrolled group, or `selectedKeys` with `onSelectionChange` to control it. Set `selectionMode="multiple"` to let several items be pressed at once; the default, `"single"`, releases the others when an item is pressed.
+
+</OnlyBase>
 
 Set `variant` and `size` on `ToggleGroup`; items take these from the group. Use `spacing={0}` with the `outline` variant to join items into one bordered bar.
 
@@ -144,10 +188,53 @@ Disables every item in the group.
 
 The container that holds the pressed values and shared styles.
 
+<OnlyBase base="base">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` | Styles every item: borderless `default`, or `outline` with a border. |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding of every item. |
 | `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+| `multiple` | `boolean` | `false` | Lets several items be pressed at once. |
+| `defaultValue` | `any[]` | — | The items pressed at first, when uncontrolled. |
+| `value` | `any[]` | — | The controlled pressed items. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: any[]) => void` | — | Called when the pressed items change. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` | Styles every item: borderless `default`, or `outline` with a border. |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding of every item. |
+| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+| `type` | `"single" \| "multiple"` | — | Required. Allows one pressed item or several. |
+| `defaultValue` | `string \| string[]` | — | The item or items pressed at first, when uncontrolled. A string with `"single"`, an array with `"multiple"`. |
+| `value` | `string \| string[]` | — | The controlled pressed item or items. Pass it with `onValueChange`. |
+| `onValueChange` | `(value: string \| string[]) => void` | — | Called when the pressed items change. |
+| `disabled` | `boolean` | `false` | Disables every item. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` | Styles every item: borderless `default`, or `outline` with a border. |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding of every item. |
+| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+| `selectionMode` | `"single" \| "multiple"` | `"single"` | Allows one pressed item or several. |
+| `defaultSelectedKeys` | `Iterable<Key>` | — | The items pressed at first, when uncontrolled. |
+| `selectedKeys` | `Iterable<Key>` | — | The controlled pressed items. Pass it with `onSelectionChange`. |
+| `onSelectionChange` | `(keys: Set<Key>) => void` | — | Called when the pressed items change. |
+| `isDisabled` | `boolean` | `false` | Disables every item. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -157,7 +244,27 @@ Also accepts the props of the primitive part it wraps.
 
 ### ToggleGroupItem
 
+<OnlyBase base="base radix">
+
 A toggle button within the group, identified by its `value`.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Identifies the item in the group's value. |
+| `disabled` | `boolean` | `false` | Disables this item. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+A toggle button within the group, identified by its `id`.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `Key` | — | Identifies the item in the group's selection. |
+| `isDisabled` | `boolean` | `false` | Disables this item. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -165,16 +272,58 @@ Also accepts the props of the primitive part it wraps.
 
 ## Accessibility
 
+<OnlyBase base="base">
+
 - The group has the `group` role; name it with `aria-label`.
 - Each item is a `button` with `aria-pressed`. Icon-only items need an `aria-label`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+- The group has the `group` role; name it with `aria-label`.
+- With `type="multiple"` each item is a `button` with `aria-pressed`. With `type="single"` each item has the `radio` role with `aria-checked`. Icon-only items need an `aria-label`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- With `selectionMode="multiple"` the group has the `toolbar` role and each item is a `button` with `aria-pressed`. With `"single"` the group is a `radiogroup` and each item has the `radio` role with `aria-checked`. Name the group with `aria-label`. Icon-only items need an `aria-label`.
+
+</OnlyBase>
+
 - Arrow keys move focus between items: left and right in a horizontal group, up and down in a vertical one. `Space` toggles the focused item.
+
+<OnlyBase base="base radix">
+
 - `disabled` on the group disables every item.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- `isDisabled` on the group disables every item.
+
+</OnlyBase>
 
 ## Notes
 
 - The segmented indicator appears only when exactly one item is pressed. Its position is set through `--active-toggle-left`, `--active-toggle-top`, `--active-toggle-width` and `--active-toggle-height`.
 - `variant` and `size` set on a `ToggleGroupItem` are overridden by the group's values.
-- The group sets `data-variant`, `data-size`, `data-spacing` and `data-orientation`; parts use the `toggle-group`, `toggle-group-item` and `toggle-group-indicator` slots.
+
+<OnlyBase base="base radix">
+
+- The group sets `data-variant`, `data-size`, `data-spacing` and `data-orientation`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- The group sets `data-variant`, `data-size` and `data-spacing`, plus `data-horizontal` or `data-vertical`.
+
+</OnlyBase>
+
+- Parts use the `toggle-group`, `toggle-group-item` and `toggle-group-indicator` slots.
 - The segmented track uses `bg-secondary` and the pill uses `bg-card`. Its animation is removed when reduced motion is preferred.
 
 </Only>

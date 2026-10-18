@@ -29,18 +29,24 @@ npx @esuiss/ui@latest add trace
 
 ### Manual
 
-1. Add [Collapsible](/docs/components/collapsible) and the [`cn` helper](/docs/installation#the-cn-helper).
+1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
-2. Copy the source into `components/ui/trace.tsx`:
+```bash title="Terminal"
+npm install @phosphor-icons/react
+```
+
+2. Add the pieces it builds on: [Collapsible](/docs/components/collapsible).
+
+3. Copy the source into `components/ui/trace.tsx`:
 
 <ComponentSource path="components/ui/trace.tsx" />
 
-3. Update the import paths to match your project.
+4. Update the import paths to match your project.
 
 ## Usage
 
 ```tsx
-import { Trace, TraceIcon, TraceLine, TraceTitle } from "@/components/ui/trace"
+import { Trace, TraceCollapsible, TraceCollapsibleContent, TraceCollapsibleTrigger, TraceIcon, TraceLine, TraceTitle } from "@/components/ui/trace"
 ```
 
 ```tsx
@@ -280,7 +286,17 @@ A row that expands.
 
 </OnlyBase>
 
+<OnlyBase base="base aria">
+
 Also accepts the props of [Collapsible](/docs/components/collapsible).
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of [Collapsible](/docs/components/collapsible), except `asChild`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -290,7 +306,17 @@ Also accepts the props of [Collapsible](/docs/components/collapsible).
 
 The button that opens and closes the row. Put a `TraceLine` inside it; it adds a chevron after the line.
 
+<OnlyBase base="base aria">
+
 Also accepts the props of `CollapsibleTrigger`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `CollapsibleTrigger`, except `asChild`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -308,7 +334,19 @@ The detail of a row that expands, indented under the title.
 
 </OnlyBase>
 
+`className` goes to the inner `trace-collapsible-content-inner` element, which holds the children.
+
+<OnlyBase base="base aria">
+
 Also accepts the props of `CollapsibleContent`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `CollapsibleContent`, except `asChild`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -323,7 +361,7 @@ Also accepts the props of `CollapsibleContent`.
 
 ## Notes
 
-- Styling hooks: `data-slot="trace"`, `"trace-line"`, `"trace-icon"`, `"trace-title"`, `"trace-description"`, `"trace-collapsible"`, `"trace-collapsible-trigger"` and `"trace-collapsible-content"`, plus `data-status` on the row.
+- Styling hooks: `data-slot="trace"`, `"trace-line"`, `"trace-icon"`, `"trace-title"`, `"trace-description"`, `"trace-collapsible"`, `"trace-collapsible-trigger"`, `"trace-collapsible-content"` and `"trace-collapsible-content-inner"`, plus `data-status` on the row.
 - `TraceCollapsibleContent` mutes its text. Give a block with a muted background inside it `text-foreground` to keep its contrast; [Code Block](/docs/components/code-block) sets its own text color.
 
 </Only>

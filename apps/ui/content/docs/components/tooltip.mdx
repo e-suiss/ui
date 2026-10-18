@@ -116,7 +116,17 @@ The `Button` placed first inside `Tooltip` is the trigger.
 
 </OnlyBase>
 
+<OnlyBase base="base aria">
+
 Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delay` to `0`, so tooltips open without waiting.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delayDuration` to `0`, so tooltips open without waiting. A `Tooltip` outside a `TooltipProvider` wraps itself in a provider with the default delay.
+
+</OnlyBase>
 
 ## Examples
 
@@ -149,7 +159,34 @@ Names an icon button and shows its keyboard shortcut with `Kbd`.
 
 Shares delay timing across the tooltips inside it.
 
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `delay` | `number` | `0` | How long to wait before opening a tooltip, in milliseconds. |
+
 Also accepts the props of the primitive part it wraps.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `delayDuration` | `number` | `0` | How long to wait before opening a tooltip, in milliseconds. |
+
+Also accepts the props of the primitive part it wraps.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `delay` | `number` | `0` | How long to wait before opening a tooltip, in milliseconds. |
+| `closeDelay` | `number` | `0` | How long to wait before closing a tooltip, in milliseconds. |
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -179,6 +216,28 @@ Also accepts the props of the primitive part it wraps.
 
 The positioned label with its arrow, rendered in a portal.
 
+<OnlyBase base="base aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"top"` | The side of the trigger the tooltip opens on. |
+| `sideOffset` | `number` | `4` | The gap between the trigger and the tooltip, in pixels. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the tooltip lines up with the trigger along that side. |
+| `alignOffset` | `number` | `0` | Shifts the tooltip along the alignment axis, in pixels. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | The side of the trigger the tooltip opens on. |
+| `sideOffset` | `number` | `4` | The gap between the trigger and the tooltip, in pixels. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the tooltip lines up with the trigger along that side. |
+| `alignOffset` | `number` | `0` | Shifts the tooltip along the alignment axis, in pixels. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
@@ -193,6 +252,5 @@ Also accepts the props of the primitive parts it wraps.
 
 - Parts carry `data-slot` attributes such as `tooltip-trigger` and `tooltip-content`; the popup and arrow set `data-side`.
 - The label uses `bg-foreground` with `text-background`, so it inverts against the page in both light and dark appearances.
-- `TooltipContent` accepts the positioner props `side`, `sideOffset`, `align` and `alignOffset`.
 
 </Only>

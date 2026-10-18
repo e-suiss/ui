@@ -53,7 +53,23 @@ import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValu
 </div>
 ```
 
+<OnlyBase base="base">
+
 Pass `value` as a number between `min` and `max` (by default `0` and `100`). Set `value={null}` for an indeterminate state when the amount of work is unknown.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Pass `value` as a number between `0` and `max` (by default `100`). Leave `value` out, or set `value={null}`, for an indeterminate state when the amount of work is unknown.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass `value` as a number between `minValue` and `maxValue` (by default `0` and `100`). Set `isIndeterminate` for an indeterminate state when the amount of work is unknown.
+
+</OnlyBase>
 
 The track and indicator are rendered for you, so `ProgressTrack` and `ProgressIndicator` are not needed inside `Progress` children. `ProgressValue` shows the formatted value, a percentage by default.
 
@@ -73,7 +89,17 @@ A labelled bar at `100`.
 
 ### Indeterminate
 
+<OnlyBase base="base radix">
+
 A labelled bar with `value={null}` for work of unknown length.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+A labelled bar with `isIndeterminate` for work of unknown length.
+
+</OnlyBase>
 
 <ComponentPreview name="progress-indeterminate" />
 
@@ -92,6 +118,36 @@ A labelled bar with `value={null}` for work of unknown length.
 ### Progress
 
 The root that holds the value and renders the track and indicator.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| null` | — | The current value. `null` shows an indeterminate bar. |
+| `min` | `number` | `0` | The value of an empty bar. |
+| `max` | `number` | `100` | The value of a full bar. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| null` | `null` | The current value. `null` shows an indeterminate bar. |
+| `max` | `number` | `100` | The value of a full bar. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | `0` | The current value. |
+| `minValue` | `number` | `0` | The value of an empty bar. |
+| `maxValue` | `number` | `100` | The value of a full bar. |
+| `isIndeterminate` | `boolean` | `false` | Shows an indeterminate bar for work of unknown length. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -141,7 +197,18 @@ Also accepts the props of the primitive part it wraps.
 
 - The root has the `progressbar` role with `aria-valuenow` reflecting the value.
 - `ProgressLabel` provides the accessible name. Without it, pass `aria-label`.
+
+<OnlyBase base="base radix">
+
 - When `value` is `null`, `aria-valuenow` is omitted to signal an indeterminate state.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- With `isIndeterminate`, `aria-valuenow` is omitted to signal an indeterminate state.
+
+</OnlyBase>
 
 ## Notes
 

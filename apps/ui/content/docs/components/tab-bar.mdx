@@ -50,7 +50,32 @@ import { TabBar, TabBarList, TabBarItem, TabBarTrigger, TabBarContent, TabBarSec
 ```
 
 ```tsx
-<TabBarExample />
+<TabBar aria-label="Main">
+  <TabBarList>
+    {items.map((item) => (
+      <TabBarItem
+        key={item}
+        isActive={value === item}
+        onClick={() => setValue(item)}
+      >
+        {item}
+      </TabBarItem>
+    ))}
+  </TabBarList>
+  <TabBarContent>
+    {sections.map((section) => (
+      <TabBarSection key={section.title}>
+        <TabBarSectionTitle>{section.title}</TabBarSectionTitle>
+        {section.links.map((link) => (
+          <TabBarLink key={link.href} href={link.href}>
+            {link.label}
+          </TabBarLink>
+        ))}
+      </TabBarSection>
+    ))}
+  </TabBarContent>
+  <TabBarTrigger>More</TabBarTrigger>
+</TabBar>
 ```
 
 Use `defaultOpen` on `TabBar` for an uncontrolled bar, or `open` with `onOpenChange` to control it. Give the `nav` a name with `aria-label`.
@@ -115,6 +140,9 @@ Disables one item in the list.
   - [TabBarList](#tabbarlist)
     - [TabBarItem](#tabbaritem)
   - [TabBarContent](#tabbarcontent)
+    - [TabBarSection](#tabbarsection)
+      - [TabBarSectionTitle](#tabbarsectiontitle)
+      - [TabBarLink](#tabbarlink)
   - [TabBarTrigger](#tabbartrigger)
 
 </Anatomy>
@@ -131,7 +159,7 @@ The floating `nav` container that holds the open state.
 | `defaultOpen` | `boolean` | `false` | Whether the More panel starts open when uncontrolled. |
 | `onOpenChange` | `(open: boolean) => void` | - | Called when the More panel opens or closes. |
 
-Also accepts the props of `React.ComponentProps<"nav">`, `TabBarProps`.
+Also accepts the props of `React.ComponentProps<"nav">`.
 
 </ApiPart>
 
@@ -155,7 +183,23 @@ A primary destination in the list, rendered as a button by default.
 | --- | --- | --- | --- |
 | `isActive` | `boolean` | `false` | Marks the item as the current page with `aria-current="page"`. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"button">`, `React.ComponentProps<"button">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -209,7 +253,23 @@ A link inside a section that closes the bar when chosen.
 | --- | --- | --- | --- |
 | `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"`. |
 
+<OnlyBase base="base">
+
 Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps<"a">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Also accepts the props of `React.ComponentProps<"a">`, plus `asChild`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Also accepts the props of `React.ComponentProps<"a">`, plus a `render` function.
+
+</OnlyBase>
 
 </ApiPart>
 

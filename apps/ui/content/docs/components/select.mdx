@@ -44,8 +44,10 @@ npm install @base-ui/react @phosphor-icons/react
 ## Usage
 
 ```tsx
-import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton } from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 ```
+
+<OnlyBase base="base">
 
 ```tsx
 <Select items={fruits}>
@@ -64,9 +66,61 @@ import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, Se
 </Select>
 ```
 
-Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen.
+Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen. Set `disabled` on `Select` so it can't be opened, and `aria-invalid` on `SelectTrigger` to show an error.
 
 `SelectContent` opens below the trigger by default. It accepts the positioner props `side`, `sideOffset`, `align`, `alignOffset` and `alignItemWithTrigger`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<Select>
+  <SelectTrigger aria-label="Fruit" className="w-48">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      {fruits.map((fruit) => (
+        <SelectItem key={fruit.value} value={fruit.value}>
+          {fruit.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen. Set `disabled` on `Select` so it can't be opened, and `aria-invalid` on `SelectTrigger` to show an error.
+
+`SelectContent` opens below the trigger by default. It accepts `position` and, in the default `"popper"` position, `side`, `sideOffset`, `align` and `alignOffset`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+```tsx
+<Select aria-label="Fruit">
+  <SelectTrigger className="w-48">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      {fruits.map((fruit) => (
+        <SelectItem key={fruit.value} value={fruit.value}>
+          {fruit.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+Name the select with `aria-label` on `Select`. Use `defaultValue` for an uncontrolled select, or `value` with `onChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen. Set `isDisabled` on `Select` so it can't be opened, and `isInvalid` to show an error.
+
+`SelectContent` opens below the trigger by default. It accepts the popover props `placement`, `offset` and `crossOffset`.
+
+</OnlyBase>
 
 ## Examples
 
@@ -102,13 +156,33 @@ Places an icon before each option's label.
 
 ### Disabled
 
-Disables the select so it can't be opened.
+<OnlyBase base="base radix">
+
+Sets `disabled` on `Select` so it can't be opened.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Sets `isDisabled` on `Select` so it can't be opened.
+
+</OnlyBase>
 
 <ComponentPreview name="select-disabled" />
 
 ### Invalid
 
+<OnlyBase base="base radix">
+
 Marks the trigger with `aria-invalid` to show an error state.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Sets `isInvalid` on `Select` to show an error state.
+
+</OnlyBase>
 
 <ComponentPreview name="select-invalid" />
 
@@ -178,6 +252,40 @@ Also accepts the props of the primitive part it wraps.
 
 The positioned popup that holds the option list and scroll arrows.
 
+<OnlyBase base="base">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the popup opens on. |
+| `sideOffset` | `number` | `4` | The gap between the trigger and the popup, in pixels. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the popup lines up with the trigger along that side. |
+| `alignOffset` | `number` | `0` | Shifts the popup along the alignment axis, in pixels. |
+| `alignItemWithTrigger` | `boolean` | `false` | Places the popup so the selected item sits over the trigger. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `position` | `"popper" \| "item-aligned"` | `"popper"` | `popper` places the popup next to the trigger; `item-aligned` places the selected item over the trigger. |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the popup opens on, in the `popper` position. |
+| `sideOffset` | `number` | `4` | The gap between the trigger and the popup, in pixels. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | How the popup lines up with the trigger along that side. |
+| `alignOffset` | `number` | `0` | Shifts the popup along the alignment axis, in pixels. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `placement` | `Placement` | `"bottom"` | Where the popup opens relative to the trigger. |
+| `offset` | `number` | `4` | The gap between the trigger and the popup, in pixels. |
+| `crossOffset` | `number` | `0` | Shifts the popup along the cross axis, in pixels. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive parts it wraps.
 
 </ApiPart>
@@ -218,7 +326,7 @@ Also accepts the props of the primitive part it wraps.
 
 An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.
 
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
@@ -228,14 +336,26 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollUpA
 
 An arrow that scrolls the list down when it overflows; rendered by `SelectContent`.
 
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>`.
+Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
 
 ## Accessibility
 
+<OnlyBase base="base radix">
+
 - The trigger has the `combobox` role and the popup list has the `listbox` role; each item is an `option` with `aria-selected` on the chosen one.
 - Give the trigger an accessible name, such as `aria-label` or an associated label.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- The trigger is a button that opens a `listbox`; each item is an `option` with `aria-selected` on the chosen one.
+- Name the select with `aria-label` on `Select`, or with an associated label.
+
+</OnlyBase>
+
 - When the popup opens, focus moves to the selected option. Arrow keys move between options and `Enter` selects.
 - `Escape` closes the popup without changing the value, and focus returns to the trigger.
 - A `SelectGroup` with a `SelectLabel` is exposed as a named `group`.

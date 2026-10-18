@@ -51,7 +51,17 @@ import { Switch } from "@/components/ui/switch"
 <Switch aria-label="Wi-Fi" />
 ```
 
-Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. Wrap the switch and its text in a `Label` so the text toggles it too.
+<OnlyBase base="base radix">
+
+Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. Set `disabled` to turn it off. Wrap the switch and its text in a `Label` so the text toggles it too.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultSelected` for an uncontrolled switch, or `isSelected` with `onChange` to control it. Set `isDisabled` to turn it off. Wrap the switch and its text in a `Label` so the text toggles it too.
+
+</OnlyBase>
 
 ## Examples
 
@@ -81,7 +91,17 @@ Shows disabled switches in the off and on states.
 
 ### Invalid
 
+<OnlyBase base="base radix">
+
 Marks the switch with `aria-invalid` to show an error state.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Marks the switch with `isInvalid` to show an error state.
+
+</OnlyBase>
 
 <ComponentPreview name="switch-invalid" />
 
@@ -93,9 +113,30 @@ Marks the switch with `aria-invalid` to show an error state.
 
 The switch track and its sliding thumb.
 
+<OnlyBase base="base radix">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "default"` | `"default"` | Sets the switch size: `default` or the smaller `sm`. |
+| `checked` | `boolean` | — | The controlled state. Pass it with `onCheckedChange`. |
+| `defaultChecked` | `boolean` | `false` | Whether the switch starts on. |
+| `onCheckedChange` | `(checked: boolean) => void` | — | Called when the switch is toggled. |
+| `disabled` | `boolean` | `false` | Ignores clicks and keyboard presses. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` | Sets the switch size: `default` or the smaller `sm`. |
+| `isSelected` | `boolean` | — | The controlled state. Pass it with `onChange`. |
+| `defaultSelected` | `boolean` | `false` | Whether the switch starts on. |
+| `onChange` | `(isSelected: boolean) => void` | — | Called when the switch is toggled. |
+| `isDisabled` | `boolean` | `false` | Ignores clicks and keyboard presses. |
+| `isInvalid` | `boolean` | `false` | Shows the error state. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -106,7 +147,7 @@ Also accepts the props of the primitive part it wraps.
 - Renders with the `switch` role and `aria-checked`.
 - Give it a name with `aria-label` or by wrapping it in a `Label`.
 - `Space` toggles the focused switch.
-- A disabled switch sets `aria-disabled` and ignores clicks.
+- A disabled switch ignores clicks and keyboard presses.
 
 ## Notes
 

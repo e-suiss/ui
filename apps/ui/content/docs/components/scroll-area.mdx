@@ -45,6 +45,7 @@ npm install @base-ui/react
 
 ```tsx
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 ```
 
 ```tsx
@@ -61,7 +62,19 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 </ScrollArea>
 ```
 
-Give `ScrollArea` a fixed height or width with `className` so its content can overflow. Children render inside the viewport. For horizontal scrolling, make the content wider than the area (for example with `w-max`) and include `ScrollBar` with `orientation="horizontal"`.
+Give `ScrollArea` a fixed height or width with `className` so its content can overflow. Children render inside the viewport.
+
+<OnlyBase base="base radix">
+
+For horizontal scrolling, make the content wider than the area (for example with `w-max`) and include `ScrollBar` with `orientation="horizontal"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The viewport scrolls natively and shows the browser's thin scrollbars, tinted with the `border` color. For horizontal scrolling, make the content wider than the area (for example with `w-max`). `ScrollBar` renders nothing in this base; it is kept so code written for the other bases still compiles.
+
+</OnlyBase>
 
 ## Examples
 
@@ -84,9 +97,21 @@ A row of album covers that scrolls sideways with a horizontal scrollbar.
 
 ### ScrollArea
 
+<OnlyBase base="base radix">
+
 The root that renders the viewport, the vertical scrollbar and the corner.
 
 Also accepts the props of the primitive part it wraps.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The root that renders a natively scrolling viewport.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
 
 </ApiPart>
 
@@ -94,22 +119,64 @@ Also accepts the props of the primitive part it wraps.
 
 ### ScrollBar
 
+<OnlyBase base="base radix">
+
 A scrollbar track and thumb for one orientation, vertical by default.
 
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | The direction the scrollbar controls. |
+
 Also accepts the props of the primitive part it wraps.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Renders nothing. The viewport uses the browser's native scrollbars.
+
+</OnlyBase>
 
 </ApiPart>
 
 ## Accessibility
 
-- The viewport is focusable, so keyboard users can Tab to it and scroll with the arrow keys.
+<OnlyBase base="base radix">
+
+- The viewport is focusable while its content overflows, so keyboard users can Tab to it and scroll with the arrow keys.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- The viewport is always focusable, so keyboard users can Tab to it and scroll with the arrow keys.
+
+</OnlyBase>
+
 - Focus is shown with the standard focus ring around the viewport.
+
+<OnlyBase base="base radix">
+
 - The custom scrollbars are presentational; native scrolling by wheel, touch and keyboard still works.
+
+</OnlyBase>
 
 ## Notes
 
+<OnlyBase base="base radix">
+
 - Styling hooks: `data-slot` values `scroll-area`, `scroll-area-viewport`, `scroll-area-scrollbar` and `scroll-area-thumb`. Scrollbars expose `data-orientation`.
 - The thumb uses the `border` color.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+- Styling hooks: `data-slot` values `scroll-area` and `scroll-area-viewport`.
+- The native scrollbar thumb uses the `border` color.
+
+</OnlyBase>
+
 - The viewport inherits the root's border radius, so rounded containers clip their content.
 
 </Only>
