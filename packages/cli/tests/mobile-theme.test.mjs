@@ -11,12 +11,14 @@ import {
 } from "../lib/color.mjs"
 import {
   applyThemeOptions,
+  keepColors,
   menuColorsOf,
   paletteOf,
   radiusFactor,
   themeOptionsFor,
 } from "../lib/mobile/theme.mjs"
 
+const UNDEFINED_ENTRY = /^\s+\w+: undefined,$/m
 const BACKGROUND_ENTRY = /\n\s*background: "[^"]*",/
 const MOBILE = path.join(import.meta.dirname, "../../mobile")
 const THEMES = JSON.parse(
@@ -274,4 +276,67 @@ describe("custom primary", () => {
     expect(options.palette.light.primary).toBe(color)
     expect(options.palette.light.background).toBeUndefined()
   })
+})
+
+describe("NativeWind opacity tokens", () => {
+  it("follows the themed colors", () => {
+    const palette = paletteOf(THEMES, {
+      baseColor: "zinc",
+      theme: "emerald",
+    })
+    const next = applyThemeOptions(source("nativewind-css"), "nativewind-css", {
+      palette: withPrimary(palette, "#ff0080"),
+    })
+    expect(next).toContain("--primary: #ff0080;")
+    expect(next).toContain("--primary-10: rgba(255, 0, 128, 0.1);")
+    expect(next).toContain("--ring-50: rgba(255, 0, 128, 0.5);")
+    expect(next).not.toContain("rgba(0, 113, 227")
+    expect(next).not.toContain("rgba(41, 151, 255")
+  })
+})
+
+describe("a base color without a palette", () => {
+  it.each(["default-translucent", "inverted"])(
+    "writes no undefined values with %s menus",
+    async (menuColor) => {
+      const preset = encodePreset({
+        baseColor: "gray",
+        theme: "violet",
+        menuColor,
+      })
+      const options = await themeOptionsFor({ preset }, async () => THEMES, OWN)
+      const count = (text) => text.split("undefined").length
+      for (const format of Object.keys(FILES)) {
+        const text = source(format)
+        expect(count(applyThemeOptions(text, format, options)), format).toBe(
+          count(text)
+        )
+      }
+    }
+  )
+})
+
+describe("keepColors", () => {
+  it.each(["uniwind", "nativewind-css", "stylesheet", "swift", "kotlin"])(
+    "carries the %s colors over to a new style",
+    (format) => {
+      const palette = paletteOf(THEMES, { baseColor: "stone", theme: "rose" })
+      const current = applyThemeOptions(source(format), format, { palette })
+      expect(current).not.toBe(source(format))
+      expect(keepColors(source(format), current, format)).toBe(current)
+    }
+  )
+})
+
+describe("preset StyleSheet themes", () => {
+  it.each(["vega", "nova", "maia", "lyra", "mira", "luma", "sera", "rhea"])(
+    "gives %s spreadable shadows",
+    (style) => {
+      const text = readFileSync(
+        path.join(MOBILE, `styles/presets/${style}/theme.ts`),
+        "utf8"
+      )
+      expect(text).not.toMatch(UNDEFINED_ENTRY)
+    }
+  )
 })

@@ -71,11 +71,12 @@ function hexOf(channels) {
     .join("")
 }
 
-function cssColor(value) {
+function cssColor(value, opacity = 1) {
   const { channels, alpha } = parseColor(value)
-  return alpha === 1
+  const combined = round(alpha * opacity)
+  return combined === 1
     ? `#${hexOf(channels)}`
-    : `rgba(${channels.join(", ")}, ${alpha})`
+    : `rgba(${channels.join(", ")}, ${combined})`
 }
 
 function swiftColor(value) {
@@ -119,14 +120,16 @@ function replaceInBlock(text, start, end, replace) {
 }
 
 function replaceEntries(body, colors, pattern, format) {
-  return Object.entries(colors).reduce(
-    (current, [name, value]) =>
-      current.replace(
-        pattern(name),
-        (_match, head, tail = "") => `${head}${format(value)}${tail}`
-      ),
-    body
-  )
+  return Object.entries(colors ?? {})
+    .filter(([, value]) => typeof value === "string")
+    .reduce(
+      (current, [name, value]) =>
+        current.replace(
+          pattern(name),
+          (_match, head, tail = "") => `${head}${format(value)}${tail}`
+        ),
+      body
+    )
 }
 
 function cssVariable(prefix) {
@@ -141,6 +144,16 @@ function kotlinEntry(name) {
   return new RegExp(
     `(\\n\\s*${escapeRegExp(camelCase(name))} = )Color\\([^)]*\\)(?:\\.copy\\(alpha = [^)]*\\))?(,)`
   )
+}
+
+const OPACITY_TOKEN = /(--([\w-]+?)-(\d{1,3}):\s*)[^;]+(;)/g
+
+function withOpacityTokens(body, colors = {}) {
+  return body.replace(OPACITY_TOKEN, (match, head, name, percent, tail) => {
+    const value = colors[name]
+    if (typeof value !== "string") return match
+    return `${head}${cssColor(value, Number(percent) / 100)}${tail}`
+  })
 }
 
 function scaleNumbers(body, pattern, factor) {
@@ -176,13 +189,13 @@ const WRITERS = {
   },
   "nativewind-css"(text, { palette }) {
     if (!palette) return text
-    let next = replaceInBlock(text, ":root {", "\n  }", (body) =>
-      replaceEntries(body, palette.light, cssVariable(""), cssColor)
-    )
-    next = replaceInBlock(next, ".dark:root {", "\n  }", (body) =>
-      replaceEntries(body, palette.dark, cssVariable(""), cssColor)
-    )
-    return next
+    const block = (colors) => (body) =>
+      withOpacityTokens(
+        replaceEntries(body, colors, cssVariable(""), cssColor),
+        colors
+      )
+    const next = replaceInBlock(text, ":root {", "\n  }", block(palette.light))
+    return replaceInBlock(next, ".dark:root {", "\n  }", block(palette.dark))
   },
   "nativewind-config"(text, { factor }) {
     if (factor === 1) return text
@@ -216,8 +229,9 @@ const WRITERS = {
   swift(text, { palette, factor }) {
     let next = text
     if (palette) {
-      for (const name of Object.keys(palette.light)) {
-        const dark = palette.dark[name] ?? palette.light[name]
+      for (const name of Object.keys(palette.light ?? {})) {
+        const dark = palette.dark?.[name] ?? palette.light[name]
+        if (typeof palette.light[name] !== "string") continue
         next = next.replace(
           new RegExp(
             `(public static let ${escapeRegExp(camelCase(name))} = Color\\.adaptive\\(light: )[^\\n]*`
@@ -271,6 +285,7 @@ const MENU_SOURCES = {
 }
 
 function withAlpha(value, factor) {
+  if (typeof value !== "string") return value
   const oklch = value.match(OKLCH_COLOR)
   if (!oklch) return value
   const alpha = round(fraction(oklch[4]) * factor)
@@ -287,15 +302,25 @@ export function menuColorsOf(
   return Object.fromEntries(
     MODES.map((mode) => {
       const source =
-        colors[inverted ? MODES.find((other) => other !== mode) : mode]
-      const menu = Object.fromEntries(
-        Object.entries(MENU_SOURCES).map(([name, from]) => [name, source[from]])
-      )
-      menu["menu-accent"] = source[bold ? "primary" : "accent"]
-      menu["menu-accent-foreground"] =
-        source[bold ? "primary-foreground" : "accent-foreground"]
+        colors?.[inverted ? MODES.find((other) => other !== mode) : mode] ?? {}
+      const menu = {
+        ...Object.fromEntries(
+          Object.entries(MENU_SOURCES).map(([name, from]) => [
+            name,
+            source[from],
+          ])
+        ),
+        "menu-accent": source[bold ? "primary" : "accent"],
+        "menu-accent-foreground":
+          source[bold ? "primary-foreground" : "accent-foreground"],
+      }
       if (translucent) menu.menu = withAlpha(menu.menu, TRANSLUCENT_ALPHA)
-      return [mode, menu]
+      return [
+        mode,
+        Object.fromEntries(
+          Object.entries(menu).filter(([, value]) => typeof value === "string")
+        ),
+      ]
     })
   )
 }
@@ -340,6 +365,64 @@ export async function themeOptionsFor(options, fetchThemes, ownColors) {
     factor: preset ? radiusFactor(preset.radius) : 1,
     preset,
   }
+}
+
+const COLOR_LINES = {
+  uniwind: {
+    blocks: [
+      ["@variant light {", "}"],
+      ["@variant dark {", "}"],
+    ],
+    line: /^(\s*--color-[\w-]+):.*$/gm,
+  },
+  "nativewind-css": {
+    blocks: [
+      [":root {", "\n  }"],
+      [".dark:root {", "\n  }"],
+    ],
+    line: /^(\s*--[\w-]+):\s*(?:#|rgba?\().*$/gm,
+  },
+  stylesheet: {
+    blocks: [
+      ["const light = {", "\n}"],
+      ["const dark: ThemeColors = {", "\n}"],
+    ],
+    line: /^(\s*\w+): "(?:#|rgba?\().*$/gm,
+  },
+  swift: {
+    blocks: [["public enum EsuissColor {", "\n}"]],
+    line: /^(\s*public static let \w+) = Color\.adaptive\(.*$/gm,
+  },
+  kotlin: {
+    blocks: [
+      ["val LightColors = Colors(", "\n)"],
+      ["val DarkColors = Colors(", "\n)"],
+    ],
+    line: /^(\s*\w+) = Color\(.*$/gm,
+  },
+}
+
+function blockOf(text, start, end) {
+  const from = text.indexOf(start)
+  if (from === -1) return ""
+  const to = text.indexOf(end, from + start.length)
+  return to === -1 ? "" : text.slice(from + start.length, to)
+}
+
+export function keepColors(fresh, current, format) {
+  const rules = COLOR_LINES[format]
+  if (!rules) return fresh
+  return rules.blocks.reduce((next, [start, end]) => {
+    const kept = new Map(
+      [...blockOf(current, start, end).matchAll(rules.line)].map((match) => [
+        match[1],
+        match[0],
+      ])
+    )
+    return replaceInBlock(next, start, end, (body) =>
+      body.replace(rules.line, (line, key) => kept.get(key) ?? line)
+    )
+  }, fresh)
 }
 
 export function themed(text, format, themeOptions) {
