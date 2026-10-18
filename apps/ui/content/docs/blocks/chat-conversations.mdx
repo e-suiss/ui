@@ -71,7 +71,11 @@ Typing status is announced, and icon-only buttons are labeled. The composer inpu
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 Composes `Screen`, `Header`, `SwipeActions` from the interactions, `Avatar`, `Message`, `Bubble`, `MessageScroller`, `InputGroup`, `Button` and `BottomBar`. Tapping a row opens the thread with a back button, video call and details actions, and a composer. Sending a message shows a typing indicator followed by a sample reply. Swiping a row reveals a Delete action.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks chat-conversations --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -231,8 +239,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Interactions/SwipeActions.swift" />
 
 5. Add the files to your app target.
@@ -306,6 +312,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { ChatConversations } from "@/components/blocks/chat-conversations"
 ```
@@ -314,6 +322,41 @@ import { ChatConversations } from "@/components/blocks/chat-conversations"
 <ChatConversations />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct ChatConversationsExample: View {
+  var body: some View {
+    ChatConversations()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.ChatConversations
+
+@Composable
+fun ChatConversationsExample() {
+    ChatConversations()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `THREADS` and `REPLIES` with your conversations and drop the canned replies. Wire `onSend`, `onNewMessage`, `onAttach`, `onVideoCall`, `onDetails` and `onDelete` to your messaging backend.
+
+</Only>
 
 </Only>

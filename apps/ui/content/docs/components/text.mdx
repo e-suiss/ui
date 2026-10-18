@@ -9,9 +9,13 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-text--default" />
 
+<Only platform="rn">
+
 `Text` renders a React Native `Text` with one of twelve typography variants: `default`, `h1`–`h4`, `p`, `blockquote`, `code`, `lead`, `large`, `small` and `muted`. Heading variants also set the `heading` role.
 
 It reads `TextClassContext`, so components such as `Button` can pass a text color and size down to any `Text` inside them.
+
+</Only>
 
 ## Installation
 
@@ -149,6 +153,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Text } from "@/components/ui/text"
 ```
@@ -157,9 +163,45 @@ import { Text } from "@/components/ui/text"
 <Text>The quick brown fox jumps over the lazy dog.</Text>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct TextExample: View {
+  var body: some View {
+    Text("The quick brown fox jumps over the lazy dog.")
+      .textVariant(.default)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.Text
+
+@Composable
+fun TextExample() {
+    Text("The quick brown fox jumps over the lazy dog.")
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Pick a `variant` for the role of the text, and add classes through `className` for one-off changes.
 
 Use the `render` prop to render a different component with the same classes. `TextClassContext` is exported so your own components can style nested `Text` the same way.
+
+</Only>
 
 ## Examples
 
@@ -251,6 +293,8 @@ The text element with typography variants.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `h1` to `h4` set `role="heading"`, so VoiceOver and TalkBack can navigate by heading.
@@ -260,5 +304,7 @@ The text element with typography variants.
 
 - Colors use the `text-foreground` and `text-muted-foreground` tokens; `code` uses `bg-muted` and `blockquote` a `border-border` start border.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

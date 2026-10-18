@@ -71,7 +71,11 @@ The label column sizes itself to the longest name. Keyboard users can focus the 
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `BarChart` with `layout="vertical"`, so categories run down a `YAxis` and bars extend to the right, which leaves room for longer names. Each bar gets its color from `chartConfig` through a `Cell`, and the axis labels come from the same config.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts bar-chart-horizontal --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BarChartHorizontal } from "@/components/charts/bar-chart-horizontal"
 ```
@@ -229,6 +237,41 @@ import { BarChartHorizontal } from "@/components/charts/bar-chart-horizontal"
 <BarChartHorizontal />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BarHorizontalExample: View {
+  var body: some View {
+    BarChartHorizontal()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.BarChartHorizontal
+
+@Composable
+fun BarHorizontalExample() {
+    BarChartHorizontal()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your categories and values, and add a matching entry with a label and color to `chartConfig` for each category. The component takes no props.
+
+</Only>
 
 </Only>

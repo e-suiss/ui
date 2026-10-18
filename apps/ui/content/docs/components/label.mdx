@@ -98,7 +98,11 @@ Also accepts the props of `React.ComponentProps<"label">`.
 
 <NativeExample id="components-label--default" />
 
+<Only platform="rn">
+
 `Label` renders a `Text` inside a `Pressable` row. The pressable accepts `onPress`, `onLongPress`, `onPressIn` and `onPressOut`, so pressing the label can toggle or focus the control next to it. A disabled label is dimmed to 50% opacity.
+
+</Only>
 
 ## Installation
 
@@ -208,8 +212,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -242,6 +244,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Label } from "@/components/ui/label"
 ```
@@ -250,15 +254,54 @@ import { Label } from "@/components/ui/label"
 <Label>Your email address</Label>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LabelExample: View {
+  var body: some View {
+    FieldLabel("Your email address")
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.Label
+
+@Composable
+fun LabelExample() {
+    Label("Your email address")
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Set a `nativeID` on the label and point the control's `accessibilityLabelledBy` at it, so screen readers read the label with the control.
 
 For a checkbox or switch, pass an `onPress` that toggles the control, which gives a larger touch target. Inside a `Field`, use `FieldLabel` instead.
+
+</Only>
 
 ## Examples
 
 ### With input
 
+<Only platform="rn">
+
 A label linked to an input through `nativeID` and `accessibilityLabelledBy`.
+
+</Only>
 
 <NativeExample id="components-label--with-input" />
 
@@ -326,6 +369,8 @@ Overloads: `Label(content)`, `Label(text)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The label text reports its `disabled` state in `accessibilityState`.
@@ -335,5 +380,7 @@ Overloads: `Label(content)`, `Label(text)`.
 
 - Text uses the `text-foreground` token, and `opacity-50` when disabled.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ The center text is hard-coded and not derived from the value, so update both tog
 
 </NativeExample>
 
+<Only platform="rn swift">
+
 A `RadialBarChart` drawn from 225 to -45 degrees, with one value on a 0 to 100 `PolarAngleAxis` over a tinted track. The "16 / 25" count and caption are `Text` layered in the center. Nothing is interactive.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts radial-chart-progress --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadialChartProgress } from "@/components/charts/radial-chart-progress"
 ```
@@ -229,6 +237,41 @@ import { RadialChartProgress } from "@/components/charts/radial-chart-progress"
 <RadialChartProgress />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadialProgressExample: View {
+  var body: some View {
+    RadialChartProgress()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadialChartProgress
+
+@Composable
+fun RadialProgressExample() {
+    RadialChartProgress()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props.
+
+</Only>
 
 </Only>

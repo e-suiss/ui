@@ -71,7 +71,11 @@ Inputs use the `username` and `current-password` autocomplete values so password
 
 </NativeExample>
 
+<Only platform="rn">
+
 A sign-in screen inside a `KeyboardScrollView`. The email `Input` comes first; once a valid address is submitted, the password field appears below it and takes focus. Invalid input shakes the form and shows an error. It also has a Remember me `Checkbox` with a `Label`, a Forgot password link, a create account link, and a `Spinner` while signing in, followed by a welcome view with an `Avatar` and a Sign out link.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks login-account --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -221,8 +229,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Spinner.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -278,6 +284,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LoginAccount } from "@/components/blocks/login-account"
 ```
@@ -285,6 +293,37 @@ import { LoginAccount } from "@/components/blocks/login-account"
 ```tsx
 <LoginAccount />
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LoginAccountExample: View {
+  var body: some View {
+    LoginAccount()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.LoginAccount
+
+@Composable
+fun LoginAccountExample() {
+    LoginAccount()
+}
+```
+
+</Only>
 
 Wire `onSubmit` (receives the email and password) to your auth service, and `onForgotPassword` and `onCreateAccount` to your navigation. The sign-in delay and the success view are simulated in the component.
 

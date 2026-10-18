@@ -171,7 +171,11 @@ Styling hooks: `data-slot="picker"`, `picker-group`, `picker-item` and `picker-s
 
 <NativeExample id="patterns-picker--default" />
 
+<Only platform="rn">
+
 `Picker` composes `Select`: a `SelectTrigger` showing the current value and a `SelectContent` popup with the options. The selected option shows a check mark.
+
+</Only>
 
 Use it to choose one value from a short or grouped list in a form.
 
@@ -207,7 +211,11 @@ npx @esuiss/ui@latest add patterns picker --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Select](/docs/components/select).
+
+</Only>
 
 ### Manual
 
@@ -289,8 +297,6 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 5. Add the files to your app target.
@@ -344,17 +350,152 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
-```
+<Only platform="rn">
 
 ```tsx
-<PickerDemo />
+import * as React from "react"
+import { View } from "react-native"
+import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
+import { Text } from "@/components/ui/text"
+
+function PickerDemo() {
+  const [value, setValue] = React.useState<string>()
+  return (
+    <View className="gap-2">
+      <Picker
+        value={value}
+        onValueChange={setValue}
+        placeholder="Select a fruit"
+        accessibilityLabel="Fruit"
+        className="w-56"
+      >
+        <PickerGroup label="Fruits">
+          <PickerItem value="cherry">Cherry</PickerItem>
+          <PickerItem value="banana">Banana</PickerItem>
+          <PickerItem value="mango">Mango</PickerItem>
+        </PickerGroup>
+        <PickerSeparator />
+        <PickerGroup label="Vegetables">
+          <PickerItem value="carrot">Carrot</PickerItem>
+          <PickerItem value="spinach" disabled>
+            Spinach
+          </PickerItem>
+        </PickerGroup>
+      </Picker>
+      <Text className="text-sm text-muted-foreground">
+        Selected: {value ?? "none"}
+      </Text>
+    </View>
+  )
+}
+
+export function PickerExample() {
+  return (
+    <PickerDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PickerDemo: View {
+  @State private var value: String?
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      OptionPicker(selection: $value, placeholder: "Select a fruit") {
+        OptionPickerGroup("Fruits") {
+          OptionPickerItem("Cherry", value: "cherry")
+          OptionPickerItem("Banana", value: "banana")
+          OptionPickerItem("Mango", value: "mango")
+        }
+        OptionPickerSeparator()
+        OptionPickerGroup("Vegetables") {
+          OptionPickerItem("Carrot", value: "carrot")
+          OptionPickerItem("Spinach", value: "spinach")
+            .disabled(true)
+        }
+      }
+      .frame(width: 224)
+      .accessibilityLabel(Text("Fruit"))
+      Text(verbatim: "Selected: \(value ?? "none")")
+        .textStyle(.sm)
+        .foregroundStyle(EsuissColor.mutedForeground)
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.patterns.Picker
+import com.esuiss.ui.patterns.PickerGroup
+import com.esuiss.ui.patterns.PickerItem
+import com.esuiss.ui.patterns.PickerSeparator
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun PickerDefault() {
+    var value by rememberSaveable { mutableStateOf<String?>(null) }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Picker(
+            value = value,
+            onValueChange = { value = it },
+            modifier = Modifier.width(224.dp).semantics { contentDescription = "Fruit" },
+            placeholder = "Select a fruit",
+        ) {
+            PickerGroup(label = "Fruits") {
+                PickerItem("cherry", "Cherry")
+                PickerItem("banana", "Banana")
+                PickerItem("mango", "Mango")
+            }
+            PickerSeparator()
+            PickerGroup(label = "Vegetables") {
+                PickerItem("carrot", "Carrot")
+                PickerItem("spinach", "Spinach", enabled = false)
+            }
+        }
+        Text("Selected: ${value ?: "none"}", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
 
 List `PickerItem`s as children, optionally inside `PickerGroup`s separated by `PickerSeparator`. The picker collects the items from its children to show the selected label, or you can pass `items` directly.
 
+</Only>
+
+<Only platform="rn">
+
 Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `placeholder` shows while nothing is selected.
+
+</Only>
 
 ## Examples
 
@@ -543,6 +684,8 @@ Takes no parameters.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Give the picker an `accessibilityLabel` or `accessibilityLabelledBy`, since the trigger shows only the value.
@@ -552,5 +695,7 @@ Takes no parameters.
 - The popup uses `bg-popover` with a subtle border that is stronger in dark mode.
 - The popup fades in and out, and respects the system reduce motion setting.
 - On iOS the popup renders in a full-window overlay so it appears above native screens.
+
+</Only>
 
 </Only>

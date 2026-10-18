@@ -101,7 +101,11 @@ npx @esuiss/ui@latest add blocks log-activity --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Collapsible](/docs/components/collapsible), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Collapsible](/docs/components/collapsible), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -235,8 +239,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -302,6 +304,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LogActivity } from "@/components/blocks/log-activity"
 ```
@@ -310,6 +314,41 @@ import { LogActivity } from "@/components/blocks/log-activity"
 <LogActivity />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LogActivityExample: View {
+  var body: some View {
+    LogActivity()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.LogActivity
+
+@Composable
+fun LogActivityExample() {
+    LogActivity()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `EVENTS` with your audit log and `KINDS` with your event types. Wire `onFilterChange`, `onExport` (receives the current filter) and `onNavigate` (receives the selected tab) to your app.
+
+</Only>
 
 </Only>

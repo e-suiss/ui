@@ -71,7 +71,11 @@ The last visible city can't be hidden, so the chart is never empty. Values outsi
 
 </NativeExample>
 
+<Only platform="rn">
+
 One line per visible city across twelve months. A `ToggleGroup` switches between average, high and low temperatures, and a row of `Toggle` chips shows or hides each city, keeping at least one on. Touching the plot reports the month through `onActiveIndexChange`, and the summary under the chart switches from each city's range to its value for that month. The lines animate with `animationDuration={650}` and `animationEasing="ease-in-out"`.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts line-chart-interactive --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
+
+</Only>
 
 ### Manual
 
@@ -203,8 +211,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -264,6 +270,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LineChartInteractive } from "@/components/charts/line-chart-interactive"
 ```
@@ -272,6 +280,41 @@ import { LineChartInteractive } from "@/components/charts/line-chart-interactive
 <LineChartInteractive />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LineInteractiveExample: View {
+  var body: some View {
+    LineChartInteractive()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.LineChartInteractive
+
+@Composable
+fun LineInteractiveExample() {
+    LineChartInteractive()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `CITIES` with your series and monthly values, and add a matching entry to `chartConfig` and `SWATCH` for each. The high and low values are derived in `temperature()`, so replace that with real data. The component takes no props.
+
+</Only>
 
 </Only>

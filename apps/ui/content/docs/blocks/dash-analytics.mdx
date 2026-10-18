@@ -71,7 +71,11 @@ The headline value is announced as you move through the chart, and the chart sup
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `Header`, `DropdownMenu` for picking the app, `ToggleGroup`, the `AreaChart` from `Chart`, `Item` rows and `TabBar`. Switching the metric or app redraws the chart, and dragging across the chart updates the headline value for that week. The other tabs show a placeholder section.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks dash-analytics --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Button](/docs/components/button), [Chart](/docs/components/chart), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+</Only>
 
 ### Manual
 
@@ -223,8 +231,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -300,6 +306,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { DashAnalytics } from "@/components/blocks/dash-analytics"
 ```
@@ -308,6 +316,41 @@ import { DashAnalytics } from "@/components/blocks/dash-analytics"
 <DashAnalytics />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct DashAnalyticsExample: View {
+  var body: some View {
+    DashAnalytics()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.DashAnalytics
+
+@Composable
+fun DashAnalyticsExample() {
+    DashAnalytics()
+}
+```
+
+</Only>
+
+<Only platform="rn swift">
+
 Replace `apps`, `metrics` and `regions` with your analytics data. Pass `onAppChange`, `onMetricChange` and `onNavigate` to sync the selections with your app.
+
+</Only>
 
 </Only>

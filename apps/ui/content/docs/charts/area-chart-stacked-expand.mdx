@@ -71,7 +71,11 @@ The tooltip shows the original values, not percentages; add a tooltip formatter 
 
 </NativeExample>
 
+<Only platform="rn">
+
 Desktop and mobile areas share one stack with `stackOffset="expand"`, so the chart shows the proportion of each series rather than raw totals. A value axis on the right reads 0%, 50% and 100%, and the tooltip lists both series.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts area-chart-stacked-expand --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { AreaChartStackedExpand } from "@/components/charts/area-chart-stacked-expand"
 ```
@@ -229,6 +237,41 @@ import { AreaChartStackedExpand } from "@/components/charts/area-chart-stacked-e
 <AreaChartStackedExpand />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AreaStackedExpandExample: View {
+  var body: some View {
+    AreaChartStackedExpand()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.AreaChartStackedExpand
+
+@Composable
+fun AreaStackedExpandExample() {
+    AreaChartStackedExpand()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and change each `dataKey` to match your fields. Rename the series or change their colors in `chartConfig`. The component takes no props.
+
+</Only>
 
 </Only>

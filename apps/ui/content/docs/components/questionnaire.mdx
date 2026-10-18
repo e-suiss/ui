@@ -361,9 +361,13 @@ Also accepts the props of `QuestionnaireNavigationProps`.
 
 <NativeExample id="components-questionnaire--default" />
 
+<Only platform="rn">
+
 `Questionnaire` is a `View` that tracks which question is active, collects answers and validates them. Each `QuestionnaireItem` is one question; only the active item is shown, and moving between items slides the content horizontally with a Reanimated keyframe that follows the layout direction.
 
 Items hold `QuestionnaireChoice` rows, which are `Pressable` radios or, with `multiple`, checkboxes, or a `QuestionnaireInput` for a typed answer. `QuestionnaireActions` holds the Previous, Skip, Next and Submit buttons, each of which only appears when it applies.
+
+</Only>
 
 ## Installation
 
@@ -397,7 +401,11 @@ npx @esuiss/ui@latest add questionnaire --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -493,8 +501,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -548,7 +554,10 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { Onboarding } from "@/components/blocks/onboarding"
 import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit } from "@/components/ui/questionnaire"
 ```
 
@@ -556,11 +565,207 @@ import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireT
 <Onboarding />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct QuestionnaireStoryActions: View {
+  var body: some View {
+    QuestionnaireActions {
+      QuestionnairePrevious()
+      QuestionnaireSkip()
+      QuestionnaireNext()
+      QuestionnaireSubmit()
+    }
+  }
+}
+
+struct QuestionnaireOnboarding: View {
+  var attempted = false
+
+  @State private var controller: QuestionnaireController
+  @State private var submitted: String?
+
+  init(defaultItem: String? = nil, attempted: Bool = false) {
+    self.attempted = attempted
+    _controller = State(initialValue: QuestionnaireController(
+      defaultItem: defaultItem,
+      defaultValues: ["team-size": ["small"]]
+    ))
+  }
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 16) {
+      Questionnaire(controller: controller) {
+        QuestionnaireProgress()
+        QuestionnaireItem(name: "role", required: true, invalid: attempted) {
+          QuestionnaireTitle("What best describes your role?")
+          QuestionnaireDescription("This helps us tailor the setup to your team.")
+          QuestionnaireChoices {
+            QuestionnaireChoice("Engineering", value: "engineering")
+            QuestionnaireChoice("Design", value: "design")
+            QuestionnaireChoice("Product", value: "product")
+            QuestionnaireChoice("Something else", value: "other")
+          }
+          QuestionnaireError()
+        }
+        QuestionnaireItem(name: "team-size") {
+          QuestionnaireTitle("How large is your team?")
+          QuestionnaireChoices {
+            QuestionnaireChoice("Just me", value: "solo")
+            QuestionnaireChoice("2 to 10 people", value: "small")
+            QuestionnaireChoice("11 to 50 people", value: "medium")
+            QuestionnaireChoice("More than 50 people", value: "large")
+          }
+          QuestionnaireError()
+        }
+        QuestionnaireItem(name: "company", required: true) {
+          QuestionnaireTitle("What is your company called?")
+          QuestionnaireInput("Acme Inc.")
+          QuestionnaireError("Enter a company name to continue.")
+        }
+        QuestionnaireStoryActions()
+      }
+      if let submitted {
+        Text(verbatim: submitted)
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.mutedForeground)
+          .accessibilityAddTraits(.updatesFrequently)
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .onAppear {
+      let controller = controller
+      controller.onSubmit = { answers in
+        let fields = controller.sequence.compactMap { name -> String? in
+          guard let value = answers[name]?.first else { return nil }
+          return "\"\(name)\":\"\(value)\""
+        }
+        submitted = "Submitted: {\(fields.joined(separator: ","))}"
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Questionnaire
+import com.esuiss.ui.components.QuestionnaireActions
+import com.esuiss.ui.components.QuestionnaireChoice
+import com.esuiss.ui.components.QuestionnaireChoices
+import com.esuiss.ui.components.QuestionnaireDescription
+import com.esuiss.ui.components.QuestionnaireError
+import com.esuiss.ui.components.QuestionnaireInput
+import com.esuiss.ui.components.QuestionnaireItem
+import com.esuiss.ui.components.QuestionnaireNext
+import com.esuiss.ui.components.QuestionnairePrevious
+import com.esuiss.ui.components.QuestionnaireProgress
+import com.esuiss.ui.components.QuestionnaireSkip
+import com.esuiss.ui.components.QuestionnaireSubmit
+import com.esuiss.ui.components.QuestionnaireTitle
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.rememberQuestionnaireState
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+fun questionnaireJson(values: Map<String, List<String>>): String =
+    values.entries.joinToString(",", "{", "}") { (key, list) ->
+        "\"$key\":" + list.joinToString(",", "[", "]") { "\"$it\"" }
+    }
+
+@Composable
+fun QuestionnaireActionsRow() {
+    QuestionnaireActions {
+        QuestionnairePrevious()
+        QuestionnaireSkip()
+        QuestionnaireNext()
+        QuestionnaireSubmit()
+    }
+}
+
+@Composable
+fun QuestionnaireResult(values: String?) {
+    if (values == null) return
+    Text(
+        "Submitted: $values",
+        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        style = Typography.sm,
+        color = EsuissTheme.colors.mutedForeground,
+    )
+}
+
+@Composable
+fun QuestionnaireOnboarding(defaultItem: String? = null, attempted: Boolean = false) {
+    var values by rememberSaveable { mutableStateOf<String?>(null) }
+    val state = rememberQuestionnaireState(defaultItem = defaultItem)
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Questionnaire(state = state, onSubmit = { values = questionnaireJson(it) }) {
+            QuestionnaireProgress()
+            QuestionnaireItem(name = "role", required = true, invalid = attempted) {
+                QuestionnaireTitle("What best describes your role?")
+                QuestionnaireDescription("This helps us tailor the setup to your team.")
+                QuestionnaireChoices {
+                    QuestionnaireChoice("Engineering", value = "engineering")
+                    QuestionnaireChoice("Design", value = "design")
+                    QuestionnaireChoice("Product", value = "product")
+                    QuestionnaireChoice("Something else", value = "other")
+                }
+                QuestionnaireError()
+            }
+            QuestionnaireItem(name = "team-size") {
+                QuestionnaireTitle("How large is your team?")
+                QuestionnaireChoices {
+                    QuestionnaireChoice("Just me", value = "solo")
+                    QuestionnaireChoice("2 to 10 people", value = "small", defaultChecked = true)
+                    QuestionnaireChoice("11 to 50 people", value = "medium")
+                    QuestionnaireChoice("More than 50 people", value = "large")
+                }
+                QuestionnaireError()
+            }
+            QuestionnaireItem(name = "company", required = true) {
+                QuestionnaireTitle("What is your company called?")
+                QuestionnaireInput(placeholder = "Acme Inc.")
+                QuestionnaireError("Enter a company name to continue.")
+            }
+            QuestionnaireActionsRow()
+        }
+        QuestionnaireResult(values)
+    }
+}
+```
+
+</Only>
+
 Give every `QuestionnaireItem` a unique `name`; answers are collected under that name. Mark items `required` to block moving on without an answer; optional items show the Skip button. `QuestionnaireError` appears only when the item is invalid and has a default message you can replace.
 
 The active item is uncontrolled through `defaultItem` or controlled with `item` and `onItemChange`. `onSubmit` receives the collected values: a string for single-answer items and a string array for `multiple` items.
 
+<Only platform="rn">
+
 `QuestionnaireChoice` supports `defaultChecked`, or controlled `checked` with `onCheckedChange`. `QuestionnaireInput` takes a `type` that sets the keyboard, autocomplete and secure entry. `QuestionnaireProgress` shows "Question 1 of 3" by default and accepts a render function. Use `useQuestionnaireContext` to build custom controls, or `useQuestionnaire` for the underlying state.
+
+</Only>
 
 ## Examples
 
@@ -1588,6 +1793,8 @@ Validates all questions and calls `onSubmit` on the last step.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Each item has the `radiogroup` role, or `group` when `multiple`, and is labelled by its `QuestionnaireTitle`, which has the `heading` role.
@@ -1603,5 +1810,7 @@ Validates all questions and calls `onSubmit` on the last step.
 - Selected choices use `border-primary` and `bg-primary`; invalid items use `border-destructive`.
 - The slide direction flips for right-to-left layouts.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

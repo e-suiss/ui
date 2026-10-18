@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-pin-pad--default" />
 
+<Only platform="rn">
+
 `PinPad` combines a row of dots that fill as digits are entered with a `Keypad` for input. The length is between 4 and 8 digits. Each key press plays a selection haptic, and switching to the error state turns the dots red, plays an error haptic and shakes the row with Reanimated. Haptics play when a haptics adapter is provided through `HapticsContext`.
+
+</Only>
 
 An optional biometric key appears in the bottom-left corner of the keypad when `onBiometric` is set, and the delete key is disabled while nothing is entered.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add pin-pad --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Keypad](/docs/components/keypad). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Keypad](/docs/components/keypad). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -153,8 +161,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -200,6 +206,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PinPad } from "@/components/ui/pin-pad"
 ```
@@ -208,9 +216,79 @@ import { PinPad } from "@/components/ui/pin-pad"
 <PinPad />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PinPadDemo: View {
+  let length: Int
+  let error: Bool
+  let biometric: Bool
+
+  @State private var value: String
+
+  init(value: String = "", length: Int = 6, error: Bool = false, biometric: Bool = false) {
+    self.length = length
+    self.error = error
+    self.biometric = biometric
+    _value = State(initialValue: value)
+  }
+
+  var body: some View {
+    PinPad(value: $value, length: length, error: error, onBiometric: biometric ? {} : nil)
+      .frame(maxWidth: .infinity)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.PinPad
+
+@Composable
+fun PinPadExample() {
+    PinPadCentered { PinPad() }
+}
+
+@Composable
+fun PinPadCentered(content: @Composable () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+    ) {
+        content()
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
+
 Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `onComplete` fires with the full code once the last digit is entered; check the code there, set `error` when it is wrong and clear the value to let the user try again.
 
+</Only>
+
+<Only platform="rn">
+
 Pass `onBiometric` to show the biometric key, with `biometricIcon` and `biometricLabel` to match the method in use. Style the dots and keypad separately with `dotsClassName` and `keypadClassName`.
+
+</Only>
 
 ## Examples
 
@@ -252,7 +330,11 @@ A biometric key with a face icon and a matching label.
 
 ### Four digits
 
+<Only platform="rn">
+
 A four-digit code with `length={4}`.
+
+</Only>
 
 <NativeExample id="components-pin-pad--four-digits" />
 
@@ -334,6 +416,8 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The dots row is a single element labeled by `dotsLabel`, so screen readers hear progress without the digits.
@@ -344,5 +428,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 ## Notes
 
 - Uses `bg-foreground` for filled dots, `border-input` for empty ones and `bg-destructive` in the error state; colors follow the system appearance.
+
+</Only>
 
 </Only>

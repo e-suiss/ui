@@ -67,7 +67,11 @@ Edit `groups`; each row has a label, icon, tint and either a `toggle` key or a `
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A large-title `Header` sits over an `InputGroup` search field, an account `Item` with an `Avatar`, and inset `ItemGroup` lists of rows with tinted icons. Airplane Mode and Focus use a `Switch`; Wi-Fi, Bluetooth and the other rows show a detail value and a chevron. Typing filters the rows and shows a message when nothing matches.
+
+</Only>
 
 ## Installation
 
@@ -101,7 +105,11 @@ npx @esuiss/ui@latest add blocks settings-device --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -213,8 +221,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Switch.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -276,6 +282,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SettingsDevice } from "@/components/blocks/settings-device"
 ```
@@ -284,6 +292,41 @@ import { SettingsDevice } from "@/components/blocks/settings-device"
 <SettingsDevice />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SettingsDeviceExample: View {
+  var body: some View {
+    SettingsDevice()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.SettingsDevice
+
+@Composable
+fun SettingsDeviceExample() {
+    SettingsDevice()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `GROUPS` with your rows and the account details with your user. Use `onAccountPress` and `onRowPress`, which receives the row label, to navigate.
+
+</Only>
 
 </Only>

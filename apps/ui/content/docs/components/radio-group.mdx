@@ -139,7 +139,11 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-radio-group--default" />
 
+<Only platform="rn">
+
 `RadioGroup` is a `View` with the `radiogroup` role that holds the selected value. Each `RadioGroupItem` is a small round `Pressable` with the `radio` role; when checked it fills with the primary color and shows a dot. Items have an enlarged hit area so they are easy to press.
+
+</Only>
 
 ## Installation
 
@@ -271,8 +275,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -320,17 +322,164 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-```
+<Only platform="rn">
 
 ```tsx
-<RadioGroupDemo />
+import * as React from "react"
+import { View } from "react-native"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+const options = [
+  { value: "default", label: "Default" },
+  { value: "comfortable", label: "Comfortable" },
+  { value: "compact", label: "Compact" },
+]
+
+function RadioGroupDemo({
+  disabled = false,
+  disabledItem,
+}: {
+  disabled?: boolean
+  disabledItem?: string
+}) {
+  const [value, setValue] = React.useState("comfortable")
+  return (
+    <RadioGroup value={value} onValueChange={setValue} disabled={disabled}>
+      {options.map((option) => {
+        const isDisabled = disabled || option.value === disabledItem
+        return (
+          <View key={option.value} className="flex-row items-center gap-3">
+            <RadioGroupItem
+              value={option.value}
+              accessibilityLabelledBy={`radio-${option.value}`}
+              disabled={isDisabled}
+            />
+            <Label
+              nativeID={`radio-${option.value}`}
+              disabled={isDisabled}
+              onPress={() => setValue(option.value)}
+            >
+              {option.label}
+            </Label>
+          </View>
+        )
+      })}
+    </RadioGroup>
+  )
+}
+
+export function RadioGroupExample() {
+  return (
+    <RadioGroupDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadioGroupOption {
+  let value: String
+  let label: LocalizedStringKey
+}
+
+let radioGroupOptions = [
+  RadioGroupOption(value: "default", label: "Default"),
+  RadioGroupOption(value: "comfortable", label: "Comfortable"),
+  RadioGroupOption(value: "compact", label: "Compact"),
+]
+
+struct RadioGroupDemo: View {
+  var disabled = false
+  var disabledItem: String?
+
+  @State private var value = "comfortable"
+
+  var body: some View {
+    RadioGroup(selection: $value) {
+      ForEach(radioGroupOptions, id: \.value) { option in
+        RadioGroupItem(option.label, value: option.value)
+          .disabled(disabled || option.value == disabledItem)
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Label
+import com.esuiss.ui.components.RadioGroup
+import com.esuiss.ui.components.RadioGroupItem
+
+class RadioGroupOption(val value: String, val label: String, val description: String = "")
+
+val radioGroupOptions = listOf(
+    RadioGroupOption("default", "Default"),
+    RadioGroupOption("comfortable", "Comfortable"),
+    RadioGroupOption("compact", "Compact"),
+)
+
+@Composable
+fun Modifier.radioGroupTap(enabled: Boolean, onTap: () -> Unit): Modifier = clickable(
+    interactionSource = remember { MutableInteractionSource() },
+    indication = null,
+    enabled = enabled,
+    onClick = onTap,
+)
+
+@Composable
+fun RadioGroupDemo(disabled: Boolean = false, disabledItem: String? = null) {
+    var value by rememberSaveable { mutableStateOf("comfortable") }
+    RadioGroup(value = value, onValueChange = { value = it }, enabled = !disabled) {
+        radioGroupOptions.forEach { option ->
+            val isDisabled = disabled || option.value == disabledItem
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                RadioGroupItem(
+                    option.value,
+                    Modifier.semantics { contentDescription = option.label },
+                    enabled = !isDisabled,
+                )
+                Label(option.label, Modifier.radioGroupTap(!isDisabled) { value = option.value }, enabled = !isDisabled)
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Give every `RadioGroupItem` a unique `value`. Control the group with `value` and `onValueChange(value, details)`, or leave it uncontrolled with `defaultValue`. Values are generic, so they can be strings or other types.
 
 Put a `Label` next to each item and link it through `nativeID` and `accessibilityLabelledBy`. Set `disabled` on the group to disable all items, or on a single item. Set `invalid` on items to show the destructive border.
+
+</Only>
 
 ## Examples
 
@@ -459,6 +608,8 @@ A single radio button with its checked indicator.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The group has the `radiogroup` role and reports `disabled` in `accessibilityState`.
@@ -470,5 +621,7 @@ A single radio button with its checked indicator.
 - Selecting an item triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
 - Uses the `bg-primary`, `bg-primary-foreground` and `border-destructive` tokens, with `opacity-50` when disabled.
 - Light and dark colors follow the system appearance; in dark mode unchecked items drop the border and shadow.
+
+</Only>
 
 </Only>

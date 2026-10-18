@@ -118,7 +118,11 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-checkbox--default" />
 
+<Only platform="rn">
+
 `Checkbox` is a `Pressable` with the `checkbox` role that shows a check icon when checked and a minus icon when `indeterminate`. It has an enlarged hit area around the box so it is easy to tap.
+
+</Only>
 
 Use it for options that can be combined, such as terms acceptance or multi-select lists. For a single on/off setting that applies right away, use Switch.
 
@@ -154,7 +158,11 @@ npx @esuiss/ui@latest add checkbox --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -246,8 +254,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -293,17 +299,88 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-```
+<Only platform="rn">
 
 ```tsx
-<CheckboxDemo />
+import * as React from "react"
+import { Checkbox } from "@/components/ui/checkbox"
+
+function CheckboxDemo({ initial = false }: { initial?: boolean }) {
+  const [checked, setChecked] = React.useState(initial)
+  return <Checkbox checked={checked} onCheckedChange={setChecked} />
+}
+
+export function CheckboxExample() {
+  return (
+    <CheckboxDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct CheckboxExample: View {
+  var body: some View {
+    CheckboxDemo(initial: false)
+  }
+}
+
+struct CheckboxDemo: View {
+  @State private var checked: Bool
+
+  init(initial: Bool) {
+    _checked = State(initialValue: initial)
+  }
+
+  var body: some View {
+    Toggle(isOn: $checked) { EmptyView() }
+      .toggleStyle(.checkbox)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.components.Checkbox
+
+@Composable
+fun CheckboxExample() {
+    CheckboxDemo(initial = false)
+}
+
+@Composable
+fun CheckboxDemo(initial: Boolean) {
+    var checked by rememberSaveable { mutableStateOf(initial) }
+    Row {
+        Checkbox(checked, { checked = it })
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Use `checked` with `onCheckedChange` for controlled state, or `defaultChecked` for uncontrolled. Set `indeterminate` for a parent checkbox whose children are partly selected.
 
 Pair the checkbox with a `Label`: give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`. Set `invalid` to show a destructive border.
+
+</Only>
 
 ## Examples
 
@@ -315,7 +392,11 @@ Starts checked.
 
 ### With label
 
+<Only platform="rn kotlin">
+
 Linked to a `Label` that also toggles it.
+
+</Only>
 
 <NativeExample id="components-checkbox--with-label" />
 
@@ -412,6 +493,8 @@ The checkbox control, rendering the box and its check indicator.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Has the `checkbox` role with `checked` (or `mixed` when indeterminate) and `disabled` state.
@@ -421,5 +504,7 @@ The checkbox control, rendering the box and its check indicator.
 
 - Uses `bg-primary` when checked and `bg-background` with a translucent border when unchecked; in dark mode the unchecked box is filled instead of outlined.
 - Light and dark follow the system appearance.
+
+</Only>
 
 </Only>

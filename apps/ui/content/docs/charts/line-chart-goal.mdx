@@ -71,7 +71,11 @@ The value axis scales to the data only, so a goal far above or below every value
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 Seven days of steps drawn as a monotone line with dots, a value axis in thousands on the right and a labeled dashed `ReferenceLine` at `GOAL`. The tooltip formats the count with thousands separators.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts line-chart-goal --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LineChartGoal } from "@/components/charts/line-chart-goal"
 ```
@@ -229,6 +237,41 @@ import { LineChartGoal } from "@/components/charts/line-chart-goal"
 <LineChartGoal />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LineGoalExample: View {
+  var body: some View {
+    LineChartGoal()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.LineChartGoal
+
+@Composable
+fun LineGoalExample() {
+    LineChartGoal()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your daily values and set `GOAL`. The component takes no props.
+
+</Only>
 
 </Only>

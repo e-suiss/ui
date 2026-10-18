@@ -71,7 +71,11 @@ Highlighting works with a mouse over the slices, the bar or the list, but list r
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `Card` with a `ToggleGroup` that switches between phone and cloud storage, a stacked usage bar, a `PieChart` donut and a list of categories. Sizes come from the `STORAGE` record, and free space is the total minus what is used. Pressing a slice or a list row selects that category: its slice lifts outward, other segments in the bar dim, and the center text shows its size and share. Pressing it again returns to total used. The donut sets `isAnimationActive={false}` and draws without the enter animation.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts pie-chart-interactive --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+</Only>
 
 ### Manual
 
@@ -203,8 +211,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -264,6 +270,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PieChartInteractive } from "@/components/charts/pie-chart-interactive"
 ```
@@ -272,6 +280,41 @@ import { PieChartInteractive } from "@/components/charts/pie-chart-interactive"
 <PieChartInteractive />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PieInteractiveExample: View {
+  var body: some View {
+    PieChartInteractive()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.PieChartInteractive
+
+@Composable
+fun PieInteractiveExample() {
+    PieChartInteractive()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `STORAGE` with your devices, totals and per-category sizes, and keep `KINDS`, `chartConfig` and `SWATCH` in sync when adding categories. The component takes no props.
+
+</Only>
 
 </Only>

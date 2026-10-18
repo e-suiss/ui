@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-chip--default" />
 
+<Only platform="rn">
+
 `Chip` is a toggle rendered as a rounded `Pressable`. It switches between an unselected `bg-secondary` background and a selected `bg-foreground` fill, and shrinks slightly while pressed. It has `default` and `sm` sizes, an optional leading `icon`, and an optional trailing remove button when `onRemove` is set.
+
+</Only>
 
 `ChipGroup` manages selection for a set of chips: single selection by default, or several with `multiple`. It wraps chips onto new lines, or lays them out in a horizontal scroll view with `scrollable`.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add chip --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -153,8 +161,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -206,6 +212,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Chip, ChipGroup } from "@/components/ui/chip"
 ```
@@ -214,11 +222,111 @@ import { Chip, ChipGroup } from "@/components/ui/chip"
 <Chip>Open now</Chip>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct ChipExample: View {
+  var body: some View {
+    ChipToggleDemo(title: "Open now", initial: false)
+  }
+}
+
+struct ChipToggleDemo: View {
+  let title: LocalizedStringKey
+  var size: ChipSize?
+  var icon: Image?
+  var onRemove: (() -> Void)?
+
+  @State private var selected: Bool
+
+  init(
+    title: LocalizedStringKey,
+    initial: Bool,
+    size: ChipSize? = nil,
+    icon: Image? = nil,
+    onRemove: (() -> Void)? = nil
+  ) {
+    self.title = title
+    self.size = size
+    self.icon = icon
+    self.onRemove = onRemove
+    _selected = State(initialValue: initial)
+  }
+
+  var body: some View {
+    Chip(title, isSelected: $selected, size: size, icon: icon, onRemove: onRemove)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.esuiss.ui.components.Chip
+import com.esuiss.ui.components.ChipSize
+
+@Composable
+fun ChipItem(
+    text: String,
+    defaultSelected: Boolean = false,
+    size: ChipSize = ChipSize.Default,
+    enabled: Boolean = true,
+    icon: ImageVector? = null,
+    onRemove: (() -> Unit)? = null,
+) {
+    var selected by rememberSaveable { mutableStateOf(defaultSelected) }
+    Chip(
+        text,
+        selected = selected,
+        onSelectedChange = { selected = it },
+        size = size,
+        enabled = enabled,
+        icon = icon,
+        onRemove = onRemove,
+    )
+}
+
+@Composable
+fun ChipDefault() {
+    Column {
+        ChipItem("Open now")
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Use `selected` with `onSelectedChange`, or `defaultSelected`, on a standalone chip. Inside a `ChipGroup`, give each chip a `value` and control the group with `value`, `defaultValue` and `onValueChange` (arrays of values).
+
+</Only>
+
+<Only platform="rn kotlin">
 
 The group's `size` is passed to every chip unless a chip sets its own. Use `removeLabel` to localize the remove button's label.
 
+</Only>
+
+<Only platform="rn">
+
 `chipVariants` is also exported if you need the classes elsewhere.
+
+</Only>
 
 ## Examples
 
@@ -248,7 +356,11 @@ Chips with a remove button through `onRemove`.
 
 ### Controlled
 
+<Only platform="rn kotlin">
+
 A chip controlled with `selected` and `onSelectedChange`.
+
+</Only>
 
 <NativeExample id="components-chip--controlled" />
 
@@ -266,7 +378,11 @@ A group with `multiple` selection.
 
 ### Group uncontrolled
 
+<Only platform="rn swift">
+
 A group using `defaultValue`.
+
+</Only>
 
 <NativeExample id="components-chip--group-uncontrolled" />
 
@@ -428,6 +544,8 @@ Overloads: `Chip(text, value)`, `Chip(text, selected, onSelectedChange, size)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - A chip has the `togglebutton` role with `checked` state, or the `radio` role in a single-selection group.
@@ -437,5 +555,7 @@ Overloads: `Chip(text, value)`, `Chip(text, selected, onSelectedChange, size)`.
 ## Notes
 
 - Uses `bg-secondary`, `bg-foreground` and `text-background` tokens, with `opacity-80` while pressed and `opacity-50` when disabled; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ With 24 narrow bars, the tooltip is the most reliable way to read a single hour.
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 Thin bars show minutes for each hour of the day, with ticks every six hours and a value axis in minutes on the right. A `ReferenceLine` marks the hourly average, and the header shows the day's total in hours and minutes. The tooltip formats the hour and the minutes.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts bar-chart-hourly --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BarChartHourly } from "@/components/charts/bar-chart-hourly"
 ```
@@ -229,6 +237,41 @@ import { BarChartHourly } from "@/components/charts/bar-chart-hourly"
 <BarChartHourly />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BarHourlyExample: View {
+  var body: some View {
+    BarChartHourly()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.BarChartHourly
+
+@Composable
+fun BarHourlyExample() {
+    BarChartHourly()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace the 24 values in `chartData` with your hourly minutes; the total and average are calculated from it. The component takes no props.
+
+</Only>
 
 </Only>

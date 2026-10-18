@@ -298,9 +298,13 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-attachment--default" live="attachment/Default" />
 
+<Only platform="rn">
+
 `Attachment` is a rounded `View` that lays out an `AttachmentMedia` thumbnail, an `AttachmentContent` column and `AttachmentActions`. It comes in `default`, `sm` and `xs` sizes and in `horizontal` or `vertical` orientation; the vertical layout makes a tile with the actions floating over the media.
 
 The `state` prop reflects the upload lifecycle: `idle` draws a dashed border for an empty drop slot, `error` turns the description red, and `uploading`, `processing` and `done` are passed to the parts through context. Put several attachments in an `AttachmentGroup` to show them as one list with hairlines between rows.
+
+</Only>
 
 ## Installation
 
@@ -334,7 +338,11 @@ npx @esuiss/ui@latest add attachment --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Progress](/docs/components/progress), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -414,8 +422,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -454,8 +460,11 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Attachment, AttachmentMedia, AttachmentLabel, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from "@/components/ui/attachment"
+import { Icon } from "@/components/ui/icon"
 ```
 
 ```tsx
@@ -475,11 +484,99 @@ import { Attachment, AttachmentMedia, AttachmentLabel, AttachmentContent, Attach
 </Attachment>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct AttachmentExample: View {
+  var body: some View {
+    Attachment {
+      AttachmentMedia(.document) { AttachmentLabel("pdf", tint: EsuissColor.destructive) }
+      AttachmentContent {
+        AttachmentTitle("Quarterly report.pdf")
+        AttachmentDescription("2.4 MB")
+      }
+      AttachmentActions {
+        AttachmentAction("Remove", icon: Ph.x.bold) {}
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.X
+import com.esuiss.ui.components.Attachment
+import com.esuiss.ui.components.AttachmentAction
+import com.esuiss.ui.components.AttachmentActions
+import com.esuiss.ui.components.AttachmentContent
+import com.esuiss.ui.components.AttachmentDescription
+import com.esuiss.ui.components.AttachmentLabel
+import com.esuiss.ui.components.AttachmentMedia
+import com.esuiss.ui.components.AttachmentMediaVariant
+import com.esuiss.ui.components.AttachmentTitle
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.theme.Palette
+
+@Composable
+fun AttachmentDocument(extension: String, tone: Color) {
+    AttachmentMedia(variant = AttachmentMediaVariant.Document) {
+        AttachmentLabel(extension, background = tone)
+    }
+}
+
+@Composable
+fun AttachmentIconAction(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector = PhosphorIcons.Regular.X) {
+    AttachmentAction(onClick = {}, contentDescription = label) {
+        Icon(icon, contentDescription = null)
+    }
+}
+
+@Composable
+fun AttachmentDefault() {
+    Row {
+        Attachment {
+            AttachmentDocument("pdf", Palette.red500)
+            AttachmentContent {
+                AttachmentTitle("Quarterly report.pdf")
+                AttachmentDescription("2.4 MB")
+            }
+            AttachmentActions { AttachmentIconAction("Remove") }
+        }
+    }
+}
+```
+
+</Only>
+
 `AttachmentMedia` has three variants: `icon` for a glyph, `document` for a page shape (pair it with `AttachmentLabel` to show a file extension), and `image` for a thumbnail. Put `AttachmentTitle` and `AttachmentDescription` in `AttachmentContent`, and add `AttachmentProgress` with a `value` while uploading.
+
+<Only platform="rn">
 
 `AttachmentAction` is a `Button` that defaults to the `secondary` variant and a small icon size scaled to the attachment, with an enlarged hit area. Use `variant="link"` for a text action.
 
+</Only>
+
+<Only platform="rn swift">
+
 To make the whole card pressable, add an `AttachmentTrigger`; it covers the card while actions stay pressable above it.
+
+</Only>
 
 ## Examples
 
@@ -503,13 +600,21 @@ An image thumbnail with the `image` media variant.
 
 ### Vertical
 
+<Only platform="rn">
+
 Tiles with `orientation="vertical"`.
+
+</Only>
 
 <NativeExample id="components-attachment--vertical" live="attachment/Vertical" />
 
 ### Pressable
 
+<Only platform="rn swift">
+
 A card made pressable with `AttachmentTrigger`.
+
+</Only>
 
 <NativeExample id="components-attachment--pressable" live="attachment/Pressable" />
 
@@ -1072,6 +1177,8 @@ Overloads: `AttachmentAction(onClick, contentDescription, variant, content)`, `A
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `AttachmentProgress` has the `progressbar` role with its value exposed.
@@ -1082,5 +1189,7 @@ Overloads: `AttachmentAction(onClick, contentDescription, variant, content)`, `A
 
 - Uses `bg-muted`, `border-border`, `bg-primary` and `text-destructive` tokens; light and dark follow the system appearance.
 - Separators and action positions use start and end offsets, so they flip in right-to-left layouts.
+
+</Only>
 
 </Only>

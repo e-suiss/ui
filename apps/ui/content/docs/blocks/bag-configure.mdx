@@ -65,7 +65,11 @@ Price changes are announced to screen readers, and each swatch is labeled with i
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `ToggleGroup` color swatches, `Button`, `Text` and `BottomBar`. Model and storage are radio-style options, the finish swatches cross-fade the product photo, and the bottom bar shows the price and a monthly amount that update as you choose. Add to Bag switches its label to Added to Bag.
+
+</Only>
 
 ## Installation
 
@@ -99,7 +103,11 @@ npx @esuiss/ui@latest add blocks bag-configure --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -209,8 +217,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -256,6 +262,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BagConfigure } from "@/components/blocks/bag-configure"
 ```
@@ -264,6 +272,41 @@ import { BagConfigure } from "@/components/blocks/bag-configure"
 <BagConfigure />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BagConfigureExample: View {
+  var body: some View {
+    BagConfigure()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.BagConfigure
+
+@Composable
+fun BagConfigureExample() {
+    BagConfigure()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `MODELS`, `FINISHES` and `STORAGE` with your catalog data. Pass `onAddToBag` to receive the selected model, finish, storage and price.
+
+</Only>
 
 </Only>

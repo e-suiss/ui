@@ -176,7 +176,11 @@ Also accepts the props of `React.ComponentProps<"div">`, `RechartsPrimitive.Defa
 
 <NativeExample id="components-chart--tooltip-dot" />
 
+<Only platform="rn">
+
 Charts are composed declaratively: a chart root such as `LineChart`, `AreaChart`, `BarChart`, `ComposedChart`, `PieChart`, `RadialBarChart` or `RadarChart` goes inside a `ChartContainer`, and series and axes such as `Line`, `Area`, `Bar`, `XAxis`, `YAxis` and `CartesianGrid` are added as children. These child components render nothing themselves; the root reads them and draws everything with `react-native-svg`.
+
+</Only>
 
 Charts animate in when they first render: bars grow from the baseline, lines draw along their path, areas reveal from left to right, pie and radial sectors sweep open and radar shapes grow from the center. When the data changes, shapes animate from their previous values to the new ones.
 
@@ -214,7 +218,11 @@ npx @esuiss/ui@latest add chart --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -300,8 +308,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -340,18 +346,270 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { ChartPalette, ChartContainer, LineChart, AreaChart, BarChart, ComposedChart, PieChart, RadialBarChart, RadarChart, ChartTooltipContent, ChartLegendContent } from "@/components/ui/chart"
-```
+<Only platform="rn">
 
 ```tsx
-<StackedTooltipChart
-  title="Dot indicator"
-  description='indicator="dot"'
-  defaultIndex={2}
-  content={<ChartTooltipContent indicator="dot" />}
-/>
+import * as React from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Bar, BarChart, type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, XAxis } from "@/components/ui/chart"
+
+const monthData = [
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 173, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 264, mobile: 140 },
+]
+
+const deviceConfig = {
+  desktop: { label: "Desktop", color: "chart-1" },
+  mobile: { label: "Mobile", color: "chart-2" },
+} satisfies ChartConfig
+
+function StackedTooltipChart({
+  title,
+  description,
+  defaultIndex,
+  content,
+}: {
+  title: string
+  description: string
+  defaultIndex: number
+  content: React.ReactElement
+}) {
+  return (
+    <Card variant="filled" size="sm">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer
+          config={deviceConfig}
+          accessibilityLabel={title}
+          className="h-52 w-full"
+        >
+          <BarChart
+            data={monthData}
+            margin={{ top: 70, right: 4, left: 4, bottom: 0 }}
+          >
+            <XAxis
+              dataKey="month"
+              tickMargin={8}
+              interval={0}
+              tickFormatter={(value: string) => value.slice(0, 3)}
+            />
+            <ChartTooltip
+              defaultIndex={defaultIndex}
+              cursor={false}
+              content={content}
+            />
+            <Bar
+              dataKey="desktop"
+              stackId="a"
+              radius={[0, 0, 4, 4]}
+              maxBarSize={30}
+            />
+            <Bar
+              dataKey="mobile"
+              stackId="a"
+              radius={[4, 4, 0, 0]}
+              maxBarSize={30}
+            />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
+  )
+}
+
+export function ChartTooltipDotExample() {
+  return (
+    <StackedTooltipChart
+      title="Dot indicator"
+      description='indicator="dot"'
+      defaultIndex={2}
+      content={<ChartTooltipContent indicator="dot" />}
+    />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import Charts
+import EsuissUI
+import SwiftUI
+
+struct ChartTooltipDotExample: View {
+  var body: some View {
+    ChartStackedTooltip(title: "Dot indicator", description: "indicator=\"dot\"", defaultIndex: 2) { payload in
+      ChartTooltipContent(payload, indicator: .dot)
+    }
+  }
+}
+
+let chartMonthData: [(month: String, desktop: Double, mobile: Double)] = [
+  ("January", 186, 80),
+  ("February", 305, 200),
+  ("March", 237, 120),
+  ("April", 173, 190),
+  ("May", 209, 130),
+  ("June", 264, 140),
+]
+
+let chartDevices: ChartConfig = [
+  "desktop": .init("Desktop", color: Palette.blue500),
+  "mobile": .init("Mobile", color: Palette.teal500),
+]
+
+struct ChartStackedTooltip<Tooltip: View>: View {
+  let title: String
+  let description: String
+  var config = chartDevices
+  let defaultIndex: Int
+  @ViewBuilder let tooltip: (ChartTooltipPayload) -> Tooltip
+
+  var body: some View {
+    Card(.filled, size: .sm) {
+      CardHeader(LocalizedStringKey(title), description: LocalizedStringKey(description))
+      CardContent {
+        ChartContainer(config: config) {
+          ChartAnimator(animationDuration: 400) { progress in
+            Chart {
+              ForEach(chartMonthData.indices, id: \.self) { index in
+                let item = chartMonthData[index]
+                BarMark(
+                  x: .value("Month", item.month),
+                  yStart: .value("Start", 0),
+                  yEnd: .value("Desktop", item.desktop * progress),
+                  width: .fixed(30)
+                )
+                .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 4, bottomTrailingRadius: 4, style: .continuous))
+                .foregroundStyle(config.color("desktop"))
+                BarMark(
+                  x: .value("Month", item.month),
+                  yStart: .value("Start", item.desktop * progress),
+                  yEnd: .value("Mobile", (item.desktop + item.mobile) * progress),
+                  width: .fixed(30)
+                )
+                .clipShape(UnevenRoundedRectangle(topLeadingRadius: 4, topTrailingRadius: 4, style: .continuous))
+                .foregroundStyle(config.color("mobile"))
+                ChartAnchorMark(x: .value("Month", item.month), y: .value("Mobile", item.desktop + item.mobile))
+              }
+            }
+            .chartYScale(range: .plotDimension(endPadding: 70))
+            .chartXAxis { ChartAxis.x(values: chartMonthData.map(\.month)) { String($0.prefix(3)) } }
+            .chartYAxis(.hidden)
+            .chartTooltip(
+              x: chartMonthData.map(\.month),
+              defaultIndex: defaultIndex,
+              cursor: false,
+              accessibilityLabel: title,
+              items: { index in
+                [
+                  ChartTooltipItem("desktop", value: chartMonthData[index].desktop),
+                  ChartTooltipItem("mobile", value: chartMonthData[index].mobile),
+                ]
+              },
+              content: tooltip
+            )
+          }
+        }
+        .frame(height: 208)
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.adamglin.phosphoricons.regular.Desktop
+import com.esuiss.ui.components.BarChart
+import com.esuiss.ui.components.Card
+import com.esuiss.ui.components.CardContent
+import com.esuiss.ui.components.CardHeader
+import com.esuiss.ui.components.CardSize
+import com.esuiss.ui.components.CardVariant
+import com.esuiss.ui.components.ChartConfig
+import com.esuiss.ui.components.ChartConfigItem
+import com.esuiss.ui.components.ChartContainer
+import com.esuiss.ui.components.ChartMargin
+import com.esuiss.ui.components.ChartRadius
+import com.esuiss.ui.components.ChartTooltipContent
+import com.esuiss.ui.components.ChartTooltipIndicator
+import com.esuiss.ui.components.ChartTooltipScope
+
+@Composable
+fun ChartTooltipDotExample() {
+    ChartStackedTooltip("Dot indicator", "indicator=\"dot\"", 2) { ChartTooltipContent(indicator = ChartTooltipIndicator.Dot) }
+}
+
+class ChartMonth(val month: String, val desktop: Double, val mobile: Double)
+
+val chartMonthData = listOf(
+    ChartMonth("January", 186.0, 80.0),
+    ChartMonth("February", 305.0, 200.0),
+    ChartMonth("March", 237.0, 120.0),
+    ChartMonth("April", 173.0, 190.0),
+    ChartMonth("May", 209.0, 130.0),
+    ChartMonth("June", 264.0, 140.0),
+)
+
+val chartDeviceConfig = ChartConfig(
+    "desktop" to ChartConfigItem("Desktop") { chart1 },
+    "mobile" to ChartConfigItem("Mobile") { chart2 },
+)
+
+@Composable
+fun ChartTooltipCard(title: String, description: String, content: @Composable () -> Unit) {
+    Card(variant = CardVariant.Filled, size = CardSize.Sm) {
+        CardHeader(title, description = description)
+        CardContent { content() }
+    }
+}
+
+@Composable
+fun ChartStackedTooltip(
+    title: String,
+    description: String,
+    defaultIndex: Int,
+    config: ChartConfig = chartDeviceConfig,
+    tooltip: @Composable ChartTooltipScope.() -> Unit,
+) {
+    ChartTooltipCard(title, description) {
+        ChartContainer(config, Modifier.fillMaxWidth().height(208.dp)) {
+            BarChart(
+                chartMonthData,
+                margin = ChartMargin(top = 70.dp, right = 4.dp, bottom = 0.dp, left = 4.dp),
+                accessibilityLabel = title,
+            ) {
+                XAxis(label = { it.month }, tickMargin = 8.dp, interval = 0, tickFormatter = { it.take(3) })
+                ChartTooltip(defaultIndex = defaultIndex, cursor = null, content = tooltip)
+                Bar("desktop", value = { it.desktop }, stackId = "a", radius = ChartRadius(0.dp, 0.dp, 4.dp, 4.dp), maxBarSize = 30.dp)
+                Bar("mobile", value = { it.mobile }, stackId = "a", radius = ChartRadius(4.dp, 4.dp, 0.dp, 0.dp), maxBarSize = 30.dp)
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Describe each series in a `ChartConfig` object with a `label`, a token `color` and an optional `icon`, and pass it to `ChartContainer` as `config`. The container is full width with a 16:9 aspect ratio unless you give it an `h-`, `size-` or `aspect-` class.
 
@@ -360,6 +618,8 @@ Add `ChartTooltip` with `content={<ChartTooltipContent />}` to make the chart re
 `Line`, `Area`, `Bar`, `Pie`, `RadialBar` and `Radar` take `isAnimationActive`, `animationDuration` and `animationEasing`. Bars default to 400 ms and curves, sectors and radar shapes to 1500 ms, with `ease` easing. Set `isAnimationActive={false}` to draw a series in its final state, for example when its data changes on every interaction.
 
 Add `ChartLegend` with `content={<ChartLegendContent />}` for a legend in config order. `useChart()` returns the config inside a container, and `ChartPalette` resolves token colors for custom drawing.
+
+</Only>
 
 ## Examples
 
@@ -1700,6 +1960,8 @@ Polar chart built from `Radar` and `PolarGrid`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The chart is one accessible element labelled with its series names and data range; pass `accessibilityLabel` to `ChartContainer` to override the names.
@@ -1712,5 +1974,7 @@ Polar chart built from `Radar` and `PolarGrid`.
 - Series colors accept `chart-1` to `chart-5`, theme colors such as `primary`, `destructive` and `foreground`, and palette colors such as `green-500` and `red-500`; grid and cursor lines use `border`.
 - Value labels from `LabelList` and pie `label` appear once a series finishes animating.
 - Light and dark follow the system appearance.
+
+</Only>
 
 </Only>

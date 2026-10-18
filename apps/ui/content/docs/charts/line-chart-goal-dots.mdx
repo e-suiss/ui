@@ -71,7 +71,11 @@ The headline figure is hard-coded text, not computed from the data, so wire it u
 
 </NativeExample>
 
+<Only platform="rn">
+
 Seven nights of sleep drawn as a monotone line. The `dot` prop is a function that colors each point by comparing it with `GOAL`, and a dashed green `ReferenceLine` marks the goal itself. The tooltip formats values as hours and minutes.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts line-chart-goal-dots --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LineChartGoalDots } from "@/components/charts/line-chart-goal-dots"
 ```
@@ -229,6 +237,41 @@ import { LineChartGoalDots } from "@/components/charts/line-chart-goal-dots"
 <LineChartGoalDots />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LineGoalDotsExample: View {
+  var body: some View {
+    LineChartGoalDots()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.LineChartGoalDots
+
+@Composable
+fun LineGoalDotsExample() {
+    LineChartGoalDots()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your nightly hours and set `GOAL`. The header average is static text, so update it with your own value. The component takes no props.
+
+</Only>
 
 </Only>

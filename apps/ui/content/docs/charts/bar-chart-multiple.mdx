@@ -71,7 +71,11 @@ Grouped bars get thin quickly; beyond three series or a dozen categories, consid
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 Two `Bar` series sit next to each other in every month, separated by a small `barGap`. The tooltip lists both values with a dashed indicator.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts bar-chart-multiple --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
 ```
@@ -229,6 +237,41 @@ import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
 <BarChartMultiple />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BarMultipleExample: View {
+  var body: some View {
+    BarChartMultiple()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.BarChartMultiple
+
+@Composable
+fun BarMultipleExample() {
+    BarChartMultiple()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Bar` and a `chartConfig` entry for each extra series. The component takes no props.
+
+</Only>
 
 </Only>

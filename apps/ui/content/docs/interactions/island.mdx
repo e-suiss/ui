@@ -160,11 +160,11 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 
 <NativeExample id="interactions-island--compact" />
 
-</Only>
-
 `Island` floats below the top safe area and morphs between views: `hidden`, `compact`, `minimal`, `expanded` and `notice`. Its width, height and corner radius spring to the measured size of the active view, and views cross-fade as it changes.
 
 Content is passed through slots. `compactLeading` and `compactTrailing` sit at the two ends of the compact pill, `minimal` is a single small circle, and `IslandExpandedRegion` children fill the expanded view. The island appears while it has compact or minimal content and hides when it has none. Pressing it expands; pressing outside, swiping up or the Android back button collapses it. `notify` shows a notice that replaces the current view and dismisses itself after 4 seconds, on press or on swipe up. Use it for ongoing activity such as a download, timer or call.
+
+</Only>
 
 ## Installation
 
@@ -198,7 +198,11 @@ npx @esuiss/ui@latest add interactions island --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -326,19 +330,599 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { IslandProvider, IslandExpandedRegion, Island, IslandRing } from "@/components/interactions/island"
-```
+<Only platform="rn">
 
 ```tsx
-<IslandProvider>
-  <DownloadsExample initial={0.42} />
-</IslandProvider>
+import { BellIcon, ChatCircleIcon, CheckCircleIcon, DownloadSimpleIcon, FileZipIcon } from "phosphor-react-native"
+import * as React from "react"
+import { Pressable, View } from "react-native"
+import { Island, IslandExpandedRegion, IslandProvider, IslandRing, useIsland } from "@/components/interactions/island"
+import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
+
+function NotifyButtons({ children }: { children?: React.ReactNode }) {
+  const { notify } = useIsland()
+
+  return (
+    <View className="flex-row flex-wrap justify-center gap-3">
+      {children}
+      <Button
+        variant="secondary"
+        onPress={() =>
+          notify({
+            icon: (
+              <Icon
+                as={ChatCircleIcon}
+                weight="fill"
+                className="text-green-500"
+              />
+            ),
+            title: "Jordan Lee",
+            description: "Are we still on for Saturday?",
+          })
+        }
+      >
+        <Text>New message</Text>
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          notify({
+            icon: (
+              <Icon as={BellIcon} weight="fill" className="text-orange-500" />
+            ),
+            title: "Design review",
+            description: "Starts in 10 minutes",
+          })
+        }
+      >
+        <Text>Reminder</Text>
+      </Button>
+    </View>
+  )
+}
+
+function useDownload(initial: number | null = null) {
+  const [progress, setProgress] = React.useState<number | null>(initial)
+  const { notify } = useIsland()
+
+  React.useEffect(() => {
+    if (initial !== null || progress === null || progress >= 1) return
+    const timer = setTimeout(
+      () => setProgress((value) => Math.min((value ?? 0) + 0.01, 1)),
+      150
+    )
+    return () => clearTimeout(timer)
+  }, [initial, progress])
+
+  React.useEffect(() => {
+    if (progress !== 1) return
+    const timer = setTimeout(() => {
+      setProgress(null)
+      notify({
+        icon: (
+          <Icon as={CheckCircleIcon} weight="fill" className="text-green-500" />
+        ),
+        title: "Download complete",
+        description: "Design-Kit.zip",
+      })
+    }, 1200)
+    return () => clearTimeout(timer)
+  }, [progress, notify])
+
+  return {
+    progress,
+    start: () => setProgress(0),
+    cancel: () => setProgress(null),
+  }
+}
+
+function DownloadIsland({
+  progress,
+  onCancel,
+}: {
+  progress: number | null
+  onCancel: () => void
+}) {
+  if (progress === null) return <Island />
+
+  const done = progress >= 1
+  const percent = Math.round(progress * 100)
+
+  return (
+    <Island
+      accessibilityLabel={`Downloading Design-Kit.zip, ${percent}%`}
+      compactLeading={
+        <Icon as={DownloadSimpleIcon} weight="bold" className="text-primary" />
+      }
+      compactTrailing={
+        done ? (
+          <Icon as={CheckCircleIcon} weight="fill" className="text-green-500" />
+        ) : (
+          <IslandRing value={progress} />
+        )
+      }
+      minimal={<IslandRing value={progress} />}
+    >
+      <IslandExpandedRegion region="leading">
+        <View className="size-10 items-center justify-center rounded-xl bg-white/15">
+          <Icon
+            as={FileZipIcon}
+            weight="fill"
+            className="size-6 text-primary"
+          />
+        </View>
+      </IslandExpandedRegion>
+      <IslandExpandedRegion region="trailing">
+        <Text className="text-2xl font-semibold">{percent}%</Text>
+      </IslandExpandedRegion>
+      <IslandExpandedRegion region="center">
+        <Text numberOfLines={1} className="text-sm font-semibold">
+          {done ? "Downloaded" : "Downloading"}
+        </Text>
+        <Text numberOfLines={1} className="text-sm text-white/70">
+          Design-Kit.zip
+        </Text>
+      </IslandExpandedRegion>
+      <IslandExpandedRegion region="bottom">
+        <View
+          role="progressbar"
+          accessibilityLabel="Download progress"
+          accessibilityValue={{ min: 0, max: 100, now: percent }}
+          className="h-1.5 overflow-hidden rounded-full bg-white/20"
+        >
+          <View
+            className="h-full rounded-full bg-primary"
+            style={{ width: `${percent}%` }}
+          />
+        </View>
+        <Pressable
+          role="button"
+          disabled={done}
+          onPress={onCancel}
+          className="h-11 items-center justify-center rounded-full bg-white/15 active:opacity-80 disabled:opacity-50"
+        >
+          <Text className="text-sm font-semibold">Cancel download</Text>
+        </Pressable>
+      </IslandExpandedRegion>
+    </Island>
+  )
+}
+
+function DownloadsExample({
+  initial = null,
+  view = "compact",
+  withNotifications = false,
+}: {
+  initial?: number | null
+  view?: "compact" | "expanded" | "minimal"
+  withNotifications?: boolean
+}) {
+  const { progress, start, cancel } = useDownload(initial)
+  const { expand, minimize } = useIsland()
+
+  React.useEffect(() => {
+    if (view === "expanded") expand()
+    else if (view === "minimal") minimize()
+  }, [view, expand, minimize])
+
+  return (
+    <View className="flex-1 items-center justify-center gap-4">
+      <DownloadIsland progress={progress} onCancel={cancel} />
+      <Text className="max-w-xs text-center text-sm text-muted-foreground">
+        Start a download, then tap the pill at the top to see the details. Swipe
+        up on it to close.
+      </Text>
+      {initial === null ? (
+        <Button onPress={start} disabled={progress !== null}>
+          <Text>
+            {progress === null ? "Download Design-Kit.zip" : "Downloading…"}
+          </Text>
+        </Button>
+      ) : null}
+      {withNotifications ? (
+        <NotifyButtons>
+          <Button
+            variant="secondary"
+            disabled={progress === null}
+            onPress={minimize}
+          >
+            <Text>Minimize</Text>
+          </Button>
+        </NotifyButtons>
+      ) : null}
+    </View>
+  )
+}
+
+export function IslandCompactExample() {
+  return (
+    <IslandProvider>
+      <DownloadsExample initial={0.42} />
+    </IslandProvider>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import ActivityKit
+import EsuissUI
+import SwiftUI
+
+struct IslandLiveActivity: View {
+  @State private var activity: Activity<DownloadActivityAttributes>?
+  @State private var state = DownloadActivityAttributes.ContentState(progress: 0, fileName: "Design-Kit.zip", finished: false)
+  @State private var failure: String?
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 16) {
+      Text("Start a download, then leave the app. The activity shows in the Dynamic Island and on the Lock Screen.")
+        .textStyle(.sm)
+        .foregroundStyle(EsuissColor.mutedForeground)
+      FlowRow(spacing: 12) {
+        Button("Start") { start() }
+          .buttonStyle(.variant())
+          .disabled(activity != nil)
+        Button("Update (+10%)") { advance() }
+          .buttonStyle(.variant(.secondary))
+          .disabled(activity == nil || state.finished)
+        Button("Finish") { finish() }
+          .buttonStyle(.variant(.secondary))
+          .disabled(activity == nil || state.finished)
+        Button("End") { end() }
+          .buttonStyle(.variant(.destructive))
+          .disabled(activity == nil)
+      }
+      Text(verbatim: activity == nil ? "No activity" : "\(state.fileName) · \(state.percent)%")
+        .textStyle(.sm, weight: .semibold)
+        .monospacedDigit()
+      if let failure {
+        Text(verbatim: failure)
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.destructive)
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .task {
+      activity = Activity<DownloadActivityAttributes>.activities.first
+      if let current = activity?.content.state { state = current }
+    }
+  }
+
+  func start() {
+    guard ActivityAuthorizationInfo().areActivitiesEnabled else {
+      failure = "Live Activities are turned off for this app."
+      return
+    }
+    let next = DownloadActivityAttributes.ContentState(progress: 0, fileName: "Design-Kit.zip", finished: false)
+    do {
+      activity = try Activity.request(
+        attributes: DownloadActivityAttributes(),
+        content: ActivityContent(state: next, staleDate: nil)
+      )
+      state = next
+      failure = nil
+    } catch {
+      failure = error.localizedDescription
+    }
+  }
+
+  func advance() {
+    state.progress = min(state.progress + 0.1, 1)
+    state.finished = state.progress >= 1
+    push()
+  }
+
+  func finish() {
+    state.progress = 1
+    state.finished = true
+    push()
+  }
+
+  func push() {
+    guard let id = activity?.id else { return }
+    let next = state
+    Task { await Self.send(next, to: id, ending: false) }
+  }
+
+  func end() {
+    guard let id = activity?.id else { return }
+    let next = state
+    activity = nil
+    Task { await Self.send(next, to: id, ending: true) }
+  }
+
+  private nonisolated static func send(_ state: DownloadActivityAttributes.ContentState, to id: String, ending: Bool) async {
+    guard let activity = Activity<DownloadActivityAttributes>.activities.first(where: { $0.id == id }) else { return }
+    let content = ActivityContent(state: state, staleDate: nil)
+    if ending {
+      await activity.end(content, dismissalPolicy: .immediate)
+    } else {
+      await activity.update(content)
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Bold
+import com.adamglin.phosphoricons.Fill
+import com.adamglin.phosphoricons.bold.DownloadSimple
+import com.adamglin.phosphoricons.fill.Bell
+import com.adamglin.phosphoricons.fill.ChatCircle
+import com.adamglin.phosphoricons.fill.CheckCircle
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.LocalContentColor
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.interactions.Island
+import com.esuiss.ui.interactions.IslandProvider
+import com.esuiss.ui.interactions.IslandRegion
+import com.esuiss.ui.interactions.IslandRing
+import com.esuiss.ui.interactions.useIsland
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Palette
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Typography
+import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
+
+@Composable
+fun IslandCompactExample() {
+    IslandProvider { IslandDownloads(initial = 0.42f) }
+}
+
+enum class IslandStart { Compact, Expanded, Minimal }
+
+@Composable
+fun IslandNotifyButtons(extra: @Composable () -> Unit = {}) {
+    val island = useIsland()
+    val colors = EsuissTheme.colors
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Button(
+            "New message",
+            onClick = {
+                island.notify(
+                    title = "Jordan Lee",
+                    description = "Are we still on for Saturday?",
+                    icon = { Icon(PhosphorIcons.Fill.ChatCircle, contentDescription = null, tint = Palette.green500) },
+                )
+            },
+            variant = ButtonVariant.Secondary,
+        )
+        Button(
+            "Reminder",
+            onClick = {
+                island.notify(
+                    title = "Design review",
+                    description = "Starts in 10 minutes",
+                    icon = { Icon(PhosphorIcons.Fill.Bell, contentDescription = null, tint = Palette.orange500) },
+                )
+            },
+            variant = ButtonVariant.Secondary,
+        )
+        extra()
+    }
+}
+
+@Composable
+fun IslandProgress(progress: Float) {
+    val colors = EsuissTheme.colors
+    if (progress >= 1f) {
+        Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = Palette.green500)
+    } else {
+        IslandRing(progress)
+    }
+}
+
+@Composable
+fun IslandDownloadIsland(progress: Float?, onCancel: () -> Unit) {
+    val colors = EsuissTheme.colors
+    val current = progress ?: 0f
+    val done = current >= 1f
+    val percent = (current * 100).roundToInt()
+    Island(
+        compactLeading = progress?.let {
+            { Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, tint = colors.primary) }
+        },
+        compactTrailing = progress?.let { value -> { IslandProgress(value) } },
+        minimal = progress?.let { value -> { IslandProgress(value) } },
+        modifier = Modifier.semantics { contentDescription = "Downloading Design-Kit.zip, $percent%" },
+    ) {
+        IslandExpandedRegion(IslandRegion.Leading) {
+            val foreground = LocalContentColor.current
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(foreground.copy(alpha = 0.15f), RoundedCornerShape(Radius.xl)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(PhosphorIcons.Bold.DownloadSimple, contentDescription = null, size = 24.dp, tint = colors.primary)
+            }
+        }
+        IslandExpandedRegion(IslandRegion.Trailing) {
+            Text("$percent%", style = Typography.xl2.copy(color = LocalContentColor.current, fontWeight = FontWeight.SemiBold))
+        }
+        IslandExpandedRegion(IslandRegion.Center) {
+            val foreground = LocalContentColor.current
+            Text(
+                if (done) "Downloaded" else "Downloading",
+                style = Typography.sm.copy(color = foreground, fontWeight = FontWeight.SemiBold),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                if (done) "Design-Kit.zip" else "Design-Kit.zip · ${(current * IslandSize).roundToInt()} of $IslandSize MB",
+                style = Typography.sm.copy(color = foreground.copy(alpha = 0.7f)),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        IslandExpandedRegion(IslandRegion.Bottom) {
+            val foreground = LocalContentColor.current
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(6.dp)
+                    .clip(CircleShape)
+                    .background(foreground.copy(alpha = 0.2f))
+                    .semantics {
+                        contentDescription = "Download progress"
+                        progressBarRangeInfo = ProgressBarRangeInfo(percent.toFloat(), 0f..100f)
+                    },
+            ) {
+                Box(
+                    Modifier
+                        .fillMaxWidth(current.coerceIn(0f, 1f))
+                        .fillMaxHeight()
+                        .background(colors.primary, CircleShape),
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+            val interaction = remember { MutableInteractionSource() }
+            val pressed by interaction.collectIsPressedAsState()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(44.dp)
+                    .alpha(if (done) 0.5f else 1f)
+                    .clip(CircleShape)
+                    .alpha(if (pressed) 0.8f else 1f)
+                    .background(foreground.copy(alpha = 0.15f))
+                    .clickable(interactionSource = interaction, indication = null, enabled = !done, role = Role.Button, onClick = onCancel),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("Cancel download", style = Typography.sm.copy(color = foreground, fontWeight = FontWeight.SemiBold))
+            }
+        }
+    }
+}
+
+@Composable
+fun IslandDownloads(initial: Float? = null, start: IslandStart = IslandStart.Compact, withNotifications: Boolean = false) {
+    val island = useIsland()
+    val colors = EsuissTheme.colors
+    var progress by rememberSaveable { mutableStateOf(initial) }
+    LaunchedEffect(progress) {
+        val current = progress ?: return@LaunchedEffect
+        if (initial != null) return@LaunchedEffect
+        if (current < 1f) {
+            delay(150)
+            progress = minOf(current + 0.01f, 1f)
+        } else {
+            delay(1200)
+            progress = null
+            island.notify(
+                title = "Download complete",
+                description = "Design-Kit.zip",
+                icon = { Icon(PhosphorIcons.Fill.CheckCircle, contentDescription = null, tint = Palette.green500) },
+            )
+        }
+    }
+    LaunchedEffect(start) {
+        when (start) {
+            IslandStart.Expanded -> island.expand()
+            IslandStart.Minimal -> island.minimize()
+            IslandStart.Compact -> Unit
+        }
+    }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        IslandDownloadIsland(progress) { progress = null }
+        Text(
+            "Start a download, then tap the pill at the top to see the details. Swipe up on it to close.",
+            modifier = Modifier.widthIn(max = 320.dp),
+            style = Typography.sm.copy(color = colors.mutedForeground),
+            textAlign = TextAlign.Center,
+        )
+        if (initial == null) {
+            Button(
+                if (progress == null) "Download Design-Kit.zip" else "Downloading…",
+                onClick = { progress = 0f },
+                enabled = progress == null,
+            )
+        }
+        if (withNotifications) {
+            IslandNotifyButtons {
+                Button(
+                    "Minimize",
+                    onClick = island::minimize,
+                    variant = ButtonVariant.Secondary,
+                    enabled = progress != null,
+                )
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
 
 Wrap the app in `IslandProvider` and render one `Island`. Pass `compactLeading`, `compactTrailing` and `minimal` only while there is activity to show, and add `IslandExpandedRegion`s as children with a `region` of `leading`, `trailing`, `center` or `bottom`. Leading, center and trailing form a top row; bottom regions stack below it at full width. If only one of the compact and minimal slots is given, the island uses it for both views.
 
+</Only>
+
+<Only platform="rn">
+
 `useIsland` returns `view`, `notice`, `expand`, `collapse`, `minimize`, `notify` and `dismiss`. A notice is `{ icon?, title, description?, duration? }`; pass a `duration` of `0` or `Infinity` to keep it until dismissed. Dragging the island pauses the notice timer. Use `IslandRing` for circular progress. The `IslandNotice`, `IslandRegion` and `IslandView` types are exported.
+
+</Only>
 
 ## Examples
 
@@ -350,19 +934,11 @@ Starts with the island expanded to show download details.
 
 <NativeExample id="interactions-island--expanded" />
 
-</Only>
-
-<Only platform="rn kotlin">
-
 ### Minimal
 
 Starts in the minimal view with only the progress ring.
 
 <NativeExample id="interactions-island--minimal" />
-
-</Only>
-
-<Only platform="rn kotlin">
 
 ### Notice
 
@@ -616,6 +1192,8 @@ A small circular progress ring.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Notices are announced with their title and description when they are text.
@@ -629,5 +1207,7 @@ A small circular progress ring.
 - The island uses `bg-black` with `text-white`.
 - Expanded and notice views are up to 384 points wide.
 - Size and fade animations respect the system reduce motion setting.
+
+</Only>
 
 </Only>

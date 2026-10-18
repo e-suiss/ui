@@ -71,7 +71,11 @@ When notifications are off, the dependent settings are dimmed and skipped by key
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A wallpaper preview shows a sample notification that reflects the current settings: hidden previews, stacking when grouping is on, and banners that fade out when set to temporary. Below it, `Switch` rows control notifications, sounds and badges, `Toggle` tiles choose Lock Screen, Notification Center and Banners, a `ToggleGroup` picks the banner style, and `Picker` rows set previews and grouping.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks settings-notifications --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs/components/item), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Switch.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -308,6 +314,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SettingsNotifications } from "@/components/blocks/settings-notifications"
 ```
@@ -316,6 +324,41 @@ import { SettingsNotifications } from "@/components/blocks/settings-notification
 <SettingsNotifications />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SettingsNotificationsExample: View {
+  var body: some View {
+    SettingsNotifications()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.SettingsNotifications
+
+@Composable
+fun SettingsNotificationsExample() {
+    SettingsNotifications()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 The settings live in local state and the component takes no props. Replace `WALLPAPER`, `PREVIEW_OPTIONS` and `GROUPING_OPTIONS` and wire each control's change handler to your preferences store.
+
+</Only>
 
 </Only>

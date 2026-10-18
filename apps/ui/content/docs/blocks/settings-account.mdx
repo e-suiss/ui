@@ -71,7 +71,11 @@ Collapsed edit forms are `inert`, focus moves to the input when a card opens, an
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 The main page shows an `Avatar` and name above an inset `ItemGroup` of account sections; tapping one pushes it into the same `Header` with a back button. The Sign-In & Security page has cards for email and phone that open an inline `Input` with Save and Cancel, a passkeys `Switch`, and a confirmation that appears after saving. Other sections show a placeholder.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks settings-account --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input](/docs/components/input), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input](/docs/components/input), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Switch.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -294,6 +300,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SettingsAccount } from "@/components/blocks/settings-account"
 ```
@@ -302,6 +310,41 @@ import { SettingsAccount } from "@/components/blocks/settings-account"
 <SettingsAccount />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SettingsAccountExample: View {
+  var body: some View {
+    SettingsAccount()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.SettingsAccount
+
+@Composable
+fun SettingsAccountExample() {
+    SettingsAccount()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `ITEMS` and the initial email and phone values with your account data. Use `onSave`, which receives the field and new value, to persist edits.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ There is no tooltip and the center text is hard-coded, so keep it in sync with t
 
 </NativeExample>
 
+<Only platform="rn swift">
+
 A `RadialBarChart` drawn from 210 to -30 degrees, with a single value on a 0 to 100 `PolarAngleAxis` and a tinted track behind it. The number and its rating are `Text` layered over the arc. Nothing is interactive.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts radial-chart-gauge --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadialChartGauge } from "@/components/charts/radial-chart-gauge"
 ```
@@ -229,6 +237,41 @@ import { RadialChartGauge } from "@/components/charts/radial-chart-gauge"
 <RadialChartGauge />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadialGaugeExample: View {
+  var body: some View {
+    RadialChartGauge()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadialChartGauge
+
+@Composable
+fun RadialGaugeExample() {
+    RadialChartGauge()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props.
+
+</Only>
 
 </Only>

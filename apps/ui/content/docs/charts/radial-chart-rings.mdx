@@ -65,7 +65,11 @@ The graphic is exposed as an image with a label listing each ring's value and go
 
 </NativeExample>
 
+<Only platform="rn">
+
 Three rings drawn with `Svg` circles colored through `ChartPalette`. Each entry in `rings` has a value and a goal, and the filled arc is capped at a full circle. The whole graphic is one accessible image whose label lists each ring's value and goal. Nothing is interactive.
+
+</Only>
 
 ## Installation
 
@@ -99,7 +103,11 @@ npx @esuiss/ui@latest add charts radial-chart-rings --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -215,6 +223,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadialChartRings } from "@/components/charts/radial-chart-rings"
 ```
@@ -223,6 +233,41 @@ import { RadialChartRings } from "@/components/charts/radial-chart-rings"
 <RadialChartRings />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadialRingsExample: View {
+  var body: some View {
+    RadialChartRings()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadialChartRings
+
+@Composable
+fun RadialRingsExample() {
+    RadialChartRings()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace the values, goals and colors in `rings`, and change `SIZE` and `BAR` to resize the rings. The component takes no props.
+
+</Only>
 
 </Only>

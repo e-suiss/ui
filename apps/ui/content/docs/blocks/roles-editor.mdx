@@ -67,7 +67,11 @@ Edit `groups` for the permissions, `roles` and `members` for the role list, and 
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A `SplitView` lists the Editor, Support and Viewer roles with their member counts, and the detail pane shows the selected role's permissions grouped into `ItemGroup` lists, each with a `Switch`. Revert and Save buttons appear once a switch changes, and a New Role `Button` sits under the list. An admin `TabBar` switches between Users, Roles, Activity and Settings; sections other than Roles show a placeholder. On wide screens the list and detail sit side by side.
+
+</Only>
 
 ## Installation
 
@@ -101,7 +105,11 @@ npx @esuiss/ui@latest add blocks roles-editor --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Patterns/SplitView.swift" />
 
 5. Add the files to your app target.
@@ -296,6 +302,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RolesEditor } from "@/components/blocks/roles-editor"
 ```
@@ -304,6 +312,41 @@ import { RolesEditor } from "@/components/blocks/roles-editor"
 <RolesEditor />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RolesEditorExample: View {
+  var body: some View {
+    RolesEditor()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.RolesEditor
+
+@Composable
+fun RolesEditorExample() {
+    RolesEditor()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `GROUPS`, `ROLES`, `MEMBERS` and `DEFAULTS` with your permissions and grants. Use `onTogglePermission`, `onSave`, `onRevert`, `onNewRole` and `onNavigate` to persist changes and route between sections.
+
+</Only>
 
 </Only>

@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-bottom-bar--default" />
 
+<Only platform="rn">
+
 `BottomBar` is an animated `View` that adds bottom padding equal to the safe-area inset, or to the keyboard height while the keyboard is open, and animates between them with the keyboard's own timing. `BottomBarContent` adds the standard padding and spacing for the buttons inside.
+
+</Only>
 
 Use it for the main call to action of a screen, such as checkout or a form submit button.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add bottom-bar --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Screen](/docs/components/screen). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Screen](/docs/components/screen). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -175,23 +183,145 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { BottomBar, BottomBarContent } from "@/components/ui/bottom-bar"
-```
+<Only platform="rn">
 
 ```tsx
-<Page>
-  <BottomBar>
-    <BottomBarContent>
-      <Button size="lg" block>
-        <Text>Continue</Text>
-      </Button>
-    </BottomBarContent>
-  </BottomBar>
-</Page>
+import { View } from "react-native"
+import { BottomBar, BottomBarContent } from "@/components/ui/bottom-bar"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+function Page({ children }: { children: React.ReactNode }) {
+  return (
+    <View className="-m-4 flex-1">
+      <View className="flex-1 gap-2 p-4">
+        <Text variant="h3">Review order</Text>
+        <Text variant="muted">2 items, delivery on Thursday.</Text>
+      </View>
+      {children}
+    </View>
+  )
+}
+
+export function BottomBarExample() {
+  return (
+    <Page>
+      <BottomBar>
+        <BottomBarContent>
+          <Button size="lg" block>
+            <Text>Continue</Text>
+          </Button>
+        </BottomBarContent>
+      </BottomBar>
+    </Page>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BottomBarExample: View {
+  var body: some View {
+    BottomBarPage {
+      BottomBar(separator: false) {
+        BottomBarContent {
+          Button("Continue") {}.buttonStyle(.variant(size: .lg, block: true))
+        }
+      }
+    }
+  }
+}
+
+struct BottomBarPage<Bar: View>: View {
+  @ViewBuilder let bar: () -> Bar
+
+  var body: some View {
+    VStack(spacing: 0) {
+      VStack(alignment: .leading, spacing: 8) {
+        Text("Review order").textVariant(.h3)
+        Text("2 items, delivery on Thursday.").textVariant(.muted)
+      }
+      .padding(16)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+      bar()
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.BottomBar
+import com.esuiss.ui.components.BottomBarContent
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
+import com.esuiss.ui.components.Screen
+import com.esuiss.ui.components.ScreenEdge
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+
+@Composable
+fun BottomBarPage(page: @Composable ColumnScope.() -> Unit, bar: @Composable () -> Unit) {
+    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {
+        Column(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.weight(1f).fillMaxWidth().padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                content = page,
+            )
+            bar()
+        }
+    }
+}
+
+@Composable
+fun BottomBarOrder(bar: @Composable () -> Unit) {
+    BottomBarPage(
+        page = {
+            Text("Review order", variant = TextVariant.H3)
+            Text("2 items, delivery on Thursday.", variant = TextVariant.Muted)
+        },
+        bar = bar,
+    )
+}
+
+@Composable
+fun BottomBarDefault() {
+    BottomBarOrder {
+        BottomBar {
+            BottomBarContent {
+                Button("Continue", onClick = {}, size = ButtonSize.Lg, block = true)
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Place `BottomBar` as the last child of the screen so it sits below the scrolling content. Stack buttons in `BottomBarContent`, or add `flex-row` to place them side by side.
+
+</Only>
 
 Set `separator` to draw a hairline above the bar. Inside a `Screen` that already handles the bottom safe-area edge, the inset is not added twice.
 
@@ -312,6 +442,8 @@ Padded area for the actions.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The bar adds no role; each action inside provides its own.
@@ -320,5 +452,7 @@ Padded area for the actions.
 
 - The padding animation respects the system Reduce Motion setting.
 - Uses `bg-background` and `border-border` tokens; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

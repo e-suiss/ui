@@ -105,7 +105,11 @@ npx @esuiss/ui@latest add blocks signup-form --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -237,8 +241,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 <ComponentSource path="swift/Patterns/Confirm.swift" />
@@ -306,6 +308,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SignupForm } from "@/components/blocks/signup-form"
 ```
@@ -314,6 +318,41 @@ import { SignupForm } from "@/components/blocks/signup-form"
 <SignupForm />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SignupFormExample: View {
+  var body: some View {
+    SignupForm()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.SignupForm
+
+@Composable
+fun SignupFormExample() {
+    SignupForm()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `COUNTRIES` and `RULES` to match your requirements. `onSubmit` receives the form values (typed as `SignupFormValues`), and `onLearnMore` handles the info link.
+
+</Only>
 
 </Only>

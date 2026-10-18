@@ -71,7 +71,11 @@ Closing the dialog cancels the pending timers; abort your WebAuthn request the s
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A sign-in screen that shows the account with an `Avatar`, a Change link, a Continue with passkey `Button` and a link to sign in with a password. Continuing opens a `Dialog` with an animated scan glyph that turns into a verified state, then shows a welcome view with a Sign out link. The dialog can be cancelled during the scan.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks login-passkey --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -217,8 +225,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -268,6 +274,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LoginPasskey } from "@/components/blocks/login-passkey"
 ```
@@ -275,6 +283,37 @@ import { LoginPasskey } from "@/components/blocks/login-passkey"
 ```tsx
 <LoginPasskey />
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LoginPasskeyExample: View {
+  var body: some View {
+    LoginPasskey()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.LoginPasskey
+
+@Composable
+fun LoginPasskeyExample() {
+    LoginPasskey()
+}
+```
+
+</Only>
 
 Call your passkey API from `onContinue`, and wire `onChangeAccount` and `onUsePassword` to your navigation. The account details and the scan timing are sample values in the component.
 

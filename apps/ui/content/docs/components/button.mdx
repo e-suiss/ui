@@ -143,7 +143,11 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-button--default" live="button/Default" />
 
+<Only platform="rn">
+
 `Button` is a `Pressable` with the `button` role. It supports eight visual variants, five text sizes and five icon-only sizes, and an optional `block` mode that fills the width of its container.
+
+</Only>
 
 Use the `default` variant for the primary action on a screen, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.
 
@@ -179,7 +183,11 @@ npx @esuiss/ui@latest add button --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -255,8 +263,6 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -293,8 +299,12 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
 import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
 ```
 
 ```tsx
@@ -305,11 +315,50 @@ import { Button } from "@/components/ui/button"
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct ButtonExample: View {
+  var body: some View {
+    Button("Button") {}
+      .buttonStyle(.variant())
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.Button
+
+@Composable
+fun ButtonDefault() {
+    Column {
+        Button("Button", onClick = {})
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Put the label in a `Text` and icons in an `Icon`. The button passes its text color and icon size down through context, so children pick them up without extra classes.
 
 Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `accessibilityLabel`.
 
 `buttonVariants` and `buttonTextVariants` are also exported if you need the classes on another element.
+
+</Only>
 
 ## Examples
 
@@ -422,6 +471,8 @@ Overloads: `Button(onClick, content)`, `Button(text, onClick)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Renders a `Pressable` with `role="button"`, so VoiceOver and TalkBack announce it as a button.
@@ -432,5 +483,7 @@ Overloads: `Button(onClick, content)`, `Button(text, onClick)`.
 
 - Colors come from semantic tokens such as `bg-primary`, `bg-secondary`, `bg-primary/10 dark:bg-primary/20` and `bg-destructive/10 dark:bg-destructive/20`, with `opacity-80` while pressed and `opacity-50` when disabled.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

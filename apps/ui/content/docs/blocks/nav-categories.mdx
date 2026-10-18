@@ -99,7 +99,11 @@ npx @esuiss/ui@latest add blocks nav-categories --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -227,8 +231,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -284,6 +286,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { NavCategories } from "@/components/blocks/nav-categories"
 ```
@@ -292,6 +296,41 @@ import { NavCategories } from "@/components/blocks/nav-categories"
 <NavCategories />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct NavCategoriesExample: View {
+  var body: some View {
+    NavCategories()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.NavCategories
+
+@Composable
+fun NavCategoriesExample() {
+    NavCategories()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `CATEGORIES` with your categories and images. Wire `onSelectCategory`, `onAskSpecialist` and `onFindStore` to your navigation. The photos are Unsplash placeholders.
+
+</Only>
 
 </Only>

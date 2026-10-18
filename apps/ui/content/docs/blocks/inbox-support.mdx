@@ -67,7 +67,11 @@ Replace `initialTickets` with your tickets, each with an id, title, device, stat
 
 </NativeExample>
 
+<Only platform="rn">
+
 A help desk screen built on `SplitView`, with a sidebar of queues, a list of tickets showing the requester `Avatar`, priority and device, and a detail view. In the detail view a `ToggleGroup` changes the ticket status, a `Textarea` takes a reply, Send and set pending sends it and moves the ticket to Pending, and Mark as solved closes it.
+
+</Only>
 
 ## Installation
 
@@ -101,7 +105,11 @@ npx @esuiss/ui@latest add blocks inbox-support --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Text](/docs/components/text), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Text](/docs/components/text), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -223,8 +231,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Textarea.swift" />
 
 <ComponentSource path="swift/Components/Toggle.swift" />
@@ -298,6 +304,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { InboxSupport } from "@/components/blocks/inbox-support"
 ```
@@ -306,6 +314,41 @@ import { InboxSupport } from "@/components/blocks/inbox-support"
 <InboxSupport />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct InboxSupportExample: View {
+  var body: some View {
+    InboxSupport()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.InboxSupport
+
+@Composable
+fun InboxSupportExample() {
+    InboxSupport()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `INITIAL_TICKETS` with your tickets. Wire `onViewChange`, `onStatusChange` and `onReply` to your help desk backend; the screen also updates its own ticket list.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ The chart supports keyboard navigation, and its headline is announced as you mov
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `Header`, `DropdownMenu` for picking the store, `ToggleGroup`, the `BarChart` from `Chart`, `Chip` filters, `Avatar`, `Item` rows and `TabBar`. The bar chart compares online and in-store sales per day, and pressing a day highlights it and shows its total. Order status chips filter the list.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks dash-store --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Chart](/docs/components/chart), [Chip](/docs/components/chip), [Dropdown Menu](/docs/components/dropdown-menu), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -235,8 +243,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -314,6 +320,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { DashStore } from "@/components/blocks/dash-store"
 ```
@@ -322,6 +330,41 @@ import { DashStore } from "@/components/blocks/dash-store"
 <DashStore />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct DashStoreExample: View {
+  var body: some View {
+    DashStore()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.DashStore
+
+@Composable
+fun DashStoreExample() {
+    DashStore()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `STORES`, `ranges`, `week`, `orders` and `filters` with your store data. Pass `onRangeChange`, `onFilterChange`, `onStoreChange`, `onOrderPress` and `onNavigate` to react to each control.
+
+</Only>
 
 </Only>

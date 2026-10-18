@@ -184,9 +184,13 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-inputotp--default" />
 
+<Only platform="rn">
+
 `InputOTP` is backed by one hidden `TextInput` and shows each character in an `InputOTPSlot`. The active slot gets a `border-primary` border and a blinking caret. The hidden input uses the one-time-code autofill hints, so codes from messages can be filled in automatically, and pasting fills every slot.
 
 Group slots with `InputOTPGroup` and place an `InputOTPSeparator` between groups for codes such as `123-456`.
+
+</Only>
 
 ## Installation
 
@@ -220,7 +224,11 @@ npx @esuiss/ui@latest add input-otp --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -310,8 +318,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -355,6 +361,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/ui/input-otp"
 ```
@@ -375,23 +383,103 @@ import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/comp
 </InputOTP>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct InputOTPDefaultDemo: View {
+  @State private var text = ""
+
+  var body: some View {
+    InputOTP(text: $text, length: 6) {
+      InputOTPGroup {
+        InputOTPSlot(index: 0)
+        InputOTPSlot(index: 1)
+        InputOTPSlot(index: 2)
+      }
+      InputOTPSeparator()
+      InputOTPGroup {
+        InputOTPSlot(index: 3)
+        InputOTPSlot(index: 4)
+        InputOTPSlot(index: 5)
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.components.InputOTP
+import com.esuiss.ui.components.InputOTPGroup
+import com.esuiss.ui.components.InputOTPSeparator
+import com.esuiss.ui.components.InputOTPSlot
+
+@Composable
+fun InputOTPDefault() {
+    var value by rememberSaveable { mutableStateOf("") }
+    Column {
+        InputOTP(value, { value = it }, maxLength = 6) {
+            InputOTPGroup {
+                InputOTPSlot(0)
+                InputOTPSlot(1)
+                InputOTPSlot(2)
+            }
+            InputOTPSeparator()
+            InputOTPGroup {
+                InputOTPSlot(3)
+                InputOTPSlot(4)
+                InputOTPSlot(5)
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Set `length` and render one `InputOTPSlot` per `index`. Use `value` with `onValueChange` for controlled state, or `defaultValue`. `onValueComplete` fires when every slot is filled.
 
 `validationType` limits input to `numeric` (the default number pad), `alpha`, `alphanumeric` or `none`, and `onValueInvalid` reports rejected characters. Set `mask` to hide the characters.
 
 Use `InputOTPSlotClassContext` to style every slot at once, or `className` on a single slot.
 
+</Only>
+
 ## Examples
 
 ### Controlled
 
+<Only platform="rn kotlin">
+
 Controlled with `value` and `onValueChange`.
+
+</Only>
 
 <NativeExample id="components-inputotp--controlled" />
 
 ### Alphanumeric
 
+<Only platform="rn">
+
 Letters and numbers with `validationType="alphanumeric"`.
+
+</Only>
 
 <NativeExample id="components-inputotp--alphanumeric" />
 
@@ -577,6 +665,8 @@ Dash between groups.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Screen readers interact with the hidden input, labelled "N character code" by default; pass `inputProps` with an `accessibilityLabel` to localize it.
@@ -588,5 +678,7 @@ Dash between groups.
 - The hidden input sets `textContentType="oneTimeCode"` for iOS and `autoComplete="one-time-code"` for Android autofill.
 - The caret blink respects the system Reduce Motion setting.
 - Uses `bg-secondary`, `border-primary` and `bg-primary` tokens; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

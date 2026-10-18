@@ -71,7 +71,11 @@ Arc lengths are relative to the largest value, which always closes a full circle
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `RadialBarChart` with one bar per record in `chartData` (a `device` and a `users` count). Each bar is colored through a `Cell` that reads `chartConfig`, over a track in the `secondary` color. Pressing a bar shows a tooltip.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts radial-chart-default --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -187,8 +195,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -231,6 +237,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadialChartDefault } from "@/components/charts/radial-chart-default"
 ```
@@ -239,6 +247,41 @@ import { RadialChartDefault } from "@/components/charts/radial-chart-default"
 <RadialChartDefault />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadialExample: View {
+  var body: some View {
+    RadialChartDefault()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadialChartDefault
+
+@Composable
+fun RadialExample() {
+    RadialChartDefault()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props.
+
+</Only>
 
 </Only>

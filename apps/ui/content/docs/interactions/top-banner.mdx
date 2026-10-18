@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="interactions-top-banner--default" />
 
+<Only platform="rn">
+
 `TopBannerProvider` shows banners requested with `show` from `useTopBanner`. Each banner slides down below the top safe area with a title, an optional description, icon and action button, and hides after 4 seconds by default.
+
+</Only>
 
 Banners queue and appear one at a time, with a short pause between them. Swiping a banner up past a small distance, or flicking it up, dismisses it; dragging pauses the timer. Use it for brief confirmations and status updates, such as a copied link or a restored connection.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add interactions top-banner --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -147,8 +155,6 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -189,19 +195,267 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { TopBannerProvider } from "@/components/interactions/top-banner"
-```
+<Only platform="rn">
 
 ```tsx
-<TopBannerProvider>
-  <Triggers />
-</TopBannerProvider>
+import { WifiSlashIcon } from "phosphor-react-native"
+import * as React from "react"
+import { View } from "react-native"
+import { TopBannerProvider, useTopBanner } from "@/components/interactions/top-banner"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+function Triggers() {
+  const { show, dismiss } = useTopBanner()
+  const [log, setLog] = React.useState("")
+  return (
+    <View className="w-full gap-3">
+      <Button
+        variant="outline"
+        onPress={() =>
+          show({
+            title: "Message sent",
+            description: "Alex will see it the next time they open the app.",
+          })
+        }
+      >
+        <Text>Show banner</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          show({
+            icon: WifiSlashIcon,
+            title: "You are offline",
+            description: "Changes will sync when you reconnect.",
+            action: { label: "Retry", onPress: () => setLog("Retry pressed") },
+          })
+        }
+      >
+        <Text>Show with icon and action</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() => {
+          show({ title: "First of three" })
+          show({ title: "Second of three" })
+          show({ title: "Third of three" })
+        }}
+      >
+        <Text>Queue three</Text>
+      </Button>
+      <Button variant="ghost" onPress={() => dismiss()}>
+        <Text>Dismiss current</Text>
+      </Button>
+      <Text role="status" className="text-sm text-muted-foreground">
+        {log}
+      </Text>
+    </View>
+  )
+}
+
+export function TopBannerExample() {
+  return (
+    <TopBannerProvider>
+      <Triggers />
+    </TopBannerProvider>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct TopBannerExample: View {
+  var body: some View {
+    TopBannerStage(timeout: .seconds(4))
+  }
+}
+
+struct TopBannerStage: View {
+  var timeout: Duration = .seconds(600)
+  var onMount: (@MainActor (TopBannerManager) -> Void)?
+
+  @State private var manager = TopBannerManager()
+  @State private var shown = false
+
+  init(timeout: Duration = .seconds(600), onMount: (@MainActor (TopBannerManager) -> Void)? = nil) {
+    self.timeout = timeout
+    self.onMount = onMount
+  }
+
+  var body: some View {
+    TopBannerTriggers(manager: manager)
+      .frame(maxHeight: .infinity, alignment: .top)
+      .containerRelativeFrame(.vertical) { height, _ in height - 32 }
+      .topBanner(manager, timeout: timeout)
+      .onAppear {
+        guard !shown else { return }
+        shown = true
+        manager.timeout = timeout
+        onMount?(manager)
+      }
+  }
+}
+
+struct TopBannerTriggers: View {
+  let manager: TopBannerManager
+
+  @State private var log = ""
+
+  var body: some View {
+    VStack(spacing: 12) {
+      Button {
+        manager.show("Message sent", description: "Alex will see it the next time they open the app.")
+      } label: {
+        Text("Show banner").frame(maxWidth: .infinity)
+      }
+      .buttonStyle(.variant(.outline))
+      Button {
+        manager.show(
+          "You are offline",
+          description: "Changes will sync when you reconnect.",
+          icon: Ph.wifiSlash.regular,
+          action: TopBannerAction("Retry") { log = "Retry pressed" }
+        )
+      } label: {
+        Text("Show with icon and action").frame(maxWidth: .infinity)
+      }
+      .buttonStyle(.variant(.outline))
+      Button {
+        manager.show("First of three")
+        manager.show("Second of three")
+        manager.show("Third of three")
+      } label: {
+        Text("Queue three").frame(maxWidth: .infinity)
+      }
+      .buttonStyle(.variant(.outline))
+      Button {
+        manager.dismiss()
+      } label: {
+        Text("Dismiss current").frame(maxWidth: .infinity)
+      }
+      .buttonStyle(.variant(.ghost))
+      Text(verbatim: log)
+        .textStyle(.sm)
+        .foregroundStyle(EsuissColor.mutedForeground)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityAddTraits(.updatesFrequently)
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.WifiSlash
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.interactions.TopBannerAction
+import com.esuiss.ui.interactions.TopBannerProvider
+import com.esuiss.ui.interactions.TopBannerState
+import com.esuiss.ui.interactions.rememberTopBannerState
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun TopBannerExample() {
+    TopBannerDemo(timeout = 4000L)
+}
+
+@Composable
+fun TopBannerDemo(timeout: Long = 600000L, onMount: (TopBannerState.() -> Unit)? = null) {
+    val state = rememberTopBannerState(defaultTimeoutMillis = timeout)
+    var shown by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        if (shown || onMount == null) return@LaunchedEffect
+        shown = true
+        state.onMount()
+    }
+    TopBannerProvider(state) {
+        TopBannerTriggers(state)
+    }
+}
+
+@Composable
+fun TopBannerTriggers(state: TopBannerState) {
+    var log by rememberSaveable { mutableStateOf("") }
+    val fill = Modifier.fillMaxWidth()
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Button(
+            "Show banner",
+            onClick = { state.show("Message sent", description = "Alex will see it the next time they open the app.") },
+            modifier = fill,
+            variant = ButtonVariant.Outline,
+        )
+        Button(
+            "Show with icon and action",
+            onClick = {
+                state.show(
+                    "You are offline",
+                    description = "Changes will sync when you reconnect.",
+                    icon = PhosphorIcons.Regular.WifiSlash,
+                    action = TopBannerAction("Retry") { log = "Retry pressed" },
+                )
+            },
+            modifier = fill,
+            variant = ButtonVariant.Outline,
+        )
+        Button(
+            "Queue three",
+            onClick = {
+                state.show("First of three")
+                state.show("Second of three")
+                state.show("Third of three")
+            },
+            modifier = fill,
+            variant = ButtonVariant.Outline,
+        )
+        Button("Dismiss current", onClick = { state.dismiss() }, modifier = fill, variant = ButtonVariant.Ghost)
+        Text(
+            log,
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
+        )
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Wrap the app in `TopBannerProvider`, then call `show({ title, description?, icon?, action?, timeout? })` from `useTopBanner`. `show` returns an id that you can pass to `dismiss`; calling `dismiss()` with no id dismisses the current banner.
 
 `icon` is a Phosphor icon component. `action` is `{ label, onPress }`; pressing it runs `onPress` and dismisses the banner. Pass a `timeout` of `0` or `Infinity` to keep a banner until dismissed.
+
+</Only>
 
 ## Examples
 
@@ -410,6 +664,8 @@ Holds the banner queue and renders the current banner in a portal.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The banner has the `alert` role and is a polite live region.
@@ -421,5 +677,7 @@ Holds the banner queue and renders the current banner in a portal.
 - Banners are up to 384 points wide and centered.
 - The card uses `bg-card`, or `bg-muted` in dark mode, with a `border-border` outline; the icon uses `text-primary`.
 - Slide animations respect the system reduce motion setting.
+
+</Only>
 
 </Only>

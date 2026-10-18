@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-fab--default" />
 
+<Only platform="rn">
+
 `Fab` is a round primary `Pressable` rendered through a portal and pinned to the bottom-end corner of the screen, above the safe-area insets. It comes in `default` and `lg` sizes, and becomes an extended pill when you pass a `label`.
+
+</Only>
 
 When it has `FabAction` children, pressing it opens a speed dial: a scrim dims the screen and the actions rise above the button one after another. The plus icon rotates 45 degrees into a close mark; other icons swap to an X.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add fab --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -151,8 +159,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -194,22 +200,166 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { Fab, FabAction } from "@/components/ui/fab"
-```
+<Only platform="rn">
 
 ```tsx
-<View className="flex-1">
-  <Page />
-  <Fab accessibilityLabel="New note" />
-</View>
+import { View } from "react-native"
+import { Fab } from "@/components/ui/fab"
+import { Text } from "@/components/ui/text"
+
+function Page({ log }: { log?: string }) {
+  return (
+    <View className="gap-2">
+      <Text variant="h3">Notes</Text>
+      <Text variant="muted">
+        The button floats at the bottom end of the screen.
+      </Text>
+      {log ? (
+        <Text role="status" className="text-sm text-muted-foreground">
+          {log}
+        </Text>
+      ) : null}
+    </View>
+  )
+}
+
+export function FabExample() {
+  return (
+    <View className="flex-1">
+      <Page />
+      <Fab accessibilityLabel="New note" />
+    </View>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct FabExample: View {
+  var body: some View {
+    FabStage {
+      Fab(accessibilityLabel: "New note", action: {}) { Ph.plus.bold }
+    }
+  }
+}
+
+struct FabPage: View {
+  var log: String?
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Text("Notes")
+        .textVariant(.h3)
+      Text("The button floats at the bottom end of the screen.")
+        .textVariant(.muted)
+      if let log, !log.isEmpty {
+        Text(verbatim: log)
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.mutedForeground)
+          .accessibilityAddTraits(.updatesFrequently)
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+  }
+}
+
+struct FabStage<Content: View>: View {
+  var log: String?
+  @ViewBuilder let content: () -> Content
+
+  var body: some View {
+    ZStack(alignment: .topLeading) {
+      FabPage(log: log)
+      content()
+    }
+    .containerRelativeFrame(.vertical) { height, _ in max(height - 32, 0) }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.Plus
+import com.esuiss.ui.components.Fab
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun FabExample() {
+    FabPage {
+        Fab(PhosphorIcons.Regular.Plus, contentDescription = "New note", onClick = {})
+    }
+}
+
+@Composable
+fun FabPage(log: String? = null, fab: @Composable () -> Unit) {
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text("Notes", variant = TextVariant.H3)
+            Text("The button floats at the bottom end of the screen.", variant = TextVariant.Muted)
+            if (!log.isNullOrEmpty()) {
+                Text(
+                    log,
+                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
+                )
+            }
+        }
+        fab()
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn swift">
 
 Use the default plus icon or pass any Phosphor icon to `icon`. Give an icon-only button an `accessibilityLabel`.
+
+</Only>
+
+<Only platform="rn">
 
 For a speed dial, add `FabAction` children with an `icon` and an optional text label. Pressing an action calls its `onPress` and closes the dial. Tapping the scrim or pressing the Android back button also closes it. Use `open`, `defaultOpen` and `onOpenChange` to control it.
 
 Pass `portalHost` to render into a named portal host.
+
+</Only>
 
 ## Examples
 
@@ -245,7 +395,11 @@ A speed dial that opens on press.
 
 ### Controlled
 
+<Only platform="rn kotlin">
+
 A speed dial controlled with `open` and `onOpenChange`.
+
+</Only>
 
 <NativeExample id="components-fab--controlled" />
 
@@ -390,6 +544,8 @@ One action in the speed dial, with an icon and optional label.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The button and each action have the `button` role.
@@ -402,5 +558,7 @@ One action in the speed dial, with an icon and optional label.
 - Position follows the safe-area insets and flips sides in right-to-left layouts.
 - Animations respect the system Reduce Motion setting.
 - Uses `bg-primary`, `bg-card` and `bg-black/50` tokens; actions use `bg-muted` in dark mode.
+
+</Only>
 
 </Only>

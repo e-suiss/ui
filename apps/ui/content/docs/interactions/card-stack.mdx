@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="interactions-card-stack--default" />
 
+<Only platform="rn kotlin">
+
 `CardStack` shows the top card of `data` with up to `visibleCount` cards stacked behind it, each slightly smaller and lower. Dragging the top card sideways moves and tilts it, while the cards behind grow into place.
+
+</Only>
 
 Releasing past `threshold`, or flicking faster than 800 points per second, flies the card off in that direction and shows the next one; otherwise it springs back. Use it for one-at-a-time decisions such as keep or skip.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add interactions card-stack --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -155,8 +163,6 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -191,17 +197,394 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { CardStack, CardStackEmpty, CardStackActions, CardStackSwipeButton, CardStackUndo } from "@/components/interactions/card-stack"
-```
+<Only platform="rn">
 
 ```tsx
-<Demo />
+import * as React from "react"
+import { View } from "react-native"
+import { CardStack, CardStackActions, CardStackEmpty, CardStackSwipeButton, CardStackUndo } from "@/components/interactions/card-stack"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Text } from "@/components/ui/text"
+
+type Place = { id: string; name: string; city: string; detail: string }
+
+const places: Place[] = [
+  {
+    id: "harbor",
+    name: "Harbor Café",
+    city: "Lisbon",
+    detail: "Slow mornings, strong coffee and a view of the river.",
+  },
+  {
+    id: "garden",
+    name: "Garden Library",
+    city: "Kyoto",
+    detail: "Quiet reading rooms around a moss garden.",
+  },
+  {
+    id: "market",
+    name: "Night Market",
+    city: "Taipei",
+    detail: "Street food stalls open until two in the morning.",
+  },
+]
+
+function PlaceCard({ place }: { place: Place }) {
+  return (
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle>{place.name}</CardTitle>
+        <CardDescription>{place.city}</CardDescription>
+      </CardHeader>
+      <CardContent className="grow">
+        <View className="grow rounded-xl bg-muted" />
+      </CardContent>
+      <CardContent>
+        <Text className="text-sm text-muted-foreground">{place.detail}</Text>
+      </CardContent>
+    </Card>
+  )
+}
+
+function Demo({ disabled = false }: { disabled?: boolean }) {
+  const [log, setLog] = React.useState("")
+  return (
+    <View className="gap-3">
+      <CardStack
+        data={places}
+        keyExtractor={(place) => place.id}
+        renderItem={(place) => <PlaceCard place={place} />}
+        itemAccessibilityLabel={(place) => `${place.name}, ${place.city}`}
+        disabled={disabled}
+        onSwipe={(direction, place) =>
+          setLog(`${direction === "left" ? "Skipped" : "Liked"} ${place.name}`)
+        }
+        onUndo={(place) => setLog(`Restored ${place.name}`)}
+      >
+        <CardStackEmpty>You have seen every place.</CardStackEmpty>
+        <CardStackActions>
+          <CardStackSwipeButton direction="left" />
+          <CardStackUndo />
+          <CardStackSwipeButton direction="right" />
+        </CardStackActions>
+      </CardStack>
+      <Text role="status" className="text-center text-sm text-muted-foreground">
+        {log}
+      </Text>
+    </View>
+  )
+}
+
+export function CardStackExample() {
+  return (
+    <Demo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct CardStackExample: View {
+  var body: some View {
+    CardStackDemo(places: cardStackPlaces)
+  }
+}
+
+struct CardStackPlace: Identifiable {
+  let id: String
+  let name: String
+  let city: String
+  let detail: String
+}
+
+let cardStackPlaces = [
+  CardStackPlace(id: "harbor", name: "Harbor Café", city: "Lisbon", detail: "Slow mornings, strong coffee and a view of the river."),
+  CardStackPlace(id: "garden", name: "Garden Library", city: "Kyoto", detail: "Quiet reading rooms around a moss garden."),
+  CardStackPlace(id: "market", name: "Night Market", city: "Taipei", detail: "Street food stalls open until two in the morning."),
+]
+
+struct CardStackPlaceCard: View {
+  let place: CardStackPlace
+
+  var body: some View {
+    Card {
+      CardHeader(LocalizedStringKey(place.name), description: LocalizedStringKey(place.city))
+      CardContent {
+        RoundedRectangle(cornerRadius: Radius.xl, style: .continuous)
+          .fill(EsuissColor.muted)
+          .frame(maxHeight: .infinity)
+      }
+      .frame(maxHeight: .infinity)
+      CardContent {
+        Text(verbatim: place.detail)
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.mutedForeground)
+      }
+    }
+    .frame(maxHeight: .infinity)
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel(Text(verbatim: "\(place.name), \(place.city)"))
+  }
+}
+
+struct CardStackDemo: View {
+  let places: [CardStackPlace]
+  var showsLog = true
+
+  @State private var controller = CardStackController()
+  @State private var log = ""
+
+  var body: some View {
+    VStack(spacing: 12) {
+      VStack(spacing: 24) {
+        ZStack {
+          if !controller.canSwipe {
+            Text("You have seen every place.")
+              .textStyle(.sm)
+              .foregroundStyle(EsuissColor.mutedForeground)
+              .multilineTextAlignment(.center)
+              .padding(24)
+              .frame(maxWidth: .infinity, maxHeight: .infinity)
+              .overlay {
+                RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
+                  .strokeBorder(EsuissColor.border, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+              }
+          }
+          CardStack(
+            places,
+            controller: controller,
+            onSwipe: { direction, place in
+              log = "\(direction == .left ? "Skipped" : "Liked") \(place.name)"
+            },
+            onUndo: { place in
+              log = "Restored \(place.name)"
+            }
+          ) { place in
+            CardStackPlaceCard(place: place)
+          }
+        }
+        .frame(height: 384)
+        HStack(spacing: 16) {
+          CardStackButton(.swipeLeft, controller: controller)
+          CardStackButton(.undo, controller: controller)
+          CardStackButton(.swipeRight, controller: controller)
+        }
+      }
+      if showsLog {
+        Text(verbatim: log)
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.mutedForeground)
+          .multilineTextAlignment(.center)
+          .frame(maxWidth: .infinity)
+          .accessibilityAddTraits(.updatesFrequently)
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.ArrowCounterClockwise
+import com.adamglin.phosphoricons.regular.Heart
+import com.adamglin.phosphoricons.regular.X
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Card
+import com.esuiss.ui.components.CardContent
+import com.esuiss.ui.components.CardHeader
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.interactions.CardStack
+import com.esuiss.ui.interactions.CardStackDirection
+import com.esuiss.ui.interactions.CardStackState
+import com.esuiss.ui.interactions.rememberCardStackState
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun CardStackExample() {
+    CardStackDemo(enabled = true)
+}
+
+class CardStackPlace(val id: String, val name: String, val city: String, val detail: String)
+
+val cardStackPlaces = listOf(
+    CardStackPlace("harbor", "Harbor Café", "Lisbon", "Slow mornings, strong coffee and a view of the river."),
+    CardStackPlace("garden", "Garden Library", "Kyoto", "Quiet reading rooms around a moss garden."),
+    CardStackPlace("market", "Night Market", "Taipei", "Street food stalls open until two in the morning."),
+)
+
+val cardStackDeckHeight = 384.dp
+
+@Composable
+fun CardStackPlaceCard(place: CardStackPlace, modifier: Modifier = Modifier) {
+    val colors = EsuissTheme.colors
+    Card(modifier.fillMaxWidth().height(cardStackDeckHeight)) {
+        CardHeader(place.name, description = place.city)
+        CardContent(Modifier.weight(1f)) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(colors.muted, RoundedCornerShape(Radius.xl)),
+            )
+        }
+        CardContent {
+            Text(place.detail, style = Typography.sm.copy(color = colors.mutedForeground))
+        }
+    }
+}
+
+@Composable
+fun CardStackEmptyBox() {
+    val colors = EsuissTheme.colors
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(cardStackDeckHeight)
+            .drawBehind {
+                val stroke = 1.dp.toPx()
+                val radius = Radius.xl2.toPx()
+                drawRoundRect(
+                    color = colors.border,
+                    topLeft = Offset(stroke / 2, stroke / 2),
+                    size = Size(size.width - stroke, size.height - stroke),
+                    cornerRadius = CornerRadius(radius, radius),
+                    style = Stroke(width = stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(3.dp.toPx(), 3.dp.toPx()))),
+                )
+            }
+            .padding(24.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            "You have seen every place.",
+            style = Typography.sm.copy(color = colors.mutedForeground),
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
+@Composable
+fun CardStackActions(state: CardStackState, enabled: Boolean) {
+    val colors = EsuissTheme.colors
+    val canSwipe = enabled && !state.isEmpty
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Button(
+            onClick = { state.swipe(CardStackDirection.Left) },
+            modifier = Modifier.size(56.dp),
+            variant = ButtonVariant.Outline,
+            size = ButtonSize.IconLg,
+            enabled = canSwipe,
+        ) {
+            Icon(PhosphorIcons.Regular.X, contentDescription = "Swipe left", size = 24.dp, tint = colors.destructive)
+        }
+        Button(
+            onClick = { state.undo() },
+            variant = ButtonVariant.Ghost,
+            size = ButtonSize.IconLg,
+            enabled = state.canUndo,
+        ) {
+            Icon(PhosphorIcons.Regular.ArrowCounterClockwise, contentDescription = "Undo")
+        }
+        Button(
+            onClick = { state.swipe(CardStackDirection.Right) },
+            modifier = Modifier.size(56.dp),
+            variant = ButtonVariant.Outline,
+            size = ButtonSize.IconLg,
+            enabled = canSwipe,
+        ) {
+            Icon(PhosphorIcons.Regular.Heart, contentDescription = "Swipe right", size = 24.dp, tint = colors.primary)
+        }
+    }
+}
+
+@Composable
+fun CardStackDemo(enabled: Boolean) {
+    var log by rememberSaveable { mutableStateOf("") }
+    val state = rememberCardStackState()
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+            CardStack(
+                items = cardStackPlaces,
+                onSwipe = { direction, place ->
+                    log = "${if (direction == CardStackDirection.Left) "Skipped" else "Liked"} ${place.name}"
+                },
+                state = state,
+                key = { it.id },
+                enabled = enabled,
+                onUndo = { _, place -> log = "Restored ${place.name}" },
+                empty = { CardStackEmptyBox() },
+            ) { place ->
+                CardStackPlaceCard(place, Modifier.semantics(mergeDescendants = true) { contentDescription = "${place.name}, ${place.city}" })
+            }
+            CardStackActions(state, enabled)
+        }
+        Text(
+            log,
+            modifier = Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Pass `data` and `renderItem`, and handle `onSwipe(direction, item, index)`. Add children below the deck: `CardStackActions` with `CardStackSwipeButton`s and a `CardStackUndo`, and a `CardStackEmpty` shown once every card is swiped.
 
 Undo brings back the last card from the side it left and calls `onUndo`. `useCardStack` exposes `index`, `count`, `remaining`, `canUndo`, `swipe` and `undo` for custom controls. The `CardStackDirection` type is exported.
+
+</Only>
 
 ## Examples
 
@@ -213,13 +596,21 @@ A static frame of the top card dragged to the right.
 
 ### Empty
 
+<Only platform="rn">
+
 An empty deck showing `CardStackEmpty`.
+
+</Only>
 
 <NativeExample id="interactions-card-stack--empty" />
 
 ### Disabled
 
+<Only platform="rn swift">
+
 Turns off swiping and the buttons with `disabled`.
+
+</Only>
 
 <NativeExample id="interactions-card-stack--disabled" />
 
@@ -461,6 +852,8 @@ The root that renders the deck and handles the drag gesture.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The top card has `Swipe left` and `Swipe right` accessibility actions.
@@ -472,5 +865,7 @@ The root that renders the deck and handles the drag gesture.
 - A medium impact haptic plays when a card is swiped by gesture, button or accessibility action, if the app provides an adapter through `HapticsProvider`.
 - Fly-out and spring animations respect the system reduce motion setting.
 - The left button icon uses `text-destructive`; the right uses `text-primary`.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ Each bubble is a button whose label includes the message and how to toggle the h
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 Composes `Screen`, `Avatar`, `Message`, `Bubble` with `BubbleReactions`, `MessageScroller`, `Attachment`, `InputGroup`, `Button` and `BottomBar`. Double-tapping a bubble toggles a heart, the attach button adds a sample photo preview that can be removed before sending, and each sent message gets a sample reply after a typing indicator.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks chat-thread --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Attachment](/docs/components/attachment), [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Attachment](/docs/components/attachment), [Avatar](/docs/components/avatar), [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -300,6 +306,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { ChatThread } from "@/components/blocks/chat-thread"
 ```
@@ -308,6 +316,41 @@ import { ChatThread } from "@/components/blocks/chat-thread"
 <ChatThread />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct ChatThreadExample: View {
+  var body: some View {
+    ChatThread()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.ChatThread
+
+@Composable
+fun ChatThreadExample() {
+    ChatThread()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `OPENING`, `REPLIES` and `PHOTO` with your messages and attachment source. Wire `onSend`, `onAttach`, `onOpenContact` and `onLikeChange` to your messaging backend.
+
+</Only>
 
 </Only>

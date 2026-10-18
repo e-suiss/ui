@@ -280,7 +280,11 @@ Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 <NativeExample id="components-carousel--default" live="carousel/Default" />
 
+<Only platform="rn">
+
 `Carousel` wraps a scroll view that snaps to each `CarouselItem`. It scrolls horizontally by default or vertically with `orientation="vertical"`. `CarouselPrevious` and `CarouselNext` are round `Button`s that sit outside the slides, or inline when placed in `CarouselControls`.
+
+</Only>
 
 `CarouselDots` shows one dot per snap point, with the active dot stretched into a pill; with autoplay on, the active dot fills up as a timer. `CarouselPlayButton` pauses and resumes autoplay.
 
@@ -316,7 +320,11 @@ npx @esuiss/ui@latest add carousel --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -418,8 +426,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -459,19 +465,207 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselControls, CarouselDots, CarouselPlayButton } from "@/components/ui/carousel"
-```
+<Only platform="rn">
 
 ```tsx
-<View className="mx-12">
-  <Carousel>
-    <NumberSlides />
-    <CarouselPrevious />
-    <CarouselNext />
-  </Carousel>
-</View>
+import { View } from "react-native"
+import { Card, CardContent } from "@/components/ui/card"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Text } from "@/components/ui/text"
+
+const slides = [1, 2, 3, 4, 5]
+
+function NumberSlides({ basis }: { basis?: number }) {
+  return (
+    <CarouselContent>
+      {slides.map((slide) => (
+        <CarouselItem key={slide} basis={basis}>
+          <Card size={basis ? "sm" : "default"}>
+            <CardContent className="aspect-square items-center justify-center">
+              <Text className="text-4xl font-semibold">{slide}</Text>
+            </CardContent>
+          </Card>
+        </CarouselItem>
+      ))}
+    </CarouselContent>
+  )
+}
+
+export function CarouselExample() {
+  return (
+    <View className="mx-12">
+      <Carousel>
+        <NumberSlides />
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </View>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct CarouselExample: View {
+  var body: some View {
+    Carousel {
+      HStack(spacing: 12) {
+        CarouselPrevious()
+        CarouselNumberSlides(basis: nil)
+        CarouselNext()
+      }
+    }
+  }
+}
+
+struct CarouselPick {
+  let eyebrow: String
+  let title: String
+  let tint: Color
+}
+
+enum CarouselData {
+  static let slides = [1, 2, 3, 4, 5]
+
+  static let picks = [
+    CarouselPick(eyebrow: "Today's pick", title: "Weekend breakfast", tint: Palette.amber500),
+    CarouselPick(eyebrow: "New", title: "Grilled meatballs", tint: EsuissColor.destructive),
+    CarouselPick(eyebrow: "Chef's special", title: "Lentil soup", tint: Palette.green500),
+    CarouselPick(eyebrow: "Dessert", title: "Künefe", tint: EsuissColor.primary),
+  ]
+
+  static let features = [
+    "Take orders at the table.",
+    "Every ticket, right on time.",
+    "A full room, every night.",
+  ]
+}
+
+struct CarouselNumberSlides: View {
+  let basis: CGFloat?
+
+  var body: some View {
+    CarouselContent {
+      ForEach(CarouselData.slides, id: \.self) { slide in
+        CarouselItem(basis: basis ?? 1) {
+          Card(size: basis == nil ? .default : .sm) {
+            CardContent {
+              Text(verbatim: "\(slide)")
+                .textStyle(.xl3, weight: .semibold)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .aspectRatio(1, contentMode: .fit)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+let slides = [1, 2, 3, 4, 5]
+
+let picks = [
+  CarouselPick(eyebrow: "Today's pick", title: "Weekend breakfast", tint: Palette.amber500),
+  CarouselPick(eyebrow: "New", title: "Grilled meatballs", tint: EsuissColor.destructive),
+  CarouselPick(eyebrow: "Chef's special", title: "Lentil soup", tint: Palette.green500),
+  CarouselPick(eyebrow: "Dessert", title: "Künefe", tint: EsuissColor.primary),
+]
+
+let features = [
+  "Take orders at the table.",
+  "Every ticket, right on time.",
+  "A full room, every night.",
+]
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Card
+import com.esuiss.ui.components.CardContent
+import com.esuiss.ui.components.CardSize
+import com.esuiss.ui.components.Carousel
+import com.esuiss.ui.components.CarouselContent
+import com.esuiss.ui.components.CarouselItem
+import com.esuiss.ui.components.CarouselNext
+import com.esuiss.ui.components.CarouselPrevious
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.rememberCarouselState
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun CarouselExample() {
+    CarouselNumbers(basis = null, loop = false)
+}
+
+val carouselSlides = listOf(1, 2, 3, 4, 5)
+
+val carouselSpacing = 16.dp
+
+fun carouselPeek(width: Dp, basis: Float?, spacing: Dp = carouselSpacing): PaddingValues {
+    if (basis == null) return PaddingValues(0.dp)
+    val page = (width + spacing) * basis - spacing
+    return PaddingValues(end = width - page)
+}
+
+@Composable
+fun CarouselNumbers(basis: Float?, loop: Boolean) {
+    val state = rememberCarouselState(pageCount = carouselSlides.size, loop = loop)
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val width = maxWidth
+        Carousel(state = state, modifier = Modifier.fillMaxWidth()) {
+            CarouselContent(contentPadding = carouselPeek(width, basis)) { page ->
+                CarouselItem {
+                    Card(size = if (basis != null) CardSize.Sm else CardSize.Default) {
+                        CardContent {
+                            Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
+                                Text(
+                                    carouselSlides[page].toString(),
+                                    style = Typography.xl3.copy(fontWeight = FontWeight.SemiBold),
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            Row(
+                Modifier.fillMaxWidth().padding(top = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                CarouselPrevious()
+                CarouselNext()
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Set each slide's width with `basis` on `CarouselItem`, as a fraction of the viewport (for example `0.5` for two per view). Use `opts` for `loop`, `align` (`start` or `center`) and `dragFree` scrolling without snapping.
 
@@ -479,11 +673,17 @@ Pass `autoplay` as `true` for the default 5-second delay, or as a number of mill
 
 Use `setApi` to get a `CarouselApi` for scrolling from outside, or call `useCarousel()` inside the carousel to read the selected index and scroll state.
 
+</Only>
+
 ## Examples
 
 ### Multiple items
 
+<Only platform="rn">
+
 Two slides per view with `basis={0.5}`.
+
+</Only>
 
 <NativeExample id="components-carousel--multiple-items" live="carousel/MultipleItems" />
 
@@ -525,7 +725,11 @@ Advances every four seconds, with progress dots and a play button.
 
 ### Shelf
 
+<Only platform="rn">
+
 A free-scrolling shelf of small cards with `dragFree`.
+
+</Only>
 
 <NativeExample id="components-carousel--shelf" live="carousel/Shelf" />
 
@@ -999,6 +1203,8 @@ Toggles autoplay.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Previous and next buttons have the `button` role and are labelled "Previous slide" and "Next slide", with a disabled state at the ends.
@@ -1010,5 +1216,7 @@ Toggles autoplay.
 - Arrow icons are mirrored in right-to-left layouts.
 - Dot and progress animations respect the system Reduce Motion setting.
 - Uses `bg-secondary`, `bg-foreground` and `bg-muted-foreground` tokens; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

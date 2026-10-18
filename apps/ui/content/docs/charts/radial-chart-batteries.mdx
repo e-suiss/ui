@@ -71,7 +71,11 @@ The rings are hidden from assistive technology and have no tooltip; the percenta
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `Card` that renders one `RadialBarChart` ring per entry in `devices`, each with a level from 0 to 100. A ring turns red at or below `LOW` (20%) and is green otherwise, with the device initial in the center and its percentage and name below. Each gauge is a single accessible element labeled with name and level. Nothing is interactive. The rings set `isAnimationActive={false}` and draw without the enter animation.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts radial-chart-batteries --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadialChartBatteries } from "@/components/charts/radial-chart-batteries"
 ```
@@ -229,6 +237,41 @@ import { RadialChartBatteries } from "@/components/charts/radial-chart-batteries
 <RadialChartBatteries />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadialBatteriesExample: View {
+  var body: some View {
+    RadialChartBatteries()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadialChartBatteries
+
+@Composable
+fun RadialBatteriesExample() {
+    RadialChartBatteries()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `devices` with your names and levels, and change `LOW` to move the warning threshold. The component takes no props.
+
+</Only>
 
 </Only>

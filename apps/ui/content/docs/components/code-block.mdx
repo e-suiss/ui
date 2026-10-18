@@ -433,7 +433,11 @@ npx @esuiss/ui@latest add code-block --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -503,17 +507,23 @@ npx expo install expo-clipboard phosphor-react-native react-native-svg
 
 1. Target iOS 17 or later.
 
-2. Copy the theme files every view uses:
+2. Add the Swift package to your app:
+
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
+
+3. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-3. Copy the source and every file it uses:
+4. Copy the source:
 
 <ComponentSource path="swift/Components/CodeBlock.swift" />
 
-4. Add the files to your app target.
+5. Add the files to your app target.
 
 </Only>
 
@@ -525,6 +535,7 @@ npx expo install expo-clipboard phosphor-react-native react-native-svg
 implementation(platform("androidx.compose:compose-bom:2026.09.00"))
 implementation("androidx.compose.foundation:foundation")
 implementation("androidx.compose.ui:ui")
+implementation("com.adamglin:phosphor-icon-android:1.0.0")
 ```
 
 2. Copy the theme files every view uses:
@@ -549,8 +560,9 @@ implementation("androidx.compose.ui:ui")
 
 </Only>
 
-
 ## Usage
+
+<Only platform="rn">
 
 ```tsx
 import { CodeBlock, CodeBlockActions, CodeBlockContent, CodeBlockCopyButton, CodeBlockFooter, CodeBlockHeader, CodeBlockLine, CodeBlockTitle } from "@/components/ui/code-block"
@@ -568,7 +580,68 @@ import { CodeBlock, CodeBlockActions, CodeBlockContent, CodeBlockCopyButton, Cod
 </CodeBlock>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct CodeBlockExample: View {
+  var body: some View {
+    CodeBlock {
+      CodeBlockHeader {
+        Ph.fileTs.regular.frame(width: 16, height: 16)
+        CodeBlockTitle(verbatim: "components/greeting.tsx")
+        CodeBlockActions { CodeBlockCopyButton(value: greeting) }
+      }
+      CodeBlockContent(greeting, language: "tsx")
+    }
+  }
+}
+
+let greeting = """
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.FileTs
+import com.esuiss.ui.components.CodeBlock
+import com.esuiss.ui.components.CodeBlockActions
+import com.esuiss.ui.components.CodeBlockContent
+import com.esuiss.ui.components.CodeBlockCopyButton
+import com.esuiss.ui.components.CodeBlockHeader
+import com.esuiss.ui.components.CodeBlockTitle
+import com.esuiss.ui.components.Icon
+
+@Composable
+fun CodeBlockDefault() {
+    CodeBlock {
+        CodeBlockHeader {
+            Icon(PhosphorIcons.Regular.FileTs, contentDescription = null)
+            CodeBlockTitle("components/greeting.tsx")
+            CodeBlockActions { CodeBlockCopyButton(GREETING) }
+        }
+        CodeBlockContent(GREETING, language = "tsx")
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 In SwiftUI and Compose, pass the code as a string or a list of `CodeBlockLine` values to `CodeBlockContent`. The copy button uses `expo-clipboard` in React Native, `UIPasteboard` in SwiftUI and the Compose clipboard on Android.
+
+</Only>
 
 ## Examples
 
@@ -598,7 +671,11 @@ Wraps long lines instead of scrolling sideways.
 
 ### Highlighted lines
 
+<Only platform="rn">
+
 `CodeBlockLine` with `variant="highlighted"` tints the lines that matter.
+
+</Only>
 
 <NativeExample id="components-code-block--highlighted-lines" />
 
@@ -1008,9 +1085,13 @@ Secondary text below the code.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The copy button has the label Copy, and Copied after a copy.
 - Line numbers and diff markers are hidden from assistive technology.
+
+</Only>
 
 </Only>

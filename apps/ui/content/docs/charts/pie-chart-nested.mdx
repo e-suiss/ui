@@ -71,7 +71,11 @@ In the demo the inner groups reuse the Phone and Watch keys even though they com
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A `PieChart` with two `Pie` layers. The inner pie reads a `groups` array and is drawn at reduced opacity; the outer ring reads `chartData`, one record per device. Pressing a slice in either ring shows a tooltip.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts pie-chart-nested --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PieChartNested } from "@/components/charts/pie-chart-nested"
 ```
@@ -229,6 +237,41 @@ import { PieChartNested } from "@/components/charts/pie-chart-nested"
 <PieChartNested />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PieNestedExample: View {
+  var body: some View {
+    PieChartNested()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.PieChartNested
+
+@Composable
+fun PieNestedExample() {
+    PieChartNested()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `groups` and `chartData` with your summary and detail records, and add each name to `chartConfig` with its label and color. The component takes no props.
+
+</Only>
 
 </Only>

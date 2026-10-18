@@ -182,7 +182,11 @@ Also accepts the props of `React.ComponentProps<"button">`.
 
 <NativeExample id="interactions-tip--default" />
 
+<Only platform="rn kotlin">
+
 `Tip` shows a hint until the user dismisses it, then records the dismissal under its `id` so it does not return. It renders either as a `TipCard` placed in the layout, or as a `TipPopover` with an arrow pointing at a `TipAnchor`. Touching the anchor also dismisses the tip.
+
+</Only>
 
 `TipGroup` shows several tips one at a time in the order they mount, moving to the next when one is dismissed. Use tips to introduce a feature or gesture the user may not discover.
 
@@ -218,7 +222,11 @@ npx @esuiss/ui@latest add interactions tip --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -312,11 +320,9 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-4. Copy the source and every file it uses:
+4. Copy the source:
 
 <ComponentSource path="swift/Interactions/Tip.swift" />
-
-<ComponentSource path="swift/Components/TextVariant.swift" />
 
 5. Add the files to your app target.
 
@@ -361,17 +367,517 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { TipGroup, Tip, TipCard, TipAnchor, TipPopover, TipIcon, TipContent, TipTitle, TipDescription, TipClose } from "@/components/interactions/tip"
-```
+<Only platform="rn">
 
 ```tsx
-<TipsExample fresh />
+import { NotePencilIcon, PushPinIcon, ShareNetworkIcon } from "phosphor-react-native"
+import * as React from "react"
+import { Pressable, View } from "react-native"
+import { resetTips, Tip, TipAnchor, TipCard, TipClose, TipContent, TipDescription, TipGroup, TipIcon, TipPopover, TipTitle } from "@/components/interactions/tip"
+import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
+
+const notes = [
+  { id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee" },
+  { id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road" },
+  { id: 3, title: "Book list", preview: "Three novels for the summer" },
+  { id: 4, title: "Meeting notes", preview: "Ship the beta on Friday" },
+]
+
+const TIP_IDS = ["notes-pin", "notes-compose"]
+
+function NotesPage() {
+  const [log, setLog] = React.useState("")
+  return (
+    <TipGroup>
+      <View className="w-full gap-4">
+        <View className="flex-row items-center justify-between">
+          <Text variant="h1">Notes</Text>
+          <View className="flex-row items-center">
+            <Button
+              variant="plain"
+              size="icon-lg"
+              accessibilityLabel="Share folder"
+              onPress={() => setLog("Shared the folder")}
+            >
+              <Icon as={ShareNetworkIcon} className="size-5.5" />
+            </Button>
+            <Tip id="notes-compose" delay={600}>
+              <TipAnchor>
+                <Button
+                  variant="plain"
+                  size="icon-lg"
+                  accessibilityLabel="New note"
+                  onPress={() => setLog("Started a new note")}
+                >
+                  <Icon as={NotePencilIcon} className="size-5.5" />
+                </Button>
+              </TipAnchor>
+              <TipPopover side="bottom" align="end">
+                <TipIcon>
+                  <Icon as={NotePencilIcon} weight="duotone" />
+                </TipIcon>
+                <TipContent>
+                  <TipTitle>Start a note fast</TipTitle>
+                  <TipDescription>
+                    Tap here any time to begin a new note.
+                  </TipDescription>
+                </TipContent>
+                <TipClose />
+              </TipPopover>
+            </Tip>
+          </View>
+        </View>
+        <Tip id="notes-pin">
+          <TipCard>
+            <TipIcon>
+              <Icon as={PushPinIcon} weight="duotone" />
+            </TipIcon>
+            <TipContent>
+              <TipTitle>Pin your favorites</TipTitle>
+              <TipDescription>
+                Swipe right on a note to keep it at the top of the list.
+              </TipDescription>
+            </TipContent>
+            <TipClose />
+          </TipCard>
+        </Tip>
+        <View className="overflow-hidden rounded-2xl border border-border">
+          {notes.map((note, index) => (
+            <Pressable
+              key={note.id}
+              onPress={() => setLog(`Opened ${note.title}`)}
+              className={
+                index > 0
+                  ? "border-t border-border px-4 py-3 active:opacity-80"
+                  : "px-4 py-3 active:opacity-80"
+              }
+            >
+              <Text numberOfLines={1} className="font-semibold">
+                {note.title}
+              </Text>
+              <Text numberOfLines={1} className="text-sm text-muted-foreground">
+                {note.preview}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+        <Text role="status" className="min-h-5 text-sm text-muted-foreground">
+          {log}
+        </Text>
+      </View>
+    </TipGroup>
+  )
+}
+
+function TipsExample({ fresh = false }: { fresh?: boolean }) {
+  const [key, setKey] = React.useState(0)
+  const [ready, setReady] = React.useState(!fresh)
+
+  React.useEffect(() => {
+    if (!fresh) return
+    resetTips(TIP_IDS).then(() => setReady(true))
+  }, [fresh])
+
+  return (
+    <View className="gap-6">
+      {ready ? <NotesPage key={key} /> : null}
+      <Button
+        variant="secondary"
+        size="sm"
+        className="self-center"
+        onPress={() => {
+          resetTips(TIP_IDS).then(() => setKey((value) => value + 1))
+        }}
+      >
+        <Text>Show tips again</Text>
+      </Button>
+    </View>
+  )
+}
+
+export function TipExample() {
+  return (
+    <TipsExample fresh />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+let tipIDs = ["notes-pin", "notes-compose"]
+
+struct TipNote: Identifiable {
+  let id: Int
+  let title: String
+  let preview: String
+}
+
+let tipNotes = [
+  TipNote(id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee"),
+  TipNote(id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road"),
+  TipNote(id: 3, title: "Book list", preview: "Three novels for the summer"),
+  TipNote(id: 4, title: "Meeting notes", preview: "Ship the beta on Friday"),
+]
+
+struct TipPinCard: View {
+  let id: String
+
+  var body: some View {
+    Tip(id: id) {
+      TipCard {
+        TipIcon { Ph.pushPin.duotone }
+        TipContent {
+          TipTitle("Pin your favorites")
+          TipDescription("Swipe right on a note to keep it at the top of the list.")
+        }
+        TipClose()
+      }
+    }
+  }
+}
+
+struct TipNotesPage: View {
+  @State private var log = ""
+
+  var body: some View {
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
+    TipGroup {
+      VStack(alignment: .leading, spacing: 16) {
+        HStack {
+          Text("Notes")
+            .textVariant(.h1)
+          Spacer()
+          Button {
+            log = "Shared the folder"
+          } label: {
+            Ph.shareNetwork.regular.frame(width: 22, height: 22)
+          }
+          .buttonStyle(.variant(.plain, size: .iconLg))
+          .accessibilityLabel(Text("Share folder"))
+          Tip(id: "notes-compose", delay: .milliseconds(600)) {
+            Button {
+              log = "Started a new note"
+            } label: {
+              Ph.notePencil.regular.frame(width: 22, height: 22)
+            }
+            .buttonStyle(.variant(.plain, size: .iconLg))
+            .accessibilityLabel(Text("New note"))
+            .tipPopover(side: .bottom) {
+              TipIcon { Ph.notePencil.duotone }
+              TipContent {
+                TipTitle("Start a note fast")
+                TipDescription("Tap here any time to begin a new note.")
+              }
+              TipClose()
+            }
+          }
+        }
+        TipPinCard(id: "notes-pin")
+        VStack(spacing: 0) {
+          ForEach(Array(tipNotes.enumerated()), id: \.element.id) { index, note in
+            Button {
+              log = "Opened \(note.title)"
+            } label: {
+              VStack(alignment: .leading, spacing: 0) {
+                Text(verbatim: note.title)
+                  .textStyle(.base, weight: .semibold)
+                  .foregroundStyle(EsuissColor.foreground)
+                  .lineLimit(1)
+                Text(verbatim: note.preview)
+                  .textStyle(.sm)
+                  .foregroundStyle(EsuissColor.mutedForeground)
+                  .lineLimit(1)
+              }
+              .padding(.horizontal, 16)
+              .padding(.vertical, 12)
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .contentShape(Rectangle())
+            }
+            .buttonStyle(TipRowStyle())
+            .overlay(alignment: .top) {
+              if index > 0 {
+                EsuissColor.border.frame(height: 1)
+              }
+            }
+          }
+        }
+        .clipShape(shape)
+        .overlay { shape.strokeBorder(EsuissColor.border) }
+        Text(verbatim: log)
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.mutedForeground)
+          .frame(minHeight: 20)
+          .accessibilityAddTraits(.updatesFrequently)
+      }
+    }
+  }
+}
+
+struct TipRowStyle: ButtonStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .opacity(configuration.isPressed ? 0.8 : 1)
+  }
+}
+
+struct TipExample: View {
+  @State private var key = 0
+  @State private var ready = false
+
+  var body: some View {
+    VStack(spacing: 24) {
+      if ready {
+        TipNotesPage()
+          .id(key)
+      }
+      Button("Show tips again") {
+        Task {
+          await resetTips(tipIDs)
+          key += 1
+        }
+      }
+      .buttonStyle(.variant(.secondary, size: .sm))
+    }
+    .task {
+      await resetTips(tipIDs)
+      ready = true
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Duotone
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.duotone.NotePencil
+import com.adamglin.phosphoricons.duotone.PushPin
+import com.adamglin.phosphoricons.regular.NotePencil
+import com.adamglin.phosphoricons.regular.ShareNetwork
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.PopupAlign
+import com.esuiss.ui.components.PopupSide
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+import com.esuiss.ui.interactions.Tip
+import com.esuiss.ui.interactions.TipAnchor
+import com.esuiss.ui.interactions.TipCard
+import com.esuiss.ui.interactions.TipClose
+import com.esuiss.ui.interactions.TipContent
+import com.esuiss.ui.interactions.TipDescription
+import com.esuiss.ui.interactions.TipGroup
+import com.esuiss.ui.interactions.TipIcon
+import com.esuiss.ui.interactions.TipPopover
+import com.esuiss.ui.interactions.TipTitle
+import com.esuiss.ui.interactions.resetTips
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Typography
+import kotlinx.coroutines.launch
+
+class TipNote(val id: Int, val title: String, val preview: String)
+
+val tipNotes = listOf(
+    TipNote(1, "Groceries", "Milk, eggs, bread, coffee"),
+    TipNote(2, "Trip ideas", "Lisbon, Porto, the coast road"),
+    TipNote(3, "Book list", "Three novels for the summer"),
+    TipNote(4, "Meeting notes", "Ship the beta on Friday"),
+)
+
+val tipIds = listOf("notes-pin", "notes-compose")
+
+@Composable
+fun TipPinCard() {
+    TipCard {
+        TipIcon {
+            Icon(PhosphorIcons.Duotone.PushPin, contentDescription = null)
+        }
+        TipContent {
+            TipTitle("Pin your favorites")
+            TipDescription("Swipe right on a note to keep it at the top of the list.")
+        }
+        TipClose()
+    }
+}
+
+@Composable
+fun TipNotesPage() {
+    val colors = EsuissTheme.colors
+    var log by rememberSaveable { mutableStateOf("") }
+    val shape = RoundedCornerShape(Radius.xl2)
+    TipGroup {
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text("Notes", variant = TextVariant.H1)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Button(onClick = { log = "Shared the folder" }, variant = ButtonVariant.Plain, size = ButtonSize.IconLg) {
+                        Icon(PhosphorIcons.Regular.ShareNetwork, contentDescription = "Share folder", size = 22.dp)
+                    }
+                    Tip(id = "notes-compose", delayMillis = 600) {
+                        TipAnchor {
+                            Button(onClick = { log = "Started a new note" }, variant = ButtonVariant.Plain, size = ButtonSize.IconLg) {
+                                Icon(PhosphorIcons.Regular.NotePencil, contentDescription = "New note", size = 22.dp)
+                            }
+                        }
+                        TipPopover(side = PopupSide.Bottom, align = PopupAlign.End) {
+                            TipIcon {
+                                Icon(PhosphorIcons.Duotone.NotePencil, contentDescription = null)
+                            }
+                            TipContent {
+                                TipTitle("Start a note fast")
+                                TipDescription("Tap here any time to begin a new note.")
+                            }
+                            TipClose()
+                        }
+                    }
+                }
+            }
+            Tip(id = "notes-pin") {
+                TipPinCard()
+            }
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape)
+                    .border(1.dp, colors.border, shape),
+            ) {
+                tipNotes.forEachIndexed { index, note ->
+                    if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
+                    TipNoteRow(note) { log = "Opened ${note.title}" }
+                }
+            }
+            Text(
+                log,
+                modifier = Modifier.heightIn(min = 20.dp).semantics { liveRegion = LiveRegionMode.Polite },
+                style = Typography.sm.copy(color = colors.mutedForeground),
+            )
+        }
+    }
+}
+
+@Composable
+fun TipNoteRow(note: TipNote, onClick: () -> Unit) {
+    val colors = EsuissTheme.colors
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .alpha(if (pressed) 0.8f else 1f)
+            .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+    ) {
+        Text(
+            note.title,
+            style = Typography.base.copy(fontWeight = FontWeight.SemiBold),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Text(
+            note.preview,
+            style = Typography.sm.copy(color = colors.mutedForeground),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Composable
+fun TipExample() {
+    val scope = rememberCoroutineScope()
+    var ready by remember { mutableStateOf(false) }
+    var page by remember { mutableIntStateOf(0) }
+    LaunchedEffect(Unit) {
+        resetTips(tipIds)
+        ready = true
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        if (ready) {
+            key(page) { TipNotesPage() }
+        }
+        Button(
+            "Show tips again",
+            onClick = {
+                scope.launch {
+                    resetTips(tipIds)
+                    page += 1
+                }
+            },
+            variant = ButtonVariant.Secondary,
+            size = ButtonSize.Sm,
+        )
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
 
 Give each `Tip` a stable `id`. Compose `TipIcon`, `TipContent` with `TipTitle` and `TipDescription`, and `TipClose` inside a `TipCard` or `TipPopover`. For a popover, wrap the target in `TipAnchor` inside the same `Tip`.
 
+</Only>
+
+<Only platform="rn">
+
 By default dismissals are kept in memory and reset when the app restarts. To persist them, pass a `storage` adapter to `TipGroup` with `getItem` and `setItem`, sync or async, such as one backed by your app's key-value store. Keys are prefixed with `tip:`. `resetTips(ids, storage)` clears dismissals, and `useTip` returns `visible` and `dismiss`. The `TipStorage` type is exported.
+
+</Only>
 
 ## Examples
 
@@ -849,6 +1355,8 @@ A button that dismisses the tip.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `TipCard` has the `note` role.
@@ -861,5 +1369,7 @@ A button that dismisses the tip.
 - Cards use `bg-muted`; popovers use `bg-popover` with a border that is stronger in dark mode, and are up to 320 points wide.
 - Animations respect the system reduce motion setting.
 - On iOS the popover renders in a full-window overlay so it appears above native screens.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ Each row has a hidden checkbox labeled with the user's name, so selection works 
 
 </NativeExample>
 
+<Only platform="rn">
+
 A collapsing `Header` holds a search `InputGroup` and a `ChipGroup` that filters by role. Rows show an `Avatar`, role and a `Badge` for status. The `SelectionList` trigger enters select mode, and the `SelectionListBar` applies bulk actions: make Editor, activate or suspend. An invite `Button` sits in the header, and the admin `TabBar` switches sections.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks users-table --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Badge](/docs/components/badge), [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Selection List](/docs/interactions/selection-list), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Interactions/SelectionList.swift" />
 
 5. Add the files to your app target.
@@ -302,6 +308,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { UsersTable } from "@/components/blocks/users-table"
 ```
@@ -310,6 +318,41 @@ import { UsersTable } from "@/components/blocks/users-table"
 <UsersTable />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct UsersTableExample: View {
+  var body: some View {
+    UsersTable()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.UsersTable
+
+@Composable
+fun UsersTableExample() {
+    UsersTable()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `INITIAL_USERS` and `ROLES` with your data. Use `onInvite`, `onFilterChange`, `onBulkUpdate` and `onNavigate` to connect the screen to your API.
+
+</Only>
 
 </Only>

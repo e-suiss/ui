@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-page-indicator--default" />
 
+<Only platform="rn">
+
 `PageIndicator` draws one dot per page and widens the active one into a pill. Width and position changes animate with Reanimated. When `count` exceeds `maxVisible`, only a window of dots is shown; the window slides to keep the active dot near the center and the dots at its edges shrink to hint that more pages exist.
+
+</Only>
 
 It comes in two sizes, `default` and `sm`, and two variants: `default` uses the foreground color for the active dot and `accent` uses the primary color.
 
@@ -149,8 +153,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Haptics.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -194,6 +196,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PageIndicator } from "@/components/ui/page-indicator"
 ```
@@ -201,6 +205,37 @@ import { PageIndicator } from "@/components/ui/page-indicator"
 ```tsx
 <PageIndicator count={5} index={1} />
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PageIndicatorExample: View {
+  var body: some View {
+    PageIndicator(count: 5, index: 1)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.PageIndicator
+
+@Composable
+fun PageIndicatorExample() {
+    PageIndicator(count = 5, index = 1)
+}
+```
+
+</Only>
 
 The component is controlled: pass `count` and the current `index`. Pass `onIndexChange` to make the dots pressable; without it the indicator is display-only. Pressing a dot plays a selection haptic.
 
@@ -216,7 +251,11 @@ The `sm` and `default` sizes.
 
 ### Accent
 
+<Only platform="rn">
+
 The `accent` variant, which colors the active dot with `bg-primary`.
+
+</Only>
 
 <NativeExample id="components-page-indicator--accent" />
 
@@ -228,7 +267,11 @@ Twelve pages shown in a sliding window at the start, middle and end.
 
 ### Interactive
 
+<Only platform="rn">
+
 Pressable dots that change the page through `onIndexChange`.
+
+</Only>
 
 <NativeExample id="components-page-indicator--interactive" />
 
@@ -327,6 +370,8 @@ Values: `Default`, `Accent`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The indicator is a single element with the `adjustable` role, and the dots are not focusable on their own.
@@ -337,5 +382,7 @@ Values: `Default`, `Accent`.
 ## Notes
 
 - Uses `bg-foreground` or `bg-primary` for the active dot and `bg-border` for the others; colors follow the system appearance.
+
+</Only>
 
 </Only>

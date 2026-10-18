@@ -160,7 +160,11 @@ Styling hooks: `data-slot="search-picker"`, `search-picker-trigger` (mobile) and
 
 <NativeExample id="patterns-search-picker--default" />
 
+<Only platform="rn">
+
 `SearchPicker` renders a field-style `DrawerTrigger` with the selected label and an up-down caret. Pressing it opens a `Drawer` with a search input and a scrollable list of options.
+
+</Only>
 
 Typing filters options by label, case-insensitively. Options with a `group` are shown under a group heading. Choosing an option selects it, closes the drawer and clears the search. Use it when the list is too long to scan, such as countries, cities or frameworks.
 
@@ -196,7 +200,11 @@ npx @esuiss/ui@latest add patterns search-picker --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -296,8 +304,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 5. Add the files to your app target.
@@ -359,6 +365,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SearchPicker } from "@/components/patterns/search-picker"
 ```
@@ -367,15 +375,154 @@ import { SearchPicker } from "@/components/patterns/search-picker"
 <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." accessibilityLabel="Framework" className="w-56" />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+let searchPickerFrameworks = [
+  SearchPickerItem(value: "next", label: "Next.js"),
+  SearchPickerItem(value: "remix", label: "Remix"),
+  SearchPickerItem(value: "astro", label: "Astro"),
+  SearchPickerItem(value: "sveltekit", label: "SvelteKit"),
+  SearchPickerItem(value: "nuxt", label: "Nuxt"),
+  SearchPickerItem(value: "gatsby", label: "Gatsby", disabled: true),
+]
+
+struct SearchPickerDemo: View {
+  var items = searchPickerFrameworks
+  var placeholder: LocalizedStringKey = "Select a framework"
+  var searchPlaceholder: LocalizedStringKey = "Search frameworks..."
+  var emptyText: LocalizedStringKey = "No framework found."
+  var label: LocalizedStringKey = "Framework"
+  var title: LocalizedStringKey?
+  var showCloseButton = false
+  var closeLabel: LocalizedStringKey?
+
+  @State private var value: String?
+
+  init(
+    value: String? = nil,
+    items: [SearchPickerItem] = searchPickerFrameworks,
+    placeholder: LocalizedStringKey = "Select a framework",
+    searchPlaceholder: LocalizedStringKey = "Search frameworks...",
+    emptyText: LocalizedStringKey = "No framework found.",
+    label: LocalizedStringKey = "Framework",
+    title: LocalizedStringKey? = nil,
+    showCloseButton: Bool = false,
+    closeLabel: LocalizedStringKey? = nil
+  ) {
+    _value = State(initialValue: value)
+    self.items = items
+    self.placeholder = placeholder
+    self.searchPlaceholder = searchPlaceholder
+    self.emptyText = emptyText
+    self.label = label
+    self.title = title
+    self.showCloseButton = showCloseButton
+    self.closeLabel = closeLabel
+  }
+
+  var body: some View {
+    SearchPicker(
+      items: items,
+      selection: $value,
+      placeholder: placeholder,
+      searchPlaceholder: searchPlaceholder,
+      emptyText: emptyText,
+      title: title,
+      showCloseButton: showCloseButton,
+      closeLabel: closeLabel
+    )
+    .frame(width: 224)
+    .accessibilityLabel(Text(label))
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.patterns.SearchPicker
+import com.esuiss.ui.patterns.SearchPickerItem
+
+val searchPickerFrameworks = listOf(
+    SearchPickerItem("next", "Next.js"),
+    SearchPickerItem("remix", "Remix"),
+    SearchPickerItem("astro", "Astro"),
+    SearchPickerItem("sveltekit", "SvelteKit"),
+    SearchPickerItem("nuxt", "Nuxt"),
+    SearchPickerItem("gatsby", "Gatsby", enabled = false),
+)
+
+@Composable
+fun SearchPickerDemo(
+    initial: String? = null,
+    items: List<SearchPickerItem> = searchPickerFrameworks,
+    placeholder: String = "Select a framework",
+    searchPlaceholder: String = "Search frameworks...",
+    emptyText: String = "No framework found.",
+    label: String = "Framework",
+    title: String? = null,
+    enabled: Boolean = true,
+    invalid: Boolean? = null,
+    floating: Boolean = false,
+    showCloseButton: Boolean = false,
+    closeLabel: String? = null,
+) {
+    var value by rememberSaveable { mutableStateOf(initial) }
+    SearchPicker(
+        items = items,
+        value = value,
+        onValueChange = { value = it },
+        modifier = Modifier.width(224.dp).semantics { contentDescription = label },
+        placeholder = placeholder,
+        searchPlaceholder = searchPlaceholder,
+        emptyText = emptyText,
+        title = title,
+        enabled = enabled,
+        invalid = invalid,
+        floating = floating,
+        showCloseButton = showCloseButton,
+        closeLabel = closeLabel,
+    )
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Pass `items` as an array of `{ value, label, group?, disabled? }`. The `SearchPickerItem` type is exported.
 
 Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`; the value is a string or `null`. `emptyText` shows when nothing matches.
+
+</Only>
 
 ## Examples
 
 ### With value
 
+<Only platform="rn swift">
+
 Starts with a preset selection via `defaultValue`.
+
+</Only>
 
 <NativeExample id="patterns-search-picker--with-value" />
 
@@ -399,7 +546,11 @@ Shows a close button in the drawer.
 
 ### With close label
 
+<Only platform="rn">
+
 Labels the close button `Cancel` with `closeLabel`.
+
+</Only>
 
 <NativeExample id="patterns-search-picker--with-close-label" />
 
@@ -547,6 +698,8 @@ The complete searchable picker, rendered from the `items` array.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Each option is a button that exposes `selected` and `disabled` states.
@@ -559,5 +712,7 @@ The complete searchable picker, rendered from the `items` array.
 - The list stays between 40% and 60% of the window height, and taps work while the keyboard is open.
 - The field uses `bg-secondary`, `border-destructive` with a `bg-destructive` tint when invalid, and `opacity-50` when disabled; the tint is stronger in dark mode.
 - The search input disables autocorrect and autocapitalization.
+
+</Only>
 
 </Only>

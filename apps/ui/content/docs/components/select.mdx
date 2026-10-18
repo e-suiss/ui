@@ -255,9 +255,9 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.ScrollDow
 
 <NativeExample id="components-select--open-by-default" />
 
-</Only>
-
 `Select` is built on the select primitive. `SelectTrigger` is a pressable field with the `combobox` role and an up-down caret. `SelectContent` renders in a portal, positioned next to the trigger, and fades in and out with Reanimated. The list matches the trigger width.
+
+</Only>
 
 The trigger comes in two sizes, `default` and `sm`. Use Select for picking one value from a short list; for a list that needs searching, use Combobox.
 
@@ -293,7 +293,11 @@ npx @esuiss/ui@latest add select --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -403,8 +407,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -454,19 +456,192 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator } from "@/components/ui/select"
-```
+<Only platform="rn">
 
 ```tsx
-<SelectDemo initial={fruits[2]} defaultOpen />
+import * as React from "react"
+import { type Option, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+const fruits: Option[] = [
+  { value: "mango", label: "Mango" },
+  { value: "banana", label: "Banana" },
+  { value: "blueberry", label: "Blueberry" },
+  { value: "grapes", label: "Grapes" },
+  { value: "pineapple", label: "Pineapple" },
+]
+
+function SelectDemo({
+  initial,
+  size,
+  disabled = false,
+  invalid = false,
+  labelledBy,
+  defaultOpen,
+}: {
+  initial?: Option
+  size?: "default" | "sm"
+  disabled?: boolean
+  invalid?: boolean
+  labelledBy?: string
+  defaultOpen?: boolean
+}) {
+  const [value, setValue] = React.useState<string | null>(
+    initial?.value ?? null
+  )
+  return (
+    <Select
+      items={fruits}
+      value={value}
+      onValueChange={setValue}
+      disabled={disabled}
+      defaultOpen={defaultOpen}
+    >
+      <SelectTrigger
+        size={size}
+        accessibilityLabelledBy={labelledBy}
+        invalid={invalid}
+        className="w-48"
+      >
+        <SelectValue placeholder="Select a fruit" />
+      </SelectTrigger>
+      <SelectContent className="w-48">
+        <SelectGroup>
+          <SelectLabel>Fruits</SelectLabel>
+          {fruits.map((fruit) => (
+            <SelectItem
+              key={fruit.value}
+              value={fruit.value}
+              label={fruit.label}
+            />
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}
+
+export function SelectExample() {
+  return (
+    <SelectDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SelectOption {
+  let value: String
+  let label: LocalizedStringKey
+}
+
+let selectFruits = [
+  SelectOption(value: "mango", label: "Mango"),
+  SelectOption(value: "banana", label: "Banana"),
+  SelectOption(value: "blueberry", label: "Blueberry"),
+  SelectOption(value: "grapes", label: "Grapes"),
+  SelectOption(value: "pineapple", label: "Pineapple"),
+]
+
+struct SelectDemo: View {
+  var size: SelectSize = .default
+
+  @State private var value: String?
+
+  init(initial: String? = nil, size: SelectSize = .default) {
+    self.size = size
+    _value = State(initialValue: initial)
+  }
+
+  var body: some View {
+    SelectField(selection: $value, placeholder: "Select a fruit", size: size) {
+      SelectGroup {
+        SelectLabel("Fruits")
+        ForEach(selectFruits, id: \.value) { fruit in
+          SelectItem(fruit.label, value: fruit.value)
+        }
+      }
+    }
+    .frame(width: 192)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Select
+import com.esuiss.ui.components.SelectGroup
+import com.esuiss.ui.components.SelectItem
+import com.esuiss.ui.components.SelectLabel
+import com.esuiss.ui.components.SelectOption
+import com.esuiss.ui.components.SelectSize
+
+val selectFruits = listOf(
+    SelectOption("mango", "Mango"),
+    SelectOption("banana", "Banana"),
+    SelectOption("blueberry", "Blueberry"),
+    SelectOption("grapes", "Grapes"),
+    SelectOption("pineapple", "Pineapple"),
+)
+
+@Composable
+fun SelectDemo(
+    initial: String? = null,
+    size: SelectSize = SelectSize.Default,
+    enabled: Boolean = true,
+    invalid: Boolean = false,
+    label: String? = null,
+) {
+    var value by rememberSaveable { mutableStateOf(initial) }
+    Select(
+        value = value,
+        onValueChange = { value = it },
+        displayValue = selectFruits.firstOrNull { it.value == value }?.label,
+        modifier = Modifier
+            .width(192.dp)
+            .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),
+        placeholder = "Select a fruit",
+        size = size,
+        invalid = invalid,
+        enabled = enabled,
+    ) {
+        SelectGroup {
+            SelectLabel("Fruits")
+            selectFruits.forEach { SelectItem(it.value, it.label) }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Put a `SelectValue` inside `SelectTrigger`, and `SelectItem` entries inside `SelectContent`. Group items with `SelectGroup` and `SelectLabel`, and divide groups with `SelectSeparator`.
 
 Control the value with `value` and `onValueChange` on `Select`, or start from `defaultValue`. Pass the full option list as `items` so `SelectValue` can show the label of the current value. `Select` also accepts `multiple`, `disabled`, `readOnly`, `open`, `defaultOpen` and `onOpenChange`.
 
 Give each `SelectItem` a `value` and a `label`; the label is shown when no children are passed. `SelectValue` shows `placeholder` until a value is chosen. The `Option` type (`{ value, label }`) is also exported.
+
+</Only>
 
 ## Examples
 
@@ -494,7 +669,11 @@ Two labeled groups divided by a separator.
 
 ### With label
 
+<Only platform="rn">
+
 A select labeled by a `Label` through `accessibilityLabelledBy`, with helper text.
+
+</Only>
 
 <NativeExample id="components-select--with-label" />
 
@@ -800,6 +979,8 @@ Line between groups.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The trigger has the `combobox` role and reports its expanded and disabled states.
@@ -812,5 +993,7 @@ Line between groups.
 
 - Uses `bg-secondary` for the trigger, `bg-popover` for the list and `text-primary` for the check mark; colors follow the system appearance.
 - On iOS the list renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
+
+</Only>
 
 </Only>

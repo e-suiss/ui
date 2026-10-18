@@ -130,7 +130,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 `SectionIndex` pairs a scroll view of lettered sections with `SectionIndexBar`, a column of letters on the end edge. Tapping a letter scrolls to that section; dragging along the bar scrubs through sections and shows the current letter in a large bubble beside the finger.
 
+<Only platform="rn">
+
 When the bar is too short for every letter, it shows a subset with `•` between them. Use it for long alphabetical lists such as contacts.
+
+</Only>
 
 ## Installation
 
@@ -164,7 +168,11 @@ npx @esuiss/ui@latest add interactions section-index --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -280,8 +288,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -314,17 +320,360 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { SectionIndex, SectionIndexScrollView, SectionIndexSection, SectionIndexHeader, SectionIndexBar } from "@/components/interactions/section-index"
-```
+<Only platform="rn">
 
 ```tsx
-<ContactsExample className="h-[520px]" />
+import * as React from "react"
+import { Pressable, View } from "react-native"
+import { SectionIndex, SectionIndexBar, SectionIndexHeader, SectionIndexScrollView, SectionIndexSection } from "@/components/interactions/section-index"
+import { Text } from "@/components/ui/text"
+
+const UPPERCASE = /[A-Z]/
+
+const names = [
+  "Aaron Price",
+  "Abby Chen",
+  "Alex Morgan",
+  "Amira Haddad",
+  "Ben Carter",
+  "Bianca Rossi",
+  "Carla Diaz",
+  "Chris Evans",
+  "Cody Brooks",
+  "Dana Scott",
+  "Derek Hale",
+  "Elena Petrova",
+  "Ethan Wright",
+  "Fatima Khan",
+  "Felix Wagner",
+  "Grace Kim",
+  "Hana Sato",
+  "Henry Ford",
+  "Ivy Turner",
+  "Jack Miller",
+  "Jade Wilson",
+  "Jonas Berg",
+  "Kai Nakamura",
+  "Laura Bell",
+  "Leo Martin",
+  "Lina Costa",
+  "Maya Patel",
+  "Mia Novak",
+  "Noah Fischer",
+  "Nora Lind",
+  "Omar Aziz",
+  "Paula Silva",
+  "Quinn Avery",
+  "Rosa Lopez",
+  "Ryan Cole",
+  "Sara Ahmed",
+  "Sofia Greco",
+  "Tom Baker",
+  "Uma Rao",
+  "Victor Hugo",
+  "Will Jensen",
+  "Yara Nasser",
+  "Zoe Adams",
+  "8 Ball Club",
+]
+
+function groupByLetter() {
+  const groups = new Map<string, string[]>()
+  for (const name of names) {
+    const first = name.charAt(0).toUpperCase()
+    const letter = UPPERCASE.test(first) ? first : "#"
+    groups.set(letter, [...(groups.get(letter) ?? []), name])
+  }
+  return [...groups.entries()].sort(([a], [b]) => {
+    if (a === "#") return 1
+    if (b === "#") return -1
+    return a.localeCompare(b)
+  })
+}
+
+function ContactsExample({ className }: { className: string }) {
+  const [log, setLog] = React.useState("Tap or drag the letters.")
+  return (
+    <View className="gap-3">
+      <SectionIndex className={className}>
+        <SectionIndexScrollView className="rounded-2xl border border-border">
+          {groupByLetter().map(([letter, group]) => (
+            <SectionIndexSection key={letter} value={letter}>
+              <SectionIndexHeader>{letter}</SectionIndexHeader>
+              {group.map((name, index) => (
+                <Pressable
+                  key={name}
+                  onPress={() => setLog(`Opened ${name}`)}
+                  className={`ms-4 me-10 py-3 active:opacity-60 ${index > 0 ? "border-t border-border" : ""}`}
+                >
+                  <Text>{name}</Text>
+                </Pressable>
+              ))}
+            </SectionIndexSection>
+          ))}
+        </SectionIndexScrollView>
+        <SectionIndexBar
+          onValueChange={(letter) => setLog(`Jumped to ${letter}`)}
+        />
+      </SectionIndex>
+      <Text variant="muted">{log}</Text>
+    </View>
+  )
+}
+
+export function SectionIndexExample() {
+  return (
+    <ContactsExample className="h-[520px]" />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SectionIndexExample: View {
+  var body: some View {
+    SectionIndexContacts(height: 520)
+  }
+}
+
+let sectionIndexNames = [
+  "Aaron Price", "Abby Chen", "Alex Morgan", "Amira Haddad", "Ben Carter", "Bianca Rossi",
+  "Carla Diaz", "Chris Evans", "Cody Brooks", "Dana Scott", "Derek Hale", "Elena Petrova",
+  "Ethan Wright", "Fatima Khan", "Felix Wagner", "Grace Kim", "Hana Sato", "Henry Ford",
+  "Ivy Turner", "Jack Miller", "Jade Wilson", "Jonas Berg", "Kai Nakamura", "Laura Bell",
+  "Leo Martin", "Lina Costa", "Maya Patel", "Mia Novak", "Noah Fischer", "Nora Lind",
+  "Omar Aziz", "Paula Silva", "Quinn Avery", "Rosa Lopez", "Ryan Cole", "Sara Ahmed",
+  "Sofia Greco", "Tom Baker", "Uma Rao", "Victor Hugo", "Will Jensen", "Yara Nasser",
+  "Zoe Adams", "8 Ball Club",
+]
+
+let sectionIndexGroups: [(String, [String])] = {
+  var groups: [String: [String]] = [:]
+  for name in sectionIndexNames {
+    let first = name.prefix(1).uppercased()
+    let letter = first.range(of: "^[A-Z]$", options: .regularExpression) != nil ? first : "#"
+    groups[letter, default: []].append(name)
+  }
+  return groups.sorted { lhs, rhs in
+    if lhs.key == "#" { return false }
+    if rhs.key == "#" { return true }
+    return lhs.key < rhs.key
+  }
+  .map { ($0.key, $0.value) }
+}()
+
+struct SectionIndexContacts: View {
+  let height: CGFloat
+
+  @State private var log: LocalizedStringKey = "Tap or drag the letters."
+
+  var body: some View {
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
+    VStack(alignment: .leading, spacing: 12) {
+      SectionIndex {
+        ScrollView {
+          LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+            ForEach(sectionIndexGroups, id: \.0) { entry in
+              SectionIndexSection(entry.0) {
+                ForEach(Array(entry.1.enumerated()), id: \.element) { index, name in
+                  Button {
+                    log = "Opened \(name)"
+                  } label: {
+                    Text(verbatim: name)
+                      .textStyle(.base)
+                      .foregroundStyle(EsuissColor.foreground)
+                      .padding(.vertical, 12)
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                      .contentShape(Rectangle())
+                  }
+                  .buttonStyle(SectionIndexRowStyle())
+                  .overlay(alignment: .top) {
+                    if index > 0 {
+                      EsuissColor.border.frame(height: 1)
+                    }
+                  }
+                  .padding(.leading, 16)
+                  .padding(.trailing, 40)
+                }
+              }
+            }
+          }
+        }
+        .clipShape(shape)
+        .overlay { shape.strokeBorder(EsuissColor.border) }
+        SectionIndexBar { letter in
+          log = "Jumped to \(letter)"
+        }
+      }
+      .frame(height: height)
+      Text(log)
+        .textVariant(.muted)
+    }
+  }
+}
+
+struct SectionIndexRowStyle: ButtonStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .opacity(configuration.isPressed ? 0.8 : 1)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+import com.esuiss.ui.interactions.SectionIndex
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Radius
+
+@Composable
+fun SectionIndexExample() {
+    SectionIndexContacts(height = 520.dp)
+}
+
+val sectionIndexNames = listOf(
+    "Aaron Price",
+    "Abby Chen",
+    "Alex Morgan",
+    "Amira Haddad",
+    "Ben Carter",
+    "Bianca Rossi",
+    "Carla Diaz",
+    "Chris Evans",
+    "Cody Brooks",
+    "Dana Scott",
+    "Derek Hale",
+    "Elena Petrova",
+    "Ethan Wright",
+    "Fatima Khan",
+    "Felix Wagner",
+    "Grace Kim",
+    "Hana Sato",
+    "Henry Ford",
+    "Ivy Turner",
+    "Jack Miller",
+    "Jade Wilson",
+    "Jonas Berg",
+    "Kai Nakamura",
+    "Laura Bell",
+    "Leo Martin",
+    "Lina Costa",
+    "Maya Patel",
+    "Mia Novak",
+    "Noah Fischer",
+    "Nora Lind",
+    "Omar Aziz",
+    "Paula Silva",
+    "Quinn Avery",
+    "Rosa Lopez",
+    "Ryan Cole",
+    "Sara Ahmed",
+    "Sofia Greco",
+    "Tom Baker",
+    "Uma Rao",
+    "Victor Hugo",
+    "Will Jensen",
+    "Yara Nasser",
+    "Zoe Adams",
+    "8 Ball Club",
+)
+
+val sectionIndexGroups: List<Pair<String, List<String>>> =
+    sectionIndexNames
+        .groupBy { name ->
+            val first = name.first().uppercaseChar()
+            if (first in 'A'..'Z') first.toString() else "#"
+        }
+        .toList()
+        .sortedWith(compareBy({ it.first == "#" }, { it.first }))
+
+@Composable
+fun SectionIndexContacts(height: Dp) {
+    val colors = EsuissTheme.colors
+    var log by rememberSaveable { mutableStateOf("Tap or drag the letters.") }
+    val shape = RoundedCornerShape(Radius.xl2)
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        SectionIndex(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height)
+                .clip(shape)
+                .border(1.dp, colors.border, shape),
+            onValueChange = { letter -> log = "Jumped to $letter" },
+        ) {
+            sectionIndexGroups.forEach { (letter, group) ->
+                SectionIndexSection(letter) {
+                    items(group.size, key = { group[it] }) { index ->
+                        SectionIndexRow(group[index], divided = index > 0) { log = "Opened ${group[index]}" }
+                    }
+                }
+            }
+        }
+        Text(log, variant = TextVariant.Muted)
+    }
+}
+
+@Composable
+fun SectionIndexRow(name: String, divided: Boolean, onClick: () -> Unit) {
+    val colors = EsuissTheme.colors
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 40.dp)
+            .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick),
+    ) {
+        if (divided) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
+        Text(name, modifier = Modifier.alpha(if (pressed) 0.6f else 1f).padding(vertical = 12.dp))
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Put a `SectionIndexScrollView` and a `SectionIndexBar` inside `SectionIndex`. Wrap each group in a `SectionIndexSection` with its letter as `value`, and start it with a `SectionIndexHeader`.
 
 The bar shows `A` to `Z` and `#` by default; pass `letters` to match your sections. `onValueChange` is called with the letter when the user jumps.
+
+</Only>
 
 ## Examples
 
@@ -536,6 +885,8 @@ The letter bar with the drag bubble.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The bar is `adjustable`: swiping up or down with a screen reader moves to the previous or next section, and the current letter is announced as its value.
@@ -546,5 +897,7 @@ The letter bar with the drag bubble.
 - A selection haptic plays on each letter change from touch, if the app provides an adapter through `HapticsProvider`.
 - Letters use `text-primary`; the bubble uses `bg-popover`.
 - The bubble animation respects the system reduce motion setting.
+
+</Only>
 
 </Only>

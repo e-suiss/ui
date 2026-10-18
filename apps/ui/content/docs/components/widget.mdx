@@ -261,9 +261,13 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-widget--default" />
 
+<Only platform="rn">
+
 `Widget` is a `View` with a rounded, filled surface. It comes in four fixed sizes, `small` (168×168), `medium` (352×168), `large` (352×352) and `extra-large` (720×352), or `auto`, which fills its parent. Fixed sizes animate with Reanimated when the size changes.
 
 With `resizable`, a corner handle lets the user drag the widget between sizes: a dashed outline previews the size it will snap to, a selection haptic plays on each new snap (when a haptics adapter is provided through `HapticsContext`), and double-tapping the handle returns to the initial size. Only sizes that fit the available width are offered. Set `align="center"` to center the content, which also hides `WidgetAction`.
+
+</Only>
 
 ## Installation
 
@@ -297,7 +301,11 @@ npx @esuiss/ui@latest add widget --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -409,8 +417,6 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="swift/Components/Popover.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 <ComponentSource path="swift/Patterns/Preview.swift" />
@@ -451,21 +457,141 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from "@/components/ui/widget"
-```
+<Only platform="rn">
 
 ```tsx
-<Widget size="small" align="start">
-  <Weather />
-</Widget>
+import { SunIcon } from "phosphor-react-native"
+import { Icon } from "@/components/ui/icon"
+import { Widget, WidgetContent, WidgetDescription, WidgetFooter, WidgetHeader, WidgetIcon, WidgetTitle, WidgetValue } from "@/components/ui/widget"
+
+function Weather() {
+  return (
+    <>
+      <WidgetHeader>
+        <WidgetIcon>
+          <Icon as={SunIcon} weight="fill" />
+        </WidgetIcon>
+        <WidgetTitle>Istanbul</WidgetTitle>
+      </WidgetHeader>
+      <WidgetContent>
+        <WidgetValue>24°</WidgetValue>
+        <WidgetDescription>Partly cloudy</WidgetDescription>
+      </WidgetContent>
+      <WidgetFooter>H 27° · L 18°</WidgetFooter>
+    </>
+  )
+}
+
+export function WidgetExample() {
+  return (
+    <Widget size="small" align="start">
+      <Weather />
+    </Widget>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct WidgetExample: View {
+  var body: some View {
+    Widget(.small) {
+      WidgetWeather()
+    }
+  }
+}
+
+struct WidgetWeather: View {
+  var body: some View {
+    WidgetHeader {
+      WidgetIcon {
+        Ph.sun.fill
+      }
+      WidgetTitle("Istanbul")
+    }
+    WidgetContent {
+      WidgetValue(verbatim: "24°")
+      WidgetDescription("Partly cloudy")
+    }
+    WidgetFooter(verbatim: "H 27° · L 18°")
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.style.TextOverflow
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Fill
+import com.adamglin.phosphoricons.fill.Sun
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.Widget
+import com.esuiss.ui.components.WidgetContent
+import com.esuiss.ui.components.WidgetDescription
+import com.esuiss.ui.components.WidgetFooter
+import com.esuiss.ui.components.WidgetHeader
+import com.esuiss.ui.components.WidgetIcon
+import com.esuiss.ui.components.WidgetSize
+import com.esuiss.ui.components.WidgetTitle
+import com.esuiss.ui.components.WidgetValue
+
+@Composable
+fun WidgetExample() {
+    Widget(size = WidgetSize.Small) { WidgetWeather() }
+}
+
+@Composable
+fun WidgetFooterText(text: String) {
+    WidgetFooter {
+        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    }
+}
+
+@Composable
+fun WidgetWeather() {
+    WidgetHeader {
+        WidgetIcon { Icon(PhosphorIcons.Fill.Sun, contentDescription = null) }
+        WidgetTitle("Istanbul")
+    }
+    WidgetContent {
+        WidgetValue("24°")
+        WidgetDescription("Partly cloudy")
+    }
+    WidgetFooterText("H 27° · L 18°")
+}
+```
+
+</Only>
+
+<Only platform="rn swift">
 
 Compose the content from `WidgetHeader` (with `WidgetIcon`, `WidgetTitle` and `WidgetAction`), then `WidgetValue`, `WidgetDescription` or `WidgetContent`, and `WidgetFooter`, which sticks to the bottom. Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.
 
+</Only>
+
+<Only platform="rn kotlin">
+
 The size is uncontrolled with `defaultSize`, or controlled with `size` and `onSizeChange`. Use `sizes` to limit which sizes the user can pick. A non-resizable widget defaults to `auto`; a resizable one defaults to `small`.
 
+</Only>
+
+<Only platform="rn">
+
 `useWidget` returns the current `size` and `align` so custom content can adapt to the widget size.
+
+</Only>
 
 ## Examples
 
@@ -495,19 +621,31 @@ Resizing limited to `small` and `medium`.
 
 ### Controlled
 
+<Only platform="rn kotlin">
+
 Controls the size with `size` and `onSizeChange`.
+
+</Only>
 
 <NativeExample id="components-widget--controlled" />
 
 ### Centered
 
+<Only platform="rn">
+
 Centered content with `align="center"`.
+
+</Only>
 
 <NativeExample id="components-widget--centered" />
 
 ### Auto
 
+<Only platform="rn kotlin">
+
 An `auto` widget that fills its parent.
+
+</Only>
 
 <NativeExample id="components-widget--auto" />
 
@@ -985,6 +1123,8 @@ Small secondary text and icons pinned to the bottom.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The resize handle has the `adjustable` role, its `resizeLabel` and the current size as its value; increment and decrement actions step through the available sizes, so VoiceOver and TalkBack users can resize without dragging.
@@ -997,5 +1137,7 @@ Small secondary text and icons pinned to the bottom.
 - Uses `bg-muted` for the surface, `bg-secondary` for icon frames, and `text-muted-foreground/50` for the handle, which turns `text-primary` while dragging.
 - The handle and drag direction mirror in right-to-left layouts.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

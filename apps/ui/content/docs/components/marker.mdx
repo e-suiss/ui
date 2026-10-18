@@ -197,7 +197,11 @@ npx @esuiss/ui@latest add marker --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -267,11 +271,9 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-3. Copy the source and every file it uses:
+3. Copy the source:
 
 <ComponentSource path="swift/Components/Marker.swift" />
-
-<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -309,7 +311,11 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
+import { Icon } from "@/components/ui/icon"
 import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
 ```
 
@@ -333,9 +339,83 @@ import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct MarkerVariantsExample: View {
+  var body: some View {
+    VStack(spacing: 32) {
+      Marker {
+        MarkerIcon { Ph.info.regular }
+        MarkerContent("Messages are end-to-end encrypted.")
+      }
+      Marker(.separator) {
+        MarkerContent("Today")
+      }
+      Marker(.border) {
+        MarkerIcon { Ph.calendarBlank.regular }
+        MarkerContent("Upcoming")
+      }
+    }
+    .frame(maxWidth: .infinity)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.CalendarBlank
+import com.adamglin.phosphoricons.regular.Info
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.Marker
+import com.esuiss.ui.components.MarkerContent
+import com.esuiss.ui.components.MarkerIcon
+import com.esuiss.ui.components.MarkerVariant
+
+@Composable
+fun MarkerVariants() {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(32.dp)) {
+        Marker {
+            MarkerIcon { Icon(PhosphorIcons.Regular.Info, contentDescription = null) }
+            MarkerContent("Messages are end-to-end encrypted.")
+        }
+        Marker(variant = MarkerVariant.Separator) {
+            MarkerContent("Today")
+        }
+        Marker(variant = MarkerVariant.Border) {
+            MarkerIcon { Icon(PhosphorIcons.Regular.CalendarBlank, contentDescription = null) }
+            MarkerContent("Upcoming")
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Put the text in `MarkerContent` and an `Icon` in `MarkerIcon`. Text and icons inside the marker pick up the `text-muted-foreground` color and size through context.
 
 Pass a `render` element to `Marker` to render it as another component instead of a `View`.
+
+</Only>
 
 ## API Reference
 
@@ -498,6 +578,8 @@ Overloads: `MarkerContent(content)`, `MarkerContent(text)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `MarkerIcon` and the separator lines are hidden from screen readers, so only the text is read.
@@ -508,5 +590,7 @@ Overloads: `MarkerContent(content)`, `MarkerContent(text)`.
 - Text uses `text-sm text-muted-foreground` and icons `size-4`.
 - Lines and the bottom border use `bg-border` and `border-border`.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

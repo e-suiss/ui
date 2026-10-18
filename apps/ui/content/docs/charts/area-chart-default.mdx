@@ -105,7 +105,11 @@ npx @esuiss/ui@latest add charts area-chart-default --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +181,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +223,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { AreaChartDefault } from "@/components/charts/area-chart-default"
 ```
@@ -229,6 +233,41 @@ import { AreaChartDefault } from "@/components/charts/area-chart-default"
 <AreaChartDefault />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AreaExample: View {
+  var body: some View {
+    AreaChartDefault()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.AreaChartDefault
+
+@Composable
+fun AreaExample() {
+    AreaChartDefault()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and change each `dataKey` to match your fields. Rename the series in `chartConfig` to set its label and color. The component takes no props.
+
+</Only>
 
 </Only>

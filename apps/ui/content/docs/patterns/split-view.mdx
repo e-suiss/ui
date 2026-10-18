@@ -181,7 +181,11 @@ Pass a `render` function to `SplitViewItem` that returns a link with the props i
 
 <NativeExample id="patterns-split-view--default" />
 
+<Only platform="rn">
+
 `SplitView` lays out up to three panes: `SplitViewSidebar`, `SplitViewList` and `SplitViewDetail`. When the window is at least `breakpoint` wide (768 by default), they sit side by side in a bordered row, sized 20, 32 and 48 parts.
+
+</Only>
 
 Below the breakpoint only the current column is shown, full screen and scrollable, with a large title. Pressing a `SplitViewItem` moves to the next column, and a back button titled with the previous pane returns to it. On Android the hardware back button also goes back. Use it for mail, notes or settings screens that drill down.
 
@@ -217,7 +221,11 @@ npx @esuiss/ui@latest add patterns split-view --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -329,8 +337,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -366,17 +372,329 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { SplitView, SplitViewSidebar, SplitViewList, SplitViewDetail, SplitViewItem } from "@/components/patterns/split-view"
-```
+<Only platform="rn">
 
 ```tsx
-<MailExample />
+import * as React from "react"
+import { View } from "react-native"
+import { SplitView, type SplitViewColumn, SplitViewDetail, SplitViewItem, SplitViewList, SplitViewSidebar } from "@/components/patterns/split-view"
+import { Text } from "@/components/ui/text"
+
+const mailboxes = ["Inbox", "Sent", "Drafts", "Archive"]
+
+const messages = [
+  {
+    id: "order",
+    from: "Acme Store",
+    time: "09:12",
+    subject: "Your order has shipped",
+    body: "Order #1042 will be delivered tomorrow. Tracking number: 4815 1623 42.",
+  },
+  {
+    id: "meeting",
+    from: "Jordan Lee",
+    time: "Yesterday",
+    subject: "Tomorrow's meeting",
+    body: "Does 10:00 work for you? On the agenda: the Q4 budget and the campaign plan.",
+  },
+  {
+    id: "storage",
+    from: "Cloud Drive",
+    time: "Mon",
+    subject: "Your storage is almost full",
+    body: "Your cloud storage is 90% full. Upgrade your plan to get more space.",
+  },
+] as const
+
+function MailExample({
+  withSidebar = true,
+  defaultColumn,
+}: {
+  withSidebar?: boolean
+  defaultColumn?: SplitViewColumn
+}) {
+  const [mailbox, setMailbox] = React.useState("Inbox")
+  const [messageId, setMessageId] = React.useState<string>("order")
+  const message = messages.find((item) => item.id === messageId) ?? messages[0]
+
+  return (
+    <SplitView defaultColumn={defaultColumn}>
+      {withSidebar ? (
+        <SplitViewSidebar title="Mailboxes">
+          {mailboxes.map((name) => (
+            <SplitViewItem
+              key={name}
+              isActive={mailbox === name}
+              onPress={() => setMailbox(name)}
+            >
+              {name}
+            </SplitViewItem>
+          ))}
+        </SplitViewSidebar>
+      ) : null}
+      <SplitViewList title={mailbox}>
+        {messages.map((item) => (
+          <SplitViewItem
+            key={item.id}
+            isActive={item.id === messageId}
+            onPress={() => setMessageId(item.id)}
+          >
+            <View className="flex-row items-baseline justify-between gap-2">
+              <Text className="shrink font-semibold" numberOfLines={1}>
+                {item.from}
+              </Text>
+              <Text className="text-sm text-muted-foreground">{item.time}</Text>
+            </View>
+            <Text numberOfLines={1}>{item.subject}</Text>
+            <Text className="text-sm text-muted-foreground" numberOfLines={1}>
+              {item.body}
+            </Text>
+          </SplitViewItem>
+        ))}
+      </SplitViewList>
+      <SplitViewDetail title={message.subject}>
+        <Text className="text-sm text-muted-foreground">
+          {message.from} · {message.time}
+        </Text>
+        <Text className="mt-6">{message.body}</Text>
+      </SplitViewDetail>
+    </SplitView>
+  )
+}
+
+export function SplitViewExample() {
+  return (
+    <MailExample />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SplitViewMessage: Identifiable {
+  let id: String
+  let from: String
+  let time: String
+  let subject: String
+  let body: String
+}
+
+let splitViewMailboxes = ["Inbox", "Sent", "Drafts", "Archive"]
+
+let splitViewMessages = [
+  SplitViewMessage(
+    id: "order",
+    from: "Acme Store",
+    time: "09:12",
+    subject: "Your order has shipped",
+    body: "Order #1042 will be delivered tomorrow. Tracking number: 4815 1623 42."
+  ),
+  SplitViewMessage(
+    id: "meeting",
+    from: "Jordan Lee",
+    time: "Yesterday",
+    subject: "Tomorrow's meeting",
+    body: "Does 10:00 work for you? On the agenda: the Q4 budget and the campaign plan."
+  ),
+  SplitViewMessage(
+    id: "storage",
+    from: "Cloud Drive",
+    time: "Mon",
+    subject: "Your storage is almost full",
+    body: "Your cloud storage is 90% full. Upgrade your plan to get more space."
+  ),
+]
+
+struct SplitViewMail: View {
+  var withSidebar = true
+
+  @State private var column: SplitViewColumn
+  @State private var mailbox = "Inbox"
+  @State private var messageID = "order"
+
+  init(column: SplitViewColumn = .list, withSidebar: Bool = true) {
+    _column = State(initialValue: column)
+    self.withSidebar = withSidebar
+  }
+
+  var message: SplitViewMessage {
+    splitViewMessages.first { $0.id == messageID } ?? splitViewMessages[0]
+  }
+
+  var body: some View {
+    SplitView(column: $column) {
+      if withSidebar {
+        SplitViewSidebar("Mailboxes") {
+          ForEach(splitViewMailboxes, id: \.self) { name in
+            SplitViewItem(isActive: mailbox == name, action: { mailbox = name }) {
+              Text(verbatim: name)
+            }
+          }
+        }
+      }
+      SplitViewList(verbatim: mailbox) {
+        ForEach(splitViewMessages) { item in
+          SplitViewItem(isActive: item.id == messageID, action: { messageID = item.id }) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+              Text(verbatim: item.from)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+              Text(verbatim: item.time)
+                .textStyle(.sm)
+                .foregroundStyle(EsuissColor.mutedForeground)
+            }
+            Text(verbatim: item.subject)
+              .lineLimit(1)
+            Text(verbatim: item.body)
+              .textStyle(.sm)
+              .foregroundStyle(EsuissColor.mutedForeground)
+              .lineLimit(1)
+          }
+        }
+      }
+      SplitViewDetail(verbatim: message.subject) {
+        Text(verbatim: "\(message.from) · \(message.time)")
+          .textStyle(.sm)
+          .foregroundStyle(EsuissColor.mutedForeground)
+        Text(verbatim: message.body)
+          .foregroundStyle(EsuissColor.foreground)
+          .fixedSize(horizontal: false, vertical: true)
+          .padding(.top, 24)
+      }
+    }
+    .containerRelativeFrame(.vertical) { height, _ in height - 32 }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.patterns.SplitView
+import com.esuiss.ui.patterns.SplitViewColumn
+import com.esuiss.ui.patterns.SplitViewItem
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+class SplitViewMessage(
+    val id: String,
+    val from: String,
+    val time: String,
+    val subject: String,
+    val body: String,
+)
+
+val splitViewMailboxes = listOf("Inbox", "Sent", "Drafts", "Archive")
+
+val splitViewMessages = listOf(
+    SplitViewMessage(
+        "order",
+        "Acme Store",
+        "09:12",
+        "Your order has shipped",
+        "Order #1042 will be delivered tomorrow. Tracking number: 4815 1623 42.",
+    ),
+    SplitViewMessage(
+        "meeting",
+        "Jordan Lee",
+        "Yesterday",
+        "Tomorrow's meeting",
+        "Does 10:00 work for you? On the agenda: the Q4 budget and the campaign plan.",
+    ),
+    SplitViewMessage(
+        "storage",
+        "Cloud Drive",
+        "Mon",
+        "Your storage is almost full",
+        "Your cloud storage is 90% full. Upgrade your plan to get more space.",
+    ),
+)
+
+@Composable
+fun SplitViewMail(withSidebar: Boolean = true, defaultColumn: SplitViewColumn = SplitViewColumn.List) {
+    var mailbox by rememberSaveable { mutableStateOf("Inbox") }
+    var messageId by rememberSaveable { mutableStateOf("order") }
+    val message = splitViewMessages.firstOrNull { it.id == messageId } ?: splitViewMessages.first()
+    val colors = EsuissTheme.colors
+    SplitView(modifier = Modifier.fillMaxWidth().height(640.dp), defaultColumn = defaultColumn) {
+        if (withSidebar) {
+            SplitViewSidebar(title = "Mailboxes") {
+                splitViewMailboxes.forEach { name ->
+                    SplitViewItem(isActive = mailbox == name, onClick = { mailbox = name }) {
+                        Text(name)
+                    }
+                }
+            }
+        }
+        SplitViewList(title = mailbox) {
+            splitViewMessages.forEach { item ->
+                SplitViewItem(isActive = item.id == messageId, onClick = { messageId = item.id }) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            item.from,
+                            modifier = Modifier.weight(1f),
+                            style = Typography.base.copy(fontWeight = FontWeight.SemiBold),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        Text(item.time, style = Typography.sm.copy(color = colors.mutedForeground), maxLines = 1)
+                    }
+                    Text(item.subject, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        item.body,
+                        style = Typography.sm.copy(color = colors.mutedForeground),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
+        SplitViewDetail(title = message.subject) {
+            Text("${message.from} · ${message.time}", style = Typography.sm.copy(color = colors.mutedForeground))
+            Text(message.body, modifier = Modifier.padding(top = 24.dp))
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Give each pane a `title`; the back button only appears when the previous pane exists and has a title. Put `SplitViewItem`s in the sidebar and list panes, and use their `onPress` to set the selection in your own state.
 
 The current column is uncontrolled with `defaultColumn` (`list` by default) or controlled with `column` and `onColumnChange`. `useSplitView` returns `isCompact`, `column` and `setColumn` for custom navigation.
+
+</Only>
 
 ## Examples
 
@@ -647,6 +965,8 @@ A pressable row that moves to the next column.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Pane titles have the `heading` role, and panes are labelled by string titles.
@@ -658,5 +978,7 @@ A pressable row that moves to the next column.
 
 - On phones the new pane fades in, respecting the system reduce motion setting.
 - Active rows use `bg-muted`; panes are divided by `border-border`.
+
+</Only>
 
 </Only>

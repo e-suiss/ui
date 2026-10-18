@@ -71,7 +71,11 @@ The strength meter exposes its level to screen readers. The promo panel is a CSS
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A hero image sits above an `InputAccessoryBar` with email and password inputs; the password shows a five-level strength meter as you type. A `Checkbox` with a `Label` accepts the terms, and the Start free trial `Button` in the `BottomBar` stays disabled until the form is valid, then shows a welcome screen. A sign-in link sits below.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks signup-trial --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Icon](/docs/components/icon), [Input Accessory Bar](/docs/components/input-accessory-bar), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Label](/docs/components/label), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -223,8 +231,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -284,6 +290,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SignupTrial } from "@/components/blocks/signup-trial"
 ```
@@ -292,6 +300,41 @@ import { SignupTrial } from "@/components/blocks/signup-trial"
 <SignupTrial />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SignupTrialExample: View {
+  var body: some View {
+    SignupTrial()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.SignupTrial
+
+@Composable
+fun SignupTrialExample() {
+    SignupTrial()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `IMAGE` and the copy with your own. `onSubmit` receives the email and password, and `onSignIn` handles the sign-in link. The hero photo is an Unsplash placeholder.
+
+</Only>
 
 </Only>

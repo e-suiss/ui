@@ -303,9 +303,13 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-field--default" />
 
+<Only platform="rn">
+
 `Field` wraps one control, such as an `Input`, `Textarea` or `Switch`, with a `FieldLabel`, an optional `FieldDescription` and a `FieldError`. It shares the field's disabled and invalid state with the control and handles validation: required values, length limits and custom `validate` functions, checked on submit, blur or change.
 
 `FieldSet` and `FieldLegend` group related fields under a heading, and `FieldGroup` stacks fields. The `inset` variant of `FieldGroup` turns the fields into rows on a rounded `bg-muted` surface with hairlines between them, like a settings list.
+
+</Only>
 
 ## Installation
 
@@ -339,7 +343,11 @@ npx @esuiss/ui@latest add field --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Separator](/docs/components/separator).
+
+</Only>
 
 ### Manual
 
@@ -415,8 +423,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -455,8 +461,11 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
 ```
 
 ```tsx
@@ -469,9 +478,83 @@ import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, Fie
 </Field>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct FieldDefaultDemo: View {
+  @State private var username = ""
+
+  var body: some View {
+    Field {
+      FieldLabel("Username")
+        .accessibilityHidden(true)
+      TextField("evilrabbit", text: $username)
+        .textFieldStyle(.input)
+        .textInputAutocapitalization(.never)
+        .accessibilityLabel(Text("Username"))
+      FieldDescription("Choose a unique username for your account.")
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import com.esuiss.ui.components.Field
+import com.esuiss.ui.components.FieldDescription
+import com.esuiss.ui.components.FieldLabel
+import com.esuiss.ui.components.Input
+
+val FieldPlainText = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false)
+
+@Composable
+fun FieldDefault() {
+    var value by rememberSaveable { mutableStateOf("") }
+    Field {
+        FieldLabel("Username")
+        Input(
+            value,
+            { value = it },
+            Modifier.semantics { contentDescription = "Username" },
+            placeholder = "evilrabbit",
+            keyboardOptions = FieldPlainText,
+        )
+        FieldDescription("Choose a unique username for your account.")
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
+
 Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control is labelled by the label and uses the description and error text as its accessibility hint. Set `invalid` to force the error state, or let validation decide it.
 
+</Only>
+
+<Only platform="rn">
+
 `FieldError` shows its children, or the messages from `errors` (for example from a form library), and can be limited to one failure with `match`, such as `tooShort`. Use `orientation="horizontal"` for a label beside a switch or checkbox, with `FieldContent` holding a `FieldTitle` and `FieldDescription`.
+
+</Only>
 
 `FieldSeparator` divides fields and can show short text such as "or" in the middle.
 
@@ -977,6 +1060,8 @@ Overloads: `FieldError(text)`, `FieldError(errors)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The control is labelled by `FieldLabel` and gets the description and error text as its accessibility hint.
@@ -988,5 +1073,7 @@ Overloads: `FieldError(text)`, `FieldError(errors)`.
 
 - Uses `text-foreground`, `text-muted-foreground`, `text-destructive` and `bg-muted` tokens; light and dark follow the system appearance.
 - Inset separators use start and end offsets, so they flip in right-to-left layouts.
+
+</Only>
 
 </Only>

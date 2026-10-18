@@ -71,7 +71,11 @@ Labels sit inside the bars in a light color, so very short bars may not have roo
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `RadialBarChart` with one bar per record in `chartData`, sweeping from 90 to -200 degrees. Bars are colored through `Cell` and labeled with a `LabelList` that reads names from `chartConfig`. Pressing a bar shows a tooltip.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts radial-chart-label --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -187,8 +195,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -231,6 +237,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadialChartLabel } from "@/components/charts/radial-chart-label"
 ```
@@ -239,6 +247,41 @@ import { RadialChartLabel } from "@/components/charts/radial-chart-label"
 <RadialChartLabel />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadialLabelExample: View {
+  var body: some View {
+    RadialChartLabel()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadialChartLabel
+
+@Composable
+fun RadialLabelExample() {
+    RadialChartLabel()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props.
+
+</Only>
 
 </Only>

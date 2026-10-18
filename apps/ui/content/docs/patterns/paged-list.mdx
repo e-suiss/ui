@@ -167,7 +167,11 @@ npx @esuiss/ui@latest add patterns paged-list --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -249,8 +253,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -289,17 +291,199 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { PagedList } from "@/components/patterns/paged-list"
-```
+<Only platform="rn">
 
 ```tsx
-<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />
+import { ChatCircleIcon } from "phosphor-react-native"
+import { PagedList } from "@/components/patterns/paged-list"
+import { Icon } from "@/components/ui/icon"
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
+
+type Topic = { id: number; title: string; replies: number }
+
+const subjects = [
+  "Getting started",
+  "Dark mode tokens",
+  "Form validation",
+  "Release notes",
+  "Accessibility",
+  "Theming",
+  "Server components",
+  "Animations",
+]
+
+const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
+  id: index + 1,
+  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
+  replies: (index * 7) % 23,
+}))
+
+function TopicRow({ topic }: { topic: Topic }) {
+  return (
+    <Item onPress={() => undefined}>
+      <ItemMedia variant="icon">
+        <Icon as={ChatCircleIcon} />
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>{topic.title}</ItemTitle>
+        <ItemDescription>{topic.replies} replies</ItemDescription>
+      </ItemContent>
+    </Item>
+  )
+}
+
+export function PagedListExample() {
+  return (
+    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct PagedListExample: View {
+  var body: some View {
+    PagedListDemo(topics: pagedListTopics)
+  }
+}
+
+struct PagedListTopic: Identifiable {
+  let id: Int
+  let title: String
+  let replies: Int
+}
+
+let pagedListSubjects = [
+  "Getting started",
+  "Dark mode tokens",
+  "Form validation",
+  "Release notes",
+  "Accessibility",
+  "Theming",
+  "Server components",
+  "Animations",
+]
+
+let pagedListTopics: [PagedListTopic] = (0..<57).map { index in
+  PagedListTopic(
+    id: index + 1,
+    title: "\(pagedListSubjects[index % pagedListSubjects.count]) · thread \(index + 1)",
+    replies: (index * 7) % 23
+  )
+}
+
+struct PagedListDemo: View {
+  let topics: [PagedListTopic]
+  var pageSize = 10
+  var loadMoreLabel: LocalizedStringKey = "Load more"
+
+  var body: some View {
+    PagedList(topics, pageSize: pageSize, loadMoreLabel: loadMoreLabel) { topic, _ in
+      Item(action: {}) {
+        ItemMedia(.icon) {
+          Ph.chatCircle.regular
+        }
+        ItemContent {
+          ItemTitle(verbatim: topic.title)
+          ItemDescription(verbatim: "\(topic.replies) replies")
+        }
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.ChatCircle
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.Item
+import com.esuiss.ui.components.ItemContent
+import com.esuiss.ui.components.ItemDescription
+import com.esuiss.ui.components.ItemMedia
+import com.esuiss.ui.components.ItemMediaVariant
+import com.esuiss.ui.components.ItemTitle
+import com.esuiss.ui.patterns.PagedList
+
+@Composable
+fun PagedListExample() {
+    PagedListDemo(pagedListTopics)
+}
+
+class PagedListTopic(val id: Int, val title: String, val replies: Int)
+
+val pagedListSubjects = listOf(
+    "Getting started",
+    "Dark mode tokens",
+    "Form validation",
+    "Release notes",
+    "Accessibility",
+    "Theming",
+    "Server components",
+    "Animations",
+)
+
+val pagedListTopics = List(57) { index ->
+    PagedListTopic(
+        id = index + 1,
+        title = "${pagedListSubjects[index % pagedListSubjects.size]} · thread ${index + 1}",
+        replies = (index * 7) % 23,
+    )
+}
+
+@Composable
+fun PagedListDemo(items: List<PagedListTopic>, pageSize: Int = 10, loadMoreLabel: String = "Load more") {
+    PagedList(
+        items = items,
+        modifier = Modifier.fillMaxWidth().height(560.dp),
+        pageSize = pageSize,
+        getKey = { topic, _ -> topic.id },
+        loadMoreLabel = loadMoreLabel,
+    ) { topic, _ ->
+        PagedListRow(topic)
+    }
+}
+
+@Composable
+fun PagedListRow(topic: PagedListTopic) {
+    Item(onClick = {}) {
+        ItemMedia(variant = ItemMediaVariant.Icon) {
+            Icon(PhosphorIcons.Regular.ChatCircle, contentDescription = null)
+        }
+        ItemContent {
+            ItemTitle(topic.title)
+            ItemDescription("${topic.replies} replies")
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Pass `items`, `renderItem` and a `getKey` that returns a stable key for each item. `renderItem` receives the item and its index, not the `FlatList` info object.
 
 Other `FlatList` props pass through, except `data`, `keyExtractor`, `onEndReached` and `ListFooterComponent`, which the list manages. Use `listClassName` to style the content container.
+
+</Only>
 
 ## Examples
 
@@ -391,6 +575,8 @@ The root that renders the visible items and the pagination or Load more control.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The Load more button is a `Button`, so screen reader users can load the next page without scrolling to the end.
@@ -399,5 +585,7 @@ The root that renders the visible items and the pagination or Load more control.
 
 - The next page loads when the scroll position is within half a screen of the end (`onEndReachedThreshold` of `0.5`).
 - The footer is a full-width `secondary` button.
+
+</Only>
 
 </Only>

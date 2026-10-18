@@ -183,9 +183,13 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-toggle-group--default" />
 
+<Only platform="rn">
+
 `ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column. Items take the same `variant` and `size` styles as Toggle. The `spacing` prop sets the gap between items in steps of 4 points.
 
 With `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-secondary` track, and the `outline` variant joins items into one bordered strip. In a single-selection segmented control, the selected item is marked by a raised indicator that slides to the new item when the selection changes, like Tabs. In a `multiple` segmented control, each pressed item is raised on its own. Use the segmented style for switching views and the spaced style for toolbars.
+
+</Only>
 
 ## Installation
 
@@ -219,7 +223,11 @@ npx @esuiss/ui@latest add toggle-group --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
+
+</Only>
 
 ### Manual
 
@@ -317,8 +325,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 5. Add the files to your app target.
@@ -370,17 +376,163 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { ToggleGroup, ToggleGroupItem, ToggleGroupIcon } from "@/components/ui/toggle-group"
-```
+<Only platform="rn">
 
 ```tsx
-<FormattingDemo />
+import { TextBIcon, TextItalicIcon, TextUnderlineIcon } from "phosphor-react-native"
+import * as React from "react"
+import { ToggleGroup, ToggleGroupIcon, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+type GroupProps = Omit<
+  React.ComponentProps<typeof ToggleGroup>,
+  "value" | "onValueChange" | "children"
+>
+
+function FormattingDemo({
+  initial = ["bold"],
+  ...props
+}: GroupProps & { initial?: string[] }) {
+  const [value, setValue] = React.useState<string[]>(initial)
+  return (
+    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>
+      <ToggleGroupItem value="bold" accessibilityLabel="Toggle bold">
+        <ToggleGroupIcon as={TextBIcon} />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="italic" accessibilityLabel="Toggle italic">
+        <ToggleGroupIcon as={TextItalicIcon} />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="underline" accessibilityLabel="Toggle underline">
+        <ToggleGroupIcon as={TextUnderlineIcon} />
+      </ToggleGroupItem>
+    </ToggleGroup>
+  )
+}
+
+export function ToggleGroupExample() {
+  return (
+    <FormattingDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct FormattingDemo: View {
+  let variant: ToggleVariant
+  let size: ToggleSize
+  let spacing: Int
+  let orientation: Axis
+
+  @State private var value: Set<String>
+
+  init(
+    initial: Set<String> = ["bold"],
+    variant: ToggleVariant = .default,
+    size: ToggleSize = .default,
+    spacing: Int = 2,
+    orientation: Axis = .horizontal
+  ) {
+    self.variant = variant
+    self.size = size
+    self.spacing = spacing
+    self.orientation = orientation
+    _value = State(initialValue: initial)
+  }
+
+  var body: some View {
+    ToggleGroup(selection: $value, variant: variant, size: size, spacing: spacing, orientation: orientation) {
+      ToggleGroupItem(value: "bold") {
+        Ph.textB.regular.frame(width: 16, height: 16)
+      }
+      .accessibilityLabel(Text("Toggle bold"))
+      ToggleGroupItem(value: "italic") {
+        Ph.textItalic.regular.frame(width: 16, height: 16)
+      }
+      .accessibilityLabel(Text("Toggle italic"))
+      ToggleGroupItem(value: "underline") {
+        Ph.textUnderline.regular.frame(width: 16, height: 16)
+      }
+      .accessibilityLabel(Text("Toggle underline"))
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.TextB
+import com.adamglin.phosphoricons.regular.TextItalic
+import com.adamglin.phosphoricons.regular.TextUnderline
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.ToggleGroup
+import com.esuiss.ui.components.ToggleGroupItem
+import com.esuiss.ui.components.ToggleSize
+import com.esuiss.ui.components.ToggleVariant
+
+@Composable
+fun ToggleGroupIconItem(value: String, label: String, icon: ImageVector) {
+    ToggleGroupItem(value, Modifier.semantics { contentDescription = label }) {
+        Icon(icon, contentDescription = null)
+    }
+}
+
+@Composable
+fun ToggleGroupFormatting(
+    variant: ToggleVariant = ToggleVariant.Default,
+    size: ToggleSize = ToggleSize.Default,
+    spacing: Int = 2,
+    orientation: Orientation = Orientation.Horizontal,
+    enabled: Boolean = true,
+    initial: Set<String> = setOf("bold"),
+) {
+    var values by rememberSaveable { mutableStateOf(initial.toList()) }
+    ToggleGroup(
+        values = values.toSet(),
+        onValuesChange = { values = it.toList() },
+        variant = variant,
+        size = size,
+        spacing = spacing,
+        orientation = orientation,
+        enabled = enabled,
+    ) {
+        ToggleGroupIconItem("bold", "Toggle bold", PhosphorIcons.Regular.TextB)
+        ToggleGroupIconItem("italic", "Toggle italic", PhosphorIcons.Regular.TextItalic)
+        ToggleGroupIconItem("underline", "Toggle underline", PhosphorIcons.Regular.TextUnderline)
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 The value is always an array of strings. Use `value` and `onValueChange` for controlled use, or `defaultValue`. Set `multiple` to allow more than one pressed item; without it, pressing an item replaces the selection.
 
 Give each `ToggleGroupItem` a `value`. Put icons in a `ToggleGroupIcon`, which sizes them to 16 points, and give icon-only items an `accessibilityLabel`. `orientation` switches between a row and a column, and `disabled` on the group turns off every item.
+
+</Only>
 
 ## Examples
 
@@ -392,7 +544,11 @@ The `outline` variant.
 
 ### Attached
 
+<Only platform="rn">
+
 Outlined items joined into one strip with `spacing={0}`.
+
+</Only>
 
 <NativeExample id="components-toggle-group--attached" />
 
@@ -568,6 +724,8 @@ Overloads: `ToggleGroupItem(value, interactionSource, content)`, `ToggleGroupIte
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - A single-selection group has the `radiogroup` role and its items have the `radio` role.
@@ -581,5 +739,7 @@ Overloads: `ToggleGroupItem(value, interactionSource, content)`, `ToggleGroupIte
 - Pressed items use `bg-accent` and `text-primary`; the segmented indicator and pressed segmented items use `bg-card` with a small shadow in light mode and `bg-border` in dark mode.
 - The indicator slides over 300 ms and respects the system reduce motion setting. It is hidden when the selected item is disabled.
 - Colors follow the system appearance.
+
+</Only>
 
 </Only>

@@ -65,7 +65,11 @@ The total is announced when it changes. Photos are Unsplash placeholders.
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A product screen with a hero photo per device, a `ToggleGroup` to pick the device, and a `RadioGroup` of payment options. For the phone, a `Switch` adds theft and loss protection. A `BottomBar` shows the total, which updates with each choice, and an Add to Bag `Button`.
+
+</Only>
 
 ## Installation
 
@@ -99,7 +103,11 @@ npx @esuiss/ui@latest add blocks price-care --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -227,8 +235,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Switch.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -296,6 +302,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PriceCare } from "@/components/blocks/price-care"
 ```
@@ -304,6 +312,41 @@ import { PriceCare } from "@/components/blocks/price-care"
 <PriceCare />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PriceCareExample: View {
+  var body: some View {
+    PriceCare()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.PriceCare
+
+@Composable
+fun PriceCareExample() {
+    PriceCare()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `DEVICES` with your products, options and prices. Wire `onAddToBag`, which receives the device, option, theft add-on and total. The photos are Unsplash placeholders.
+
+</Only>
 
 </Only>

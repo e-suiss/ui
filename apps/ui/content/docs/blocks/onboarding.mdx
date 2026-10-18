@@ -51,7 +51,11 @@ npx @esuiss/ui@latest add blocks onboarding --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Carousel](/docs/components/carousel), [Icon](/docs/components/icon), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -153,8 +157,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -204,6 +206,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Onboarding } from "@/components/blocks/onboarding"
 ```
@@ -212,6 +216,41 @@ import { Onboarding } from "@/components/blocks/onboarding"
 <Onboarding />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct OnboardingExample: View {
+  var body: some View {
+    Onboarding(onDone: {})
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.Onboarding
+
+@Composable
+fun OnboardingExample() {
+    Onboarding(onDone = {})
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Pass your own `pages` (each with a `title`, `description` and optional `illustration`), or edit `DEFAULT_PAGES`. `onDone` is called from Get started and Skip.
+
+</Only>
 
 </Only>

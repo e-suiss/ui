@@ -71,7 +71,11 @@ Click, tap or press Return on a bar to select a day, and select it again to clea
 
 </NativeExample>
 
+<Only platform="rn">
+
 Bars stack social, productivity and entertainment time. A `ToggleGroup` switches between a weekly view and an hourly view of one day. In the week view, touching a bar selects that day through `onActiveIndexChange`, dims the other days and updates the headline, comparison text, category totals and the most used apps list below. A dashed line marks the weekly average. The bars set `isAnimationActive={false}`, so they draw without the enter animation and switch views instantly.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts bar-chart-interactive --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+</Only>
 
 ### Manual
 
@@ -203,8 +211,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -264,6 +270,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BarChartInteractive } from "@/components/charts/bar-chart-interactive"
 ```
@@ -272,6 +280,41 @@ import { BarChartInteractive } from "@/components/charts/bar-chart-interactive"
 <BarChartInteractive />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BarInteractiveExample: View {
+  var body: some View {
+    BarChartInteractive()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.BarChartInteractive
+
+@Composable
+fun BarInteractiveExample() {
+    BarChartInteractive()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `USAGE` with daily minutes per category and `APPS` with your apps and their share of each category. The hourly view is generated from `PROFILE`, so swap `hourly()` for real data. The component takes no props.
+
+</Only>
 
 </Only>

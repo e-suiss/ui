@@ -71,7 +71,11 @@ The legend takes labels and colors from the config. Focus the chart and use the 
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 Desktop and mobile bars share a `stackId`, so each column shows both parts and their total. Only the outer corners are rounded, and a legend below the plot names both series.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts bar-chart-stacked --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
 ```
@@ -229,6 +237,41 @@ import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
 <BarChartStacked />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BarStackedExample: View {
+  var body: some View {
+    BarChartStacked()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.BarChartStacked
+
+@Composable
+fun BarStackedExample() {
+    BarChartStacked()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig` and add a `Bar` for each. The component takes no props.
+
+</Only>
 
 </Only>

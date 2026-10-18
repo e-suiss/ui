@@ -11,7 +11,11 @@ platforms: [rn, swift, kotlin]
 
 `Header` is a 44-point bar that sorts its children into three slots: `HeaderBack` and leading `HeaderActions` on the start side, `HeaderTitle` in the center, and everything else on the end side. The side slots share the remaining width equally, so the title stays centered.
 
+<Only platform="rn">
+
 For a large title, create a scroll state with `useHeaderScroll()`, pass it to both `Header` and `HeaderScrollView`, and put a `HeaderLargeTitle` at the top of the scroll view. As the large title scrolls away, the small title fades in and a hairline appears under the bar. Pulling down stretches the large title slightly.
+
+</Only>
 
 ## Installation
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add header --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -159,8 +167,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -200,8 +206,13 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
 import { Header, HeaderTitle, HeaderLargeTitle, HeaderBack, HeaderActions, HeaderScrollView } from "@/components/ui/header"
+import { Text } from "@/components/ui/text"
 ```
 
 ```tsx
@@ -218,11 +229,97 @@ import { Header, HeaderTitle, HeaderLargeTitle, HeaderBack, HeaderActions, Heade
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct HeaderExample: View {
+  var body: some View {
+    Header {
+      HeaderTitle("Profile")
+    } leading: {
+      HeaderBack("Settings")
+    } trailing: {
+      HeaderActions {
+        Button {} label: {
+          Text("Edit").fontWeight(.semibold)
+        }
+        .buttonStyle(.variant(.plain, size: .sm))
+      }
+    }
+    .headerStoryBleed()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Header
+import com.esuiss.ui.components.HeaderActions
+import com.esuiss.ui.components.HeaderBack
+import com.esuiss.ui.components.HeaderTitle
+import com.esuiss.ui.components.Text
+
+fun Modifier.headerBleed(): Modifier = layout { measurable, constraints ->
+    val inset = 16.dp.roundToPx()
+    val width = constraints.maxWidth + inset * 2
+    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))
+    layout(constraints.maxWidth, (placeable.height - inset).coerceAtLeast(0)) {
+        placeable.place(-inset, -inset)
+    }
+}
+
+@Composable
+fun HeaderPlainAction(text: String) {
+    Button(onClick = {}, variant = ButtonVariant.Plain, size = ButtonSize.Sm) {
+        Text(text, style = TextStyle(fontWeight = FontWeight.SemiBold))
+    }
+}
+
+@Composable
+fun HeaderDefault() {
+    Column(Modifier.headerBleed()) {
+        Header {
+            HeaderBack(onClick = {}, text = "Settings")
+            HeaderTitle("Profile")
+            HeaderActions { HeaderPlainAction("Edit") }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 `HeaderBack` shows a caret and an optional text label such as the previous screen's name; wire `onPress` to your navigation. Group icon buttons in `HeaderActions`, and set `side="leading"` to place a group on the start side.
+
+</Only>
+
+<Only platform="rn swift">
 
 Both `HeaderTitle` and `HeaderLargeTitle` accept a `subtitle`. Plain strings are wrapped in `Text` and truncated to one line in the bar.
 
 Without a large title, you can still pass the same `scroll` to `Header` and `HeaderScrollView` to show the hairline once content scrolls under the bar.
+
+</Only>
 
 ## Examples
 
@@ -551,6 +648,8 @@ Row of actions for either side.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `HeaderTitle` and a string `HeaderLargeTitle` have the `heading` role.
@@ -561,5 +660,7 @@ Row of actions for either side.
 
 - The back caret rotates and the large title scales from the correct edge in right-to-left layouts.
 - Uses `text-primary` and `bg-border` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

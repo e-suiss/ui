@@ -71,7 +71,11 @@ The progress dots are an ordered list with the current step marked, and each inp
 
 </NativeExample>
 
+<Only platform="rn">
+
 A progress bar tracks the step, and each step slides in with a title, description and a single `Input`. The email step checks the format and the password step shows a live rule checklist. Back and Continue `Button`s sit in a `BottomBar`, and the last step creates the account and shows a confirmation.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks signup-steps --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input](/docs/components/input), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -213,8 +221,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -266,6 +272,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SignupSteps } from "@/components/blocks/signup-steps"
 ```
@@ -274,6 +282,41 @@ import { SignupSteps } from "@/components/blocks/signup-steps"
 <SignupSteps />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SignupStepsExample: View {
+  var body: some View {
+    SignupSteps()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.SignupSteps
+
+@Composable
+fun SignupStepsExample() {
+    SignupSteps()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Edit the `STEPS` copy and `RULES` to fit your product. `onSubmit` receives the name, email and password when the last step is completed.
+
+</Only>
 
 </Only>

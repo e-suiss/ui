@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-amount-input--default" />
 
+<Only platform="rn">
+
 `AmountInput` combines a big formatted amount with a `Keypad`. The amount is formatted with `Intl.NumberFormat` for the given `locale` and `currency`, the currency symbol is drawn smaller, and the font size steps down as the number gets longer.
+
+</Only>
 
 The decimal key appears only when the currency allows fractions, using the locale's decimal separator. A key that would exceed the limits is rejected with a shake and an error haptic; accepted keys play a selection haptic.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add amount-input --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Keypad](/docs/components/keypad), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Keypad](/docs/components/keypad), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -153,8 +161,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -200,6 +206,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { AmountInput } from "@/components/ui/amount-input"
 ```
@@ -208,7 +216,89 @@ import { AmountInput } from "@/components/ui/amount-input"
 <AmountInput currency="USD" locale="en-US" />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AmountInputExample: View {
+  var body: some View {
+    AmountInputDemo(currency: "USD", locale: "en-US")
+  }
+}
+
+struct AmountInputDemo: View {
+  let currency: String
+  let locale: String
+  var max: Double?
+
+  @State private var value: String
+
+  init(currency: String, locale: String, initial: String = "", max: Double? = nil) {
+    self.currency = currency
+    self.locale = locale
+    self.max = max
+    _value = State(initialValue: initial)
+  }
+
+  var body: some View {
+    AmountInput(value: $value, currency: currency, max: max)
+      .environment(\.locale, Locale(identifier: locale))
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import com.esuiss.ui.components.AmountInput
+import java.util.Locale
+
+@Composable
+fun AmountInputExample() {
+    AmountInputStory("USD", "en-US")
+}
+
+@Composable
+fun AmountInputStory(
+    currency: String,
+    locale: String,
+    defaultValue: String = "",
+    max: Double? = null,
+    enabled: Boolean = true,
+) {
+    var value by rememberSaveable { mutableStateOf(defaultValue) }
+    AmountInput(
+        modifier = Modifier.fillMaxWidth(),
+        value = value,
+        onValueChange = { next, _ -> value = next },
+        currency = currency,
+        locale = Locale.forLanguageTag(locale),
+        max = max,
+        enabled = enabled,
+    )
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 The value is a plain numeric string such as `"1250.5"`. Use `defaultValue` for uncontrolled state, or `value` with `onValueChange`, which receives the string and the parsed number.
+
+</Only>
 
 Fraction digits default to the currency's own precision (for example 0 for JPY); override with `maxFractionDigits`. Use `max` to cap the amount. Input is limited to 15 digits.
 
@@ -236,13 +326,21 @@ A long amount that shrinks to fit.
 
 ### Euro
 
+<Only platform="rn">
+
 EUR in the `de-DE` locale with a comma decimal separator.
+
+</Only>
 
 <NativeExample id="components-amount-input--euro" />
 
 ### Turkish lira
 
+<Only platform="rn">
+
 TRY in the `tr-TR` locale.
+
+</Only>
 
 <NativeExample id="components-amount-input--turkish-lira" />
 
@@ -341,6 +439,8 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The amount text is a polite live region, so changes are announced.
@@ -352,5 +452,7 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 - The shake animation respects the system Reduce Motion setting.
 - Uses tabular numerals so digits do not shift as they change.
 - Uses `text-foreground` and `text-muted-foreground` tokens; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

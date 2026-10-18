@@ -71,7 +71,11 @@ Every new event is announced to screen readers, which can get noisy on a busy st
 
 </NativeExample>
 
+<Only platform="rn">
+
 An admin screen with a collapsing `Header`, three stats for the session, and a list of recent events with an `Avatar` or icon for each actor. A timer adds the next sample event every 2.2 seconds and keeps the seven newest, with a pulsing Live dot while it runs. The header button pauses and resumes the feed. A `TabBar` at the bottom switches between admin sections; only Activity has content in the sample.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks log-live --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -231,8 +239,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -284,6 +290,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LogLive } from "@/components/blocks/log-live"
 ```
@@ -292,6 +300,41 @@ import { LogLive } from "@/components/blocks/log-live"
 <LogLive />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LogLiveExample: View {
+  var body: some View {
+    LogLive()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.LogLive
+
+@Composable
+fun LogLiveExample() {
+    LogLive()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `FEED` with your events and swap the timer for your real-time source. Wire `onRunningChange` and `onNavigate` to your app.
+
+</Only>
 
 </Only>

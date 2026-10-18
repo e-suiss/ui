@@ -176,7 +176,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-message--default" />
 
+<Only platform="rn">
+
 `Message` is a horizontal `View` that places an avatar next to a column of bubbles. Its `align` prop puts the row on the leading (`start`) or trailing (`end`) side and passes the alignment to any `Bubble` inside through context.
+
+</Only>
 
 `MessageGroup` stacks several messages into a conversation. `MessageHeader` and `MessageFooter` hold small secondary text, such as a sender name or a timestamp.
 
@@ -212,7 +216,11 @@ npx @esuiss/ui@latest add message --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -292,8 +300,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -340,7 +346,11 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from "@/components/ui/message"
 ```
 
@@ -359,9 +369,76 @@ import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, Me
 </Message>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct MessageExample: View {
+  var body: some View {
+    Message {
+      MessageAvatar {
+        Avatar { AvatarFallback("MK") }
+      }
+      MessageContent {
+        Bubble(variant: .muted) {
+          BubbleContent("Are we still on for lunch tomorrow?")
+        }
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.esuiss.ui.components.Avatar
+import com.esuiss.ui.components.AvatarFallback
+import com.esuiss.ui.components.Bubble
+import com.esuiss.ui.components.BubbleContent
+import com.esuiss.ui.components.BubbleVariant
+import com.esuiss.ui.components.Message
+import com.esuiss.ui.components.MessageAvatar
+import com.esuiss.ui.components.MessageContent
+
+@Composable
+fun MessageInitials(text: String) {
+    MessageAvatar {
+        Avatar(fallback = { AvatarFallback(text) })
+    }
+}
+
+@Composable
+fun MessageDefault() {
+    Message(Modifier.fillMaxWidth()) {
+        MessageInitials("MK")
+        MessageContent {
+            Bubble(variant = BubbleVariant.Muted) {
+                BubbleContent("Are we still on for lunch tomorrow?")
+            }
+        }
+    }
+}
+```
+
+</Only>
+
 Put a `MessageAvatar` and a `MessageContent` inside each `Message`, and place `Bubble` components, a `MessageHeader` and a `MessageFooter` in `MessageContent`.
 
+<Only platform="rn">
+
 Plain strings in `MessageHeader` and `MessageFooter` are wrapped in `Text` for you, so you can pass text directly or mix it with an `Icon`.
+
+</Only>
 
 When `MessageContent` contains a `MessageFooter`, the avatar shifts up so it lines up with the last bubble instead of the footer.
 
@@ -638,6 +715,8 @@ Overloads: `MessageFooter(content)`, `MessageFooter(text)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Messages are plain `View` and `Text` elements, so screen readers read the header, bubble text and footer in order.
@@ -648,5 +727,7 @@ Overloads: `MessageFooter(content)`, `MessageFooter(text)`.
 - Header and footer text use `text-xs text-muted-foreground`, with icons at `size-3.5`.
 - The avatar slot uses `bg-muted`.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

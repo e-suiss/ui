@@ -71,7 +71,11 @@ Each decision is announced as it happens.
 
 </NativeExample>
 
+<Only platform="rn">
+
 Each request shows an `Avatar`, the requester, the permission and an optional reason, with Deny and Approve `Button`s. Rows use `SwipeActions`, so swiping from the leading edge approves and from the trailing edge denies, and decided rows collapse out of the list. A `Picker` sets the grant duration, and an `Empty` state with a reset link appears once the queue is clear. It uses a collapsing `Header` and the admin `TabBar`.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks roles-requests --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Empty](/docs/components/empty), [Header](/docs/components/header), [Icon](/docs/components/icon), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Empty](/docs/components/empty), [Header](/docs/components/header), [Icon](/docs/components/icon), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Swipe Actions](/docs/interactions/swipe-actions), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -233,8 +241,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Interactions/SwipeActions.swift" />
 
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
@@ -308,6 +314,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RolesRequests } from "@/components/blocks/roles-requests"
 ```
@@ -316,6 +324,41 @@ import { RolesRequests } from "@/components/blocks/roles-requests"
 <RolesRequests />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RolesRequestsExample: View {
+  var body: some View {
+    RolesRequests()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.RolesRequests
+
+@Composable
+fun RolesRequestsExample() {
+    RolesRequests()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `INITIAL_REQUESTS` and `DURATIONS` with your data. Use `onApprove`, `onDeny`, `onDurationChange` and `onNavigate` to send decisions to your API and route between sections.
+
+</Only>
 
 </Only>

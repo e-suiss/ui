@@ -67,7 +67,11 @@ Edit `plans`; each has a size, monthly price, a list of features and an optional
 
 </NativeExample>
 
+<Only platform="rn swift">
+
 A pricing screen with a `ToggleGroup` for the billing period and a `RadioGroup` of plan cards, each with a size, price and feature list. The selected card lifts slightly, and the most popular plan carries a label. Yearly prices show ten months of the monthly price. A `BottomBar` `Button` confirms the switch.
+
+</Only>
 
 ## Installation
 
@@ -101,7 +105,11 @@ npx @esuiss/ui@latest add blocks price-storage --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -227,8 +235,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -292,6 +298,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PriceStorage } from "@/components/blocks/price-storage"
 ```
@@ -300,6 +308,41 @@ import { PriceStorage } from "@/components/blocks/price-storage"
 <PriceStorage />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PriceStorageExample: View {
+  var body: some View {
+    PriceStorage()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.PriceStorage
+
+@Composable
+fun PriceStorageExample() {
+    PriceStorage()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `PLANS` with your plans. Wire `onSelectPlan` (receives the size and period) and `onPeriodChange` to your billing flow.
+
+</Only>
 
 </Only>

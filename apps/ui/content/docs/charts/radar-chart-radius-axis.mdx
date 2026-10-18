@@ -105,7 +105,11 @@ npx @esuiss/ui@latest add charts radar-chart-radius-axis --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +181,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +223,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadarChartRadiusAxis } from "@/components/charts/radar-chart-radius-axis"
 ```
@@ -229,6 +233,41 @@ import { RadarChartRadiusAxis } from "@/components/charts/radar-chart-radius-axi
 <RadarChartRadiusAxis />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadarRadiusAxisExample: View {
+  var body: some View {
+    RadarChartRadiusAxis()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadarChartRadiusAxis
+
+@Composable
+fun RadarRadiusAxisExample() {
+    RadarChartRadiusAxis()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and set the `PolarRadiusAxis` `domain` to your value range. Rename the series in `chartConfig`. The component takes no props.
+
+</Only>
 
 </Only>

@@ -312,9 +312,13 @@ Also accepts the props of `DrawerPrimitive.Description.Props`.
 
 <NativeExample id="components-drawer--open-by-default" />
 
+<Only platform="rn">
+
 `Drawer` presents content in a panel attached to an edge of the screen. It slides in from the bottom by default, or from the top, left or right with `swipeDirection`, and the user can drag it closed in that direction. The content renders through a portal (inside a full-window overlay on iOS) and respects the safe-area insets.
 
 Set `floating` to inset the panel from the screen edges with all corners rounded. Use `snapPoints` to let a bottom drawer rest at several heights. Wrap your app in `DrawerProvider` and its screen in `DrawerIndent` to scale the page back behind an open bottom drawer.
+
+</Only>
 
 ## Installation
 
@@ -348,7 +352,11 @@ npx @esuiss/ui@latest add drawer --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -454,8 +462,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -497,26 +503,154 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
-```
+<Only platform="rn">
 
 ```tsx
-<View className="items-start">
-  <Drawer defaultOpen showSwipeHandle>
-    <DrawerTrigger render={<Button variant="outline" />}>
-      <Text>Open drawer</Text>
-    </DrawerTrigger>
-    <GoalContent />
-  </Drawer>
-</View>
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+import { Text } from "@/components/ui/text"
+
+function GoalContent() {
+  return (
+    <DrawerContent>
+      <DrawerHeader>
+        <DrawerTitle>Move goal</DrawerTitle>
+        <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+      </DrawerHeader>
+      <View className="items-center gap-1 p-4">
+        <Text className="text-5xl font-semibold tracking-tight">350</Text>
+        <Text className="text-xs text-muted-foreground uppercase">
+          Calories/day
+        </Text>
+      </View>
+      <DrawerFooter>
+        <Button>
+          <Text>Submit</Text>
+        </Button>
+        <DrawerClose render={<Button variant="secondary" />}>
+          <Text>Cancel</Text>
+        </DrawerClose>
+      </DrawerFooter>
+    </DrawerContent>
+  )
+}
+
+export function DrawerExample() {
+  return (
+    <View className="items-start">
+      <Drawer showSwipeHandle>
+        <DrawerTrigger render={<Button variant="outline" />}>
+          <Text>Open drawer</Text>
+        </DrawerTrigger>
+        <GoalContent />
+      </Drawer>
+    </View>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct DrawerGoal: View {
+  @State private var open: Bool
+
+  init(open: Bool = false) {
+    _open = State(initialValue: open)
+  }
+
+  var body: some View {
+    Button("Open drawer") { open = true }
+      .buttonStyle(.variant(.outline))
+      .drawer(isPresented: $open) {
+        DrawerGoalContent()
+      }
+  }
+}
+
+struct DrawerGoalContent: View {
+  var body: some View {
+    DrawerContent {
+      DrawerHeader {
+        DrawerTitle("Move goal")
+        DrawerDescription("Set your daily activity goal.")
+      }
+      VStack(spacing: 4) {
+        Text(verbatim: "350")
+          .font(.system(size: 48, weight: .semibold))
+          .tracking(-1.2)
+          .foregroundStyle(EsuissColor.foreground)
+        Text("Calories/day")
+          .textCase(.uppercase)
+          .textStyle(.xs)
+          .foregroundStyle(EsuissColor.mutedForeground)
+      }
+      .frame(maxWidth: .infinity)
+      .padding(16)
+      DrawerFooter {
+        Button {} label: {
+          Text("Submit").frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.variant())
+        DrawerClose {
+          Text("Cancel").frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.variant(.secondary))
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Drawer
+
+@Composable
+fun DrawerExample() {
+    DrawerGoal(defaultOpen = false, floating = false)
+}
+
+@Composable
+fun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = "Open drawer") {
+    var open by rememberSaveable { mutableStateOf(defaultOpen) }
+    Column {
+        Button(label, onClick = { open = true }, variant = ButtonVariant.Outline)
+        Drawer(open = open, onOpenChange = { open = it }, floating = floating, showSwipeHandle = true) {
+            DrawerGoalContent(onClose = { open = false })
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Compose `DrawerTrigger` and `DrawerContent` with a `DrawerHeader` (`DrawerTitle`, `DrawerDescription`), your content and a `DrawerFooter`. Use `DrawerClose` to close it from a button.
 
 Set `showSwipeHandle` to show a grab handle, and `showCloseButton` on the content for a corner close button, with `closeLabel` for a text button. `snapPoints` accepts fractions of the screen such as `[0.4, 1]`; control the current one with `snapPoint` and `onSnapPointChange`.
 
 With `modal={false}` there is no scrim. For the scaled background, render `DrawerIndentBackground` behind a `DrawerIndent` inside `DrawerProvider`.
+
+</Only>
 
 ## Examples
 
@@ -812,6 +946,8 @@ Supporting text.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The popup has the `dialog` role and is labelled by the title.
@@ -823,5 +959,7 @@ Supporting text.
 - Padding follows the safe-area insets, and a docked drawer extends its background past the screen edge so drag overshoot shows no gap.
 - Animations respect the system Reduce Motion setting.
 - Uses `bg-popover`, `bg-black/50` and `bg-border` tokens; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

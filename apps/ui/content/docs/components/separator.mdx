@@ -109,7 +109,11 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-separator--default" />
 
+<Only platform="rn">
+
 `Separator` is a `View` drawn as a one-pixel line. Horizontal separators fill the width of their container; vertical separators stretch to the height of a row.
+
+</Only>
 
 ## Installation
 
@@ -245,8 +249,12 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
 import { Separator } from "@/components/ui/separator"
+import { Text } from "@/components/ui/text"
 ```
 
 ```tsx
@@ -266,7 +274,110 @@ import { Separator } from "@/components/ui/separator"
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SeparatorExample: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: 0) {
+      VStack(alignment: .leading, spacing: 4) {
+        Text(verbatim: "suiss")
+          .textStyle(.sm, weight: .medium)
+          .foregroundStyle(EsuissColor.foreground)
+        Text("An open-source UI component library.")
+          .textVariant(.muted)
+      }
+      Separator()
+        .padding(.vertical, 16)
+      HStack(spacing: 16) {
+        SeparatorText("Blog")
+        Separator(.vertical)
+        SeparatorText("Docs")
+        Separator(.vertical)
+        SeparatorText("Source")
+      }
+      .frame(height: 20)
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+  }
+}
+
+struct SeparatorText: View {
+  let title: LocalizedStringKey
+
+  init(_ title: LocalizedStringKey) {
+    self.title = title
+  }
+
+  var body: some View {
+    Text(title)
+      .textStyle(.sm)
+      .foregroundStyle(EsuissColor.foreground)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Separator
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun SeparatorVerticalRow(labels: List<String>, height: Int) {
+    Row(
+        modifier = Modifier.height(height.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        labels.forEachIndexed { index, label ->
+            if (index > 0) Separator(orientation = Orientation.Vertical)
+            Text(label, style = Typography.sm)
+        }
+    }
+}
+
+@Composable
+fun SeparatorDefault() {
+    Column(Modifier.fillMaxWidth()) {
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text("esuiss", style = Typography.sm.copy(fontWeight = FontWeight.Medium))
+            Text("An open-source UI component library.", variant = TextVariant.Muted)
+        }
+        Separator(Modifier.padding(vertical = 16.dp))
+        SeparatorVerticalRow(listOf("Blog", "Docs", "Source"), 20)
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Use the default `horizontal` orientation between stacked blocks, and `orientation="vertical"` between items in a row. Add spacing with `className`, such as `my-4`.
+
+</Only>
 
 ## Examples
 
@@ -329,6 +440,8 @@ Draws the dividing line.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The separator is decorative and hidden from VoiceOver and TalkBack.
@@ -337,5 +450,7 @@ Draws the dividing line.
 
 - Uses the `bg-border` token.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

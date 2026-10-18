@@ -71,7 +71,11 @@ Without fill or legend, color is the only cue for which line is which, so add a 
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `RadarChart` with two `Radar` series drawn with `fillOpacity={0}`, so only the outlines show. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip with both values.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts radar-chart-lines-only --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { RadarChartLinesOnly } from "@/components/charts/radar-chart-lines-only"
 ```
@@ -229,6 +237,41 @@ import { RadarChartLinesOnly } from "@/components/charts/radar-chart-lines-only"
 <RadarChartLinesOnly />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct RadarLinesOnlyExample: View {
+  var body: some View {
+    RadarChartLinesOnly()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.RadarChartLinesOnly
+
+@Composable
+fun RadarLinesOnlyExample() {
+    RadarChartLinesOnly()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
+
+</Only>
 
 </Only>

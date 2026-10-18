@@ -106,7 +106,11 @@ Styling hooks: `data-slot="table-list"` and `table-list-title`; on mobile also `
 
 `TableList` takes `rows` and a `columns` definition, and renders each row as a `TableListRow` inside one rounded group. Each column has a `slot` that decides where its cell goes: the row title, the description line, the trailing side, or nowhere.
 
+<Only platform="rn">
+
 The row parts are also exported, so you can build the same grouped look inside a `FlatList` for long or virtualized lists.
+
+</Only>
 
 ## Installation
 
@@ -140,7 +144,11 @@ npx @esuiss/ui@latest add patterns table-list --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -218,8 +226,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -263,7 +269,10 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
 import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, TableListRow, TableList } from "@/components/patterns/table-list"
 ```
 
@@ -280,17 +289,121 @@ import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, T
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct TableListExample: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: 32) {
+      TableList(tableListInvoices, columns: tableListColumns, title: "Invoices", action: { _ in })
+      TableList([TableListInvoice](), columns: tableListColumns, emptyText: "No invoices yet.")
+    }
+  }
+}
+
+struct TableListInvoice: Identifiable {
+  let id: String
+  let customer: String
+  let status: String
+  let method: String
+  let amount: String
+}
+
+let tableListInvoices = [
+  TableListInvoice(id: "INV001", customer: "Olivia Martin", status: "Paid", method: "Card", amount: "$250.00"),
+  TableListInvoice(id: "INV002", customer: "Jackson Lee", status: "Pending", method: "PayPal", amount: "$150.00"),
+  TableListInvoice(id: "INV003", customer: "Isabella Nguyen", status: "Unpaid", method: "Transfer", amount: "$350.00"),
+  TableListInvoice(id: "INV004", customer: "William Kim", status: "Paid", method: "Card", amount: "$450.00"),
+]
+
+let tableListColumns: [TableListColumn<TableListInvoice>] = [
+  TableListColumn("customer", header: "Customer", slot: .title) { Text(verbatim: $0.customer) },
+  TableListColumn("status", header: "Status", slot: .description) { Text(verbatim: $0.status) },
+  TableListColumn("method", header: "Method", slot: .description) { Text(verbatim: $0.method) },
+  TableListColumn("amount", header: "Amount", slot: .trailing) { Text(verbatim: $0.amount) },
+]
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.patterns.TableList
+import com.esuiss.ui.patterns.TableListAlign
+import com.esuiss.ui.patterns.TableListColumn
+import com.esuiss.ui.patterns.TableListSlot
+
+class TableListInvoice(
+    val id: String,
+    val customer: String,
+    val status: String,
+    val method: String,
+    val amount: String,
+)
+
+val tableListInvoices = listOf(
+    TableListInvoice("INV001", "Olivia Martin", "Paid", "Card", "$250.00"),
+    TableListInvoice("INV002", "Jackson Lee", "Pending", "PayPal", "$150.00"),
+    TableListInvoice("INV003", "Isabella Nguyen", "Unpaid", "Transfer", "$350.00"),
+    TableListInvoice("INV004", "William Kim", "Paid", "Card", "$450.00"),
+)
+
+val tableListColumns = listOf(
+    TableListColumn<TableListInvoice>("customer", "Customer", slot = TableListSlot.Title) { Text(it.customer, maxLines = 1) },
+    TableListColumn<TableListInvoice>("status", "Status", slot = TableListSlot.Description) { Text(it.status, maxLines = 1) },
+    TableListColumn<TableListInvoice>("method", "Method", slot = TableListSlot.Description) { Text(it.method, maxLines = 1) },
+    TableListColumn<TableListInvoice>("amount", "Amount", slot = TableListSlot.Trailing, align = TableListAlign.End) {
+        Text(it.amount, maxLines = 1)
+    },
+)
+
+@Composable
+fun TableListDefault() {
+    Column(verticalArrangement = Arrangement.spacedBy(32.dp)) {
+        TableList(
+            rows = tableListInvoices,
+            columns = tableListColumns,
+            getKey = { row, _ -> row.id },
+            title = "Invoices",
+            onRowClick = {},
+        )
+        TableList(rows = emptyList(), columns = tableListColumns, emptyText = "No invoices yet.")
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Define columns with `key`, `header`, `cell` and `slot`. Several `description` columns are joined with ` · `, and several `trailing` columns are shown side by side. Use `mobileCell` to render a different value than `cell` in the list, such as a shorter date.
 
 Pass `onRowPress` to make rows pressable. When there are no rows, `emptyText` is shown in the group. The `TableListColumn` type is exported.
 
 With a `FlatList`, use `TableListRow` as the item, pass `first` and `last` to round the ends, `TableListSeparator` as `ItemSeparatorComponent`, and `TableListHeader` and `TableListFooter` around the list.
 
+</Only>
+
 ## Examples
 
 ### With flat list
 
+<Only platform="rn">
+
 Builds the grouped list in a `FlatList` with a header, footer and separators.
+
+</Only>
 
 <NativeExample id="patterns-table-list--with-flat-list" />
 
@@ -662,6 +775,8 @@ Receiver: `LazyListScope`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The group has the `list` role; rows have the `listitem` role, or `button` when `onRowPress` is set.
@@ -672,5 +787,7 @@ Receiver: `LazyListScope`.
 
 - Rows use `bg-muted` and `opacity-80` when pressed.
 - The `header` and `align` column fields are not rendered by the list layout.
+
+</Only>
 
 </Only>

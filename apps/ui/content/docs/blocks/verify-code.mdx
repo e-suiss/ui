@@ -105,7 +105,11 @@ npx @esuiss/ui@latest add blocks verify-code --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Input OTP](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Input OTP](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -219,8 +223,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -280,6 +282,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { VerifyCode } from "@/components/blocks/verify-code"
 ```
@@ -287,6 +291,37 @@ import { VerifyCode } from "@/components/blocks/verify-code"
 ```tsx
 <VerifyCode />
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct VerifyCodeExample: View {
+  var body: some View {
+    VerifyCode()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.VerifyCode
+
+@Composable
+fun VerifyCodeExample() {
+    VerifyCode()
+}
+```
+
+</Only>
 
 `onVerify` receives the code and returns a boolean or a promise; by default it accepts the demo code `482913`. `onHelp` handles the help link.
 

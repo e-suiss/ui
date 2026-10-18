@@ -101,7 +101,11 @@ npx @esuiss/ui@latest add blocks verify-email --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -209,8 +213,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -254,6 +256,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { VerifyEmail } from "@/components/blocks/verify-email"
 ```
@@ -262,6 +266,41 @@ import { VerifyEmail } from "@/components/blocks/verify-email"
 <VerifyEmail />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct VerifyEmailExample: View {
+  var body: some View {
+    VerifyEmail()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.VerifyEmail
+
+@Composable
+fun VerifyEmailExample() {
+    VerifyEmail()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `EMAIL` with the user's address. Use `onOpenMail` to open the mail app and `onChangeAddress` to go back to the email field.
+
+</Only>
 
 </Only>

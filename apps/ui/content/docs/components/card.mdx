@@ -208,7 +208,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-card--default" />
 
+<Only platform="rn">
+
 `Card` is a rounded `View` that stacks a `CardHeader`, `CardContent` and `CardFooter` with consistent spacing. The `default` variant is a raised surface with a hairline border and a shadow; the `filled` variant is a flat `bg-muted` surface.
+
+</Only>
 
 The `sm` size reduces the padding and gaps for dense layouts. All parts read the size from context, so their horizontal padding stays aligned.
 
@@ -244,7 +248,11 @@ npx @esuiss/ui@latest add card --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -350,8 +358,15 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Text } from "@/components/ui/text"
 ```
 
 ```tsx
@@ -388,9 +403,135 @@ import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, 
 </Card>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct CardLoginDemo: View {
+  @State private var email = ""
+  @State private var password = ""
+
+  var body: some View {
+    Card {
+      CardHeader("Login to your account", description: "Enter your email below to login to your account")
+      CardContent {
+        VStack(alignment: .leading, spacing: 16) {
+          VStack(alignment: .leading, spacing: 8) {
+            FieldLabel("Email")
+              .accessibilityHidden(true)
+            TextField("Email", text: $email, prompt: Text(verbatim: "m@example.com"))
+              .textFieldStyle(.input)
+              .keyboardType(.emailAddress)
+              .textInputAutocapitalization(.never)
+          }
+          VStack(alignment: .leading, spacing: 8) {
+            FieldLabel("Password")
+              .accessibilityHidden(true)
+            SecureField("Password", text: $password, prompt: Text(verbatim: ""))
+              .textFieldStyle(.input)
+          }
+        }
+      }
+      CardFooter {
+        VStack(spacing: 8) {
+          Button("Login") {}
+            .buttonStyle(.variant(block: true))
+          Button("Login with Google") {}
+            .buttonStyle(.variant(.secondary, block: true))
+        }
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Card
+import com.esuiss.ui.components.CardContent
+import com.esuiss.ui.components.CardFooter
+import com.esuiss.ui.components.CardHeader
+import com.esuiss.ui.components.Input
+import com.esuiss.ui.components.Label
+
+@Composable
+fun CardDefault() {
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    Card {
+        CardHeader("Login to your account", description = "Enter your email below to login to your account")
+        CardContent {
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Label("Email")
+                    Input(
+                        email,
+                        { email = it },
+                        Modifier.semantics { contentDescription = "Email" },
+                        placeholder = "m@example.com",
+                        keyboardOptions = KeyboardOptions(
+                            capitalization = KeyboardCapitalization.None,
+                            autoCorrectEnabled = false,
+                            keyboardType = KeyboardType.Email,
+                        ),
+                    )
+                }
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Label("Password")
+                    Input(
+                        password,
+                        { password = it },
+                        Modifier.semantics { contentDescription = "Password" },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        visualTransformation = PasswordVisualTransformation(),
+                    )
+                }
+            }
+        }
+        CardFooter {
+            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button("Login", onClick = {}, block = true)
+                Button("Login with Google", onClick = {}, variant = ButtonVariant.Secondary, block = true)
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Put a `CardTitle` and `CardDescription` in `CardHeader`. Add a `CardAction` anywhere in the header and it is placed in the top-end corner beside the title.
 
 To show an image edge to edge, place it directly in the card before the header and add `pt-0` to the card; only the header, content and footer are padded horizontally.
+
+</Only>
 
 ## Examples
 
@@ -402,7 +543,11 @@ The compact `sm` size.
 
 ### With action
 
+<Only platform="rn">
+
 A `CardAction` button beside the title.
+
+</Only>
 
 <NativeExample id="components-card--with-action" />
 
@@ -683,6 +828,8 @@ Padded row for actions.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `CardTitle` has the `heading` role.
@@ -692,5 +839,7 @@ Padded row for actions.
 
 - Uses `bg-card` with a shadow, or `bg-muted` for `filled`; the border is stronger in dark mode.
 - Light and dark follow the system appearance.
+
+</Only>
 
 </Only>

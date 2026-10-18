@@ -71,7 +71,11 @@ Search runs in the browser over sender, subject and body, so move it server-side
 
 </NativeExample>
 
+<Only platform="rn">
+
 A three-column mail screen built on `SplitView`: a sidebar of mailboxes (Inbox, Starred, Sent, Archive, Trash), a message list with a search field made from `InputGroup`, and a reader. On phones each column opens in turn. Rows use `Avatar` and support `SwipeActions` to archive or delete, and searching filters by sender, subject and body. The reader has Reply, Star, Archive and Delete buttons, and Reply opens a `Textarea`.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks inbox-mail --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Screen](/docs/components/screen), [Split View](/docs/patterns/split-view), [Swipe Actions](/docs/interactions/swipe-actions), [Text](/docs/components/text), [Textarea](/docs/components/textarea). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Textarea.swift" />
 
 <ComponentSource path="swift/Interactions/SwipeActions.swift" />
@@ -296,6 +302,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { InboxMail } from "@/components/blocks/inbox-mail"
 ```
@@ -304,6 +312,41 @@ import { InboxMail } from "@/components/blocks/inbox-mail"
 <InboxMail />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct InboxMailExample: View {
+  var body: some View {
+    InboxMail()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.InboxMail
+
+@Composable
+fun InboxMailExample() {
+    InboxMail()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `INITIAL_MAIL` with your messages and `MAILBOXES` with your folders. Wire `onMailboxChange`, `onNewMessage`, `onReply`, `onStarChange`, `onArchive` and `onDelete` to your mail service.
+
+</Only>
 
 </Only>

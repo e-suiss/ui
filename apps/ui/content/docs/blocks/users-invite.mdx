@@ -71,7 +71,11 @@ Each chip's remove button names its address, and the summary line is announced a
 
 </NativeExample>
 
+<Only platform="rn">
+
 Emails become `Chip`s as you type, and Backspace in an empty `Input` removes the last one. A `Picker` sets the role, a `Switch` toggles the welcome email, and the send `Button` adds the invites to the pending list. Pending invitations can be resent or cancelled, and sending or resending shows a toast through `Toaster`. The admin `TabBar` switches sections.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks users-invite --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input](/docs/components/input), [Item](/docs/components/item), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toast](/docs/components/toast). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/docs/components/chip), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input](/docs/components/input), [Item](/docs/components/item), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Picker](/docs/patterns/picker), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Tab Bar](/docs/components/tab-bar), [Text](/docs/components/text), [Toast](/docs/components/toast). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -239,8 +247,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/TabBar.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toast.swift" />
 
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
@@ -320,6 +326,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { UsersInvite } from "@/components/blocks/users-invite"
 ```
@@ -328,6 +336,41 @@ import { UsersInvite } from "@/components/blocks/users-invite"
 <UsersInvite />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct UsersInviteExample: View {
+  var body: some View {
+    UsersInvite()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.UsersInvite
+
+@Composable
+fun UsersInviteExample() {
+    UsersInvite()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `ROLES` and the initial pending invites with your data. Use `onInvite`, `onResend`, `onCancelInvite` and `onNavigate` to call your API.
+
+</Only>
 
 </Only>

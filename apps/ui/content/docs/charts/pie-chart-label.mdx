@@ -71,7 +71,11 @@ Outside labels collide when slices are thin, so keep the category count low.
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A `PieChart` with a smaller radius to leave room for labels. `chartData` holds one record per device with a `users` count. The `label` callback reads each slice name from `chartConfig`, and `labelLine` draws the connector. Pressing a slice shows a tooltip.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts pie-chart-label --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { PieChartLabel } from "@/components/charts/pie-chart-label"
 ```
@@ -229,6 +237,41 @@ import { PieChartLabel } from "@/components/charts/pie-chart-label"
 <PieChartLabel />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct PieLabelExample: View {
+  var body: some View {
+    PieChartLabel()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.PieChartLabel
+
+@Composable
+fun PieLabelExample() {
+    PieChartLabel()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
+
+</Only>
 
 </Only>

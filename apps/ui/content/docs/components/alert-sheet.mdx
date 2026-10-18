@@ -313,7 +313,11 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-alert-sheet--open-by-default" />
 
+<Only platform="rn">
+
 `AlertSheet` presents a set of choices related to the current context. `AlertSheetContent` renders through a portal (inside a full-window overlay on iOS), slides up from the bottom over a dimmed scrim, and respects the safe-area insets.
+
+</Only>
 
 Actions sit in an `AlertSheetGroup`, a rounded card that draws a hairline between each child, and `AlertSheetCancel` sits below it as its own card with bold text. Use it for two to a few actions; for a single decision that needs confirmation, use Alert Dialog.
 
@@ -349,7 +353,11 @@ npx @esuiss/ui@latest add alert-sheet --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -453,8 +461,6 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -498,26 +504,163 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { AlertSheet, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from "@/components/ui/alert-sheet"
-```
+<Only platform="rn">
 
 ```tsx
-<View className="items-start">
-  <AlertSheet defaultOpen>
-    <AlertSheetTrigger render={<Button variant="outline" />}>
-      <Text>Show sheet</Text>
-    </AlertSheetTrigger>
-    <SheetBody />
-  </AlertSheet>
-</View>
+import { View } from "react-native"
+import { AlertSheet, AlertSheetAction, AlertSheetCancel, AlertSheetContent, AlertSheetDescription, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetTrigger } from "@/components/ui/alert-sheet"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+function SheetBody() {
+  return (
+    <AlertSheetContent>
+      <AlertSheetGroup>
+        <AlertSheetHeader>
+          <AlertSheetTitle>Delete this photo?</AlertSheetTitle>
+          <AlertSheetDescription>
+            This photo will be deleted from all of your devices.
+          </AlertSheetDescription>
+        </AlertSheetHeader>
+        <AlertSheetAction>Save to Files</AlertSheetAction>
+        <AlertSheetAction variant="destructive">Delete Photo</AlertSheetAction>
+      </AlertSheetGroup>
+      <AlertSheetCancel>Cancel</AlertSheetCancel>
+    </AlertSheetContent>
+  )
+}
+
+export function AlertSheetExample() {
+  return (
+    <View className="items-start">
+      <AlertSheet>
+        <AlertSheetTrigger render={<Button variant="outline" />}>
+          <Text>Show sheet</Text>
+        </AlertSheetTrigger>
+        <SheetBody />
+      </AlertSheet>
+    </View>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AlertSheetExample: View {
+  var body: some View {
+    AlertSheetDemo(title: "Show sheet") {
+      AlertSheetBody()
+    }
+  }
+}
+
+struct AlertSheetDemo<Body: View>: View {
+  let title: LocalizedStringKey
+  let dismissible: Bool
+  let content: () -> Body
+
+  @State private var open: Bool
+
+  init(
+    title: LocalizedStringKey,
+    open: Bool = false,
+    dismissible: Bool = true,
+    @ViewBuilder content: @escaping () -> Body
+  ) {
+    self.title = title
+    self.dismissible = dismissible
+    self.content = content
+    _open = State(initialValue: open)
+  }
+
+  var body: some View {
+    Button(title) { open = true }
+      .buttonStyle(.variant(.outline))
+      .alertSheet(isPresented: $open, dismissible: dismissible, content: content)
+  }
+}
+
+struct AlertSheetBody: View {
+  var body: some View {
+    AlertSheetContent {
+      AlertSheetGroup {
+        AlertSheetHeader {
+          AlertSheetTitle("Delete this photo?")
+          AlertSheetDescription("This photo will be deleted from all of your devices.")
+        }
+        AlertSheetAction("Save to Files")
+        AlertSheetAction("Delete Photo", variant: .destructive)
+      }
+      AlertSheetCancel("Cancel")
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.components.AlertSheet
+import com.esuiss.ui.components.AlertSheetAction
+import com.esuiss.ui.components.AlertSheetActionVariant
+import com.esuiss.ui.components.AlertSheetCancel
+import com.esuiss.ui.components.AlertSheetDescription
+import com.esuiss.ui.components.AlertSheetGroup
+import com.esuiss.ui.components.AlertSheetHeader
+import com.esuiss.ui.components.AlertSheetTitle
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+
+@Composable
+fun AlertSheetExample() {
+    AlertSheetDefault(defaultOpen = false)
+}
+
+@Composable
+fun AlertSheetDefault(defaultOpen: Boolean) {
+    var open by rememberSaveable { mutableStateOf(defaultOpen) }
+    Column {
+        Button("Show sheet", onClick = { open = true }, variant = ButtonVariant.Outline)
+        AlertSheet(open = open, onOpenChange = { open = it }) {
+            AlertSheetGroup {
+                AlertSheetHeader {
+                    AlertSheetTitle("Delete this photo?")
+                    AlertSheetDescription("This photo will be deleted from all of your devices.")
+                }
+                AlertSheetAction("Save to Files", onClick = {})
+                AlertSheetAction("Delete Photo", onClick = {}, variant = AlertSheetActionVariant.Destructive)
+            }
+            AlertSheetCancel("Cancel")
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Compose `AlertSheetTrigger` and `AlertSheetContent`. Inside the content, put an `AlertSheetGroup` with an optional `AlertSheetHeader` (`AlertSheetTitle`, `AlertSheetDescription`) followed by `AlertSheetAction`s, then an `AlertSheetCancel`.
 
 Every action closes the sheet when pressed. String children are wrapped in `Text` automatically. Use `variant="destructive"` on an action that deletes or removes, and `disabled` to dim and block it.
 
 By default the sheet is dismissible and a tap on the scrim closes it. Set `dismissible={false}` to require an explicit choice.
+
+</Only>
 
 ## Examples
 
@@ -527,7 +670,11 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 ### Not dismissible
 
+<Only platform="rn">
+
 `dismissible={false}` with a destructive and a disabled action.
+
+</Only>
 
 <NativeExample id="components-alert-sheet--not-dismissible" />
 
@@ -874,6 +1021,8 @@ Separate cancel card with bold text.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - When dismissible the popup has the `dialog` role, otherwise `alertdialog`; it is labelled by the title and marked as modal for VoiceOver.
@@ -887,5 +1036,7 @@ Separate cancel card with bold text.
 - On iOS the content is wrapped in a full-window overlay.
 - Animations respect the system Reduce Motion setting.
 - Uses `bg-popover`, `text-primary` and `text-destructive` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

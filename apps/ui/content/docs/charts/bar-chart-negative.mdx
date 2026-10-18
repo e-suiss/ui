@@ -71,7 +71,11 @@ Because colors are set per bar instead of in the config, the tooltip has no colo
 
 </NativeExample>
 
+<Only platform="rn">
+
 One bar per month, colored per value through a `Cell`: green when the flow is positive and red when it is negative. A `ReferenceLine` at zero anchors the bars, and the month axis shows every other label.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts bar-chart-negative --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BarChartNegative } from "@/components/charts/bar-chart-negative"
 ```
@@ -229,6 +237,41 @@ import { BarChartNegative } from "@/components/charts/bar-chart-negative"
 <BarChartNegative />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BarNegativeExample: View {
+  var body: some View {
+    BarChartNegative()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.BarChartNegative
+
+@Composable
+fun BarNegativeExample() {
+    BarChartNegative()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your months and signed `flow` values. Change the colors in the `Cell` `fill` expression. The component takes no props.
+
+</Only>
 
 </Only>

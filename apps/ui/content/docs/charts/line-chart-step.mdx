@@ -71,7 +71,11 @@ The tooltip follows the cursor, or the arrow keys once the chart has focus.
 
 </NativeExample>
 
+<Only platform="rn">
+
 One series with `type="step"`, which draws flat runs and vertical jumps instead of slopes. Use it for values that change at discrete moments. It has a month axis, a dashed grid and a tooltip.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts line-chart-step --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LineChartStep } from "@/components/charts/line-chart-step"
 ```
@@ -229,6 +237,41 @@ import { LineChartStep } from "@/components/charts/line-chart-step"
 <LineChartStep />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LineStepExample: View {
+  var body: some View {
+    LineChartStep()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.LineChartStep
+
+@Composable
+fun LineStepExample() {
+    LineChartStep()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.
+
+</Only>
 
 </Only>

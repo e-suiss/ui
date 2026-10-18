@@ -126,7 +126,11 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 
 <NativeExample id="components-textarea--default" />
 
+<Only platform="rn">
+
 `Textarea` is the multi-line version of `Input`. It wraps a `TextInput` through the same field control primitive, defaults to `multiline` with `numberOfLines={8}`, aligns text to the top and has a minimum height. It shows a focus border while editing, a destructive border and tint when invalid, and 50% opacity when disabled.
+
+</Only>
 
 ## Installation
 
@@ -242,8 +246,6 @@ npx expo install cn nativewind
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -284,6 +286,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Textarea } from "@/components/ui/textarea"
 ```
@@ -292,17 +296,78 @@ import { Textarea } from "@/components/ui/textarea"
 <Textarea placeholder="Type your message here." />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct TextareaDemo: View {
+  let placeholder: LocalizedStringKey
+
+  @State private var text: String
+
+  init(initial: String = "", placeholder: LocalizedStringKey = "Type your message here.") {
+    self.placeholder = placeholder
+    _text = State(initialValue: initial)
+  }
+
+  var body: some View {
+    TextField(placeholder, text: $text, axis: .vertical)
+      .textFieldStyle(.textarea)
+      .frame(maxWidth: .infinity)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import com.esuiss.ui.components.Textarea
+
+@Composable
+fun TextareaDemo(
+    initial: String = "",
+    placeholder: String = "Type your message here.",
+    enabled: Boolean = true,
+) {
+    var value by rememberSaveable { mutableStateOf(initial) }
+    Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Use it for comments, messages and other free-form text. Use `Input` for single-line values.
 
 The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state.
 
 Override `numberOfLines` or set a height through `className` to change the visible size.
 
+</Only>
+
 ## Examples
 
 ### With value
 
+<Only platform="rn swift">
+
 A textarea that starts with a `defaultValue`.
+
+</Only>
 
 <NativeExample id="components-textarea--with-value" />
 
@@ -379,6 +444,8 @@ The multi-line text field, with an optional resize handle.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Inside a `Field`, the textarea gets the field label as `accessibilityLabel` and the description as `accessibilityHint`.
@@ -391,5 +458,7 @@ The multi-line text field, with an optional resize handle.
 - In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
 - Placeholder, cursor and selection colors come from the `muted-foreground` and `primary` tokens.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

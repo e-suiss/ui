@@ -65,7 +65,11 @@ Quantities are limited to 1–10, and each stepper and Remove button is labeled 
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `Stepper` from the interactions, `Button`, `Text` and `BottomBar`. Each compact row shows a thumbnail, the product name with its line price, the variant, a quantity stepper and a Remove link; tapping the thumbnail or the name opens the product details. The heading and totals update as the bag changes, and removing every item shows an empty state with a Continue Shopping button.
+
+</Only>
 
 ## Installation
 
@@ -99,7 +103,11 @@ npx @esuiss/ui@latest add blocks bag-review --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Stepper](/docs/interactions/stepper), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Screen](/docs/components/screen), [Stepper](/docs/interactions/stepper), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -215,8 +223,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Interactions/Stepper.swift" />
 
 5. Add the files to your app target.
@@ -268,6 +274,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BagReview } from "@/components/blocks/bag-review"
 ```
@@ -276,6 +284,41 @@ import { BagReview } from "@/components/blocks/bag-review"
 <BagReview />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BagReviewExample: View {
+  var body: some View {
+    BagReview()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.BagReview
+
+@Composable
+fun BagReviewExample() {
+    BagReview()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `INITIAL_ITEMS` with your cart lines. Wire `onCheckout`, `onShowDetails`, `onContinueShopping`, `onQuantityChange` and `onRemove` to your cart logic.
+
+</Only>
 
 </Only>

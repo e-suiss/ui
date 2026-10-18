@@ -71,7 +71,11 @@ Focus returns to the launcher when the panel closes. The hero photo is an Unspla
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `Message`, `Bubble`, `MessageScroller`, `InputGroup`, `Button`, `Icon` and `BottomBar`. The chat panel opens and closes with a scale animation from a launcher button, quick questions disappear once asked, and each question gets a typed answer after a short typing indicator. The panel grows to the available height while the composer has focus.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks chat-support --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -229,8 +237,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -296,6 +302,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { ChatSupport } from "@/components/blocks/chat-support"
 ```
@@ -304,6 +312,41 @@ import { ChatSupport } from "@/components/blocks/chat-support"
 <ChatSupport />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct ChatSupportExample: View {
+  var body: some View {
+    ChatSupport()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.ChatSupport
+
+@Composable
+fun ChatSupportExample() {
+    ChatSupport()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `ANSWERS` and `FALLBACK` with your own replies or a call to your support service. Pass `onSend`, `onAttach` and `onOpenChange` to handle messages, attachments and the open state.
+
+</Only>
 
 </Only>

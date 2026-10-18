@@ -65,7 +65,11 @@ Swatches are labeled with their finish names and have enlarged hit areas. Photos
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `ToggleGroup` color swatches, `Button` and `Text`. Each model keeps its own selected finish, which is passed along when Buy is pressed.
+
+</Only>
 
 ## Installation
 
@@ -99,7 +103,11 @@ npx @esuiss/ui@latest add blocks grid-lineup --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Screen](/docs/components/screen), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -207,8 +215,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -252,6 +258,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { GridLineup } from "@/components/blocks/grid-lineup"
 ```
@@ -260,6 +268,41 @@ import { GridLineup } from "@/components/blocks/grid-lineup"
 <GridLineup />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct GridLineupExample: View {
+  var body: some View {
+    GridLineup()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.GridLineup
+
+@Composable
+fun GridLineupExample() {
+    GridLineup()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `MODELS` with your lineup. Pass `onBuy` to receive the model name and finish, and `onLearnMore` for the Learn more link.
+
+</Only>
 
 </Only>

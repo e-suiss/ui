@@ -96,7 +96,11 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 
 <NativeExample id="components-spinner--default" />
 
+<Only platform="rn">
+
 `Spinner` wraps the native `ActivityIndicator` in a square `View`. The indicator is scaled from its native small size to the `size` you pass, so it can match text and icon sizes. Its color is set through a class.
+
+</Only>
 
 ## Installation
 
@@ -230,6 +234,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Spinner } from "@/components/ui/spinner"
 ```
@@ -238,7 +244,43 @@ import { Spinner } from "@/components/ui/spinner"
 <Spinner />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SpinnerExample: View {
+  var body: some View {
+    Spinner()
+      .foregroundStyle(EsuissColor.mutedForeground)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.Spinner
+
+@Composable
+fun SpinnerExample() {
+    Spinner()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Set `size` in points (default `16`) and `colorClassName` with an `accent-*` class, such as `accent-primary` or `accent-destructive`. Inside a button, use `accent-primary-foreground` on the `default` variant so the spinner matches the label.
+
+</Only>
 
 ## Examples
 
@@ -318,6 +360,8 @@ The animated activity indicator.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The wrapper has `role="progressbar"`, is `accessible`, and sets `busy: true` in `accessibilityState`.
@@ -327,5 +371,7 @@ The animated activity indicator.
 
 - The default color uses the `muted-foreground` token.
 - The look of the indicator comes from the platform's native activity indicator, so it differs between iOS and Android.
+
+</Only>
 
 </Only>

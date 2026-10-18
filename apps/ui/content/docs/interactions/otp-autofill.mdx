@@ -168,7 +168,11 @@ npx @esuiss/ui@latest add interactions otp-autofill --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Input OTP](/docs/components/input-otp), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Input OTP](/docs/components/input-otp), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -278,8 +282,6 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -333,17 +335,327 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion } from "@/components/interactions/otp-autofill"
-```
+<Only platform="rn">
 
 ```tsx
-<VerificationExample incoming={CODE} />
+import * as React from "react"
+import { View } from "react-native"
+import { OtpAutofill, OtpAutofillInput, OtpAutofillSuggestion, useOtpAutofill } from "@/components/interactions/otp-autofill"
+import { Button } from "@/components/ui/button"
+import { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
+import { Text } from "@/components/ui/text"
+
+const CODE = "482913"
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+function statusClassName(state: string) {
+  if (state === "invalid") return "min-h-5 text-sm text-destructive"
+  if (state === "verified")
+    return "min-h-5 text-sm text-green-600 dark:text-green-400"
+  return "min-h-5 text-sm text-muted-foreground"
+}
+
+function statusText(state: string) {
+  if (state === "verifying") return "Verifying…"
+  if (state === "verified") return "Verified"
+  if (state === "invalid") return "That code didn't work. Try again."
+  return ""
+}
+
+function Status() {
+  const { state } = useOtpAutofill()
+
+  return (
+    <Text
+      role="status"
+      accessibilityLiveRegion="polite"
+      className={statusClassName(state)}
+    >
+      {statusText(state)}
+    </Text>
+  )
+}
+
+function VerificationExample({ incoming }: { incoming: string }) {
+  const [suggestion, setSuggestion] = React.useState<string | null>(null)
+  const [sending, setSending] = React.useState(false)
+
+  const send = React.useCallback(async () => {
+    setSending(true)
+    setSuggestion(null)
+    await wait(1200)
+    setSuggestion(incoming)
+    setSending(false)
+  }, [incoming])
+
+  React.useEffect(() => {
+    send()
+  }, [send])
+
+  return (
+    <View className="w-full items-center gap-2">
+      <Text className="text-center text-2xl font-bold">Enter the code</Text>
+      <Text className="text-center text-sm text-muted-foreground">
+        We sent a 6-digit code to +1 555 0100.
+      </Text>
+      <OtpAutofill
+        maxLength={6}
+        onVerify={async (code) => {
+          await wait(700)
+          return code === CODE
+        }}
+        className="mt-4"
+      >
+        <OtpAutofillInput autoFocus accessibilityLabel="Verification code">
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+          </InputOTPGroup>
+          <InputOTPSeparator />
+          <InputOTPGroup>
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </OtpAutofillInput>
+        <Status />
+        <OtpAutofillSuggestion code={suggestion} />
+      </OtpAutofill>
+      <Button variant="plain" onPress={send} disabled={sending}>
+        <Text>{sending ? "Sending…" : "Resend code"}</Text>
+      </Button>
+    </View>
+  )
+}
+
+export function OtpAutofillExample() {
+  return (
+    <VerificationExample incoming={CODE} />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct OTPAutofillExample: View {
+  var body: some View {
+    OtpAutofillVerification(incoming: otpAutofillCode)
+  }
+}
+
+let otpAutofillCode = "482913"
+
+struct OtpAutofillStatus: View {
+  let state: OtpAutofillState
+
+  var body: some View {
+    Text(text)
+      .textStyle(.sm)
+      .foregroundStyle(color)
+      .frame(minHeight: 20)
+      .accessibilityAddTraits(.updatesFrequently)
+  }
+
+  var text: LocalizedStringKey {
+    switch state {
+    case .verifying: "Verifying…"
+    case .verified: "Verified"
+    case .invalid: "That code didn't work. Try again."
+    case .idle, .filling: ""
+    }
+  }
+
+  var color: Color {
+    switch state {
+    case .verified: Color.adaptive(light: Palette.green600, dark: Palette.green400)
+    case .invalid: EsuissColor.destructive
+    default: EsuissColor.mutedForeground
+    }
+  }
+}
+
+struct OtpAutofillVerification: View {
+  let incoming: String
+
+  @State private var suggestion: String?
+  @State private var sending = false
+
+  var body: some View {
+    VStack(spacing: 8) {
+      Text("Enter the code")
+        .textStyle(.xl2, weight: .bold)
+        .foregroundStyle(EsuissColor.foreground)
+        .multilineTextAlignment(.center)
+      Text("We sent a 6-digit code to +1 555 0100.")
+        .textStyle(.sm)
+        .foregroundStyle(EsuissColor.mutedForeground)
+        .multilineTextAlignment(.center)
+      OtpAutofill(length: 6, onVerify: { code in
+        try? await Task.sleep(for: .milliseconds(700))
+        return code == otpAutofillCode
+      }) { state in
+        OtpAutofillInput(autoFocus: true) {
+          InputOTPGroup {
+            InputOTPSlot(index: 0)
+            InputOTPSlot(index: 1)
+            InputOTPSlot(index: 2)
+          }
+          InputOTPSeparator()
+          InputOTPGroup {
+            InputOTPSlot(index: 3)
+            InputOTPSlot(index: 4)
+            InputOTPSlot(index: 5)
+          }
+        }
+        .accessibilityLabel(Text("Verification code"))
+        OtpAutofillStatus(state: state)
+        OtpAutofillSuggestion(code: suggestion)
+      }
+      .padding(.top, 16)
+      Button {
+        Task { await send() }
+      } label: {
+        Text(sending ? "Sending…" : "Resend code")
+      }
+      .buttonStyle(.variant(.plain))
+      .disabled(sending)
+    }
+    .frame(maxWidth: .infinity)
+    .task {
+      await send()
+    }
+  }
+
+  func send() async {
+    sending = true
+    suggestion = nil
+    try? await Task.sleep(for: .milliseconds(1200))
+    suggestion = incoming
+    sending = false
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.InputOTPGroup
+import com.esuiss.ui.components.InputOTPSeparator
+import com.esuiss.ui.components.InputOTPSlot
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.interactions.OtpAutofill
+import com.esuiss.ui.interactions.OtpAutofillInput
+import com.esuiss.ui.interactions.OtpAutofillSuggestion
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+import kotlinx.coroutines.delay
+
+@Composable
+fun OTPAutofillExample() {
+    OtpAutofillVerification(incoming = OtpAutofillCode)
+}
+
+@Composable
+fun OtpAutofillVerification(incoming: String) {
+    val colors = EsuissTheme.colors
+    var suggestion by rememberSaveable { mutableStateOf<String?>(null) }
+    var sending by rememberSaveable { mutableStateOf(false) }
+    var request by rememberSaveable { mutableIntStateOf(0) }
+    LaunchedEffect(request) {
+        sending = true
+        suggestion = null
+        delay(1200)
+        suggestion = incoming
+        sending = false
+    }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text("Enter the code", style = Typography.xl2.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center)
+        Text(
+            "We sent a 6-digit code to +1 555 0100.",
+            style = Typography.sm.copy(color = colors.mutedForeground),
+            textAlign = TextAlign.Center,
+        )
+        OtpAutofill(
+            maxLength = 6,
+            onVerify = { code ->
+                delay(700)
+                code == OtpAutofillCode
+            },
+            modifier = Modifier.padding(top = 16.dp),
+        ) {
+            OtpAutofillInput(contentDescription = "Verification code", autoFocus = true) {
+                InputOTPGroup {
+                    InputOTPSlot(0)
+                    InputOTPSlot(1)
+                    InputOTPSlot(2)
+                }
+                InputOTPSeparator()
+                InputOTPGroup {
+                    InputOTPSlot(3)
+                    InputOTPSlot(4)
+                    InputOTPSlot(5)
+                }
+            }
+            OtpAutofillStatus()
+            OtpAutofillSuggestion(code = suggestion)
+        }
+        Button(
+            if (sending) "Sending…" else "Resend code",
+            onClick = { request += 1 },
+            variant = ButtonVariant.Plain,
+            enabled = !sending,
+        )
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
 
 Pass `maxLength` and `onVerify`, which returns a boolean or a promise of one. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
 
+</Only>
+
+<Only platform="rn">
+
 The input sets `textContentType="oneTimeCode"` and the platform's one-time code `autoComplete`, so the system can also offer the code. `useOtpAutofill` returns `state`, `value`, `fill` and `inputRef` for custom controls.
+
+</Only>
 
 ## Examples
 
@@ -550,6 +862,8 @@ Receiver: `OtpAutofillScope`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `accessibilityLabel` on `OtpAutofillInput` is passed to the underlying text input.
@@ -561,5 +875,7 @@ Receiver: `OtpAutofillScope`.
 - Invalid slots use `border-destructive` with a `bg-destructive` tint that is stronger in dark mode; verified slots use `border-green-500` and `bg-green-500/10 dark:bg-green-500/20`.
 - The suggestion bar uses `bg-popover`, or `bg-muted` in dark mode, and sits on the keyboard or above the bottom safe area.
 - Slide and shake animations respect the system reduce motion setting.
+
+</Only>
 
 </Only>

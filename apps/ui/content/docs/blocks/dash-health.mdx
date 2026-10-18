@@ -71,7 +71,11 @@ Sparklines are hidden from assistive technology because each value is also shown
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `Header` with a back button, `Avatar`, `Button`, `Icon` and `Item` groups, with sparklines drawn using `react-native-svg`. The list opens a section of metric cards, and the Summary section has an Edit mode for pinning and unpinning cards.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks dash-health --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Item](/docs/components/item), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -223,8 +231,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -270,6 +276,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { DashHealth } from "@/components/blocks/dash-health"
 ```
@@ -278,6 +286,41 @@ import { DashHealth } from "@/components/blocks/dash-health"
 <DashHealth />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct DashHealthExample: View {
+  var body: some View {
+    DashHealth()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.DashHealth
+
+@Composable
+fun DashHealthExample() {
+    DashHealth()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `METRICS` and `CATEGORIES` with your own readings. Pass `onMetricPress` to open a metric and `onPinnedChange` to store the pinned list.
+
+</Only>
 
 </Only>

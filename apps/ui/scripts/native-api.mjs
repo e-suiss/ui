@@ -919,14 +919,17 @@ function splitApi(native) {
   const from = start + API_HEADING.length + 2
   const next = native.indexOf("\n## ", from)
   let end = next < 0 ? native.length : next
-  let depth = 0
+  const open = []
   for (const match of native.slice(from, end).matchAll(ONLY_TAG)) {
-    depth += match[0] === "</Only>" ? -1 : 1
-    if (depth < 0) {
+    if (match[0] !== "</Only>") open.push(match.index)
+    else if (open.length) open.pop()
+    else {
       end = from + native.slice(from, from + match.index).trimEnd().length + 1
       break
     }
   }
+  if (open.length)
+    end = from + native.slice(from, from + open[0]).trimEnd().length + 1
   return {
     before: native.slice(0, from),
     api: native.slice(from, end),

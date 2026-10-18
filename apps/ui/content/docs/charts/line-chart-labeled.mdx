@@ -71,7 +71,11 @@ Labels overlap quickly on long or dense series; keep this variant to a dozen poi
 
 </NativeExample>
 
+<Only platform="rn">
+
 One natural curve with dots on each month and a `LabelList` above every point, so values are readable without touching the chart. There is no grid; a month axis and a tooltip remain.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts line-chart-labeled --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LineChartLabeled } from "@/components/charts/line-chart-labeled"
 ```
@@ -229,6 +237,41 @@ import { LineChartLabeled } from "@/components/charts/line-chart-labeled"
 <LineChartLabeled />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LineLabeledExample: View {
+  var body: some View {
+    LineChartLabeled()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.LineChartLabeled
+
+@Composable
+fun LineLabeledExample() {
+    LineChartLabeled()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `chartData` with your records and change each `dataKey` to match your fields. Change `position` and `offset` on the `LabelList` to move the labels. The component takes no props.
+
+</Only>
 
 </Only>

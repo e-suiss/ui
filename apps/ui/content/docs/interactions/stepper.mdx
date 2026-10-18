@@ -170,7 +170,11 @@ Also accepts the props of `React.ComponentProps<"span">`.
 
 <NativeExample id="interactions-stepper--default" />
 
+<Only platform="rn kotlin">
+
 `Stepper` is a number field laid out as a right-aligned value followed by a field holding minus and plus buttons, inset from its edges. Each step snaps to `step` and stays within `min` and `max`, and a button that can go no further is shown as disabled.
+
+</Only>
 
 Pressing and holding a button steps once, then repeats every 60 ms after 400 ms. The value can also be typed. Use it for quantities, copies or percentages in settings rows.
 
@@ -206,7 +210,11 @@ npx @esuiss/ui@latest add interactions stepper --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon).
+
+</Only>
 
 ### Manual
 
@@ -300,8 +308,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -341,6 +347,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from "@/components/interactions/stepper"
 ```
@@ -356,9 +364,89 @@ import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement
 </Stepper>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct StepperParts: View {
+  var body: some View {
+    StepperInput()
+    StepperGroup {
+      StepperDecrement()
+      StepperSeparator()
+      StepperIncrement()
+    }
+  }
+}
+
+struct StepperQuantity: View {
+  @State private var value = 1
+
+  var body: some View {
+    ValueStepper(value: $value, in: 0...10) {
+      StepperParts()
+    }
+    .accessibilityLabel(Text("Quantity"))
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.interactions.Stepper
+import com.esuiss.ui.interactions.StepperDecrement
+import com.esuiss.ui.interactions.StepperGroup
+import com.esuiss.ui.interactions.StepperIncrement
+import com.esuiss.ui.interactions.StepperInput
+import com.esuiss.ui.interactions.StepperSeparator
+
+@Composable
+fun StepperControls() {
+    StepperGroup {
+        StepperDecrement()
+        StepperSeparator()
+        StepperIncrement()
+    }
+}
+
+@Composable
+fun StepperDefault() {
+    var value by rememberSaveable { mutableDoubleStateOf(1.0) }
+    Row {
+        Stepper(value = value, onValueChange = { value = it }, min = 0.0, max = 10.0) {
+            StepperInput(contentDescription = "Quantity")
+            StepperControls()
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
+
 Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`.
 
+</Only>
+
+<Only platform="rn">
+
 Use it uncontrolled with `defaultValue` (`0` by default) or controlled with `value` and `onValueChange`. Clearing the field never reports `null`; the change is cancelled instead. `min`, `max`, `step`, `format` (`Intl.NumberFormatOptions`), `locale` and `disabled` are passed to the number field.
+
+</Only>
 
 ## Examples
 
@@ -610,6 +698,8 @@ A thin divider between the buttons.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The minus and plus buttons have the `button` role.
@@ -621,5 +711,7 @@ A thin divider between the buttons.
 - A selection haptic plays on each step, if the app provides an adapter through `HapticsProvider`.
 - The group uses `bg-secondary`. Buttons use `bg-card` with a small shadow (`bg-border` in dark mode) and `opacity-80` when pressed; a disabled button or one at its limit uses `opacity-50`.
 - Disabled text uses `opacity-50`.
+
+</Only>
 
 </Only>

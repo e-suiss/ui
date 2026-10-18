@@ -228,7 +228,11 @@ npx @esuiss/ui@latest add empty --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -298,11 +302,9 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-3. Copy the source and every file it uses:
+3. Copy the source:
 
 <ComponentSource path="swift/Components/Empty.swift" />
-
-<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -338,8 +340,13 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { Button } from "@/components/ui/button"
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
 ```
 
 ```tsx
@@ -365,9 +372,85 @@ import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyCont
 </Empty>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct EmptyExample: View {
+  var body: some View {
+    Empty {
+      EmptyHeader {
+        EmptyMedia(.icon) { Ph.folderOpen.regular }
+        EmptyTitle("No projects yet")
+        EmptyDescription("You haven't created any projects yet. Get started by creating your first project.")
+      }
+      EmptyContent {
+        Button("Create project") {}
+          .buttonStyle(.variant())
+        Button("Import project") {}
+          .buttonStyle(.variant(.link))
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.FolderOpen
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Empty
+import com.esuiss.ui.components.EmptyContent
+import com.esuiss.ui.components.EmptyDescription
+import com.esuiss.ui.components.EmptyHeader
+import com.esuiss.ui.components.EmptyMedia
+import com.esuiss.ui.components.EmptyMediaVariant
+import com.esuiss.ui.components.EmptyTitle
+import com.esuiss.ui.components.Icon
+
+@Composable
+fun EmptyDefault() {
+    Empty {
+        EmptyHeader {
+            EmptyMedia(variant = EmptyMediaVariant.Icon) {
+                Icon(PhosphorIcons.Regular.FolderOpen, contentDescription = null)
+            }
+            EmptyTitle("No projects yet")
+            EmptyDescription("You haven't created any projects yet. Get started by creating your first project.")
+        }
+        EmptyContent {
+            Button("Create project", onClick = {})
+            Button("Import project", onClick = {}, variant = ButtonVariant.Link)
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn kotlin">
+
 `EmptyMedia` has two variants: `default` shows its child as is, such as an illustration, and `icon` puts an `Icon` in a small rounded tile. Put buttons or links in `EmptyContent`.
 
+</Only>
+
+<Only platform="rn">
+
 Add a background class such as `bg-muted` to `Empty` for a filled panel.
+
+</Only>
 
 ## Examples
 
@@ -629,6 +712,8 @@ Area for actions.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `EmptyTitle` has the `heading` role.
@@ -637,5 +722,7 @@ Area for actions.
 ## Notes
 
 - Uses `bg-muted`, `text-foreground` and `text-muted-foreground` tokens; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

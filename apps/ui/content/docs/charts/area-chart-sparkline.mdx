@@ -71,7 +71,11 @@ Sparklines are hidden from assistive technology and have no tooltip or keyboard 
 
 </NativeExample>
 
+<Only platform="rn">
+
 Each row shows a symbol and company name, a tiny area chart without axes, the price and a colored badge with the percentage change. The sparkline turns green when the change is positive and red when it is negative, using the `up` and `down` colors in `chartConfig`. The charts are hidden from screen readers because the row text already carries the values. Each sparkline sets `isAnimationActive={false}` and draws without the enter animation.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts area-chart-sparkline --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -189,8 +197,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -235,6 +241,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { AreaChartSparkline } from "@/components/charts/area-chart-sparkline"
 ```
@@ -243,6 +251,41 @@ import { AreaChartSparkline } from "@/components/charts/area-chart-sparkline"
 <AreaChartSparkline />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AreaSparklineExample: View {
+  var body: some View {
+    AreaChartSparkline()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.AreaChartSparkline
+
+@Composable
+fun AreaSparklineExample() {
+    AreaChartSparkline()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace the `stocks` array with your own symbols, prices and changes, and swap the generated `series` data for real price history. The component takes no props.
+
+</Only>
 
 </Only>

@@ -311,9 +311,13 @@ Also accepts the props of `ComboboxPrimitive.Input.Props`.
 
 </Only>
 
+<Only platform="rn">
+
 `Combobox` pairs a text input with a floating list that filters its `items` as the user types. `ComboboxInput` draws the field with a caret trigger and an optional clear button, and `ComboboxContent` renders the list through a portal (inside a full-window overlay on iOS), positioned below the input and as wide as it.
 
 For multiple selection, set `multiple` and use `ComboboxChips` with a `ComboboxChip` per selected value and a `ComboboxChipsInput` for typing. Each chip has a remove button.
+
+</Only>
 
 ## Installation
 
@@ -347,7 +351,11 @@ npx @esuiss/ui@latest add combobox --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -461,8 +469,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -520,19 +526,170 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
-```
+<Only platform="rn">
 
 ```tsx
-<ComboboxDemo defaultValue="Expo" defaultOpen />
+import * as React from "react"
+import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
+
+const frameworks = [
+  "Next.js",
+  "SvelteKit",
+  "Nuxt.js",
+  "Remix",
+  "Astro",
+  "Gatsby",
+  "Expo",
+]
+
+function ComboboxDemo({
+  defaultValue = null,
+  defaultOpen,
+  disabled,
+  showClear,
+  labelledBy,
+  invalid,
+}: {
+  defaultValue?: string | null
+  defaultOpen?: boolean
+  disabled?: boolean
+  showClear?: boolean
+  labelledBy?: string
+  invalid?: boolean
+}) {
+  const [value, setValue] = React.useState<string | null>(defaultValue)
+  return (
+    <Combobox
+      items={frameworks}
+      value={value}
+      onValueChange={setValue}
+      defaultOpen={defaultOpen}
+      disabled={disabled}
+    >
+      <ComboboxInput
+        className="w-64"
+        placeholder="Select a framework"
+        showClear={showClear}
+        disabled={disabled}
+        invalid={invalid}
+        accessibilityLabelledBy={labelledBy}
+      />
+      <ComboboxContent>
+        <ComboboxEmpty>No framework found.</ComboboxEmpty>
+        <ComboboxList>
+          {(item: string) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+
+export function ComboboxExample() {
+  return (
+    <ComboboxDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+let comboboxFrameworks = [
+  "Next.js",
+  "SvelteKit",
+  "Nuxt.js",
+  "Remix",
+  "Astro",
+  "Gatsby",
+  "Expo",
+]
+
+struct ComboboxDemo: View {
+  @State private var value: String?
+
+  init(initial: String? = nil) {
+    _value = State(initialValue: initial)
+  }
+
+  var body: some View {
+    Combobox(
+      comboboxFrameworks,
+      selection: $value,
+      placeholder: "Select a framework",
+      emptyText: "No framework found."
+    )
+    .frame(width: 256)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Combobox
+
+val ComboboxFrameworks = listOf("Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro", "Gatsby", "Expo")
+
+@Composable
+fun ComboboxDemo(
+    defaultValue: String? = null,
+    disabled: Boolean = false,
+    showClear: Boolean = false,
+    label: String? = null,
+    invalid: Boolean? = null,
+) {
+    var value by rememberSaveable { mutableStateOf(defaultValue) }
+    Column {
+        Combobox(
+            items = ComboboxFrameworks,
+            value = value,
+            onValueChange = { value = it },
+            modifier = Modifier
+                .width(256.dp)
+                .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),
+            placeholder = "Select a framework",
+            emptyText = "No framework found.",
+            showClear = showClear,
+            invalid = invalid,
+            enabled = !disabled,
+        )
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Pass `items` to the root and render the filtered list with a function child of `ComboboxList`. For grouped items, render a `ComboboxGroup` per group with a `ComboboxLabel` and a `ComboboxCollection`. Add `ComboboxEmpty` for the no-results message.
 
 Use `value`, `defaultValue` and `onValueChange` for the selection, and `inputValue` with `onInputValueChange` for the typed text. For object items, provide `itemToStringLabel`. `filter`, `limit` and `locale` tune matching.
 
 With chips, create a ref with `useComboboxAnchor()`, attach it to `ComboboxChips`, and pass it to `ComboboxContent` as `anchor` so the list lines up with the chips field. On `ComboboxInput`, set `showClear` to add a clear button and `showTrigger={false}` to hide the caret.
+
+</Only>
 
 ## Examples
 
@@ -548,7 +705,11 @@ Starts with a selected value.
 
 ### With clear
 
+<Only platform="rn kotlin">
+
 A clear button through `showClear`.
+
+</Only>
 
 <NativeExample id="components-combobox--with-clear" live="combobox/WithClear" />
 
@@ -750,7 +911,6 @@ Selected value with a remove button.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `showRemove` | `boolean` | `true` | Shows the remove button. Defaults to `true`. |
-| `removeLabel` | `string` | `Remove {value}` | Accessible name of the remove button. Defaults to `Remove` followed by the chip text. |
 
 Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chip>`.
 
@@ -839,6 +999,8 @@ The root that holds the items, the selected value, the typed text and the open s
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The input has the `combobox` role with `expanded` and `disabled` state.
@@ -851,5 +1013,7 @@ The root that holds the items, the selected value, the typed text and the open s
 - Uses `bg-secondary`, `bg-popover`, `border-ring` and `border-destructive` tokens; light and dark follow the system appearance.
 - In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
 - Fade animations respect the system Reduce Motion setting.
+
+</Only>
 
 </Only>

@@ -71,7 +71,11 @@ Collapsed steps are `inert`, so keyboard users only reach the open step, and the
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 A checkout built from `Screen`, `Header` with a collapsing large title, `RadioGroup`, `Button`, `Icon` and `BottomBar`. Delivery and payment are chosen with radio options, finished steps collapse to a one-line summary with an Edit link, and the bottom bar button advances through the steps. The total updates when express delivery is picked, and placing the order shows a confirmation screen with a Start over link.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks bag-checkout --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), [Button](/docs/components/button), [Header](/docs/components/header), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -233,8 +241,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -294,6 +300,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BagCheckout } from "@/components/blocks/bag-checkout"
 ```
@@ -302,6 +310,41 @@ import { BagCheckout } from "@/components/blocks/bag-checkout"
 <BagCheckout />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BagCheckoutExample: View {
+  var body: some View {
+    BagCheckout()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.BagCheckout
+
+@Composable
+fun BagCheckoutExample() {
+    BagCheckout()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `ITEMS`, `SHIPPING` and `PAYMENT` with your cart lines and options. Pass `onPlaceOrder` to receive the chosen shipping, payment and total, and `onStartOver` to react when the confirmation is dismissed.
+
+</Only>
 
 </Only>

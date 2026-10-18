@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-keypad--default" />
 
+<Only platform="rn">
+
 `Keypad` lays out digits 1 to 9 in three rows and a bottom row with an accessory key, `0` and a delete key. Each key is a `KeypadKey`, a round `Pressable` with the `button` role. Digit keys have a filled background; the accessory and delete keys use the `plain` variant with no fill.
+
+</Only>
 
 Use it for PIN entry, amounts and other numeric input where the system keyboard is not wanted.
 
@@ -45,7 +49,11 @@ npx @esuiss/ui@latest add keypad --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -139,8 +147,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -182,19 +188,164 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { KeypadKey, Keypad } from "@/components/ui/keypad"
-```
+<Only platform="rn">
 
 ```tsx
-<KeyLog />
+import * as React from "react"
+import { View } from "react-native"
+import { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from "@/components/ui/keypad"
+import { Text } from "@/components/ui/text"
+
+function KeyLog({
+  accessoryKey,
+  disabled,
+}: {
+  accessoryKey?: KeypadAccessoryKey
+  disabled?: boolean
+}) {
+  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)
+  return (
+    <View className="items-center gap-6">
+      <Text
+        role="status"
+        accessibilityLiveRegion="polite"
+        className="text-sm text-muted-foreground"
+      >
+        {last ? `Last key: ${last}` : "Press a key"}
+      </Text>
+      <Keypad
+        accessoryKey={accessoryKey}
+        disabled={disabled}
+        onKeyPress={setLast}
+      />
+    </View>
+  )
+}
+
+export function KeypadExample() {
+  return (
+    <KeyLog />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct KeypadExample: View {
+  var body: some View {
+    KeypadLog(accessory: .none)
+  }
+}
+
+struct KeypadLog: View {
+  let accessory: KeypadAccessory
+
+  @State private var last: KeypadKey?
+
+  var body: some View {
+    VStack(spacing: 24) {
+      Group {
+        if let last {
+          Text(verbatim: "Last key: \(name(last))")
+        } else {
+          Text("Press a key")
+        }
+      }
+      .textStyle(.sm)
+      .foregroundStyle(EsuissColor.mutedForeground)
+      .accessibilityAddTraits(.updatesFrequently)
+      Keypad(accessory: accessory) { key in
+        last = key
+      }
+    }
+    .frame(maxWidth: .infinity)
+  }
+
+  func name(_ key: KeypadKey) -> String {
+    switch key {
+    case .digit(let value): "\(value)"
+    case .decimal: "decimal"
+    case .delete: "delete"
+    case .biometric: "biometric"
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Keypad
+import com.esuiss.ui.components.KeypadAccessory
+import com.esuiss.ui.components.KeypadKey
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun KeypadExample() {
+    KeypadKeyLog(KeypadAccessory.None)
+}
+
+fun keypadKeyName(key: KeypadKey): String = when (key) {
+    is KeypadKey.Digit -> key.value.toString()
+    KeypadKey.Decimal -> "decimal"
+    KeypadKey.Biometric -> "biometric"
+    KeypadKey.Delete -> "delete"
+}
+
+@Composable
+fun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {
+    var last by rememberSaveable { mutableStateOf<String?>(null) }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+    ) {
+        Text(
+            last?.let { "Last key: $it" } ?: "Press a key",
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+            style = Typography.sm,
+            color = EsuissTheme.colors.mutedForeground,
+        )
+        Keypad(onKeyPress = { last = keypadKeyName(it) }, accessory = accessory, enabled = enabled)
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Handle input in `onKeyPress`, which receives a digit string (`"0"` to `"9"`), `"decimal"`, `"delete"` or `"biometric"`. The keypad holds no value of its own.
 
 Set `accessoryKey` to `decimal` or `biometric` to fill the bottom-left slot; otherwise it stays empty. Change the decimal character with `decimalSeparator` and the biometric icon with `biometricIcon`.
 
 Use `deleteDisabled` to turn off only the delete key, for example when the value is empty. `KeypadKey` is exported for custom layouts, along with the `KeypadDigit`, `KeypadKeyValue` and `KeypadAccessoryKey` types.
+
+</Only>
 
 ## Examples
 
@@ -350,6 +501,8 @@ The full grid of keys.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Every key has the `button` role and an `accessibilityLabel`: the digit itself, or `decimalLabel`, `biometricLabel` and `deleteLabel` for the other keys.
@@ -361,5 +514,7 @@ The full grid of keys.
 - Filled keys use `bg-secondary`, `opacity-80` when pressed and `opacity-50` when disabled.
 - Digits use `text-2xl` with tabular numbers.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

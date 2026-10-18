@@ -121,7 +121,11 @@ Also accepts the props of the primitive part it wraps.
 
 <NativeExample id="components-switch--default" />
 
+<Only platform="rn">
+
 `Switch` is a pressable track with a round thumb that slides between the off and on positions. The thumb animates with Reanimated and stretches slightly while pressed. It comes in two sizes, `default` and `sm`, and has an `invalid` state that adds a destructive border.
+
+</Only>
 
 Use a switch for settings that take effect immediately. For choices that are submitted later, use Checkbox.
 
@@ -249,8 +253,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -293,17 +295,96 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { Switch } from "@/components/ui/switch"
-```
+<Only platform="rn">
 
 ```tsx
-<SwitchDemo />
+import * as React from "react"
+import { Switch } from "@/components/ui/switch"
+
+function SwitchDemo({ initial = false }: { initial?: boolean }) {
+  const [checked, setChecked] = React.useState(initial)
+  return <Switch checked={checked} onCheckedChange={setChecked} />
+}
+
+export function SwitchExample() {
+  return (
+    <SwitchDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SwitchExample: View {
+  var body: some View {
+    SwitchDemo(initial: false)
+  }
+}
+
+struct SwitchDemo: View {
+  var size: SwitchStyle.Size = .default
+  var label: LocalizedStringKey?
+
+  @State private var checked: Bool
+
+  init(initial: Bool, size: SwitchStyle.Size = .default, label: LocalizedStringKey? = nil) {
+    self.size = size
+    self.label = label
+    _checked = State(initialValue: initial)
+  }
+
+  var body: some View {
+    if let label {
+      Toggle(isOn: $checked) { EmptyView() }
+        .toggleStyle(.switch(size: size))
+        .accessibilityLabel(Text(label))
+    } else {
+      Toggle(isOn: $checked) { EmptyView() }
+        .toggleStyle(.switch(size: size))
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.components.Switch
+
+@Composable
+fun SwitchExample() {
+    SwitchDemo(initial = false)
+}
+
+@Composable
+fun SwitchDemo(initial: Boolean) {
+    var checked by rememberSaveable { mutableStateOf(initial) }
+    Switch(checked, { checked = it })
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it.
 
 A switch has no visible text of its own. Pair it with a `Label` and link them with `accessibilityLabelledBy` and the label's `nativeID`, or set an `accessibilityLabel`. Give the `Label` an `onPress` that toggles the value if the label should be pressable too.
+
+</Only>
 
 The switch has a hit slop around it, so it is easier to press than its visual size.
 
@@ -408,6 +489,8 @@ The switch track and its sliding thumb.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The root has the `switch` role and reports `checked` and `disabled` in its accessibility state, so VoiceOver and TalkBack announce whether it is on.
@@ -420,5 +503,7 @@ The switch track and its sliding thumb.
 - The track uses `bg-primary` when on and `bg-input` when off, with `opacity-50` when disabled.
 - The thumb uses `bg-background`, or `bg-foreground` in dark mode.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

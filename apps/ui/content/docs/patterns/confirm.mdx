@@ -198,9 +198,17 @@ Parts carry `data-slot` values from `confirm` through `confirm-cancel`. Pass `va
 
 <NativeExample id="patterns-confirm--open-by-default" />
 
+<Only platform="rn kotlin">
+
 `Confirm` wraps `AlertSheet` with `dismissible` set to `false` by default, so the sheet closes only through one of its buttons.
 
+</Only>
+
+<Only platform="rn swift">
+
 `ConfirmContent` rearranges its children: the header and every non-cancel button from `ConfirmFooter` go into one rounded group, and `ConfirmCancel` is placed below it as a separate button. Use it before destructive or irreversible actions.
+
+</Only>
 
 ## Installation
 
@@ -234,7 +242,11 @@ npx @esuiss/ui@latest add patterns confirm --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet).
+
+</Only>
 
 ### Manual
 
@@ -326,8 +338,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Overlay.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Patterns/Adaptive.swift" />
 
 5. Add the files to your app target.
@@ -375,17 +385,144 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from "@/components/patterns/confirm"
-```
+<Only platform="rn">
 
 ```tsx
-<ConfirmDemo defaultOpen />
+import { View } from "react-native"
+import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from "@/components/patterns/confirm"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+function ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {
+  return (
+    <View className="items-start">
+      <Confirm defaultOpen={defaultOpen}>
+        <ConfirmTrigger render={<Button variant="destructive" />}>
+          <Text>Delete account</Text>
+        </ConfirmTrigger>
+        <ConfirmContent>
+          <ConfirmHeader>
+            <ConfirmTitle>Delete your account?</ConfirmTitle>
+            <ConfirmDescription>
+              This permanently deletes your account and all of its data.
+            </ConfirmDescription>
+          </ConfirmHeader>
+          <ConfirmFooter>
+            <ConfirmCancel>Cancel</ConfirmCancel>
+            <ConfirmAction variant="destructive">Delete Account</ConfirmAction>
+          </ConfirmFooter>
+        </ConfirmContent>
+      </Confirm>
+    </View>
+  )
+}
+
+export function ConfirmExample() {
+  return (
+    <ConfirmDemo />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct ConfirmExample: View {
+  var body: some View {
+    ConfirmDemo(open: false)
+  }
+}
+
+struct ConfirmDemo: View {
+  @State private var open: Bool
+
+  init(open: Bool) {
+    _open = State(initialValue: open)
+  }
+
+  var body: some View {
+    Button("Delete account") { open = true }
+      .buttonStyle(.variant(.destructive))
+      .confirm(isPresented: $open) {
+        ConfirmContent {
+          ConfirmHeader {
+            ConfirmTitle("Delete your account?")
+            ConfirmDescription("This permanently deletes your account and all of its data.")
+          }
+          ConfirmFooter {
+            ConfirmCancel("Cancel")
+            ConfirmAction("Delete Account", variant: .destructive)
+          }
+        }
+      }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import com.esuiss.ui.components.AlertSheetActionVariant
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.patterns.Confirm
+import com.esuiss.ui.patterns.ConfirmAction
+import com.esuiss.ui.patterns.ConfirmCancel
+import com.esuiss.ui.patterns.ConfirmDescription
+import com.esuiss.ui.patterns.ConfirmFooter
+import com.esuiss.ui.patterns.ConfirmHeader
+import com.esuiss.ui.patterns.ConfirmTitle
+
+@Composable
+fun ConfirmExample() {
+    ConfirmDemo(defaultOpen = false)
+}
+
+@Composable
+fun ConfirmDemo(defaultOpen: Boolean) {
+    var open by rememberSaveable { mutableStateOf(defaultOpen) }
+    Column {
+        Button("Delete account", onClick = { open = true }, variant = ButtonVariant.Destructive)
+        Confirm(open = open, onOpenChange = { open = it }) {
+            ConfirmHeader {
+                ConfirmTitle("Delete your account?")
+                ConfirmDescription("This permanently deletes your account and all of its data.")
+            }
+            ConfirmFooter {
+                ConfirmCancel("Cancel")
+                ConfirmAction("Delete Account", onClick = {}, variant = AlertSheetActionVariant.Destructive)
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn swift">
 
 Put `ConfirmTitle` and `ConfirmDescription` in a `ConfirmHeader`, and the buttons in a `ConfirmFooter` inside `ConfirmContent`. Any `ConfirmAction` goes into the group; `ConfirmCancel` is moved out of it.
 
+</Only>
+
+<Only platform="rn">
+
 The root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to let outside presses close it. Set `variant="destructive"` on `ConfirmAction` for delete-style actions.
+
+</Only>
 
 ## Examples
 
@@ -693,6 +830,8 @@ The cancel button, shown separately below the group.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - With the default `dismissible={false}`, the sheet uses the alert dialog primitive, so it closes only through its buttons.
@@ -701,5 +840,7 @@ The cancel button, shown separately below the group.
 
 - Action text uses `text-primary`, or `text-destructive` for the `destructive` variant.
 - On iOS the sheet renders in a full-window overlay so it appears above native screens.
+
+</Only>
 
 </Only>

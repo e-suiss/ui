@@ -71,7 +71,11 @@ The line turns green or red depending on whether the price at the cursor is abov
 
 </NativeExample>
 
+<Only platform="rn">
+
 One price series drawn as a linear area with a fading gradient, a value axis on the right and a dashed `ReferenceLine` at the opening price. A `ToggleGroup` switches between 1D, 1W, 1M, 3M, 1Y and 5Y. Touching the plot reports the point through `onActiveIndexChange`, and the header updates the price, change and date for that point. The area turns green or red depending on whether the price is up or down, and open, high, low and volume sit below the chart. The area sets `isAnimationActive={false}`, so it draws without the enter animation and switches ranges instantly.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts area-chart-interactive --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
+
+</Only>
 
 ### Manual
 
@@ -203,8 +211,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 <ComponentSource path="swift/Components/Toggle.swift" />
 
 <ComponentSource path="swift/Components/ToggleGroup.swift" />
@@ -264,6 +270,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { AreaChartInteractive } from "@/components/charts/area-chart-interactive"
 ```
@@ -272,6 +280,41 @@ import { AreaChartInteractive } from "@/components/charts/area-chart-interactive
 <AreaChartInteractive />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AreaInteractiveExample: View {
+  var body: some View {
+    AreaChartInteractive()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.AreaChartInteractive
+
+@Composable
+fun AreaInteractiveExample() {
+    AreaChartInteractive()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `generate()` with your price history for each range, and set the symbol, company name and `LAST_PRICE`. Volume values are hard-coded in `stats`. The component takes no props.
+
+</Only>
 
 </Only>

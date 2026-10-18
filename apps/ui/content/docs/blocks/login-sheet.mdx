@@ -71,7 +71,11 @@ The sheet behaves as a modal dialog: focus moves into it, Escape or a click on t
 
 </NativeExample>
 
+<Only platform="rn kotlin">
+
 An app welcome screen with two buttons: Sign in with suiss and Continue with email. The first opens a `Drawer` that shows the account name and a `RadioGroup` to share the real email or use a hidden forwarding address, with a Continue `Button` that shows a `Spinner` before closing the sheet and showing a welcome message.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add blocks login-sheet --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -225,8 +233,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Spinner.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -290,6 +296,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { LoginSheet } from "@/components/blocks/login-sheet"
 ```
@@ -298,6 +306,41 @@ import { LoginSheet } from "@/components/blocks/login-sheet"
 <LoginSheet />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct LoginSheetExample: View {
+  var body: some View {
+    LoginSheet()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.LoginSheet
+
+@Composable
+fun LoginSheetExample() {
+    LoginSheet()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Edit `EMAIL_OPTIONS` to change the email choices. Wire `onContinue` (receives `share` or `hide`) to your sign-in flow and `onContinueWithEmail` to your email sign-up screen.
+
+</Only>
 
 </Only>

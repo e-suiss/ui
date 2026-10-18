@@ -71,7 +71,11 @@ The value axis has a fixed domain, so readings outside it get clipped until you 
 
 </NativeExample>
 
+<Only platform="rn">
+
 A `ComposedChart` that pairs a range `Area`, filled between each hour's low and high reading, with a `Line` for the hourly average. The header shows the day's lowest and highest values in BPM, and the tooltip formats both the range and the average with a custom row built from `Text`.
+
+</Only>
 
 ## Installation
 
@@ -105,7 +109,11 @@ npx @esuiss/ui@latest add charts area-chart-range --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -177,8 +185,6 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -221,6 +227,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { AreaChartRange } from "@/components/charts/area-chart-range"
 ```
@@ -229,6 +237,41 @@ import { AreaChartRange } from "@/components/charts/area-chart-range"
 <AreaChartRange />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct AreaRangeExample: View {
+  var body: some View {
+    AreaChartRange()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.charts.AreaChartRange
+
+@Composable
+fun AreaRangeExample() {
+    AreaChartRange()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace the `readings` array with `[low, high, average]` tuples for each hour; the header range and the chart data are derived from it. Adjust the `YAxis` `domain` and `ticks` to fit your values. The component takes no props.
+
+</Only>
 
 </Only>

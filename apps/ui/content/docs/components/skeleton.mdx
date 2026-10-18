@@ -95,7 +95,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-skeleton--default" />
 
+<Only platform="rn">
+
 `Skeleton` is a Reanimated `View` with a rounded background whose opacity pulses between 1 and 0.5 on a loop. It has no fixed size; you shape it with classes to match the content it stands in for.
+
+</Only>
 
 ## Installation
 
@@ -233,6 +237,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Skeleton } from "@/components/ui/skeleton"
 ```
@@ -241,7 +247,47 @@ import { Skeleton } from "@/components/ui/skeleton"
 <Skeleton className="h-4 w-48" />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SkeletonExample: View {
+  var body: some View {
+    Skeleton()
+      .frame(width: 192, height: 16)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Skeleton
+
+@Composable
+fun SkeletonExample() {
+    Skeleton(Modifier.width(192.dp).height(16.dp))
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Set width, height and radius through `className`, for example `h-4 w-48` for a line of text or `size-12 rounded-full` for an avatar. Compose several skeletons to mirror the layout of the loaded content, then swap them for the real content once it arrives.
+
+</Only>
 
 ## Examples
 
@@ -310,6 +356,8 @@ A pulsing placeholder block.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The skeleton is a plain view with no role or label. If loading state matters to the user, announce it elsewhere, for example with a `Spinner` that has an `accessibilityLabel`.
@@ -319,5 +367,7 @@ A pulsing placeholder block.
 - Uses the `bg-muted` token.
 - The pulse runs on the UI thread through Reanimated, with a 1000 ms cycle.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

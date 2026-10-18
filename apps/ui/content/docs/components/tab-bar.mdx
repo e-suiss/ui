@@ -236,7 +236,11 @@ Also accepts the props of `useRender.ComponentProps<"a">`, `React.ComponentProps
 
 <NativeExample id="components-tab-bar--default" />
 
+<Only platform="rn">
+
 `TabBar` is built on the tabs primitive and sits at the bottom of a screen. `TabBarList` is a rounded capsule with a shadow, inset from the screen edges, so the bar floats above the page. The root adds bottom padding for the safe area, minus any inset an enclosing `Screen` already handles, and never less than 12 points. `TabBarItem` stacks an icon over a short label; the active tab sits on a `bg-secondary` pill and uses `text-primary` and a filled icon weight.
+
+</Only>
 
 Use it for switching between the top-level sections of an app. For switching views within a screen, use Tabs.
 
@@ -272,7 +276,11 @@ npx @esuiss/ui@latest add tab-bar --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Screen](/docs/components/screen), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -374,8 +382,6 @@ npx expo install phosphor-react-native react-native-safe-area-context react-nati
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -419,19 +425,237 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { TabBar, TabBarList, TabBarItem } from "@/components/ui/tab-bar"
-```
+<Only platform="rn">
 
 ```tsx
-<TabBarExample />
+import { ChatCircleIcon, HouseIcon, MagnifyingGlassIcon, UserIcon } from "phosphor-react-native"
+import * as React from "react"
+import { View } from "react-native"
+import { TabBar, TabBarItem, TabBarList } from "@/components/ui/tab-bar"
+import { Text } from "@/components/ui/text"
+
+const items = [
+  { value: "home", label: "Home", icon: HouseIcon },
+  { value: "search", label: "Search", icon: MagnifyingGlassIcon },
+  { value: "messages", label: "Messages", icon: ChatCircleIcon, badge: 3 },
+  { value: "profile", label: "Profile", icon: UserIcon, badge: true },
+]
+
+function Page({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <View className="-m-4 flex-1 bg-background">
+      <View className="flex-1 gap-2 p-4">
+        <Text variant="h3">{title}</Text>
+        <Text variant="muted">Tap a tab to switch screens.</Text>
+      </View>
+      {children}
+    </View>
+  )
+}
+
+function TabBarExample({
+  badges = true,
+  disabled,
+}: {
+  badges?: boolean
+  disabled?: string
+}) {
+  const [value, setValue] = React.useState("home")
+  const current = items.find((item) => item.value === value)
+  return (
+    <Page title={current?.label ?? ""}>
+      <TabBar value={value} onValueChange={setValue}>
+        <TabBarList>
+          {items.map((item) => (
+            <TabBarItem
+              key={item.value}
+              value={item.value}
+              icon={item.icon}
+              badge={badges ? item.badge : undefined}
+              disabled={item.value === disabled}
+            >
+              {item.label}
+            </TabBarItem>
+          ))}
+        </TabBarList>
+      </TabBar>
+    </Page>
+  )
+}
+
+export function TabBarExampleDemo() {
+  return (
+    <TabBarExample />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct TabBarEntry {
+  let value: String
+  let label: String
+  let icon: Image
+  let activeIcon: Image
+  let badge: TabBarBadge?
+}
+
+let tabBarEntries = [
+  TabBarEntry(value: "home", label: "Home", icon: Ph.house.regular, activeIcon: Ph.house.fill, badge: nil),
+  TabBarEntry(value: "search", label: "Search", icon: Ph.magnifyingGlass.regular, activeIcon: Ph.magnifyingGlass.fill, badge: nil),
+  TabBarEntry(value: "messages", label: "Messages", icon: Ph.chatCircle.regular, activeIcon: Ph.chatCircle.fill, badge: 3),
+  TabBarEntry(value: "profile", label: "Profile", icon: Ph.user.regular, activeIcon: Ph.user.fill, badge: .dot),
+]
+
+struct TabBarPage<Bar: View>: View {
+  let title: String
+  @ViewBuilder let bar: () -> Bar
+
+  var body: some View {
+    VStack(spacing: 0) {
+      VStack(alignment: .leading, spacing: 8) {
+        Text(verbatim: title).textVariant(.h3)
+        Text("Tap a tab to switch screens.").textVariant(.muted)
+      }
+      .padding(16)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+      bar()
+    }
+    .background(EsuissColor.background.ignoresSafeArea())
+  }
+}
+
+struct TabBarExample: View {
+  var badges = true
+  var disabled: String?
+
+  @State private var value = "home"
+
+  var body: some View {
+    TabBarPage(title: tabBarEntries.first { $0.value == value }?.label ?? "") {
+      TabBar(selection: $value) {
+        ForEach(tabBarEntries, id: \.value) { item in
+          TabBarItem(
+            verbatim: item.label,
+            value: item.value,
+            icon: item.icon,
+            activeIcon: item.activeIcon,
+            badge: badges ? item.badge : nil
+          )
+          .disabled(item.value == disabled)
+        }
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Fill
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.fill.ChatCircle
+import com.adamglin.phosphoricons.fill.House
+import com.adamglin.phosphoricons.fill.MagnifyingGlass
+import com.adamglin.phosphoricons.fill.User
+import com.adamglin.phosphoricons.regular.ChatCircle
+import com.adamglin.phosphoricons.regular.House
+import com.adamglin.phosphoricons.regular.MagnifyingGlass
+import com.adamglin.phosphoricons.regular.User
+import com.esuiss.ui.components.Screen
+import com.esuiss.ui.components.ScreenEdge
+import com.esuiss.ui.components.TabBar
+import com.esuiss.ui.components.TabBarItem
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+
+class TabBarEntry(val value: String, val label: String, val icon: ImageVector, val selectedIcon: ImageVector, val badge: String? = null)
+
+val tabBarEntries = listOf(
+    TabBarEntry("home", "Home", PhosphorIcons.Regular.House, PhosphorIcons.Fill.House),
+    TabBarEntry("search", "Search", PhosphorIcons.Regular.MagnifyingGlass, PhosphorIcons.Fill.MagnifyingGlass),
+    TabBarEntry("messages", "Messages", PhosphorIcons.Regular.ChatCircle, PhosphorIcons.Fill.ChatCircle, "3"),
+    TabBarEntry("profile", "Profile", PhosphorIcons.Regular.User, PhosphorIcons.Fill.User, ""),
+)
+
+@Composable
+fun TabBarPage(title: String, bar: @Composable () -> Unit) {
+    Screen(edges = setOf(ScreenEdge.Top, ScreenEdge.Left, ScreenEdge.Right)) {
+        Column(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.weight(1f).fillMaxWidth().padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(title, variant = TextVariant.H3)
+                Text("Tap a tab to switch screens.", variant = TextVariant.Muted)
+            }
+            bar()
+        }
+    }
+}
+
+@Composable
+fun TabBarExample(badges: Boolean = true, disabled: String? = null) {
+    var value by rememberSaveable { mutableStateOf("home") }
+    val current = tabBarEntries.firstOrNull { it.value == value }
+    TabBarPage(current?.label ?: "") {
+        TabBar(value = value, onValueChange = { value = it }) {
+            tabBarEntries.forEach { entry ->
+                TabBarItem(
+                    value = entry.value,
+                    label = entry.label,
+                    icon = entry.icon,
+                    selectedIcon = entry.selectedIcon,
+                    badge = if (badges) entry.badge else null,
+                    enabled = entry.value != disabled,
+                )
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Put `TabBarItem` entries inside a `TabBarList`, inside `TabBar`. Give each item a `value`, an `icon` and a label as children. Control the active tab with `value` and `onValueChange`, or set `defaultValue`.
 
 The `badge` prop shows a count, text or a dot: numbers above 99 show as `99+`, `0` and empty strings show nothing, and `true` shows a small dot. A selection haptic plays whenever the tab changes, when a haptics adapter is provided through `HapticsContext`.
 
 The `TabBarBadgeValue` type is also exported.
+
+</Only>
 
 ## Examples
 
@@ -443,7 +667,11 @@ The tab bar without badges.
 
 ### Large badge
 
+<Only platform="rn">
+
 A count above 99 shown as `99+` and a text badge.
+
+</Only>
 
 <NativeExample id="components-tab-bar--large-badge" />
 
@@ -581,6 +809,8 @@ Receiver: `RowScope`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The list has the `tablist` role and each item has the `tab` role, with selected and disabled states.
@@ -591,5 +821,7 @@ Receiver: `RowScope`.
 
 - The capsule uses `bg-card` with a `border-foreground/5` border (`border-foreground/10` in dark mode) and a large shadow. The active tab uses `bg-secondary` and `text-primary`, and badges use `bg-destructive`; colors follow the system appearance.
 - The bottom padding is the remaining safe area inset minus 8 points, and never less than 12 points.
+
+</Only>
 
 </Only>

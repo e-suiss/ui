@@ -291,7 +291,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-item--default" />
 
+<Only platform="rn">
+
 `Item` is a row that renders as a `Pressable` with the `button` role when it has `onPress` or `onLongPress`, and as a plain `View` with the `listitem` role otherwise. It has three variants (`default`, `outline`, `muted`) and three sizes (`default`, `sm`, `xs`).
+
+</Only>
 
 `ItemGroup` stacks items as a list. Its `inset` variant joins them into one rounded card with square inner corners, which suits settings screens; add `ItemSeparator` between rows to draw an inset divider.
 
@@ -327,7 +331,11 @@ npx @esuiss/ui@latest add item --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -403,8 +411,6 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -446,8 +452,15 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
 import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "@/components/ui/item"
+import { Text } from "@/components/ui/text"
 ```
 
 ```tsx
@@ -495,17 +508,164 @@ import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, Item
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct ItemExample: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: 16) {
+      Item(.outline) {
+        ItemContent {
+          ItemTitle("Basic item")
+          ItemDescription("A simple item with a title and a description.")
+        }
+        ItemActions {
+          Button("Action") {}
+            .buttonStyle(.variant(.outline, size: .sm))
+        }
+      }
+      Item(.muted, size: .sm, action: {}) {
+        ItemMedia(.icon) {
+          Ph.shieldCheck.regular
+        }
+        ItemContent {
+          ItemTitle("Your profile has been verified.")
+        }
+        ItemActions {
+          ItemChevron()
+        }
+      }
+      Item(.outline, size: .xs) {
+        ItemHeader {
+          ItemTitle("Header")
+          Badge("New")
+        }
+        ItemContent {
+          ItemDescription("Items can carry a header and a footer.")
+        }
+        ItemFooter {
+          Text("Footer")
+            .textStyle(.sm)
+            .foregroundStyle(EsuissColor.mutedForeground)
+        }
+      }
+    }
+  }
+}
+
+struct ItemChevron: View {
+  var body: some View {
+    Ph.caretRight.regular
+      .frame(width: 16, height: 16)
+      .foregroundStyle(EsuissColor.mutedForeground)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.CaretRight
+import com.adamglin.phosphoricons.regular.ShieldCheck
+import com.esuiss.ui.components.Badge
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Icon
+import com.esuiss.ui.components.Item
+import com.esuiss.ui.components.ItemActions
+import com.esuiss.ui.components.ItemContent
+import com.esuiss.ui.components.ItemDescription
+import com.esuiss.ui.components.ItemFooter
+import com.esuiss.ui.components.ItemHeader
+import com.esuiss.ui.components.ItemMedia
+import com.esuiss.ui.components.ItemMediaVariant
+import com.esuiss.ui.components.ItemSize
+import com.esuiss.ui.components.ItemTitle
+import com.esuiss.ui.components.ItemVariant
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Typography
+
+@Composable
+fun ItemCaret() {
+    Icon(PhosphorIcons.Regular.CaretRight, contentDescription = null, size = 16.dp, tint = EsuissTheme.colors.mutedForeground)
+}
+
+@Composable
+fun ItemDefault() {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Item(variant = ItemVariant.Outline, role = null) {
+            ItemContent {
+                ItemTitle("Basic item")
+                ItemDescription("A simple item with a title and a description.")
+            }
+            ItemActions {
+                Button("Action", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm)
+            }
+        }
+        Item(variant = ItemVariant.Muted, size = ItemSize.Sm, onClick = {}) {
+            ItemMedia(variant = ItemMediaVariant.Icon) {
+                Icon(PhosphorIcons.Regular.ShieldCheck, contentDescription = null)
+            }
+            ItemContent {
+                ItemTitle("Your profile has been verified.")
+            }
+            ItemActions { ItemCaret() }
+        }
+        Item(variant = ItemVariant.Outline, size = ItemSize.Xs, role = null) {
+            ItemHeader {
+                ItemTitle("Header")
+                Badge("New")
+            }
+            ItemContent {
+                ItemDescription("Items can carry a header and a footer.")
+            }
+            ItemFooter {
+                Text("Footer", style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground))
+            }
+        }
+    }
+}
+```
+
+</Only>
+
 Compose a row from `ItemMedia`, `ItemContent` (holding `ItemTitle` and `ItemDescription`) and `ItemActions`. Use `ItemHeader` and `ItemFooter` for full-width rows above or below the main content.
+
+<Only platform="rn">
 
 `ItemMedia` with `variant="icon"` sizes icons to 16 points; `variant="image"` makes a square thumbnail that shrinks with the item size. `ItemTitle` truncates to one line and `ItemDescription` to two by default; override with `numberOfLines`. Text inside `ItemActions` picks up `text-muted-foreground`.
 
 Pass `render` to render the row as another component while keeping the item styles.
 
+</Only>
+
 ## Examples
 
 ### Inset group
 
+<Only platform="rn">
+
 Pressable rows in an inset group, with colored icon tiles, separators and trailing chevrons.
+
+</Only>
 
 <NativeExample id="components-item--inset-group" />
 
@@ -973,6 +1133,8 @@ Full-width row below the content.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `ItemGroup` has the `list` role.
@@ -984,5 +1146,7 @@ Full-width row below the content.
 
 - Uses `bg-muted` for inset groups and the `muted` variant, `border-border` for `outline`, and `opacity-80` for the pressed state.
 - Colors follow the system appearance.
+
+</Only>
 
 </Only>

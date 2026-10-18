@@ -9,7 +9,7 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-icon--default" />
 
-<Only platform="rn kotlin">
+<Only platform="rn">
 
 `Icon` takes a Phosphor icon component in `as` and maps `size-*` classes to its size and `text-*` classes to its color. It defaults to `size-5 text-foreground`.
 
@@ -57,7 +57,7 @@ Add the Phosphor Swift package to your app:
 
 </Only>
 
-<Only platform="rn kotlin">
+<Only platform="rn">
 
 The CLI also adds what it builds on: [Text](/docs/components/text).
 
@@ -169,6 +169,70 @@ import { Icon } from "@/components/ui/icon"
 <Icon as={StarIcon} />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct IconExample: View {
+  var body: some View {
+    IconGlyph(image: Ph.star.regular)
+  }
+}
+
+struct IconGlyph: View {
+  let image: Image
+  var size: CGFloat = 20
+  var color: Color = EsuissColor.foreground
+
+  var body: some View {
+    image
+      .resizable()
+      .scaledToFit()
+      .frame(width: size, height: size)
+      .foregroundStyle(color)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.Star
+import com.esuiss.ui.components.Icon
+
+@Composable
+fun IconRow(content: @Composable () -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
+        content()
+    }
+}
+
+@Composable
+fun IconDefault() {
+    IconRow {
+        Icon(PhosphorIcons.Regular.Star, contentDescription = null)
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-destructive`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
 
 Wrap a subtree in `IconClassContext.Provider` to set default classes for the icons inside your own components.
@@ -179,25 +243,39 @@ Wrap a subtree in `IconClassContext.Provider` to set default classes for the ico
 
 ### Sizes
 
+<Only platform="rn">
+
 Icons at several `size-*` classes.
+
+</Only>
 
 <NativeExample id="components-icon--sizes" />
 
 ### Colors
 
+<Only platform="rn kotlin">
+
 Icons in different color tokens.
+
+</Only>
 
 <NativeExample id="components-icon--colors" />
 
 ### Weights
 
+<Only platform="rn kotlin">
+
 The available Phosphor weights.
+
+</Only>
 
 <NativeExample id="components-icon--weights" />
 
 <Only platform="rn kotlin">
 
 ## API Reference
+
+</Only>
 
 <Only platform="rn">
 
@@ -237,7 +315,7 @@ Styled Phosphor icon.
 
 </Only>
 
-</Only>
+<Only platform="rn">
 
 ## Accessibility
 
@@ -246,5 +324,7 @@ Styled Phosphor icon.
 ## Notes
 
 - The default color is the `text-foreground` token, so icons follow light and dark mode with the system appearance.
+
+</Only>
 
 </Only>

@@ -162,7 +162,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-alert--default" />
 
+<Only platform="rn">
+
 `Alert` is a `View` on a rounded `bg-muted` surface with an optional leading icon, a title and description column, and an optional action pinned to the top-end corner. It is static and stays in the layout; it is not a toast or a modal.
+
+</Only>
 
 Use the `default` variant for neutral information, where the icon uses the primary color, and `destructive` for errors, where the icon uses the destructive color.
 
@@ -198,7 +202,11 @@ npx @esuiss/ui@latest add alert --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -274,11 +282,9 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-3. Copy the source and every file it uses:
+3. Copy the source:
 
 <ComponentSource path="swift/Components/Alert.swift" />
-
-<ComponentSource path="swift/Components/TextVariant.swift" />
 
 4. Add the files to your app target.
 
@@ -316,6 +322,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/components/ui/alert"
 ```
@@ -330,9 +338,56 @@ import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/components/u
 </Alert>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct AlertExample: View {
+  var body: some View {
+    InlineAlert(icon: Ph.checkCircle.regular) {
+      AlertTitle("Payment successful")
+      AlertDescription("Your payment of $29.99 has been processed. A receipt has been sent to your email.")
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.CheckCircle
+import com.esuiss.ui.components.Alert
+import com.esuiss.ui.components.AlertDescription
+import com.esuiss.ui.components.AlertTitle
+
+@Composable
+fun AlertDefault() {
+    Alert(icon = PhosphorIcons.Regular.CheckCircle) {
+        AlertTitle("Payment successful")
+        AlertDescription("Your payment of \$29.99 has been processed. A receipt has been sent to your email.")
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Pass a Phosphor icon component to `icon`, and compose `AlertTitle` and `AlertDescription` as children. Any `AlertAction` child is detected and placed in the corner, and extra end padding is added so the text does not run under it.
 
 Use `iconClassName` to adjust the icon's size or color.
+
+</Only>
 
 ## Examples
 
@@ -350,7 +405,11 @@ An alert with only a title.
 
 ### With action
 
+<Only platform="rn">
+
 An `AlertAction` button in the top-end corner.
+
+</Only>
 
 <NativeExample id="components-alert--with-action" />
 
@@ -509,6 +568,8 @@ Secondary-colored supporting text.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The container has the `alert` role.
@@ -518,5 +579,7 @@ Secondary-colored supporting text.
 
 - Uses `bg-muted`, `text-foreground`, `text-primary` and `text-destructive` tokens; light and dark follow the system appearance.
 - The action is positioned with `end-4`, so it flips in right-to-left layouts.
+
+</Only>
 
 </Only>

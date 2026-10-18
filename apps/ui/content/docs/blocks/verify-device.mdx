@@ -105,7 +105,11 @@ npx @esuiss/ui@latest add blocks verify-device --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Input OTP](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Input OTP](/docs/components/input-otp), [Keyboard Scroll View](/docs/components/keyboard-scroll-view), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -221,8 +225,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/Spinner.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -284,6 +286,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { VerifyDevice } from "@/components/blocks/verify-device"
 ```
@@ -292,6 +296,41 @@ import { VerifyDevice } from "@/components/blocks/verify-device"
 <VerifyDevice />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct VerifyDeviceExample: View {
+  var body: some View {
+    VerifyDevice()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.VerifyDevice
+
+@Composable
+fun VerifyDeviceExample() {
+    VerifyDevice()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 `onVerify` receives the code and returns a boolean or a promise; by default it accepts the demo code `482913`. Edit `COPY` to change the text for each phase.
+
+</Only>
 
 </Only>

@@ -187,7 +187,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-bubble--default" />
 
+<Only platform="rn">
+
 `Bubble` lays out one message aligned to the `start` or `end` of the conversation, and `BubbleContent` draws the rounded bubble with an SVG tail on the aligned side. Seven variants are available: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` and `destructive`; `outline` and `ghost` have no tail.
+
+</Only>
 
 `BubbleGroup` stacks messages and shows the tail only on the last bubble of each run from the same side, so consecutive messages read as one block. `BubbleReactions` pins a small reaction pill to the top or bottom edge of a bubble.
 
@@ -223,7 +227,11 @@ npx @esuiss/ui@latest add bubble --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -309,8 +317,6 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 4. Add the files to your app target.
 
 </Only>
@@ -357,6 +363,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
 ```
@@ -367,9 +375,49 @@ import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/component
 </Bubble>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct BubbleExample: View {
+  var body: some View {
+    Bubble {
+      BubbleContent("Are we still on for lunch tomorrow?")
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.components.Bubble
+import com.esuiss.ui.components.BubbleContent
+
+@Composable
+fun BubbleDefault() {
+    Bubble {
+        BubbleContent("Are we still on for lunch tomorrow?")
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Wrap each message in `Bubble` and put its text in `BubbleContent`; plain strings are wrapped in `Text`. Set `align="end"` for messages from the current user, or provide a default through `BubbleAlignContext`.
 
 `BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and it fades to 80% opacity while pressed. Use `render` to attach it to a trigger such as a context menu.
+
+</Only>
 
 `BubbleReactions` takes `side` (`top` or `bottom`) and `align` (`start` or `end`), and the bubble adds margin so the pill does not overlap its neighbors.
 
@@ -389,13 +437,21 @@ A `BubbleGroup` with messages from both sides and merged tails.
 
 ### With reactions
 
+<Only platform="rn">
+
 Reaction pills on the bottom and top edges.
+
+</Only>
 
 <NativeExample id="components-bubble--with-reactions" />
 
 ### Interactive
 
+<Only platform="rn kotlin">
+
 A pressable `outline` bubble with `onPress`.
+
+</Only>
 
 <NativeExample id="components-bubble--interactive" />
 
@@ -647,6 +703,8 @@ Overloads: `BubbleReactions(content)`, `BubbleReactions(text)`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - `BubbleContent` gets the `button` role when it has `onPress` or `onLongPress`.
@@ -657,5 +715,7 @@ Overloads: `BubbleReactions(content)`, `BubbleReactions(text)`.
 
 - The tail mirrors itself for `end` alignment and in right-to-left layouts.
 - Uses `bg-primary`, `bg-secondary`, `bg-muted` and `bg-destructive/10 dark:bg-destructive/20` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
+
+</Only>
 
 </Only>

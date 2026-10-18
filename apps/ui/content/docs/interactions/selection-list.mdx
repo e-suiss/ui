@@ -187,7 +187,11 @@ npx @esuiss/ui@latest add interactions selection-list --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -289,8 +293,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -334,17 +336,513 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
-```tsx
-import { SelectionList, SelectionListTrigger, SelectionListItem, SelectionListBar, SelectionListCount } from "@/components/interactions/selection-list"
-```
+<Only platform="rn">
 
 ```tsx
-<NotesExample />
+import { CaretRightIcon } from "phosphor-react-native"
+import * as React from "react"
+import { Pressable, View } from "react-native"
+import { SelectionList, SelectionListBar, SelectionListCount, SelectionListItem, SelectionListTrigger, useSelectionList } from "@/components/interactions/selection-list"
+import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
+
+const initialNotes = [
+  { id: "groceries", title: "Groceries", preview: "Milk, eggs, bread, coffee" },
+  { id: "trip", title: "Trip ideas", preview: "Lisbon, Porto, the coast road" },
+  { id: "books", title: "Book list", preview: "Three novels for the summer" },
+  { id: "meeting", title: "Meeting notes", preview: "Ship the beta on Friday" },
+  { id: "gifts", title: "Gift ideas", preview: "Headphones, a plant, a scarf" },
+  { id: "recipes", title: "Recipes", preview: "Lemon pasta and a quick curry" },
+]
+
+type Note = (typeof initialNotes)[number]
+
+function NoteRows({
+  notes,
+  onOpen,
+}: {
+  notes: Note[]
+  onOpen: (note: Note) => void
+}) {
+  const { editing } = useSelectionList()
+  return (
+    <View className="overflow-hidden rounded-2xl border border-border">
+      {notes.map((note, index) => (
+        <SelectionListItem
+          key={note.id}
+          value={note.id}
+          className={index > 0 ? "border-t border-border" : undefined}
+        >
+          <Pressable
+            onPress={() => onOpen(note)}
+            className="min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:opacity-80"
+          >
+            <View className="min-w-0 flex-1">
+              <Text numberOfLines={1} className="font-semibold">
+                {note.title}
+              </Text>
+              <Text numberOfLines={1} className="text-sm text-muted-foreground">
+                {note.preview}
+              </Text>
+            </View>
+            <Icon
+              as={CaretRightIcon}
+              className={
+                editing
+                  ? "size-4 shrink-0 text-muted-foreground opacity-0"
+                  : "size-4 shrink-0 text-muted-foreground"
+              }
+            />
+          </Pressable>
+        </SelectionListItem>
+      ))}
+    </View>
+  )
+}
+
+function SelectAllButton() {
+  const { selected, selectAll, clear } = useSelectionList()
+  const all = selected.length > 0
+  return (
+    <Button
+      variant="plain"
+      size="lg"
+      className="px-4"
+      onPress={all ? clear : selectAll}
+    >
+      <Text>{all ? "Deselect All" : "Select All"}</Text>
+    </Button>
+  )
+}
+
+function DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {
+  const { selected, setEditing } = useSelectionList()
+  const disabled = selected.length === 0
+  return (
+    <Button
+      variant="plain"
+      size="lg"
+      className="px-4"
+      disabled={disabled}
+      onPress={() => {
+        onDelete(selected)
+        setEditing(false)
+      }}
+    >
+      <Text
+        className={
+          disabled ? "text-destructive opacity-50" : "text-destructive"
+        }
+      >
+        Delete
+      </Text>
+    </Button>
+  )
+}
+
+function useNotes() {
+  const [notes, setNotes] = React.useState(initialNotes)
+  const [log, setLog] = React.useState("Tap Select to choose notes.")
+  return {
+    notes,
+    log,
+    setLog,
+    remove: (ids: string[]) => {
+      setNotes((current) => current.filter((note) => !ids.includes(note.id)))
+      setLog(`Deleted ${ids.length} ${ids.length === 1 ? "note" : "notes"}`)
+    },
+    reset: () => {
+      setNotes(initialNotes)
+      setLog("Tap Select to choose notes.")
+    },
+  }
+}
+
+function Footer({ log, onReset }: { log: string; onReset: () => void }) {
+  return (
+    <View className="flex-row items-center justify-between gap-3">
+      <Text
+        role="status"
+        className="min-w-0 flex-1 text-sm text-muted-foreground"
+      >
+        {log}
+      </Text>
+      <Button size="sm" variant="secondary" onPress={onReset}>
+        <Text>Reset</Text>
+      </Button>
+    </View>
+  )
+}
+
+function NotesExample({
+  defaultEditing,
+  defaultValue,
+}: {
+  defaultEditing?: boolean
+  defaultValue?: string[]
+}) {
+  const { notes, log, setLog, remove, reset } = useNotes()
+  return (
+    <SelectionList
+      defaultEditing={defaultEditing}
+      defaultValue={defaultValue}
+      className="w-full gap-3"
+    >
+      <View className="flex-row items-center justify-between">
+        <Text variant="h1">Notes</Text>
+        <SelectionListTrigger />
+      </View>
+      <NoteRows
+        notes={notes}
+        onOpen={(note) => setLog(`Opened ${note.title}`)}
+      />
+      <Footer log={log} onReset={reset} />
+      <SelectionListBar accessibilityLabel="Selection actions">
+        <SelectAllButton />
+        <SelectionListCount />
+        <DeleteButton onDelete={remove} />
+      </SelectionListBar>
+    </SelectionList>
+  )
+}
+
+export function SelectionListExample() {
+  return (
+    <NotesExample />
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct SelectionListNote: Identifiable {
+  let id: String
+  let title: String
+  let preview: String
+}
+
+let selectionListInitialNotes = [
+  SelectionListNote(id: "groceries", title: "Groceries", preview: "Milk, eggs, bread, coffee"),
+  SelectionListNote(id: "trip", title: "Trip ideas", preview: "Lisbon, Porto, the coast road"),
+  SelectionListNote(id: "books", title: "Book list", preview: "Three novels for the summer"),
+  SelectionListNote(id: "meeting", title: "Meeting notes", preview: "Ship the beta on Friday"),
+  SelectionListNote(id: "gifts", title: "Gift ideas", preview: "Headphones, a plant, a scarf"),
+  SelectionListNote(id: "recipes", title: "Recipes", preview: "Lemon pasta and a quick curry"),
+]
+
+let selectionListIdleLog = "Tap Select to choose notes."
+
+struct SelectionListRows: View {
+  let notes: [SelectionListNote]
+  let editing: Bool
+  let onOpen: (SelectionListNote) -> Void
+
+  var body: some View {
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
+    VStack(spacing: 0) {
+      ForEach(Array(notes.enumerated()), id: \.element.id) { index, note in
+        SelectionListItem(value: note.id) {
+          Button {
+            onOpen(note)
+          } label: {
+            HStack(spacing: 12) {
+              VStack(alignment: .leading, spacing: 0) {
+                Text(verbatim: note.title)
+                  .textStyle(.base, weight: .semibold)
+                  .foregroundStyle(EsuissColor.foreground)
+                  .lineLimit(1)
+                Text(verbatim: note.preview)
+                  .textStyle(.sm)
+                  .foregroundStyle(EsuissColor.mutedForeground)
+                  .lineLimit(1)
+              }
+              .frame(maxWidth: .infinity, alignment: .leading)
+              Ph.caretRight.regular
+                .frame(width: 16, height: 16)
+                .foregroundStyle(EsuissColor.mutedForeground)
+                .opacity(editing ? 0 : 1)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .contentShape(Rectangle())
+          }
+          .buttonStyle(SelectionListRowStyle())
+        }
+        .overlay(alignment: .top) {
+          if index > 0 {
+            EsuissColor.border.frame(height: 1)
+          }
+        }
+      }
+    }
+    .clipShape(shape)
+    .overlay { shape.strokeBorder(EsuissColor.border) }
+  }
+}
+
+struct SelectionListRowStyle: ButtonStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .opacity(configuration.isPressed ? 0.8 : 1)
+  }
+}
+
+struct SelectionListFooter: View {
+  let log: String
+  let onReset: () -> Void
+
+  var body: some View {
+    HStack(spacing: 12) {
+      Text(verbatim: log)
+        .textStyle(.sm)
+        .foregroundStyle(EsuissColor.mutedForeground)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityAddTraits(.updatesFrequently)
+      Button("Reset", action: onReset)
+        .buttonStyle(.variant(.secondary, size: .sm))
+    }
+  }
+}
+
+struct SelectionListStage<Content: View, Bar: View>: View {
+  @ViewBuilder let content: () -> Content
+  @ViewBuilder let bar: () -> Bar
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      content()
+    }
+    .frame(maxHeight: .infinity, alignment: .top)
+    .overlay(alignment: .bottom) {
+      bar()
+        .padding(.horizontal, -16)
+    }
+    .containerRelativeFrame(.vertical) { height, _ in height - 32 }
+  }
+}
+
+struct SelectionListNotes: View {
+  @State private var editing: Bool
+  @State private var selection: Set<String>
+  @State private var notes = selectionListInitialNotes
+  @State private var log = selectionListIdleLog
+
+  init(editing: Bool = false, selection: Set<String> = []) {
+    _editing = State(initialValue: editing)
+    _selection = State(initialValue: selection)
+  }
+
+  var body: some View {
+    SelectionList(isEditing: $editing, selection: $selection) {
+      SelectionListStage {
+        HStack {
+          Text("Notes")
+            .textVariant(.h1)
+          Spacer()
+          SelectionListTrigger()
+        }
+        SelectionListRows(notes: notes, editing: editing) { log = "Opened \($0.title)" }
+        SelectionListFooter(log: log) {
+          notes = selectionListInitialNotes
+          log = selectionListIdleLog
+        }
+      } bar: {
+        SelectionListBar { list in
+          Button(list.count > 0 ? "Deselect All" : "Select All") {
+            if list.count > 0 { list.clear() } else { list.selectAll() }
+          }
+          .buttonStyle(.variant(.plain, size: .lg))
+          SelectionListCount()
+          Button {
+            let ids = selection
+            notes.removeAll { ids.contains($0.id) }
+            log = "Deleted \(ids.count) \(ids.count == 1 ? "note" : "notes")"
+            selection = []
+            list.setEditing(false)
+          } label: {
+            Text("Delete")
+              .foregroundStyle(EsuissColor.destructive)
+          }
+          .buttonStyle(.variant(.plain, size: .lg))
+          .disabled(list.count == 0)
+        }
+        .accessibilityLabel(Text("Selection actions"))
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
+import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Text
+import com.esuiss.ui.components.TextVariant
+import com.esuiss.ui.interactions.SelectionList
+import com.esuiss.ui.interactions.SelectionListBar
+import com.esuiss.ui.interactions.SelectionListCount
+import com.esuiss.ui.interactions.SelectionListItem
+import com.esuiss.ui.interactions.SelectionListTrigger
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Typography
+
+class SelectionListNote(val id: String, val title: String, val preview: String)
+
+val selectionListInitialNotes = listOf(
+    SelectionListNote("groceries", "Groceries", "Milk, eggs, bread, coffee"),
+    SelectionListNote("trip", "Trip ideas", "Lisbon, Porto, the coast road"),
+    SelectionListNote("books", "Book list", "Three novels for the summer"),
+    SelectionListNote("meeting", "Meeting notes", "Ship the beta on Friday"),
+    SelectionListNote("gifts", "Gift ideas", "Headphones, a plant, a scarf"),
+    SelectionListNote("recipes", "Recipes", "Lemon pasta and a quick curry"),
+)
+
+@Composable
+fun SelectionListRows(notes: List<SelectionListNote>, editing: Boolean, onOpen: (SelectionListNote) -> Unit) {
+    val colors = EsuissTheme.colors
+    val shape = RoundedCornerShape(Radius.xl2)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(shape)
+            .border(1.dp, colors.border, shape),
+    ) {
+        notes.forEachIndexed { index, note ->
+            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
+            SelectionListItem(value = note.id, contentDescription = note.title) {
+                SelectionListRowContent(note, editing) { onOpen(note) }
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectionListFooter(log: String, onReset: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            log,
+            modifier = Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
+            style = Typography.sm.copy(color = EsuissTheme.colors.mutedForeground),
+        )
+        Button("Reset", onClick = onReset, variant = ButtonVariant.Secondary, size = ButtonSize.Sm)
+    }
+}
+
+@Composable
+fun SelectionListHeader(title: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(title, variant = TextVariant.H1)
+        SelectionListTrigger()
+    }
+}
+
+fun selectionListDeleted(count: Int): String = "Deleted $count ${if (count == 1) "note" else "notes"}"
+
+@Composable
+fun SelectionListNotes(defaultEditing: Boolean = false, defaultValue: List<String> = emptyList()) {
+    val colors = EsuissTheme.colors
+    var notes by remember { mutableStateOf(selectionListInitialNotes) }
+    var log by rememberSaveable { mutableStateOf(SelectionListHint) }
+    var editing by rememberSaveable { mutableStateOf(defaultEditing) }
+    var selected by rememberSaveable { mutableStateOf(defaultValue) }
+    SelectionList(
+        editing = editing,
+        onEditingChange = { editing = it },
+        value = selected,
+        onValueChange = { selected = it },
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            SelectionListHeader("Notes")
+            SelectionListRows(notes, editing) { log = "Opened ${it.title}" }
+            SelectionListFooter(log) {
+                notes = selectionListInitialNotes
+                log = SelectionListHint
+            }
+        }
+        SelectionListBar {
+            val any = this@SelectionList.selected.isNotEmpty()
+            Button(
+                if (any) "Deselect All" else "Select All",
+                onClick = { if (any) clear() else selectAll() },
+                modifier = Modifier.padding(horizontal = 4.dp),
+                variant = ButtonVariant.Plain,
+                size = ButtonSize.Lg,
+            )
+            SelectionListCount()
+            Button(
+                onClick = {
+                    val ids = this@SelectionList.selected
+                    notes = notes.filterNot { it.id in ids }
+                    log = selectionListDeleted(ids.size)
+                    setEditing(false)
+                },
+                modifier = Modifier.padding(horizontal = 4.dp),
+                variant = ButtonVariant.Plain,
+                size = ButtonSize.Lg,
+                enabled = any,
+            ) {
+                Text("Delete", style = Typography.base.copy(color = colors.destructive))
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Wrap the list in `SelectionList`, add a `SelectionListTrigger` that toggles editing (it reads `Select` and `Done` by default), and give each `SelectionListItem` a unique `value`. Put your buttons and a `SelectionListCount` in `SelectionListBar`.
 
 Editing and the selection can be uncontrolled with `defaultEditing` and `defaultValue`, or controlled with `editing`, `onEditingChange`, `value` and `onValueChange`. `useSelectionList` returns `editing`, `selected`, `toggle`, `selectAll` and `clear` for custom actions. Outside editing mode, the row's children receive presses as usual.
+
+</Only>
 
 ## Examples
 
@@ -680,6 +1178,8 @@ Receiver: `RowScope`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - While editing, rows have the `checkbox` role and expose their `checked` state; otherwise the row wrapper is not focusable and its children are.
@@ -692,5 +1192,7 @@ Receiver: `RowScope`.
 - Selected rows use `bg-accent`; checked circles use `bg-primary` with a `primary-foreground` check.
 - The bar uses `bg-card`, or `bg-muted` in dark mode, and is up to `max-w-md` wide.
 - Animations respect the system reduce motion setting.
+
+</Only>
 
 </Only>

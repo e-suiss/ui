@@ -185,7 +185,11 @@ npx @esuiss/ui@latest add interactions swipe-actions --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -317,19 +321,214 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
-```tsx
-import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from "@/components/interactions/swipe-actions"
-```
+<Only platform="rn">
 
 ```tsx
-<View>
-  <Inbox />
-</View>
+import { ArchiveIcon, BellSlashIcon, EnvelopeOpenIcon, TrashIcon } from "phosphor-react-native"
+import * as React from "react"
+import { View } from "react-native"
+import { SwipeAction, SwipeActions, SwipeActionsActions, SwipeActionsContent } from "@/components/interactions/swipe-actions"
+import { Icon } from "@/components/ui/icon"
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@/components/ui/item"
+import { Text } from "@/components/ui/text"
+
+const MESSAGES = [
+  { id: "1", from: "Olivia Martin", subject: "Quarterly report is ready" },
+  { id: "2", from: "Jackson Lee", subject: "Lunch on Friday?" },
+  { id: "3", from: "Isabella Nguyen", subject: "Design review notes" },
+]
+
+function Inbox() {
+  const [messages, setMessages] = React.useState(MESSAGES)
+  const remove = (id: string) =>
+    setMessages((current) => current.filter((message) => message.id !== id))
+  return (
+    <ItemGroup variant="inset">
+      {messages.map((message, index) => (
+        <React.Fragment key={message.id}>
+          {index > 0 ? <ItemSeparator /> : null}
+          <SwipeActions>
+            <SwipeActionsActions side="leading">
+              <SwipeAction>
+                <Icon as={EnvelopeOpenIcon} />
+                <Text>Read</Text>
+              </SwipeAction>
+            </SwipeActionsActions>
+            <SwipeActionsContent className="bg-muted">
+              <Item onPress={() => undefined}>
+                <ItemContent>
+                  <ItemTitle>{message.from}</ItemTitle>
+                  <ItemDescription>{message.subject}</ItemDescription>
+                </ItemContent>
+              </Item>
+            </SwipeActionsContent>
+            <SwipeActionsActions side="trailing">
+              <SwipeAction variant="neutral">
+                <Icon as={BellSlashIcon} />
+                <Text>Mute</Text>
+              </SwipeAction>
+              <SwipeAction variant="archive">
+                <Icon as={ArchiveIcon} />
+                <Text>Archive</Text>
+              </SwipeAction>
+              <SwipeAction
+                variant="destructive"
+                fullSwipe
+                onPress={() => remove(message.id)}
+              >
+                <Icon as={TrashIcon} />
+                <Text>Delete</Text>
+              </SwipeAction>
+            </SwipeActionsActions>
+          </SwipeActions>
+        </React.Fragment>
+      ))}
+    </ItemGroup>
+  )
+}
+
+export function SwipeActionsExample() {
+  return (
+    <View>
+      <Inbox />
+    </View>
+  )
+}
 ```
+
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import PhosphorSwift
+import SwiftUI
+
+struct SwipeActionsMessage: Identifiable {
+  let id: String
+  let from: String
+  let subject: String
+}
+
+let swipeActionsMessages = [
+  SwipeActionsMessage(id: "1", from: "Olivia Martin", subject: "Quarterly report is ready"),
+  SwipeActionsMessage(id: "2", from: "Jackson Lee", subject: "Lunch on Friday?"),
+  SwipeActionsMessage(id: "3", from: "Isabella Nguyen", subject: "Design review notes"),
+]
+
+struct SwipeActionsInbox: View {
+  @State private var messages = swipeActionsMessages
+
+  var body: some View {
+    ItemGroup(.inset) {
+      ForEach(Array(messages.enumerated()), id: \.element.id) { index, message in
+        if index > 0 {
+          ItemSeparator()
+        }
+        SwipeActions(background: EsuissColor.muted) {
+          Item(action: {}) {
+            ItemContent {
+              ItemTitle(verbatim: message.from)
+              ItemDescription(verbatim: message.subject)
+            }
+          }
+        } leading: {
+          SwipeAction("Read", icon: Ph.envelopeOpen.regular) {}
+        } trailing: {
+          SwipeAction("Mute", icon: Ph.bellSlash.regular, variant: .neutral) {}
+          SwipeAction("Archive", icon: Ph.archive.regular, variant: .archive) {}
+          SwipeAction("Delete", icon: Ph.trash.regular, variant: .destructive, fullSwipe: true) {
+            messages.removeAll { $0.id == message.id }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.Archive
+import com.adamglin.phosphoricons.regular.BellSlash
+import com.adamglin.phosphoricons.regular.EnvelopeOpen
+import com.adamglin.phosphoricons.regular.Trash
+import com.esuiss.ui.components.Item
+import com.esuiss.ui.components.ItemContent
+import com.esuiss.ui.components.ItemDescription
+import com.esuiss.ui.components.ItemGroup
+import com.esuiss.ui.components.ItemGroupVariant
+import com.esuiss.ui.components.ItemSeparator
+import com.esuiss.ui.components.ItemTitle
+import com.esuiss.ui.interactions.SwipeAction
+import com.esuiss.ui.interactions.SwipeActionVariant
+import com.esuiss.ui.interactions.SwipeActions
+import com.esuiss.ui.theme.EsuissTheme
+
+class SwipeActionsMessage(val id: String, val from: String, val subject: String)
+
+val swipeActionsMessages = listOf(
+    SwipeActionsMessage("1", "Olivia Martin", "Quarterly report is ready"),
+    SwipeActionsMessage("2", "Jackson Lee", "Lunch on Friday?"),
+    SwipeActionsMessage("3", "Isabella Nguyen", "Design review notes"),
+)
+
+@Composable
+fun SwipeActionsInbox() {
+    var messages by remember { mutableStateOf(swipeActionsMessages) }
+    ItemGroup(variant = ItemGroupVariant.Inset) {
+        messages.forEachIndexed { index, message ->
+            key(message.id) {
+                if (index > 0) ItemSeparator()
+                SwipeActions(
+                    leading = listOf(SwipeAction("Read", {}, icon = PhosphorIcons.Regular.EnvelopeOpen)),
+                    trailing = listOf(
+                        SwipeAction("Mute", {}, icon = PhosphorIcons.Regular.BellSlash, variant = SwipeActionVariant.Neutral),
+                        SwipeAction("Archive", {}, icon = PhosphorIcons.Regular.Archive, variant = SwipeActionVariant.Archive),
+                        SwipeAction(
+                            "Delete",
+                            { messages = messages.filterNot { it.id == message.id } },
+                            icon = PhosphorIcons.Regular.Trash,
+                            variant = SwipeActionVariant.Destructive,
+                            fullSwipe = true,
+                        ),
+                    ),
+                    background = EsuissTheme.colors.muted,
+                ) {
+                    Item(onClick = {}) {
+                        ItemContent {
+                            ItemTitle(message.from)
+                            ItemDescription(message.subject)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
 
 Put the row in `SwipeActionsContent`, and the buttons in one `SwipeActionsActions` per side, with `side` set to `leading` or `trailing` (the default). Leading actions are on the left in left-to-right layouts and on the right in right-to-left layouts.
 
 Pressing an action runs `onPress` and closes the row. For a full-swipe action, `onPress` runs after the row collapses, so remove the item from your data there. `useSwipeActions` returns `close` for closing the row from inside it. `swipeActionVariants` is also exported.
+
+</Only>
 
 ## API Reference
 
@@ -530,6 +729,8 @@ The root that handles the swipe gesture.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Every action is offered as an accessibility action on `SwipeActionsContent`, labelled by its `accessibilityLabel` or text, so screen reader users can run it without swiping.
@@ -540,5 +741,7 @@ The root that handles the swipe gesture.
 
 - The full-swipe haptic plays only if the app provides an adapter through `HapticsProvider`.
 - Action colors use `bg-primary`, `bg-destructive`, `bg-purple-500` and `bg-zinc-500` with `text-primary-foreground` labels and icons; the content uses `bg-background`.
+
+</Only>
 
 </Only>

@@ -9,7 +9,11 @@ platforms: [rn, swift, kotlin]
 
 <NativeExample id="components-signature-pad--default" />
 
+<Only platform="rn">
+
 `SignaturePad` is a `View` with a single-finger pan gesture from `react-native-gesture-handler`. Each touch records a stroke of points, and the strokes are drawn as smoothed paths with `react-native-svg`. A signature line with an `×` mark and a placeholder sits near the bottom, and a ghost Clear button appears in the top corner once something is drawn.
+
+</Only>
 
 ## Installation
 
@@ -43,7 +47,11 @@ npx @esuiss/ui@latest add signature-pad --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -137,8 +145,6 @@ npx expo install react-native-gesture-handler react-native-svg
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -177,6 +183,8 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { SignaturePad } from "@/components/ui/signature-pad"
 ```
@@ -185,11 +193,65 @@ import { SignaturePad } from "@/components/ui/signature-pad"
 <SignaturePad />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct SignaturePadExample: View {
+  var body: some View {
+    SignaturePadDemo(initial: [])
+  }
+}
+
+struct SignaturePadDemo: View {
+  var strokeWidth: CGFloat = 2.5
+
+  @State private var strokes: [SignatureStroke]
+
+  init(initial: [SignatureStroke], strokeWidth: CGFloat = 2.5) {
+    self.strokeWidth = strokeWidth
+    _strokes = State(initialValue: initial)
+  }
+
+  var body: some View {
+    SignaturePad(value: $strokes, strokeWidth: strokeWidth)
+      .frame(height: 192)
+      .frame(maxWidth: .infinity)
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.esuiss.ui.components.SignaturePad
+
+@Composable
+fun SignaturePadExample() {
+    SignaturePad(Modifier.fillMaxWidth())
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Use it uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. The value is an array of strokes, where each stroke is an array of `{ x, y }` points.
 
 Pass a `ref` to get a `SignaturePadHandle` with `toSVG()`, `clear()` and `isEmpty()`. `toSVG` returns an SVG string sized to the pad and accepts an optional `color` (defaults to `currentColor`).
 
 The `SignaturePadHandle`, `SignaturePadPoint` and `SignaturePadStroke` types are also exported.
+
+</Only>
 
 ## Examples
 
@@ -201,7 +263,11 @@ A pad that starts with a saved signature.
 
 ### Thick stroke
 
+<Only platform="rn">
+
 A signature drawn with `strokeWidth={5}`.
+
+</Only>
 
 <NativeExample id="components-signature-pad--thick-stroke" />
 
@@ -213,7 +279,11 @@ A disabled pad that ignores touches and hides the Clear button.
 
 ### Controlled
 
+<Only platform="rn">
+
 A controlled pad that reads the signature through the ref and exports it with `toSVG`.
+
+</Only>
 
 <NativeExample id="components-signature-pad--controlled" />
 
@@ -385,6 +455,8 @@ Returns `ImageBitmap`.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - The pad is a single accessible element labeled by `accessibilityLabel`.
@@ -395,5 +467,7 @@ Returns `ImageBitmap`.
 
 - Uses `bg-card` in light mode and `bg-muted` in dark mode, with `border-border` and `text-foreground` for the strokes.
 - Points closer than one point to the previous point are skipped while drawing.
+
+</Only>
 
 </Only>

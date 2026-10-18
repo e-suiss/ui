@@ -146,7 +146,11 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <NativeExample id="components-wheel-picker--default" />
 
+<Only platform="rn">
+
 `WheelPicker` lays out one or more `WheelPickerColumn` components side by side behind a shared highlight band. Each column is a snapping `ScrollView`; items above and below the center are scaled, moved and faded with React Native `Animated` interpolations to look like a rotating wheel.
+
+</Only>
 
 Use it for times, dates and other values picked from a short, ordered list, often in a sheet or popover.
 
@@ -182,7 +186,11 @@ npx @esuiss/ui@latest add wheel-picker --platform kotlin
 
 </Only>
 
+<Only platform="rn">
+
 The CLI also adds what it builds on: [Text](/docs/components/text).
+
+</Only>
 
 ### Manual
 
@@ -278,8 +286,6 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -316,7 +322,10 @@ implementation("androidx.compose.ui:ui")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
+import { View } from "react-native"
 import { WheelPicker, WheelPickerColumn, WheelPickerItem } from "@/components/ui/wheel-picker"
 ```
 
@@ -334,11 +343,144 @@ import { WheelPicker, WheelPickerColumn, WheelPickerItem } from "@/components/ui
 </View>
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct WheelPickerExample: View {
+  var body: some View {
+    WheelPickerFrame {
+      FruitDemo()
+    }
+  }
+}
+
+struct WheelPickerFrame<Content: View>: View {
+  @ViewBuilder let content: () -> Content
+
+  @Environment(\.colorScheme) private var colorScheme
+
+  var body: some View {
+    let shape = RoundedRectangle(cornerRadius: Radius.xl2, style: .continuous)
+    content()
+      .padding(16)
+      .frame(width: 320)
+      .background(EsuissColor.card, in: shape)
+      .overlay {
+        shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
+      }
+      .shadow(Shadow.md)
+  }
+}
+
+let wheelFruits = ["Apple", "Banana", "Cherry", "Grape", "Lemon", "Mango", "Orange", "Peach", "Pear", "Plum"]
+
+struct FruitDemo: View {
+  @State private var fruit = "Lemon"
+
+  var body: some View {
+    WheelPicker {
+      WheelPickerColumn(selection: $fruit) {
+        ForEach(wheelFruits, id: \.self) { item in
+          WheelPickerItem(verbatim: item, value: item)
+        }
+      }
+      .accessibilityLabel(Text("Fruit"))
+    }
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.esuiss.ui.components.WheelPicker
+import com.esuiss.ui.components.WheelPickerColumn
+import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Shadows
+import com.esuiss.ui.theme.shadow
+
+@Composable
+fun WheelPickerExample() {
+    WheelPickerFrame { WheelPickerFruits() }
+}
+
+val wheelPickerFruits = listOf(
+    "Apple",
+    "Banana",
+    "Cherry",
+    "Grape",
+    "Lemon",
+    "Mango",
+    "Orange",
+    "Peach",
+    "Pear",
+    "Plum",
+)
+
+@Composable
+fun WheelPickerFrame(content: @Composable () -> Unit) {
+    val colors = EsuissTheme.colors
+    val shape = RoundedCornerShape(Radius.xl2)
+    Box(
+        Modifier
+            .width(320.dp)
+            .shadow(Shadows.md, shape)
+            .background(colors.card, shape)
+            .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+            .padding(16.dp),
+    ) {
+        content()
+    }
+}
+
+@Composable
+fun WheelPickerFruits() {
+    var value by rememberSaveable { mutableStateOf("Lemon") }
+    WheelPicker(Modifier.fillMaxWidth()) {
+        WheelPickerColumn(value, { value = it }, label = "Fruit") {
+            wheelPickerFruits.forEach { WheelPickerItem(it, it) }
+        }
+    }
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Give each column a `defaultValue`, or `value` with `onValueChange`, and fill it with `WheelPickerItem` components that each have a unique `value`. Plain string or number children are wrapped in single-line `Text`.
+
+</Only>
 
 The value is set when scrolling settles or when an item is pressed. Disabled items are skipped: if the wheel stops on one, it moves to the nearest enabled item.
 
+<Only platform="rn">
+
 Combine several columns for compound values such as day, hour and minute, and use `className` on columns and items to control width and alignment. Set `itemHeight` on `WheelPicker` to change the row height.
+
+</Only>
 
 ## Examples
 
@@ -489,6 +631,8 @@ Snapping scroll column that holds one value.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Each column has the `adjustable` role and announces the selected item's label as its value.
@@ -501,5 +645,7 @@ Snapping scroll column that holds one value.
 - A selection haptic plays when the value changes, if a haptics adapter is provided through the haptics context.
 - The highlight uses `bg-secondary`; items use `text-xl text-foreground` with tabular numbers and `text-muted-foreground` when disabled.
 - Light and dark colors follow the system appearance.
+
+</Only>
 
 </Only>

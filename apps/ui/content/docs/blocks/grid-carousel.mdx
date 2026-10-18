@@ -65,7 +65,11 @@ Images are Unsplash placeholders with descriptive alt text.
 
 </NativeExample>
 
+<Only platform="rn">
+
 Composes `Screen`, `Carousel` with `CarouselPageIndicator`, `Text` and product photos. Each card shows an optional kicker, name, tagline and starting price, and the whole card is pressable.
+
+</Only>
 
 ## Installation
 
@@ -99,7 +103,11 @@ npx @esuiss/ui@latest add blocks grid-carousel --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Carousel](/docs/components/carousel), [Page Indicator](/docs/components/page-indicator), [Screen](/docs/components/screen), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -211,8 +219,6 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="swift/Components/Screen.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -260,6 +266,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<Only platform="rn">
+
 ```tsx
 import { GridCarousel } from "@/components/blocks/grid-carousel"
 ```
@@ -268,6 +276,41 @@ import { GridCarousel } from "@/components/blocks/grid-carousel"
 <GridCarousel />
 ```
 
+</Only>
+
+<Only platform="swift">
+
+```swift
+import EsuissUI
+import SwiftUI
+
+struct GridCarouselExample: View {
+  var body: some View {
+    GridCarousel()
+  }
+}
+```
+
+</Only>
+
+<Only platform="kotlin">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.esuiss.ui.blocks.GridCarousel
+
+@Composable
+fun GridCarouselExample() {
+    GridCarousel()
+}
+```
+
+</Only>
+
+<Only platform="rn">
+
 Replace `PRODUCTS` with your items. Pass `onSelectProduct` to receive the name of the pressed product.
+
+</Only>
 
 </Only>

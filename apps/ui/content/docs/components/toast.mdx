@@ -223,7 +223,11 @@ Also accepts the props of `ToastPrimitive.Provider.Props`.
 
 </Only>
 
+<Only platform="rn kotlin">
+
 `Toaster` wraps your app in a toast provider and renders the queue into a full-screen viewport. Each toast slides in from the bottom edge, fades out downward, and is capped at 384 points wide.
+
+</Only>
 
 <Only platform="rn">
 
@@ -265,7 +269,11 @@ npx @esuiss/ui@latest add toast --platform kotlin
 
 </Only>
 
-The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). On React Native it also adds the animated view `components/ui/animated-view.tsx`.
+<Only platform="rn">
+
+The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text). It also adds the animated view `components/ui/animated-view.tsx`.
+
+</Only>
 
 ### Manual
 
@@ -367,8 +375,6 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-<ComponentSource path="swift/Components/TextVariant.swift" />
-
 5. Add the files to your app target.
 
 </Only>
@@ -406,16 +412,99 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 </Only>
 
+<Only platform="rn">
+
 ## Usage
 
 ```tsx
-import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from "@/components/ui/toast"
-```
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+import { Toaster, toast } from "@/components/ui/toast"
 
-```tsx
-<Toaster>
-  <Examples />
-</Toaster>
+function wait(ms: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms))
+}
+
+function Examples() {
+  return (
+    <View className="items-start gap-3">
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Event created",
+            description: "Sunday, December 3 at 9:00 AM",
+          })
+        }
+      >
+        <Text>Show toast</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Message archived",
+            type: "info",
+            actionProps: {
+              children: "Undo",
+              onPress: () => toast.add({ title: "Restored", type: "success" }),
+            },
+          })
+        }
+      >
+        <Text>With action</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Storage almost full",
+            description: "Free up space to keep syncing.",
+            type: "warning",
+          })
+        }
+      >
+        <Text>Warning</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Upload failed",
+            description: "Check your connection and try again.",
+            type: "error",
+            priority: "high",
+          })
+        }
+      >
+        <Text>Error</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() => {
+          toast
+            .promise(wait(2000), {
+              loading: "Saving changes",
+              success: "Changes saved",
+              error: "Could not save changes",
+            })
+            .catch(() => undefined)
+        }}
+      >
+        <Text>Promise</Text>
+      </Button>
+    </View>
+  )
+}
+
+export function ToastExample() {
+  return (
+    <Toaster>
+      <Examples />
+    </Toaster>
+  )
+}
 ```
 
 Render `Toaster` once near the root, then call the exported `toast` manager from anywhere: `toast.add({ title, description, type })` returns an id, `toast.update(id, updates)` changes a toast, and `toast.close(id)` removes it (or all toasts when called without an id).
@@ -427,8 +516,6 @@ Pass `actionProps` (for example `{ children: "Undo", onPress }`) to show an acti
 Use `createToastManager` to create a separate manager and pass it to `Toaster` as `toastManager`, and `useToastManager` to read the current toasts and actions inside the provider. The lower-level parts are exported for building a custom toast layout.
 
 ## Examples
-
-<Only platform="rn">
 
 ### Show on load
 
@@ -915,6 +1002,8 @@ Provider, portal and viewport that render the default toast list.
 
 </Only>
 
+<Only platform="rn">
+
 ## Accessibility
 
 - Each toast has the `alert` role and a live region that is `polite`, or `assertive` for `priority: "high"`.
@@ -930,5 +1019,7 @@ Provider, portal and viewport that render the default toast list.
 - Light and dark colors follow the system appearance; dark mode drops the border.
 - Toasts respect the bottom safe area inset.
 - `FullWindowOverlay` is used on iOS only; Android renders the viewport directly.
+
+</Only>
 
 </Only>
