@@ -9,6 +9,7 @@ import {
   exampleFile,
   exampleSource,
   highlightCode,
+  plainCode,
   readSource,
   sourceVariants,
 } from "@/lib/highlight"
@@ -21,9 +22,12 @@ async function highlighted(
   code: string,
   lang: string,
   title?: string,
-  src?: string
+  src?: string,
+  plain = false
 ) {
-  const { className, style, html } = await highlightCode(code.trimEnd(), lang)
+  const { className, style, html } = plain
+    ? plainCode(code.trimEnd())
+    : await highlightCode(code.trimEnd(), lang)
   return (
     <CodeBlock
       title={title}
@@ -64,7 +68,7 @@ export async function NativeCode({
   )
 }
 
-async function preview(file: string) {
+async function preview(file: string, plain = false) {
   const code = ((await readSource(file)) ?? "").trimEnd()
   const lines = code.split("\n")
   const long = lines.length > PREVIEW_LINES
@@ -72,7 +76,8 @@ async function preview(file: string) {
     long ? lines.slice(0, PREVIEW_LINES).join("\n") : code,
     languageOf(file),
     file,
-    long ? sourceUrl(file) : undefined
+    long ? sourceUrl(file) : undefined,
+    plain
   )
   return {
     block,
@@ -85,11 +90,13 @@ async function preview(file: string) {
 export async function ComponentSource({
   path: file,
   fold = true,
+  plain = false,
 }: {
   path: string
   fold?: boolean
+  plain?: boolean
 }) {
-  const { block, long, lines, variants } = await preview(file)
+  const { block, long, lines, variants } = await preview(file, plain)
   return (
     <LazySource
       file={file}

@@ -261,6 +261,11 @@ export type Highlighted = {
   html: string
 }
 
+export const plainCode = (code: string): Highlighted => ({
+  className: "",
+  html: escapeHtml(code),
+})
+
 export async function highlightCode(
   code: string,
   lang: string

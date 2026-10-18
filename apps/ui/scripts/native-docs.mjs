@@ -642,8 +642,8 @@ async function rnTab(styling, root, registries, pages) {
   const item = registry.items.find((entry) => entry.name === root.name)
   if (!item) return undefined
   const { pieces, local, packages } = await rnParts(registry, item, pages)
-  const source = (file) =>
-    `<ComponentSource path="${styling}/${file.path.replace(STYLING_DIRECTORY, "")}" />`
+  const source = (file, plain = false) =>
+    `<ComponentSource path="${styling}/${file.path.replace(STYLING_DIRECTORY, "")}"${plain ? " plain" : ""} />`
   const steps = []
   if (packages.length)
     steps.push(
@@ -666,7 +666,7 @@ async function rnTab(styling, root, registries, pages) {
       .flatMap((entry) => entry.files ?? [])
       .sort((a, b) => a.path.localeCompare(b.path))
     steps.push(
-      `Copy the primitives it uses into \`components/primitives\`:\n\n${files.map(source).join("\n\n")}`
+      `Copy the primitives it uses into \`components/primitives\`:\n\n${files.map((file) => source(file, true)).join("\n\n")}`
     )
   }
   for (const file of item.files ?? [])
@@ -688,7 +688,10 @@ async function rnManual(native, registries, pages) {
   const main = [...block.matchAll(RN_SOURCE)]
     .map((match) => match[1])
     .find(
-      (file) => file.startsWith("uniwind/") && !file.includes("/animated-view.")
+      (file) =>
+        file.startsWith("uniwind/") &&
+        !file.includes("/animated-view.") &&
+        !file.includes("/primitives/")
     )
   const root = main && rnItem(registries.uniwind, main)
   if (!root) return native
