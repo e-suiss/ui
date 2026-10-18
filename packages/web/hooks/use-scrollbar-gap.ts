@@ -28,11 +28,13 @@ function release(html: HTMLElement, body: HTMLElement) {
   releasing = true
   const previous = html.style.overflow
   html.style.overflow = "hidden"
+  html.style.setProperty("scrollbar-gutter", "auto", "important")
   requestAnimationFrame(() => {
     settled().then(() => {
       html.style.overflow = previous
       releasing = false
       if (isLocked(html, body) || !applied) return
+      html.style.removeProperty("scrollbar-gutter")
       body.style.paddingInlineEnd = applied.padding
       html.style.removeProperty(GAP)
       applied = null
