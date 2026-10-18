@@ -1,17 +1,33 @@
-import { CliError } from "../output.mjs"
+import { CliError, note } from "../output.mjs"
+import { isRegistryPath } from "./files.mjs"
 import { version } from "./package.mjs"
 
 const TRAILING_SLASH = /\/$/
 const REF = "{ref}"
 const TIMEOUT = 30_000
+const LOCAL_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
 
 const DEFAULT_BRANCH = "main"
+const TAG = `v${version}`
+const REFS = [TAG, DEFAULT_BRANCH]
 
-function registryRoots(base, override) {
-  const roots = override
-    ? [override]
-    : [base.replace(REF, `v${version}`), base.replace(REF, DEFAULT_BRANCH)]
-  return roots.map((root) => root.replace(TRAILING_SLASH, ""))
+let chosenRef = null
+let pending = null
+
+function checkOverride(override, env) {
+  let url
+  try {
+    url = new URL(override)
+  } catch {
+    throw new CliError(`${env} must be a URL.`)
+  }
+  const local = url.protocol === "http:" && LOCAL_HOSTS.includes(url.hostname)
+  if (url.protocol !== "https:" && !local) {
+    throw new CliError(
+      `${env} must use https (http works only for localhost and 127.0.0.1).`
+    )
+  }
+  return override.replace(TRAILING_SLASH, "")
 }
 
 async function request(url, file) {
@@ -25,24 +41,60 @@ async function request(url, file) {
   }
 }
 
+function announce(ref) {
+  note(
+    ref === TAG
+      ? `Using the ${TAG} registry.`
+      : `Using the registry from ${DEFAULT_BRANCH}, because ${TAG} is not published yet.`
+  )
+}
+
+async function chooseRef(rootFor, file) {
+  for (const ref of REFS) {
+    const response = await request(`${rootFor(ref)}/${file}`, file)
+    if (response.status === 404 && ref !== REFS.at(-1)) continue
+    if (response.ok && !chosenRef) {
+      chosenRef = ref
+      announce(ref)
+    }
+    return response
+  }
+}
+
 export function createRegistry({ base, env, index = "registry.json" }) {
-  const roots = registryRoots(base, process.env[env])
-  let first = 0
+  const rootFor = (ref) => base.replace(REF, ref).replace(TRAILING_SLASH, "")
+  let override
+
+  async function respond(file) {
+    if (override === undefined) {
+      override = process.env[env] ? checkOverride(process.env[env], env) : null
+      if (override) note(`Using the registry at ${override}.`)
+    }
+    if (override) return request(`${override}/${file}`, file)
+    if (chosenRef) return request(`${rootFor(chosenRef)}/${file}`, file)
+    if (pending) {
+      await pending.catch(() => undefined)
+      return respond(file)
+    }
+    pending = chooseRef(rootFor, file)
+    try {
+      return await pending
+    } finally {
+      pending = null
+    }
+  }
 
   async function fetchText(file) {
-    for (let current = first; ; current++) {
-      const response = await request(`${roots[current]}/${file}`, file)
-      if (response.status === 404 && current < roots.length - 1) {
-        first = Math.max(first, current + 1)
-        continue
-      }
-      if (!response.ok) {
-        throw new CliError(
-          `Could not download ${file} (HTTP ${response.status}).`
-        )
-      }
-      return response.text()
+    if (!isRegistryPath(file)) {
+      throw new CliError(`Refusing to download ${file} from the registry.`)
     }
+    const response = await respond(file)
+    if (!response.ok) {
+      throw new CliError(
+        `Could not download ${file} (HTTP ${response.status}).`
+      )
+    }
+    return response.text()
   }
 
   async function fetchJson(file) {
