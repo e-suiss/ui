@@ -1,3 +1,4 @@
+import { withPrimary } from "../color.mjs"
 import { decodePreset } from "../shared/style.mjs"
 
 const HEX_COLOR = /^#([\da-f]{3}|[\da-f]{6})$/i
@@ -310,23 +311,25 @@ function isDefaultMenu(preset) {
 }
 
 export async function themeOptionsFor(options, fetchThemes, ownColors) {
-  if (!options.preset) return null
-  const preset = decodePreset(options.preset)
-  if (!preset) return null
+  const preset = options.preset ? decodePreset(options.preset) : null
+  if (!preset && !options.primary) return null
   const presetPalette =
-    options.theme === OWN_THEME ? null : paletteOf(await fetchThemes(), preset)
-  let palette = presetPalette
-  if (presetPalette || (ownColors && !isDefaultMenu(preset))) {
-    const colors = presetPalette ?? ownColors
+    preset && options.theme !== OWN_THEME
+      ? paletteOf(await fetchThemes(), preset)
+      : null
+  let palette = withPrimary(presetPalette, options.primary)
+  if (preset && (presetPalette || (ownColors && !isDefaultMenu(preset)))) {
+    const colors = withPrimary(presetPalette ?? ownColors, options.primary)
     const menu = menuColorsOf(colors, preset)
     palette = Object.fromEntries(
-      MODES.map((mode) => [
-        mode,
-        { ...(presetPalette?.[mode] ?? {}), ...menu[mode] },
-      ])
+      MODES.map((mode) => [mode, { ...(palette?.[mode] ?? {}), ...menu[mode] }])
     )
   }
-  return { palette, factor: radiusFactor(preset.radius), preset }
+  return {
+    palette,
+    factor: preset ? radiusFactor(preset.radius) : 1,
+    preset,
+  }
 }
 
 export function themed(text, format, themeOptions) {

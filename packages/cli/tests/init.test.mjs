@@ -438,4 +438,24 @@ describe("init with a preset", () => {
     expect(css).toContain("--radius: 0;")
     expect(JSON.parse(read(cwd, "components.json")).style).toBe("base-suiss")
   })
+
+  it("sets a custom primary over the preset colors", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true, preset: "bJ4oV1t", primary: "#e11d48" })
+    const css = read(cwd, "src/index.css")
+    const [light, dark] = css.split(".dark")
+    expect(light).toContain("--primary: oklch(0.5858 0.222 17.58);")
+    expect(dark).toContain("--primary: oklch(0.5858 0.222 17.58);")
+    expect(light).toContain("--background: oklch(1 0 0 / 1);")
+    expect(light).toContain("--radius: 0;")
+  })
+
+  it("sets a custom primary without a preset", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true, primary: "oklch(0.7 0.15 162)" })
+    const css = read(cwd, "src/index.css")
+    expect(css).toContain("--primary: oklch(0.7 0.15 162);")
+    expect(css).toContain("--radius: 0.625rem;")
+    expect(css).toContain("--background: oklch(0 0 0);")
+  })
 })

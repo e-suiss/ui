@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
 import { installItems } from "./add.mjs"
+import { withPrimary } from "./color.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
 import { decodePreset, RADIUS_VALUES } from "./preset.mjs"
 import {
@@ -303,7 +304,7 @@ function paletteOf(themes, preset) {
 }
 
 function applyPreset(css, preset, palette) {
-  const radius = RADIUS_VALUES[preset.radius]
+  const radius = preset ? RADIUS_VALUES[preset.radius] : undefined
   const light = { ...(palette?.light ?? {}), ...(radius ? { radius } : {}) }
   const dark = palette?.dark ?? {}
   return css
@@ -363,14 +364,17 @@ export async function init(options) {
   const icons = preset?.iconLibrary ?? detectIcons(project.cwd)
   const menuColor = preset?.menuColor ?? detectMenuColor(project.cwd)
   const registry = await fetchRegistry(base)
-  const palette =
+  const palette = withPrimary(
     preset && options.theme !== OWN_THEME
       ? paletteOf(await fetchThemes(), preset)
-      : null
+      : null,
+    options.primary
+  )
   const stylesheetCss = stylesheetFor(project, await fetchStylesheet())
-  const css = preset
-    ? applyPreset(stylesheetCss, preset, palette)
-    : stylesheetCss
+  const css =
+    preset || palette
+      ? applyPreset(stylesheetCss, preset, palette)
+      : stylesheetCss
 
   const tsconfigs =
     project.framework === "vite"

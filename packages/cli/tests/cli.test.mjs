@@ -27,6 +27,22 @@ function run(...args) {
 }
 
 describe("esuiss-ui command", () => {
+  it("rejects a --primary that is not a color", () => {
+    const result = run("init", "--primary", "blue")
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain('"blue" is not a color')
+  })
+
+  it("keeps --primary to init", () => {
+    const result = run("add", "button", "--primary", "#2563eb")
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain("--primary work with init")
+  })
+
+  it("lists --primary in the init help", () => {
+    expect(run("init", "--help").stdout).toContain("--primary <color>")
+  })
+
   it.each([[], ["--help"], ["-h"], ["help"]])(
     "prints the usage for %j",
     (...args) => {
