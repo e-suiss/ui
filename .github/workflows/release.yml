@@ -156,4 +156,4 @@ jobs:
             echo "npx @esuiss/ui@${TAG#v} init"
             echo '```'
           } > notes.md
-          gh release create "$TAG" --title "$TAG" --notes-file notes.md --verify-tag
+          gh release create "$TAG" --title "@esuiss/ui@${TAG#v}" --notes-file notes.md --verify-tag
