@@ -53,7 +53,7 @@ const PAGES_RETURN = /return <Component \{\.\.\.pageProps\} \/>(;?)/
 const PAGES_FONT_LINE =
   /--font-[a-z0-9-]+: \$\{font[A-Z]\w*\.style\.fontFamily\};/
 
-export function webFontOf(name) {
+function webFontOf(name) {
   const font = fonts.find((entry) => entry.name === name)
   if (!font) return null
   const fallback = font.family.split(",").at(-1).trim()
