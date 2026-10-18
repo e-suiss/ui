@@ -411,6 +411,7 @@
       ],
       "registryDependencies": [
         "@esuiss/button",
+        "@esuiss/use-highlighted-code",
         "@esuiss/utils"
       ],
       "files": [

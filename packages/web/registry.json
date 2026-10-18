@@ -266,6 +266,7 @@
       ],
       "requires": [
         "button",
+        "use-highlighted-code",
         "utils"
       ],
       "files": [

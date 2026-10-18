@@ -26,6 +26,7 @@ const NAMESPACE = "@esuiss"
 const IGNORED_PACKAGES = new Set(["react", "react-dom"])
 const OPT_IN = new Set(["theme"])
 const ITEM_CSS = new Map([["theme", "styles/theme.css"]])
+const EXTRA_REQUIRES = new Map([["code-block", ["use-highlighted-code"]]])
 const ICON_PLACEHOLDER = "@/app/(create)/components/icon-placeholder"
 const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks|lib)\/([\w-]+)$/
@@ -137,7 +138,7 @@ async function collect(source, file, base) {
   const code = await readFile(path.join(ROOT, sourcePath), "utf8")
 
   const dependencies = new Set()
-  const requires = new Set()
+  const requires = new Set(EXTRA_REQUIRES.get(name) ?? [])
   let icons = false
 
   for (const specifier of collectImports(code)) {
