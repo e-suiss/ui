@@ -110,6 +110,14 @@ A menubar with `disabled` set, so none of its menus open.
 
 The bar that contains the menus and manages keyboard navigation between them.
 
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `disabled` | `boolean` | - | Disables every trigger in the bar. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -119,6 +127,16 @@ Also accepts the props of the primitive part it wraps.
 ### MenubarMenu
 
 Groups one trigger with its popup and holds that menu's open state.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | - | The controlled open state. Pass it with `onOpenChange`. |
+| `defaultOpen` | `boolean` | `false` | Whether the menu starts open. |
+| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu opens or closes. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -195,6 +213,15 @@ An item that toggles on and off, with a leading check indicator.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
 
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultChecked` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
+| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -218,6 +245,14 @@ One option in a radio group, with a leading check indicator when selected.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 

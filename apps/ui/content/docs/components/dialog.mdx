@@ -268,6 +268,15 @@ The dialog window, rendered in a portal with an overlay and an optional close bu
 | `showCloseButton` | `boolean` | `true` | Shows the close button in the top corner. |
 | `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
 
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isDismissable` | `boolean` | `true` | Closes the dialog on a press outside it. |
+| `isKeyboardDismissDisabled` | `boolean` | - | Stops Escape from closing the dialog. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>

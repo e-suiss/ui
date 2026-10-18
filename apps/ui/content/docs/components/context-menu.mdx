@@ -366,6 +366,25 @@ An item that toggles a setting on or off and shows a check mark when on.
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
 
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultChecked` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
+| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isSelected` | `boolean` | - | The controlled checked state. Pass it with `onChange`. |
+| `defaultSelected` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
+| `onChange` | `(isSelected: boolean) => void` | - | Called when the item is checked or unchecked. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
@@ -375,6 +394,16 @@ Also accepts the props of the primitive part it wraps.
 ### ContextMenuRadioGroup
 
 Groups radio items so that only one can be selected.
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | The selected item's `value`, for controlled use. Pass it with `onChange`. |
+| `defaultValue` | `string` | - | The item selected at first when uncontrolled. |
+| `onChange` | `(value: string) => void` | - | Called with the `value` of the newly selected item. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
@@ -389,6 +418,22 @@ An item in a radio group that shows a check mark when selected.
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | The value the group reports when this item is selected. Required. |
+
+</OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 

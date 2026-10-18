@@ -197,9 +197,21 @@ The root that renders a `Popover` on desktop and a `Drawer` on mobile.
 
 The button that opens the flyout.
 
+<OnlyBase base="base aria">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | - | Renders the child element, such as a `Button`, in place of the default button. |
+
+</OnlyBase>
 
 <OnlyBase base="base radix">
 
@@ -210,12 +222,6 @@ Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
 <OnlyBase base="aria">
 
 Also accepts `className`, `children`, `id` and `aria-label`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-On the `radix` base, set `asChild` and pass your element as the child instead of `render`.
 
 </OnlyBase>
 
@@ -312,9 +318,21 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 A button that closes the flyout.
 
+<OnlyBase base="base aria">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | - | Renders the child element, such as a `Button`, in place of the default button. |
+
+</OnlyBase>
 
 <OnlyBase base="base radix">
 
@@ -325,12 +343,6 @@ Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
 <OnlyBase base="aria">
 
 Also accepts `className`, `children`, `id` and `aria-label`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-On the `radix` base, set `asChild` and pass your element as the child instead of `render`.
 
 </OnlyBase>
 

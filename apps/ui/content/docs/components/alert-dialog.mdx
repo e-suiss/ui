@@ -217,6 +217,15 @@ The dialog surface, rendered with its own portal and overlay.
 | --- | --- | --- | --- |
 | `size` | `"default" \| "sm"` | `"default"` | Maximum width of the dialog. `sm` is narrower than `default`. |
 
+<OnlyBase base="aria">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isDismissable` | `boolean` | `false` | Closes the dialog on a press outside it. |
+| `isKeyboardDismissDisabled` | `boolean` | - | Stops Escape from closing the dialog. |
+
+</OnlyBase>
+
 Also accepts the props of the primitive part it wraps.
 
 </ApiPart>
