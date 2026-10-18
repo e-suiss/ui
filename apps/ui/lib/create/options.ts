@@ -40,9 +40,31 @@ const RADII: Record<string, string> = {
 
 type Palette = { name: string; light: object; dark: object }
 
-export const BASE_COLORS = [OWN, ...PRESET_BASE_COLORS]
-export const THEMES = [OWN, ...PRESET_THEMES]
+const hasPalette = (name: string) =>
+  (themes as Palette[]).some((theme) => theme.name === name)
+
+export const BASE_COLORS = [OWN, ...PRESET_BASE_COLORS.filter(hasPalette)]
+const THEMES = [OWN, ...PRESET_THEMES.filter(hasPalette)]
 export const FONTS = [OWN, ...PRESET_FONTS]
+
+const OWN_SWATCH = {
+  primary: "oklch(0.5629 0.1933 256.16)",
+  "muted-foreground": "oklch(0.5399 0.0077 286.13)",
+}
+
+export const isGray = (name: string) =>
+  (PRESET_BASE_COLORS as readonly string[]).includes(name) || name === OWN
+
+export function themeOptions(baseColor: string) {
+  return [baseColor, ...THEMES.filter((theme) => !isGray(theme))]
+}
+
+export function swatchOf(name: string) {
+  const token = isGray(name) ? "muted-foreground" : "primary"
+  if (name === OWN) return OWN_SWATCH[token]
+  const palette = themeOf(name)?.light as Record<string, string> | undefined
+  return palette?.[token] ?? palette?.["muted-foreground"]
+}
 
 export {
   PRESET_ICON_LIBRARIES,
@@ -139,6 +161,7 @@ export function fromParams(params: URLSearchParams): CreateState {
     state.theme = OWN
   }
   if (params.get("font") === OWN) state.font = OWN
+  if (isGray(state.theme)) state.theme = state.baseColor
   return state
 }
 

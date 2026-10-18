@@ -42,6 +42,7 @@ export const strings = {
   createIntro:
     "Pick a style and the details, check the preview, then run the command in your project.",
   createOwn: "Suiss",
+  createDefault: "Default",
   createPlatform: "Platform",
   createBaseColor: "Base color",
   createTheme: "Theme",
