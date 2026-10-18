@@ -190,13 +190,25 @@ The root that chooses Sheet or Drawer and holds the open state.
 
 The button that opens the panel.
 
+<OnlyBase base="base aria">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a `Button`, in place of the default button. |
+
+</OnlyBase>
+
 <OnlyBase base="base radix">
 
-Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+Also accepts the props of `SheetTrigger`.
 
 </OnlyBase>
 
@@ -310,13 +322,25 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 A button that closes the panel.
 
+<OnlyBase base="base aria">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a `Button`, in place of the default button. |
+
+</OnlyBase>
+
 <OnlyBase base="base radix">
 
-Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+Also accepts the props of `SheetClose`.
 
 </OnlyBase>
 

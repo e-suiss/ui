@@ -78,8 +78,11 @@ function ActionMenu({
 }
 
 function ActionMenuTrigger(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    render?: React.ReactElement
+  props: Omit<
+    React.ComponentProps<typeof DropdownMenuTrigger>,
+    "handle" | "className"
+  > & {
+    className?: string
   }
 ) {
   const { isMobile } = useActionMenu()

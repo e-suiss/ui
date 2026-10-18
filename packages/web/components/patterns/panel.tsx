@@ -78,8 +78,11 @@ function Panel({
 }
 
 function PanelTrigger(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    render?: React.ReactElement
+  props: Omit<
+    React.ComponentProps<typeof SheetTrigger>,
+    "handle" | "className"
+  > & {
+    className?: string
   }
 ) {
   const { isMobile } = usePanel()
@@ -163,8 +166,8 @@ function PanelFooter(props: React.ComponentProps<"div">) {
 }
 
 function PanelClose(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    render?: React.ReactElement
+  props: Omit<React.ComponentProps<typeof SheetClose>, "className"> & {
+    className?: string
   }
 ) {
   const { isMobile } = usePanel()

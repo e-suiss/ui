@@ -47,6 +47,8 @@ import { Button } from "@/components/ui/button"
 import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandShortcut } from "@/components/ui/command"
 ```
 
+<OnlyBase base="base aria">
+
 ```tsx
 <div className="flex min-h-svh items-center justify-center">
   <CommandPalette>
@@ -73,7 +75,51 @@ import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, Com
 </div>
 ```
 
-The palette can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`; the hotkey and the trigger update the same state. Set `hotkey` to another letter to change the shortcut, or to `false` to disable it. `CommandPaletteTrigger` accepts `render` to use your own button, for example a `Button` with a `Kbd` hint. Remaining props on `CommandPaletteContent` pass through to `Command`.
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+```tsx
+<div className="flex min-h-svh items-center justify-center">
+  <CommandPalette>
+    <CommandPaletteTrigger asChild>
+      <Button variant="outline">Search</Button>
+    </CommandPaletteTrigger>
+    <CommandPaletteContent>
+      <CommandInput placeholder="Type a command or search..." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Settings">
+          <CommandItem>
+            Profile
+            <CommandShortcut mod>P</CommandShortcut>
+          </CommandItem>
+          <CommandItem>
+            Billing
+            <CommandShortcut mod>B</CommandShortcut>
+          </CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </CommandPaletteContent>
+  </CommandPalette>
+</div>
+```
+
+</OnlyBase>
+
+The palette can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`; the hotkey and the trigger update the same state. Set `hotkey` to another letter to change the shortcut, or to `false` to disable it. Remaining props on `CommandPaletteContent` pass through to `Command`.
+
+<OnlyBase base="base aria">
+
+`CommandPaletteTrigger` accepts `render` to use your own button, for example a `Button` with a `Kbd` hint.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on `CommandPaletteTrigger` to use your own button, for example a `Button` with a `Kbd` hint.
+
+</OnlyBase>
 
 ## Examples
 
@@ -127,13 +173,25 @@ The root that renders a `Dialog` on desktop and a `Drawer` on mobile and registe
 
 The button that opens the palette.
 
+<OnlyBase base="base aria">
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
 
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element, such as a `Button`, in place of the default button. |
+
+</OnlyBase>
+
 <OnlyBase base="base radix">
 
-Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+Also accepts the props of `DialogTrigger`.
 
 </OnlyBase>
 

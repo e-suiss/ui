@@ -110,8 +110,11 @@ function CommandPalette({
 }
 
 function CommandPaletteTrigger(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    render?: React.ReactElement
+  props: Omit<
+    React.ComponentProps<typeof DialogTrigger>,
+    "handle" | "className"
+  > & {
+    className?: string
   }
 ) {
   const { isMobile } = useCommandPalette()
