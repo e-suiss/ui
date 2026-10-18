@@ -100,7 +100,9 @@ function SwipeActions({
 
   const close = () => apply(0, true)
   const closeRef = React.useRef(close)
-  closeRef.current = close
+  React.useLayoutEffect(() => {
+    closeRef.current = close
+  })
 
   const actionsFor = (side: SwipeActionsSide) =>
     rootRef.current ? actionsOf(rootRef.current, side) : null

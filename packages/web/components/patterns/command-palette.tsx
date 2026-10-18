@@ -60,7 +60,9 @@ function CommandPalette({
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
   const open = openProp ?? uncontrolledOpen
   const openRef = React.useRef(open)
-  openRef.current = open
+  React.useLayoutEffect(() => {
+    openRef.current = open
+  })
 
   const setOpen = React.useCallback(
     (next: boolean) => {

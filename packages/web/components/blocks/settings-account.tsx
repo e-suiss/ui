@@ -224,11 +224,16 @@ function EditableCard({
   onSave: (value: string) => void
 }) {
   const [draft, setDraft] = React.useState(value)
+  const [synced, setSynced] = React.useState({ editing, value })
   const inputRef = React.useRef<HTMLInputElement>(null)
+
+  if (synced.editing !== editing || synced.value !== value) {
+    setSynced({ editing, value })
+    if (editing) setDraft(value)
+  }
 
   React.useEffect(() => {
     if (!editing) return
-    setDraft(value)
     const timer = window.setTimeout(() => inputRef.current?.focus(), 300)
     return () => window.clearTimeout(timer)
   }, [editing, value])
@@ -422,7 +427,7 @@ export function SettingsAccount() {
               <Security />
             ) : (
               <p className="text-lg text-muted-foreground">
-                This section isn't part of the sample. Choose Sign-In &
+                This section isn&apos;t part of the sample. Choose Sign-In &
                 Security.
               </p>
             )}

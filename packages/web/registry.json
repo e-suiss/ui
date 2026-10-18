@@ -1110,9 +1110,7 @@
       "name": "context-actions",
       "type": "pattern",
       "title": "Context Actions",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": [],
       "requires": [
         "alert-sheet",
         "context-menu",

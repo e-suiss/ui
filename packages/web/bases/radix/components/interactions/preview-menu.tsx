@@ -14,6 +14,24 @@ type PreviewMenuFrame = {
   source: { width: number; height: number; scale: number }
 }
 
+function createContentStore() {
+  let content: React.ReactNode = null
+  const listeners = new Set<() => void>()
+  return {
+    get: () => content,
+    set: (next: React.ReactNode) => {
+      content = next
+      for (const listener of listeners) listener()
+    },
+    subscribe: (listener: () => void) => {
+      listeners.add(listener)
+      return () => {
+        listeners.delete(listener)
+      }
+    },
+  }
+}
+
 type PreviewMenuContextProps = {
   open: boolean
   setOpen: (open: boolean) => void
@@ -21,7 +39,7 @@ type PreviewMenuContextProps = {
   setLifted: (lifted: boolean) => void
   frame: PreviewMenuFrame | null
   triggerRef: React.RefObject<HTMLElement | null>
-  contentRef: React.RefObject<React.ReactNode>
+  content: ReturnType<typeof createContentStore>
 }
 
 const PreviewMenuContext = React.createContext<PreviewMenuContextProps | null>(
@@ -112,7 +130,7 @@ function PreviewMenu({
   const open = openProp ?? uncontrolledOpen
   const [frame, setFrame] = React.useState<PreviewMenuFrame | null>(null)
   const triggerRef = React.useRef<HTMLElement | null>(null)
-  const contentRef = React.useRef<React.ReactNode>(null)
+  const [content] = React.useState(createContentStore)
 
   const [lifted, setLifted] = React.useState(open)
 
@@ -139,7 +157,7 @@ function PreviewMenu({
         setLifted,
         frame,
         triggerRef,
-        contentRef,
+        content,
       }}
     >
       <DropdownMenuPrimitive.Root
@@ -165,10 +183,14 @@ function PreviewMenuTrigger({
   ref,
   ...props
 }: React.ComponentProps<"div">) {
-  const { open, setOpen, lifted, triggerRef, contentRef } = usePreviewMenu()
+  const { open, setOpen, lifted, triggerRef, content } = usePreviewMenu()
   const timerRef = React.useRef<ReturnType<typeof setTimeout>>(undefined)
   const startRef = React.useRef<{ x: number; y: number } | null>(null)
-  contentRef.current = children as React.ReactNode
+
+  React.useLayoutEffect(
+    () => content.set(children as React.ReactNode),
+    [content, children]
+  )
 
   React.useEffect(() => () => clearTimeout(timerRef.current), [])
 
@@ -249,7 +271,9 @@ function PreviewMenuTrigger({
 
 function Unmounted({ onUnmount }: { onUnmount: () => void }) {
   const callback = React.useRef(onUnmount)
-  callback.current = onUnmount
+  React.useEffect(() => {
+    callback.current = onUnmount
+  })
   React.useEffect(() => () => callback.current(), [])
   return null
 }
@@ -264,8 +288,13 @@ function PreviewMenuContent({
   preview?: React.ReactNode
   previewClassName?: string
 }) {
-  const { open, lifted, setLifted, frame, contentRef, triggerRef } =
+  const { open, lifted, setLifted, frame, content, triggerRef } =
     usePreviewMenu()
+  const triggerContent = React.useSyncExternalStore(
+    content.subscribe,
+    content.get,
+    content.get
+  )
   const previewRef = React.useRef<HTMLDivElement>(null)
   const custom = preview !== undefined
 
@@ -327,7 +356,7 @@ function PreviewMenuContent({
                   previewClassName
                 )}
               >
-                {preview ?? contentRef.current}
+                {preview ?? triggerContent}
               </div>
               {custom && (
                 <div

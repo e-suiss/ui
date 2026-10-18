@@ -66,6 +66,31 @@ function useCarousel() {
 const INTERACTIVE =
   "input, textarea, select, [contenteditable]:not([contenteditable=false]), [role=slider], [role=radio], [role=spinbutton], [role=listbox], [role=combobox], [role=textbox], [role=tablist], [role=menu], [role=grid]"
 
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)"
+
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+
+function getReducedMotion() {
+  return window.matchMedia(REDUCED_MOTION).matches
+}
+
+function subscribeVisibility(onChange: () => void) {
+  document.addEventListener("visibilitychange", onChange)
+  return () => document.removeEventListener("visibilitychange", onChange)
+}
+
+function getHidden() {
+  return document.visibilityState === "hidden"
+}
+
+function getServerFalse() {
+  return false
+}
+
 function keepControlFocus(
   root: HTMLDivElement | null,
   api: NonNullable<CarouselApi>
@@ -113,24 +138,49 @@ function Carousel({
     },
     plugins
   )
-  const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-  const [canScrollNext, setCanScrollNext] = React.useState(false)
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
-  const [playing, setPlaying] = React.useState(Boolean(autoplay))
+  const subscribe = React.useCallback(
+    (onChange: () => void) => {
+      if (!api) return () => undefined
+      api.on("reInit", onChange)
+      api.on("select", onChange)
+      return () => {
+        api.off("select", onChange)
+        api.off("reInit", onChange)
+      }
+    },
+    [api]
+  )
+  const canScrollPrev = React.useSyncExternalStore(
+    subscribe,
+    () => api?.canScrollPrev() ?? false,
+    getServerFalse
+  )
+  const canScrollNext = React.useSyncExternalStore(
+    subscribe,
+    () => api?.canScrollNext() ?? false,
+    getServerFalse
+  )
+  const selectedIndex = React.useSyncExternalStore(
+    subscribe,
+    () => api?.selectedScrollSnap() ?? 0,
+    () => 0
+  )
+  const reducedMotion = React.useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    getServerFalse
+  )
+  const hidden = React.useSyncExternalStore(
+    subscribeVisibility,
+    getHidden,
+    getServerFalse
+  )
+  const [playChoice, setPlaying] = React.useState<boolean | null>(null)
   const [hovered, setHovered] = React.useState(false)
   const [focused, setFocused] = React.useState(false)
-  const [hidden, setHidden] = React.useState(false)
   const delay = typeof autoplay === "number" ? autoplay : 5000
-  const running =
-    Boolean(autoplay) && playing && !hovered && !focused && !hidden
-
-  const onSelect = React.useCallback((api: CarouselApi) => {
-    if (!api) return
-    keepControlFocus(rootRef.current, api)
-    setCanScrollPrev(api.canScrollPrev())
-    setCanScrollNext(api.canScrollNext())
-    setSelectedIndex(api.selectedScrollSnap())
-  }, [])
+  const playing = Boolean(autoplay) && (playChoice ?? !reducedMotion)
+  const running = playing && !hovered && !focused && !hidden
 
   const scrollPrev = React.useCallback(() => {
     api?.scrollPrev()
@@ -156,17 +206,6 @@ function Carousel({
     },
     [direction, orientation, scrollPrev, scrollNext]
   )
-
-  React.useEffect(() => {
-    if (!autoplay) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setPlaying(false)
-    }
-    const update = () => setHidden(document.visibilityState === "hidden")
-    update()
-    document.addEventListener("visibilitychange", update)
-    return () => document.removeEventListener("visibilitychange", update)
-  }, [autoplay])
 
   const remaining = React.useRef({ index: 0, time: delay })
   const elapsed = React.useCallback(
@@ -208,15 +247,16 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api) return
-    onSelect(api)
+    const onSelect = () => keepControlFocus(rootRef.current, api)
+    onSelect()
     api.on("reInit", onSelect)
     api.on("select", onSelect)
 
     return () => {
-      api?.off("select", onSelect)
-      api?.off("reInit", onSelect)
+      api.off("select", onSelect)
+      api.off("reInit", onSelect)
     }
-  }, [api, onSelect])
+  }, [api])
 
   return (
     <CarouselContext.Provider
@@ -424,34 +464,47 @@ function CarouselDots({
   ...props
 }: React.ComponentProps<"div"> & { variant?: "default" | "plain" }) {
   const { api, selectedIndex, autoplay } = useCarousel()
-  const [count, setCount] = React.useState(0)
   const [fill, setFill] = React.useState<HTMLSpanElement | null>(null)
-  const [progress, setProgress] = React.useState<Animation | null>(null)
+  const progressRef = React.useRef<Animation | null>(null)
+  const runningRef = React.useRef(autoplay.running)
+  const subscribe = React.useCallback(
+    (onChange: () => void) => {
+      if (!api) return () => undefined
+      api.on("reInit", onChange)
+      return () => {
+        api.off("reInit", onChange)
+      }
+    },
+    [api]
+  )
+  const count = React.useSyncExternalStore(
+    subscribe,
+    () => api?.scrollSnapList().length ?? 0,
+    () => 0
+  )
 
   React.useEffect(() => {
-    if (!api) return
-    const update = () => setCount(api.scrollSnapList().length)
-    update()
-    api.on("reInit", update)
-    return () => {
-      api.off("reInit", update)
-    }
-  }, [api])
-
-  React.useEffect(() => {
-    if (!fill || !autoplay.enabled) return
-    if (!autoplay.playing) {
-      fill.style.transform = "scaleX(1)"
-      setProgress(null)
+    runningRef.current = autoplay.running
+    const progress = progressRef.current
+    if (
+      !progress ||
+      (progress.playState !== "running" && progress.playState !== "paused")
+    )
       return
-    }
-    fill.style.transform = ""
+    if (autoplay.running) progress.play()
+    else progress.pause()
+  }, [autoplay.running])
+
+  React.useEffect(() => {
+    progressRef.current = null
+    if (!fill || !autoplay.enabled || !autoplay.playing) return
     const animation = fill.animate(
       [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
       { duration: autoplay.delay, easing: "linear", fill: "forwards" }
     )
     animation.currentTime = autoplay.elapsed()
-    setProgress(animation)
+    if (!runningRef.current) animation.pause()
+    progressRef.current = animation
     return () => animation.cancel()
   }, [
     fill,
@@ -460,16 +513,6 @@ function CarouselDots({
     autoplay.delay,
     autoplay.elapsed,
   ])
-
-  React.useEffect(() => {
-    if (
-      !progress ||
-      (progress.playState !== "running" && progress.playState !== "paused")
-    )
-      return
-    if (autoplay.running) progress.play()
-    else progress.pause()
-  }, [progress, autoplay.running])
 
   return (
     <div
@@ -496,6 +539,9 @@ function CarouselDots({
             >
               <span
                 ref={setFill}
+                style={
+                  autoplay.playing ? undefined : { transform: "scaleX(1)" }
+                }
                 className="absolute inset-0 origin-left rounded-full bg-foreground rtl:origin-right"
               />
             </span>

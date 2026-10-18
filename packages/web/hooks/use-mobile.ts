@@ -2,18 +2,20 @@ import * as React from "react"
 
 const MOBILE_QUERY = "(width < 48rem)"
 
+function subscribe(onChange: () => void) {
+  const mql = window.matchMedia(MOBILE_QUERY)
+  mql.addEventListener("change", onChange)
+  return () => mql.removeEventListener("change", onChange)
+}
+
+function getSnapshot() {
+  return window.matchMedia(MOBILE_QUERY).matches
+}
+
+function getServerSnapshot() {
+  return false
+}
+
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(MOBILE_QUERY)
-    const onChange = () => {
-      setIsMobile(mql.matches)
-    }
-    mql.addEventListener("change", onChange)
-    setIsMobile(mql.matches)
-    return () => mql.removeEventListener("change", onChange)
-  }, [])
-
-  return !!isMobile
+  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }

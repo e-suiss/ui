@@ -81,7 +81,7 @@ export function EmptyOffline() {
             />
           </EmptyMedia>
           <EmptyTitle className="text-3xl tracking-tight">
-            You're not connected to the internet.
+            You&apos;re not connected to the internet.
           </EmptyTitle>
           <EmptyDescription className="text-lg/normal">
             Turn on Wi-Fi or cellular data. Songs you downloaded still play

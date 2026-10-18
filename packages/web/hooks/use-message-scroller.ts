@@ -460,6 +460,10 @@ class MessageScrollerController {
     if (element) this.applyDataAttributes(this.scrollableStore.getSnapshot())
   }
 
+  setPreserveScrollOnPrepend = (preserve: boolean) => {
+    this.preserveScrollOnPrepend = preserve
+  }
+
   setContentElement = (element: HTMLElement | null) => {
     this.contentElement = element
   }
@@ -1130,15 +1134,27 @@ function useChildListObserver(
   }, [elementRef, onChange])
 }
 
-function useMergedRefs<Instance>(
-  ...refs: Array<React.Ref<Instance> | undefined>
+function assignRef<Instance>(
+  ref: React.Ref<Instance> | undefined,
+  instance: Instance | null
 ) {
-  return React.useCallback((instance: Instance | null) => {
-    for (const ref of refs) {
-      if (typeof ref === "function") ref(instance)
-      else if (ref) ref.current = instance
-    }
-  }, refs)
+  if (typeof ref === "function") ref(instance)
+  else if (ref) ref.current = instance
+}
+
+function useMergedRefs<Instance>(
+  first?: React.Ref<Instance>,
+  second?: React.Ref<Instance>,
+  third?: React.Ref<Instance>
+) {
+  return React.useCallback(
+    (instance: Instance | null) => {
+      assignRef(first, instance)
+      assignRef(second, instance)
+      assignRef(third, instance)
+    },
+    [first, second, third]
+  )
 }
 
 export {

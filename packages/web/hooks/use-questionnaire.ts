@@ -270,6 +270,11 @@ function useRegisteredIds() {
   return [ids, register] as const
 }
 
+function assignRef<T>(ref: React.Ref<T> | undefined, element: T | null) {
+  if (typeof ref === "function") return ref(element)
+  if (ref) ref.current = element
+}
+
 function useComposedRef<T>(
   setElement: (element: T | null) => void,
   ref: React.Ref<T> | undefined
@@ -277,11 +282,19 @@ function useComposedRef<T>(
   return React.useCallback(
     (element: T | null) => {
       setElement(element)
-      if (typeof ref === "function") return ref(element)
-      if (ref) ref.current = element
+      return assignRef(ref, element)
     },
     [setElement, ref]
   )
+}
+
+function syncCheckedElement(
+  element: HTMLInputElement,
+  defaultChecked: boolean,
+  checked: boolean | null
+) {
+  element.defaultChecked = defaultChecked
+  if (checked !== null) element.checked = checked
 }
 
 type UseQuestionnaireParameters = {
@@ -367,6 +380,15 @@ function useQuestionnaire({
         : renderedItems,
     [definitions, recordByName, renderedItems]
   )
+  const initialItemName = sequence[0]?.name
+  const [fallback, setFallback] = React.useState<{ name: string } | null>(null)
+  const handledFallbackRef = React.useRef(fallback)
+
+  if (!controlled && index < 0 && initialItemName) {
+    setUncontrolledItem(initialItemName)
+    if (activeItemName !== null) setFallback({ name: initialItemName })
+  }
+
   const total = sequence.length
   const current = index < 0 ? 0 : index + 1
   const first = total > 0 && index === 0
@@ -386,12 +408,15 @@ function useQuestionnaire({
     const initial = sequence[0]
     if (!initial) return
     if (index < 0) {
-      if (!controlled && activeItemName === null) {
-        setUncontrolledItem(initial.name)
-        return
-      }
-      navigate(initial.name)
+      if (!controlled) return
+      pendingFocusRef.current = { name: initial.name, target: "item" }
+      onItemChange?.(initial.name)
       return
+    }
+    if (fallback && handledFallbackRef.current !== fallback) {
+      handledFallbackRef.current = fallback
+      pendingFocusRef.current = { name: fallback.name, target: "item" }
+      onItemChange?.(fallback.name)
     }
     const pendingFocus = pendingFocusRef.current
     const changed = previousItemRef.current !== activeItemName
@@ -409,7 +434,15 @@ function useQuestionnaire({
       activeItem?.focus()
     }
     pendingFocusRef.current = null
-  }, [activeItem, activeItemName, controlled, index, sequence, navigate])
+  }, [
+    activeItem,
+    activeItemName,
+    controlled,
+    fallback,
+    index,
+    sequence,
+    onItemChange,
+  ])
 
   const registerItem = React.useCallback((record: ItemRecord) => {
     setRecords((current) => [
@@ -648,7 +681,10 @@ function useQuestionnaireItem({
   const defaultAnswerIdsRef = React.useRef<string[]>([])
   const multipleRef = React.useRef(multiple)
   const previousMultipleRef = React.useRef(multiple)
-  multipleRef.current = multiple
+
+  React.useLayoutEffect(() => {
+    multipleRef.current = multiple
+  })
 
   const active = !disabled && root.activeItemName === name
   const sortedControls = React.useMemo(
@@ -1083,8 +1119,11 @@ function useQuestionnaireChoice({
 
   React.useLayoutEffect(() => {
     if (!element) return
-    element.defaultChecked = controlled ? !!checked : defaultChecked
-    if (resetVersion > 0) element.checked = isChecked
+    syncCheckedElement(
+      element,
+      controlled ? !!checked : defaultChecked,
+      resetVersion > 0 ? isChecked : null
+    )
   }, [checked, controlled, defaultChecked, element, isChecked, resetVersion])
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -1162,8 +1201,22 @@ function useQuestionnaireInput({
   const [uncontrolledFilled, setUncontrolledFilled] =
     React.useState(defaultFilled)
   const disabled = item.disabled || disabledProp
+  const [resetKey, setResetKey] = React.useState({
+    controlled,
+    defaultFilled,
+    resetVersion,
+  })
   const filled = controlled ? valueFilled : uncontrolledFilled
   const selected = item.selectedAnswerIds.includes(id)
+
+  if (
+    resetKey.controlled !== controlled ||
+    resetKey.defaultFilled !== defaultFilled ||
+    resetKey.resetVersion !== resetVersion
+  ) {
+    setResetKey({ controlled, defaultFilled, resetVersion })
+    if (!controlled && resetVersion > 0) setUncontrolledFilled(defaultFilled)
+  }
 
   React.useLayoutEffect(
     () => registerAnswerSelection(id, initialFilledRef.current),
@@ -1182,20 +1235,8 @@ function useQuestionnaireInput({
   }, [disabled, id, registerAnswerControl])
 
   React.useLayoutEffect(() => {
-    if (controlled) {
-      syncControlledAnswer(id, valueFilled)
-      return
-    }
-    if (resetVersion > 0) setUncontrolledFilled(defaultFilled)
-  }, [
-    controlled,
-    defaultFilled,
-    id,
-    resetVersion,
-    syncControlledAnswer,
-    value,
-    valueFilled,
-  ])
+    if (controlled) syncControlledAnswer(id, valueFilled)
+  }, [controlled, id, resetVersion, syncControlledAnswer, value, valueFilled])
 
   React.useLayoutEffect(() => {
     const element = elementRef.current

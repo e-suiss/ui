@@ -223,8 +223,8 @@ export function ChatThread() {
         <p className="text-sm font-semibold text-muted-foreground">Phone</p>
         <h2 className="text-4xl font-semibold tracking-tight">Messages.</h2>
         <p className="text-lg text-muted-foreground">
-          Double-click a bubble to add a heart. Send a message and you'll get a
-          reply.
+          Double-click a bubble to add a heart. Send a message and you&apos;ll
+          get a reply.
         </p>
       </div>
     </section>

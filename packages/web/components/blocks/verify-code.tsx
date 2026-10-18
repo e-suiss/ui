@@ -60,7 +60,7 @@ export function VerifyCode() {
           </span>
           <h1 className="text-4xl font-semibold tracking-tight">Verified.</h1>
           <p className="text-lg text-muted-foreground">
-            This browser is now trusted. You won't be asked for a code next
+            This browser is now trusted. You won&apos;t be asked for a code next
             time.
           </p>
           <button
@@ -155,7 +155,7 @@ export function VerifyCode() {
             </button>
           )}
           <a href="#help" className="text-primary hover:underline">
-            Didn't get a verification code? ›
+            Didn&apos;t get a verification code? ›
           </a>
         </div>
       </div>

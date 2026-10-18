@@ -35,7 +35,7 @@ export function TooltipChartDashed() {
     <Card variant="filled" size="sm">
       <CardHeader>
         <CardTitle>Dashed indicator</CardTitle>
-        <CardDescription>indicator="dashed"</CardDescription>
+        <CardDescription>indicator=&quot;dashed&quot;</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer

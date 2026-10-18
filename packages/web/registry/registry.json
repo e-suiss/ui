@@ -1807,9 +1807,6 @@
       "type": "registry:component",
       "title": "Context Actions",
       "description": "Actions for an element that open as a context menu on right click, or an action sheet on long press on mobile.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
       "registryDependencies": [
         "@esuiss/alert-sheet",
         "@esuiss/context-menu",

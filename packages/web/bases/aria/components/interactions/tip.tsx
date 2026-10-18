@@ -167,13 +167,15 @@ function TipCard({
 }: React.ComponentProps<"div">) {
   const { visible } = useTip()
   const [mounted, setMounted] = React.useState(visible)
+  const [previous, setPrevious] = React.useState(visible)
 
-  React.useEffect(() => {
+  if (visible !== previous) {
+    setPrevious(visible)
     if (visible) setMounted(true)
     else if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setMounted(false)
     }
-  }, [visible])
+  }
 
   if (!mounted) return null
 

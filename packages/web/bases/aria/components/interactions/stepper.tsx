@@ -65,7 +65,9 @@ function Stepper({
   const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue)
   const value = valueProp ?? uncontrolledValue
   const valueRef = React.useRef(value)
-  valueRef.current = value
+  React.useLayoutEffect(() => {
+    valueRef.current = value
+  })
 
   const setValue = React.useCallback(
     (next: number) => {

@@ -49,6 +49,14 @@ function markCollapsed(
   }
 }
 
+function assignRef<Instance>(
+  ref: React.Ref<Instance> | undefined,
+  instance: Instance | null
+) {
+  if (typeof ref === "function") ref(instance)
+  else if (ref) ref.current = instance
+}
+
 function ResizablePanelGroup({
   className,
   variant = "default",
@@ -71,8 +79,7 @@ function ResizablePanelGroup({
       )}
       elementRef={(node: HTMLDivElement | null) => {
         group.current = node
-        if (typeof elementRef === "function") elementRef(node)
-        else if (elementRef) elementRef.current = node
+        assignRef(elementRef, node)
       }}
       onLayoutChange={(next) => {
         animateJumps(group.current, layout.current, next)
