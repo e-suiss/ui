@@ -50,6 +50,8 @@ import {
 } from "@/components/ui/trace"
 ```
 
+<OnlyBase base="base radix">
+
 ```tsx
 <Trace>
   <TraceCollapsible defaultOpen>
@@ -80,9 +82,39 @@ import {
 </Trace>
 ```
 
+</OnlyBase>
+
 <OnlyBase base="aria">
 
-Use `defaultExpanded` instead of `defaultOpen` on `TraceCollapsible`.
+```tsx
+<Trace>
+  <TraceCollapsible defaultExpanded>
+    <TraceCollapsibleTrigger>
+      <TraceLine>
+        <TraceTitle>Found the project files</TraceTitle>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <SearchIcon />
+          </TraceIcon>
+          <TraceTitle>Searched for app/page.tsx</TraceTitle>
+        </TraceLine>
+        <a href="/files/app/page.tsx">
+          <TraceLine>
+            <TraceIcon>
+              <FileTextIcon />
+            </TraceIcon>
+            <TraceTitle>Read app/page.tsx</TraceTitle>
+          </TraceLine>
+        </a>
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
 
 </OnlyBase>
 

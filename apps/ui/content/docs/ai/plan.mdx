@@ -42,6 +42,8 @@ import {
 } from "@/components/ui/trace"
 ```
 
+<OnlyBase base="base radix">
+
 ```tsx
 <Trace>
   <TraceCollapsible defaultOpen>
@@ -80,9 +82,47 @@ import {
 </Trace>
 ```
 
+</OnlyBase>
+
 <OnlyBase base="aria">
 
-Use `defaultExpanded` instead of `defaultOpen` on `TraceCollapsible`.
+```tsx
+<Trace>
+  <TraceCollapsible defaultExpanded>
+    <TraceCollapsibleTrigger>
+      <TraceLine status="running">
+        <TraceIcon>
+          <RouteIcon />
+        </TraceIcon>
+        <TraceTitle>Plan: migrate to Base UI</TraceTitle>
+        <TraceDescription>2 of 5 done</TraceDescription>
+      </TraceLine>
+    </TraceCollapsibleTrigger>
+    <TraceCollapsibleContent>
+      <Trace>
+        <TraceLine>
+          <TraceIcon>
+            <CircleCheckIcon />
+          </TraceIcon>
+          <TraceTitle>Replace the Radix imports</TraceTitle>
+        </TraceLine>
+        <TraceLine status="running">
+          <TraceIcon>
+            <CircleDotIcon />
+          </TraceIcon>
+          <TraceTitle>Rename asChild to render</TraceTitle>
+        </TraceLine>
+        <TraceLine status="pending">
+          <TraceIcon>
+            <CircleIcon />
+          </TraceIcon>
+          <TraceTitle>Run the type checker</TraceTitle>
+        </TraceLine>
+      </Trace>
+    </TraceCollapsibleContent>
+  </TraceCollapsible>
+</Trace>
+```
 
 </OnlyBase>
 

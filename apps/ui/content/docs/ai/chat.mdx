@@ -30,6 +30,12 @@ npx @esuiss/ui@latest add message-scroller message bubble trace code-block input
 ## Usage
 
 ```tsx
+import { Bubble, BubbleContent } from "@/components/ui/bubble"
+import { Message, MessageContent } from "@/components/ui/message"
+import { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from "@/components/ui/message-scroller"
+```
+
+```tsx
 <MessageScrollerProvider autoScroll>
   <MessageScroller>
     <MessageScrollerViewport>
