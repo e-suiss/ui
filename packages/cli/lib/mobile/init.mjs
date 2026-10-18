@@ -377,7 +377,11 @@ export async function init(options) {
           "primitives/toggle",
           "primitives/toggle-group",
         ],
-    { styling: project.styling, overwrite: options.overwrite }
+    {
+      styling: project.styling,
+      overwrite: options.overwrite,
+      iconLibrary: options.iconLibrary,
+    }
   )
 
   if (project.styling === "uniwind") {

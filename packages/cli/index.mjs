@@ -5,6 +5,7 @@ import path from "node:path"
 import { add } from "./lib/add.mjs"
 import { init } from "./lib/init.mjs"
 import { add as addMobile } from "./lib/mobile/add.mjs"
+import { checkIconLibrary, resolveIconLibrary } from "./lib/mobile/icons.mjs"
 import { init as initMobile } from "./lib/mobile/init.mjs"
 import {
   addNative,
@@ -38,6 +39,10 @@ const OPTIONS = {
   preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
                    colors, radius, icons and menu color (init only)`,
   theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
+  iconLibrary: `  --icon-library <phosphor|lucide|tabler|hugeicons|remixicon>
+                   the icons of React Native, SwiftUI and Compose components
+                   (read from the preset or the installed icons when omitted,
+                   otherwise phosphor)`,
   platform: `  -p, --platform <web|rn|swift|kotlin>
                    web, React Native, SwiftUI or Jetpack Compose sources
                    (detected from the project when omitted)`,
@@ -76,6 +81,7 @@ const ADD_OPTIONS = optionLines(
   "yes",
   "base",
   "style",
+  "iconLibrary",
   "platform",
   "styling",
   "path",
@@ -91,6 +97,7 @@ const INIT_OPTIONS = optionLines(
   "style",
   "preset",
   "theme",
+  "iconLibrary",
   "platform",
   "styling",
   "path",
@@ -187,6 +194,10 @@ function parseArgs(args) {
           throw new CliError(`${arg} needs a preset code from the create page.`)
         }
         options.preset = code
+        break
+      }
+      case "--icon-library": {
+        options.iconLibrary = checkIconLibrary(queue.next().value, arg)
         break
       }
       case "--theme": {
@@ -287,7 +298,15 @@ async function resolvePlatform(options) {
   if (options.styling && options.platform !== "rn") {
     throw new CliError("--styling works with React Native projects.")
   }
-  if (options.platform !== "web") options.style = resolveStyle(options)
+  if (options.iconLibrary && options.platform === "web") {
+    throw new CliError(
+      "--icon-library works with --platform rn, swift or kotlin. React projects pick icons with --preset or the iconLibrary in components.json."
+    )
+  }
+  if (options.platform !== "web") {
+    options.style = resolveStyle(options)
+    options.iconLibrary = resolveIconLibrary(options)
+  }
   return options
 }
 

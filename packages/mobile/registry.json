@@ -112,6 +112,81 @@
       }
     }
   },
+  "icons": {
+    "lucide": {
+      "rn": "icons/rn/lucide.tsx",
+      "swift": [
+        "icons/swift/lucide/Icons/EsuissIcons.swift"
+      ],
+      "kotlin": [
+        "icons/kotlin/lucide/icons/EsuissIcons.kt",
+        "icons/kotlin/lucide/icons/thin/Thin.kt",
+        "icons/kotlin/lucide/icons/light/Light.kt",
+        "icons/kotlin/lucide/icons/regular/Regular.kt",
+        "icons/kotlin/lucide/icons/bold/Bold.kt",
+        "icons/kotlin/lucide/icons/fill/Fill.kt",
+        "icons/kotlin/lucide/icons/duotone/Duotone.kt"
+      ],
+      "dependencies": [
+        "lucide-react-native"
+      ]
+    },
+    "tabler": {
+      "rn": "icons/rn/tabler.tsx",
+      "swift": [
+        "icons/swift/tabler/Icons/EsuissIcons.swift"
+      ],
+      "kotlin": [
+        "icons/kotlin/tabler/icons/EsuissIcons.kt",
+        "icons/kotlin/tabler/icons/thin/Thin.kt",
+        "icons/kotlin/tabler/icons/light/Light.kt",
+        "icons/kotlin/tabler/icons/regular/Regular.kt",
+        "icons/kotlin/tabler/icons/bold/Bold.kt",
+        "icons/kotlin/tabler/icons/fill/Fill.kt",
+        "icons/kotlin/tabler/icons/duotone/Duotone.kt"
+      ],
+      "dependencies": [
+        "@tabler/icons-react-native"
+      ]
+    },
+    "hugeicons": {
+      "rn": "icons/rn/hugeicons.tsx",
+      "swift": [
+        "icons/swift/hugeicons/Icons/EsuissIcons.swift"
+      ],
+      "kotlin": [
+        "icons/kotlin/hugeicons/icons/EsuissIcons.kt",
+        "icons/kotlin/hugeicons/icons/thin/Thin.kt",
+        "icons/kotlin/hugeicons/icons/light/Light.kt",
+        "icons/kotlin/hugeicons/icons/regular/Regular.kt",
+        "icons/kotlin/hugeicons/icons/bold/Bold.kt",
+        "icons/kotlin/hugeicons/icons/fill/Fill.kt",
+        "icons/kotlin/hugeicons/icons/duotone/Duotone.kt"
+      ],
+      "dependencies": [
+        "@hugeicons/react-native",
+        "@hugeicons/core-free-icons"
+      ]
+    },
+    "remixicon": {
+      "rn": "icons/rn/remixicon.tsx",
+      "swift": [
+        "icons/swift/remixicon/Icons/EsuissIcons.swift"
+      ],
+      "kotlin": [
+        "icons/kotlin/remixicon/icons/EsuissIcons.kt",
+        "icons/kotlin/remixicon/icons/thin/Thin.kt",
+        "icons/kotlin/remixicon/icons/light/Light.kt",
+        "icons/kotlin/remixicon/icons/regular/Regular.kt",
+        "icons/kotlin/remixicon/icons/bold/Bold.kt",
+        "icons/kotlin/remixicon/icons/fill/Fill.kt",
+        "icons/kotlin/remixicon/icons/duotone/Duotone.kt"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ]
+    }
+  },
   "items": [
     {
       "name": "accordion",

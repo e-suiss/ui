@@ -54,7 +54,8 @@
         "nativewind/components/**/*.tsx",
         "stylesheet/components/**/*.{ts,tsx}",
         "components/primitives/*.{ts,tsx}",
-        "App.web.tsx"
+        "App.web.tsx",
+        "icons/rn/*.tsx"
       ],
       "project": [
         "uniwind/**/*.{ts,tsx}",
@@ -64,7 +65,8 @@
         "*.{ts,tsx}",
         "nativewind/**/*.tsx",
         "stylesheet/**/*.{ts,tsx}",
-        "components/primitives/*.{ts,tsx}"
+        "components/primitives/*.{ts,tsx}",
+        "icons/rn/*.tsx"
       ],
       "paths": {
         "@/components/primitives/*": ["./components/primitives/*"],
@@ -74,7 +76,12 @@
         ]
       },
       "metro": false,
-      "ignoreDependencies": ["expo-updates"]
+      "ignoreDependencies": [
+        "expo-updates",
+        "@tabler/icons",
+        "lucide-static",
+        "remixicon"
+      ]
     },
     "apps/www": {
       "entry": ["lib/image-loader.ts"],
