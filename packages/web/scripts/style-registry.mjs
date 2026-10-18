@@ -4,8 +4,15 @@ import path from "node:path"
 import { packStyles } from "./lib/packed.mjs"
 import { applyStyle, loadStyleMaps, STYLE_NAMES } from "./lib/styles.mjs"
 
-const output = path.resolve(process.argv[2] ?? "")
-const bases = process.argv.slice(3)
+const STYLE_FLAG = "--style="
+const args = process.argv.slice(2)
+const only = args
+  .find((arg) => arg.startsWith(STYLE_FLAG))
+  ?.slice(STYLE_FLAG.length)
+const [target = "", ...bases] = args.filter(
+  (arg) => !arg.startsWith(STYLE_FLAG)
+)
+const output = path.resolve(target)
 const problems = []
 let packed = 0
 
@@ -31,6 +38,10 @@ for (const base of bases) {
     const file = path.join(dir, name)
     const item = JSON.parse(await readFile(file, "utf8"))
     const label = `${base}/${name}`
+    if (only) {
+      await writeFile(file, styled(item, maps[only], label))
+      continue
+    }
     const variants = STYLE_NAMES.map((style) => [
       style,
       styled(item, maps[style], label),

@@ -1175,6 +1175,17 @@ try {
       { cwd: WEB }
     )
   }
+  await run(
+    "Apply the suiss style to the registry",
+    "node",
+    [
+      "scripts/style-registry.mjs",
+      path.join(output, "r"),
+      ...SELECTED,
+      "--style=suiss",
+    ],
+    { cwd: WEB }
+  )
   const origin = await serveDirectory(output)
   const env = { ESUISS_REGISTRY: await serveDirectory(WEB) }
 
