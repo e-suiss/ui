@@ -204,7 +204,7 @@ export function CreatePage() {
     setState((current) => ({ ...current, [key]: value }))
 
   return (
-    <div className="mx-auto flex w-full max-w-[1680px] flex-col gap-10 px-5 py-10 md:px-10 lg:flex-row">
+    <div className="flex w-full flex-col gap-10 px-5 py-10 md:px-10 lg:flex-row">
       <aside className="flex w-full shrink-0 flex-col gap-6 lg:sticky lg:top-24 lg:w-80 lg:self-start">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-semibold tracking-[-0.03em]">

@@ -7,7 +7,7 @@ export default function DocsLayout(props: LayoutProps<"/docs">) {
   return (
     <SidebarProvider className="min-h-0 flex-1 flex-col has-[[data-slot=sidebar][data-variant=inset]]:bg-transparent">
       <LocalNav />
-      <div className="mx-auto flex w-full max-w-[1680px] flex-1 md:ps-6">
+      <div className="flex w-full flex-1 md:ps-6">
         <DocsSidebar nodes={source.getPageTree().children} />
         <div className="min-w-0 flex-1">{props.children}</div>
       </div>
