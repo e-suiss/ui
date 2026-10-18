@@ -21,7 +21,7 @@ export const dictionary = {
   verbsTitle: "Every product answers one question.",
   developersLabel: "Developers",
   developersTitle: "Build with suiss today.",
-  developersBody: "Our component libraries are open source and available now.",
+  developersBody: "Our component library is open source and available now.",
   learnMore: "Learn more",
   visitSite: "Visit site",
   inDevelopment: "In development",
