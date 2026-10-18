@@ -358,6 +358,46 @@ Leave out the names to pick from a list that only shows what exists for SwiftUI.
 2. Copy the theme files, `Theme.swift` and `Tokens.swift`. Every view uses them.
 3. Copy the component and the files it uses, then add them to your app target.
 
+## Use the registry CLI
+
+The components are also in the registry, so `npx shadcn@latest add` can copy them. Put a `components.json` and a `jsconfig.json` in the folder that holds your Xcode project:
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "swift-suiss",
+  "rsc": false,
+  "tsx": false,
+  "tailwind": {
+    "config": "",
+    "css": "",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "EsuissUI",
+    "utils": "EsuissUI"
+  },
+  "registries": {
+    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
+  }
+}
+```
+
+```json title="jsconfig.json"
+{
+  "compilerOptions": { "baseUrl": "." }
+}
+```
+
+For another [style](/docs/theming#styles), set `style` to `swift-vega`, `swift-luma` and so on. Then add components:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/button
+```
+
+Every component pulls in `@esuiss/theme-suiss`, the theme files of your style, and the files it uses. Files go to `EsuissUI/`; add that folder to your app target in Xcode. For a Swift package with its own targets, use the suiss/ui CLI, which picks the target folder. The registry CLI prints what a component needs but never changes your project settings, and it does not copy preset fonts or switch the icon library; the suiss/ui CLI does both.
+
 ## Usage
 
 Components follow SwiftUI conventions. The copied files are part of your app target, so the views need no extra import. The button, for example, is a button style:
@@ -427,6 +467,46 @@ dependencies {
 2. Copy the theme files, `Theme.kt` and `Tokens.kt`. Every composable uses them.
 3. Copy the component and the files it uses.
 4. Update the `com.esuiss.ui` package names to match your project.
+
+## Use the registry CLI
+
+The components are also in the registry, so `npx shadcn@latest add` can copy them. Put a `components.json` and a `jsconfig.json` in the root of your Android project:
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "kotlin-suiss",
+  "rsc": false,
+  "tsx": false,
+  "tailwind": {
+    "config": "",
+    "css": "",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "app/src/main/kotlin/com/esuiss/ui",
+    "utils": "app/src/main/kotlin/com/esuiss/ui"
+  },
+  "registries": {
+    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
+  }
+}
+```
+
+```json title="jsconfig.json"
+{
+  "compilerOptions": { "baseUrl": "." }
+}
+```
+
+For another [style](/docs/theming#styles), set `style` to `kotlin-vega`, `kotlin-luma` and so on. Then add components:
+
+```bash title="Terminal"
+npx shadcn@latest add @esuiss/button
+```
+
+Every component pulls in `@esuiss/theme-suiss`, the theme files of your style, and the files it uses. Files go to `app/src/main/kotlin/com/esuiss/ui/`, so the app module has to be `app/`; for another module, use the suiss/ui CLI, which finds it. The registry CLI prints what a component needs but never changes your project settings, and it does not copy preset fonts or switch the icon library; the suiss/ui CLI does both.
 
 ## Usage
 

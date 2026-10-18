@@ -10,14 +10,14 @@ eyebrow: suiss/ui
 
 ## Registry CLI
 
-Every React item is also published as a registry under the `@esuiss` namespace, so any project with a `components.json` can add it with the registry CLI instead. The item names are the same, without the group:
+Every React, React Native, SwiftUI and Compose item is also published as a registry under the `@esuiss` namespace, so any project with a `components.json` can add it with the registry CLI instead. The item names are the same, without the group:
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/button
 npx shadcn@latest add @esuiss/date-picker @esuiss/area-chart-default
 ```
 
-Files land in the same folders as below, icons follow the icon library in `components.json`, and the `style` there picks the primitive base. See [Installation](/docs/installation#choose-the-primitive-base). Until the namespace is listed in the public registry directory, register it once as shown in [Installation](/docs/installation#register-the-namespace).
+For React, files land in the same folders as below, icons follow the icon library in `components.json`, and the `style` there picks the primitive base. See [Installation](/docs/installation#choose-the-primitive-base). For the other platforms the `style` picks the platform and the style, such as `rn-uniwind-suiss`, `swift-suiss` or `kotlin-suiss`; the Installation page of each platform has the `components.json` to use. The registry CLI only copies files and installs npm packages: it prints the Swift packages and Gradle dependencies a SwiftUI or Compose item needs, and leaves preset fonts and icon library switching to `@esuiss/ui`. Until the namespace is listed in the public registry directory, register it once as shown in [Installation](/docs/installation#register-the-namespace).
 
 ## init
 

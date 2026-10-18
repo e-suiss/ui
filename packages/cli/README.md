@@ -65,7 +65,7 @@ export function Example() {
 
 ### Registry CLI
 
-The React items are also a registry under the `@esuiss` namespace, so any project with a `components.json` can add them without this CLI:
+The React, React Native, SwiftUI and Compose items are also a registry under the `@esuiss` namespace, so any project with a `components.json` can add them without this CLI. The examples below are for React; the other platforms use their own `style`, such as `rn-uniwind-suiss`, `swift-suiss` or `kotlin-suiss` (see [Installation](https://suiss.app/ui/docs/installation)):
 
 ```bash
 npx shadcn@latest add @esuiss/button @esuiss/dialog
