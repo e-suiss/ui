@@ -127,6 +127,7 @@ function presetCode(state: CreateState) {
     chartColor: theme as PresetConfig["chartColor"],
     iconLibrary: state.iconLibrary,
     font: (state.font === OWN ? "inter" : state.font) as PresetConfig["font"],
+    fontHeading: state.font === "inter" ? "inter" : "inherit",
     radius: state.radius,
     menuAccent: state.menuAccent,
     menuColor: state.menuColor,
