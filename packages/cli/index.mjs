@@ -146,11 +146,13 @@ const APPLY_OPTIONS = optionLines(
   "version"
 )
 
+const ALL_OPTIONS = optionLines(...Object.keys(OPTIONS))
+
 function page(lines, list) {
   return `${name} ${version}\n\nUsage:${lines}\n\nOptions:\n${list}\n\n${SUPPORTED}`
 }
 
-const usage = page(`${INIT_LINES}${APPLY_LINES}${ADD_LINES}`, ADD_OPTIONS)
+const usage = `${page(`${INIT_LINES}${APPLY_LINES}${ADD_LINES}`, ALL_OPTIONS)}\n\nRun npx ${name} <command> --help for the options of one command.`
 
 const COMMAND_USAGE = {
   init: page(INIT_LINES, INIT_OPTIONS),
@@ -376,6 +378,15 @@ async function resolvePlatform(options) {
       )
     }
   }
+  checkPlatformOptions(options)
+  if (options.platform !== "web") {
+    options.style = resolveStyle(options)
+    options.iconLibrary = resolveIconLibrary(options)
+  }
+  return options
+}
+
+function checkPlatformOptions(options) {
   if (options.path && ["web", "rn"].includes(options.platform)) {
     throw new CliError("--path works with --platform swift or kotlin.")
   }
@@ -394,10 +405,9 @@ async function resolvePlatform(options) {
     throw new CliError("--rtl and --pointer work with React projects.")
   }
   if (options.platform !== "web") {
-    options.style = resolveStyle(options)
-    options.iconLibrary = resolveIconLibrary(options)
+    resolveStyle(options)
+    resolveIconLibrary(options)
   }
-  return options
 }
 
 function rejectOptions(options, keys, message) {
@@ -413,6 +423,7 @@ function createFromTemplate(options) {
       `--template ${options.template} creates a ${PLATFORM_TITLES[platform]} app. Drop --platform ${options.platform}.`
     )
   }
+  checkPlatformOptions({ ...options, platform })
   options.cwd = createProject({
     template: options.template,
     name: options.name,
@@ -479,6 +490,14 @@ async function main() {
       if (options.only === "font" && options.style) {
         throw new CliError(
           "--style changes components and themes; drop --only font to use it."
+        )
+      }
+      if (
+        options.only === "font" &&
+        (options.primary !== undefined || options.theme !== undefined)
+      ) {
+        throw new CliError(
+          "--primary and --theme change the colors; drop --only font to use them."
         )
       }
       const keepsStyle = options.style === undefined && !options.preset

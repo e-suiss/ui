@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process"
-import { readFileSync } from "node:fs"
+import { readdirSync, readFileSync } from "node:fs"
 import { describe, expect, it } from "vitest"
 
 import { createProject } from "./helpers.mjs"
@@ -134,6 +134,66 @@ describe("esuiss-ui command", () => {
       "missing-folder-for-the-test"
     )
     expect(result.stderr).not.toContain("drop --only")
+  })
+
+  it("keeps --primary and --theme out of --only font", () => {
+    for (const flag of [
+      ["--primary", "#ff0000"],
+      ["--theme", "suiss"],
+    ]) {
+      const result = run(
+        "apply",
+        "--only",
+        "font",
+        "--preset",
+        "bJ4oV1t",
+        ...flag
+      )
+      expect(result.code).not.toBe(0)
+      expect(result.stderr).toContain(
+        "--primary and --theme change the colors; drop --only font to use them."
+      )
+    }
+  })
+
+  it.each([
+    [
+      ["--template", "next", "--icon-library", "lucide"],
+      "--icon-library works with",
+    ],
+    [
+      ["--template", "next", "--styling", "uniwind"],
+      "--styling works with React Native",
+    ],
+    [["--template", "vite", "--path", "x"], "--path works with"],
+    [
+      ["--template", "expo", "--base", "radix"],
+      "--base works with React projects.",
+    ],
+    [
+      ["--template", "expo", "--rtl"],
+      "--rtl and --pointer work with React projects.",
+    ],
+  ])("checks %j before creating the app", (args, message) => {
+    const cwd = createProject({})
+    const result = run("init", ...args, "--cwd", cwd)
+    expect(result.code).not.toBe(0)
+    expect(result.stderr).toContain(message)
+    expect(readdirSync(cwd)).toEqual([])
+  })
+
+  it("lists the options of every command in the top-level usage", () => {
+    const { stdout } = run("--help")
+    for (const option of [
+      "--preset",
+      "--style",
+      "--only",
+      "--template",
+      "--overwrite",
+    ]) {
+      expect(stdout).toContain(option)
+    }
+    expect(stdout).toContain("<command> --help")
   })
 
   it("rejects --template with another platform", () => {
