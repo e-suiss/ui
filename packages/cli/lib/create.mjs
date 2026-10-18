@@ -11,7 +11,7 @@ export const TEMPLATES = {
   expo: { title: "Expo", platform: "rn" },
 }
 
-export const UNSUPPORTED_TEMPLATES = {
+const UNSUPPORTED_TEMPLATES = {
   start: "TanStack Start",
   "react-router": "React Router",
   astro: "Astro",
@@ -71,7 +71,7 @@ function defaultRun(command, args, cwd) {
   return result.status === 0
 }
 
-export function packageManagerOf() {
+function packageManagerOf() {
   return agentPackageManager() ?? "npm"
 }
 
