@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { ICON_LABELS, type IconLibrary, STYLE_LABELS } from "@/lib/code-options"
 import {
@@ -90,7 +91,7 @@ function Picker({
         if (!next) onPreview(null)
       }}
     >
-      <PopoverTrigger className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-start outline-none transition-colors hover:bg-foreground/5 focus-visible:ring-3 focus-visible:ring-ring/50 data-popup-open:bg-foreground/5">
+      <PopoverTrigger className="flex w-full items-center gap-3 rounded-xl bg-foreground/5 px-3.5 py-2 text-start outline-none transition-colors hover:bg-foreground/8 focus-visible:ring-3 focus-visible:ring-ring/50 data-popup-open:bg-foreground/10">
         <span className="flex min-w-0 flex-1 flex-col">
           <span className="text-xs text-muted-foreground">{label}</span>
           <span className="truncate text-sm font-medium text-foreground">
@@ -104,44 +105,46 @@ function Picker({
         align={isMobile ? "center" : "start"}
         sideOffset={8}
         onMouseLeave={() => onPreview(null)}
-        className="max-h-92 w-56 overflow-y-auto p-1"
+        className="w-56 p-0"
       >
-        <RadioGroup
-          aria-label={label}
-          value={value}
-          onValueChange={(next) => {
-            onChange(next as string)
-            onPreview(null)
-            if (isMobile) setOpen(false)
-          }}
-          className="flex flex-col"
-        >
-          {groups.map((options, index) => (
-            <div
-              key={options[0]?.value ?? index}
-              className={cn(
-                "flex flex-col",
-                index > 0 && "mt-1 border-t border-border pt-1"
-              )}
-            >
-              {options.map((option) => (
-                <Radio.Root
-                  key={option.value}
-                  value={option.value}
-                  onMouseEnter={() => onPreview(option.value)}
-                  className="group/item flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-start text-sm outline-none transition-colors hover:bg-foreground/5 focus-visible:bg-foreground/5"
-                >
-                  <Swatch color={option.swatch} />
-                  <span className="flex-1 truncate">{option.label}</span>
-                  <CheckIcon
-                    aria-hidden
-                    className="size-4 opacity-0 group-data-checked/item:opacity-100"
-                  />
-                </Radio.Root>
-              ))}
-            </div>
-          ))}
-        </RadioGroup>
+        <ScrollArea className="[&>[data-slot=scroll-area-viewport]]:max-h-92">
+          <RadioGroup
+            aria-label={label}
+            value={value}
+            onValueChange={(next) => {
+              onChange(next as string)
+              onPreview(null)
+              if (isMobile) setOpen(false)
+            }}
+            className="flex flex-col p-1"
+          >
+            {groups.map((options, index) => (
+              <div
+                key={options[0]?.value ?? index}
+                className={cn(
+                  "flex flex-col",
+                  index > 0 && "mt-1 border-t border-border pt-1"
+                )}
+              >
+                {options.map((option) => (
+                  <Radio.Root
+                    key={option.value}
+                    value={option.value}
+                    onMouseEnter={() => onPreview(option.value)}
+                    className="group/item flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-start text-sm outline-none transition-colors hover:bg-foreground/5 focus-visible:bg-foreground/5"
+                  >
+                    <Swatch color={option.swatch} />
+                    <span className="flex-1 truncate">{option.label}</span>
+                    <CheckIcon
+                      aria-hidden
+                      className="size-4 opacity-0 group-data-checked/item:opacity-100"
+                    />
+                  </Radio.Root>
+                ))}
+              </div>
+            ))}
+          </RadioGroup>
+        </ScrollArea>
       </PopoverContent>
     </Popover>
   )
@@ -284,7 +287,7 @@ export function CreatePage() {
             {strings.createIntro}
           </p>
         </div>
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-col gap-1.5">
           {picker("platform", strings.createPlatform, [
             PLATFORMS.map((item) => ({ value: item.value, label: item.label })),
           ])}
