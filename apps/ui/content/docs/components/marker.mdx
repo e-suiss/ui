@@ -373,6 +373,8 @@ import { Icon } from "@/components/ui/icon"
 import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <View className="gap-8">
   <Marker>
@@ -392,6 +394,32 @@ import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
   </Marker>
 </View>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+<View style={{ gap: 32 }}>
+  <Marker>
+    <MarkerIcon>
+      <Icon as={InfoIcon} />
+    </MarkerIcon>
+    <MarkerContent>Messages are end-to-end encrypted.</MarkerContent>
+  </Marker>
+  <Marker variant="separator">
+    <MarkerContent>Today</MarkerContent>
+  </Marker>
+  <Marker variant="border">
+    <MarkerIcon>
+      <Icon as={CalendarBlankIcon} />
+    </MarkerIcon>
+    <MarkerContent>Upcoming</MarkerContent>
+  </Marker>
+</View>
+```
+
+</OnlyStyling>
 
 </Only>
 

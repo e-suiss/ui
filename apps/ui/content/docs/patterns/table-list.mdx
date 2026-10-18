@@ -289,6 +289,8 @@ import { View } from "react-native"
 import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, TableListRow, TableList } from "@/components/patterns/table-list"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <View className="gap-8">
   <TableList
@@ -301,6 +303,25 @@ import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, T
   <TableList rows={[]} columns={columns} emptyText="No invoices yet." />
 </View>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+<View style={{ gap: 32 }}>
+  <TableList
+    title="Invoices"
+    rows={invoices}
+    columns={columns}
+    getKey={(row) => row.id}
+    onRowPress={() => undefined}
+  />
+  <TableList rows={[]} columns={columns} emptyText="No invoices yet." />
+</View>
+```
+
+</OnlyStyling>
 
 </Only>
 

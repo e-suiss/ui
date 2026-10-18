@@ -1,16 +1,18 @@
 import path from "node:path"
 import type * as PageTree from "fumadocs-core/page-tree"
 
-import { DEFAULT_BASE } from "@/lib/code-options"
+import { DEFAULT_BASE, STYLING_LABELS } from "@/lib/code-options"
 import { BASE_TITLES } from "@/lib/create/templates"
 import { exampleSource, readSource, sourcePath } from "@/lib/highlight"
 import { nativeCode, nativePreview } from "@/lib/native"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
+import { strings } from "@/lib/strings"
 import { pageSummary } from "@/lib/summary"
 
 const ONLY_OPEN = /^<Only platform="([^"]*)">$/
 const ONLY_BASE_OPEN = /^<OnlyBase base="([^"]*)">$/
+const ONLY_STYLING_OPEN = /^<OnlyStyling styling="([^"]*)">$/
 const TABS_OPEN = /^<Tabs\b(.*)>$/
 const BLOCK_OPEN = /^<(NativeExample|ApiPart|Callout|Anatomy)\b([^>]*)>$/
 const FIRST_CHAR = /^./
@@ -132,6 +134,15 @@ async function toMarkdown(body: string, context: MarkdownContext) {
     return [
       previewImage(id),
       ...(code.rn ? [fence(code.rn, "tsx", platformNames.rn)] : []),
+      ...(code.stylesheet && code.stylesheet !== code.rn
+        ? [
+            fence(
+              code.stylesheet,
+              "tsx",
+              `${platformNames.rn} (${STYLING_LABELS.stylesheet})`
+            ),
+          ]
+        : []),
       ...(code.swift ? [fence(code.swift, "swift", platformNames.swift)] : []),
       ...(code.kotlin
         ? [fence(code.kotlin, "kotlin", platformNames.kotlin)]
@@ -214,6 +225,21 @@ function cleanMarkdown(body: string, full: boolean) {
     }
     if (trimmed === "</OnlyBase>") {
       if (!full) close()
+      continue
+    }
+    const onlyStyling = trimmed.match(ONLY_STYLING_OPEN)
+    if (onlyStyling) {
+      const label = scopeLabel(onlyStyling[1].split(" "), STYLING_LABELS)
+      scopes.push(label)
+      output.push(label, "")
+      continue
+    }
+    if (trimmed === "</OnlyStyling>") {
+      close()
+      continue
+    }
+    if (trimmed === "<StylingNote />") {
+      output.push(strings.stylingNote)
       continue
     }
     const only = trimmed.match(ONLY_OPEN)

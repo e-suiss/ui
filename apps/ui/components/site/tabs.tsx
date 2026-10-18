@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useCodeOptions } from "@/components/site/code-options"
+import { STYLING_LABELS } from "@/lib/code-options"
 import { cn } from "@/lib/utils"
 
 export function Tabs({
@@ -11,6 +13,11 @@ export function Tabs({
   children: React.ReactNode
 }) {
   const [active, setActive] = React.useState(0)
+  const { styling } = useCodeOptions()
+  const preferred = items.indexOf(STYLING_LABELS[styling])
+  React.useEffect(() => {
+    if (preferred >= 0) setActive(preferred)
+  }, [preferred])
   const panels = React.Children.toArray(children)
 
   return (

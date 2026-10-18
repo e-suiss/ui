@@ -646,6 +646,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
@@ -712,6 +714,79 @@ export function ComboboxExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
+
+const frameworks = [
+  "Next.js",
+  "SvelteKit",
+  "Nuxt.js",
+  "Remix",
+  "Astro",
+  "Gatsby",
+  "Expo",
+]
+
+function ComboboxDemo({
+  defaultValue = null,
+  defaultOpen,
+  disabled,
+  showClear,
+  labelledBy,
+  invalid,
+}: {
+  defaultValue?: string | null
+  defaultOpen?: boolean
+  disabled?: boolean
+  showClear?: boolean
+  labelledBy?: string
+  invalid?: boolean
+}) {
+  const [value, setValue] = React.useState<string | null>(defaultValue)
+  return (
+    <Combobox
+      items={frameworks}
+      value={value}
+      onValueChange={setValue}
+      defaultOpen={defaultOpen}
+      disabled={disabled}
+    >
+      <ComboboxInput
+        style={{ width: 256 }}
+        placeholder="Select a framework"
+        showClear={showClear}
+        disabled={disabled}
+        invalid={invalid}
+        accessibilityLabelledBy={labelledBy}
+      />
+      <ComboboxContent>
+        <ComboboxEmpty>No framework found.</ComboboxEmpty>
+        <ComboboxList>
+          {(item: string) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+
+export function ComboboxExample() {
+  return (
+    <ComboboxDemo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

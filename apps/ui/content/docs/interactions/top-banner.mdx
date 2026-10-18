@@ -209,6 +209,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { WifiSlashIcon } from "phosphor-react-native"
 import * as React from "react"
@@ -274,6 +276,80 @@ export function TopBannerExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { WifiSlashIcon } from "phosphor-react-native"
+import * as React from "react"
+import { View } from "react-native"
+import { TopBannerProvider, useTopBanner } from "@/components/interactions/top-banner"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+import { fontSize, useTheme } from "@/components/ui/theme"
+
+function Triggers() {
+  const { colors } = useTheme()
+  const { show, dismiss } = useTopBanner()
+  const [log, setLog] = React.useState("")
+  return (
+    <View style={{ width: "100%", gap: 12 }}>
+      <Button
+        variant="outline"
+        onPress={() =>
+          show({
+            title: "Message sent",
+            description: "Alex will see it the next time they open the app.",
+          })
+        }
+      >
+        <Text>Show banner</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          show({
+            icon: WifiSlashIcon,
+            title: "You are offline",
+            description: "Changes will sync when you reconnect.",
+            action: { label: "Retry", onPress: () => setLog("Retry pressed") },
+          })
+        }
+      >
+        <Text>Show with icon and action</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() => {
+          show({ title: "First of three" })
+          show({ title: "Second of three" })
+          show({ title: "Third of three" })
+        }}
+      >
+        <Text>Queue three</Text>
+      </Button>
+      <Button variant="ghost" onPress={() => dismiss()}>
+        <Text>Dismiss current</Text>
+      </Button>
+      <Text role="status" style={{ ...fontSize.sm, color: colors.mutedForeground }}>
+        {log}
+      </Text>
+    </View>
+  )
+}
+
+export function TopBannerExample() {
+  return (
+    <TopBannerProvider>
+      <Triggers />
+    </TopBannerProvider>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

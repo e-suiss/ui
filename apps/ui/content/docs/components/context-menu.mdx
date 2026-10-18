@@ -753,6 +753,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@/components/ui/context-menu"
@@ -834,6 +836,96 @@ export function ContextMenuExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@/components/ui/context-menu"
+import { Text } from "@/components/ui/text"
+import { fontSize, radius, useTheme } from "@/components/ui/theme"
+
+function TriggerArea() {
+  const { colors } = useTheme()
+  return (
+    <ContextMenuTrigger style={{ borderColor: colors.border, height: 144, width: "100%", alignItems: "center", justifyContent: "center", borderRadius: radius.md, borderWidth: 1, borderStyle: "dashed" }}>
+      <Text style={{ ...fontSize.sm, color: colors.mutedForeground }}>Long press here</Text>
+    </ContextMenuTrigger>
+  )
+}
+
+function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
+  const [showBookmarks, setShowBookmarks] = React.useState(true)
+  const [showUrls, setShowUrls] = React.useState(false)
+  const [person, setPerson] = React.useState("pedro")
+  return (
+    <ContextMenu defaultOpen={defaultOpen}>
+      <TriggerArea />
+      <ContextMenuContent style={{ width: 256 }}>
+        <ContextMenuItem inset>
+          <Text>Back</Text>
+        </ContextMenuItem>
+        <ContextMenuItem inset disabled>
+          <Text>Forward</Text>
+        </ContextMenuItem>
+        <ContextMenuItem inset>
+          <Text>Reload</Text>
+        </ContextMenuItem>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger inset>
+            <Text>More tools</Text>
+          </ContextMenuSubTrigger>
+          <ContextMenuSubContent style={{ width: 192 }}>
+            <ContextMenuItem>
+              <Text>Save page</Text>
+            </ContextMenuItem>
+            <ContextMenuItem>
+              <Text>Create shortcut</Text>
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem variant="destructive">
+              <Text>Delete</Text>
+            </ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        <ContextMenuSeparator />
+        <ContextMenuCheckboxItem
+          checked={showBookmarks}
+          onCheckedChange={setShowBookmarks}
+        >
+          <Text>Show bookmarks</Text>
+        </ContextMenuCheckboxItem>
+        <ContextMenuCheckboxItem
+          checked={showUrls}
+          onCheckedChange={setShowUrls}
+        >
+          <Text>Show full URLs</Text>
+        </ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <ContextMenuRadioGroup value={person} onValueChange={setPerson}>
+          <ContextMenuLabel inset>People</ContextMenuLabel>
+          <ContextMenuRadioItem value="pedro">
+            <Text>Pedro Duarte</Text>
+          </ContextMenuRadioItem>
+          <ContextMenuRadioItem value="colm">
+            <Text>Colm Tuite</Text>
+          </ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      </ContextMenuContent>
+    </ContextMenu>
+  )
+}
+
+export function ContextMenuExample() {
+  return (
+    <ContextMenuDemo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

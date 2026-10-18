@@ -467,6 +467,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { CaretUpDownIcon } from "phosphor-react-native"
 import * as React from "react"
@@ -525,6 +527,73 @@ export function CollapsibleExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { CaretUpDownIcon } from "phosphor-react-native"
+import * as React from "react"
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
+import { fontSize, radius, useTheme } from "@/components/ui/theme"
+
+const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
+
+function CollapsibleDemo({
+  initialOpen = false,
+  disabled = false,
+}: {
+  initialOpen?: boolean
+  disabled?: boolean
+}) {
+  const { colors } = useTheme()
+  const [open, setOpen] = React.useState(initialOpen)
+  return (
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
+      disabled={disabled}
+      style={{ width: "100%", gap: 8 }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 16, paddingHorizontal: 12 }}>
+        <Text style={{ ...fontSize.sm, fontWeight: "500" }}>
+          @ademceper starred 3 repositories
+        </Text>
+        <CollapsibleTrigger
+          render={
+            <Button variant="ghost" size="icon-sm" disabled={disabled}>
+              <Icon as={CaretUpDownIcon} size={16} />
+            </Button>
+          }
+        />
+      </View>
+      <View style={{ borderRadius: radius["2xl"], backgroundColor: colors.muted, paddingHorizontal: 16, paddingVertical: 8 }}>
+        <Text style={{ ...fontSize.sm }}>{repositories[0]}</Text>
+      </View>
+      <CollapsibleContent style={{ gap: 8 }}>
+        {repositories.slice(1).map((repository) => (
+          <View key={repository} style={{ borderRadius: radius["2xl"], backgroundColor: colors.muted, paddingHorizontal: 16, paddingVertical: 8 }}>
+            <Text style={{ ...fontSize.sm }}>{repository}</Text>
+          </View>
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+export function CollapsibleExample() {
+  return (
+    <CollapsibleDemo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

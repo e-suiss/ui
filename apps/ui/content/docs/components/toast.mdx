@@ -481,6 +481,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 ## Usage
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View } from "react-native"
 import { Button } from "@/components/ui/button"
@@ -571,6 +573,103 @@ export function ToastExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+import { Toaster, toast } from "@/components/ui/toast"
+
+function wait(ms: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms))
+}
+
+function Examples() {
+  return (
+    <View style={{ alignItems: "flex-start", gap: 12 }}>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Event created",
+            description: "Sunday, December 3 at 9:00 AM",
+          })
+        }
+      >
+        <Text>Show toast</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Message archived",
+            type: "info",
+            actionProps: {
+              children: "Undo",
+              onPress: () => toast.add({ title: "Restored", type: "success" }),
+            },
+          })
+        }
+      >
+        <Text>With action</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Storage almost full",
+            description: "Free up space to keep syncing.",
+            type: "warning",
+          })
+        }
+      >
+        <Text>Warning</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.add({
+            title: "Upload failed",
+            description: "Check your connection and try again.",
+            type: "error",
+            priority: "high",
+          })
+        }
+      >
+        <Text>Error</Text>
+      </Button>
+      <Button
+        variant="outline"
+        onPress={() => {
+          toast
+            .promise(wait(2000), {
+              loading: "Saving changes",
+              success: "Changes saved",
+              error: "Could not save changes",
+            })
+            .catch(() => undefined)
+        }}
+      >
+        <Text>Promise</Text>
+      </Button>
+    </View>
+  )
+}
+
+export function ToastExample() {
+  return (
+    <Toaster>
+      <Examples />
+    </Toaster>
+  )
+}
+```
+
+</OnlyStyling>
 
 Render `Toaster` once near the root, then call the exported `toast` manager from anywhere: `toast.add({ title, description, type })` returns an id, `toast.update(id, updates)` changes a toast, and `toast.close(id)` removes it (or all toasts when called without an id).
 

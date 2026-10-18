@@ -352,6 +352,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { View } from "react-native"
@@ -395,6 +397,58 @@ export function PickerExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { View } from "react-native"
+import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
+import { Text } from "@/components/ui/text"
+import { fontSize, useTheme } from "@/components/ui/theme"
+
+function PickerDemo() {
+  const { colors } = useTheme()
+  const [value, setValue] = React.useState<string>()
+  return (
+    <View style={{ gap: 8 }}>
+      <Picker
+        value={value}
+        onValueChange={setValue}
+        placeholder="Select a fruit"
+        accessibilityLabel="Fruit"
+        style={{ width: 224 }}
+      >
+        <PickerGroup label="Fruits">
+          <PickerItem value="cherry">Cherry</PickerItem>
+          <PickerItem value="banana">Banana</PickerItem>
+          <PickerItem value="mango">Mango</PickerItem>
+        </PickerGroup>
+        <PickerSeparator />
+        <PickerGroup label="Vegetables">
+          <PickerItem value="carrot">Carrot</PickerItem>
+          <PickerItem value="spinach" disabled>
+            Spinach
+          </PickerItem>
+        </PickerGroup>
+      </Picker>
+      <Text style={{ ...fontSize.sm, color: colors.mutedForeground }}>
+        Selected: {value ?? "none"}
+      </Text>
+    </View>
+  )
+}
+
+export function PickerExample() {
+  return (
+    <PickerDemo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

@@ -266,6 +266,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View, Image } from "react-native"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
@@ -276,6 +278,24 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
   </AspectRatio>
 </View>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View, Image } from "react-native"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { radius } from "@/components/ui/theme"
+
+<View style={{ width: "100%", overflow: "hidden", borderRadius: radius.lg }}>
+  <AspectRatio ratio={16 / 9}>
+    <Image source={{ uri: imageUri }} style={{ height: "100%", width: "100%" }} />
+  </AspectRatio>
+</View>
+```
+
+</OnlyStyling>
 
 </Only>
 

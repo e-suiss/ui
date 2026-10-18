@@ -215,6 +215,8 @@ import { Header, HeaderTitle, HeaderLargeTitle, HeaderBack, HeaderActions, Heade
 import { Text } from "@/components/ui/text"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <View className="-mx-4 -mt-4">
   <Header>
@@ -228,6 +230,26 @@ import { Text } from "@/components/ui/text"
   </Header>
 </View>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+<View style={{ marginHorizontal: -16, marginTop: -16 }}>
+  <Header>
+    <HeaderBack>Settings</HeaderBack>
+    <HeaderTitle>Profile</HeaderTitle>
+    <HeaderActions>
+      <Button variant="plain" size="sm">
+        <Text style={{ fontWeight: "600" }}>Edit</Text>
+      </Button>
+    </HeaderActions>
+  </Header>
+</View>
+```
+
+</OnlyStyling>
 
 </Only>
 

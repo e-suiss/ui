@@ -21,7 +21,10 @@ import {
   ICON_LIBRARIES,
   STYLE_LABELS,
   STYLES,
+  STYLING_LABELS,
+  STYLINGS,
   type StyleName,
+  type Styling,
 } from "@/lib/code-options"
 import { BASE_TITLES } from "@/lib/create/templates"
 import { strings } from "@/lib/strings"
@@ -44,6 +47,7 @@ function readStored(): CodeOptions {
 function apply(options: CodeOptions) {
   const root = document.documentElement
   root.dataset.base = options.base
+  root.dataset.styling = options.styling
   if (root.dataset.create === undefined) void showStyle(options.style)
 }
 
@@ -139,7 +143,8 @@ export function CodeOptionsMenu() {
   const changed =
     options.icons !== DEFAULT_OPTIONS.icons ||
     options.base !== DEFAULT_OPTIONS.base ||
-    options.style !== DEFAULT_OPTIONS.style
+    options.style !== DEFAULT_OPTIONS.style ||
+    options.styling !== DEFAULT_OPTIONS.styling
   React.useEffect(() => {
     if (document.documentElement.dataset.create !== undefined) return
     if (options.style !== DEFAULT_OPTIONS.style) void showStyle(options.style)
@@ -189,6 +194,15 @@ export function CodeOptionsMenu() {
             onChange={(base) => select({ base })}
           />
         )}
+        <Options
+          label={strings.styling}
+          value={options.styling}
+          options={STYLINGS.map((value) => ({
+            value,
+            label: STYLING_LABELS[value],
+          }))}
+          onChange={(styling) => select({ styling: styling as Styling })}
+        />
         <p className="text-[13px] leading-[1.45] tracking-[-0.01em] text-muted-foreground">
           {strings.codeOptionsHint}{" "}
           <Anchor

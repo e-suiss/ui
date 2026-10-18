@@ -125,6 +125,9 @@ export const strings = {
   createSettings: "Settings",
   createSignOut: "Sign out",
   primitiveBase: "Primitive base",
+  styling: "React Native styling",
+  stylingNote:
+    "This code uses Tailwind classes that need Uniwind or NativeWind. With StyleSheet, pass the same values through the style props.",
   codeOptionsHint: "Changes the code on this site. Installs follow your",
   codeOptionsLink: "components.json",
   note: "Note",

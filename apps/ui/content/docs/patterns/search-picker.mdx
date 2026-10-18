@@ -371,9 +371,21 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 import { SearchPicker } from "@/components/patterns/search-picker"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." accessibilityLabel="Framework" className="w-56" />
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+<SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." accessibilityLabel="Framework" style={{ width: 224 }} />
+```
+
+</OnlyStyling>
 
 </Only>
 

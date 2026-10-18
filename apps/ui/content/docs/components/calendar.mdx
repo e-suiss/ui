@@ -392,6 +392,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { Calendar } from "@/components/ui/calendar"
@@ -422,6 +424,45 @@ export function CalendarExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { Calendar } from "@/components/ui/calendar"
+import { radius, useTheme } from "@/components/ui/theme"
+
+type CalendarProps = React.ComponentProps<typeof Calendar>
+
+function SingleCalendar(
+  props: Omit<CalendarProps, "mode" | "selected" | "onSelect">
+) {
+  const { colors } = useTheme()
+  const today = new Date()
+  const [date, setDate] = React.useState<Date | undefined>(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
+  )
+  return (
+    <Calendar
+      {...props}
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      style={{ borderRadius: radius["2xl"], borderWidth: 1, borderColor: colors.border }}
+    />
+  )
+}
+
+export function CalendarExample() {
+  return (
+    <SingleCalendar />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

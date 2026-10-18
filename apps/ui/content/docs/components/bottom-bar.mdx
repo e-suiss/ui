@@ -197,6 +197,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View } from "react-native"
 import { BottomBar, BottomBarContent } from "@/components/ui/bottom-bar"
@@ -229,6 +231,45 @@ export function BottomBarExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View } from "react-native"
+import { BottomBar, BottomBarContent } from "@/components/ui/bottom-bar"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+function Page({ children }: { children: React.ReactNode }) {
+  return (
+    <View style={{ margin: -16, flex: 1 }}>
+      <View style={{ flex: 1, gap: 8, padding: 16 }}>
+        <Text variant="h3">Review order</Text>
+        <Text variant="muted">2 items, delivery on Thursday.</Text>
+      </View>
+      {children}
+    </View>
+  )
+}
+
+export function BottomBarExample() {
+  return (
+    <Page>
+      <BottomBar>
+        <BottomBarContent>
+          <Button size="lg" block>
+            <Text>Continue</Text>
+          </Button>
+        </BottomBarContent>
+      </BottomBar>
+    </Page>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

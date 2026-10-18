@@ -220,6 +220,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View } from "react-native"
 import { InputAccessoryBar, InputAccessoryBarInput } from "@/components/ui/input-accessory-bar"
@@ -254,6 +256,47 @@ export function InputAccessoryBarExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View } from "react-native"
+import { InputAccessoryBar, InputAccessoryBarInput } from "@/components/ui/input-accessory-bar"
+import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
+import { Text } from "@/components/ui/text"
+
+function Field({ label, autoFocus }: { label: string; autoFocus?: boolean }) {
+  return (
+    <View style={{ gap: 6 }}>
+      <Text variant="small">{label}</Text>
+      <InputAccessoryBarInput placeholder={label} autoFocus={autoFocus} />
+    </View>
+  )
+}
+
+function Form({ autoFocus = false }: { autoFocus?: boolean }) {
+  return (
+    <KeyboardScrollView style={{ margin: -16 }} contentContainerStyle={{ gap: 16, padding: 16 }}>
+      <Field label="Name" autoFocus={autoFocus} />
+      <Field label="Email" />
+      <Field label="Phone" />
+      <Field label="City" />
+    </KeyboardScrollView>
+  )
+}
+
+export function InputAccessoryBarExample() {
+  return (
+    <InputAccessoryBar>
+      <Form />
+    </InputAccessoryBar>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

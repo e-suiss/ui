@@ -585,6 +585,8 @@ import { PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription, Popove
 import { Text } from "@/components/ui/text"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <View className="items-start">
   <Popover defaultOpen>
@@ -621,6 +623,49 @@ import { Text } from "@/components/ui/text"
   </Popover>
 </View>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+<View style={{ alignItems: "flex-start" }}>
+  <Popover defaultOpen>
+    <PopoverTrigger render={<Button variant="outline" />}>
+      <Text>Open popover</Text>
+    </PopoverTrigger>
+    <PopoverContent align="start" style={{ width: 320 }}>
+      <View style={{ gap: 16 }}>
+        <PopoverHeader>
+          <PopoverTitle>Dimensions</PopoverTitle>
+          <PopoverDescription>
+            Set the dimensions for the layer.
+          </PopoverDescription>
+        </PopoverHeader>
+        <View style={{ gap: 8 }}>
+          {dimensions.map((dimension) => (
+            <View
+              key={dimension.id}
+              style={{ flexDirection: "row", alignItems: "center", gap: 16 }}
+            >
+              <Label nativeID={`popover-${dimension.id}`} style={{ width: 96 }}>
+                {dimension.label}
+              </Label>
+              <Input
+                accessibilityLabelledBy={`popover-${dimension.id}`}
+                defaultValue={dimension.value}
+                style={{ height: 32, flex: 1 }}
+              />
+            </View>
+          ))}
+        </View>
+      </View>
+    </PopoverContent>
+  </Popover>
+</View>
+```
+
+</OnlyStyling>
 
 </Only>
 

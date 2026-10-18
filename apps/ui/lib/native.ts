@@ -2,10 +2,16 @@ import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 
 import { nativeExamples } from "@/lib/native-examples.mjs"
+import { toStyleSheet } from "@/lib/native-stylesheet.mjs"
 import { nativeWebPreviews } from "@/lib/native-web.mjs"
 import type { Preview } from "@/lib/previews"
 
-type NativeCode = { rn?: string; swift?: string; kotlin?: string }
+type NativeCode = {
+  rn?: string
+  stylesheet?: string
+  swift?: string
+  kotlin?: string
+}
 
 const previews = path.join(process.cwd(), "public/previews")
 const mobileRoot = path.join(process.cwd(), "../../packages/mobile")
@@ -14,12 +20,17 @@ let examples: Map<string, NativeCode> | undefined
 
 export const NATIVE_LANGUAGES = {
   rn: "tsx",
+  stylesheet: "tsx",
   swift: "swift",
   kotlin: "kotlin",
 } as const
 
 function allExamples() {
-  examples ??= nativeExamples(mobileRoot) as Map<string, NativeCode>
+  if (!examples) {
+    examples = nativeExamples(mobileRoot) as Map<string, NativeCode>
+    for (const code of examples.values())
+      if (code.rn) code.stylesheet = toStyleSheet(code.rn)
+  }
   return examples
 }
 

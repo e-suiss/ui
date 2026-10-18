@@ -169,6 +169,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View } from "react-native"
 import { Input } from "@/components/ui/input"
@@ -206,6 +208,50 @@ export function KeyboardScrollViewExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View } from "react-native"
+import { Input } from "@/components/ui/input"
+import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
+import { Text } from "@/components/ui/text"
+
+const fields = [
+  "First name",
+  "Last name",
+  "Email",
+  "Phone",
+  "Street",
+  "City",
+  "Postal code",
+  "Country",
+  "Company",
+  "Notes",
+]
+
+function Fields() {
+  return fields.map((label) => (
+    <View key={label} style={{ gap: 6 }}>
+      <Text variant="small">{label}</Text>
+      <Input placeholder={label} />
+    </View>
+  ))
+}
+
+export function KeyboardScrollViewExample() {
+  return (
+    <KeyboardScrollView style={{ margin: -16 }} contentContainerStyle={{ gap: 16, padding: 16 }}>
+      <Text variant="h3">Shipping address</Text>
+      <Fields />
+    </KeyboardScrollView>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

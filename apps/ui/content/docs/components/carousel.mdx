@@ -519,6 +519,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View } from "react-native"
 import { Card, CardContent } from "@/components/ui/card"
@@ -555,6 +557,49 @@ export function CarouselExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View } from "react-native"
+import { Card, CardContent } from "@/components/ui/card"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Text } from "@/components/ui/text"
+
+const slides = [1, 2, 3, 4, 5]
+
+function NumberSlides({ basis }: { basis?: number }) {
+  return (
+    <CarouselContent>
+      {slides.map((slide) => (
+        <CarouselItem key={slide} basis={basis}>
+          <Card size={basis ? "sm" : "default"}>
+            <CardContent style={{ aspectRatio: 1, alignItems: "center", justifyContent: "center" }}>
+              <Text style={{ fontSize: 36, lineHeight: 40, fontWeight: "600" }}>{slide}</Text>
+            </CardContent>
+          </Card>
+        </CarouselItem>
+      ))}
+    </CarouselContent>
+  )
+}
+
+export function CarouselExample() {
+  return (
+    <View style={{ marginHorizontal: 48 }}>
+      <Carousel>
+        <NumberSlides />
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </View>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

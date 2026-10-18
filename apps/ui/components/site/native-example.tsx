@@ -2,12 +2,14 @@ import type * as React from "react"
 
 import { NativeCode } from "@/components/site/component-source"
 import { NativeExampleView } from "@/components/site/native-example-view"
+import { OnlyStyling } from "@/components/site/only-styling"
 import {
   NATIVE_LANGUAGES,
   nativeCode,
   nativePreview,
   webPreviewFor,
 } from "@/lib/native"
+import { strings } from "@/lib/strings"
 
 const LABELS = { swift: "SwiftUI", kotlin: "Compose" } as const
 
@@ -52,12 +54,39 @@ export function NativeExample({
           : undefined
       }
     >
-      <NativeCode
-        id={id}
-        platform="rn"
-        code={code.rn ?? ""}
-        lang={NATIVE_LANGUAGES.rn}
-      />
+      {code.stylesheet === code.rn ? (
+        <NativeCode
+          id={id}
+          platform="rn"
+          code={code.rn ?? ""}
+          lang={NATIVE_LANGUAGES.rn}
+        />
+      ) : (
+        <div className="contents">
+          <OnlyStyling styling="uniwind nativewind">
+            <NativeCode
+              id={id}
+              platform="rn"
+              code={code.rn ?? ""}
+              lang={NATIVE_LANGUAGES.rn}
+            />
+          </OnlyStyling>
+          <OnlyStyling styling="stylesheet">
+            {code.stylesheet ? (
+              <NativeCode
+                id={id}
+                platform="stylesheet"
+                code={code.stylesheet}
+                lang={NATIVE_LANGUAGES.stylesheet}
+              />
+            ) : (
+              <p className="p-5 text-sm text-muted-foreground">
+                {strings.stylingNote}
+              </p>
+            )}
+          </OnlyStyling>
+        </div>
+      )}
       {others.map((platform) => (
         <NativeCode
           key={platform}

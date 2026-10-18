@@ -370,6 +370,8 @@ import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <Card className="w-full">
   <CardHeader>
@@ -403,6 +405,46 @@ import { Text } from "@/components/ui/text"
   </CardFooter>
 </Card>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+<Card style={{ width: "100%" }}>
+  <CardHeader>
+    <CardTitle>Login to your account</CardTitle>
+    <CardDescription>
+      Enter your email below to login to your account
+    </CardDescription>
+  </CardHeader>
+  <CardContent style={{ gap: 16 }}>
+    <View style={{ gap: 8 }}>
+      <Label nativeID="card-email">Email</Label>
+      <Input
+        accessibilityLabelledBy="card-email"
+        placeholder="m@example.com"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+    </View>
+    <View style={{ gap: 8 }}>
+      <Label nativeID="card-password">Password</Label>
+      <Input accessibilityLabelledBy="card-password" secureTextEntry />
+    </View>
+  </CardContent>
+  <CardFooter style={{ flexDirection: "column", gap: 8 }}>
+    <Button block>
+      <Text>Login</Text>
+    </Button>
+    <Button block variant="secondary">
+      <Text>Login with Google</Text>
+    </Button>
+  </CardFooter>
+</Card>
+```
+
+</OnlyStyling>
 
 </Only>
 

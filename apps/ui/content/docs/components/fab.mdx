@@ -226,6 +226,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { View } from "react-native"
 import { Fab } from "@/components/ui/fab"
@@ -256,6 +258,45 @@ export function FabExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { View } from "react-native"
+import { Fab } from "@/components/ui/fab"
+import { Text } from "@/components/ui/text"
+import { fontSize, useTheme } from "@/components/ui/theme"
+
+function Page({ log }: { log?: string }) {
+  const { colors } = useTheme()
+  return (
+    <View style={{ gap: 8 }}>
+      <Text variant="h3">Notes</Text>
+      <Text variant="muted">
+        The button floats at the bottom end of the screen.
+      </Text>
+      {log ? (
+        <Text role="status" style={{ ...fontSize.sm, color: colors.mutedForeground }}>
+          {log}
+        </Text>
+      ) : null}
+    </View>
+  )
+}
+
+export function FabExample() {
+  return (
+    <View style={{ flex: 1 }}>
+      <Page />
+      <Fab accessibilityLabel="New note" />
+    </View>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

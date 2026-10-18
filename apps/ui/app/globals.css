@@ -419,6 +419,17 @@ body {
   height: 32rem;
 }
 
+html:not([data-styling])
+  [data-only-styling]:not([data-only-styling~="uniwind"]),
+html[data-styling="uniwind"]
+  [data-only-styling]:not([data-only-styling~="uniwind"]),
+html[data-styling="nativewind"]
+  [data-only-styling]:not([data-only-styling~="nativewind"]),
+html[data-styling="stylesheet"]
+  [data-only-styling]:not([data-only-styling~="stylesheet"]) {
+  display: none;
+}
+
 html:not([data-base]) [data-only-base]:not([data-only-base~="base"]),
 html[data-base="base"] [data-only-base]:not([data-only-base~="base"]),
 html[data-base="radix"] [data-only-base]:not([data-only-base~="radix"]),

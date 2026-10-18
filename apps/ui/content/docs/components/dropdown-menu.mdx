@@ -845,6 +845,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, UserIcon, UserPlusIcon } from "phosphor-react-native"
 import { View } from "react-native"
@@ -912,6 +914,80 @@ export function DropdownMenuExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { ChatCircleIcon, CreditCardIcon, EnvelopeIcon, GearIcon, SignOutIcon, UserIcon, UserPlusIcon } from "phosphor-react-native"
+import { View } from "react-native"
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
+
+function OpenButton({ label = "Open menu" }: { label?: string }) {
+  return (
+    <DropdownMenuTrigger render={<Button variant="outline" />}>
+      <Text>{label}</Text>
+    </DropdownMenuTrigger>
+  )
+}
+
+export function DropdownMenuExample() {
+  return (
+    <View style={{ alignItems: "flex-start" }}>
+      <DropdownMenu>
+        <OpenButton />
+        <DropdownMenuContent style={{ width: 224 }} align="start">
+          <DropdownMenuLabel>My account</DropdownMenuLabel>
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <Icon as={UserIcon} size={16} />
+              <Text>Profile</Text>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Icon as={CreditCardIcon} size={16} />
+              <Text>Billing</Text>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Icon as={GearIcon} size={16} />
+              <Text>Settings</Text>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <Icon as={UserPlusIcon} size={16} />
+                <Text>Invite users</Text>
+              </View>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem>
+                <Icon as={EnvelopeIcon} size={16} />
+                <Text>Email</Text>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon as={ChatCircleIcon} size={16} />
+                <Text>Message</Text>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive">
+            <Icon as={SignOutIcon} size={16} />
+            <Text>Log out</Text>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </View>
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

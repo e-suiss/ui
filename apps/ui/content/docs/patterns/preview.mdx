@@ -389,6 +389,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import { CalendarBlankIcon } from "phosphor-react-native"
 import { View } from "react-native"
@@ -459,6 +461,85 @@ export function PreviewExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { CalendarBlankIcon } from "phosphor-react-native"
+import { View } from "react-native"
+import { Preview, PreviewContent, PreviewTrigger } from "@/components/patterns/preview"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Icon } from "@/components/ui/icon"
+import { Text } from "@/components/ui/text"
+import { fontSize, useTheme } from "@/components/ui/theme"
+
+function ProfileCard() {
+  const { colors } = useTheme()
+  return (
+    <View style={{ flexDirection: "row", gap: 16 }}>
+      <Avatar size="lg">
+        <AvatarImage
+          alt="Ada Lovelace"
+          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
+        />
+        <AvatarFallback>AL</AvatarFallback>
+      </Avatar>
+      <View style={{ flex: 1, gap: 4 }}>
+        <Text style={{ ...fontSize.sm, fontWeight: "600" }}>@ada</Text>
+        <Text style={{ ...fontSize.sm }}>
+          Mathematician and writer, known for her work on the Analytical Engine.
+        </Text>
+        <View style={{ marginTop: 4, flexDirection: "row", alignItems: "center", gap: 6 }}>
+          <Icon
+            as={CalendarBlankIcon}
+            size={16} color={colors.mutedForeground}
+          />
+          <Text style={{ ...fontSize.xs, color: colors.mutedForeground }}>
+            Joined December 2021
+          </Text>
+        </View>
+      </View>
+    </View>
+  )
+}
+
+function PreviewDemo({
+  defaultOpen,
+  floating,
+  showCloseButton,
+  closeLabel,
+}: {
+  defaultOpen?: boolean
+  floating?: boolean
+  showCloseButton?: boolean
+  closeLabel?: string
+}) {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Preview defaultOpen={defaultOpen} floating={floating}>
+        <PreviewTrigger>@ada</PreviewTrigger>
+        <PreviewContent
+          showCloseButton={showCloseButton}
+          closeLabel={closeLabel}
+          accessibilityLabel="@ada"
+        >
+          <ProfileCard />
+        </PreviewContent>
+      </Preview>
+    </View>
+  )
+}
+
+export function PreviewExample() {
+  return (
+    <PreviewDemo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

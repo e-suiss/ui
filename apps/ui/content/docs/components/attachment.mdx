@@ -548,6 +548,8 @@ import { Attachment, AttachmentMedia, AttachmentLabel, AttachmentContent, Attach
 import { Icon } from "@/components/ui/icon"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <Attachment orientation="horizontal" state="done">
   <AttachmentMedia variant="document">
@@ -564,6 +566,31 @@ import { Icon } from "@/components/ui/icon"
   </AttachmentActions>
 </Attachment>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { palette } from "@/components/ui/theme"
+
+<Attachment orientation="horizontal" state="done">
+  <AttachmentMedia variant="document">
+    <AttachmentLabel style={{ backgroundColor: palette.red500 }}>pdf</AttachmentLabel>
+  </AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
+    <AttachmentDescription>2.4 MB</AttachmentDescription>
+  </AttachmentContent>
+  <AttachmentActions>
+    <AttachmentAction accessibilityLabel="Remove">
+      <Icon as={XIcon} />
+    </AttachmentAction>
+  </AttachmentActions>
+</Attachment>
+```
+
+</OnlyStyling>
 
 </Only>
 

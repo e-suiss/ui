@@ -32,7 +32,19 @@ export const PRIMITIVE_BASES = BASES.slice(1)
 
 export const CODE_OPTIONS_KEY = "suiss-code"
 
-export const baseScript = `(()=>{try{const b=new URLSearchParams(location.search).get("base")||JSON.parse(localStorage.getItem("${CODE_OPTIONS_KEY}")||"{}").base;if(${JSON.stringify(BASES)}.includes(b))document.documentElement.dataset.base=b}catch(e){}})()`
+export const STYLING_LABELS = {
+  uniwind: "Uniwind",
+  nativewind: "NativeWind",
+  stylesheet: "StyleSheet",
+} as const
+
+export type Styling = keyof typeof STYLING_LABELS
+
+export const STYLINGS = Object.keys(STYLING_LABELS) as Styling[]
+
+export const DEFAULT_STYLING = "uniwind" satisfies Styling
+
+export const baseScript = `(()=>{try{const p=new URLSearchParams(location.search),s=JSON.parse(localStorage.getItem("${CODE_OPTIONS_KEY}")||"{}"),r=document.documentElement,b=p.get("base")||s.base,t=p.get("styling")||s.styling;if(${JSON.stringify(BASES)}.includes(b))r.dataset.base=b;if(${JSON.stringify(STYLINGS)}.includes(t))r.dataset.styling=t}catch(e){}})()`
 
 export const STYLE_LABELS = {
   suiss: "Suiss",
@@ -56,12 +68,14 @@ export type CodeOptions = {
   icons: IconLibrary
   base: string
   style: StyleName
+  styling: Styling
 }
 
 export const DEFAULT_OPTIONS: CodeOptions = {
   icons: DEFAULT_ICONS,
   base: DEFAULT_BASE,
   style: DEFAULT_STYLE,
+  styling: DEFAULT_STYLING,
 }
 
 export const isIconLibrary = (value: unknown): value is IconLibrary =>
@@ -73,6 +87,9 @@ export const isBase = (value: unknown): value is string =>
 export const isStyle = (value: unknown): value is StyleName =>
   STYLES.includes(value as StyleName)
 
+export const isStyling = (value: unknown): value is Styling =>
+  STYLINGS.includes(value as Styling)
+
 export function codeOptions(
   params: URLSearchParams,
   fallback: Partial<CodeOptions> = {}
@@ -80,10 +97,12 @@ export function codeOptions(
   const icons = params.get("icons") ?? fallback.icons
   const base = params.get("base") ?? fallback.base
   const style = params.get("style") ?? fallback.style
+  const styling = params.get("styling") ?? fallback.styling
   return {
     icons: isIconLibrary(icons) ? icons : DEFAULT_ICONS,
     base: isBase(base) ? base : DEFAULT_BASE,
     style: isStyle(style) ? style : DEFAULT_STYLE,
+    styling: isStyling(styling) ? styling : DEFAULT_STYLING,
   }
 }
 

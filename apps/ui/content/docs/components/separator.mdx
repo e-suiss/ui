@@ -287,6 +287,8 @@ import { Separator } from "@/components/ui/separator"
 import { Text } from "@/components/ui/text"
 ```
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 <View>
   <View className="gap-1">
@@ -303,6 +305,31 @@ import { Text } from "@/components/ui/text"
   </View>
 </View>
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import { fontSize } from "@/components/ui/theme"
+
+<View>
+  <View style={{ gap: 4 }}>
+    <Text style={{ ...fontSize.sm, fontWeight: "500" }}>esuiss</Text>
+    <Text variant="muted">An open-source UI component library.</Text>
+  </View>
+  <Separator style={{ marginVertical: 16 }} />
+  <View style={{ height: 20, flexDirection: "row", alignItems: "center", gap: 16 }}>
+    <Text style={{ ...fontSize.sm }}>Blog</Text>
+    <Separator orientation="vertical" />
+    <Text style={{ ...fontSize.sm }}>Docs</Text>
+    <Separator orientation="vertical" />
+    <Text style={{ ...fontSize.sm }}>Source</Text>
+  </View>
+</View>
+```
+
+</OnlyStyling>
 
 </Only>
 

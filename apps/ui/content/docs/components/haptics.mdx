@@ -147,6 +147,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { View } from "react-native"
@@ -266,6 +268,134 @@ export function HapticsExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { View } from "react-native"
+import { Stepper, StepperDecrement, StepperGroup, StepperIncrement, StepperInput, StepperSeparator } from "@/components/interactions/stepper"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Chip } from "@/components/ui/chip"
+import { type HapticsAdapter, HapticsProvider } from "@/components/ui/haptics"
+import { Slider } from "@/components/ui/slider"
+import { Switch } from "@/components/ui/switch"
+import { Text } from "@/components/ui/text"
+import { fontSize, radius, useTheme } from "@/components/ui/theme"
+
+function useLoggingAdapter() {
+  const [log, setLog] = React.useState({ last: "None", count: 0 })
+  const adapter = React.useMemo<HapticsAdapter>(() => {
+    const record = (event: string) =>
+      setLog((current) => ({ last: event, count: current.count + 1 }))
+    return {
+      impact: (style) => record(`impact ${style}`),
+      selection: () => record("selection"),
+      notification: (type) => record(`notification ${type}`),
+    }
+  }, [])
+  return { adapter, log }
+}
+
+function HapticLog({ last, count }: { last: string; count: number }) {
+  const { colors } = useTheme()
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderRadius: radius.xl, backgroundColor: colors.muted, paddingHorizontal: 16, paddingVertical: 12 }}>
+      <Text style={{ ...fontSize.sm, color: colors.mutedForeground }}>Last haptic</Text>
+      <Text
+        role="status"
+        accessibilityLiveRegion="polite"
+        style={{ ...fontSize.sm, fontWeight: "500" }}
+      >
+        {count > 0 ? `${last} (${count})` : last}
+      </Text>
+    </View>
+  )
+}
+
+function Row({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <View style={{ minHeight: 44, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+      <Text>{label}</Text>
+      {children}
+    </View>
+  )
+}
+
+function Controls() {
+  const [wifi, setWifi] = React.useState(true)
+  const [terms, setTerms] = React.useState(false)
+  const [volume, setVolume] = React.useState(40)
+  const [copies, setCopies] = React.useState(1)
+
+  return (
+    <View style={{ width: "100%", gap: 8 }}>
+      <Row label="Wi-Fi">
+        <Switch
+          accessibilityLabel="Wi-Fi"
+          checked={wifi}
+          onCheckedChange={setWifi}
+        />
+      </Row>
+      <Row label="Accept terms">
+        <Checkbox
+          accessibilityLabel="Accept terms"
+          checked={terms}
+          onCheckedChange={setTerms}
+        />
+      </Row>
+      <Row label="Copies">
+        <Stepper value={copies} onValueChange={setCopies} min={1} max={9}>
+          <StepperInput accessibilityLabel="Copies" />
+          <StepperGroup>
+            <StepperDecrement />
+            <StepperSeparator />
+            <StepperIncrement />
+          </StepperGroup>
+        </Stepper>
+      </Row>
+      <View style={{ flexDirection: "row", gap: 8, paddingVertical: 8 }}>
+        <Chip>Open now</Chip>
+        <Chip>Top rated</Chip>
+      </View>
+      <Slider
+        value={volume}
+        step={10}
+        onValueChange={(next) => setVolume(next)}
+        accessibilityLabel="Volume"
+      />
+    </View>
+  )
+}
+
+function ControlsDemo({ enabled = true }: { enabled?: boolean }) {
+  const { adapter, log } = useLoggingAdapter()
+  return (
+    <HapticsProvider adapter={adapter} enabled={enabled}>
+      <View style={{ width: "100%", gap: 16 }}>
+        <HapticLog {...log} />
+        <Controls />
+      </View>
+    </HapticsProvider>
+  )
+}
+
+export function HapticsExample() {
+  return (
+    <ControlsDemo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

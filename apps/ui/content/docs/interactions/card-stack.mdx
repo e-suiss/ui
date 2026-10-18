@@ -211,6 +211,8 @@ implementation("androidx.compose.ui:ui")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { View } from "react-native"
@@ -293,6 +295,98 @@ export function CardStackExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { View } from "react-native"
+import { CardStack, CardStackActions, CardStackEmpty, CardStackSwipeButton, CardStackUndo } from "@/components/interactions/card-stack"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Text } from "@/components/ui/text"
+import { fontSize, radius, useTheme } from "@/components/ui/theme"
+
+type Place = { id: string; name: string; city: string; detail: string }
+
+const places: Place[] = [
+  {
+    id: "harbor",
+    name: "Harbor Café",
+    city: "Lisbon",
+    detail: "Slow mornings, strong coffee and a view of the river.",
+  },
+  {
+    id: "garden",
+    name: "Garden Library",
+    city: "Kyoto",
+    detail: "Quiet reading rooms around a moss garden.",
+  },
+  {
+    id: "market",
+    name: "Night Market",
+    city: "Taipei",
+    detail: "Street food stalls open until two in the morning.",
+  },
+]
+
+function PlaceCard({ place }: { place: Place }) {
+  const { colors } = useTheme()
+  return (
+    <Card style={{ height: "100%" }}>
+      <CardHeader>
+        <CardTitle>{place.name}</CardTitle>
+        <CardDescription>{place.city}</CardDescription>
+      </CardHeader>
+      <CardContent style={{ flexGrow: 1 }}>
+        <View style={{ flexGrow: 1, borderRadius: radius.xl, backgroundColor: colors.muted }} />
+      </CardContent>
+      <CardContent>
+        <Text style={{ ...fontSize.sm, color: colors.mutedForeground }}>{place.detail}</Text>
+      </CardContent>
+    </Card>
+  )
+}
+
+function Demo({ disabled = false }: { disabled?: boolean }) {
+  const { colors } = useTheme()
+  const [log, setLog] = React.useState("")
+  return (
+    <View style={{ gap: 12 }}>
+      <CardStack
+        data={places}
+        keyExtractor={(place) => place.id}
+        renderItem={(place) => <PlaceCard place={place} />}
+        itemAccessibilityLabel={(place) => `${place.name}, ${place.city}`}
+        disabled={disabled}
+        onSwipe={(direction, place) =>
+          setLog(`${direction === "left" ? "Skipped" : "Liked"} ${place.name}`)
+        }
+        onUndo={(place) => setLog(`Restored ${place.name}`)}
+      >
+        <CardStackEmpty>You have seen every place.</CardStackEmpty>
+        <CardStackActions>
+          <CardStackSwipeButton direction="left" />
+          <CardStackUndo />
+          <CardStackSwipeButton direction="right" />
+        </CardStackActions>
+      </CardStack>
+      <Text role="status" style={{ textAlign: "center", ...fontSize.sm, color: colors.mutedForeground }}>
+        {log}
+      </Text>
+    </View>
+  )
+}
+
+export function CardStackExample() {
+  return (
+    <Demo />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 

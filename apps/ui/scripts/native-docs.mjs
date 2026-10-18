@@ -2,6 +2,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { parseArgs } from "node:util"
 import { nativeExamples } from "../lib/native-examples.mjs"
+import { toStyleSheet } from "../lib/native-stylesheet.mjs"
 
 const ROOT = path.resolve(import.meta.dirname, "..")
 const DOCS = path.join(ROOT, "content/docs")
@@ -80,6 +81,12 @@ const PAGE_SECTIONS = {
 }
 const STYLING_DIRECTORY = new RegExp(`^(?:${Object.keys(STYLINGS).join("|")})/`)
 const ALIAS_PREFIX = /^@/
+const TAILWIND_STYLINGS = "uniwind nativewind"
+const STYLESHEET_BLOCK =
+  /\n*<OnlyStyling styling="stylesheet">\n[\s\S]*?\n<\/OnlyStyling>\n*/g
+const TAILWIND_BLOCK =
+  /<OnlyStyling styling="uniwind nativewind">\n\n([\s\S]*?)\n\n<\/OnlyStyling>/g
+const FENCE_BODY = /^```\w*\n([\s\S]*)\n```$/
 const FRONTMATTER_TITLE = /^title: (.+)$/m
 const RN_SOURCE =
   /<ComponentSource path="(\w+\/components\/\w+\/[\w-]+\.tsx?)" \/>/g
@@ -387,6 +394,28 @@ function repairUsage(leaves, rn, context, report, name) {
   target.text = `\`\`\`${target.lang}\n${header}${body ? `\n\n${body}` : ""}\n\`\`\``
 }
 
+function stylingUsage(leaves) {
+  for (const leaf of leaves) {
+    if (
+      leaf.zone !== "Usage" ||
+      leaf.kind !== "fence" ||
+      !RN_LANGUAGES.has(leaf.lang) ||
+      !leaf.scope.includes("rn")
+    )
+      continue
+    const code = leaf.text.match(FENCE_BODY)?.[1]
+    if (code === undefined) continue
+    const converted = toStyleSheet(code)
+    if (converted === code) continue
+    const variant =
+      converted === undefined
+        ? "<StylingNote />"
+        : `\`\`\`${leaf.lang}\n${converted}\n\`\`\``
+    leaf.kind = "element"
+    leaf.text = `<OnlyStyling styling="${TAILWIND_STYLINGS}">\n\n${leaf.text}\n\n</OnlyStyling>\n\n<OnlyStyling styling="stylesheet">\n\n${variant}\n\n</OnlyStyling>`
+  }
+}
+
 function usageLeaves(leaves, codes) {
   const usage = leaves.filter((leaf) => leaf.zone === "Usage")
   if (!usage.length) return leaves
@@ -674,7 +703,10 @@ async function generate(file, context, report) {
   const nativeEnd = closingOnly(source, nativeStart)
   const name = path.relative(DOCS, file)
   const slug = path.basename(file).replace(SLUG, "")
-  let native = source.slice(nativeStart + NATIVE_SECTION.length, nativeEnd)
+  let native = source
+    .slice(nativeStart + NATIVE_SECTION.length, nativeEnd)
+    .replace(STYLESHEET_BLOCK, "\n\n")
+    .replace(TAILWIND_BLOCK, "$1")
   const items = itemsOf(native, slug, context.registry)
   native = await manual(native, items, context.registry)
   native = await rnManual(native, context.rnRegistries, context.pages)
@@ -711,6 +743,7 @@ async function generate(file, context, report) {
   }
   repairUsage(leaves, usageCodes.rn, context, report, name)
   leaves = usageLeaves(leaves, usageCodes)
+  stylingUsage(leaves)
   settleHeadings(leaves)
   const next = render(leaves)
   checkExamples(next, ALL, context.examples, report, name)

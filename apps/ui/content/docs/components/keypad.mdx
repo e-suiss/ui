@@ -190,6 +190,8 @@ implementation("com.adamglin:phosphor-icon-android:1.0.0")
 
 <Only platform="rn">
 
+<OnlyStyling styling="uniwind nativewind">
+
 ```tsx
 import * as React from "react"
 import { View } from "react-native"
@@ -228,6 +230,53 @@ export function KeypadExample() {
   )
 }
 ```
+
+</OnlyStyling>
+
+<OnlyStyling styling="stylesheet">
+
+```tsx
+import * as React from "react"
+import { View } from "react-native"
+import { Keypad, type KeypadAccessoryKey, type KeypadKeyValue } from "@/components/ui/keypad"
+import { Text } from "@/components/ui/text"
+import { fontSize, useTheme } from "@/components/ui/theme"
+
+function KeyLog({
+  accessoryKey,
+  disabled,
+}: {
+  accessoryKey?: KeypadAccessoryKey
+  disabled?: boolean
+}) {
+  const { colors } = useTheme()
+  const [last, setLast] = React.useState<KeypadKeyValue | null>(null)
+  return (
+    <View style={{ alignItems: "center", gap: 24 }}>
+      <Text
+        role="status"
+        accessibilityLiveRegion="polite"
+        style={{ ...fontSize.sm, color: colors.mutedForeground }}
+      >
+        {last ? `Last key: ${last}` : "Press a key"}
+      </Text>
+      <Keypad
+        accessoryKey={accessoryKey}
+        disabled={disabled}
+        onKeyPress={setLast}
+      />
+    </View>
+  )
+}
+
+export function KeypadExample() {
+  return (
+    <KeyLog />
+  )
+}
+```
+
+</OnlyStyling>
 
 </Only>
 
