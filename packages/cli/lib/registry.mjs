@@ -98,18 +98,16 @@ function scopeOfFile(file = "") {
   return entry ? entry[0] : "ui"
 }
 
+const isList = (value) => value === undefined || Array.isArray(value)
+
 function validItem(item) {
   return (
     item &&
     typeof item.name === "string" &&
     Array.isArray(item.files) &&
     item.files.every((file) => typeof file?.path === "string") &&
-    (item.registryDependencies === undefined ||
-      (Array.isArray(item.registryDependencies) &&
-        item.registryDependencies.every((name) => typeof name === "string"))) &&
-    (item.dependencies === undefined ||
-      (Array.isArray(item.dependencies) &&
-        item.dependencies.every((name) => typeof name === "string")))
+    isList(item.registryDependencies) &&
+    isList(item.dependencies)
   )
 }
 
@@ -125,9 +123,11 @@ function toItem(item) {
   return {
     name: item.name,
     scope: scopeOfFile(files[0]),
-    requires: (item.registryDependencies ?? []).map((name) =>
-      name.startsWith(NAMESPACE) ? name.slice(NAMESPACE.length) : name
-    ),
+    requires: (item.registryDependencies ?? [])
+      .map(String)
+      .map((name) =>
+        name.startsWith(NAMESPACE) ? name.slice(NAMESPACE.length) : name
+      ),
     dependencies: item.dependencies ?? [],
     files,
     ...(sources.some((source, index) => source !== files[index]) && {

@@ -313,7 +313,7 @@ describe("malformed registry entries", () => {
       {
         name: "x",
         files: [{ path: "components/ui/x.tsx" }],
-        dependencies: [1],
+        dependencies: "a",
       },
     ],
   ])("names the bad item %j instead of crashing", async (entry) => {
