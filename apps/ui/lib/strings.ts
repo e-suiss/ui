@@ -12,7 +12,6 @@ export const strings = {
   previous: "Previous",
   next: "Next",
   documentation: "Documentation",
-  getStarted: "Get started",
   create: "Create",
   overview: "Overview",
   explore: "Explore",

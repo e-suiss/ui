@@ -12,6 +12,7 @@ import { repository, sections } from "@/lib/sections"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
+const CREATE = "/create"
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]"
 
 export function useActiveSection() {
@@ -52,25 +53,27 @@ export function LocalNav() {
           <Logo />
         </Anchor>
         <ul className="hidden min-w-0 items-stretch gap-6 md:flex">
-          {sections.map((section) => {
-            const active = isActive(section.path)
-            return (
-              <li key={section.path} className="flex">
-                <Anchor
-                  href={section.path}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50",
-                    active
-                      ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-foreground"
-                      : "text-foreground/55 hover:text-foreground"
-                  )}
-                >
-                  {section.label}
-                </Anchor>
-              </li>
-            )
-          })}
+          {sections
+            .filter((section) => section.path !== CREATE)
+            .map((section) => {
+              const active = isActive(section.path)
+              return (
+                <li key={section.path} className="flex">
+                  <Anchor
+                    href={section.path}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/50",
+                      active
+                        ? "text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-foreground"
+                        : "text-foreground/55 hover:text-foreground"
+                    )}
+                  >
+                    {section.label}
+                  </Anchor>
+                </li>
+              )
+            })}
         </ul>
         <div className="ms-auto flex shrink-0 items-center gap-2">
           <Search className="size-10 rounded-full bg-foreground/5 text-foreground transition-colors duration-300 hover:bg-foreground/10" />
@@ -82,10 +85,10 @@ export function LocalNav() {
             {strings.github}
           </Anchor>
           <Anchor
-            href="/docs/installation"
+            href="/create"
             className="group hidden h-10 items-center gap-2 rounded-full bg-foreground ps-4.5 pe-1 text-sm font-medium text-background outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:flex"
           >
-            {strings.getStarted}
+            {strings.create}
             <span
               className={cn(
                 "flex size-8 items-center justify-center rounded-full bg-background text-foreground transition-transform duration-500 group-hover:rotate-45",
