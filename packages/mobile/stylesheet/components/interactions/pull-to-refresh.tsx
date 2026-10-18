@@ -36,7 +36,7 @@ function useRefresh(onRefresh: RefreshHandler) {
       new Promise((resolve) => resolve(onRefreshRef.current())),
     ])
     const elapsed = Date.now() - started
-    await new Promise((resolve) =>
+    await new Promise<void>((resolve) =>
       setTimeout(resolve, Math.max(0, MIN_REFRESH - elapsed))
     )
     if (mountedRef.current) setRefreshing(false)

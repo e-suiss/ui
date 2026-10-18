@@ -84,7 +84,7 @@ const SLOT_CLASS_NAMES: Partial<
 }
 
 function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+  return new Promise<void>((resolve) => setTimeout(resolve, ms))
 }
 
 function OtpAutofill({

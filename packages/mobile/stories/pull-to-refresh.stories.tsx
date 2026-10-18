@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/item"
 import { Text } from "@/components/ui/text"
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+const wait = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms))
 
 function Feed() {
   const [count, setCount] = React.useState(3)

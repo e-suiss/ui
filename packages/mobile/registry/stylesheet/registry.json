@@ -6900,6 +6900,12 @@
         "react-native-svg",
         "react-native-worklets"
       ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
+      ],
       "files": [
         {
           "path": "stylesheet/components/ui/theme.ts",
@@ -6922,6 +6928,12 @@
         "react-native-reanimated",
         "react-native-svg",
         "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
       ],
       "files": [
         {
@@ -6946,6 +6958,12 @@
         "react-native-svg",
         "react-native-worklets"
       ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
+      ],
       "files": [
         {
           "path": "styles/presets/nova/theme.ts",
@@ -6968,6 +6986,12 @@
         "react-native-reanimated",
         "react-native-svg",
         "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
       ],
       "files": [
         {
@@ -6992,6 +7016,12 @@
         "react-native-svg",
         "react-native-worklets"
       ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
+      ],
       "files": [
         {
           "path": "styles/presets/lyra/theme.ts",
@@ -7014,6 +7044,12 @@
         "react-native-reanimated",
         "react-native-svg",
         "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
       ],
       "files": [
         {
@@ -7038,6 +7074,12 @@
         "react-native-svg",
         "react-native-worklets"
       ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
+      ],
       "files": [
         {
           "path": "styles/presets/luma/theme.ts",
@@ -7061,6 +7103,12 @@
         "react-native-svg",
         "react-native-worklets"
       ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
+      ],
       "files": [
         {
           "path": "styles/presets/sera/theme.ts",
@@ -7083,6 +7131,12 @@
         "react-native-reanimated",
         "react-native-svg",
         "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group"
       ],
       "files": [
         {
