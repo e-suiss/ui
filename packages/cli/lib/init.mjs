@@ -351,10 +351,9 @@ export async function init(options) {
   const restyled = Object.keys(styling).some(
     (key) => styling[key] !== previous[key]
   )
-  const others = installed.filter((name) => name !== "button")
   let names = ["button"]
   let overwrite = options.overwrite
-  if (restyled && others.length) {
+  if (restyled && installed.length) {
     if (!options.yes && !process.stdin.isTTY) {
       throw new CliError(
         `This changes the style of the ${installed.length} installed components. Run again with --yes to restyle them, nothing was changed.`

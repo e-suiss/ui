@@ -350,6 +350,17 @@ describe("init options", () => {
     expect(JSON.parse(read(cwd, "components.json"))).toEqual(config)
   })
 
+  it("switches a radix project back to the Base UI base with --base base", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true, base: "radix" })
+    expect(read(cwd, "src/components/ui/button.tsx")).toContain("RadixButton")
+    await init({ cwd, yes: true, base: "base" })
+    expect(JSON.parse(read(cwd, "components.json")).style).toBe("base-suiss")
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+      "export function Button() {}\n"
+    )
+  })
+
   it("replaces a changed button with --overwrite", async () => {
     const cwd = viteProject({
       "src/components/ui/button.tsx": "export function Button() { edited }\n",
