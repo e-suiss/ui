@@ -35,6 +35,7 @@ npx @esuiss/ui@latest init [options]
 | `--style <name>` | Visual style: `suiss`, `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is saved as the `style` in `components.json`; for React Native, SwiftUI and Compose it picks the theme or tokens file |
 | `--preset <code>` | A preset code from [Create](/create): style, colors, radius, fonts, icon library and menus. React Native, SwiftUI and Compose apply it to their theme files; see [Theming](/docs/theming#styles) |
 | `--theme suiss` | Keep the suiss/ui colors when applying a preset |
+| `--primary <color>` | A custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. Replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | Icons of React Native, SwiftUI and Compose components: `phosphor` (the default), `lucide`, `tabler`, `hugeicons` or `remixicon`. Read from `--preset` or the installed icons file when omitted |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
 | `-s, --styling <uniwind\|nativewind\|stylesheet>` | React Native styling, detected from the project when omitted |
