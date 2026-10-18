@@ -12,7 +12,7 @@ import {
 import { SourceCode } from "@/components/site/source-code"
 import { useTheme } from "@/components/ui/theme"
 import { basePath, withBase } from "@/lib/base-path"
-import type { Platform } from "@/lib/platform"
+import { PLATFORM_LABELS, type Platform } from "@/lib/platform"
 import type { Preview } from "@/lib/previews"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
@@ -25,7 +25,7 @@ function previewAlt(id: string, scheme: string) {
     .map((word) => word[0].toUpperCase() + word.slice(1))
     .join(" ")
   const variant = words(story).join(" ")
-  return `${name}${variant && variant !== "default" ? ` (${variant})` : ""} on iOS in ${scheme} mode`
+  return `${name}${variant && variant !== "default" ? ` (${variant})` : ""} in ${PLATFORM_LABELS.rn}, ${scheme} mode`
 }
 
 function LiveFrame({
@@ -120,6 +120,9 @@ export function NativeExampleView({
   const active = Math.max(0, codePlatforms.indexOf(selected))
   const mobilePlatform = useActivePlatform(["rn", "swift", "kotlin"])
   const showLive = !web && Boolean(live) && mobilePlatform === "rn"
+  const missing =
+    mobilePlatform !== "rn" &&
+    !(codePlatforms.length ? codePlatforms : ["rn"]).includes(mobilePlatform)
   const responsive = useResponsivePreview()
 
   return (
@@ -149,7 +152,7 @@ export function NativeExampleView({
         )}
         {id && (
           <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
-            {showLive || web ? "Web" : "iOS"}
+            {showLive || web ? "Web" : PLATFORM_LABELS.rn}
           </span>
         )}
       </div>
@@ -221,9 +224,9 @@ export function NativeExampleView({
                 )
               )}
             </div>
-            {showLive && (
+            {(showLive || mobilePlatform !== "rn") && (
               <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
-                {strings.webPreview}
+                {showLive ? strings.webPreview : strings.nativePreview}
               </p>
             )}
           </div>
@@ -231,15 +234,19 @@ export function NativeExampleView({
       )}
       <CodeVisible value={tab === "code"}>
         <div hidden={tab !== "code"}>
-          {labels.length > 1 ? (
+          {missing && (
+            <p className="mt-[1.2em] rounded-2xl bg-muted px-5 py-4 text-sm text-muted-foreground">
+              {strings.noNativeCode(PLATFORM_LABELS[mobilePlatform])}
+            </p>
+          )}
+          {!missing &&
+            labels.length > 1 &&
             panels.map((panel, index) => (
               <div key={labels[index]} hidden={index !== active}>
                 <SourceCode>{panel}</SourceCode>
               </div>
-            ))
-          ) : (
-            <SourceCode>{children}</SourceCode>
-          )}
+            ))}
+          {!missing && labels.length < 2 && <SourceCode>{children}</SourceCode>}
         </div>
       </CodeVisible>
     </div>

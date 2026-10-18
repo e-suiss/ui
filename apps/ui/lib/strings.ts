@@ -44,6 +44,9 @@ export const strings = {
   createDefault: "Default",
   createCustom: "Custom",
   webPreview: "Web preview",
+  nativePreview: "React Native preview",
+  noNativeCode: (platform: string) =>
+    `This example has no ${platform} code yet. Switch to React Native to see it.`,
   createPreview: "Preview of the selected options",
   createCustomNote:
     "Preset codes cannot hold a custom color, so the shadcn CLI uses the theme instead.",
