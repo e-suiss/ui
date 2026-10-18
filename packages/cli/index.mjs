@@ -3,6 +3,7 @@ import { existsSync } from "node:fs"
 import path from "node:path"
 
 import { add } from "./lib/add.mjs"
+import { normalizeColor } from "./lib/color.mjs"
 import { init } from "./lib/init.mjs"
 import { add as addMobile } from "./lib/mobile/add.mjs"
 import { checkIconLibrary, resolveIconLibrary } from "./lib/mobile/icons.mjs"
@@ -39,6 +40,8 @@ const OPTIONS = {
   preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
                    colors, radius, fonts, icons and menus (init only)`,
   theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
+  primary: `  --primary <color> a custom primary color as hex, rgb() or oklch(); sets the
+                   primary, its foreground, the focus ring and chart-1 (init only)`,
   iconLibrary: `  --icon-library <phosphor|lucide|tabler|hugeicons|remixicon>
                    the icons of React Native, SwiftUI and Compose components
                    (read from the preset or the installed icons when omitted,
@@ -97,6 +100,7 @@ const INIT_OPTIONS = optionLines(
   "style",
   "preset",
   "theme",
+  "primary",
   "iconLibrary",
   "platform",
   "styling",
@@ -201,6 +205,10 @@ function parseArgs(args) {
       }
       case "--icon-library": {
         options.iconLibrary = checkIconLibrary(queue.next().value, arg)
+        break
+      }
+      case "--primary": {
+        options.primary = normalizeColor(queue.next().value)
         break
       }
       case "--theme": {
@@ -345,9 +353,13 @@ async function main() {
       const parsed = parseCommand(command, scope ? args.slice(1) : args)
       if (!parsed) break
       const options = { ...parsed.options, scope }
-      if (options.style !== undefined || options.preset !== undefined) {
+      if (
+        options.style !== undefined ||
+        options.preset !== undefined ||
+        options.primary !== undefined
+      ) {
         throw new CliError(
-          "--style and --preset work with init; add keeps the style init set up."
+          "--style, --preset and --primary work with init; add keeps the style init set up."
         )
       }
       await resolvePlatform(options)

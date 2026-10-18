@@ -125,6 +125,7 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | `--style <name>` | The visual style, one of `suiss` (default), `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is read from and saved to the `style` in `components.json`, and `add` follows it; for React Native, SwiftUI and Compose `init` sets radius, control sizes, paddings, weights and shadows through the theme |
 | `--preset <code>` | `init` only: a preset code from suiss.app/ui/create. React applies its style, colors, radius, icon library and menu color; React Native, SwiftUI and Compose apply its style, colors, radius, menu color, menu accent and fonts to their theme files. A gray theme must match the base color |
 | `--theme suiss` | `init` only: keep the suiss/ui colors when applying a preset |
+| `--primary <color>` | `init` only: a custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. It replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | React Native, SwiftUI and Compose icons: `phosphor` (default), `lucide`, `tabler`, `hugeicons` or `remixicon`; read from `--preset` or the installed icons file when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
 | `-c, --cwd <dir>` | Run in another project directory |

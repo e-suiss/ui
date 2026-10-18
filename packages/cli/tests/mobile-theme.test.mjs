@@ -4,6 +4,12 @@ import { encodePreset } from "shadcn/preset"
 import { describe, expect, it } from "vitest"
 
 import {
+  normalizeColor,
+  oklchToRgb,
+  parseColor,
+  withPrimary,
+} from "../lib/color.mjs"
+import {
   applyThemeOptions,
   menuColorsOf,
   paletteOf,
@@ -11,6 +17,7 @@ import {
   themeOptionsFor,
 } from "../lib/mobile/theme.mjs"
 
+const BACKGROUND_ENTRY = /\n\s*background: "[^"]*",/
 const MOBILE = path.join(import.meta.dirname, "../../mobile")
 const THEMES = JSON.parse(
   readFileSync(
@@ -168,5 +175,83 @@ describe("themeOptionsFor menus", () => {
     )
     expect(options.palette.light.menu).toBe(OWN.dark.popover)
     expect(options.palette.light.primary).toBeUndefined()
+  })
+})
+
+describe("custom primary", () => {
+  const color = normalizeColor("#e11d48")
+  const hex = oklchToRgb(parseColor(color))
+    .map((channel) => channel.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase()
+  const palette = withPrimary(null, "#e11d48")
+  const expected = {
+    uniwind: `--color-primary: ${color};`,
+    "nativewind-css": `--primary: #${hex.toLowerCase()};`,
+    stylesheet: `primary: "#${hex.toLowerCase()}",`,
+    swift: `public static let primary = Color.adaptive(light: .init(0x${hex}), dark: .init(0x${hex}))`,
+    kotlin: `primary = Color(0xFF${hex}),`,
+  }
+
+  it.each(Object.keys(expected))("writes the primary into %s", (format) => {
+    const next = applyThemeOptions(source(format), format, { palette })
+    expect(next).toContain(expected[format])
+  })
+
+  it("leaves the other colors alone", () => {
+    const text = source("stylesheet")
+    const next = applyThemeOptions(text, "stylesheet", { palette })
+    const background = text.match(BACKGROUND_ENTRY)[0]
+    expect(next).toContain(background)
+    expect(next).toContain('primaryForeground: "#ffffff",')
+  })
+
+  it("works without a preset", async () => {
+    const options = await themeOptionsFor({ primary: "#e11d48" }, () => THEMES)
+    expect(options.palette.light.primary).toBe(color)
+    expect(options.palette.dark.ring).toBe(color)
+    expect(options.factor).toBe(1)
+  })
+
+  it("overrides the preset theme and feeds a bold menu accent", async () => {
+    const preset = encodePreset({
+      style: "nova",
+      baseColor: "zinc",
+      theme: "blue",
+      radius: "large",
+      font: "inter",
+      iconLibrary: "lucide",
+      menuColor: "default",
+      menuAccent: "bold",
+    })
+    const options = await themeOptionsFor(
+      { preset, primary: "#e11d48" },
+      () => THEMES,
+      OWN
+    )
+    const zinc = THEMES.find((theme) => theme.name === "zinc")
+    expect(options.palette.light.primary).toBe(color)
+    expect(options.palette.light.background).toBe(zinc.light.background)
+    expect(options.palette.light["menu-accent"]).toBe(color)
+  })
+
+  it("keeps the suiss palette under a custom primary with --theme suiss", async () => {
+    const preset = encodePreset({
+      style: "nova",
+      baseColor: "zinc",
+      theme: "blue",
+      radius: "large",
+      font: "inter",
+      iconLibrary: "lucide",
+      menuColor: "default",
+      menuAccent: "subtle",
+    })
+    const options = await themeOptionsFor(
+      { preset, theme: "suiss", primary: "#e11d48" },
+      () => THEMES,
+      OWN
+    )
+    expect(options.palette.light.primary).toBe(color)
+    expect(options.palette.light.background).toBeUndefined()
   })
 })
