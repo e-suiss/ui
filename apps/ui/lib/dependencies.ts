@@ -45,12 +45,14 @@ const sameSet = (a: string[], b: string[]) =>
   a.length === b.length && a.every((name) => b.includes(name))
 
 const ITEM_PREFIX = "@esuiss/"
+const SETUP_PIECES = new Set(["utils"])
 const PIECE_SECTIONS = new Set(["components", "patterns"])
 
 const pieceNames = (pieces: string[]) =>
   pieces
     .filter((piece) => piece.startsWith(ITEM_PREFIX))
     .map((piece) => piece.slice(ITEM_PREFIX.length))
+    .filter((name) => !SETUP_PIECES.has(name))
 
 function piece(name: string): Piece {
   const page = source
@@ -90,7 +92,7 @@ export async function baseItems(
     const entry = (await registryMap(base))[item]
     if (!entry) continue
     if (!sameSet(entry.packages, own.packages)) packages[base] = entry.packages
-    if (!sameSet(entry.pieces, own.pieces))
+    if (!sameSet(pieceNames(entry.pieces), pieceNames(own.pieces)))
       pieces[base] = pieceNames(entry.pieces).map(piece)
   }
   const result: BaseItems = {
