@@ -8,6 +8,7 @@ const DOC = path.join(ROOT, "content/docs/cli.mdx")
 const COMMANDS = ["init", "apply", "add"]
 const HELP_OPTION = /^ {2}(-\w, )?--[\w-]+/
 const DOC_OPTION = /^\| `(-[^`]+)` \|/
+const OPTIONS_HEADER = "| Option | Description |"
 const FLAG = /-{1,2}[a-z][\w-]*/g
 
 function flagsOf(text) {
@@ -31,13 +32,15 @@ function helpFlags(command) {
 function docFlags(source, command) {
   const section = source.split(`\n## ${command}\n`)[1]?.split("\n## ")[0]
   if (!section) return null
-  return new Set(
-    section
-      .split("\n")
-      .map((line) => line.match(DOC_OPTION)?.[1])
-      .filter(Boolean)
-      .map(flagsOf)
-  )
+  const flags = new Set()
+  let table = false
+  for (const line of section.split("\n")) {
+    if (line === OPTIONS_HEADER) table = true
+    else if (!line.startsWith("|")) table = false
+    const flag = table && line.match(DOC_OPTION)?.[1]
+    if (flag) flags.add(flagsOf(flag))
+  }
+  return flags
 }
 
 const source = readFileSync(DOC, "utf8")
