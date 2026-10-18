@@ -4,6 +4,7 @@ import { Radio } from "@base-ui/react/radio"
 import { RadioGroup } from "@base-ui/react/radio-group"
 import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
+import { ColorPicker } from "@/components/create/color-picker"
 import { CommandLine } from "@/components/create/command-line"
 import { CreatePreview } from "@/components/create/preview"
 import { PreviewIconsProvider } from "@/components/site/icon-placeholder"
@@ -16,6 +17,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { ICON_LABELS, type IconLibrary, STYLE_LABELS } from "@/lib/code-options"
+import { parseColor } from "@/lib/create/color"
 import {
   BASE_COLORS,
   type CreateState,
@@ -43,6 +45,7 @@ import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
 const THEME_STYLE = "create-theme"
+const FALLBACK_PRIMARY = { r: 0, g: 113, b: 227 }
 const FONT_LINK = "create-font"
 
 const titleCase = (value: string) =>
@@ -73,16 +76,21 @@ function Picker({
   groups,
   onChange,
   onPreview,
+  display,
+  footer,
 }: {
   label: string
   value: string
   groups: Option[][]
   onChange: (value: string) => void
   onPreview: (value: string | null) => void
+  display?: Option
+  footer?: React.ReactNode
 }) {
   const isMobile = useIsMobile()
   const [open, setOpen] = React.useState(false)
-  const current = groups.flat().find((option) => option.value === value)
+  const current =
+    display ?? groups.flat().find((option) => option.value === value)
   return (
     <Popover
       open={open}
@@ -105,7 +113,7 @@ function Picker({
         align={isMobile ? "center" : "start"}
         sideOffset={8}
         onMouseLeave={() => onPreview(null)}
-        className="w-56 p-0"
+        className={cn("p-0", footer ? "w-64" : "w-56")}
       >
         <ScrollArea className="[&>[data-slot=scroll-area-viewport]]:max-h-92">
           <RadioGroup
@@ -145,6 +153,7 @@ function Picker({
             ))}
           </RadioGroup>
         </ScrollArea>
+        {footer && <div className="border-t border-border">{footer}</div>}
       </PopoverContent>
     </Popover>
   )
@@ -251,27 +260,38 @@ export function CreatePage() {
   const picker = <K extends keyof CreateState>(
     key: K,
     pickerLabel: string,
-    groups: Option[][]
-  ) => (
-    <Picker
-      label={pickerLabel}
-      value={state[key] as string}
-      groups={groups}
-      onChange={(value) => update(key, value as CreateState[K])}
-      onPreview={(value) => {
-        if (value === null) {
-          setPreview({})
-          return
-        }
-        setPreview({
-          [key]: value,
-          ...(key === "baseColor" && isGray(state.theme)
-            ? { theme: value }
-            : {}),
-        })
-      }}
-    />
-  )
+    groups: Option[][],
+    extra: Partial<
+      Pick<React.ComponentProps<typeof Picker>, "display" | "footer">
+    > = {}
+  ) => {
+    const custom = key === "theme" && state.primary !== ""
+    return (
+      <Picker
+        label={pickerLabel}
+        value={custom ? "" : (state[key] as string)}
+        groups={groups}
+        {...extra}
+        onChange={(value) => {
+          update(key, value as CreateState[K])
+          if (key === "theme") update("primary", "")
+        }}
+        onPreview={(value) => {
+          if (value === null) {
+            setPreview({})
+            return
+          }
+          setPreview({
+            [key]: value,
+            ...(key === "theme" ? { primary: "" } : {}),
+            ...(key === "baseColor" && isGray(state.theme)
+              ? { theme: value }
+              : {}),
+          })
+        }}
+      />
+    )
+  }
 
   const web = state.platform === "web"
   const [defaultTheme, ...colorThemes] = themeOptions(state.baseColor)
@@ -301,16 +321,41 @@ export function CreatePage() {
           {picker("baseColor", strings.createBaseColor, [
             options(BASE_COLORS, true),
           ])}
-          {picker("theme", strings.createTheme, [
+          {picker(
+            "theme",
+            strings.createTheme,
             [
-              {
-                value: defaultTheme ?? state.baseColor,
-                label: strings.createDefault,
-                swatch: swatchOf(defaultTheme ?? state.baseColor),
-              },
+              [
+                {
+                  value: defaultTheme ?? state.baseColor,
+                  label: strings.createDefault,
+                  swatch: swatchOf(defaultTheme ?? state.baseColor),
+                },
+              ],
+              options(colorThemes, true),
             ],
-            options(colorThemes, true),
-          ])}
+            {
+              display: state.primary
+                ? {
+                    value: "",
+                    label: strings.createCustom,
+                    swatch: state.primary,
+                  }
+                : undefined,
+              footer: (
+                <ColorPicker
+                  value={state.primary}
+                  fallback={
+                    parseColor(swatchOf(state.theme) ?? "") ?? FALLBACK_PRIMARY
+                  }
+                  onChange={(primary) => {
+                    setPreview({})
+                    update("primary", primary)
+                  }}
+                />
+              ),
+            }
+          )}
           {picker("font", strings.createFont, [options(FONTS)])}
           {picker("radius", strings.createRadius, [options(PRESET_RADII)])}
           {picker("iconLibrary", strings.iconLibrary, [
@@ -339,6 +384,11 @@ export function CreatePage() {
                 {strings.createShadcnNote}
               </p>
               <CommandLine command={shadcnCommand(state)} />
+              {state.primary && (
+                <p className="text-[13px] leading-[1.5] text-muted-foreground">
+                  {strings.createCustomNote}
+                </p>
+              )}
             </>
           )}
           {state.platform !== "web" && (

@@ -12,6 +12,7 @@ import {
   type PresetConfig,
 } from "shadcn/preset"
 import { STYLES, type StyleName } from "@/lib/code-options"
+import { foregroundFor, oklchString, parseColor } from "@/lib/create/color"
 import fonts from "@/lib/create/fonts.json"
 import themes from "../../../../packages/web/registry/themes.json"
 
@@ -85,6 +86,7 @@ export type CreateState = {
   radius: PresetConfig["radius"]
   menuAccent: PresetConfig["menuAccent"]
   menuColor: PresetConfig["menuColor"]
+  primary: string
 }
 
 export const DEFAULT_STATE: CreateState = {
@@ -98,6 +100,7 @@ export const DEFAULT_STATE: CreateState = {
   radius: "default",
   menuAccent: "subtle",
   menuColor: "default",
+  primary: "",
 }
 
 const isOneOf = <T extends string>(list: readonly T[], value: unknown) =>
@@ -123,7 +126,10 @@ function presetCode(state: CreateState) {
 
 function isDefault(state: CreateState) {
   return (Object.keys(DEFAULT_STATE) as (keyof CreateState)[]).every(
-    (key) => key === "platform" || state[key] === DEFAULT_STATE[key]
+    (key) =>
+      key === "platform" ||
+      key === "primary" ||
+      state[key] === DEFAULT_STATE[key]
   )
 }
 
@@ -162,6 +168,8 @@ export function fromParams(params: URLSearchParams): CreateState {
   }
   if (params.get("font") === OWN) state.font = OWN
   if (isGray(state.theme)) state.theme = state.baseColor
+  const primary = parseColor(params.get("primary") ?? "")
+  if (primary) state.primary = oklchString(primary)
   return state
 }
 
@@ -171,6 +179,7 @@ export function toParams(state: CreateState) {
     params.set("platform", state.platform)
   }
   if (state.base !== DEFAULT_STATE.base) params.set("base", state.base)
+  if (state.primary) params.set("primary", state.primary)
   if (isDefault(state)) return params
   params.set("preset", presetCode(state))
   if (state.style === OWN) params.set("style", OWN)
@@ -191,6 +200,7 @@ export function cliCommand(state: CreateState) {
       flags.push(`--theme ${OWN}`)
     }
   }
+  if (state.primary) flags.push(`--primary "${state.primary}"`)
   return `npx @esuiss/ui@latest init ${flags.join(" ")}`
 }
 
@@ -214,7 +224,26 @@ export function themeVariables(state: CreateState) {
     ...accent?.dark,
   } as Record<string, string>
   const radius = RADII[state.radius]
-  return { light: radius ? { ...light, radius } : light, dark }
+  const custom = primaryVariables(state.primary)
+  return {
+    light: { ...light, ...custom, ...(radius ? { radius } : {}) },
+    dark: { ...dark, ...custom },
+  }
+}
+
+function primaryVariables(primary: string): Record<string, string> {
+  const rgb = parseColor(primary)
+  if (!rgb) return {}
+  const foreground = foregroundFor(rgb)
+  return {
+    primary,
+    "primary-foreground": foreground,
+    ring: primary,
+    "sidebar-primary": primary,
+    "sidebar-primary-foreground": foreground,
+    "sidebar-ring": primary,
+    "chart-1": primary,
+  }
 }
 
 export function fontOf(name: string) {

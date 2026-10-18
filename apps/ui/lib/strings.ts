@@ -42,6 +42,12 @@ export const strings = {
     "Pick a style and the details, check the preview, then run the command in your project.",
   createOwn: "Suiss",
   createDefault: "Default",
+  createCustom: "Custom",
+  createCustomNote:
+    "Preset codes cannot hold a custom color, so the shadcn CLI uses the theme instead.",
+  createSaturation: "Saturation and brightness",
+  createHue: "Hue",
+  createColorValue: "Color value",
   createPlatform: "Platform",
   createBaseColor: "Base color",
   createTheme: "Theme",
