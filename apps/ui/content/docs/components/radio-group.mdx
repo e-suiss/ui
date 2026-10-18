@@ -466,7 +466,6 @@ export function RadioGroupExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct RadioGroupOption {
@@ -474,7 +473,7 @@ struct RadioGroupOption {
   let label: LocalizedStringKey
 }
 
-let radioGroupOptions = [
+@MainActor let radioGroupOptions = [
   RadioGroupOption(value: "default", label: "Default"),
   RadioGroupOption(value: "comfortable", label: "Comfortable"),
   RadioGroupOption(value: "compact", label: "Compact"),

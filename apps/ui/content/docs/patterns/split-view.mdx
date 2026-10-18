@@ -516,7 +516,6 @@ export function SplitViewExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct SplitViewMessage: Identifiable {
@@ -529,7 +528,7 @@ struct SplitViewMessage: Identifiable {
 
 let splitViewMailboxes = ["Inbox", "Sent", "Drafts", "Archive"]
 
-let splitViewMessages = [
+@MainActor let splitViewMessages = [
   SplitViewMessage(
     id: "order",
     from: "Acme Store",

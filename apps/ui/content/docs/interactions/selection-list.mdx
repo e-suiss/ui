@@ -535,7 +535,6 @@ export function SelectionListExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -545,7 +544,7 @@ struct SelectionListNote: Identifiable {
   let preview: String
 }
 
-let selectionListInitialNotes = [
+@MainActor let selectionListInitialNotes = [
   SelectionListNote(id: "groceries", title: "Groceries", preview: "Milk, eggs, bread, coffee"),
   SelectionListNote(id: "trip", title: "Trip ideas", preview: "Lisbon, Porto, the coast road"),
   SelectionListNote(id: "books", title: "Book list", preview: "Three novels for the summer"),
@@ -704,10 +703,14 @@ struct SelectionListNotes: View {
 ```kotlin
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -720,14 +723,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.adamglin.PhosphorIcons
+import com.adamglin.phosphoricons.Regular
+import com.adamglin.phosphoricons.regular.CaretRight
 import com.esuiss.ui.components.Button
 import com.esuiss.ui.components.ButtonSize
 import com.esuiss.ui.components.ButtonVariant
+import com.esuiss.ui.components.Icon
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.components.TextVariant
 import com.esuiss.ui.interactions.SelectionList
@@ -750,6 +761,8 @@ val selectionListInitialNotes = listOf(
     SelectionListNote("recipes", "Recipes", "Lemon pasta and a quick curry"),
 )
 
+const val SelectionListHint = "Tap Select to choose notes."
+
 @Composable
 fun SelectionListRows(notes: List<SelectionListNote>, editing: Boolean, onOpen: (SelectionListNote) -> Unit) {
     val colors = EsuissTheme.colors
@@ -766,6 +779,44 @@ fun SelectionListRows(notes: List<SelectionListNote>, editing: Boolean, onOpen: 
                 SelectionListRowContent(note, editing) { onOpen(note) }
             }
         }
+    }
+}
+
+@Composable
+fun RowScope.SelectionListRowContent(note: SelectionListNote, editing: Boolean, onClick: () -> Unit) {
+    val colors = EsuissTheme.colors
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    Row(
+        modifier = Modifier
+            .weight(1f)
+            .alpha(if (pressed) 0.8f else 1f)
+            .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(
+                note.title,
+                style = Typography.base.copy(fontWeight = FontWeight.SemiBold),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                note.preview,
+                style = Typography.sm.copy(color = colors.mutedForeground),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        Icon(
+            PhosphorIcons.Regular.CaretRight,
+            contentDescription = null,
+            modifier = Modifier.alpha(if (editing) 0f else 1f),
+            size = 16.dp,
+            tint = colors.mutedForeground,
+        )
     }
 }
 

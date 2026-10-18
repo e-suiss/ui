@@ -347,7 +347,6 @@ export function QrScannerExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct QRScannerExample: View {
@@ -425,38 +424,6 @@ struct QRScannerCameraPlaceholder: View {
     .accessibilityHidden(true)
   }
 }
-
-let count = 21
-
-let module: CGFloat = 6
-
-let padding: CGFloat = 10
-
-let side = CGFloat(count) * module + padding * 2
-
-func isDark(_ r: Int, _ c: Int) -> Bool {
-  for (fr, fc) in [(0, 0), (0, 14), (14, 0)] {
-    let i = r - fr
-    let j = c - fc
-    if (0...6).contains(i) && (0...6).contains(j) {
-      return i == 0 || i == 6 || j == 0 || j == 6 || ((2...4).contains(i) && (2...4).contains(j))
-    }
-  }
-  if r <= 7 && c <= 7 { return false }
-  if r <= 7 && c >= 13 { return false }
-  if r >= 13 && c <= 7 { return false }
-  return (r * 7 + c * 11 + r * c) % 5 < 2
-}
-
-let modules: Path = {
-  var path = Path()
-  for r in 0..<count {
-    for c in 0..<count where isDark(r, c) {
-      path.addRect(CGRect(x: padding + CGFloat(c) * module, y: padding + CGFloat(r) * module, width: module, height: module))
-    }
-  }
-  return path
-}
 ```
 
 </Only>
@@ -464,19 +431,82 @@ let modules: Path = {
 <Only platform="kotlin">
 
 ```kotlin
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.unit.dp
 import com.esuiss.ui.components.QrScanner
 import com.esuiss.ui.components.QrScannerState
+import com.esuiss.ui.theme.DarkColors
+import com.esuiss.ui.theme.Palette
 
 @Composable
 fun QRScannerExample() {
     QrScannerDemo(hint = "Point your camera at a code to pay or connect.")
+}
+
+const val QrModules = 21
+
+val QrModule = 6.dp
+
+fun qrModuleDark(r: Int, c: Int): Boolean {
+    val boxes = listOf(0 to 0, 0 to 13, 13 to 0)
+    for ((top, left) in boxes) {
+        if (r in top until top + 8 && c in left until left + 8) {
+            val fr = if (top == 0) 0 else 14
+            val fc = if (left == 0) 0 else 14
+            val i = r - fr
+            val j = c - fc
+            if (i !in 0..6 || j !in 0..6) return false
+            return i == 0 || i == 6 || j == 0 || j == 6 || (i in 2..4 && j in 2..4)
+        }
+    }
+    return (r * 7 + c * 11 + r * c) % 5 < 2
+}
+
+@Composable
+fun BoxScope.QrScannerCameraPlaceholder() {
+    val colors = DarkColors
+    val modules = remember {
+        (0 until QrModules).flatMap { r -> (0 until QrModules).filter { c -> qrModuleDark(r, c) }.map { c -> r to c } }
+    }
+    Box(
+        modifier = Modifier.matchParentSize().background(Palette.black),
+        contentAlignment = Alignment.Center,
+    ) {
+        Box(
+            Modifier
+                .offset(y = (-24).dp)
+                .rotate(-6f)
+                .background(Palette.white, RoundedCornerShape(12.dp))
+                .padding(10.dp),
+        ) {
+            Canvas(Modifier.size(QrModule * QrModules)) {
+                val unit = size.width / QrModules
+                val path = Path().apply {
+                    modules.forEach { (r, c) -> addRect(Rect(c * unit, r * unit, (c + 1) * unit, (r + 1) * unit)) }
+                }
+                drawPath(path, Palette.black)
+            }
+        }
+    }
 }
 
 @Composable

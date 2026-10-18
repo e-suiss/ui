@@ -652,7 +652,6 @@ export function SelectExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct SelectOption {
@@ -660,7 +659,7 @@ struct SelectOption {
   let label: LocalizedStringKey
 }
 
-let selectFruits = [
+@MainActor let selectFruits = [
   SelectOption(value: "mango", label: "Mango"),
   SelectOption(value: "banana", label: "Banana"),
   SelectOption(value: "blueberry", label: "Blueberry"),

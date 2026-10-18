@@ -287,7 +287,6 @@ export function CardStackExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct CardStackExample: View {
@@ -303,7 +302,7 @@ struct CardStackPlace: Identifiable {
   let detail: String
 }
 
-let cardStackPlaces = [
+@MainActor let cardStackPlaces = [
   CardStackPlace(id: "harbor", name: "Harbor Café", city: "Lisbon", detail: "Slow mornings, strong coffee and a view of the river."),
   CardStackPlace(id: "garden", name: "Garden Library", city: "Kyoto", detail: "Quiet reading rooms around a moss garden."),
   CardStackPlace(id: "market", name: "Night Market", city: "Taipei", detail: "Street food stalls open until two in the morning."),

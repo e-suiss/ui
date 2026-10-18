@@ -10,6 +10,7 @@ const TYPE_KEYWORD = /^type\s+/
 
 const STORYBOOK = "@storybook/react-native"
 const COMPOSABLE = "androidx.compose.runtime.Composable"
+const LIBRARY_MODULE = "EsuissUI"
 
 function parse(file, source) {
   return ts.createSourceFile(
@@ -374,11 +375,19 @@ const TOP_LEVEL_LINE = /^[^\s})\]/]/
 const ANNOTATION_LINE = /^@/
 const LEADING_ANNOTATION = /^@\w+\s*\n/
 const SWIFT_DECLARATION =
-  /^(?:(?:private|fileprivate|public)\s+)*(?:struct|enum|class|actor|func|let|var|extension)\s+(\w+)/
+  /^(?:(?:private|fileprivate|public|nonisolated|final)\s+)*(?:struct|enum|class|actor|func|let|var)\s+(\w+)/
+const SWIFT_EXTENSION =
+  /^(?:(?:private|fileprivate|public)\s+)*extension\s+[\w.]+(?:<[^>]*>)?/
+const SWIFT_EXTENSION_MEMBER =
+  /^ {2}(?:(?:private|fileprivate|public|static|mutating)\s+)*(?:func|var|let)\s+(\w+)/gm
 const KOTLIN_DECLARATION =
-  /^(?:(?:private|internal)\s+)*(?:data class|enum class|sealed class|class|object|fun|val|var)\s+(?:<[^>]+>\s*)?(\w+)/
-const OPEN_BRACKET_END = /[[{(]\s*$/
-const STATIC_MEMBER = /^(?:private )?static /
+  /^(?:(?:private|internal|const|inline|suspend|data|enum|sealed|value|open|abstract)\s+)*(?:class|object|interface|fun|val|var)\s+(?:<[^>]+>\s*)?(?:[\w.]+(?:<[^>]*>)?\??\.)?(\w+)/
+const MULTILINE_STRING = /"""/g
+const SWIFT_GLOBAL = /^(?:let|var)\s+\w+(?:\s*:[^=\n]+)?\s*=[^"]*?\b[A-Z]\w*\(/
+const SWIFT_GLOBAL_KEYWORD = /^(?=let|var)/
+const RAW_STRING = /"""[^$]*?"""/g
+const SWIFT_SHARED_DIRECTORIES = ["Catalog/Catalog/Shell", "Catalog/Shared"]
+const SWIFT_IMPORT = /^import (\w+)$/gm
 const PRIVATE_MODIFIER = /^(@\w+\s*\n)?(?:private |fileprivate )/
 const SWIFT_STORY_GROUP = /StoryGroup\(\.(\w+),\s*"([^"]+)"/
 const STORIES_ENUM = /^enum \w+Stories\b/
@@ -482,10 +491,25 @@ const indentBy = (text, spaces) =>
     .map((line) => (line ? " ".repeat(spaces) + line : line))
     .join("\n")
 
-function declarations(source, lang) {
+function declarationNames(head, lang) {
+  if (lang === "kotlin") {
+    const name = head.match(KOTLIN_DECLARATION)?.[1]
+    return name ? [name] : []
+  }
+  if (SWIFT_EXTENSION.test(head))
+    return [...head.matchAll(SWIFT_EXTENSION_MEMBER)].map((match) => match[1])
+  const name = head.match(SWIFT_DECLARATION)?.[1]
+  return name ? [name] : []
+}
+
+function declarations(source, lang, imports = []) {
   const lines = source.split("\n")
   const starts = []
+  let literal = false
   lines.forEach((line, index) => {
+    const inside = literal
+    if ((line.match(MULTILINE_STRING)?.length ?? 0) % 2) literal = !literal
+    if (inside) return
     if (!TOP_LEVEL_LINE.test(line) || IMPORT_LINE.test(line)) return
     if (index > 0 && ANNOTATION_LINE.test(lines[index - 1])) return
     starts.push(index)
@@ -495,30 +519,22 @@ function declarations(source, lang) {
     while (end > start && !lines[end].trim()) end--
     const text = lines.slice(start, end + 1).join("\n")
     const head = text.replace(LEADING_ANNOTATION, "")
-    const name =
-      lang === "swift"
-        ? head.match(SWIFT_DECLARATION)?.[1]
-        : head.match(KOTLIN_DECLARATION)?.[1]
-    return { name, text }
+    return { names: declarationNames(head, lang), text, imports }
   })
 }
 
-function members(source) {
-  const result = []
-  for (const match of source.matchAll(
-    /^ {2}(?:private )?static (let|var|func) (\w+)/gm
-  )) {
-    const start = match.index
-    let end = source.indexOf("\n", start)
-    const rest = source.slice(start, end)
-    const opener = rest.search(OPEN_BRACKET_END)
-    if (opener >= 0) end = closing(source, start + opener) + 1
-    result.push({
-      name: match[2],
-      text: dedentBlock(source.slice(start, end)).replace(STATIC_MEMBER, ""),
-    })
-  }
-  return result
+function sharedSwift(uimRepo) {
+  return SWIFT_SHARED_DIRECTORIES.flatMap((directory) =>
+    files(path.join(uimRepo, "swiftui", directory), ".swift").flatMap(
+      (file) => {
+        const source = readFileSync(file, "utf8")
+        const imports = [...source.matchAll(SWIFT_IMPORT)].map(
+          (match) => match[1]
+        )
+        return declarations(source, "swift", imports)
+      }
+    )
+  )
 }
 
 const words = (text) => new Set(text.match(/\b[A-Za-z_]\w*\b/g) ?? [])
@@ -530,9 +546,8 @@ function helpers(seed, pool) {
     const found = words(queue.pop())
     for (const declaration of pool) {
       if (
-        declaration.name &&
         !used.has(declaration) &&
-        found.has(declaration.name)
+        declaration.names.some((name) => found.has(name))
       ) {
         used.add(declaration)
         queue.push(declaration.text)
@@ -550,17 +565,24 @@ const publicize = (text) =>
       "$1"
     )
 
-function swiftStories(file) {
+const isolate = (text) =>
+  SWIFT_GLOBAL.test(text)
+    ? text.replace(SWIFT_GLOBAL_KEYWORD, "@MainActor ")
+    : text
+
+function swiftStories(file, shared) {
   const source = readFileSync(file, "utf8")
   const group = source.match(SWIFT_STORY_GROUP)
   if (!group) return []
   const prefix = sanitize(`${sections.swift[group[1]]}/${group[2]}`)
-  const imports = [...source.matchAll(/^import (\w+)$/gm)].map(
-    (match) => match[1]
+  const imports = [...source.matchAll(SWIFT_IMPORT)].map((match) => match[1])
+  const own = declarations(source, "swift").filter(
+    (d) => !STORIES_ENUM.test(d.text)
   )
+  const names = new Set(own.flatMap((d) => d.names))
   const pool = [
-    ...declarations(source, "swift").filter((d) => !STORIES_ENUM.test(d.text)),
-    ...members(source),
+    ...own,
+    ...shared.filter((d) => !d.names.some((name) => names.has(name))),
   ]
   const result = []
   for (const match of source.matchAll(/Story\(\s*"(\w+)"/g)) {
@@ -576,7 +598,9 @@ function swiftStories(file) {
       !(
         direct &&
         used.some(
-          (d) => d.name === direct && STRUCT_KEYWORD.test(d.text.split("\n")[0])
+          (d) =>
+            d.names.includes(direct) &&
+            STRUCT_KEYWORD.test(d.text.split("\n")[0])
         )
       )
     ) {
@@ -584,13 +608,15 @@ function swiftStories(file) {
         `struct ${exampleName(group[2], match[1])}: View {\n  var body: some View {\n${indentBy(body, 4)}\n  }\n}`
       )
     }
-    parts.push(...used.map((d) => publicize(d.text)))
+    parts.push(...used.map((d) => isolate(publicize(d.text))))
     const code = parts.join("\n\n")
-    const header = imports.filter((name) =>
-      name === "PhosphorSwift"
-        ? PHOSPHOR_REFERENCE.test(code)
-        : name !== "Charts" || CHART_REFERENCE.test(code)
-    )
+    const header = [
+      ...new Set([...imports, ...used.flatMap((d) => d.imports)]),
+    ].filter((name) => {
+      if (name === LIBRARY_MODULE) return false
+      if (name === "PhosphorSwift") return PHOSPHOR_REFERENCE.test(code)
+      return name !== "Charts" || CHART_REFERENCE.test(code)
+    })
     result.push({
       id: `${prefix}--${sanitize(startCase(match[1]))}`,
       code: `${header.map((name) => `import ${name}`).join("\n")}\n\n${code}`,
@@ -623,7 +649,7 @@ function kotlinStories(file) {
     if (
       !(
         direct &&
-        used.some((d) => d.name === direct && FUN_KEYWORD.test(d.text))
+        used.some((d) => d.names.includes(direct) && FUN_KEYWORD.test(d.text))
       )
     ) {
       parts.push(
@@ -632,7 +658,7 @@ function kotlinStories(file) {
     }
     parts.push(...used.map((d) => publicize(d.text)))
     const code = parts.join("\n\n")
-    const found = words(code)
+    const found = words(code.replace(RAW_STRING, '""'))
     const header = imports.filter((name) => {
       const last = name.split(".").pop()
       if (last === "*") return true
@@ -653,6 +679,7 @@ function kotlinStories(file) {
 }
 
 function nativeStories(uimRepo) {
+  const shared = sharedSwift(uimRepo)
   const map = new Map()
   const add = (platform, list) => {
     for (const story of list) {
@@ -664,7 +691,7 @@ function nativeStories(uimRepo) {
     path.join(uimRepo, "swiftui/Catalog/Catalog/Stories"),
     ".swift"
   ))
-    add("swift", swiftStories(file))
+    add("swift", swiftStories(file, shared))
   for (const file of files(
     path.join(
       uimRepo,

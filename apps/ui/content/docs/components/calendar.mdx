@@ -386,7 +386,6 @@ export function CalendarExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 enum CalendarDates {
@@ -440,19 +439,6 @@ struct CalendarSingleDemo: View {
     )
     .modifier(CalendarBordered())
   }
-}
-
-func day(_ offset: Int) -> Date {
-  let calendar = Foundation.Calendar.current
-  let start = calendar.startOfDay(for: Date())
-  return calendar.date(byAdding: .day, value: offset, to: start) ?? start
-}
-
-func dayOfMonth(_ day: Int) -> Date {
-  let calendar = Foundation.Calendar.current
-  var components = calendar.dateComponents([.year, .month], from: Date())
-  components.day = day
-  return calendar.date(from: components) ?? Date()
 }
 ```
 

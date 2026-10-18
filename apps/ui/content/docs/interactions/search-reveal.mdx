@@ -394,7 +394,6 @@ export function SearchRevealExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct SearchRevealExample: View {
@@ -409,7 +408,7 @@ struct SearchRevealNote: Identifiable {
   let preview: String
 }
 
-let searchRevealNotes = [
+@MainActor let searchRevealNotes = [
   SearchRevealNote(id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee"),
   SearchRevealNote(id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road"),
   SearchRevealNote(id: 3, title: "Book list", preview: "Three novels for the summer"),

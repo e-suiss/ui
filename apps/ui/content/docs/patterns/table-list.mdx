@@ -307,7 +307,6 @@ import { TableListTitle, TableListHeader, TableListFooter, TableListSeparator, T
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct TableListExample: View {
@@ -327,14 +326,14 @@ struct TableListInvoice: Identifiable {
   let amount: String
 }
 
-let tableListInvoices = [
+@MainActor let tableListInvoices = [
   TableListInvoice(id: "INV001", customer: "Olivia Martin", status: "Paid", method: "Card", amount: "$250.00"),
   TableListInvoice(id: "INV002", customer: "Jackson Lee", status: "Pending", method: "PayPal", amount: "$150.00"),
   TableListInvoice(id: "INV003", customer: "Isabella Nguyen", status: "Unpaid", method: "Transfer", amount: "$350.00"),
   TableListInvoice(id: "INV004", customer: "William Kim", status: "Paid", method: "Card", amount: "$450.00"),
 ]
 
-let tableListColumns: [TableListColumn<TableListInvoice>] = [
+@MainActor let tableListColumns: [TableListColumn<TableListInvoice>] = [
   TableListColumn("customer", header: "Customer", slot: .title) { Text(verbatim: $0.customer) },
   TableListColumn("status", header: "Status", slot: .description) { Text(verbatim: $0.status) },
   TableListColumn("method", header: "Method", slot: .description) { Text(verbatim: $0.method) },

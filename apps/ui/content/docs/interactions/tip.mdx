@@ -539,7 +539,6 @@ export function TipExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -551,7 +550,7 @@ struct TipNote: Identifiable {
   let preview: String
 }
 
-let tipNotes = [
+@MainActor let tipNotes = [
   TipNote(id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee"),
   TipNote(id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road"),
   TipNote(id: 3, title: "Book list", preview: "Three novels for the summer"),

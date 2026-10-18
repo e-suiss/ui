@@ -380,10 +380,9 @@ import { SearchPicker } from "@/components/patterns/search-picker"
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
-let searchPickerFrameworks = [
+@MainActor let searchPickerFrameworks = [
   SearchPickerItem(value: "next", label: "Next.js"),
   SearchPickerItem(value: "remix", label: "Remix"),
   SearchPickerItem(value: "astro", label: "Astro"),

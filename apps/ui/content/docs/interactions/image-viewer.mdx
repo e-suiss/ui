@@ -287,7 +287,6 @@ export function ImageViewerExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 import UIKit
 
@@ -296,7 +295,7 @@ struct ImageViewerPhoto {
   let label: String
 }
 
-let imageViewerPhotos = [
+@MainActor let imageViewerPhotos = [
   ImageViewerPhoto(url: URL(string: "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200&q=80")!, label: "Mountain lake at sunrise"),
   ImageViewerPhoto(url: URL(string: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80")!, label: "Valley with a river"),
   ImageViewerPhoto(url: URL(string: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80")!, label: "Lake between mountains"),
@@ -380,14 +379,56 @@ struct ImageViewerGallery: View {
   }
 }
 
-let group = StoryGroup(.interactions, "Image Viewer", stories: [
-  Story("Default") {
-    ImageViewerGallery()
-  },
-  Story("OpenByDefault") {
-    ImageViewerGallery(open: true, index: 1)
-  },
-]
+struct FlowRow: Layout {
+  var spacing: CGFloat = 12
+
+  func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    let rows = arrange(width: proposal.width ?? .infinity, subviews: subviews)
+    let width = rows.map(\.width).max() ?? 0
+    let height = rows.map(\.height).reduce(0, +) + spacing * CGFloat(max(rows.count - 1, 0))
+    return CGSize(width: width, height: height)
+  }
+
+  func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+    var y = bounds.minY
+    for row in arrange(width: bounds.width, subviews: subviews) {
+      var x = bounds.minX
+      for index in row.indices {
+        let size = subviews[index].sizeThatFits(.unspecified)
+        subviews[index].place(
+          at: CGPoint(x: x, y: y + (row.height - size.height) / 2),
+          proposal: ProposedViewSize(size)
+        )
+        x += size.width + spacing
+      }
+      y += row.height + spacing
+    }
+  }
+
+  struct Row {
+    var indices: [Int] = []
+    var width: CGFloat = 0
+    var height: CGFloat = 0
+  }
+
+  func arrange(width: CGFloat, subviews: Subviews) -> [Row] {
+    var rows: [Row] = []
+    var row = Row()
+    for index in subviews.indices {
+      let size = subviews[index].sizeThatFits(.unspecified)
+      let next = row.indices.isEmpty ? size.width : row.width + spacing + size.width
+      if next > width && !row.indices.isEmpty {
+        rows.append(row)
+        row = Row()
+      }
+      row.width = row.indices.isEmpty ? size.width : row.width + spacing + size.width
+      row.height = max(row.height, size.height)
+      row.indices.append(index)
+    }
+    if !row.indices.isEmpty { rows.append(row) }
+    return rows
+  }
+}
 ```
 
 </Only>

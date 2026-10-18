@@ -362,7 +362,6 @@ export function PagedListExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -389,7 +388,7 @@ let pagedListSubjects = [
   "Animations",
 ]
 
-let pagedListTopics: [PagedListTopic] = (0..<57).map { index in
+@MainActor let pagedListTopics: [PagedListTopic] = (0..<57).map { index in
   PagedListTopic(
     id: index + 1,
     title: "\(pagedListSubjects[index % pagedListSubjects.count]) · thread \(index + 1)",

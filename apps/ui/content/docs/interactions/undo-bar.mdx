@@ -433,7 +433,6 @@ export function UndoBarExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -449,7 +448,7 @@ struct UndoBarNote: Identifiable, Equatable {
   let preview: String
 }
 
-let undoBarInitialNotes = [
+@MainActor let undoBarInitialNotes = [
   UndoBarNote(id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee"),
   UndoBarNote(id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road"),
   UndoBarNote(id: 3, title: "Book list", preview: "Three novels for the summer"),

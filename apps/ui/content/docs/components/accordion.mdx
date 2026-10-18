@@ -532,7 +532,6 @@ export function AccordionExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct AccordionExample: View {
@@ -551,7 +550,7 @@ struct AccordionEntry: Identifiable {
   var id: String { value }
 }
 
-let accordionEntries = [
+@MainActor let accordionEntries = [
   AccordionEntry(value: "item-1", title: "Is it accessible?", content: "Yes. It works with VoiceOver and TalkBack."),
   AccordionEntry(
     value: "item-2",

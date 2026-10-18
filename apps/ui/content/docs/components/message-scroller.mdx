@@ -676,7 +676,6 @@ export function MessageScrollerExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -899,68 +898,6 @@ struct MessageScrollerChat: View {
     Task { @MainActor in
       controller.scrollToEnd()
     }
-  }
-}
-
-let thread: [MessageScrollerMessage] = [
-  MessageScrollerMessage(
-    id: "1",
-    fromMe: false,
-    texts: ["Hey, do you have a minute?", "The client moved the launch."],
-    time: "9:12 AM"
-  ),
-  MessageScrollerMessage(id: "2", fromMe: true, texts: ["Sure, what's up?"]),
-  MessageScrollerMessage(
-    id: "3",
-    fromMe: false,
-    texts: ["It's Thursday now. Two days earlier than planned."],
-    reaction: "😬 1"
-  ),
-  MessageScrollerMessage(
-    id: "4",
-    fromMe: true,
-    texts: ["We could ship onboarding behind a flag.", "Turn it on next week once QA is done."],
-    status: "Read 9:15 AM"
-  ),
-  MessageScrollerMessage(
-    id: "5",
-    fromMe: false,
-    texts: ["Here are the release notes."],
-    time: "9:18 AM",
-    attachment: MessageScrollerAttachment(name: "Release notes.pdf", size: "1.2 MB")
-  ),
-  MessageScrollerMessage(
-    id: "6",
-    fromMe: true,
-    texts: ["And the checklist with my comments."],
-    attachment: MessageScrollerAttachment(name: "Checklist.pdf", size: "Uploading", progress: 64)
-  ),
-  MessageScrollerMessage(
-    id: "7",
-    fromMe: false,
-    texts: ["Perfect. Let's sync tomorrow at ten."],
-    reaction: "👍 2"
-  ),
-  MessageScrollerMessage(id: "8", fromMe: true, texts: ["Sounds good, see you then."], status: "Delivered"),
-]
-
-let subjects = [
-  "Did you see the latest build?",
-  "The onboarding copy needs one more pass.",
-  "I can take the release notes.",
-  "QA found two small issues on Android.",
-  "Both are fixed in the next build.",
-  "Can we move the review to the afternoon?",
-]
-
-func long(_ count: Int, offset: Int = 0) -> [MessageScrollerMessage] {
-  (0..<count).map { index in
-    let number = index + offset
-    return MessageScrollerMessage(
-      id: "m\(number)",
-      fromMe: number % 3 == 0,
-      texts: [subjects[number % subjects.count]]
-    )
   }
 }
 ```

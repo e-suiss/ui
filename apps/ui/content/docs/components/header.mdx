@@ -234,7 +234,6 @@ import { Text } from "@/components/ui/text"
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import SwiftUI
 
 struct HeaderExample: View {
@@ -252,6 +251,12 @@ struct HeaderExample: View {
       }
     }
     .headerStoryBleed()
+  }
+}
+
+extension View {
+  func headerStoryBleed() -> some View {
+    padding(.horizontal, -16).padding(.top, -16)
   }
 }
 ```

@@ -415,7 +415,6 @@ export function SwipeActionsExample() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -425,7 +424,7 @@ struct SwipeActionsMessage: Identifiable {
   let subject: String
 }
 
-let swipeActionsMessages = [
+@MainActor let swipeActionsMessages = [
   SwipeActionsMessage(id: "1", from: "Olivia Martin", subject: "Quarterly report is ready"),
   SwipeActionsMessage(id: "2", from: "Jackson Lee", subject: "Lunch on Friday?"),
   SwipeActionsMessage(id: "3", from: "Isabella Nguyen", subject: "Design review notes"),

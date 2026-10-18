@@ -585,7 +585,6 @@ import { CodeBlock, CodeBlockActions, CodeBlockContent, CodeBlockCopyButton, Cod
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -603,6 +602,11 @@ struct CodeBlockExample: View {
 }
 
 let greeting = """
+export function Greeting({ name }: { name: string }) {
+  // Say hello to the person signing in
+  return <Text>Hello, {name}!</Text>
+}
+"""
 ```
 
 </Only>
@@ -621,6 +625,11 @@ import com.esuiss.ui.components.CodeBlockCopyButton
 import com.esuiss.ui.components.CodeBlockHeader
 import com.esuiss.ui.components.CodeBlockTitle
 import com.esuiss.ui.components.Icon
+
+const val GREETING = """export function Greeting({ name }: { name: string }) {
+  // Say hello to the person signing in
+  return <Text>Hello, {name}!</Text>
+}"""
 
 @Composable
 fun CodeBlockDefault() {

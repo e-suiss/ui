@@ -561,7 +561,6 @@ export function TabBarExampleDemo() {
 <Only platform="swift">
 
 ```swift
-import EsuissUI
 import PhosphorSwift
 import SwiftUI
 
@@ -573,7 +572,7 @@ struct TabBarEntry {
   let badge: TabBarBadge?
 }
 
-let tabBarEntries = [
+@MainActor let tabBarEntries = [
   TabBarEntry(value: "home", label: "Home", icon: Ph.house.regular, activeIcon: Ph.house.fill, badge: nil),
   TabBarEntry(value: "search", label: "Search", icon: Ph.magnifyingGlass.regular, activeIcon: Ph.magnifyingGlass.fill, badge: nil),
   TabBarEntry(value: "messages", label: "Messages", icon: Ph.chatCircle.regular, activeIcon: Ph.chatCircle.fill, badge: 3),
