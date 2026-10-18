@@ -209,6 +209,17 @@ The React Native components are published as a registry too, once per styling li
 | NativeWind v4 | `https://suiss.app/ui/r/rn-nativewind/{name}.json` | `"css": "global.css"`, `"config": "tailwind.config.js"` |
 | StyleSheet | `https://suiss.app/ui/r/rn-stylesheet/{name}.json` | `"css": ""` |
 
+You can also keep the `{style}` URL from [Register the namespace](#register-the-namespace) and set `"style"` in `components.json` to `rn-<styling>-<style>`, such as `rn-uniwind-suiss`, `rn-nativewind-vega` or `rn-stylesheet-luma`. The registry then serves the items of that styling, and `@esuiss/theme-suiss` resolves to the theme of that style:
+
+```json title="components.json"
+{
+  "style": "rn-uniwind-suiss",
+  "registries": {
+    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
+  }
+}
+```
+
 Then add components with the registry CLI:
 
 ```bash title="Terminal"

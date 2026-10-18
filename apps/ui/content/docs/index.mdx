@@ -24,7 +24,7 @@ npx @esuiss/ui@latest add button dialog sheet
 | SwiftUI | Xcode projects and Swift packages, iOS 17 or later | SwiftUI and Swift Charts |
 | Jetpack Compose | Android Gradle modules, `minSdk` 24 or higher | Compose Foundation and UI, without Material |
 
-Every component page has a tab for each platform it supports, with its own preview, installation steps, examples and API reference.
+Every page has a tab for each platform it supports, with installation steps and examples for that platform. Most component, pattern, interaction and AI pages also have the API reference of that platform.
 
 ## Principles
 
@@ -40,7 +40,7 @@ Every color has a light and a dark value, and every platform uses the same value
 
 ### Icons and primitives
 
-On the web, a component's source names each icon in five libraries (Lucide, Tabler, Hugeicons, Phosphor and Remix Icon) with an `IconPlaceholder` element. When a file is copied, every placeholder becomes an import from one library: the registry CLI uses the icon library set in your `components.json`, and the suiss/ui CLI uses [Phosphor](https://phosphoricons.com). React Native, SwiftUI and Compose use Phosphor.
+On the web, a component's source names each icon in five libraries (Lucide, Tabler, Hugeicons, Phosphor and Remix Icon) with an `IconPlaceholder` element. When a file is copied, every placeholder becomes an import from one library: both the registry CLI and the suiss/ui CLI use the `iconLibrary` set in your `components.json`, and [Phosphor](https://phosphoricons.com) when none is set. React Native, SwiftUI and Compose components use Phosphor by default and switch to Lucide, Tabler, Hugeicons or Remix Icon with `--icon-library` or a preset. See [Icon libraries](/docs/cli#icon-libraries).
 
 Web components also come in three primitive bases, picked when you set up a project. Code on this site shows Phosphor icons and the default base; choose another icon library or base under code options in the header to see the code you will get. See [Installation](/docs/installation#choose-the-primitive-base).
 
