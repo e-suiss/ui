@@ -328,7 +328,7 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
-  const theme = await themeOptionsFor(options, fetchThemes)
+  const theme = await themeOptionsFor(options, fetchThemes, registry.colors)
   const css = usesCss
     ? themed(
         await fetchStylesheet(registry, project.styling, options.style),

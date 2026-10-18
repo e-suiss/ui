@@ -38,6 +38,12 @@ data class Colors(
     val sidebarAccentForeground: Color,
     val sidebarBorder: Color,
     val sidebarRing: Color,
+    val menu: Color,
+    val menuForeground: Color,
+    val menuMutedForeground: Color,
+    val menuAccent: Color,
+    val menuAccentForeground: Color,
+    val menuBorder: Color,
     val isDark: Boolean,
 )
 
@@ -73,6 +79,12 @@ val LightColors = Colors(
     sidebarAccentForeground = Color(0xFF1D1D1F),
     sidebarBorder = Color(0xFFD2D2D7),
     sidebarRing = Color(0xFF0071E3),
+    menu = Color(0xFFFFFFFF),
+    menuForeground = Color(0xFF1D1D1F),
+    menuMutedForeground = Color(0xFF6E6E73),
+    menuAccent = Color(0xFF000000).copy(alpha = 0.06f),
+    menuAccentForeground = Color(0xFF1D1D1F),
+    menuBorder = Color(0xFFD2D2D7),
     isDark = false,
 )
 
@@ -108,6 +120,12 @@ val DarkColors = Colors(
     sidebarAccentForeground = Color(0xFFF5F5F7),
     sidebarBorder = Color(0xFF424245),
     sidebarRing = Color(0xFF0071E3),
+    menu = Color(0xFF1D1D1F),
+    menuForeground = Color(0xFFF5F5F7),
+    menuMutedForeground = Color(0xFFA1A1A6),
+    menuAccent = Color(0xFFFFFFFF).copy(alpha = 0.1f),
+    menuAccentForeground = Color(0xFFF5F5F7),
+    menuBorder = Color(0xFF424245),
     isDark = true,
 )
 

@@ -381,7 +381,7 @@ private fun <T> ComboboxPopup(
         Column(
             modifier = Modifier
                 .width(width)
-                .raisedSurface(colors, RoundedCornerShape(Radius.xl))
+                .raisedSurface(colors, RoundedCornerShape(Radius.xl), menu = true)
                 .heightIn(max = 288.dp)
                 .verticalScroll(rememberScrollState())
                 .padding(6.dp),
@@ -390,14 +390,14 @@ private fun <T> ComboboxPopup(
                 BasicText(
                     emptyText,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    style = Typography.sm.copy(color = colors.mutedForeground, textAlign = TextAlign.Center),
+                    style = Typography.sm.copy(color = colors.menuMutedForeground, textAlign = TextAlign.Center),
                 )
             } else if (groupBy == null) {
                 items.forEach { ComboboxOption(itemText(it), isSelected(it)) { onItemClick(it) } }
             } else {
                 items.groupBy(groupBy).entries.forEachIndexed { index, (label, group) ->
                     if (index > 0) {
-                        MenuSeparatorLine(Modifier, bleed = 6.dp, color = colors.border)
+                        MenuSeparatorLine(Modifier, bleed = 6.dp, color = colors.menuBorder)
                     }
                     BasicText(
                         label,
@@ -405,7 +405,7 @@ private fun <T> ComboboxPopup(
                             .fillMaxWidth()
                             .semantics { heading() }
                             .padding(horizontal = 12.dp, vertical = 10.dp),
-                        style = Typography.xs.copy(color = colors.mutedForeground, fontWeight = FontWeight.SemiBold),
+                        style = Typography.xs.copy(color = colors.menuMutedForeground, fontWeight = FontWeight.SemiBold),
                     )
                     group.forEach { ComboboxOption(itemText(it), isSelected(it)) { onItemClick(it) } }
                 }
@@ -439,7 +439,7 @@ private fun ComboboxOption(text: String, selected: Boolean, onClick: () -> Unit)
         BasicText(
             text,
             modifier = Modifier.padding(end = 24.dp, top = 8.dp, bottom = 8.dp),
-            style = Typography.base.copy(color = colors.foreground),
+            style = Typography.base.copy(color = colors.menuForeground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

@@ -290,8 +290,8 @@ function ContentPopup({
       style={(state) => [
         styles.content,
         {
-          borderColor: `${colors.foreground}${isDark ? "1a" : "0d"}`,
-          backgroundColor: colors.popover,
+          borderColor: `${colors.menuForeground}${isDark ? "1a" : "0d"}`,
+          backgroundColor: colors.menu,
         },
         sizing,
         resolveStyle(style, state) as StyleProp<ViewStyle>,
@@ -333,7 +333,7 @@ function ComboboxContent({
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
             <TextStyleContext.Provider
-              value={{ ...fontSize.base, color: colors.foreground }}
+              value={{ ...fontSize.base, color: colors.menuForeground }}
             >
               <ContentPopup style={style} chips={!!anchor} {...props} />
             </TextStyleContext.Provider>
@@ -379,7 +379,7 @@ function ComboboxItem({
       ]}
       {...props}
     >
-      {wrapText(children, [styles.itemText, { color: colors.foreground }])}
+      {wrapText(children, [styles.itemText, { color: colors.menuForeground }])}
       <ComboboxPrimitive.ItemIndicator style={styles.indicator}>
         <Icon as={CheckIcon} size={16} color={colors.primary} />
       </ComboboxPrimitive.ItemIndicator>
@@ -402,7 +402,7 @@ function ComboboxLabel({
     <ComboboxPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.mutedForeground },
+        { color: colors.menuMutedForeground },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
@@ -426,7 +426,7 @@ function ComboboxEmpty({
     >
       {wrapText(children, [
         styles.emptyText,
-        { color: colors.mutedForeground },
+        { color: colors.menuMutedForeground },
       ])}
     </ComboboxPrimitive.Empty>
   )
@@ -441,7 +441,7 @@ function ComboboxSeparator({
     <ComboboxPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.border },
+        { backgroundColor: colors.menuBorder },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}

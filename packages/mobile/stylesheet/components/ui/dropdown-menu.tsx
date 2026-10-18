@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
 function usePopupColors() {
   const { colors, isDark } = useTheme()
   return {
-    borderColor: `${colors.foreground}${isDark ? "1a" : "0d"}`,
-    backgroundColor: colors.popover,
+    borderColor: `${colors.menuForeground}${isDark ? "1a" : "0d"}`,
+    backgroundColor: colors.menu,
   }
 }
 
@@ -136,7 +136,7 @@ function DropdownMenuContent({
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
             <TextStyleContext.Provider
-              value={{ ...fontSize.base, color: colors.foreground }}
+              value={{ ...fontSize.base, color: colors.menuForeground }}
             >
               <MenuPrimitive.Popup
                 style={(state) => [
@@ -171,13 +171,13 @@ function DropdownMenuSubTrigger({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: colors.foreground,
+        color: colors.menuForeground,
       }}
     >
       <MenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          state.open && { backgroundColor: colors.accent },
+          state.open && { backgroundColor: colors.menuAccent },
           state.highlighted && { opacity: 0.8 },
           props.disabled && { opacity: 0.5 },
           inset && styles.inset,
@@ -226,7 +226,7 @@ function DropdownMenuItem({
 }) {
   const { colors } = useTheme()
   const destructive = variant === "destructive"
-  const color = destructive ? colors.destructive : colors.foreground
+  const color = destructive ? colors.destructive : colors.menuForeground
   return (
     <TextStyleContext.Provider
       value={{
@@ -262,7 +262,7 @@ function DropdownMenuCheckboxItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: colors.foreground,
+        color: colors.menuForeground,
       }}
     >
       <MenuPrimitive.CheckboxItem
@@ -300,7 +300,7 @@ function DropdownMenuRadioItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: colors.foreground,
+        color: colors.menuForeground,
       }}
     >
       <MenuPrimitive.RadioItem
@@ -336,7 +336,7 @@ function DropdownMenuLabel({
     <MenuPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.mutedForeground },
+        { color: colors.menuMutedForeground },
         inset && styles.inset,
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
@@ -354,7 +354,7 @@ function DropdownMenuSeparator({
     <MenuPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.border },
+        { backgroundColor: colors.menuBorder },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}

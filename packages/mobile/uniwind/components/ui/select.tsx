@@ -105,7 +105,7 @@ function ContentPopup({
     <SelectPrimitive.Popup
       className={(state) =>
         cn(
-          "relative min-w-36 overflow-hidden rounded-menu border border-foreground/5 bg-popover shadow-menu dark:border-foreground/10",
+          "relative min-w-36 overflow-hidden rounded-menu border border-menu-foreground/5 bg-menu shadow-menu dark:border-menu-foreground/10",
           resolveClassName(className, state)
         )
       }
@@ -146,7 +146,7 @@ function SelectContent({
             entering={FadeIn.reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
-            <TextClassContext.Provider value="text-base text-foreground">
+            <TextClassContext.Provider value="text-base text-menu-foreground">
               <ContentPopup {...props} />
             </TextClassContext.Provider>
           </AnimatedView>
@@ -164,7 +164,7 @@ function SelectLabel({
     <SelectPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
+          "px-3 py-2.5 text-xs font-semibold text-menu-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -192,7 +192,7 @@ function SelectItem({
       }
       {...props}
     >
-      <SelectPrimitive.ItemText className="flex-1 select-none text-base text-foreground">
+      <SelectPrimitive.ItemText className="flex-1 select-none text-base text-menu-foreground">
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator className="absolute right-2 size-4 items-center justify-center">
@@ -209,7 +209,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       className={(state) =>
-        cn("my-1.5 h-px bg-border", resolveClassName(className, state))
+        cn("my-1.5 h-px bg-menu-border", resolveClassName(className, state))
       }
       {...props}
     />

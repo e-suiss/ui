@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest"
 
 import {
   applyThemeOptions,
+  menuColorsOf,
   paletteOf,
   radiusFactor,
   themeOptionsFor,
@@ -115,5 +116,57 @@ describe("themeOptionsFor", () => {
     const options = await themeOptionsFor({ preset }, () => THEMES)
     const blue = THEMES.find((theme) => theme.name === "blue")
     expect(options.palette.light.primary).toBe(blue.light.primary)
+  })
+})
+
+describe("menuColorsOf", () => {
+  it("matches today's menu colors by default", () => {
+    const menu = menuColorsOf(OWN, {})
+    for (const mode of ["light", "dark"]) {
+      for (const name of Object.keys(menu[mode])) {
+        expect(menu[mode][name]).toBe(OWN[mode][name])
+      }
+    }
+  })
+
+  it("takes the other mode's colors when inverted", () => {
+    const menu = menuColorsOf(OWN, { menuColor: "inverted" })
+    expect(menu.light.menu).toBe(OWN.dark.popover)
+    expect(menu.dark["menu-foreground"]).toBe(OWN.light.foreground)
+  })
+
+  it("makes the menu translucent", () => {
+    const menu = menuColorsOf(OWN, { menuColor: "default-translucent" })
+    expect(menu.light.menu).toBe("oklch(1 0 0 / 70%)")
+  })
+
+  it("highlights with the primary color when the accent is bold", () => {
+    const menu = menuColorsOf(OWN, { menuAccent: "bold" })
+    expect(menu.light["menu-accent"]).toBe(OWN.light.primary)
+    expect(menu.light["menu-accent-foreground"]).toBe(
+      OWN.light["primary-foreground"]
+    )
+  })
+})
+
+describe("themeOptionsFor menus", () => {
+  it("inverts the suiss menu colors with --theme suiss", async () => {
+    const preset = encodePreset({
+      style: "nova",
+      baseColor: "neutral",
+      theme: "neutral",
+      radius: "default",
+      font: "inter",
+      iconLibrary: "lucide",
+      menuColor: "inverted",
+      menuAccent: "subtle",
+    })
+    const options = await themeOptionsFor(
+      { preset, theme: "suiss" },
+      () => THEMES,
+      OWN
+    )
+    expect(options.palette.light.menu).toBe(OWN.dark.popover)
+    expect(options.palette.light.primary).toBeUndefined()
   })
 })

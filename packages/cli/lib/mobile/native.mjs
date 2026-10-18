@@ -213,7 +213,11 @@ export async function initNative(options) {
     ...new Set([...spec.base, ...(button?.[options.platform] ?? [])]),
   ]
 
-  const theme = await themeOptionsFor(options, fetchThemes)
+  const theme = await themeOptionsFor(
+    options,
+    fetchThemes,
+    context.registry.colors
+  )
   const downloaded = (await fetchFiles(project.root, entries(files))).map(
     (file) =>
       path.basename(file.target).startsWith("Tokens.")

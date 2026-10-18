@@ -367,12 +367,21 @@ internal fun RegisterPaneTitle(text: String) {
     SideEffect { state?.value = text }
 }
 
-internal fun Modifier.raisedSurface(colors: Colors, shape: Shape, shadow: Shadow = Shadows.lg): Modifier =
+internal fun Modifier.raisedSurface(
+    colors: Colors,
+    shape: Shape,
+    shadow: Shadow = Shadows.lg,
+    menu: Boolean = false,
+): Modifier =
     this
         .shadow(shadow, shape)
         .clip(shape)
-        .background(colors.card, shape)
-        .border(1.dp, colors.foreground.copy(alpha = if (colors.isDark) 0.1f else 0.05f), shape)
+        .background(if (menu) colors.menu else colors.card, shape)
+        .border(
+            1.dp,
+            (if (menu) colors.menuForeground else colors.foreground).copy(alpha = if (colors.isDark) 0.1f else 0.05f),
+            shape,
+        )
 
 internal fun titleStyle(colors: Colors, style: TextStyle = Typography.base, centered: Boolean = false): TextStyle =
     style.copy(

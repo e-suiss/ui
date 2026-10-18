@@ -278,14 +278,15 @@ extension View {
     )
   }
 
-  func popupSurface(radius: CGFloat = Radius.xl, shadow: Shadow = .lg) -> some View {
-    modifier(PopupSurface(radius: radius, shadow: shadow))
+  func popupSurface(radius: CGFloat = Radius.xl, shadow: Shadow = .lg, menu: Bool = false) -> some View {
+    modifier(PopupSurface(radius: radius, shadow: shadow, menu: menu))
   }
 }
 
 struct PopupSurface: ViewModifier {
   let radius: CGFloat
   let shadow: Shadow
+  var menu = false
 
   @Environment(\.colorScheme) private var colorScheme
 
@@ -295,11 +296,11 @@ struct PopupSurface: ViewModifier {
       .clipShape(shape)
       .background {
         shape
-          .fill(EsuissColor.card)
+          .fill(menu ? EsuissColor.menu : EsuissColor.card)
           .shadow(shadow)
       }
       .overlay {
-        shape.strokeBorder(EsuissColor.foreground.opacity(colorScheme == .dark ? 0.1 : 0.05))
+        shape.strokeBorder((menu ? EsuissColor.menuForeground : EsuissColor.foreground).opacity(colorScheme == .dark ? 0.1 : 0.05))
       }
   }
 }

@@ -266,12 +266,66 @@ export function applyThemeOptions(text, format, options) {
   return writer(text, { palette: null, factor: 1, ...options })
 }
 
-export async function themeOptionsFor(options, fetchThemes) {
+const MODES = ["light", "dark"]
+const TRANSLUCENT_ALPHA = 0.7
+const MENU_SOURCES = {
+  menu: "popover",
+  "menu-foreground": "foreground",
+  "menu-muted-foreground": "muted-foreground",
+  "menu-border": "border",
+}
+
+function withAlpha(value, factor) {
+  const oklch = value.match(OKLCH_COLOR)
+  if (!oklch) return value
+  const alpha = round(fraction(oklch[4]) * factor)
+  return `oklch(${oklch[1]} ${oklch[2]} ${oklch[3]} / ${round(alpha * 100)}%)`
+}
+
+export function menuColorsOf(
+  colors,
+  { menuColor = "default", menuAccent = "subtle" }
+) {
+  const inverted = menuColor.startsWith("inverted")
+  const translucent = menuColor.endsWith("translucent")
+  const bold = menuAccent === "bold"
+  return Object.fromEntries(
+    MODES.map((mode) => {
+      const source =
+        colors[inverted ? MODES.find((other) => other !== mode) : mode]
+      const menu = Object.fromEntries(
+        Object.entries(MENU_SOURCES).map(([name, from]) => [name, source[from]])
+      )
+      menu["menu-accent"] = source[bold ? "primary" : "accent"]
+      menu["menu-accent-foreground"] =
+        source[bold ? "primary-foreground" : "accent-foreground"]
+      if (translucent) menu.menu = withAlpha(menu.menu, TRANSLUCENT_ALPHA)
+      return [mode, menu]
+    })
+  )
+}
+
+function isDefaultMenu(preset) {
+  return preset.menuColor === "default" && preset.menuAccent === "subtle"
+}
+
+export async function themeOptionsFor(options, fetchThemes, ownColors) {
   if (!options.preset) return null
   const preset = decodePreset(options.preset)
   if (!preset) return null
-  const palette =
+  const presetPalette =
     options.theme === OWN_THEME ? null : paletteOf(await fetchThemes(), preset)
+  let palette = presetPalette
+  if (presetPalette || (ownColors && !isDefaultMenu(preset))) {
+    const colors = presetPalette ?? ownColors
+    const menu = menuColorsOf(colors, preset)
+    palette = Object.fromEntries(
+      MODES.map((mode) => [
+        mode,
+        { ...(presetPalette?.[mode] ?? {}), ...menu[mode] },
+      ])
+    )
+  }
   return { palette, factor: radiusFactor(preset.radius), preset }
 }
 

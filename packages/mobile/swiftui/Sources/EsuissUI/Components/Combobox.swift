@@ -320,7 +320,7 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
       if filtered.isEmpty {
         Text(emptyText)
           .scaledFont(TextStyle.sm)
-          .foregroundStyle(EsuissColor.mutedForeground)
+          .foregroundStyle(EsuissColor.menuMutedForeground)
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity)
           .padding(.vertical, 8)
@@ -352,8 +352,8 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
       }
     }
     .scaledFont(TextStyle.base)
-    .foregroundStyle(EsuissColor.foreground)
-    .popupSurface(radius: Radius.xl)
+    .foregroundStyle(EsuissColor.menuForeground)
+    .popupSurface(radius: Radius.xl, menu: true)
     .accessibilityElement(children: .contain)
     .onAppear {
       query = initialQuery

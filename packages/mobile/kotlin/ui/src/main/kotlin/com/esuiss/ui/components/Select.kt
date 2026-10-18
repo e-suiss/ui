@@ -187,13 +187,13 @@ fun Select(
                     onValueChange(it)
                     expanded = false
                 },
-                LocalContentStyle provides Typography.base.copy(color = colors.foreground),
-                LocalContentColor provides colors.foreground,
+                LocalContentStyle provides Typography.base.copy(color = colors.menuForeground),
+                LocalContentColor provides colors.menuForeground,
             ) {
                 Column(
                     modifier = Modifier
                         .width(max(anchorWidth, 144.dp))
-                        .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.menu), Metrics.Elevation.menu)
+                        .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.menu), Metrics.Elevation.menu, menu = true)
                         .verticalScroll(rememberScrollState()),
                     content = content,
                 )
@@ -218,7 +218,7 @@ fun SelectLabel(text: String, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .semantics { heading() }
             .padding(horizontal = 12.dp, vertical = 10.dp),
-        style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.SemiBold),
+        style = Typography.xs.copy(color = EsuissTheme.colors.menuMutedForeground, fontWeight = FontWeight.SemiBold),
     )
 }
 
@@ -269,7 +269,7 @@ fun SelectItem(
         BasicText(
             text,
             modifier = Modifier.padding(end = 24.dp, top = 8.dp, bottom = 8.dp),
-            style = Typography.base.copy(color = colors.foreground),
+            style = Typography.base.copy(color = colors.menuForeground),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -292,6 +292,6 @@ fun SelectSeparator(modifier: Modifier = Modifier) {
             .padding(vertical = 6.dp)
             .fillMaxWidth()
             .height(1.dp)
-            .background(EsuissTheme.colors.border),
+            .background(EsuissTheme.colors.menuBorder),
     )
 }
