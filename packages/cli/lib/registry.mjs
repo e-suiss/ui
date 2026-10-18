@@ -1,3 +1,4 @@
+import { CliError } from "./output.mjs"
 import { createRegistry } from "./shared/registry.mjs"
 
 export { resolveItems } from "./shared/registry.mjs"
@@ -5,6 +6,31 @@ export { resolveItems } from "./shared/registry.mjs"
 const NAMESPACE = "@esuiss/"
 const STYLESHEET = "styles/globals.css"
 const BASE_FOLDER = /^bases\/[^/]+\//
+const AT_RULE = /^@([a-z-]+)/
+const AT_RULES = [
+  "apply",
+  "container",
+  "custom-variant",
+  "import",
+  "keyframes",
+  "layer",
+  "media",
+  "plugin",
+  "property",
+  "supports",
+  "theme",
+  "utility",
+]
+const IMPORT = /^@(?:import|plugin)\s+(?:"([^"]+)"|'([^']+)')$/
+const MODULE_SPECIFIER =
+  /^(?:@[a-z0-9~][\w.~-]*\/)?[a-z0-9~][\w.~-]*(?:\/[\w.~-]+)*$/i
+const DATA_URL = /url\(\s*(?:'data:[^']*'|"data:[^"]*"|data:[^)'"\s]*)\s*\)/gi
+const URL_FUNCTION = /\burl\(|\bimage-set\(|\bsrc\(/i
+const REMOTE = /(?:^|["'(\s,])(?:[a-z][a-z0-9+.-]*:\/\/|\/\/)/i
+const BLOCK = /[{};]/
+const REMOTE_STYLESHEET =
+  /@import\s+url\(|@import\s+["'](?:[a-z][a-z0-9+.-]*:|\/\/)|url\(\s*["']?(?:[a-z][a-z0-9+.-]*:|\/\/)/i
+const VALUE_BLOCK = /[{}]/
 const INDEXES = {
   base: "registry/registry.json",
   radix: "registry/radix/registry.json",
@@ -100,8 +126,62 @@ export function fetchStyles() {
   return styles
 }
 
-export function fetchStylesheet() {
-  return fetchText(STYLESHEET)
+export function checkStylesheet(css, file) {
+  if (REMOTE_STYLESHEET.test(css.replace(DATA_URL, ""))) {
+    throw new CliError(
+      `Refusing ${file}: it loads files from outside the project.`
+    )
+  }
+  return css
+}
+
+export async function fetchStylesheet() {
+  return checkStylesheet(await fetchText(STYLESHEET), STYLESHEET)
+}
+
+function unsafeCss(text, value) {
+  const rest = text.replace(DATA_URL, "")
+  return (
+    URL_FUNCTION.test(rest) ||
+    REMOTE.test(rest) ||
+    (value ? VALUE_BLOCK : BLOCK).test(rest)
+  )
+}
+
+function unsafeRule(selector, body) {
+  const atRule = selector.match(AT_RULE)?.[1]
+  if (atRule && !AT_RULES.includes(atRule)) return selector
+  if (atRule === "import" || atRule === "plugin") {
+    const [, double, single] = selector.match(IMPORT) ?? []
+    const specifier = double ?? single
+    const empty = body && typeof body === "object" && !Object.keys(body).length
+    return specifier && MODULE_SPECIFIER.test(specifier) && empty
+      ? null
+      : selector
+  }
+  if (unsafeCss(selector, false)) return selector
+  if (typeof body === "string") return unsafeCss(body, true) ? body : null
+  if (!body || typeof body !== "object") return selector
+  for (const [key, value] of Object.entries(body)) {
+    const unsafe = unsafeRule(key, value)
+    if (unsafe) return unsafe
+  }
+  return null
+}
+
+export function checkCss(item) {
+  if (!item.css) return
+  const unsafe =
+    typeof item.css === "object"
+      ? Object.entries(item.css)
+          .map(([selector, body]) => unsafeRule(selector, body))
+          .find(Boolean)
+      : String(item.css)
+  if (unsafe) {
+    throw new CliError(
+      `Refusing the styles of ${item.name}: ${unsafe} can load files from outside the project or break out of its rule.`
+    )
+  }
 }
 
 function cssBlock(selector, body, indent) {

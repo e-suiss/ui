@@ -13,6 +13,7 @@ import {
   install,
 } from "./project.mjs"
 import {
+  checkCss,
   fetchRegistry,
   fetchStyles,
   fetchText,
@@ -121,6 +122,7 @@ export async function installItems(
   { overwrite = false, base, style, icons, menuColor } = {}
 ) {
   const items = resolveItems(registry, names)
+  for (const item of items) checkCss(item)
   const files = await fetchFiles(root, items, { base, style, icons, menuColor })
   const result = writeFiles(project.cwd, files, overwrite)
   const installed = install(project, [

@@ -1,4 +1,5 @@
 import { CliError } from "../output.mjs"
+import { checkStylesheet } from "../registry.mjs"
 import {
   createRegistry,
   resolveItems as orderItems,
@@ -32,9 +33,10 @@ export function presetFile(registry, kind, style = DEFAULT_STYLE) {
   return file
 }
 
-export function fetchStylesheet(registry, styling, style) {
+export async function fetchStylesheet(registry, styling, style) {
   const preset = styling === "uniwind" && presetFile(registry, styling, style)
-  return fetchText(preset || registry.styles[styling].stylesheet)
+  const file = preset || registry.styles[styling].stylesheet
+  return checkStylesheet(await fetchText(file), file)
 }
 
 export function sourceOf(registry, item, file, styling) {
