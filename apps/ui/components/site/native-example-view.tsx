@@ -10,7 +10,6 @@ import {
   useResponsivePreview,
 } from "@/components/site/responsive-preview"
 import { SourceCode } from "@/components/site/source-code"
-import { useTheme } from "@/components/ui/theme"
 import { basePath, withBase } from "@/lib/base-path"
 import { PLATFORM_LABELS, type Platform } from "@/lib/platform"
 import type { Preview } from "@/lib/previews"
@@ -28,61 +27,6 @@ function previewAlt(id: string, scheme: string) {
   return `${name}${variant && variant !== "default" ? ` (${variant})` : ""} in ${PLATFORM_LABELS.rn}, ${scheme} mode`
 }
 
-function LiveFrame({
-  live,
-  id,
-  width,
-  height,
-}: {
-  live: string
-  id: string
-  width?: number
-  height?: number
-}) {
-  const { resolvedTheme } = useTheme()
-  const ref = React.useRef<HTMLIFrameElement>(null)
-  const [file = "", story = "Default"] = live.split("/")
-  const [initial, setInitial] = React.useState<string>()
-  React.useEffect(() => {
-    if (!initial && resolvedTheme) setInitial(resolvedTheme)
-  }, [initial, resolvedTheme])
-  React.useEffect(() => {
-    ref.current?.contentWindow?.postMessage(
-      { theme: resolvedTheme },
-      window.location.origin
-    )
-  }, [resolvedTheme])
-  if (!initial)
-    return (
-      <div
-        style={{
-          aspectRatio: width && height ? `${width} / ${height}` : undefined,
-        }}
-      />
-    )
-  return (
-    <iframe
-      ref={ref}
-      src={`${basePath}/live?file=${file}&story=${story}&theme=${initial}`}
-      title={previewAlt(id, initial)}
-      loading="lazy"
-      onLoad={() =>
-        ref.current?.contentWindow?.postMessage(
-          { theme: resolvedTheme },
-          window.location.origin
-        )
-      }
-      className="block w-full bg-background"
-      style={{
-        aspectRatio:
-          width && height
-            ? `${width} / ${Math.max(height, width * 1.1)}`
-            : "9 / 16",
-      }}
-    />
-  )
-}
-
 const CODE_PLATFORMS: Record<string, Platform> = {
   "React Native": "rn",
   SwiftUI: "swift",
@@ -95,7 +39,6 @@ export function NativeExampleView({
   height,
   platforms = [],
   video,
-  live,
   web,
   children,
 }: {
@@ -105,7 +48,6 @@ export function NativeExampleView({
   height?: number
   platforms?: string[]
   video?: boolean
-  live?: string
   children: React.ReactNode
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">(
@@ -119,7 +61,6 @@ export function NativeExampleView({
   )
   const active = Math.max(0, codePlatforms.indexOf(selected))
   const mobilePlatform = useActivePlatform(["rn", "swift", "kotlin"])
-  const showLive = !web && Boolean(live) && mobilePlatform === "rn"
   const missing =
     mobilePlatform !== "rn" &&
     !(codePlatforms.length ? codePlatforms : ["rn"]).includes(mobilePlatform)
@@ -152,7 +93,7 @@ export function NativeExampleView({
         )}
         {id && (
           <span className="ms-auto self-center font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
-            {showLive || web ? "Web" : PLATFORM_LABELS.rn}
+            {web ? "Web" : PLATFORM_LABELS.rn}
           </span>
         )}
       </div>
@@ -183,50 +124,46 @@ export function NativeExampleView({
             className="mt-[1.2em] flex flex-col items-center gap-4 overflow-hidden rounded-[24px] bg-muted px-6 py-10 ring-1 ring-foreground/10 md:py-14"
           >
             <div className="w-full max-w-[360px] overflow-hidden rounded-[28px] shadow-[0_24px_60px_-28px_rgb(0_0_0/0.35)] ring-1 ring-foreground/10">
-              {showLive && live ? (
-                <LiveFrame live={live} id={id} width={width} height={height} />
-              ) : (
-                (["light", "dark"] as const).map((scheme) =>
-                  video ? (
-                    <video
-                      key={scheme}
-                      src={`${basePath}/previews/${id}.${scheme}.mp4`}
-                      poster={`${basePath}/previews/${id}.${scheme}.webp`}
-                      width={width}
-                      height={height}
-                      aria-label={previewAlt(id, scheme)}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      className={cn(
-                        "block h-auto w-full",
-                        scheme === "light" ? "dark:hidden" : "hidden dark:block"
-                      )}
-                    />
-                  ) : (
-                    <Image
-                      key={scheme}
-                      unoptimized
-                      src={`${basePath}/previews/${id}.${scheme}.webp`}
-                      width={width}
-                      height={height}
-                      alt={previewAlt(id, scheme)}
-                      loading="lazy"
-                      decoding="async"
-                      className={cn(
-                        "block h-auto w-full",
-                        scheme === "light" ? "dark:hidden" : "hidden dark:block"
-                      )}
-                    />
-                  )
+              {(["light", "dark"] as const).map((scheme) =>
+                video ? (
+                  <video
+                    key={scheme}
+                    src={`${basePath}/previews/${id}.${scheme}.mp4`}
+                    poster={`${basePath}/previews/${id}.${scheme}.webp`}
+                    width={width}
+                    height={height}
+                    aria-label={previewAlt(id, scheme)}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className={cn(
+                      "block h-auto w-full",
+                      scheme === "light" ? "dark:hidden" : "hidden dark:block"
+                    )}
+                  />
+                ) : (
+                  <Image
+                    key={scheme}
+                    unoptimized
+                    src={`${basePath}/previews/${id}.${scheme}.webp`}
+                    width={width}
+                    height={height}
+                    alt={previewAlt(id, scheme)}
+                    loading="lazy"
+                    decoding="async"
+                    className={cn(
+                      "block h-auto w-full",
+                      scheme === "light" ? "dark:hidden" : "hidden dark:block"
+                    )}
+                  />
                 )
               )}
             </div>
-            {(showLive || mobilePlatform !== "rn") && (
+            {mobilePlatform !== "rn" && (
               <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
-                {showLive ? strings.webPreview : strings.nativePreview}
+                {strings.nativePreview}
               </p>
             )}
           </div>

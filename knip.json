@@ -54,7 +54,6 @@
         "nativewind/components/**/*.tsx",
         "stylesheet/components/**/*.{ts,tsx}",
         "components/primitives/*.{ts,tsx}",
-        "App.web.tsx",
         "icons/rn/*.tsx"
       ],
       "project": [
@@ -89,7 +88,6 @@
     },
     "apps/ui": {
       "entry": ["components/site/icon-placeholder.tsx", "scripts/*.mjs"],
-      "ignore": ["public/**"],
       "ignoreDependencies": ["@esuiss/web", "@fontsource/inter"]
     }
   },

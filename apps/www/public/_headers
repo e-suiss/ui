@@ -32,12 +32,6 @@
   Content-Type: text/markdown; charset=utf-8
   X-Robots-Tag: noindex
 
-/ui/live
-  X-Robots-Tag: noindex
-
-/ui/live/*
-  X-Robots-Tag: noindex
-
 /ui/native/*
   Content-Type: application/json
   X-Robots-Tag: noindex

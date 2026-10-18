@@ -18,8 +18,7 @@
     "nativewind:check": "node scripts/build-nativewind.mjs --check",
     "tokens": "node scripts/build-tokens.mjs",
     "tokens:check": "node scripts/build-tokens.mjs --check",
-    "styles": "node scripts/derive-styles.mjs",
-    "live": "expo export --platform web --output-dir ../../apps/ui/public/live"
+    "styles": "node scripts/derive-styles.mjs"
   },
   "dependencies": {
     "class-variance-authority": "catalog:",
@@ -39,7 +38,6 @@
     "uniwind": "^1.12.0"
   },
   "devDependencies": {
-    "@expo/metro-runtime": "57.0.16",
     "@gorhom/bottom-sheet": "^5.2.14",
     "@hugeicons/core-free-icons": "^4.3.5",
     "@hugeicons/react-native": "1.0.16",
@@ -62,7 +60,6 @@
     "postcss": "^8.5.28",
     "react-dom": "19.2.3",
     "react-native-view-shot": "5.1.0",
-    "react-native-web": "^0.21.3",
     "remixicon": "4.9.1",
     "storybook": "10.6.0",
     "typescript": "catalog:"

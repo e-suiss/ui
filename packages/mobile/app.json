@@ -11,9 +11,6 @@
     },
     "android": {
       "package": "com.esuiss.ui"
-    },
-    "experiments": {
-      "baseUrl": "/ui/live"
     }
   }
 }

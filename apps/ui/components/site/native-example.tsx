@@ -15,12 +15,10 @@ const LABELS = { swift: "SwiftUI", kotlin: "Compose" } as const
 
 export function NativeExample({
   id,
-  live,
   platforms,
   children,
 }: {
   id: string
-  live?: string
   platforms?: string[]
   children?: React.ReactNode
 }) {
@@ -31,8 +29,7 @@ export function NativeExample({
     web,
     width: preview?.width,
     height: preview?.height,
-    video: Boolean(preview?.video && !live),
-    live: preview ? live : undefined,
+    video: Boolean(preview?.video),
   }
   if (children)
     return (

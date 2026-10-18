@@ -10,7 +10,6 @@
       "**",
       "!**/registry.json",
       "!pnpm-lock.yaml",
-      "!apps/ui/public/live",
       "!packages/mobile/ios",
       "!packages/mobile/android",
       "!packages/mobile/uniwind-types.d.ts",
