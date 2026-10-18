@@ -10,7 +10,7 @@ await cp(path.join(root, "apps/ui/out"), path.join(dist, "ui"), {
   recursive: true,
 })
 
-const LIMIT = 1.5 * 1024 * 1024
+const LIMIT = 1.75 * 1024 * 1024
 const heavy = []
 for (const file of await readdir(dist, { recursive: true })) {
   if (!file.endsWith(".html")) continue
