@@ -59,12 +59,18 @@ function repositoryUrl(file: string) {
 export type MarkdownContext = {
   page: Page
   seen: Set<string>
-  shared?: Map<string, string>
+  full?: boolean
 }
 
 async function sourceBlock(file: string, context: MarkdownContext) {
   const own = fileKey(file) === sourceKey(context.page.slugs.at(-1) ?? "")
   if (context.seen.has(file)) return `- \`${file}\`: shown above`
+  if (context.full) {
+    const url = own
+      ? absolute(markdownUrl(context.page.url))
+      : repositoryUrl(file)
+    return `- \`${file}\`${url ? `: [source](${url})` : ""}`
+  }
   if (own) {
     context.seen.add(file)
     return fence(
@@ -75,24 +81,9 @@ async function sourceBlock(file: string, context: MarkdownContext) {
   }
   const owner = ownerPage(file)
   if (owner && owner.url !== context.page.url)
-    return `- \`${file}\`: see [${owner.data.title}](${absolute(context.shared ? owner.url : `${owner.url}.md`)})`
-  if (context.shared) {
-    if (!context.shared.has(file))
-      context.shared.set(file, await fileText(file))
-    return `- \`${file}\`: see Shared source files`
-  }
+    return `- \`${file}\`: see [${owner.data.title}](${absolute(markdownUrl(owner.url))})`
   const url = repositoryUrl(file)
   return `- \`${file}\`${url ? `: [source](${url})` : ""}`
-}
-
-export function sharedSources(shared: Map<string, string>) {
-  return [
-    "# Shared source files",
-    "Files that several items build on, included once.",
-    ...[...shared].map(([file, code]) =>
-      fence(code, path.extname(file).slice(1) || "tsx", file)
-    ),
-  ].join("\n\n")
 }
 
 async function fileText(file: string) {
@@ -263,12 +254,12 @@ function cleanMarkdown(body: string) {
 
 export const markdownUrl = (url: string) => `${url}.md`
 
-export async function pageMarkdown(page: Page, shared?: Map<string, string>) {
+export async function pageMarkdown(page: Page, full = false) {
   const body = cleanMarkdown(
     await toMarkdown(await page.data.getText("processed"), {
       page,
       seen: new Set(),
-      shared,
+      full,
     })
   )
   return [
@@ -333,7 +324,7 @@ export function llmsIndex() {
       `- Source: ${site.repository}`,
       `- Full documentation in one file: ${absolute("/llms-full.txt")}`,
       `- Styles: suiss (default), vega, nova, maia, lyra, mira, luma, sera and rhea; pick one with \`--style\` or on ${absolute("/create")}, which also turns style, colors, radius and icons into a preset code for \`init --preset\``,
-      "- Every page is also available as Markdown by appending `.md` to its URL or sending `Accept: text/markdown`.",
+      "- Every page is also available as Markdown by appending `.md` to its URL.",
     ].join("\n"),
   ]
   for (const [title, pages] of pageGroups()) {

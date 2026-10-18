@@ -30,7 +30,7 @@ export function GET() {
       )
       .join("\n")}`,
     `## suiss/ui at a glance\n\n${UI_FACTS.map((fact) => `- ${fact}`).join("\n")}`,
-    `## Optional\n\n- [Turkish version](${absolute("/tr")})\n- [GitHub](${site.github})\n- [npm](${site.npm})`,
+    `## Optional\n\n- [GitHub](${site.github})\n- [npm](${site.npm})`,
   ]
   return new Response(lines.join("\n\n"), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
