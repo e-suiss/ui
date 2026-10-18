@@ -1,6 +1,8 @@
 import path from "node:path"
 import type * as PageTree from "fumadocs-core/page-tree"
 
+import { DEFAULT_BASE } from "@/lib/code-options"
+import { BASE_TITLES } from "@/lib/create/templates"
 import { exampleSource, readSource, sourcePath } from "@/lib/highlight"
 import { nativeCode, nativePreview } from "@/lib/native"
 import { absolute, site } from "@/lib/site"
@@ -129,9 +131,11 @@ async function toMarkdown(body: string, context: MarkdownContext) {
     const code = nativeCode(id)
     return [
       previewImage(id),
-      fence(code.rn ?? "", "tsx"),
-      ...(code.swift ? [fence(code.swift, "swift")] : []),
-      ...(code.kotlin ? [fence(code.kotlin, "kotlin")] : []),
+      ...(code.rn ? [fence(code.rn, "tsx", platformNames.rn)] : []),
+      ...(code.swift ? [fence(code.swift, "swift", platformNames.swift)] : []),
+      ...(code.kotlin
+        ? [fence(code.kotlin, "kotlin", platformNames.kotlin)]
+        : []),
     ]
       .filter(Boolean)
       .join("\n\n")
@@ -163,13 +167,22 @@ function registryIndex(tag: string) {
     .join("\n")
 }
 
-function cleanMarkdown(body: string) {
+const scopeLabel = (names: string[], titles: Record<string, string>) =>
+  `**${names.map((name) => titles[name] ?? name).join(", ")}**`
+
+function cleanMarkdown(body: string, full: boolean) {
   const output: string[] = []
+  const scopes: string[] = []
   let fence = false
   let indent = 0
   let labels: string[] = []
   let anatomy = false
   let otherBase = false
+  const close = () => {
+    scopes.pop()
+    const parent = scopes.at(-1)
+    if (parent) output.push("", parent, "")
+  }
   for (const raw of body.split("\n")) {
     const isFence = raw.trim().startsWith("```")
     if (otherBase) {
@@ -189,22 +202,31 @@ function cleanMarkdown(body: string) {
     }
     const onlyBase = trimmed.match(ONLY_BASE_OPEN)
     if (onlyBase) {
-      otherBase = !onlyBase[1].split(" ").includes("base")
+      const bases = onlyBase[1].split(" ")
+      if (full) {
+        otherBase = !bases.includes(DEFAULT_BASE)
+        continue
+      }
+      const label = scopeLabel(bases, BASE_TITLES)
+      scopes.push(label)
+      output.push(label, "")
       continue
     }
-    if (trimmed === "</OnlyBase>") continue
+    if (trimmed === "</OnlyBase>") {
+      if (!full) close()
+      continue
+    }
     const only = trimmed.match(ONLY_OPEN)
     if (only) {
-      output.push(
-        `**${only[1]
-          .split(" ")
-          .map((platform) => platformNames[platform] ?? platform)
-          .join(", ")}**`,
-        ""
-      )
+      const label = scopeLabel(only[1].split(" "), platformNames)
+      scopes.push(label)
+      output.push(label, "")
       continue
     }
-    if (trimmed === "</Only>") continue
+    if (trimmed === "</Only>") {
+      close()
+      continue
+    }
     const tabs = trimmed.match(TABS_OPEN)
     if (tabs) {
       labels = [...tabs[1].matchAll(/&quot;([^&]*)&quot;|"([^"]*)"/g)]
@@ -260,7 +282,8 @@ export async function pageMarkdown(page: Page, full = false) {
       page,
       seen: new Set(),
       full,
-    })
+    }),
+    full
   )
   return [
     `# ${page.data.title}`,
@@ -310,7 +333,7 @@ export function pageGroups() {
   return groups
 }
 
-export function llmsIndex() {
+export function llmsIndex(full = false) {
   const lines = [
     `# ${site.name}`,
     `> ${site.description}`,
@@ -325,6 +348,11 @@ export function llmsIndex() {
       `- Full documentation in one file: ${absolute("/llms-full.txt")}`,
       `- Styles: suiss (default), vega, nova, maia, lyra, mira, luma, sera and rhea; pick one with \`--style\` or on ${absolute("/create")}, which also turns style, colors, radius and icons into a preset code for \`init --preset\``,
       "- Every page is also available as Markdown by appending `.md` to its URL.",
+      ...(full
+        ? [
+            `- React code and notes in this file show the ${BASE_TITLES.base} base only; the Markdown page of each doc also has the ${BASE_TITLES.radix} and ${BASE_TITLES.aria} variants.`,
+          ]
+        : []),
     ].join("\n"),
   ]
   for (const [title, pages] of pageGroups()) {

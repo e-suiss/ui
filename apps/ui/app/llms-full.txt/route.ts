@@ -1,7 +1,7 @@
 import { llmsIndex, pageGroups, pageMarkdown } from "@/lib/llms"
 
 async function fullText() {
-  const sections = [llmsIndex()]
+  const sections = [llmsIndex(true)]
   for (const pages of pageGroups().values()) {
     for (const page of pages) sections.push(await pageMarkdown(page, true))
   }
