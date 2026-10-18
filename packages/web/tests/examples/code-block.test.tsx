@@ -3,6 +3,7 @@ import { userEvent } from "@testing-library/user-event"
 import { expect, test, vi } from "vitest"
 import CodeBlockActions from "@/examples/code-block-actions"
 import CodeBlockDiff from "@/examples/code-block-diff"
+import CodeBlockFooter from "@/examples/code-block-footer"
 import CodeBlockHeader from "@/examples/code-block-header"
 import CodeBlockHighlightedLines from "@/examples/code-block-highlighted-lines"
 import CodeBlockHighlighting from "@/examples/code-block-highlighting"
@@ -47,6 +48,16 @@ test("Header", async () => {
 
   writeText.mockRestore()
 })
+test("Footer", async () => {
+  const { canvas, canvasElement: root } = await renderExample(
+    <CodeBlockFooter />
+  )
+
+  const footer = root.querySelector("[data-slot=code-block-footer]")
+  await expect(footer).toHaveTextContent("Exited with code 0")
+  await expect(canvas.getByText("Logs")).toBeVisible()
+})
+
 test("Actions", async () => {
   const { canvas, canvasElement: root } = await renderExample(
     <CodeBlockActions />
