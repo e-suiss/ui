@@ -39,7 +39,13 @@ import {
   fetchText,
   presetFile,
 } from "./registry.mjs"
-import { keepColors, themed, themeOptionsFor } from "./theme.mjs"
+import {
+  keepColors,
+  radiusFactorIn,
+  themed,
+  themeOptionsFor,
+  withMenuAccent,
+} from "./theme.mjs"
 
 const ANDROID_PLUGIN =
   /com\.android\.(?:application|library)|android[.-](?:application|library)|androidApplication|androidLibrary/
@@ -446,14 +452,21 @@ export async function applyNative(options) {
   }
   const only = options.only
   const inPlace = options.style === undefined && !options.preset
-  if (options.style === undefined && only !== "font") {
-    options.style = await detectStyle(
-      context.registry,
-      options.platform,
-      `${spec.directory}/${tokens[0]}`,
-      readFileSync(targetFor(project.root, tokens[0], options.platform), "utf8")
-    )
-  }
+  const keepsRadius = only !== "font" && !inPlace && !options.preset
+  const detected =
+    only !== "font" && (options.style === undefined || !options.preset)
+      ? await detectStyle(
+          context.registry,
+          options.platform,
+          `${spec.directory}/${tokens[0]}`,
+          readFileSync(
+            targetFor(project.root, tokens[0], options.platform),
+            "utf8"
+          ),
+          options.platform
+        )
+      : undefined
+  options.style ??= detected
   const theme =
     only === "font"
       ? null
@@ -463,19 +476,44 @@ export async function applyNative(options) {
   const targets = new Set(
     tokens.map((file) => targetFor(project.root, file, options.platform))
   )
+  const originals = new Map(
+    keepsRadius
+      ? await Promise.all(
+          tokens.map(async (file) => [
+            targetFor(project.root, file, options.platform),
+            await fetchText(
+              presetFile(context.registry, options.platform, detected) ??
+                `${spec.directory}/${file}`
+            ),
+          ])
+        )
+      : []
+  )
   if (!only) await useIconLibrary(context, options)
   const downloaded = (await download(tokens))
     .filter((file) => targets.has(file.target))
     .map((file) => {
       const current = readFileSync(file.target, "utf8")
-      let base = themed(
-        inPlace ? current : file.content,
-        options.platform,
-        theme
-      )
-      if (only === "font") base = current
-      else {
-        if (!theme) base = keepColors(base, current, options.platform)
+      let base = current
+      if (only !== "font") {
+        let fileTheme = withMenuAccent(theme, current, options.platform)
+        if (keepsRadius) {
+          fileTheme = {
+            palette: null,
+            ...fileTheme,
+            factor: radiusFactorIn(
+              current,
+              originals.get(file.target),
+              options.platform
+            ),
+          }
+        }
+        const fresh = inPlace ? current : file.content
+        base = themed(
+          options.preset ? fresh : keepColors(fresh, current, options.platform),
+          options.platform,
+          fileTheme
+        )
         if (!fonts) base = keepFonts(base, current, options.platform)
       }
       return {

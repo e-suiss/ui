@@ -30,7 +30,13 @@ import {
   fetchText,
   presetFile,
 } from "./registry.mjs"
-import { keepColors, themed, themeOptionsFor } from "./theme.mjs"
+import {
+  keepColors,
+  radiusFactorIn,
+  themed,
+  themeOptionsFor,
+  withMenuAccent,
+} from "./theme.mjs"
 
 const METRO_CONFIGS = ["metro.config.js", "metro.config.cjs"]
 const ROOT_COMPONENTS = [
@@ -589,7 +595,8 @@ function currentStyle(project, registry, target) {
           registry,
           "nativewind",
           registry.styles.nativewind.config,
-          readFileSync(config, "utf8")
+          readFileSync(config, "utf8"),
+          "nativewind-config"
         )
       : undefined
   }
@@ -601,8 +608,41 @@ function currentStyle(project, registry, target) {
     registry,
     project.styling,
     fallback,
-    readFileSync(target, "utf8")
+    readFileSync(target, "utf8"),
+    THEME_FORMATS[project.styling]
   )
+}
+
+async function radiusSource(project, registry, style, current) {
+  if (project.styling === "uniwind") {
+    return {
+      current,
+      original: await fetchStylesheet(registry, "uniwind", style),
+      format: "uniwind",
+    }
+  }
+  if (project.styling === "stylesheet") {
+    return {
+      current,
+      original: await fetchText(
+        presetFile(registry, "stylesheet", style) ??
+          registry.styles.stylesheet.theme
+      ),
+      format: "stylesheet",
+    }
+  }
+  const config = TAILWIND_CONFIGS.map((name) =>
+    path.join(project.cwd, name)
+  ).find(existsSync)
+  if (!config) return null
+  return {
+    current: readFileSync(config, "utf8"),
+    original: await fetchText(
+      presetFile(registry, "nativewind", style) ??
+        registry.styles.nativewind.config
+    ),
+    format: "nativewind-config",
+  }
 }
 
 export async function apply(options) {
@@ -626,14 +666,34 @@ export async function apply(options) {
   const registry = await fetchRegistry()
   if (!only) assertIconDependencies(registry, options.iconLibrary)
   const inPlace = options.style === undefined && !options.preset
-  if (options.style === undefined && only !== "font") {
-    options.style = await currentStyle(project, registry, target)
-  }
+  const detected =
+    only !== "font" && (options.style === undefined || !options.preset)
+      ? await currentStyle(project, registry, target)
+      : undefined
+  options.style ??= detected
 
   if (only !== "font") {
-    const theme = await themeOptionsFor(options, fetchThemes, registry.colors)
     const format = THEME_FORMATS[project.styling]
     const current = readFileSync(target, "utf8")
+    let theme = withMenuAccent(
+      await themeOptionsFor(options, fetchThemes, registry.colors),
+      current,
+      format
+    )
+    if (!inPlace && !options.preset) {
+      const radius = await radiusSource(project, registry, detected, current)
+      if (radius) {
+        theme = {
+          palette: null,
+          ...theme,
+          factor: radiusFactorIn(
+            radius.current,
+            radius.original,
+            radius.format
+          ),
+        }
+      }
+    }
     let fresh = current
     if (!inPlace) {
       fresh = usesCss
@@ -643,9 +703,11 @@ export async function apply(options) {
               registry.styles.stylesheet.theme
           )
     }
-    const text = theme
-      ? themed(fresh, format, theme)
-      : keepColors(fresh, current, format)
+    const text = themed(
+      options.preset ? fresh : keepColors(fresh, current, format),
+      format,
+      theme
+    )
     writeFileSync(target, text)
     step(`Updated ${relative(project, target)}`)
     if (project.styling === "nativewind" && !inPlace) {

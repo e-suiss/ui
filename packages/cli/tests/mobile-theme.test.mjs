@@ -12,10 +12,13 @@ import {
 import {
   applyThemeOptions,
   keepColors,
+  keepTheme,
   menuColorsOf,
   paletteOf,
   radiusFactor,
+  radiusFactorIn,
   themeOptionsFor,
+  withMenuAccent,
 } from "../lib/mobile/theme.mjs"
 
 const UNDEFINED_ENTRY = /^\s+\w+: undefined,$/m
@@ -349,5 +352,120 @@ describe("a primary without a preset", () => {
       OWN
     )
     expect(options.palette.light.primary).toBe("oklch(0.7 0.15 162)")
+  })
+})
+
+const PRESET_FILES = {
+  uniwind: "uniwind.css",
+  "nativewind-config": "nativewind.config.js",
+  stylesheet: "theme.ts",
+  swift: "Tokens.swift",
+  kotlin: "Tokens.kt",
+}
+
+function presetSource(style, format) {
+  return readFileSync(
+    path.join(MOBILE, "styles/presets", style, PRESET_FILES[format]),
+    "utf8"
+  )
+}
+
+describe("radiusFactorIn", () => {
+  const formats = Object.keys(PRESET_FILES)
+  const radii = ["none", "small", "medium", "large"]
+
+  it.each(formats.flatMap((format) => radii.map((radius) => [format, radius])))(
+    "reads the %s radius %s back",
+    (format, radius) => {
+      const original = presetSource("rhea", format)
+      const current = applyThemeOptions(original, format, {
+        factor: radiusFactor(radius),
+      })
+      expect(radiusFactorIn(current, original, format)).toBe(
+        radiusFactor(radius)
+      )
+    }
+  )
+
+  it.each(formats)(
+    "carries the %s radius and colors over to a new style",
+    (format) => {
+      const original = presetSource("rhea", format)
+      const palette = paletteOf(THEMES, { baseColor: "stone", theme: "rose" })
+      const current = applyThemeOptions(original, format, {
+        palette,
+        factor: radiusFactor("none"),
+      })
+      const vega = presetSource("vega", format)
+      expect(keepTheme(vega, current, original, format)).toBe(
+        applyThemeOptions(vega, format, {
+          palette: format === "nativewind-config" ? null : palette,
+          factor: radiusFactor("none"),
+        })
+      )
+    }
+  )
+})
+
+describe("withMenuAccent", () => {
+  const color = normalizeColor("#e11d48")
+  const formats = ["uniwind", "nativewind-css", "stylesheet", "swift", "kotlin"]
+  const preset = (menuColor, menuAccent) =>
+    encodePreset({
+      style: "nova",
+      baseColor: "neutral",
+      theme: "green",
+      radius: "medium",
+      font: "inter",
+      iconLibrary: "lucide",
+      menuColor,
+      menuAccent,
+    })
+
+  async function projectWith(format, menuColor, menuAccent) {
+    const options = await themeOptionsFor(
+      { preset: preset(menuColor, menuAccent) },
+      () => THEMES,
+      OWN
+    )
+    return applyThemeOptions(source(format), format, options)
+  }
+
+  it.each(
+    formats.flatMap((format) => [
+      [format, "default"],
+      [format, "inverted"],
+    ])
+  )(
+    "moves a bold %s menu accent (%s) with the primary",
+    async (format, menu) => {
+      const current = await projectWith(format, menu, "bold")
+      const primary = await themeOptionsFor(
+        { primary: "#e11d48" },
+        () => THEMES,
+        OWN
+      )
+      const next = withMenuAccent(primary, current, format)
+      expect(next.palette.light["menu-accent"]).toBe(color)
+      expect(next.palette.dark["menu-accent"]).toBe(color)
+      const expected = await themeOptionsFor(
+        { preset: preset(menu, "bold"), primary: "#e11d48" },
+        () => THEMES,
+        OWN
+      )
+      expect(applyThemeOptions(current, format, next)).toBe(
+        applyThemeOptions(source(format), format, expected)
+      )
+    }
+  )
+
+  it.each(formats)("leaves a subtle %s menu accent alone", async (format) => {
+    const current = await projectWith(format, "default", "subtle")
+    const primary = await themeOptionsFor(
+      { primary: "#e11d48" },
+      () => THEMES,
+      OWN
+    )
+    expect(withMenuAccent(primary, current, format)).toBe(primary)
   })
 })

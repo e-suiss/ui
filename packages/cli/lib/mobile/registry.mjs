@@ -5,6 +5,7 @@ import {
   resolveItems as orderItems,
 } from "../shared/registry.mjs"
 import { DEFAULT_STYLE } from "../shared/style.mjs"
+import { keepTheme } from "./theme.mjs"
 
 export const { fetchText, fetchRegistry } = createRegistry({
   base: "https://raw.githubusercontent.com/e-suiss/ui/{ref}/packages/mobile",
@@ -46,6 +47,10 @@ export function sourceOf(registry, item, file, styling) {
     : file
 }
 
+function comparable(candidate, current, format) {
+  return format ? keepTheme(candidate, current, candidate, format) : candidate
+}
+
 function missingLines(candidate, current) {
   const lines = new Set(candidate.split("\n").map((line) => line.trim()))
   return current
@@ -53,7 +58,7 @@ function missingLines(candidate, current) {
     .filter((line) => line.trim() && !lines.has(line.trim())).length
 }
 
-export async function detectStyle(registry, kind, fallback, current) {
+export async function detectStyle(registry, kind, fallback, current, format) {
   const styles = [
     DEFAULT_STYLE,
     ...Object.keys(registry.presets ?? {}).filter(
@@ -64,7 +69,11 @@ export async function detectStyle(registry, kind, fallback, current) {
     styles.map(async (style) => ({
       style,
       score: missingLines(
-        await fetchText(presetFile(registry, kind, style) ?? fallback),
+        comparable(
+          await fetchText(presetFile(registry, kind, style) ?? fallback),
+          current,
+          format
+        ),
         current
       ),
     }))

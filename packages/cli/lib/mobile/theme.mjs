@@ -426,6 +426,97 @@ export function keepColors(fresh, current, format) {
   }, fresh)
 }
 
+function linesOf(text) {
+  return new Set(
+    text
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+  )
+}
+
+export function radiusFactorIn(current, original, format) {
+  const lines = [...linesOf(current)]
+  const factors = [
+    ...new Set([1, ...Object.keys(RADIUS_REMS).map(radiusFactor)]),
+  ]
+  return factors
+    .map((factor) => {
+      const scaled = linesOf(applyThemeOptions(original, format, { factor }))
+      return {
+        factor,
+        missing: lines.filter((line) => !scaled.has(line)).length,
+      }
+    })
+    .reduce((best, entry) => (entry.missing < best.missing ? entry : best))
+    .factor
+}
+
+const TOKEN_READERS = {
+  uniwind: {
+    blocks: COLOR_LINES.uniwind.blocks,
+    pattern: cssVariable("color-"),
+  },
+  "nativewind-css": {
+    blocks: COLOR_LINES["nativewind-css"].blocks,
+    pattern: cssVariable(""),
+  },
+  stylesheet: { blocks: COLOR_LINES.stylesheet.blocks, pattern: objectEntry },
+  kotlin: { blocks: COLOR_LINES.kotlin.blocks, pattern: kotlinEntry },
+}
+
+function tokenOf(text, format, mode, name) {
+  if (format === "swift") {
+    const match = text.match(
+      new RegExp(
+        `public static let ${escapeRegExp(camelCase(name))} = Color\\.adaptive\\(light: (.*), dark: (.*)\\)$`,
+        "m"
+      )
+    )
+    return match?.[mode === "light" ? 1 : 2]
+  }
+  const reader = TOKEN_READERS[format]
+  if (!reader) return undefined
+  const [start, end] = reader.blocks[MODES.indexOf(mode)]
+  const match = blockOf(text, start, end).match(reader.pattern(name))
+  if (!match) return undefined
+  return match[0].slice(match[1].length, match[0].length - match[2].length)
+}
+
+export function withMenuAccent(themeOptions, current, format) {
+  const palette = themeOptions?.palette
+  if (!palette || themeOptions.preset) return themeOptions
+  const primaries = MODES.map((mode) =>
+    tokenOf(current, format, mode, "primary")
+  ).filter(Boolean)
+  const follows = MODES.filter((mode) => {
+    const accent = tokenOf(current, format, mode, "menu-accent")
+    return accent && primaries.includes(accent)
+  })
+  if (!follows.length) return themeOptions
+  return {
+    ...themeOptions,
+    palette: Object.fromEntries(
+      MODES.map((mode) => [
+        mode,
+        follows.includes(mode) && palette[mode]?.primary
+          ? {
+              ...palette[mode],
+              "menu-accent": palette[mode].primary,
+              "menu-accent-foreground": palette[mode]["primary-foreground"],
+            }
+          : palette[mode],
+      ])
+    ),
+  }
+}
+
+export function keepTheme(fresh, current, original, format) {
+  return applyThemeOptions(keepColors(fresh, current, format), format, {
+    factor: radiusFactorIn(current, original, format),
+  })
+}
+
 export function themed(text, format, themeOptions) {
   return themeOptions ? applyThemeOptions(text, format, themeOptions) : text
 }
