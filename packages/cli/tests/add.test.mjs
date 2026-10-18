@@ -393,7 +393,7 @@ export const Icon = () => (
       .mockResolvedValueOnce(["date-picker"])
     await add([], { cwd })
     expect(vi.mocked(choose).mock.calls[0][1]).toEqual([
-      { value: "ui", label: "Components", hint: "3" },
+      { value: "ui", label: "Components", hint: "2" },
       { value: "pattern", label: "Patterns", hint: "1" },
     ])
     expect(vi.mocked(choose).mock.calls[1][1]).toEqual([
@@ -405,6 +405,53 @@ export const Icon = () => (
     expect(existsSync(path.join(cwd, "src/components/ui/dialog.tsx"))).toBe(
       true
     )
+  })
+
+  it("keeps opt-in items, hooks and libraries out of the pick list", async () => {
+    serveRegistry({
+      ...files,
+      "registry/registry.json": {
+        ...registry,
+        items: [
+          ...registry.items,
+          {
+            name: "use-mobile",
+            type: "registry:hook",
+            files: [{ path: "hooks/use-mobile.ts", type: "registry:hook" }],
+          },
+        ],
+      },
+    })
+    const cwd = viteProject()
+    vi.mocked(isInteractive).mockReturnValue(true)
+    vi.mocked(choose).mockResolvedValueOnce(["button"])
+    await add([], { cwd, scope: "ui" })
+    expect(vi.mocked(choose).mock.calls[0][1]).toEqual([
+      { value: "button", label: "button" },
+      { value: "dialog", label: "dialog" },
+    ])
+  })
+
+  it("refuses a bad package name before writing any file", async () => {
+    serveRegistry({
+      ...files,
+      "registry/registry.json": {
+        ...registry,
+        items: [
+          ...registry.items,
+          ui("pkgopt", { dependencies: ["--registry=http://127.0.0.1:9/"] }),
+        ],
+      },
+      "components/ui/pkgopt.tsx": "export function Pkgopt() {}\n",
+    })
+    const cwd = viteProject()
+    await expect(add(["pkgopt"], { cwd, yes: true })).rejects.toThrow(
+      "Refusing to install an invalid package name: --registry=http://127.0.0.1:9/"
+    )
+    expect(existsSync(path.join(cwd, "src/components/ui/pkgopt.tsx"))).toBe(
+      false
+    )
+    expect(spawnSync).not.toHaveBeenCalled()
   })
 
   it("skips the group question when the group is given", async () => {

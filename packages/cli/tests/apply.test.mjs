@@ -150,7 +150,66 @@ describe("apply", () => {
       "--primary: oklch(0.6 0.13 163);"
     )
     expect(read(cwd, "src/components/ui/button.tsx")).toBe("changed\n")
+    const saved = JSON.parse(config)
+    expect(JSON.parse(read(cwd, "components.json"))).toEqual({
+      ...saved,
+      tailwind: { ...saved.tailwind, baseColor: "stone" },
+    })
+  })
+
+  it("restyles with --only theme when --style is given", async () => {
+    const cwd = await initialized()
+    writeFileSync(path.join(cwd, "src/components/ui/button.tsx"), "changed\n")
+    await apply({
+      cwd,
+      yes: true,
+      only: "theme",
+      preset: "bJ4oV1t",
+      style: "lyra",
+    })
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe(
+      "export function Button() {}\n"
+    )
+    const config = JSON.parse(read(cwd, "components.json"))
+    expect(config.style).toBe("base-lyra")
+    expect(config.iconLibrary).toBe("phosphor")
+    expect(config.tailwind.baseColor).toBe("stone")
+  })
+
+  it("changes nothing when the restyle cannot be confirmed", async () => {
+    const cwd = await initialized()
+    const css = read(cwd, "src/index.css")
+    const config = read(cwd, "components.json")
+    writeFileSync(path.join(cwd, "src/components/ui/button.tsx"), "changed\n")
+    await expect(apply({ cwd, preset: "bJ4oV1t" })).rejects.toThrow(
+      "Run again with --yes to restyle them, nothing was changed."
+    )
+    expect(read(cwd, "src/index.css")).toBe(css)
     expect(read(cwd, "components.json")).toBe(config)
+    expect(read(cwd, "src/components/ui/button.tsx")).toBe("changed\n")
+    expect(spawnSync).not.toHaveBeenCalledWith(
+      expect.anything(),
+      expect.arrayContaining(["lucide-react"]),
+      expect.anything()
+    )
+  })
+
+  it("needs no confirmation when the components keep their style", async () => {
+    const cwd = await initialized()
+    await apply({ cwd, yes: true, preset: "bJ4oV1t" })
+    await apply({ cwd, preset: "bJ4oV1t", primary: "oklch(0.7 0.15 162)" })
+    expect(read(cwd, "src/index.css")).toContain(
+      "--primary: oklch(0.7 0.15 162);"
+    )
+  })
+
+  it("says when --style replaces the style of the preset", async () => {
+    const cwd = await initialized()
+    await apply({ cwd, yes: true, preset: "bJ4oV1t", style: "nova" })
+    expect(output()).toContain(
+      "The preset uses the vega style, --style nova replaces it."
+    )
+    expect(JSON.parse(read(cwd, "components.json")).style).toBe("base-nova")
   })
 
   it("leaves the colors alone with --only font", async () => {

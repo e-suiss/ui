@@ -2,6 +2,8 @@ import { CliError } from "../output.mjs"
 import { choose, isInteractive } from "../prompt.mjs"
 import { SCOPES } from "../registry.mjs"
 
+const isListed = (item) => !item.optIn && item.listed !== false
+
 function article(kind) {
   return kind === "interaction" ? "an" : "a"
 }
@@ -14,7 +16,7 @@ function selectNames(
   const inScope = (item) => scopeOf(item) === scope
   const pool = items.filter((item) => inScope(item) && include(item))
   const { kind, command, example } = SCOPES[scope]
-  const listed = pool.filter((item) => !item.optIn && item.listed !== false)
+  const listed = pool.filter(isListed)
   const available = `Available${title ? ` for ${title}` : ""}: ${listed.map((item) => item.name).join(", ") || "none yet"}`
 
   if (all) {
@@ -43,7 +45,8 @@ function selectNames(
   return names
 }
 
-async function pickNames(items, { scope, scopeOf }) {
+async function pickNames(all, { scope, scopeOf }) {
+  const items = all.filter(isListed)
   const group =
     scope ??
     (await choose(

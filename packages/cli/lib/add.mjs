@@ -29,7 +29,7 @@ import {
   targetFor,
   writeFiles,
 } from "./shared/files.mjs"
-import { relative } from "./shared/project.mjs"
+import { assertPackageNames, relative } from "./shared/project.mjs"
 import { chooseNames } from "./shared/select.mjs"
 import {
   applyMenuColor,
@@ -135,7 +135,10 @@ export async function installItems(
   { overwrite = false, base, style, icons, menuColor, menuAccent } = {}
 ) {
   const items = resolveItems(registry, names)
-  for (const item of items) checkCss(item)
+  for (const item of items) {
+    checkCss(item)
+    assertPackageNames(item.dependencies)
+  }
   const files = await fetchFiles(root, items, {
     base,
     style,

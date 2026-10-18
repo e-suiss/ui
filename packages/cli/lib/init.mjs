@@ -25,7 +25,7 @@ import {
   VITE_STYLESHEET,
 } from "./project.mjs"
 import { fetchRegistry, fetchStylesheet } from "./registry.mjs"
-import { ensureAlias, relative } from "./shared/project.mjs"
+import { assertPackageNames, ensureAlias, relative } from "./shared/project.mjs"
 import { DEFAULT_STYLE } from "./styles.mjs"
 import { applyPreset, presetPalette, withPointer } from "./theme.mjs"
 
@@ -261,7 +261,7 @@ function stylingOf(cwd) {
   }
 }
 
-function styleWarning(options, preset) {
+export function styleWarning(options, preset) {
   if (
     preset &&
     options.style &&
@@ -328,6 +328,37 @@ export async function init(options) {
       : stylesheetCss
   const css = options.pointer ? withPointer(themedCss) : themedCss
 
+  const packages = stylesheetPackages(css)
+  assertPackageNames([...toolingFor(project), ...packages])
+
+  const root = findAliasRoot(project.cwd) ?? sourceRoot
+  const installed = installedItems(registry, root)
+  const restyled = Object.keys(styling).some(
+    (key) => styling[key] !== previous[key]
+  )
+  const others = installed.filter((name) => name !== "button")
+  let names = ["button"]
+  let overwrite = options.overwrite
+  if (restyled && others.length) {
+    if (!options.yes && !process.stdin.isTTY) {
+      throw new CliError(
+        `This changes the style of the ${installed.length} installed components. Run again with --yes to restyle them, nothing was changed.`
+      )
+    }
+    const restyle =
+      options.yes ||
+      (await confirm(
+        `Restyle the ${installed.length} installed components? Local changes to them are replaced.`
+      ))
+    if (!restyle) {
+      throw new CliError(
+        "Cancelled, nothing was changed. The new style needs the installed components restyled."
+      )
+    }
+    names = [...new Set(["button", ...installed])]
+    overwrite = true
+  }
+
   const tsconfigs =
     project.framework === "vite"
       ? ["tsconfig.json", "tsconfig.app.json"]
@@ -336,7 +367,7 @@ export async function init(options) {
     step("Added the @/* import alias to tsconfig")
 
   install(project, toolingFor(project), { dev: true })
-  install(project, stylesheetPackages(css))
+  install(project, packages)
 
   const manual =
     project.framework === "vite"
@@ -368,33 +399,10 @@ export async function init(options) {
     )
   }
 
-  const root = findAliasRoot(project.cwd) ?? sourceRoot
-  const installed = installedItems(registry, root)
   addStyles(
     project,
     registry.items.filter((item) => item.css && installed.includes(item.name))
   )
-  const restyled = Object.keys(styling).some(
-    (key) => styling[key] !== previous[key]
-  )
-  const others = installed.filter((name) => name !== "button")
-  let names = ["button"]
-  let overwrite = options.overwrite
-  if (restyled && others.length) {
-    const restyle =
-      options.yes ||
-      (await confirm(
-        `Restyle the ${installed.length} installed components? Local changes to them are replaced.`
-      ))
-    if (restyle) {
-      names = [...new Set(["button", ...installed])]
-      overwrite = true
-    } else {
-      manual.push(
-        "Run npx @esuiss/ui add <name> --overwrite to restyle installed components later."
-      )
-    }
-  }
 
   await installItems(project, root, registry, names, { overwrite, ...styling })
 

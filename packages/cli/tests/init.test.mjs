@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process"
-import { existsSync } from "node:fs"
+import { existsSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { encodePreset } from "shadcn/preset"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
@@ -246,6 +246,55 @@ export default defineConfig({
       "Cancelled. Run again with --yes to replace the stylesheet."
     )
     expect(read(cwd, "src/index.css")).toBe("body { color: red }")
+  })
+
+  it("refuses a stylesheet package name before changing the project", async () => {
+    serveRegistry({
+      ...files,
+      "styles/globals.css":
+        '@import "tailwindcss";\n@import "--ignore-scripts=false";\n',
+    })
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    const tsconfig = read(cwd, "tsconfig.json")
+    await expect(init({ cwd, yes: true })).rejects.toThrow(
+      "Refusing to install an invalid package name: --ignore-scripts=false"
+    )
+    expect(read(cwd, "tsconfig.json")).toBe(tsconfig)
+    expect(read(cwd, "vite.config.ts")).toBe(viteConfig)
+    expect(existsSync(path.join(cwd, "src/index.css"))).toBe(false)
+    expect(spawnSync).not.toHaveBeenCalled()
+  })
+
+  it("changes nothing when the restyle of installed components cannot be confirmed", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true })
+    await add(["button"], { cwd, overwrite: true })
+    writeFileSync(
+      path.join(cwd, "src/components/ui/card.tsx"),
+      "export function Card() {}\n"
+    )
+    writeFileSync(path.join(cwd, "src/index.css"), "")
+    serveRegistry({
+      ...files,
+      "registry/registry.json": {
+        ...files["registry/registry.json"],
+        items: [
+          ...files["registry/registry.json"].items,
+          {
+            name: "card",
+            type: "registry:ui",
+            files: [{ path: "components/ui/card.tsx", type: "registry:ui" }],
+          },
+        ],
+      },
+      "components/ui/card.tsx": "export function Card() {}\n",
+    })
+    const config = read(cwd, "components.json")
+    await expect(init({ cwd, style: "vega" })).rejects.toThrow(
+      "Run again with --yes to restyle them, nothing was changed."
+    )
+    expect(read(cwd, "components.json")).toBe(config)
+    expect(read(cwd, "src/index.css")).toBe("")
   })
 })
 
