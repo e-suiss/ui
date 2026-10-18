@@ -1815,7 +1815,7 @@
   }
 
   .cn-button-variant-tinted {
-    @apply bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30;
+    @apply bg-primary/10 dark:bg-primary/20 text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] hover:bg-primary/20 dark:hover:bg-primary/30;
   }
 
   .cn-button-variant-plain {

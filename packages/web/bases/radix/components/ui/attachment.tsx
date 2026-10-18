@@ -204,7 +204,7 @@ function AttachmentAction({
       size={size ?? (isText ? "sm" : "icon-xs")}
       className={cn(
         isText
-          ? "h-auto px-0 text-base"
+          ? "h-auto px-0 text-base text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))]"
           : "relative size-7 text-muted-foreground after:absolute after:-inset-2.25 group-data-[size=sm]/attachment:size-6 group-data-[size=sm]/attachment:after:-inset-2.75 group-data-[size=xs]/attachment:size-5 group-data-[size=xs]/attachment:after:-inset-3.25 hover:text-foreground group-data-[orientation=vertical]/attachment:bg-black/50 group-data-[orientation=vertical]/attachment:text-white group-data-[orientation=vertical]/attachment:backdrop-blur-sm group-data-[orientation=vertical]/attachment:hover:bg-black/60 group-data-[orientation=vertical]/attachment:hover:text-white group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
         className
       )}

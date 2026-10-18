@@ -67,7 +67,7 @@
   }
 
   .cn-button-variant-tinted {
-    @apply bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30;
+    @apply bg-primary/10 dark:bg-primary/20 text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] hover:bg-primary/20 dark:hover:bg-primary/30;
   }
 
   .cn-button-variant-ghost {
@@ -687,7 +687,7 @@
   }
 
   .cn-combobox-chip {
-    @apply flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-full bg-primary/10 dark:bg-primary/20 px-2.5 text-xs whitespace-nowrap text-primary has-data-[slot=combobox-chip-remove]:pe-0.5;
+    @apply flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-full bg-primary/10 dark:bg-primary/20 px-2.5 text-xs whitespace-nowrap text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] has-data-[slot=combobox-chip-remove]:pe-0.5;
   }
 
   .cn-combobox-chip-remove {
@@ -1873,7 +1873,7 @@
 
   /* MARK: Toggle */
   .cn-toggle {
-    @apply gap-1 rounded-lg text-sm transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] active:scale-96 motion-reduce:active:scale-100 hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-pressed:bg-accent aria-pressed:text-primary aria-pressed:hover:bg-accent aria-pressed:hover:text-primary;
+    @apply gap-1 rounded-lg text-sm transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] active:scale-96 motion-reduce:active:scale-100 hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-pressed:bg-accent aria-pressed:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] aria-pressed:hover:bg-accent aria-pressed:hover:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))];
   }
 
   .cn-toggle-variant-default {
@@ -1906,7 +1906,7 @@
   }
 
   .cn-toggle-group-item {
-    @apply data-[state=on]:bg-accent data-[state=on]:text-primary data-[state=on]:hover:bg-accent data-[state=on]:hover:text-primary group-data-[spacing=0]/toggle-group:relative group-data-[spacing=0]/toggle-group:data-[variant=default]:active:scale-100! group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-indicator/toggle-group:data-[state=on]:shadow-none! dark:group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-[spacing=0]/toggle-group:data-[variant=default]:rounded-md! group-data-[spacing=0]/toggle-group:data-[variant=default]:hover:bg-transparent group-data-[spacing=0]/toggle-group:data-[variant=default]:hover:text-muted-foreground group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:bg-card group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:text-card-foreground group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:shadow-sm group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:bg-card group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:text-card-foreground dark:group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:bg-border dark:group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:bg-border group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-3 group-data-[spacing=0]/toggle-group:shadow-none group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pe-2.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:ps-2.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-s-lg group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-xl group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-e-lg group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-xl group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-s-0 group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-s;
+    @apply data-[state=on]:bg-accent data-[state=on]:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] data-[state=on]:hover:bg-accent data-[state=on]:hover:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] group-data-[spacing=0]/toggle-group:relative group-data-[spacing=0]/toggle-group:data-[variant=default]:active:scale-100! group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-indicator/toggle-group:data-[state=on]:shadow-none! dark:group-data-indicator/toggle-group:data-[state=on]:bg-transparent! group-data-[spacing=0]/toggle-group:data-[variant=default]:rounded-md! group-data-[spacing=0]/toggle-group:data-[variant=default]:hover:bg-transparent group-data-[spacing=0]/toggle-group:data-[variant=default]:hover:text-muted-foreground group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:bg-card group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:text-card-foreground group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:shadow-sm group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:bg-card group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:text-card-foreground dark:group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:bg-border dark:group-data-[spacing=0]/toggle-group:data-[variant=default]:data-[state=on]:hover:bg-border group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-3 group-data-[spacing=0]/toggle-group:shadow-none group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pe-2.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:ps-2.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-s-lg group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-xl group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-e-lg group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-xl group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-s-0 group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-s;
   }
 
   /* MARK: Trace */

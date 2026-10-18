@@ -312,7 +312,7 @@ function TabBarItem({
           ? cn(tabBarLinkClassName, "text-start")
           : cn(
               buttonVariants({ variant: "ghost" }),
-              "shrink-0 font-medium text-muted-foreground transition-[color,background-color] duration-200 data-active:bg-secondary data-active:text-primary data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1 disabled:opacity-50"
+              "shrink-0 font-medium text-muted-foreground transition-[color,background-color] duration-200 data-active:bg-secondary data-active:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1 disabled:opacity-50"
             ),
         className
       )}

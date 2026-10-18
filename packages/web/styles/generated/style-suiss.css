@@ -67,7 +67,7 @@
   }
 
   .cn-button-variant-tinted {
-    @apply bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30;
+    @apply bg-primary/10 dark:bg-primary/20 text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] hover:bg-primary/20 dark:hover:bg-primary/30;
   }
 
   .cn-button-variant-ghost {
@@ -676,7 +676,7 @@
   }
 
   .cn-combobox-chip {
-    @apply flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-full bg-primary/10 dark:bg-primary/20 px-2.5 text-xs whitespace-nowrap text-primary has-data-[slot=combobox-chip-remove]:pe-0.5;
+    @apply flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-full bg-primary/10 dark:bg-primary/20 px-2.5 text-xs whitespace-nowrap text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] has-data-[slot=combobox-chip-remove]:pe-0.5;
   }
 
   .cn-combobox-chip-remove {
@@ -1799,7 +1799,7 @@
 
   /* MARK: Toggle */
   .cn-toggle {
-    @apply gap-1 rounded-lg text-sm transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] active:scale-96 motion-reduce:active:scale-100 hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-pressed:bg-accent aria-pressed:text-primary aria-pressed:hover:bg-accent aria-pressed:hover:text-primary;
+    @apply gap-1 rounded-lg text-sm transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] active:scale-96 motion-reduce:active:scale-100 hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-pressed:bg-accent aria-pressed:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] aria-pressed:hover:bg-accent aria-pressed:hover:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))];
   }
 
   .cn-toggle-variant-default {
