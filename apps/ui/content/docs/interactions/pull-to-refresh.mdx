@@ -336,7 +336,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle
 import { Text } from "@/components/ui/text"
 import { fontSize, useTheme } from "@/components/ui/theme"
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms))
 
 function Feed() {
   const { colors } = useTheme()
