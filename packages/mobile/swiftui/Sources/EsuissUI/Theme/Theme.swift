@@ -1,3 +1,4 @@
+import CoreText
 import SwiftUI
 import UIKit
 
@@ -41,6 +42,25 @@ extension Color {
   }
 }
 
+public enum EsuissFont {
+  private static let registered: Bool = {
+    for name in Fonts.files {
+      let url = Bundle.main.url(forResource: name, withExtension: "ttf")
+        ?? Bundle.main.url(forResource: name, withExtension: "otf")
+      if let url {
+        CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
+      }
+    }
+    return true
+  }()
+
+  public static func font(size: CGFloat, weight: Font.Weight = .regular, heading: Bool = false) -> Font {
+    let family = heading ? (Fonts.heading ?? Fonts.sans) : Fonts.sans
+    guard let family, registered else { return .system(size: size, weight: weight) }
+    return .custom(family, fixedSize: size).weight(weight)
+  }
+}
+
 public struct TextStyle: Sendable, Hashable {
   public let size: CGFloat
   public let lineHeight: CGFloat
@@ -51,7 +71,7 @@ public struct TextStyle: Sendable, Hashable {
   }
 
   public func font(weight: Font.Weight = .regular) -> Font {
-    .system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
+    EsuissFont.font(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
   }
 
   public var lineSpacing: CGFloat {
@@ -62,6 +82,7 @@ public struct TextStyle: Sendable, Hashable {
 private struct TextStyleModifier: ViewModifier {
   let style: TextStyle
   let weight: Font.Weight
+  var heading = false
 
   @ScaledMetric(relativeTo: .body) private var scale: CGFloat = 1
 
@@ -69,7 +90,7 @@ private struct TextStyleModifier: ViewModifier {
     let size = style.size * scale
     let lineSpacing = max(0, style.lineHeight * scale - UIFont.systemFont(ofSize: size).lineHeight)
     content
-      .font(.system(size: size, weight: weight))
+      .font(EsuissFont.font(size: size, weight: weight, heading: heading))
       .lineSpacing(lineSpacing)
       .padding(.vertical, lineSpacing / 2)
   }
@@ -82,7 +103,7 @@ private struct FontStyleModifier: ViewModifier {
   @ScaledMetric(relativeTo: .body) private var scale: CGFloat = 1
 
   func body(content: Content) -> some View {
-    content.font(.system(size: style.size * scale, weight: weight))
+    content.font(EsuissFont.font(size: style.size * scale, weight: weight))
   }
 }
 
@@ -91,8 +112,8 @@ extension View {
     modifier(TextStyleModifier(style: style, weight: weight))
   }
 
-  func scaledTextStyle(_ style: TextStyle, weight: Font.Weight = .regular) -> some View {
-    modifier(TextStyleModifier(style: style, weight: weight))
+  func scaledTextStyle(_ style: TextStyle, weight: Font.Weight = .regular, heading: Bool = false) -> some View {
+    modifier(TextStyleModifier(style: style, weight: weight, heading: heading))
   }
 
   public func scaledFont(_ style: TextStyle, weight: Font.Weight = .regular) -> some View {

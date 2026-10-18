@@ -144,6 +144,16 @@ export function decodePreset(code) {
   return preset
 }
 
+export function presetProblem(preset) {
+  for (const key of ["theme", "chartColor"]) {
+    const value = preset[key]
+    if (value && BASE_COLORS.includes(value) && value !== preset.baseColor) {
+      return `The ${value} ${key === "theme" ? "theme" : "chart color"} needs the ${value} base color, the preset uses ${preset.baseColor}. Pick a colored theme or the base color itself.`
+    }
+  }
+  return null
+}
+
 export function resolveStyle({ style, preset }) {
   if (style !== undefined && !STYLES.includes(style)) {
     throw new CliError(
@@ -153,6 +163,7 @@ export function resolveStyle({ style, preset }) {
   if (preset === undefined) return style ?? DEFAULT_STYLE
   const decoded = decodePreset(preset)
   if (!decoded) throw new CliError(`${preset} is not a valid preset code.`)
+  if (style === DEFAULT_STYLE) return DEFAULT_STYLE
   if (style !== undefined && style !== decoded.style) {
     throw new CliError(
       `The preset uses the ${decoded.style} style, but --style is ${style}. Pass one of them.`

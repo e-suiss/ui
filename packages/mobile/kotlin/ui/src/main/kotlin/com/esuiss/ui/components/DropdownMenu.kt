@@ -124,15 +124,15 @@ internal fun MenuPopup(
     ) {
         CompositionLocalProvider(
             LocalMenu provides MenuContext(onDismissRequest),
-            LocalContentStyle provides Typography.base.copy(color = colors.foreground),
-            LocalContentColor provides colors.foreground,
+            LocalContentStyle provides Typography.base.copy(color = colors.menuForeground),
+            LocalContentColor provides colors.menuForeground,
             LocalIconSize provides 16.dp,
         ) {
             Column(
                 modifier = modifier
                     .widthIn(min = minWidth)
                     .width(IntrinsicSize.Max)
-                    .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.menu), Metrics.Elevation.menu)
+                    .raisedSurface(colors, RoundedCornerShape(Metrics.Radius.menu), Metrics.Elevation.menu, menu = true)
                     .verticalScroll(rememberScrollState())
                     .padding(Metrics.Padding.menu),
                 content = content,
@@ -200,7 +200,7 @@ private fun MenuRow(
 @Composable
 private fun menuForeground(destructive: Boolean = false): Color {
     val colors = EsuissTheme.colors
-    return if (destructive) colors.destructive else colors.foreground
+    return if (destructive) colors.destructive else colors.menuForeground
 }
 
 @Composable
@@ -387,13 +387,13 @@ fun DropdownMenuLabel(
             .fillMaxWidth()
             .semantics { heading() }
             .padding(start = if (inset) 38.dp else 12.dp, end = 12.dp, top = 10.dp, bottom = 10.dp),
-        style = Typography.xs.copy(color = EsuissTheme.colors.mutedForeground, fontWeight = FontWeight.SemiBold),
+        style = Typography.xs.copy(color = EsuissTheme.colors.menuMutedForeground, fontWeight = FontWeight.SemiBold),
     )
 }
 
 @Composable
 fun DropdownMenuSeparator(modifier: Modifier = Modifier) {
-    MenuSeparatorLine(modifier, bleed = 6.dp, color = EsuissTheme.colors.border.copy(alpha = 0.5f))
+    MenuSeparatorLine(modifier, bleed = 6.dp, color = EsuissTheme.colors.menuBorder.copy(alpha = 0.5f))
 }
 
 @Composable
@@ -469,7 +469,7 @@ fun DropdownMenuSub(
                 ),
             enabled = enabled,
             foreground = menuForeground(),
-            restingBackground = if (open) colors.accent else Color.Transparent,
+            restingBackground = if (open) colors.menuAccent else Color.Transparent,
             interaction = interaction,
             startPadding = if (inset) 38.dp else 12.dp,
             endPadding = 12.dp,

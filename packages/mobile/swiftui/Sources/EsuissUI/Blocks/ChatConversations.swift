@@ -305,7 +305,7 @@ private struct ChatConversationsAvatar: View {
 
   var body: some View {
     Text(verbatim: name.split(separator: " ").compactMap(\.first).prefix(2).map(String.init).joined())
-      .font(.system(size: size * 0.38, weight: .semibold))
+      .font(EsuissFont.font(size: size * 0.38, weight: .semibold))
       .foregroundStyle(EsuissColor.primaryForeground)
       .frame(width: size, height: size)
       .background(tint, in: Circle())

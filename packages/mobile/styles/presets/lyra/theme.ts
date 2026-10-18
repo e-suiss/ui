@@ -71,6 +71,12 @@ const light = {
   sidebarAccentForeground: "#1d1d1f",
   sidebarBorder: "#d2d2d7",
   sidebarRing: "#0071e3",
+  menu: "#ffffff",
+  menuForeground: "#1d1d1f",
+  menuMutedForeground: "#6e6e73",
+  menuAccent: "rgba(0, 0, 0, 0.06)",
+  menuAccentForeground: "#1d1d1f",
+  menuBorder: "#d2d2d7",
 }
 
 type ThemeColors = typeof light
@@ -107,6 +113,12 @@ const dark: ThemeColors = {
   sidebarAccentForeground: "#f5f5f7",
   sidebarBorder: "#424245",
   sidebarRing: "#0071e3",
+  menu: "#1d1d1f",
+  menuForeground: "#f5f5f7",
+  menuMutedForeground: "#a1a1a6",
+  menuAccent: "rgba(255, 255, 255, 0.1)",
+  menuAccentForeground: "#f5f5f7",
+  menuBorder: "#424245",
 }
 
 const palette = {

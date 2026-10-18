@@ -1,5 +1,6 @@
 import { existsSync, writeFileSync } from "node:fs"
 import path from "node:path"
+import { encodePreset } from "shadcn/preset"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
@@ -155,6 +156,58 @@ describe("native init and add", () => {
     expect(read(cwd, "EsuissUI/Theme/Theme.swift")).toBe(
       files[`${SWIFT_SOURCES}/Theme/Theme.swift`]
     )
+  })
+
+  it("applies the preset colors and fonts on init", async () => {
+    const themes = [
+      {
+        name: "zinc",
+        light: { primary: "oklch(0.21 0.006 285.885)" },
+        dark: { primary: "oklch(0.92 0.004 286.32)" },
+      },
+      {
+        name: "blue",
+        light: { primary: "oklch(0.488 0.243 264.376)" },
+        dark: { primary: "oklch(0.424 0.199 265.638)" },
+      },
+    ]
+    serveRegistry({
+      ...files,
+      [`${SWIFT_SOURCES}/Theme/Tokens.swift`]: [
+        "public enum EsuissColor {",
+        "  public static let primary = Color.adaptive(light: .init(0x0071E3), dark: .init(0x2997FF))",
+        "}",
+        "public enum Fonts {",
+        "  public static let sans: String? = nil",
+        "  public static let heading: String? = nil",
+        "  public static let files: [String] = []",
+        "}",
+        "",
+      ].join("\n"),
+      "registry/themes.json": themes,
+      "400Regular/Geist_400Regular.ttf": "font",
+    })
+    const preset = encodePreset({
+      style: "nova",
+      baseColor: "zinc",
+      theme: "blue",
+      radius: "default",
+      font: "geist",
+      iconLibrary: "lucide",
+      menuColor: "default",
+      menuAccent: "subtle",
+    })
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", preset })
+    const tokens = read(cwd, "EsuissUI/Theme/Tokens.swift")
+    expect(tokens).toContain(
+      "public static let primary = Color.adaptive(light: .init(0x1447E6), dark: .init(0x193CB8))"
+    )
+    expect(tokens).toContain('public static let sans: String? = "Geist"')
+    expect(tokens).toContain(
+      'public static let files: [String] = ["Geist_400Regular"]'
+    )
+    expect(read(cwd, "EsuissUI/Fonts/Geist_400Regular.ttf")).toBe("font")
   })
 
   it("writes component files into EsuissUI after init", async () => {

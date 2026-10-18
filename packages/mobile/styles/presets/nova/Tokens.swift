@@ -32,6 +32,12 @@ public enum EsuissColor {
   public static let sidebarAccentForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
   public static let sidebarBorder = Color.adaptive(light: .init(0xD2D2D7), dark: .init(0x424245))
   public static let sidebarRing = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0071E3))
+  public static let menu = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0x1D1D1F))
+  public static let menuForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
+  public static let menuMutedForeground = Color.adaptive(light: .init(0x6E6E73), dark: .init(0xA1A1A6))
+  public static let menuAccent = Color.adaptive(light: .init(0x000000, 0.06), dark: .init(0xFFFFFF, 0.1))
+  public static let menuAccentForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
+  public static let menuBorder = Color.adaptive(light: .init(0xD2D2D7), dark: .init(0x424245))
 }
 
 public enum Palette {
@@ -82,6 +88,12 @@ extension TextStyle {
 extension Shadow {
   public static let md = Shadow(.init(color: .black.opacity(0.1), radius: 3, y: 4), .init(color: .black.opacity(0.1), radius: 2, y: 2))
   public static let lg = Shadow(.init(color: .black.opacity(0.1), radius: 7.5, y: 10), .init(color: .black.opacity(0.1), radius: 3, y: 4))
+}
+
+public enum Fonts {
+  public static let sans: String? = nil
+  public static let heading: String? = nil
+  public static let files: [String] = []
 }
 
 public enum Metrics {

@@ -175,8 +175,8 @@ function ContentPopup({
         styles.content,
         {
           width,
-          borderColor: `${colors.foreground}${isDark ? "1a" : "0d"}`,
-          backgroundColor: colors.popover,
+          borderColor: `${colors.menuForeground}${isDark ? "1a" : "0d"}`,
+          backgroundColor: colors.menu,
         },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
@@ -215,7 +215,7 @@ function SelectContent({
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
             <TextStyleContext.Provider
-              value={{ ...fontSize.base, color: colors.foreground }}
+              value={{ ...fontSize.base, color: colors.menuForeground }}
             >
               <ContentPopup {...props} />
             </TextStyleContext.Provider>
@@ -235,7 +235,7 @@ function SelectLabel({
     <SelectPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.mutedForeground },
+        { color: colors.menuMutedForeground },
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
       {...props}
@@ -262,7 +262,7 @@ function SelectItem({
       {...props}
     >
       <SelectPrimitive.ItemText
-        style={[styles.itemText, { color: colors.foreground }]}
+        style={[styles.itemText, { color: colors.menuForeground }]}
       >
         {children}
       </SelectPrimitive.ItemText>
@@ -287,7 +287,7 @@ function SelectSeparator({
     <SelectPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.border },
+        { backgroundColor: colors.menuBorder },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}

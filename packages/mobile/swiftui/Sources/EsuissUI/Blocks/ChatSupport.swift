@@ -146,7 +146,7 @@ public struct ChatSupport: View {
     return VStack(spacing: 0) {
       HStack(spacing: 10) {
         Text(verbatim: "s")
-          .font(.system(size: TextStyle.base.size, weight: .bold))
+          .font(EsuissFont.font(size: TextStyle.base.size, weight: .bold))
           .foregroundStyle(EsuissColor.background)
           .frame(width: 34, height: 34)
           .background(EsuissColor.foreground, in: Circle())

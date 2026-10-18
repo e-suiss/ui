@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
 function usePopupColors() {
   const { colors, isDark } = useTheme()
   return {
-    borderColor: `${colors.foreground}${isDark ? "1a" : "0d"}`,
-    backgroundColor: colors.popover,
+    borderColor: `${colors.menuForeground}${isDark ? "1a" : "0d"}`,
+    backgroundColor: colors.menu,
   }
 }
 
@@ -136,7 +136,7 @@ function ContextMenuContent({
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
             <TextStyleContext.Provider
-              value={{ ...fontSize.base, color: colors.foreground }}
+              value={{ ...fontSize.base, color: colors.menuForeground }}
             >
               <ContextMenuPrimitive.Popup
                 style={(state) => [
@@ -171,13 +171,13 @@ function ContextMenuSubTrigger({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: colors.foreground,
+        color: colors.menuForeground,
       }}
     >
       <ContextMenuPrimitive.SubmenuTrigger
         style={(state) => [
           styles.subTrigger,
-          state.open && { backgroundColor: colors.accent },
+          state.open && { backgroundColor: colors.menuAccent },
           state.open && { marginBottom: 4 },
           state.highlighted && { opacity: 0.8 },
           props.disabled && { opacity: 0.5 },
@@ -227,7 +227,7 @@ function ContextMenuItem({
 }) {
   const { colors } = useTheme()
   const destructive = variant === "destructive"
-  const color = destructive ? colors.destructive : colors.foreground
+  const color = destructive ? colors.destructive : colors.menuForeground
   return (
     <TextStyleContext.Provider
       value={{
@@ -263,7 +263,7 @@ function ContextMenuCheckboxItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: colors.foreground,
+        color: colors.menuForeground,
       }}
     >
       <ContextMenuPrimitive.CheckboxItem
@@ -301,7 +301,7 @@ function ContextMenuRadioItem({
     <TextStyleContext.Provider
       value={{
         ...styles.itemText,
-        color: colors.foreground,
+        color: colors.menuForeground,
       }}
     >
       <ContextMenuPrimitive.RadioItem
@@ -337,7 +337,7 @@ function ContextMenuLabel({
     <ContextMenuPrimitive.GroupLabel
       style={(state) => [
         styles.label,
-        { color: colors.mutedForeground },
+        { color: colors.menuMutedForeground },
         inset && styles.inset,
         resolveStyle(style, state) as StyleProp<TextStyle>,
       ]}
@@ -355,7 +355,7 @@ function ContextMenuSeparator({
     <ContextMenuPrimitive.Separator
       style={(state) => [
         styles.separator,
-        { backgroundColor: colors.border },
+        { backgroundColor: colors.menuBorder },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}
       {...props}

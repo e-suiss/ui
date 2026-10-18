@@ -54,7 +54,7 @@ export const strings = {
   createShadcnNote:
     "The shadcn CLI resolves a preset code on ui.shadcn.com, so it installs the shadcn/ui design system, not suiss/ui. Use it only for a project without suiss/ui components; the suiss/ui CLI above reads the same code.",
   createNativeNote:
-    "Native platforms take the style and icon library; colors and fonts follow the suiss/ui theme.",
+    "The CLI writes the colors, radius, menus, fonts and icon library into your app. Fonts are embedded at build time, so rebuild the app after init.",
   createAccountTitle: "Create an account",
   createAccountDescription: "Enter your email to get started.",
   createEmail: "Email",

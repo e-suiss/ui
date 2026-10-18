@@ -1744,6 +1744,7 @@
         "cn"
       ],
       "registryDependencies": [
+        "@esuiss-rn/primitives-font",
         "@esuiss-rn/primitives-types",
         "@esuiss-rn/primitives-use-render"
       ],
@@ -6224,6 +6225,7 @@
       "registryDependencies": [
         "@esuiss-rn/primitives-event-details",
         "@esuiss-rn/primitives-floating-root",
+        "@esuiss-rn/primitives-font",
         "@esuiss-rn/primitives-positioner",
         "@esuiss-rn/primitives-types",
         "@esuiss-rn/primitives-use-controllable-state",
@@ -6326,6 +6328,7 @@
       "registryDependencies": [
         "@esuiss-rn/primitives-event-details",
         "@esuiss-rn/primitives-fieldset",
+        "@esuiss-rn/primitives-font",
         "@esuiss-rn/primitives-form",
         "@esuiss-rn/primitives-hooks",
         "@esuiss-rn/primitives-types",
@@ -6374,6 +6377,19 @@
           "path": "components/primitives/floating-root.tsx",
           "type": "registry:component",
           "target": "@components/primitives/floating-root.tsx"
+        }
+      ]
+    },
+    {
+      "name": "primitives-font",
+      "type": "registry:component",
+      "title": "Font Primitive",
+      "description": "The headless font behavior the components build on.",
+      "files": [
+        {
+          "path": "components/primitives/font.ts",
+          "type": "registry:component",
+          "target": "@components/primitives/font.ts"
         }
       ]
     },
@@ -6535,6 +6551,7 @@
       "description": "The headless number field behavior the components build on.",
       "registryDependencies": [
         "@esuiss-rn/primitives-event-details",
+        "@esuiss-rn/primitives-font",
         "@esuiss-rn/primitives-haptics",
         "@esuiss-rn/primitives-hooks",
         "@esuiss-rn/primitives-types",

@@ -149,7 +149,7 @@ public struct VerifyDevice: View {
           Text("suiss Account Verification Code")
             .scaledTextStyle(.lg, weight: .semibold)
           Text(verbatim: "482 913")
-            .font(.system(size: TextStyle.xl3.size, weight: .semibold))
+            .font(EsuissFont.font(size: TextStyle.xl3.size, weight: .semibold))
             .tracking(4)
             .monospacedDigit()
             .padding(.top, 10)

@@ -132,7 +132,7 @@ public struct InputOTPSlot: View {
     ZStack {
       if let character {
         Text(String(character))
-          .font(.system(size: TextStyle.xl.size * scale, weight: .semibold))
+          .font(EsuissFont.font(size: TextStyle.xl.size * scale, weight: .semibold))
           .monospacedDigit()
           .foregroundStyle(foreground)
       } else if active {

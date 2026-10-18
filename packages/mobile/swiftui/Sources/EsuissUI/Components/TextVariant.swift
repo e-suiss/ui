@@ -66,7 +66,7 @@ private struct TextVariantModifier: ViewModifier {
 
   private func styled(_ content: Content) -> some View {
     content
-      .scaledTextStyle(variant.style, weight: variant.weight)
+      .scaledTextStyle(variant.style, weight: variant.weight, heading: variant.isHeading)
       .foregroundStyle(variant.color)
       .accessibilityAddTraits(variant.isHeading ? .isHeader : [])
   }

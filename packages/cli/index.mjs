@@ -18,7 +18,7 @@ import { choose, isInteractive } from "./lib/prompt.mjs"
 import { BASES } from "./lib/registry.mjs"
 import { name, version } from "./lib/shared/package.mjs"
 import { readJson } from "./lib/shared/project.mjs"
-import { resolveStyle } from "./lib/shared/style.mjs"
+import { presetProblem, resolveStyle } from "./lib/shared/style.mjs"
 import { STYLE_NAMES } from "./lib/styles.mjs"
 
 const OPTIONS = {
@@ -37,7 +37,7 @@ const OPTIONS = {
                    luma, sera or rhea (defaults to suiss); for React it is
                    read from and saved to the style in components.json`,
   preset: `  --preset <code>  apply a preset code from suiss.app/ui/create: style,
-                   colors, radius, icons and menu color (init only)`,
+                   colors, radius, fonts, icons and menus (init only)`,
   theme: "  --theme suiss    keep the suiss/ui colors when applying a preset",
   iconLibrary: `  --icon-library <phosphor|lucide|tabler|hugeicons|remixicon>
                    the icons of React Native, SwiftUI and Compose components
@@ -190,9 +190,12 @@ function parseArgs(args) {
       }
       case "--preset": {
         const code = queue.next().value
-        if (!decodePreset(code)) {
+        const decoded = decodePreset(code)
+        if (!decoded) {
           throw new CliError(`${arg} needs a preset code from the create page.`)
         }
+        const problem = presetProblem(decoded)
+        if (problem) throw new CliError(problem)
         options.preset = code
         break
       }

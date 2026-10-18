@@ -199,7 +199,7 @@ function ContentPopup({
     <ComboboxPrimitive.Popup
       className={(state) =>
         cn(
-          "relative overflow-hidden rounded-xl border border-foreground-5 bg-popover shadow-lg dark:border-foreground-10",
+          "relative overflow-hidden rounded-xl border border-menu-foreground-5 bg-menu shadow-lg dark:border-menu-foreground-10",
           resolveClassName(className, state)
         )
       }
@@ -242,7 +242,7 @@ function ComboboxContent({
             entering={FadeIn.reduceMotion(ReduceMotion.System)}
             exiting={FadeOut.reduceMotion(ReduceMotion.System)}
           >
-            <TextClassContext.Provider value="text-base text-foreground">
+            <TextClassContext.Provider value="text-base text-menu-foreground">
               <ContentPopup className={className} chips={!!anchor} {...props} />
             </TextClassContext.Provider>
           </AnimatedView>
@@ -275,7 +275,7 @@ function ComboboxItem({
 }) {
   return (
     <TextClassContext.Provider
-      value={cn("select-none text-base text-foreground")}
+      value={cn("select-none text-base text-menu-foreground")}
     >
       <ComboboxPrimitive.Item
         className={(state) =>
@@ -312,7 +312,7 @@ function ComboboxLabel({
     <ComboboxPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
+          "px-3 py-2.5 text-xs font-semibold text-menu-muted-foreground",
           resolveClassName(className, state)
         )
       }
@@ -336,7 +336,7 @@ function ComboboxEmpty({
       }
       {...props}
     >
-      {wrapText(children, "text-center text-sm text-muted-foreground")}
+      {wrapText(children, "text-center text-sm text-menu-muted-foreground")}
     </ComboboxPrimitive.Empty>
   )
 }
@@ -348,7 +348,10 @@ function ComboboxSeparator({
   return (
     <ComboboxPrimitive.Separator
       className={(state) =>
-        cn("-mx-1.5 my-1.5 h-px bg-border", resolveClassName(className, state))
+        cn(
+          "-mx-1.5 my-1.5 h-px bg-menu-border",
+          resolveClassName(className, state)
+        )
       }
       {...props}
     />

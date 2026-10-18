@@ -27,6 +27,7 @@ import { DEFAULT_STYLE, loadStyles } from "./theme.mjs"
 const SCRIPT_EXTENSION = /\.(tsx?|jsx?)$/
 
 const ROOT = path.resolve(import.meta.dirname, "..")
+const TOKENS = path.join(ROOT, "../tokens/tokens.json")
 const OUTPUT = path.join(ROOT, "registry.json")
 const STYLES = {
   uniwind: { stylesheet: "styles/uniwind.css", directory: "uniwind" },
@@ -224,11 +225,22 @@ if (problems.length) {
   process.exit(1)
 }
 
+const tokenColors = Object.entries(
+  JSON.parse(await readFile(TOKENS, "utf8")).color
+)
 const registry = {
   name: "esuiss-ui-mobile",
   homepage: "https://suiss.app/ui",
   styles: STYLES,
   defaultStyle: DEFAULT_STYLE,
+  colors: Object.fromEntries(
+    ["light", "dark"].map((mode) => [
+      mode,
+      Object.fromEntries(
+        tokenColors.map(([name, value]) => [name, value[mode]])
+      ),
+    ])
+  ),
   presets: Object.fromEntries(
     PRESET_STYLES.map((style) => [style, presetFiles(style)])
   ),

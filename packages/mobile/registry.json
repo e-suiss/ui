@@ -17,6 +17,86 @@
     }
   },
   "defaultStyle": "suiss",
+  "colors": {
+    "light": {
+      "background": "oklch(1 0 0)",
+      "foreground": "oklch(0.2316 0.0038 286.09)",
+      "card": "oklch(1 0 0)",
+      "card-foreground": "oklch(0.2316 0.0038 286.09)",
+      "popover": "oklch(1 0 0)",
+      "popover-foreground": "oklch(0.2316 0.0038 286.09)",
+      "primary": "oklch(0.5629 0.1933 256.16)",
+      "primary-foreground": "oklch(1 0 0)",
+      "secondary": "oklch(0 0 0 / 4%)",
+      "secondary-foreground": "oklch(0.2316 0.0038 286.09)",
+      "muted": "oklch(0.9707 0.0026 286.29)",
+      "muted-foreground": "oklch(0.5399 0.0077 286.13)",
+      "accent": "oklch(0 0 0 / 6%)",
+      "accent-foreground": "oklch(0.2316 0.0038 286.09)",
+      "destructive": "oklch(0.5329 0.2255 27.27)",
+      "border": "oklch(0.8652 0.0068 286.24)",
+      "input": "oklch(0.6217 0.0074 286.17)",
+      "ring": "oklch(0.5629 0.1933 256.16)",
+      "chart-1": "oklch(0.6028 0.2177 257.42)",
+      "chart-2": "oklch(0.6998 0.1109 212.72)",
+      "chart-3": "oklch(0.5295 0.191 278.34)",
+      "chart-4": "oklch(0.7652 0.1752 62.57)",
+      "chart-5": "oklch(0.6483 0.0073 286.18)",
+      "sidebar": "oklch(0.9707 0.0026 286.29)",
+      "sidebar-foreground": "oklch(0.2316 0.0038 286.09)",
+      "sidebar-primary": "oklch(0.5629 0.1933 256.16)",
+      "sidebar-primary-foreground": "oklch(1 0 0)",
+      "sidebar-accent": "oklch(0 0 0 / 6%)",
+      "sidebar-accent-foreground": "oklch(0.2316 0.0038 286.09)",
+      "sidebar-border": "oklch(0.8652 0.0068 286.24)",
+      "sidebar-ring": "oklch(0.5629 0.1933 256.16)",
+      "menu": "oklch(1 0 0)",
+      "menu-foreground": "oklch(0.2316 0.0038 286.09)",
+      "menu-muted-foreground": "oklch(0.5399 0.0077 286.13)",
+      "menu-accent": "oklch(0 0 0 / 6%)",
+      "menu-accent-foreground": "oklch(0.2316 0.0038 286.09)",
+      "menu-border": "oklch(0.8652 0.0068 286.24)"
+    },
+    "dark": {
+      "background": "oklch(0 0 0)",
+      "foreground": "oklch(0.9707 0.0026 286.29)",
+      "card": "oklch(0.2316 0.0038 286.09)",
+      "card-foreground": "oklch(0.9707 0.0026 286.29)",
+      "popover": "oklch(0.2316 0.0038 286.09)",
+      "popover-foreground": "oklch(0.9707 0.0026 286.29)",
+      "primary": "oklch(0.669 0.1808 251.84)",
+      "primary-foreground": "oklch(1 0 0)",
+      "secondary": "oklch(1 0 0 / 10%)",
+      "secondary-foreground": "oklch(0.9707 0.0026 286.29)",
+      "muted": "oklch(0.2006 0.002 286.21)",
+      "muted-foreground": "oklch(0.7105 0.0072 286.2)",
+      "accent": "oklch(1 0 0 / 10%)",
+      "accent-foreground": "oklch(0.9707 0.0026 286.29)",
+      "destructive": "oklch(0.7033 0.2236 28.29)",
+      "border": "oklch(0.3802 0.005 286.15)",
+      "input": "oklch(0.5399 0.0077 286.13)",
+      "ring": "oklch(0.5629 0.1933 256.16)",
+      "chart-1": "oklch(0.6243 0.2056 255.49)",
+      "chart-2": "oklch(0.7706 0.1181 211.98)",
+      "chart-3": "oklch(0.5564 0.2032 278.15)",
+      "chart-4": "oklch(0.7824 0.1711 67.22)",
+      "chart-5": "oklch(0.6483 0.0073 286.18)",
+      "sidebar": "oklch(0.2006 0.002 286.21)",
+      "sidebar-foreground": "oklch(0.9707 0.0026 286.29)",
+      "sidebar-primary": "oklch(0.669 0.1808 251.84)",
+      "sidebar-primary-foreground": "oklch(1 0 0)",
+      "sidebar-accent": "oklch(1 0 0 / 10%)",
+      "sidebar-accent-foreground": "oklch(0.9707 0.0026 286.29)",
+      "sidebar-border": "oklch(0.3802 0.005 286.15)",
+      "sidebar-ring": "oklch(0.5629 0.1933 256.16)",
+      "menu": "oklch(0.2316 0.0038 286.09)",
+      "menu-foreground": "oklch(0.9707 0.0026 286.29)",
+      "menu-muted-foreground": "oklch(0.7105 0.0072 286.2)",
+      "menu-accent": "oklch(1 0 0 / 10%)",
+      "menu-accent-foreground": "oklch(0.9707 0.0026 286.29)",
+      "menu-border": "oklch(0.3802 0.005 286.15)"
+    }
+  },
   "presets": {
     "vega": {
       "uniwind": "styles/presets/vega/uniwind.css",
@@ -3245,6 +3325,7 @@
         "stylesheet": []
       },
       "requires": [
+        "primitives/font",
         "primitives/types",
         "primitives/use-render"
       ],
@@ -11028,6 +11109,7 @@
       "requires": [
         "primitives/event-details",
         "primitives/floating-root",
+        "primitives/font",
         "primitives/positioner",
         "primitives/types",
         "primitives/use-controllable-state",
@@ -11137,6 +11219,7 @@
       "requires": [
         "primitives/event-details",
         "primitives/fieldset",
+        "primitives/font",
         "primitives/form",
         "primitives/hooks",
         "primitives/types",
@@ -11182,6 +11265,20 @@
       ],
       "files": [
         "components/primitives/floating-root.tsx"
+      ]
+    },
+    {
+      "name": "primitives/font",
+      "type": "primitive",
+      "title": "Font",
+      "dependencies": {
+        "uniwind": [],
+        "nativewind": [],
+        "stylesheet": []
+      },
+      "requires": [],
+      "files": [
+        "components/primitives/font.ts"
       ]
     },
     {
@@ -11357,6 +11454,7 @@
       },
       "requires": [
         "primitives/event-details",
+        "primitives/font",
         "primitives/haptics",
         "primitives/hooks",
         "primitives/types",

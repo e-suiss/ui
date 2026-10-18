@@ -33,7 +33,7 @@ npx @esuiss/ui@latest init [options]
 | `-y, --yes` | Skip confirmation prompts |
 | `-b, --base <base\|radix\|aria>` | Primitive base of React components, read from the `style` in `components.json` when omitted, otherwise `base`. Saved as the `style` in `components.json` |
 | `--style <name>` | Visual style: `suiss`, `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera` or `rhea`. For React it is saved as the `style` in `components.json`; for React Native, SwiftUI and Compose it picks the theme or tokens file |
-| `--preset <code>` | A preset code from [Create](/create): style, colors, radius, icon library and menu color |
+| `--preset <code>` | A preset code from [Create](/create): style, colors, radius, fonts, icon library and menus. React Native, SwiftUI and Compose apply it to their theme files; see [Theming](/docs/theming#styles) |
 | `--theme suiss` | Keep the suiss/ui colors when applying a preset |
 | `--icon-library <name>` | Icons of React Native, SwiftUI and Compose components: `phosphor` (the default), `lucide`, `tabler`, `hugeicons` or `remixicon`. Read from `--preset` or the installed icons file when omitted |
 | `-p, --platform <web\|rn\|swift\|kotlin>` | Pick the platform when the folder holds more than one project |
@@ -151,7 +151,7 @@ npx @esuiss/ui@latest add button --style vega
 npx @esuiss/ui@latest init --platform swift --style luma
 ```
 
-Pick a style, colors, radius and icons on the [Create](/create) page, then run the command it shows. `init --preset` applies the code and saves the style, `iconLibrary` and `menuColor` in `components.json`, so later `add` runs follow them.
+Pick a style, colors, radius and icons on the [Create](/create) page, then run the command it shows. `init --preset` applies the code and saves the style, `iconLibrary` and `menuColor` in `components.json`, so later `add` runs follow them. With `--platform rn`, `swift` or `kotlin`, `init --preset` writes the colors, radius, menu colors and fonts into the theme files instead. A preset whose theme is a different gray than its base color is rejected; use the base color itself or a colored theme.
 
 ## Icon libraries
 

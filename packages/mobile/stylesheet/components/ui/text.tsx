@@ -5,6 +5,7 @@ import {
   StyleSheet,
   type TextStyle,
 } from "react-native"
+import { fontFamily } from "@/components/primitives/font"
 import type { RenderProp } from "@/components/primitives/types"
 import { useRender } from "@/components/primitives/use-render"
 import {
@@ -77,6 +78,8 @@ function variantColors(variant: TextVariant, colors: ThemeColors): TextStyle {
   }
 }
 
+const HEADINGS = new Set<TextVariant>(["h1", "h2", "h3", "h4"])
+
 const TextStyleContext = React.createContext<TextStyle | undefined>(undefined)
 
 function Text({
@@ -97,6 +100,7 @@ function Text({
     props: [
       {
         style: [
+          variant === "code" ? undefined : fontFamily(HEADINGS.has(variant)),
           styles[variant],
           variantColors(variant, colors),
           inherited,

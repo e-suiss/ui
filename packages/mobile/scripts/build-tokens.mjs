@@ -1118,6 +1118,12 @@ extension Shadow {
 ${shadow}
 }
 
+public enum Fonts {
+  public static let sans: String? = nil
+  public static let heading: String? = nil
+  public static let files: [String] = []
+}
+
 ${buildSwiftMetrics(metrics)}
 `
 }
@@ -1181,7 +1187,7 @@ function buildKotlin(theme, metrics) {
   const text = Object.entries(theme.text)
     .map(
       ([name, size]) =>
-        `    val ${nativeName(name)} = textStyle(${double(size.fontSize)}, ${double(size.lineHeight)})`
+        `    val ${nativeName(name)} get() = textStyle(${double(size.fontSize)}, ${double(size.lineHeight)})`
     )
     .join("\n")
   const palette = Object.entries(theme.palette)
@@ -1231,7 +1237,12 @@ ${radius}
 object Typography {
 ${text}
 
-    val all = listOf(${textNames.join(", ")})
+    val all get() = listOf(${textNames.join(", ")})
+}
+
+object Fonts {
+    val sans: List<FontFile> = emptyList()
+    val heading: List<FontFile> = emptyList()
 }
 
 object Shadows {

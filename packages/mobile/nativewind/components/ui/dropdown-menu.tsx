@@ -49,11 +49,11 @@ function DropdownMenuContent({
           sideOffset={sideOffset}
         >
           <AnimatedView entering={FadeIn.reduceMotion(ReduceMotion.System)}>
-            <TextClassContext.Provider value="text-base text-foreground">
+            <TextClassContext.Provider value="text-base text-menu-foreground">
               <MenuPrimitive.Popup
                 className={(state) =>
                   cn(
-                    "min-w-48 rounded-menu border border-foreground-5 bg-popover p-menu shadow-menu dark:border-foreground-10",
+                    "min-w-48 rounded-menu border border-menu-foreground-5 bg-menu p-menu shadow-menu dark:border-menu-foreground-10",
                     resolveClassName(className, state)
                   )
                 }
@@ -81,7 +81,7 @@ function DropdownMenuSubTrigger({
   const { open } = MenuPrimitive.useMenuRootContext().floating
   return (
     <TextClassContext.Provider
-      value={cn("select-none text-base text-foreground")}
+      value={cn("select-none text-base text-menu-foreground")}
     >
       <MenuPrimitive.SubmenuTrigger
         className={(state) =>
@@ -89,7 +89,7 @@ function DropdownMenuSubTrigger({
             "group flex-row items-center gap-2 rounded-menu-item px-menu-item-x py-menu-item-y",
             props.disabled && "opacity-50",
             state.highlighted && "opacity-80",
-            state.open && !state.highlighted && "bg-accent",
+            state.open && !state.highlighted && "bg-menu-accent",
             inset && "pl-[2.375rem]",
             resolveClassName(className, state)
           )
@@ -114,7 +114,7 @@ function DropdownMenuSubContent({
       <MenuPrimitive.Popup
         className={(state) =>
           cn(
-            "min-w-36 rounded-menu border border-foreground-5 bg-popover p-menu shadow-menu dark:border-foreground-10",
+            "min-w-36 rounded-menu border border-menu-foreground-5 bg-menu p-menu shadow-menu dark:border-menu-foreground-10",
             resolveClassName(className, state)
           )
         }
@@ -137,7 +137,7 @@ function DropdownMenuItem({
   return (
     <TextClassContext.Provider
       value={cn(
-        "select-none text-base text-foreground",
+        "select-none text-base text-menu-foreground",
         destructive && "text-destructive"
       )}
     >
@@ -168,7 +168,7 @@ function DropdownMenuCheckboxItem({
 }) {
   return (
     <TextClassContext.Provider
-      value={cn("select-none text-base text-foreground")}
+      value={cn("select-none text-base text-menu-foreground")}
     >
       <MenuPrimitive.CheckboxItem
         className={(state) =>
@@ -204,7 +204,7 @@ function DropdownMenuRadioItem({
 }) {
   return (
     <TextClassContext.Provider
-      value={cn("select-none text-base text-foreground")}
+      value={cn("select-none text-base text-menu-foreground")}
     >
       <MenuPrimitive.RadioItem
         className={(state) =>
@@ -240,7 +240,7 @@ function DropdownMenuLabel({
     <MenuPrimitive.GroupLabel
       className={(state) =>
         cn(
-          "px-3 py-2.5 text-xs font-semibold text-muted-foreground",
+          "px-3 py-2.5 text-xs font-semibold text-menu-muted-foreground",
           inset && "pl-[2.375rem]",
           resolveClassName(className, state)
         )
@@ -258,7 +258,7 @@ function DropdownMenuSeparator({
     <MenuPrimitive.Separator
       className={(state) =>
         cn(
-          "-mx-1.5 my-1.5 h-px bg-border-50",
+          "-mx-1.5 my-1.5 h-px bg-menu-border-50",
           resolveClassName(className, state)
         )
       }

@@ -23,6 +23,7 @@ import {
   useFloatingPopup,
   useFloatingRoot,
 } from "./floating-root"
+import { fontFamily } from "./font"
 import {
   Positioner as PositionerPrimitive,
   type PositionerProps as PositionerPrimitiveProps,
@@ -830,6 +831,7 @@ function Input({
     state,
     ref: [ref, anchorRef],
     props: [
+      { style: fontFamily() },
       {
         role: "combobox",
         accessibilityLabelledBy: labelId,

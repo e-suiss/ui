@@ -7,6 +7,7 @@ import {
 } from "react-native"
 import { createChangeEventDetails, REASONS } from "./event-details"
 import { useFieldsetContext } from "./fieldset"
+import { fontFamily } from "./font"
 import {
   type Values as FormValues,
   useFormContext,
@@ -798,6 +799,7 @@ function Control({
     ref: [ref, inputRef],
     props: [
       {
+        style: fontFamily(),
         nativeID: field.hasRoot ? field.controlId : undefined,
         accessibilityLabelledBy:
           field.labelText !== undefined ? field.labelId : undefined,

@@ -79,7 +79,7 @@ public struct ChatThread: View {
       } label: {
         VStack(spacing: 4) {
           Text(verbatim: "RC")
-            .font(.system(size: TextStyle.lg.size, weight: .semibold))
+            .font(EsuissFont.font(size: TextStyle.lg.size, weight: .semibold))
             .foregroundStyle(EsuissColor.primaryForeground)
             .frame(width: 48, height: 48)
             .background(Palette.green500, in: Circle())

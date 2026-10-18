@@ -90,9 +90,9 @@ struct MenuPanel<Content: View>: View {
       ScrollView { stack }
     }
     .scaledFont(TextStyle.base)
-    .foregroundStyle(EsuissColor.foreground)
+    .foregroundStyle(EsuissColor.menuForeground)
     .environment(\.menuPresentation, .popup)
-    .popupSurface(radius: Metrics.Radius.menu, shadow: Metrics.Elevation.menu)
+    .popupSurface(radius: Metrics.Radius.menu, shadow: Metrics.Elevation.menu, menu: true)
     .accessibilityElement(children: .contain)
   }
 }
@@ -109,12 +109,12 @@ struct MenuRowStyle: ButtonStyle {
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: 10, iconSize: 16))
       .lineLimit(1)
-      .foregroundStyle(destructive ? EsuissColor.destructive : EsuissColor.foreground)
+      .foregroundStyle(destructive ? EsuissColor.destructive : EsuissColor.menuForeground)
       .padding(.leading, inset ? 38 : Metrics.PaddingX.menuItem)
       .padding(.trailing, trailing)
       .padding(.vertical, Metrics.PaddingY.menuItem)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(selected ? EsuissColor.accent : .clear, in: RoundedRectangle(cornerRadius: Metrics.Radius.menuItem, style: .continuous))
+      .background(selected ? EsuissColor.menuAccent : .clear, in: RoundedRectangle(cornerRadius: Metrics.Radius.menuItem, style: .continuous))
       .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.5)
       .contentShape(Rectangle())
   }
@@ -315,7 +315,7 @@ public struct DropdownMenuLabel: View {
     } else {
       Text(title)
         .scaledFont(TextStyle.xs, weight: .semibold)
-        .foregroundStyle(EsuissColor.mutedForeground)
+        .foregroundStyle(EsuissColor.menuMutedForeground)
         .padding(.leading, inset ? 38 : Metrics.PaddingX.menuItem)
         .padding(.trailing, 12)
         .padding(.vertical, 10)
@@ -353,7 +353,7 @@ public struct DropdownMenuSeparator: View {
       Divider()
     } else {
       Rectangle()
-        .fill(EsuissColor.border.opacity(0.5))
+        .fill(EsuissColor.menuBorder.opacity(0.5))
         .frame(height: 1)
         .padding(.vertical, 6)
         .padding(.horizontal, -6)

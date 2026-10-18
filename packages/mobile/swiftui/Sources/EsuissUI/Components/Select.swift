@@ -137,8 +137,8 @@ struct SelectPanel<Content: View>: View {
       ScrollView { stack }
     }
     .scaledFont(TextStyle.base)
-    .foregroundStyle(EsuissColor.foreground)
-    .popupSurface(radius: Metrics.Radius.menu, shadow: Metrics.Elevation.menu)
+    .foregroundStyle(EsuissColor.menuForeground)
+    .popupSurface(radius: Metrics.Radius.menu, shadow: Metrics.Elevation.menu, menu: true)
     .accessibilityElement(children: .contain)
   }
 }
@@ -215,7 +215,7 @@ public struct SelectLabel: View {
     if !select.registering {
       Text(title)
         .scaledFont(TextStyle.xs, weight: .semibold)
-        .foregroundStyle(EsuissColor.mutedForeground)
+        .foregroundStyle(EsuissColor.menuMutedForeground)
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -232,7 +232,7 @@ public struct SelectSeparator: View {
   public var body: some View {
     if !select.registering {
       Rectangle()
-        .fill(EsuissColor.border)
+        .fill(EsuissColor.menuBorder)
         .frame(height: 1)
         .padding(.vertical, 6)
         .padding(.horizontal, -6)
