@@ -30,14 +30,14 @@ export default function CarouselTestimonialsAutoplay() {
           <CarouselContent>
             {quotes.map((item) => (
               <CarouselItem key={item.quote}>
-                <blockquote className="flex min-h-28 flex-col gap-3">
-                  <p className="text-2xl font-bold tracking-tight">
+                <figure className="flex min-h-28 flex-col gap-3">
+                  <blockquote className="text-2xl font-bold tracking-tight">
                     “{item.quote}”
-                  </p>
-                  <footer className="text-muted-foreground">
+                  </blockquote>
+                  <figcaption className="text-muted-foreground">
                     {item.author}
-                  </footer>
-                </blockquote>
+                  </figcaption>
+                </figure>
               </CarouselItem>
             ))}
           </CarouselContent>
