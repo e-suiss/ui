@@ -141,6 +141,7 @@ export default function RootLayout({ children }) {
 }
 `
 
+const GLOBAL_STYLE = /<style jsx global>/g
 const GEIST_ON_HTML =
   /<html className=\{`\$\{fontGeist\.variable\}`\} lang="en">/
 const MONO_CLASS = /\$\{fontJetbrainsMono\.variable\}/
@@ -310,6 +311,117 @@ describe("fonts on Next.js", () => {
     const cwd = nextProject()
     await init({ cwd, yes: true })
     expect(installed()).not.toContain("@tailwindcss/postcss")
+  })
+})
+
+const INTER = preset({ fontHeading: "inter" })
+
+const pagesApp = `import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+`
+
+function pagesFontLine(name, id) {
+  return `--font-${name}: ${"$"}{${id}.style.fontFamily};`
+}
+
+function pagesProject() {
+  return createProject({
+    "package.json": {
+      dependencies: { next: "16.4.2", react: "19.0.0" },
+      devDependencies: { tailwindcss: "^4", "@tailwindcss/postcss": "^4" },
+    },
+    "postcss.config.mjs":
+      'export default { plugins: { "@tailwindcss/postcss": {} } }\n',
+    "tsconfig.json": { compilerOptions: { paths: { "@/*": ["./src/*"] } } },
+    "src/pages/_app.tsx": pagesApp,
+    "src/styles/globals.css": "",
+  })
+}
+
+describe("an explicit Inter choice", () => {
+  it("uses Inter instead of the system font on Vite", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true, preset: INTER })
+    const css = read(cwd, "src/index.css")
+    expect(css).toContain("--font-sans: 'Inter Variable', sans-serif;")
+    expect(css).toContain('@import "@fontsource-variable/inter";')
+  })
+
+  it("uses Inter instead of the system font on Next.js", async () => {
+    const cwd = nextProject()
+    await init({ cwd, yes: true, preset: INTER })
+    expect(read(cwd, "src/app/globals.css")).toContain(
+      "--font-sans: var(--font-inter), sans-serif;"
+    )
+    expect(read(cwd, "src/app/layout.tsx")).toContain(
+      "const fontInter = Inter("
+    )
+  })
+
+  it("goes back to the system font with the suiss preset", async () => {
+    const cwd = viteProject({ "vite.config.ts": viteConfig })
+    await init({ cwd, yes: true })
+    const original = read(cwd, "src/index.css")
+    await apply({ cwd, only: "font", preset: INTER })
+    expect(read(cwd, "src/index.css")).not.toBe(original)
+    await apply({ cwd, only: "font", preset: SUISS })
+    expect(read(cwd, "src/index.css")).toBe(original)
+  })
+})
+
+describe("a font the template already loads", () => {
+  const MONO = preset({ font: "geist-mono" })
+
+  it("reuses the template font with latin-ext on init", async () => {
+    const cwd = nextProject()
+    await init({ cwd, yes: true, preset: MONO })
+    const layout = read(cwd, "src/app/layout.tsx")
+    expect(layout).not.toContain("fontGeistMono")
+    expect(layout).toContain(`const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin", "latin-ext"],
+});`)
+    expect(layout).toContain('<html lang="en">')
+  })
+
+  it("ends with the same layout when applied after another font", async () => {
+    const fresh = nextProject()
+    await init({ cwd: fresh, yes: true, preset: MONO })
+    const cwd = nextProject()
+    await init({ cwd, yes: true, preset: preset({ font: "lora" }) })
+    await apply({ cwd, only: "font", preset: MONO })
+    expect(read(cwd, "src/app/layout.tsx")).toBe(
+      read(fresh, "src/app/layout.tsx")
+    )
+  })
+})
+
+describe("fonts in the Pages Router", () => {
+  it("loads the font in _app and sets its variable on :root", async () => {
+    const cwd = pagesProject()
+    await init({ cwd, yes: true, preset: preset({ font: "figtree" }) })
+    const app = read(cwd, "src/pages/_app.tsx")
+    expect(app).toContain('import { Figtree } from "next/font/google";')
+    expect(app).toContain("const fontFigtree = Figtree({")
+    expect(app).toContain(pagesFontLine("figtree", "fontFigtree"))
+    expect(app).toContain("<style jsx global>")
+    expect(app).toContain("<Component {...pageProps} />")
+    expect(output()).not.toContain("Import src/styles/globals.css")
+    expect(output()).not.toContain("root layout")
+  })
+
+  it("switches the font in _app", async () => {
+    const cwd = pagesProject()
+    await init({ cwd, yes: true, preset: preset({ font: "figtree" }) })
+    await apply({ cwd, only: "font", preset: preset({ font: "lora" }) })
+    const app = read(cwd, "src/pages/_app.tsx")
+    expect(app).not.toContain("Figtree")
+    expect(app).toContain(pagesFontLine("lora", "fontLora"))
+    expect(app.match(GLOBAL_STYLE)).toHaveLength(1)
   })
 })
 

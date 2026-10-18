@@ -5,6 +5,7 @@ import { step } from "./output.mjs"
 import { relative } from "./shared/project.mjs"
 
 const DEFAULT_FONT = "inter"
+const INHERIT = "inherit"
 
 const fonts = JSON.parse(
   readFileSync(new URL("./fonts.json", import.meta.url), "utf8")
@@ -23,9 +24,16 @@ export const NEXT_LAYOUTS = [
   "src/app/layout.jsx",
   "app/layout.jsx",
 ]
+export const NEXT_PAGES_APPS = [
+  "src/pages/_app.tsx",
+  "pages/_app.tsx",
+  "src/pages/_app.jsx",
+  "pages/_app.jsx",
+]
 
 const FONT_SANS = /--font-sans:[^;]*;/
 const IMPORT_LINE = /^@import\s+["']([^"']+)["'][^;\n]*;[ \t]*\n/gm
+const REGEXP_SPECIAL = /[.*+?^${}()|[\]\\]/g
 const DASH_LETTER = /(^|-)([a-z0-9])/g
 const HTML_TAG = /<html\b[^>]*>/
 const CLASSNAME_LITERAL = /className="([^"]*)"/
@@ -39,6 +47,11 @@ const MANAGED_FONT =
   /\n?const (font[A-Z]\w*) = (\w+)\(\{[^}]*?variable:\s*["']--font-([a-z0-9-]+)["'][^}]*\}\);?\n/
 const IMPORTS = /^import\s[\s\S]*?["'][^"']+["'];?[ \t]*\n/gm
 const SPECIFIER_SEPARATOR = /\s*,\s*/
+const LATIN_ONLY = /subsets:\s*\[\s*["']latin["']\s*\]/
+const EMPTY_CLASSNAME = / className=\{``\}/
+const PAGES_RETURN = /return <Component \{\.\.\.pageProps\} \/>(;?)/
+const PAGES_FONT_LINE =
+  /--font-[a-z0-9-]+: \$\{font[A-Z]\w*\.style\.fontFamily\};/
 
 export function webFontOf(name) {
   const font = fonts.find((entry) => entry.name === name)
@@ -54,8 +67,15 @@ export function webFontOf(name) {
   }
 }
 
+export function presetWebFont(preset) {
+  const font = webFontOf(preset.font)
+  if (!font || font.name !== DEFAULT_FONT) return font
+  const explicit = Boolean(preset.fontHeading) && preset.fontHeading !== INHERIT
+  return explicit ? { ...font, explicit } : font
+}
+
 function isDefault(font) {
-  return !font || font.name === DEFAULT_FONT
+  return !font || (font.name === DEFAULT_FONT && !font.explicit)
 }
 
 function familyLine(framework, font) {
@@ -85,6 +105,62 @@ export function withFont(css, framework, font) {
     text = text.slice(0, at) + statement + text.slice(at)
   }
   return text.replace(FONT_SANS, familyLine(framework, resolved))
+}
+
+function pagesFontNote(font) {
+  return `Load the font in pages/_app with next/font/google: const ${font.id} = ${font.loader}({ subsets: ["latin", "latin-ext"], variable: "${font.variable}" }), and set ${font.variable}: \${${font.id}.style.fontFamily} on :root in a <style jsx global> block.`
+}
+
+function pagesFontLine(font) {
+  return `${font.variable}: \${${font.id}.style.fontFamily};`
+}
+
+function pagesReturn(font, semi) {
+  return `return (
+    <>
+      <style jsx global>{\`
+        :root {
+          ${pagesFontLine(font)}
+        }
+      \`}</style>
+      <Component {...pageProps} />
+    </>
+  )${semi}`
+}
+
+function configurePagesFont(project, file, font) {
+  const original = readFileSync(file, "utf8")
+  const semi = SEMICOLON_IMPORT.test(original) ? ";" : ""
+  let text = original
+  const managed = text.match(MANAGED_FONT)
+  if (managed) {
+    const [block, , loader, name] = managed
+    if (name === font.name) return []
+    if (!PAGES_FONT_LINE.test(text)) return [pagesFontNote(font)]
+    text = text.replace(block, "").replace(PAGES_FONT_LINE, pagesFontLine(font))
+    if (!new RegExp(`\\b${loader}\\(`).test(text)) {
+      text = withImports(
+        text,
+        importedNames(text).filter((imported) => imported !== loader),
+        semi
+      )
+    }
+  } else if (declarationOf(text, font)) {
+    return []
+  } else {
+    const found = text.match(PAGES_RETURN)
+    if (!found) return [pagesFontNote(font)]
+    text = text.replace(found[0], pagesReturn(font, found[1]))
+  }
+  const names = importedNames(text)
+  if (!names.includes(font.loader)) {
+    text = withImports(text, [...names, font.loader], semi)
+  }
+  text = insertDeclaration(text, font, semi)
+  if (text === original) return []
+  writeFileSync(file, text)
+  step(`Loaded ${font.title} in ${relative(project, file)}`)
+  return []
 }
 
 function fontNote(font) {
@@ -140,23 +216,64 @@ function insertDeclaration(text, font, semi) {
   return text.slice(0, at) + declaration(font, semi) + text.slice(at)
 }
 
+function declarationOf(text, font) {
+  const variable = font.variable.replace(REGEXP_SPECIAL, "\\$&")
+  return text.match(
+    new RegExp(`\\b\\w+\\(\\{[^}]*?variable:\\s*["']${variable}["'][^}]*\\}\\)`)
+  )?.[0]
+}
+
+function withLatinExt(text, font) {
+  const found = declarationOf(text, font)
+  if (!found || !LATIN_ONLY.test(found)) return text
+  return text.replace(
+    found,
+    found.replace(LATIN_ONLY, 'subsets: ["latin", "latin-ext"]')
+  )
+}
+
+function withoutClassName(text, id) {
+  const reference = `\${${id}.variable}`
+  return text
+    .replace(`${reference} `, "")
+    .replace(` ${reference}`, "")
+    .replace(reference, "")
+    .replace(EMPTY_CLASSNAME, "")
+}
+
 export function configureNextFont(project, font) {
   const resolved = font ?? webFontOf(DEFAULT_FONT)
   const file = NEXT_LAYOUTS.map((name) => path.join(project.cwd, name)).find(
     existsSync
   )
-  if (!file) return [fontNote(resolved)]
+  if (!file) {
+    const pages = NEXT_PAGES_APPS.map((name) =>
+      path.join(project.cwd, name)
+    ).find(existsSync)
+    return pages
+      ? configurePagesFont(project, pages, resolved)
+      : [fontNote(resolved)]
+  }
 
   const original = readFileSync(file, "utf8")
   const semi = SEMICOLON_IMPORT.test(original) ? ";" : ""
   let text = original
   const managed = text.match(MANAGED_FONT)
 
+  let declare = true
   if (managed) {
     const [block, id, loader, name] = managed
     if (name === resolved.name) return []
     text = text.replace(block, "")
-    text = text.replaceAll(`\${${id}.variable}`, `\${${resolved.id}.variable}`)
+    if (declarationOf(text, resolved)) {
+      declare = false
+      text = withoutClassName(text, id)
+    } else {
+      text = text.replaceAll(
+        `\${${id}.variable}`,
+        `\${${resolved.id}.variable}`
+      )
+    }
     if (!new RegExp(`\\b${loader}\\(`).test(text)) {
       text = withImports(
         text,
@@ -164,21 +281,23 @@ export function configureNextFont(project, font) {
         semi
       )
     }
-  } else if (
-    new RegExp(`variable:\\s*["']${resolved.variable}["']`).test(text)
-  ) {
-    return []
+  } else if (declarationOf(text, resolved)) {
+    declare = false
   } else {
     const withClass = addClassName(text, resolved)
     if (!withClass) return [fontNote(resolved)]
     text = withClass
   }
 
-  const names = importedNames(text)
-  if (!names.includes(resolved.loader)) {
-    text = withImports(text, [...names, resolved.loader], semi)
+  if (declare) {
+    const names = importedNames(text)
+    if (!names.includes(resolved.loader)) {
+      text = withImports(text, [...names, resolved.loader], semi)
+    }
+    text = insertDeclaration(text, resolved, semi)
+  } else {
+    text = withLatinExt(text, resolved)
   }
-  text = insertDeclaration(text, resolved, semi)
 
   if (text === original) return []
   writeFileSync(file, text)

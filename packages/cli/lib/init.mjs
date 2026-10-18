@@ -5,7 +5,8 @@ import { addStyles, installedItems, installItems } from "./add.mjs"
 import {
   configureNextFont,
   NEXT_LAYOUTS,
-  webFontOf,
+  NEXT_PAGES_APPS,
+  presetWebFont,
   withFont,
 } from "./fonts.mjs"
 import { CliError, confirm, note, step } from "./output.mjs"
@@ -221,7 +222,10 @@ function configureNext(project) {
 function importsStylesheet(project, stylesheet) {
   const name = path.basename(stylesheet).replace(REGEXP_SPECIAL, "\\$&")
   const statement = new RegExp(`import\\s+["'][^"']*\\b${name}["']`)
-  const entries = project.framework === "next" ? NEXT_LAYOUTS : VITE_ENTRIES
+  const entries =
+    project.framework === "next"
+      ? [...NEXT_LAYOUTS, ...NEXT_PAGES_APPS]
+      : VITE_ENTRIES
   return entries
     .map((file) => path.join(project.cwd, file))
     .some(
@@ -229,8 +233,19 @@ function importsStylesheet(project, stylesheet) {
     )
 }
 
+function entryName(project) {
+  if (project.framework !== "next") return "src/main.tsx"
+  const pages = NEXT_PAGES_APPS.find((file) =>
+    existsSync(path.join(project.cwd, file))
+  )
+  const app = NEXT_LAYOUTS.find((file) =>
+    existsSync(path.join(project.cwd, file))
+  )
+  return !app && pages ? pages : "your root layout"
+}
+
 export function presetFont(preset) {
-  return preset ? webFontOf(preset.font) : null
+  return preset ? presetWebFont(preset) : null
 }
 
 export function configureFont(project, font) {
@@ -395,7 +410,7 @@ export async function init(options) {
   )
   if (!importsStylesheet(project, stylesheet)) {
     manual.push(
-      `Import ${relative(project, stylesheet)} in ${project.framework === "next" ? "your root layout" : "src/main.tsx"}.`
+      `Import ${relative(project, stylesheet)} in ${entryName(project)}.`
     )
   }
 
