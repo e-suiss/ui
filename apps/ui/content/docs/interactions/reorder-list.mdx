@@ -230,6 +230,8 @@ Places the handle at the start of each row.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ReorderList
@@ -270,6 +272,84 @@ The grip that starts a drag.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ReorderList
+
+The root that renders items in `value` order.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ value` | `Binding<[Value]>` | - | Item keys in their current order. |
+| `row` | `(Value) -> Row` | - | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ReorderListScope
+
+| Property | Type |
+| --- | --- |
+| `key` | `String` |
+| `index` | `Int` |
+| `dragging` | `Boolean` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ReorderList
+
+The root that renders items in `value` order.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `List<String>` | - | Item keys in their current order. |
+| `onValueChange` | `(List<String>) -> Unit` | - | Called with the new order after a move. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `moveUpLabel` | `String` | `"Move up"` | Label of the move up accessibility action. |
+| `moveDownLabel` | `String` | `"Move down"` | Label of the move down accessibility action. |
+| `item` | `@Composable ReorderListScope.(String) -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ReorderListItem
+
+One row, keyed by its `value`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ReorderListHandle
+
+The grip that starts a drag.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String` | `"Reorder"` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

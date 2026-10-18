@@ -413,6 +413,8 @@ A disabled field with a partial value.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### InputOTP
@@ -452,6 +454,128 @@ Dash between groups.
 Also accepts the props of `React.ComponentProps<typeof OTPFieldPrimitive.Separator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### InputOTP
+
+Root that owns the hidden input and the value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `Binding<String>` | - | The text. |
+| `length` | `Int` | - | - |
+| `allowed` | `CharacterSet` | `.decimalDigits` | - |
+| `content` | `() -> Content` | - | The content. |
+
+Overloads: `init(text:length:allowed:content:)`, `init(text:length:allowed:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputOTPGroup
+
+Row of adjacent slots.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputOTPSlot
+
+Box that shows one character.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `index` | `Int` | - | The position of the character this slot displays. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputOTPSeparator
+
+Dash between groups.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### InputOTP
+
+Root that owns the hidden input and the value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `maxLength` | `Int` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | - |
+| `readOnly` | `Boolean` | `false` | - |
+| `keyboardType` | `KeyboardType` | `KeyboardType.NumberPassword` | - |
+| `onComplete` | `((String) -> Unit)?` | `null` | - |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+| `content` | `@Composable RowScope.() -> Unit` | `{ InputOTPGroup { repeat(maxLength) { InputOTPSlot(it) } } }` | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputOTPGroup
+
+Row of adjacent slots.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputOTPSlot
+
+Box that shows one character.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `index` | `Int` | - | The position of the character this slot displays. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputOTPSeparator
+
+Dash between groups.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

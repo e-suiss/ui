@@ -464,6 +464,8 @@ A label addon above the input with `block-start`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### InputGroup
@@ -536,6 +538,238 @@ Multi-line input without its own border.
 Also accepts the props of `React.ComponentProps<typeof Textarea>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### InputGroupAddonAlign
+
+Values: `.inlineStart`, `.inlineEnd`, `.blockStart`, `.blockEnd`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputGroup
+
+Field container that lays out the input and addons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputGroupAddon
+
+Slot for text, icons or buttons beside or around the input.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align` | `InputGroupAddonAlign`: `.inlineStart` \| `.inlineEnd` \| `.blockStart` \| `.blockEnd` | `.inlineStart` | Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputGroupButtonSize
+
+Values: `.xs`, `.sm`, `.iconXs`, `.iconSm`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### InputGroupButton
+
+Compact button inside an addon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.ghost` | - |
+| `size` | `Size`: `.xs` \| `.sm` \| `.iconXs` \| `.iconSm` | `.xs` | `xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### InputGroupText
+
+Text inside an addon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### InputGroupInput
+
+Single-line input without its own border.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `text` | `Binding<String>` | - | The text. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### InputGroupTextarea
+
+Multi-line input without its own border.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `text` | `Binding<String>` | - | The text. |
+| `lineLimit` | `ClosedRange<Int>` | `2...8` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### InputGroupAddonAlign
+
+Values: `InlineStart`, `InlineEnd`, `BlockStart`, `BlockEnd`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputGroupButtonSize
+
+Values: `Xs`, `Sm`, `IconXs`, `IconSm`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputGroup
+
+Field container that lays out the input and addons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows the destructive border and tint. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### InputGroupAddon
+
+Slot for text, icons or buttons beside or around the input.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `align` | `InputGroupAddonAlign`: `InlineStart` \| `InlineEnd` \| `BlockStart` \| `BlockEnd` | `InputGroupAddonAlign.InlineStart` | Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### InputGroupText
+
+Text inside an addon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `InputGroupText(content)`, `InputGroupText(text)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### InputGroupButton
+
+Compact button inside an addon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `InputGroupButtonSize`: `Xs` \| `Sm` \| `IconXs` \| `IconSm` | `InputGroupButtonSize.Xs` | `xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Ghost` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `InputGroupButton(onClick, content)`, `InputGroupButton(text, onClick)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### InputGroupInput
+
+Single-line input without its own border.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `placeholder` | `String?` | `null` | Text shown while it is empty. |
+| `readOnly` | `Boolean` | `false` | - |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
+| `visualTransformation` | `VisualTransformation` | `VisualTransformation.None` | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### InputGroupTextarea
+
+Multi-line input without its own border.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `placeholder` | `String?` | `null` | Text shown while it is empty. |
+| `readOnly` | `Boolean` | `false` | - |
+| `minLines` | `Int` | `3` | - |
+| `maxLines` | `Int` | `Int.MAX_VALUE` | - |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -214,6 +214,8 @@ Open state and the current image can be uncontrolled with `defaultOpen` and `def
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ImageViewer
@@ -253,6 +255,71 @@ The full-screen viewer with the pages, counter and close button.
 | `className` | `string` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .imageViewer
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `images` | `[Image]` | - | - |
+| `index` | `Binding<Int>` | - | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `images` | `[Image]` | - | - |
+| `index` | `Binding<Int>` | - | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ImageViewerImage
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `painter` | `Painter` | - | - |
+| `contentDescription` | `String?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the viewer opens or closes. |
+| `images` | `List<ImageViewerImage>` | - | - |
+| `index` | `Int` | - | - |
+| `onIndexChange` | `(Int) -> Unit` | - | Called with the new index after paging. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `closeLabel` | `String` | `"Close"` | Accessibility label of the close button. |
+| `indexLabel` | `(index: Int, count: Int) -> String` | `{ current, count -> "${current + 1} of $count" }` | Formats the counter from the index and count. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

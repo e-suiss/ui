@@ -262,6 +262,8 @@ Spinners inside disabled buttons next to a label.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Spinner
@@ -274,6 +276,47 @@ Spinners inside disabled buttons next to a label.
 Also accepts the props of `React.ComponentProps<typeof ActivityIndicator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Spinner
+
+The animated activity indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ size` | `Size`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` | Width and height in points. |
+| `label` | `LocalizedStringKey` | `"Loading"` | The label. |
+| `dimension` | `CGFloat` | - | - |
+
+Overloads: `init(_:label:)`, `init(dimension:label:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Spinner
+
+The animated activity indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `Dp` | `16.dp` | Width and height in points. |
+| `color` | `Color` | `Color.Unspecified` | - |
+| `contentDescription` | `String` | `"Loading"` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

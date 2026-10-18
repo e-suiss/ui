@@ -478,6 +478,8 @@ A bottom sheet whose close button reads "Done" instead of showing an icon.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Sheet
@@ -544,6 +546,146 @@ Secondary text under the title.
 Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .sheet
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `side` | `Edge` | - | Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SheetContent
+
+The panel, rendered in a portal with an overlay and an optional close button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `Bool` | `true` | Shows the close button in the top corner. |
+| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the close button. When omitted, an X icon is shown. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SheetHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SheetSide
+
+Values: `Top`, `Right`, `Bottom`, `Left`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Sheet
+
+Root that holds the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `side` | `SheetSide`: `Top` \| `Right` \| `Bottom` \| `Left` | `SheetSide.Right` | Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. |
+| `showCloseButton` | `Boolean` | `true` | Shows the close button in the top corner. |
+| `closeLabel` | `String?` | `null` | Text for the close button. When omitted, an X icon is shown. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SheetHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+Receiver: `ColumnScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SheetTitle
+
+Heading that labels the sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SheetDescription
+
+Secondary text under the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -339,6 +339,8 @@ Pass a `render` element to `Marker` to render it as another component instead of
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Marker
@@ -373,6 +375,128 @@ Marker text, centered in the `separator` variant.
 Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### MarkerVariant
+
+Values: `.default`, `.separator`, `.border`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Marker
+
+Row that sets the variant and the text and icon styles.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `MarkerVariant`: `.default` \| `.separator` \| `.border` | `.default` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
+| `content` | `() -> Content` | - | The content. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `icon` | `Image?` | `nil` | The icon. |
+| `variant` | `MarkerVariant`: `.default` \| `.separator` \| `.border` | `.default` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:content:)`, `init(_:icon:variant:)`, `init(verbatim:icon:variant:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MarkerIcon
+
+Fixed-size slot for an icon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MarkerContent
+
+Marker text, centered in the `separator` variant.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### MarkerVariant
+
+Values: `Default`, `Separator`, `Border`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Marker
+
+Row that sets the variant and the text and icon styles.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `MarkerVariant`: `Default` \| `Separator` \| `Border` | `MarkerVariant.Default` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+
+Overloads: `Marker(content)`, `Marker(text, icon)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MarkerIcon
+
+Fixed-size slot for an icon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MarkerContent
+
+Marker text, centered in the `separator` variant.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `MarkerContent(content)`, `MarkerContent(text)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

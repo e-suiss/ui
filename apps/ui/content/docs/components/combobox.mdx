@@ -588,6 +588,8 @@ The `invalid` style with an error message.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Combobox
@@ -763,6 +765,79 @@ Text input inside the chips field.
 Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ items` | `[Item]` | - | The items to filter, flat or grouped. |
+| `selection` | `Binding<Item?>` | - | The selected value. |
+| `placeholder` | `LocalizedStringKey` | `"Select"` | Text shown while it is empty. |
+| `searchPlaceholder` | `LocalizedStringKey` | `"Search"` | - |
+| `emptyText` | `LocalizedStringKey` | `"No items found."` | - |
+| `title` | `(Item) -> String` | - | The title text. |
+
+Overloads: `init(_:selection:placeholder:searchPlaceholder:emptyText:title:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:title:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<T>` | - | The items to filter, flat or grouped. |
+| `value` | `T?` | - | The selected value, for controlled use. |
+| `onValueChange` | `(T?) -> Unit` | - | Called when the selection changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `itemText` | `(T) -> String` | `{ it.toString() }` | - |
+| `placeholder` | `String` | `""` | Text shown while it is empty. |
+| `emptyText` | `String` | `"No items found."` | - |
+| `groupBy` | `((T) -> String)?` | `null` | - |
+| `showTrigger` | `Boolean` | `true` | Shows the caret button. |
+| `showClear` | `Boolean` | `false` | Shows a clear button when there is text or a value. |
+| `invalid` | `Boolean?` | `null` | Shows the destructive border; also read from a surrounding Field. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `filter` | `(T, String) -> Boolean` | `{ item, query -> itemText(item).contains(query, ignoreCase = true) }` | Custom filter function; `null` turns filtering off. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### MultiCombobox
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<T>` | - | The items to filter, flat or grouped. |
+| `values` | `List<T>` | - | - |
+| `onValuesChange` | `(List<T>) -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `itemText` | `(T) -> String` | `{ it.toString() }` | - |
+| `placeholder` | `String` | `""` | Text shown while it is empty. |
+| `emptyText` | `String` | `"No items found."` | - |
+| `groupBy` | `((T) -> String)?` | `null` | - |
+| `invalid` | `Boolean?` | `null` | Shows the destructive border; also read from a surrounding Field. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `filter` | `(T, String) -> Boolean` | `{ item, query -> itemText(item).contains(query, ignoreCase = true) }` | Custom filter function; `null` turns filtering off. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

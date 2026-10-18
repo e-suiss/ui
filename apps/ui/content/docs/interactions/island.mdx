@@ -380,6 +380,8 @@ A download that starts on press, with buttons that minimize the island and send 
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### IslandProvider
@@ -436,6 +438,183 @@ A small circular progress ring.
 | `className` | `string` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### IslandRing
+
+A small circular progress ring.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Double` | - | Progress from `0` to `1`. |
+| `color` | `Color` | `EsuissColor.primary` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### IslandView
+
+Values: `Hidden`, `Compact`, `Minimal`, `Expanded`, `Notice`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### IslandRegion
+
+Values: `Leading`, `Trailing`, `Center`, `Bottom`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### IslandNotice
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `duration` | `Long` | `IslandNoticeDuration` | - |
+| `icon` | `(@Composable () -> Unit)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### IslandState
+
+| Property | Type |
+| --- | --- |
+| `expanded` | `Boolean` |
+| `view` | `IslandView` |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### IslandState.expand
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### IslandState.collapse
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### IslandState.minimize
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### IslandState.notify
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `notice` | `IslandNotice` | - | - |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `duration` | `Long` | `IslandNoticeDuration` | - |
+| `icon` | `(@Composable () -> Unit)?` | `null` | - |
+
+Overloads: `notify(notice)`, `notify(title, description, duration, icon)`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### IslandState.dismiss
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### useIsland
+
+Takes no parameters.
+
+Returns `IslandState`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### IslandProvider
+
+Holds the island mode, the notice and the notice timer.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### Island
+
+The floating pill, rendered in a portal, with slots for the compact and minimal views.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `compactLeading` | `(@Composable RowScope.() -> Unit)?` | `null` | Content at the start of the compact pill. |
+| `compactTrailing` | `(@Composable RowScope.() -> Unit)?` | `null` | Content at the end of the compact pill. |
+| `minimal` | `(@Composable () -> Unit)?` | `null` | Content of the minimal view. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `expanded` | `@Composable IslandExpandedScope.() -> Unit` | `{}` | - |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### IslandExpandedScope.IslandExpandedRegion
+
+A region of the expanded view.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `region` | `IslandRegion`: `Leading` \| `Trailing` \| `Center` \| `Bottom` | - | Where the content sits in the expanded view. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### IslandRing
+
+A small circular progress ring.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Float` | - | Progress from `0` to `1`. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `color` | `Color` | `EsuissTheme.colors.primary` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -345,6 +345,8 @@ A required checkbox with the `invalid` border.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Checkbox
@@ -357,6 +359,58 @@ A required checkbox with the `invalid` border.
 Also accepts the props of `React.ComponentProps<typeof CheckboxPrimitive.Root>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .toggleStyle(.checkbox)
+
+Style that creates `CheckboxStyle`.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Checkbox
+
+The checkbox control, rendering the box and its check indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `Boolean` | - | - |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows a destructive border. |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TriStateCheckbox
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `ToggleableState` | - | - |
+| `onClick` | `(() -> Unit)?` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows a destructive border. |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

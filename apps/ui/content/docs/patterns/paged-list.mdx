@@ -323,6 +323,8 @@ Renames the button with `loadMoreLabel`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### PagedList
@@ -340,6 +342,54 @@ Renames the button with `loadMoreLabel`.
 Also accepts the props of `FlatListProps<T>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### PagedList
+
+The root that renders the visible items and the pagination or Load more control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ items` | `[Item]` | - | The full array of items. |
+| `id` | `KeyPath<Item, ID>` | - | - |
+| `pageSize` | `Int` | `10` | Items added per page. |
+| `loadMoreLabel` | `LocalizedStringKey?` | `"Load more"` | Text of the footer button. |
+| `loadsOnEndReached` | `Bool` | `true` | - |
+| `row` | `(Item, Int) -> Row` | - | - |
+
+Overloads: `init(_:id:pageSize:loadMoreLabel:loadsOnEndReached:row:)`, `init(_:pageSize:loadMoreLabel:loadsOnEndReached:row:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### PagedList
+
+The root that renders the visible items and the pagination or Load more control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<T>` | - | The full array of items. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `pageSize` | `Int` | `10` | Items added per page. |
+| `getKey` | `((T, Int) -> Any)?` | `null` | Returns a unique key for an item. |
+| `loadMoreLabel` | `String` | `"Load more"` | Text of the footer button. |
+| `state` | `LazyListState` | `rememberLazyListState()` | - |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
+| `renderItem` | `@Composable (T, Int) -> Unit` | - | Renders one item from the item and its index. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

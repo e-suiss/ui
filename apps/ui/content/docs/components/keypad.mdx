@@ -218,6 +218,8 @@ A fully disabled keypad.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### KeypadKey
@@ -256,6 +258,97 @@ The full grid of keys.
 Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### KeypadKey
+
+| Value | Parameters |
+| --- | --- |
+| `.digit` | `Int` |
+| `.decimal` | - |
+| `.delete` | - |
+| `.biometric` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### KeypadAccessory
+
+| Value | Parameters |
+| --- | --- |
+| `.none` | - |
+| `.decimal` | `String`, `label: LocalizedStringKey = "Decimal separator"` |
+| `.biometric` | `Image`, `label: LocalizedStringKey = "Use biometrics"` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Keypad
+
+The full grid of keys.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `accessory` | `KeypadAccessory` | `.none` | - |
+| `deleteLabel` | `LocalizedStringKey` | `"Delete"` | Accessibility label for the delete key. |
+| `deleteDisabled` | `Bool` | `false` | Disables only the delete key. |
+| `onKeyPress` | `(KeypadKey) -> Void` | - | Called with the pressed key value. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### KeypadKey
+
+| Value | Parameters |
+| --- | --- |
+| `Digit` | `value: Int` |
+| `Decimal` | - |
+| `Biometric` | - |
+| `Delete` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### KeypadAccessory
+
+| Value | Parameters |
+| --- | --- |
+| `None` | - |
+| `Decimal` | `separator: String = "."`, `label: String = "Decimal separator"` |
+| `Biometric` | `icon: ImageVector = PhosphorIcons.Regular.Fingerprint`, `label: String = "Use biometrics"` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Keypad
+
+The full grid of keys.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onKeyPress` | `(KeypadKey) -> Unit` | - | Called with the pressed key value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `accessory` | `KeypadAccessory` | `KeypadAccessory.None` | - |
+| `deleteLabel` | `String` | `"Delete"` | Accessibility label for the delete key. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

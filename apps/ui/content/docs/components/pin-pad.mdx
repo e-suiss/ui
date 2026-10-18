@@ -258,6 +258,8 @@ A four-digit code with `length={4}`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### PinPad
@@ -282,6 +284,55 @@ A four-digit code with `length={4}`.
 Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### PinPad
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Binding<String>` | - | Entered digits for controlled use. |
+| `length` | `Int` | `6` | Number of digits, clamped between 4 and 8. |
+| `error` | `Bool` | `false` | Shows the error state. Turning it on shakes the dots and plays an error haptic. |
+| `biometricIcon` | `Image` | `Ph.fingerprint.regular` | Icon for the biometric key. |
+| `biometricLabel` | `LocalizedStringKey` | `"Use biometrics"` | Accessibility label for the biometric key. |
+| `deleteLabel` | `LocalizedStringKey` | `"Delete"` | Accessibility label for the delete key. |
+| `onBiometric` | `(() -> Void)?` | `nil` | Called when the biometric key is pressed. The key is shown only when this is set. |
+| `onComplete` | `((String) -> Void)?` | `nil` | Called with the full code when the last digit is entered. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### PinPad
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `value` | `String?` | `null` | Entered digits for controlled use. |
+| `onValueChange` | `((String) -> Unit)?` | `null` | Called with the new value after each digit or deletion. |
+| `defaultValue` | `String` | `""` | Initial digits for uncontrolled use. Non-digits are removed. |
+| `length` | `Int` | `6` | Number of digits, clamped between 4 and 8. |
+| `onComplete` | `((String) -> Unit)?` | `null` | Called with the full code when the last digit is entered. |
+| `error` | `Boolean` | `false` | Shows the error state. Turning it on shakes the dots and plays an error haptic. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `onBiometric` | `(() -> Unit)?` | `null` | Called when the biometric key is pressed. The key is shown only when this is set. |
+| `biometricIcon` | `ImageVector` | `PhosphorIcons.Regular.Fingerprint` | Icon for the biometric key. |
+| `biometricLabel` | `String` | `"Use biometrics"` | Accessibility label for the biometric key. |
+| `deleteLabel` | `String` | `"Delete"` | Accessibility label for the delete key. |
+| `entryLabel` | `(entered: Int, length: Int) -> String` | `{ entered, total -> "$entered of $total entered" }` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

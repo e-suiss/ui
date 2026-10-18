@@ -531,6 +531,8 @@ A free-scrolling shelf of small cards with `dragFree`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Carousel
@@ -614,6 +616,388 @@ Toggles autoplay.
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### CarouselOrientation
+
+Values: `.horizontal`, `.vertical`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CarouselDotsVariant
+
+Values: `.default`, `.plain`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CarouselController
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `selectedIndex` | `Int` |
+| `count` | `Int` |
+| `canScrollPrev` | `Bool` |
+| `canScrollNext` | `Bool` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CarouselController.scrollTo
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ index` | `Int` | - | - |
+| `animated` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CarouselController.scrollPrev
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CarouselController.scrollNext
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CarouselController.setPlaying
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ playing` | `Bool` | - | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### Carousel
+
+Root that holds the scroll state and options.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `CarouselOrientation`: `.horizontal` \| `.vertical` | `.horizontal` | The scroll direction. |
+| `loop` | `Bool` | `false` | - |
+| `autoplay` | `Duration?` | `nil` | Advances the slides automatically; a number sets the delay in milliseconds. |
+| `controller` | `CarouselController?` | `nil` | - |
+| `onSelect` | `((Int) -> Void)?` | `nil` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### CarouselContent
+
+Scrolling track for the slides.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `spacing` | `CGFloat` | `16` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### CarouselItem
+
+One slide.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `basis` | `CGFloat` | `1` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### CarouselPrevious
+
+Button that scrolls to the previous slide.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` | `default` (on a control background) or `plain`. |
+| `size` | `VariantButtonStyle.Size` | `.icon` | - |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### CarouselNext
+
+Button that scrolls to the next slide.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` | `default` (on a control background) or `plain`. |
+| `size` | `VariantButtonStyle.Size` | `.icon` | - |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### CarouselControls
+
+Row that lays out dots and buttons below the slides.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### CarouselDots
+
+One pressable dot per snap point.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `CarouselDotsVariant`: `.default` \| `.plain` | `.default` | `default` (on a control background) or `plain`. |
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### CarouselPlayButton
+
+Toggles autoplay.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` | `default` (on a control background) or `plain`. |
+| `size` | `VariantButtonStyle.Size` | `.iconSm` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### CarouselOrientation
+
+Values: `Horizontal`, `Vertical`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CarouselDotsVariant
+
+Values: `Default`, `Plain`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CarouselState
+
+| Property | Type |
+| --- | --- |
+| `pageCount` | `Int get()` |
+| `selectedIndex` | `Int get()` |
+| `canScrollPrev` | `Boolean get()` |
+| `canScrollNext` | `Boolean get()` |
+| `isPlaying` | `Boolean get()` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CarouselState.scrollTo
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `index` | `Int` | - | - |
+| `animate` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CarouselState.scrollPrev
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CarouselState.scrollNext
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CarouselState.setPlaying
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `playing` | `Boolean` | - | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### rememberCarouselState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pageCount` | `Int` | - | - |
+| `initialPage` | `Int` | `0` | - |
+| `loop` | `Boolean` | `false` | - |
+
+Returns `CarouselState`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### Carousel
+
+Root that holds the scroll state and options.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `CarouselState` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `orientation` | `CarouselOrientation`: `Horizontal` \| `Vertical` | `CarouselOrientation.Horizontal` | The scroll direction. |
+| `autoplay` | `Boolean` | `false` | Advances the slides automatically; a number sets the delay in milliseconds. |
+| `autoplayDelayMillis` | `Long` | `5000L` | - |
+| `onSelect` | `((Int) -> Unit)?` | `null` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### CarouselContent
+
+Scrolling track for the slides.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
+| `pageSpacing` | `Dp` | `16.dp` | - |
+| `key` | `((Int) -> Any)?` | `null` | - |
+| `content` | `@Composable (page: Int) -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### CarouselItem
+
+One slide.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### CarouselPrevious
+
+Button that scrolls to the previous slide.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | `default` (on a control background) or `plain`. |
+| `size` | `ButtonSize` | `ButtonSize.Icon` | - |
+| `contentDescription` | `String` | `"Previous slide"` | - |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### CarouselNext
+
+Button that scrolls to the next slide.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | `default` (on a control background) or `plain`. |
+| `size` | `ButtonSize` | `ButtonSize.Icon` | - |
+| `contentDescription` | `String` | `"Next slide"` | - |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### CarouselControls
+
+Row that lays out dots and buttons below the slides.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### CarouselDots
+
+One pressable dot per snap point.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `CarouselDotsVariant`: `Default` \| `Plain` | `CarouselDotsVariant.Default` | `default` (on a control background) or `plain`. |
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### CarouselPlayButton
+
+Toggles autoplay.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | `default` (on a control background) or `plain`. |
+| `size` | `ButtonSize` | `ButtonSize.IconSm` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -407,6 +407,8 @@ A bubble that opens a context menu on long press.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### BubbleGroup
@@ -460,6 +462,190 @@ Reaction pill on the edge of a bubble.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### BubbleVariant
+
+Values: `.default`, `.secondary`, `.muted`, `.tinted`, `.outline`, `.ghost`, `.destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### BubbleAlign
+
+Values: `.start`, `.end`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### BubbleReactionsSide
+
+Values: `.top`, `.bottom`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### Bubble
+
+One message, aligned to the start or end.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.secondary` \| `.muted` \| `.tinted` \| `.outline` \| `.ghost` \| `.destructive` | `.default` | Background and text color: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
+| `align` | `Align`: `.start` \| `.end` | `.start` | Which side of the conversation the bubble sits on: `start` or `end`. |
+| `onLongPress` | `(() -> Void)?` | `nil` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(content:)`, `init(action:content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### BubbleReactions
+
+A small pill for reactions, overlapping the bubble's edge.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `BubbleReactionsSide`: `.top` \| `.bottom` | `.bottom` | Which edge of the bubble the reactions overlap: `top` or `bottom`. |
+| `align` | `BubbleAlign`: `.start` \| `.end` | `.end` | `start` or `end` along the bubble. |
+| `content` | `() -> Content` | - | The content. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(side:align:content:)`, `init(_:side:align:)`, `init(verbatim:side:align:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### BubbleVariant
+
+Values: `Default`, `Secondary`, `Muted`, `Tinted`, `Outline`, `Ghost`, `Destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### BubbleAlign
+
+Values: `Start`, `End`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### BubbleReactionsSide
+
+Values: `Top`, `Bottom`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### Bubble
+
+One message, aligned to the start or end.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `BubbleVariant`: `Default` \| `Secondary` \| `Muted` \| `Tinted` \| `Outline` \| `Ghost` \| `Destructive` | `BubbleVariant.Default` | Background and text color: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
+| `align` | `BubbleAlign`: `Start` \| `End` | `LocalBubbleAlign.current` | Which side of the conversation the bubble sits on: `start` or `end`. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
+| `onLongPress` | `(() -> Unit)?` | `null` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `BubbleContent(content)`, `BubbleContent(text)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### BubbleReactions
+
+A small pill for reactions, overlapping the bubble's edge.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `side` | `BubbleReactionsSide`: `Top` \| `Bottom` | `BubbleReactionsSide.Bottom` | Which edge of the bubble the reactions overlap: `top` or `bottom`. |
+| `align` | `BubbleAlign`: `Start` \| `End` | `BubbleAlign.End` | `start` or `end` along the bubble. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `BubbleReactions(content)`, `BubbleReactions(text)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

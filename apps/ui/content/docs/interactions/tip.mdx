@@ -383,6 +383,8 @@ An inline card tip with an icon, title, description and close button.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### TipGroup
@@ -497,6 +499,355 @@ A button that dismisses the tip.
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### TipStorage.getItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+
+Returns `String?`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TipStorage.setItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+| `_ value` | `String?` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InMemoryTipStorage
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `static shared` | `InMemoryTipStorage` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### resetTips
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ ids` | `[String]` | - | - |
+| `storage` | `any TipStorage` | `InMemoryTipStorage.shared` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TipGroup
+
+Shows its tips one at a time and supplies the storage.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `storage` | `any TipStorage` | `InMemoryTipStorage.shared` | Adapter with `getItem` and `setItem` for remembering dismissals. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### Tip
+
+One hint, identified by `id`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `String` | - | Stable key used to remember the dismissal. |
+| `delay` | `Duration` | `.zero` | Milliseconds to wait before showing. |
+| `storage` | `(any TipStorage)?` | `nil` | Adapter with `getItem` and `setItem` for remembering dismissals. |
+| `onDismiss` | `(() -> Void)?` | `nil` | Called when the tip is dismissed. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TipCard
+
+Renders the tip inline as a card.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### .tipPopover
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `Edge` | `.bottom` | Side of the anchor to show on. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TipIcon
+
+A decorative icon slot.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### TipContent
+
+Holds the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### TipTitle
+
+The tip's heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### TipDescription
+
+The tip's supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### TipClose
+
+A button that dismisses the tip.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TipStorage.getItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `String` | - | - |
+
+Returns `String?`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TipStorage.setItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `String` | - | - |
+| `value` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MemoryTipStorage
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### resetTips
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ids` | `List<String>` | - | - |
+| `storage` | `TipStorage` | `DefaultTipStorage` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TipGroup
+
+Shows its tips one at a time and supplies the storage.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `storage` | `TipStorage` | `LocalTipStorage.current` | Adapter with `getItem` and `setItem` for remembering dismissals. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### Tip
+
+One hint, identified by `id`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `String` | - | Stable key used to remember the dismissal. |
+| `delayMillis` | `Long` | `0` | - |
+| `onDismiss` | `() -> Unit` | `{}` | Called when the tip is dismissed. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TipCard
+
+Renders the tip inline as a card.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TipAnchor
+
+The element the popover points at.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TipPopover
+
+Renders the tip as a popover next to the anchor.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `side` | `PopupSide` | `PopupSide.Bottom` | Side of the anchor to show on. |
+| `align` | `PopupAlign` | `PopupAlign.Center` | Alignment against the anchor. |
+| `sideOffset` | `Dp` | `10.dp` | Gap from the anchor. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### TipIcon
+
+A decorative icon slot.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### TipContent
+
+Holds the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### TipTitle
+
+The tip's heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### TipDescription
+
+The tip's supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### TipClose
+
+A button that dismisses the tip.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String` | `"Dismiss tip"` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

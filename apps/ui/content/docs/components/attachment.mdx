@@ -527,6 +527,8 @@ Document media with colored extension labels.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Attachment
@@ -650,6 +652,425 @@ List container that joins attachments with separators.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### AttachmentState
+
+Values: `.idle`, `.uploading`, `.processing`, `.error`, `.done`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AttachmentSize
+
+Values: `.default`, `.sm`, `.xs`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AttachmentOrientation
+
+Values: `.horizontal`, `.vertical`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AttachmentMediaVariant
+
+Values: `.icon`, `.document`, `.image`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### Attachment
+
+Card that provides state, size and orientation to its parts.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `AttachmentState`: `.idle` \| `.uploading` \| `.processing` \| `.error` \| `.done` | `.done` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
+| `size` | `Size`: `.default` \| `.sm` \| `.xs` | `.default` | Overall density: `default`, `sm` or `xs`. |
+| `orientation` | `Orientation`: `.horizontal` \| `.vertical` | `.horizontal` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
+| `block` | `Bool` | `false` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AttachmentMedia
+
+Thumbnail area for an icon, document shape or image.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `Variant`: `.icon` \| `.document` \| `.image` | `.icon` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+| `content` | `() -> Content` | - | The content. |
+| `icon` | `Image` | - | The icon. |
+| `image` | `Image` | - | - |
+| `url` | `URL?` | - | - |
+
+Overloads: `init(_:content:)`, `init(icon:)`, `init(image:)`, `init(url:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AttachmentIcon
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ image` | `Image` | - | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AttachmentImage
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ image` | `Image` | - | - |
+| `url` | `URL?` | - | - |
+
+Overloads: `init(_:)`, `init(url:)`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AttachmentLabel
+
+Small uppercase tag, such as a file extension.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `tint` | `Color` | `EsuissColor.primary` | - |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(_:tint:)`, `init(verbatim:tint:)`.
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### AttachmentContent
+
+Column for the title, description and progress.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### AttachmentTitle
+
+File name, one line by default.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### AttachmentDescription
+
+Secondary details, red in the `error` state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### AttachmentProgress
+
+Progress bar with a percentage value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Double` | - | The current value. |
+| `total` | `Double` | `100` | - |
+| `label` | `LocalizedStringKey` | `"Uploading"` | The label. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### AttachmentActions
+
+Row of actions; floats over the media in vertical layout.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### AttachmentAction
+
+Small button sized to the attachment.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(variant:action:label:)`, `init(_:icon:variant:action:)`, `init(_:variant:action:)`.
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### AttachmentActionIcon
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `image` | `Image` | - | - |
+
+</ApiPart>
+
+<ApiPart index={17}>
+
+### AttachmentTrigger
+
+An invisible button covering the card to make it clickable.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ label` | `LocalizedStringKey` | - | The label. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+
+</ApiPart>
+
+<ApiPart index={18}>
+
+### AttachmentGroup
+
+List container that joins attachments with separators.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AttachmentState
+
+Values: `Idle`, `Uploading`, `Processing`, `Error`, `Done`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AttachmentSize
+
+Values: `Default`, `Sm`, `Xs`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AttachmentOrientation
+
+Values: `Horizontal`, `Vertical`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AttachmentMediaVariant
+
+Values: `Icon`, `Document`, `Image`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### Attachment
+
+Card that provides state, size and orientation to its parts.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `AttachmentState`: `Idle` \| `Uploading` \| `Processing` \| `Error` \| `Done` | `AttachmentState.Done` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
+| `size` | `AttachmentSize`: `Default` \| `Sm` \| `Xs` | `AttachmentSize.Default` | Overall density: `default`, `sm` or `xs`. |
+| `orientation` | `AttachmentOrientation`: `Horizontal` \| `Vertical` | `AttachmentOrientation.Horizontal` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
+| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
+| `onClickLabel` | `String?` | `null` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AttachmentGroup
+
+List container that joins attachments with separators.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AttachmentMedia
+
+Thumbnail area for an icon, document shape or image.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `AttachmentMediaVariant`: `Icon` \| `Document` \| `Image` | `AttachmentMediaVariant.Icon` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+| `image` | `Painter` | - | - |
+| `contentDescription` | `String?` | - | - |
+
+Overloads: `AttachmentMedia(variant, content)`, `AttachmentMedia(image, contentDescription)`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AttachmentLabel
+
+Small uppercase tag, such as a file extension.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `background` | `Color` | `EsuissTheme.colors.primary` | - |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AttachmentContent
+
+Column for the title, description and progress.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### AttachmentTitle
+
+File name, one line by default.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### AttachmentDescription
+
+Secondary details, red in the `error` state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### AttachmentProgress
+
+Progress bar with a percentage value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Float` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `max` | `Float` | `100f` | - |
+| `contentDescription` | `String?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### AttachmentActions
+
+Row of actions; floats over the media in vertical layout.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### AttachmentAction
+
+Small button sized to the attachment.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `contentDescription` | `String?` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `AttachmentAction(onClick, contentDescription, variant, content)`, `AttachmentAction(text, onClick)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

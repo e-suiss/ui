@@ -336,6 +336,8 @@ A short list where the bar collapses letters into dots.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SectionIndex
@@ -385,6 +387,154 @@ The letter bar with the drag bubble.
 Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Bar>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SectionIndex
+
+The root that tracks section positions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `sections` | `[String]?` | `nil` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SectionIndexSection
+
+One section, registered by its `value`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The letter this section belongs to. |
+| `content` | `() -> Content` | - | The content. |
+| `header` | `() -> Header` | - | - |
+| `_ value` | `String` | - | The letter this section belongs to. |
+
+Overloads: `init(value:content:header:)`, `init(_:content:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SectionIndexHeader
+
+A section heading; string children are styled.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SectionIndexBar
+
+The letter bar with the drag bubble.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `letters` | `[String]?` | `nil` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
+| `onValueChange` | `((String) -> Void)?` | `nil` | Called with the letter whenever the bar jumps to a section. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SectionIndexSectionScope.item
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `Any?` | `null` | - |
+| `content` | `@Composable LazyItemScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SectionIndexSectionScope.items
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `count` | `Int` | - | - |
+| `key` | `((Int) -> Any)?` | `null` | - |
+| `content` | `@Composable LazyItemScope.(index: Int) -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SectionIndexScope.SectionIndexSection
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+| `header` | `String?` | `value` | - |
+| `content` | `SectionIndexSectionScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SectionIndex
+
+The root that tracks section positions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `LazyListState` | `rememberLazyListState()` | - |
+| `letters` | `List<String>` | `SectionIndexLetters` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
+| `onValueChange` | `((String) -> Unit)?` | `null` | Called with the letter whenever the bar jumps to a section. |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
+| `content` | `SectionIndexScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SectionIndexHeader
+
+A section heading; string children are styled.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SectionIndexBar
+
+The letter bar with the drag bubble.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `letters` | `List<String>` | `SectionIndexLetters` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
+| `onValueChange` | `((String) -> Unit)?` | `null` | Called with the letter whenever the bar jumps to a section. |
+| `accessibilityLabel` | `String` | `"Section index"` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

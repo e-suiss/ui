@@ -366,6 +366,8 @@ A small picker with a value, an invalid picker and a disabled picker.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Picker
@@ -415,6 +417,131 @@ One selectable option.
 | `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### OptionPicker
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value?>` | - | The selected value. |
+| `placeholder` | `LocalizedStringKey` | `"Select"` | Text shown when no value is selected. |
+| `size` | `Size` | `.default` | Trigger height: `sm` or `default`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### OptionPickerItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `value` | `Value` | - | The selected value when controlled. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:value:)`, `init(verbatim:value:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### OptionPickerGroup
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ label` | `LocalizedStringKey?` | `nil` | Heading shown above the group. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### OptionPickerSeparator
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### PickerItemData
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+| `label` | `String` | - | - |
+| `enabled` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Picker
+
+The root that renders the trigger and the options popup.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String?` | - | The selected value when controlled. |
+| `onValueChange` | `(String) -> Unit` | - | Called with the new value when an option is chosen. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `items` | `List<PickerItemData>` | `emptyList()` | `{ value, label }` pairs used to show the selected label; collected from children when omitted. |
+| `placeholder` | `String` | `""` | Text shown when no value is selected. |
+| `size` | `SelectSize` | `SelectSize.Default` | Trigger height: `sm` or `default`. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `invalid` | `Boolean?` | `null` | Applies the error style to the trigger. |
+| `content` | `(@Composable ColumnScope.() -> Unit)?` | `null` | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PickerGroup
+
+Groups options under an optional label.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `String?` | `null` | Heading shown above the group. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PickerItem
+
+One selectable option.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The value this option selects. |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### PickerSeparator
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

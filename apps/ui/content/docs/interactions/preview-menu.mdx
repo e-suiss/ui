@@ -402,6 +402,8 @@ The custom preview, open on first render.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### PreviewMenu
@@ -468,6 +470,119 @@ A thick divider between groups of items.
 Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Separator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### PreviewMenuItemVariant
+
+Values: `.default`, `.destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### .previewMenu
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
+| `aspectRatio` | `CGFloat?` | `nil` | Width-to-height ratio of the lifted preview. |
+| `items` | `() -> Items` | - | - |
+| `preview` | `() -> Preview` | - | Content to show in the preview instead of the trigger's children. |
+
+Overloads: `previewMenu(isPresented:aspectRatio:items:)`, `previewMenu(isPresented:aspectRatio:items:preview:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PreviewMenuItem
+
+A menu action.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.destructive` | `.default` | `default` or `destructive`, which uses `text-destructive`. |
+| `icon` | `Image?` | `nil` | The icon. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(variant:icon:action:label:)`, `init(_:icon:variant:action:)`, `init(verbatim:icon:variant:action:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### PreviewMenu
+
+The root that owns the open state and preview size.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | Controls whether the preview is open. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the preview opens or closes. |
+| `trigger` | `@Composable () -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `preview` | `(@Composable () -> Unit)?` | `null` | Content to show in the preview instead of the trigger's children. |
+| `aspectRatio` | `Float?` | `null` | Width-to-height ratio of the lifted preview. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PreviewMenuItem
+
+A menu action.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | `default` or `destructive`, which uses `text-destructive`. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+
+Overloads: `PreviewMenuItem(onClick, content)`, `PreviewMenuItem(text, onClick, icon)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

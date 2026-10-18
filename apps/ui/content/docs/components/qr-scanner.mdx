@@ -266,6 +266,8 @@ A title and description with no flashlight button, because `onTorchToggle` is no
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### QRScanner
@@ -284,6 +286,69 @@ A title and description with no flashlight button, because `onTorchToggle` is no
 Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### QRScannerState
+
+Values: `.idle`, `.success`, `.error`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### QRScanner
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `QRScannerState`: `.idle` \| `.success` \| `.error` | `.idle` | `idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. |
+| `title` | `LocalizedStringKey?` | `nil` | Content shown above the frame. Strings are wrapped in a `Text`. |
+| `hint` | `LocalizedStringKey?` | `nil` | - |
+| `scanLine` | `Bool` | `false` | Shows the animated scan line while the state is `idle`. |
+| `isTorchOn` | `Bool` | `false` | - |
+| `onTorchToggle` | `(() -> Void)?` | `nil` | Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set. |
+| `frameSize` | `CGFloat?` | `nil` | Side length of the scan frame in points. Overrides the automatic size. |
+| `preview` | `() -> Preview` | - | - |
+
+Overloads: `init(state:title:hint:scanLine:isTorchOn:onTorchToggle:frameSize:preview:)`, `init(state:title:hint:scanLine:isTorchOn:onTorchToggle:frameSize:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### QrScannerState
+
+Values: `Idle`, `Success`, `Error`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### QrScanner
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `QrScannerState`: `Idle` \| `Success` \| `Error` | `QrScannerState.Idle` | `idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. |
+| `title` | `String?` | `null` | Content shown above the frame. Strings are wrapped in a `Text`. |
+| `hint` | `String?` | `null` | - |
+| `scanLine` | `Boolean` | `false` | Shows the animated scan line while the state is `idle`. |
+| `torch` | `Boolean` | `false` | Whether the flashlight is on. The button fills and the icon uses the fill weight when on. |
+| `onTorchToggle` | `((Boolean) -> Unit)?` | `null` | Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set. |
+| `frameSize` | `Dp?` | `null` | Side length of the scan frame in points. Overrides the automatic size. |
+| `content` | `@Composable BoxScope.() -> Unit` | `{}` | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

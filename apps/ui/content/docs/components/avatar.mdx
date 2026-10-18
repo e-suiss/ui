@@ -391,6 +391,8 @@ A check badge at each size.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Avatar
@@ -458,6 +460,210 @@ Round counter for the remaining items in a group.
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### AvatarSize
+
+Values: `.sm`, `.default`, `.lg`, `.xl`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Avatar
+
+Round container that sets the size.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `Size`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
+| `content` | `() -> Content` | - | The content. |
+| `url` | `URL?` | - | - |
+| `fallback` | `() -> Fallback` | - | - |
+| `initials` | `String` | - | - |
+
+Overloads: `init(size:content:)`, `init(url:size:fallback:)`, `init(url:initials:size:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AvatarImage
+
+Image that appears once it has loaded.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `url` | `URL?` | - | - |
+| `_ image` | `Image` | - | - |
+
+Overloads: `init(url:)`, `init(_:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AvatarFallback
+
+Initials or icon shown while the image is missing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ initials` | `String` | - | - |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(icon:)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AvatarIcon
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ image` | `Image` | - | - |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AvatarBadge
+
+Status dot in the bottom-end corner.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(content:)`, `init()`, `init(icon:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AvatarGroup
+
+Row that overlaps its avatars.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AvatarGroupCount
+
+Round counter for the remaining items in a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `AvatarSize`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` | Matches the size of the avatars in the group. |
+| `content` | `() -> Content` | - | The content. |
+| `_ count` | `String` | - | - |
+
+Overloads: `init(size:content:)`, `init(_:size:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AvatarSize
+
+Values: `Sm`, `Default`, `Lg`, `Xl`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Avatar
+
+Round container that sets the size.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `AvatarSize`: `Sm` \| `Default` \| `Lg` \| `Xl` | `AvatarSize.Default` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
+| `image` | `Painter?` | `null` | - |
+| `contentDescription` | `String?` | `null` | - |
+| `badge` | `(@Composable () -> Unit)?` | `null` | - |
+| `fallback` | `(@Composable () -> Unit)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AvatarFallback
+
+Initials or icon shown while the image is missing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `AvatarFallback(content)`, `AvatarFallback(text)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AvatarBadge
+
+Status dot in the bottom-end corner.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | `{}` | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AvatarGroup
+
+Row that overlaps its avatars.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AvatarGroupCount
+
+Round counter for the remaining items in a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `AvatarSize`: `Sm` \| `Default` \| `Lg` \| `Xl` | `AvatarSize.Default` | Matches the size of the avatars in the group. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `AvatarGroupCount(content)`, `AvatarGroupCount(text)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

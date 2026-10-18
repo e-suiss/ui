@@ -370,6 +370,8 @@ A print settings list with copies, a percentage scale stepping by 5, and a disab
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Stepper
@@ -435,6 +437,178 @@ A thin divider between the buttons.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ValueStepper
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Binding<Double>` | - | The current value when controlled. |
+| `in` | `ClosedRange<Double>` | `-Double.infinity...Double.infinity` | - |
+| `step` | `Double` | `1` | The amount each press adds or subtracts. |
+| `format` | `F` | - | - |
+| `content` | `() -> Content` | - | The content. |
+
+Overloads: `init(value:in:step:format:content:)`, `init(value:in:step:content:)`, `init(value:in:step:content:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### StepperInput
+
+The editable, right-aligned value.
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### StepperGroup
+
+The rounded field that holds the buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### StepperDecrement
+
+The minus button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `() -> Label` | - | The label. |
+
+Overloads: `init(label:)`, `init()`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### StepperIncrement
+
+The plus button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `() -> Label` | - | The label. |
+
+Overloads: `init(label:)`, `init()`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### StepperSeparator
+
+A thin divider between the buttons.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Stepper
+
+The root that holds the value and limits.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Double` | - | The current value when controlled. |
+| `onValueChange` | `(Double) -> Unit` | - | Called with the new number and change details. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `min` | `Double` | `Double.NEGATIVE_INFINITY` | - |
+| `max` | `Double` | `Double.POSITIVE_INFINITY` | - |
+| `step` | `Double` | `1.0` | The amount each press adds or subtracts. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `format` | `NumberFormat` | `remember { NumberFormat.getNumberInstance() }` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### StepperInput
+
+The editable, right-aligned value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### StepperGroup
+
+The rounded field that holds the buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### StepperDecrement
+
+The minus button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String` | `"Decrease"` | - |
+| `content` | `(@Composable () -> Unit)?` | `null` | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### StepperIncrement
+
+The plus button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String` | `"Increase"` | - |
+| `content` | `(@Composable () -> Unit)?` | `null` | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### StepperSeparator
+
+A thin divider between the buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

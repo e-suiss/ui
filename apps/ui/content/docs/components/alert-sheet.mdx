@@ -533,6 +533,8 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### AlertSheet
@@ -634,6 +636,243 @@ Separate cancel card with bold text.
 Also accepts the props of `AlertSheetActionProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .alertSheet
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `dismissible` | `Bool` | `true` | When `false`, the scrim no longer closes the sheet. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertSheetContent
+
+Bottom-anchored container that slides in and out.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertSheetGroup
+
+Rounded card that separates its children with hairlines.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertSheetHeader
+
+Centered block for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AlertSheetTitle
+
+Small, bold heading for the sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AlertSheetDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AlertSheetActionVariant
+
+Values: `.default`, `.destructive`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AlertSheetAction
+
+Full-width action row that closes the sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `AlertSheetActionVariant`: `.default` \| `.destructive` | `.default` | Text color of the action. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(variant:action:label:)`, `init(_:variant:action:)`, `init(_:icon:variant:action:)`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AlertSheetCancel
+
+Separate cancel card with bold text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | `"Cancel"` | The title text. |
+
+Overloads: `init(action:label:)`, `init(_:action:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AlertSheetActionVariant
+
+Values: `Default`, `Destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertSheet
+
+Root that holds the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `dismissible` | `Boolean` | `true` | When `false`, the scrim no longer closes the sheet. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertSheetGroup
+
+Rounded card that separates its children with hairlines.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertSheetHeader
+
+Centered block for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AlertSheetTitle
+
+Small, bold heading for the sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AlertSheetDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AlertSheetAction
+
+Full-width action row that closes the sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `AlertSheetActionVariant`: `Default` \| `Destructive` | `AlertSheetActionVariant.Default` | Text color of the action. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AlertSheetCancel
+
+Separate cancel card with bold text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | `"Cancel"` | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

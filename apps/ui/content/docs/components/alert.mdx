@@ -362,6 +362,8 @@ An alert with text only and no icon.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Alert
@@ -407,6 +409,105 @@ Slot positioned in the top-end corner.
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### InlineAlert
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.destructive` | `.default` | `default` or `destructive`; changes the icon color. |
+| `icon` | `Image?` | `nil` | Phosphor icon component shown before the text. |
+| `content` | `() -> Content` | - | The content. |
+| `action` | `() -> Action` | - | Called when it is tapped. |
+
+Overloads: `init(_:icon:content:action:)`, `init(_:icon:content:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertTitle
+
+Bold first line.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertDescription
+
+Secondary-colored supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AlertVariant
+
+Values: `Default`, `Destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Alert
+
+Container with the icon, text column and action.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `AlertVariant`: `Default` \| `Destructive` | `AlertVariant.Default` | `default` or `destructive`; changes the icon color. |
+| `icon` | `ImageVector?` | `null` | Phosphor icon component shown before the text. |
+| `action` | `(@Composable () -> Unit)?` | `null` | Called when it is tapped. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertTitle
+
+Bold first line.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertDescription
+
+Secondary-colored supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

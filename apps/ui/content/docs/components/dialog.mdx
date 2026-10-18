@@ -564,6 +564,8 @@ A text close button through `closeLabel`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Dialog
@@ -649,6 +651,185 @@ Supporting text.
 Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Description>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .dialog
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DialogContent
+
+Centered card with an optional close button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `Bool` | `true` | Shows the corner close button. |
+| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the close button instead of the icon. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DialogHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DialogFooter
+
+Area for actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `Bool` | `false` | Appends a secondary Close button. |
+| `content` | `() -> Content` | - | The content. |
+
+Overloads: `init(showCloseButton:content:)`, `init(showCloseButton:)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DialogDescription
+
+Supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DialogClose
+
+A button that closes the dialog.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(action:label:)`, `init(_:action:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Dialog
+
+The root that manages the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | Whether the dialog is open, for controlled use. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the dialog opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `showCloseButton` | `Boolean` | `true` | Shows the corner close button. |
+| `closeLabel` | `String?` | `null` | Text for the close button instead of the icon. |
+| `dismissible` | `Boolean` | `true` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DialogHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DialogFooter
+
+Area for actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `showCloseButton` | `Boolean` | `false` | Appends a secondary Close button. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DialogDescription
+
+Supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

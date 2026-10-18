@@ -177,6 +177,8 @@ The four heading levels.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Text
@@ -191,6 +193,63 @@ The text element with typography variants.
 Also accepts the props of `React.ComponentProps<typeof RNText>`, `React.RefAttributes<typeof RNText>`, `TextVariantProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### TextVariant
+
+Values: `.default`, `.h1`, `.h2`, `.h3`, `.h4`, `.p`, `.blockquote`, `.code`, `.lead`, `.large`, `.small`, `.muted`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### .textVariant
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `TextVariant`: `.default` \| `.h1` \| `.h2` \| `.h3` \| `.h4` \| `.p` \| `.blockquote` \| `.code` \| `.lead` \| `.large` \| `.small` \| `.muted` | - | Typography style. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TextVariant
+
+Values: `Default`, `H1`, `H2`, `H3`, `H4`, `P`, `Blockquote`, `Code`, `Lead`, `Large`, `Small`, `Muted`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Text
+
+The text element with typography variants.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `TextVariant`: `Default` \| `H1` \| `H2` \| `H3` \| `H4` \| `P` \| `Blockquote` \| `Code` \| `Lead` \| `Large` \| `Small` \| `Muted` | `TextVariant.Default` | Typography style. |
+| `color` | `Color` | `Color.Unspecified` | - |
+| `textAlign` | `TextAlign` | `TextAlign.Unspecified` | - |
+| `overflow` | `TextOverflow` | `TextOverflow.Clip` | - |
+| `softWrap` | `Boolean` | `true` | - |
+| `maxLines` | `Int` | `Int.MAX_VALUE` | - |
+| `minLines` | `Int` | `1` | - |
+| `style` | `TextStyle` | `TextStyle.Default` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

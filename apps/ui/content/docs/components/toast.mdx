@@ -440,6 +440,8 @@ Shows a success toast as soon as the screen mounts.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ToastProvider
@@ -543,6 +545,375 @@ Provider, portal and viewport that render the default toast list.
 Also accepts the props of `ToastPrimitive.ProviderProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ToastType
+
+Values: `.default`, `.success`, `.info`, `.warning`, `.error`, `.loading`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToastAction
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `action` | `() -> Void` | - | - |
+
+| Property | Type |
+| --- | --- |
+| `title` | `LocalizedStringResource` |
+| `action` | `@MainActor @Sendable () -> Void` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ToastItem
+
+| Property | Type |
+| --- | --- |
+| `id` | `UUID` |
+| `type` | `ToastType` |
+| `title` | `LocalizedStringResource` |
+| `description` | `LocalizedStringResource?` |
+| `action` | `ToastAction?` |
+| `duration` | `Duration?` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ToastManager
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `static shared` | `ToastManager` |
+| `toasts` | `[ToastItem]` |
+| `limit` | `Int` |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ToastManager.show
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `type` | `ToastType`: `.default` \| `.success` \| `.info` \| `.warning` \| `.error` \| `.loading` | `.default` | - |
+| `action` | `ToastAction?` | `nil` | - |
+| `duration` | `Duration?` | `.seconds(5)` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ToastManager.success
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `action` | `ToastAction?` | `nil` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ToastManager.info
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `action` | `ToastAction?` | `nil` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ToastManager.warning
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `action` | `ToastAction?` | `nil` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ToastManager.error
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `action` | `ToastAction?` | `nil` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ToastManager.loading
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ToastManager.update
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ id` | `UUID` | - | - |
+| `title` | `LocalizedStringResource?` | `nil` | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `type` | `ToastType?`: `.default` \| `.success` \| `.info` \| `.warning` \| `.error` \| `.loading` | `nil` | - |
+| `duration` | `Duration?` | `.seconds(5)` | - |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ToastManager.dismiss
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ id` | `UUID` | - | - |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### ToastManager.dismissAll
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### .toaster
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ manager` | `ToastManager` | `.shared` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ToastType
+
+Values: `Default`, `Success`, `Info`, `Warning`, `Error`, `Loading`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToastAction
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `String` | - | - |
+| `onClick` | `() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ToastState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `limit` | `Int` | `3` | - |
+| `defaultDurationMillis` | `Long` | `5000` | - |
+
+| Property | Type |
+| --- | --- |
+| `toasts` | `List<ToastData>` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ToastState.show
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `type` | `ToastType`: `Default` \| `Success` \| `Info` \| `Warning` \| `Error` \| `Loading` | `ToastType.Default` | - |
+| `action` | `ToastAction?` | `null` | - |
+| `durationMillis` | `Long` | `if (type == ToastType.Loading) 0 else defaultDurationMillis` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ToastState.success
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `action` | `ToastAction?` | `null` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ToastState.info
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `action` | `ToastAction?` | `null` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ToastState.warning
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `action` | `ToastAction?` | `null` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ToastState.error
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `action` | `ToastAction?` | `null` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ToastState.loading
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ToastState.update
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `Long` | - | - |
+| `title` | `String?` | `null` | - |
+| `description` | `String?` | `null` | - |
+| `type` | `ToastType?`: `Default` \| `Success` \| `Info` \| `Warning` \| `Error` \| `Loading` | `null` | - |
+| `action` | `ToastAction?` | `null` | - |
+| `durationMillis` | `Long?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ToastState.dismiss
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `Long` | - | - |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ToastState.dismissAll
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### rememberToastState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `limit` | `Int` | `3` | - |
+| `defaultDurationMillis` | `Long` | `5000` | - |
+
+Returns `ToastState`.
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### Toaster
+
+Provider, portal and viewport that render the default toast list.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `ToastState` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | `{}` | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

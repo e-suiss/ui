@@ -512,6 +512,8 @@ The invalid state with an error message.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Select
@@ -617,6 +619,186 @@ Line between groups.
 Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Separator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SelectSize
+
+Values: `.default`, `.sm`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectField
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value?>` | - | The selected value. |
+| `placeholder` | `LocalizedStringKey` | `"Select"` | Text shown while it is empty. |
+| `size` | `Size`: `.default` \| `.sm` | `.default` | Trigger height: `default` or `sm`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SelectItem
+
+One option, with a check mark when selected.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `value` | `Value` | - | The selected value, for controlled use. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:value:)`, `init(verbatim:value:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectGroup
+
+Groups related items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectLabel
+
+Heading for a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SelectSeparator
+
+Line between groups.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SelectSize
+
+Values: `Default`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectOption
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+| `label` | `String` | - | - |
+| `enabled` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Select
+
+The root that holds the selected value and the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String?` | - | The selected value, for controlled use. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the selection changes. |
+| `options` | `List<SelectOption>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `placeholder` | `String` | `""` | Text shown while it is empty. |
+| `size` | `SelectSize`: `Default` \| `Sm` | `SelectSize.Default` | Trigger height: `default` or `sm`. |
+| `invalid` | `Boolean?` | `null` | Shows the destructive border. Falls back to the invalid state of an enclosing field. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `side` | `PopupSide` | `PopupSide.Bottom` | - |
+| `align` | `PopupAlign` | `PopupAlign.Center` | - |
+| `sideOffset` | `Dp` | `4.dp` | - |
+| `displayValue` | `String?` | - | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+Overloads: `Select(value, onValueChange, options)`, `Select(value, onValueChange, displayValue, content)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectGroup
+
+Groups related items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectLabel
+
+Heading for a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SelectItem
+
+One option, with a check mark when selected.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The selected value, for controlled use. |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### SelectSeparator
+
+Line between groups.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

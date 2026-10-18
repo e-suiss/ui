@@ -173,6 +173,8 @@ The same controls with haptics turned off.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### HapticsProvider
@@ -186,6 +188,37 @@ Supplies the adapter to every component below it.
 | `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .haptics
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ enabled` | `Bool` | - | Turns feedback on or off. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ProvideHaptics
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | `Boolean` | - | Turns feedback on or off. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Notes
 

@@ -419,6 +419,8 @@ Settings that change the tooltip on a stacked bar chart with a legend.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ChartPalette
@@ -546,6 +548,1157 @@ Default legend with swatches or icons.
 | `nameKey` | `string` | - | Data key used to look up legend names in the config. |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ChartConfig
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ elements` | `[(String, Item)]` | - | - |
+| `dictionaryLiteral` | `(String, Item)...` | - | - |
+
+Overloads: `init(_:)`, `init(dictionaryLiteral:)`.
+
+| Property | Type |
+| --- | --- |
+| `keys` | `[String]` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChartConfig.label
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+
+Returns `String`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ChartConfig.color
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+
+Returns `Color`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ChartContainer
+
+Sizes the chart and provides the config.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `config` | `ChartConfig` | - | Series labels, token colors and icons keyed by data key. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ChartAnimationEasing
+
+Values: `.ease`, `.easeIn`, `.easeOut`, `.easeInOut`, `.linear`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ChartAnimator
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isAnimationActive` | `Bool` | `true` | - |
+| `animationDuration` | `Double` | `1500` | - |
+| `animationEasing` | `ChartAnimationEasing`: `.ease` \| `.easeIn` \| `.easeOut` \| `.easeInOut` \| `.linear` | `.ease` | - |
+| `content` | `(Double) -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ChartAnchorMark
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `x` | `PlottableValue<X>` | - | - |
+| `y` | `PlottableValue<Y>` | - | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ChartSectorRest
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `total` | `Double` | - | - |
+| `progress` | `Double` | - | - |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ChartTooltipItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+| `value` | `Double` | - | - |
+| `color` | `Color?` | `nil` | - |
+
+| Property | Type |
+| --- | --- |
+| `key` | `String` |
+| `value` | `Double` |
+| `color` | `Color?` |
+| `id` | `String` |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ChartTooltipPayload
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `index` | `Int` | - | - |
+| `label` | `String` | - | - |
+| `items` | `[ChartTooltipItem]` | - | - |
+
+| Property | Type |
+| --- | --- |
+| `index` | `Int` |
+| `label` | `String` |
+| `items` | `[ChartTooltipItem]` |
+| `total` | `Double` |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ChartTooltipIndicator
+
+Values: `.dot`, `.line`, `.dashed`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ChartTooltipContent
+
+Default tooltip card.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ payload` | `ChartTooltipPayload` | - | - |
+| `indicator` | `ChartTooltipIndicator`: `.dot` \| `.line` \| `.dashed` | `.dot` | Shape of the series indicator: `dot`, `line` or `dashed`. |
+| `hideLabel` | `Bool` | `false` | Hides the category label. |
+| `hideIndicator` | `Bool` | `false` | Hides the color indicator. |
+| `labelFormatter` | `(ChartTooltipPayload) -> LabelContent` | - | Formats the tooltip label. |
+| `formatter` | `(ChartTooltipItem) -> ValueContent` | - | Renders each row yourself. |
+
+Overloads: `init(_:indicator:hideLabel:hideIndicator:labelFormatter:formatter:)`, `init(_:indicator:hideLabel:hideIndicator:formatter:)`, `init(_:indicator:hideLabel:hideIndicator:labelFormatter:)`, `init(_:indicator:hideLabel:hideIndicator:)`.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### ChartLegendContent
+
+Default legend with swatches or icons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `keys` | `[String]?` | `nil` | - |
+| `hideIcon` | `Bool` | `false` | Shows a color swatch even when the config entry has an `icon`. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### .chartTooltip
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `x` | `[Value]` | - | - |
+| `labels` | `[String]?` | `nil` | - |
+| `selection` | `Binding<Int?>?` | `nil` | The selected value. |
+| `defaultIndex` | `Int?` | `nil` | - |
+| `cursor` | `Bool` | `true` | - |
+| `sticky` | `Bool` | `true` | - |
+| `accessibilityLabel` | `String?` | `nil` | - |
+| `items` | `(Int) -> [ChartTooltipItem]` | - | - |
+| `content` | `(ChartTooltipPayload) -> Tooltip` | - | The content. |
+| `y` | `[Value]` | - | - |
+| `angle` | `[Double]` | - | - |
+| `startAngle` | `Angle` | `.zero` | - |
+| `endAngle` | `Angle` | `.degrees(360)` | - |
+| `innerRadius` | `CGFloat` | `0` | - |
+| `outerRadius` | `CGFloat` | `1` | - |
+
+Overloads: `chartTooltip(x:labels:selection:defaultIndex:cursor:sticky:accessibilityLabel:items:content:)`, `chartTooltip(y:labels:selection:defaultIndex:sticky:accessibilityLabel:items:content:)`, `chartTooltip(angle:labels:startAngle:endAngle:innerRadius:outerRadius:selection:defaultIndex:sticky:accessibilityLabel:items:content:)`.
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### RadialBar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+| `value` | `Double` | - | - |
+| `color` | `Color?` | `nil` | - |
+
+| Property | Type |
+| --- | --- |
+| `key` | `String` |
+| `value` | `Double` |
+| `color` | `Color?` |
+| `id` | `String` |
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### RadialBarTrack
+
+Values: `.none`, `.control`, `.tint`.
+
+</ApiPart>
+
+<ApiPart index={17}>
+
+### RadialBarChart
+
+Circular bars built from `RadialBar`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ bars` | `[RadialBar]` | - | - |
+| `domain` | `ClosedRange<Double>?` | `nil` | - |
+| `innerRadius` | `CGFloat` | `0` | - |
+| `outerRadius` | `CGFloat` | `0.8` | - |
+| `barSize` | `CGFloat?` | `nil` | - |
+| `startAngle` | `Angle` | `.degrees(90)` | - |
+| `endAngle` | `Angle` | `.degrees(-270)` | - |
+| `rounded` | `Bool` | `false` | - |
+| `track` | `RadialBarTrack`: `.none` \| `.control` \| `.tint` | `.none` | - |
+| `showsLabels` | `Bool` | `false` | - |
+| `selection` | `Binding<Int?>?` | `nil` | The selected value. |
+| `defaultIndex` | `Int?` | `nil` | - |
+| `sticky` | `Bool` | `true` | - |
+| `accessibilityLabel` | `String?` | `nil` | - |
+| `isAnimationActive` | `Bool` | `true` | - |
+| `animationDuration` | `Double` | `1500` | - |
+| `animationEasing` | `ChartAnimationEasing`: `.ease` \| `.easeIn` \| `.easeOut` \| `.easeInOut` \| `.linear` | `.ease` | - |
+| `tooltip` | `(ChartTooltipPayload) -> Tooltip` | - | - |
+
+Overloads: `init(_:domain:innerRadius:outerRadius:barSize:startAngle:endAngle:rounded:track:showsLabels:selection:defaultIndex:sticky:accessibilityLabel:isAnimationActive:animationDuration:animationEasing:tooltip:)`, `init(_:domain:innerRadius:outerRadius:barSize:startAngle:endAngle:rounded:track:isAnimationActive:animationDuration:animationEasing:)`.
+
+</ApiPart>
+
+<ApiPart index={18}>
+
+### PolarGridType
+
+Values: `.polygon`, `.circle`.
+
+</ApiPart>
+
+<ApiPart index={19}>
+
+### PolarGrid
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `gridType` | `PolarGridType`: `.polygon` \| `.circle` | `.polygon` | - |
+| `stroke` | `Color` | `EsuissColor.border` | - |
+| `strokeWidth` | `CGFloat` | `1` | - |
+| `fill` | `Color?` | `nil` | - |
+| `fillOpacity` | `Double` | `1` | - |
+
+| Property | Type |
+| --- | --- |
+| `gridType` | `PolarGridType` |
+| `stroke` | `Color` |
+| `strokeWidth` | `CGFloat` |
+| `fill` | `Color?` |
+| `fillOpacity` | `Double` |
+
+</ApiPart>
+
+<ApiPart index={20}>
+
+### PolarAngleAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `textStyle` | `TextStyle` | `.xs` | - |
+| `highlightsSelection` | `Bool` | `false` | - |
+
+| Property | Type |
+| --- | --- |
+| `textStyle` | `TextStyle` |
+| `highlightsSelection` | `Bool` |
+
+</ApiPart>
+
+<ApiPart index={21}>
+
+### PolarRadiusAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `angle` | `Angle` | - | - |
+| `tickCount` | `Int` | `5` | - |
+
+| Property | Type |
+| --- | --- |
+| `angle` | `Angle` |
+| `tickCount` | `Int` |
+
+</ApiPart>
+
+<ApiPart index={22}>
+
+### Radar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+| `values` | `[Double]` | - | - |
+| `color` | `Color?` | `nil` | - |
+| `fillOpacity` | `Double` | `0.3` | - |
+| `strokeWidth` | `CGFloat` | `2` | - |
+| `strokeOpacity` | `Double` | `1` | - |
+| `dot` | `CGFloat?` | `nil` | - |
+
+| Property | Type |
+| --- | --- |
+| `key` | `String` |
+| `values` | `[Double]` |
+| `color` | `Color?` |
+| `fillOpacity` | `Double` |
+| `strokeWidth` | `CGFloat` |
+| `strokeOpacity` | `Double` |
+| `dot` | `CGFloat?` |
+| `id` | `String` |
+
+</ApiPart>
+
+<ApiPart index={23}>
+
+### RadarChart
+
+Polar chart built from `Radar` and `PolarGrid`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ series` | `[Radar]` | - | - |
+| `labels` | `[String]` | - | - |
+| `domain` | `ClosedRange<Double>?` | `nil` | - |
+| `outerRadius` | `CGFloat` | `0.8` | - |
+| `center` | `UnitPoint` | `.center` | - |
+| `margin` | `EdgeInsets` | `EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)` | - |
+| `grid` | `PolarGrid?` | `PolarGrid()` | - |
+| `angleAxis` | `PolarAngleAxis` | `PolarAngleAxis()` | - |
+| `radiusAxis` | `PolarRadiusAxis?` | `nil` | - |
+| `selection` | `Binding<Int?>?` | `nil` | The selected value. |
+| `defaultIndex` | `Int?` | `nil` | - |
+| `sticky` | `Bool` | `true` | - |
+| `accessibilityLabel` | `String?` | `nil` | - |
+| `items` | `((Int) -> [ChartTooltipItem])?` | `nil` | - |
+| `isAnimationActive` | `Bool` | `true` | - |
+| `animationDuration` | `Double` | `1500` | - |
+| `animationEasing` | `ChartAnimationEasing`: `.ease` \| `.easeIn` \| `.easeOut` \| `.easeInOut` \| `.linear` | `.ease` | - |
+| `tooltip` | `(ChartTooltipPayload) -> Tooltip` | - | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ChartConfigItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `String?` | `null` | - |
+| `icon` | `ImageVector?` | `null` | - |
+| `color` | `(Colors.() -> Color)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChartConfig
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `vararg Pair<String, ChartConfigItem>` | - | - |
+
+| Property | Type |
+| --- | --- |
+| `keys` | `List<String> get()` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ChartConfig.get
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `String` | - | - |
+
+Returns `ChartConfigItem?`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ChartContainer
+
+Sizes the chart and provides the config.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `config` | `ChartConfig` | - | Series labels, token colors and icons keyed by data key. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### chartColor
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `String` | - | - |
+
+Returns `Color`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ChartCurve
+
+Values: `Natural`, `Monotone`, `Linear`, `Step`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ChartLayout
+
+Values: `Horizontal`, `Vertical`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ChartStackOffset
+
+Values: `None`, `Expand`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ChartAxisOrientation
+
+Values: `Left`, `Right`.
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ChartTooltipIndicator
+
+Values: `Dot`, `Line`, `Dashed`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ChartLabelPosition
+
+Values: `Top`, `InsideStart`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ChartEasing
+
+Values: `Ease`, `EaseIn`, `EaseOut`, `EaseInOut`, `Linear`.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### ChartMargin
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `top` | `Dp` | `5.dp` | - |
+| `right` | `Dp` | `5.dp` | - |
+| `bottom` | `Dp` | `5.dp` | - |
+| `left` | `Dp` | `5.dp` | - |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### ChartDot
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `radius` | `Dp` | - | - |
+| `color` | `Color?` | `null` | - |
+| `strokeColor` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `0.dp` | - |
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### ChartRadius
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `topStart` | `Dp` | - | - |
+| `topEnd` | `Dp` | - | - |
+| `bottomEnd` | `Dp` | - | - |
+| `bottomStart` | `Dp` | - | - |
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### ChartCell
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `color` | `Color?` | `null` | - |
+| `alpha` | `Float` | `1f` | - |
+
+</ApiPart>
+
+<ApiPart index={17}>
+
+### ChartCursor
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `color` | `Color?` | `null` | - |
+| `width` | `Dp` | `1.dp` | - |
+
+</ApiPart>
+
+<ApiPart index={18}>
+
+### ChartSector
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `lift` | `Dp` | `0.dp` | - |
+| `ring` | `ChartRing?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={19}>
+
+### ChartRing
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `gap` | `Dp` | - | - |
+| `width` | `Dp` | - | - |
+
+</ApiPart>
+
+<ApiPart index={20}>
+
+### ChartLabelList
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `position` | `ChartLabelPosition`: `Top` \| `InsideStart` | `ChartLabelPosition.Top` | - |
+| `offset` | `Dp` | `5.dp` | - |
+| `color` | `Color?` | `null` | - |
+| `fontSize` | `TextUnit` | `12.sp` | - |
+| `formatter` | `((index: Int, value: Double) -> String)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={21}>
+
+### ChartFill
+
+| Value | Parameters |
+| --- | --- |
+| `Solid` | `color: Color? = null`, `alpha: Float = 1f` |
+| `VerticalGradient` | `color: Color? = null`, `topAlpha: Float`, `bottomAlpha: Float` |
+| `HorizontalGradient` | `stops: List<Pair<Float, Color>>` |
+
+</ApiPart>
+
+<ApiPart index={22}>
+
+### ChartTooltipContent
+
+Default tooltip card.
+
+Receiver: `ChartTooltipScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `indicator` | `ChartTooltipIndicator`: `Dot` \| `Line` \| `Dashed` | `ChartTooltipIndicator.Dot` | Shape of the series indicator: `dot`, `line` or `dashed`. |
+| `hideLabel` | `Boolean` | `false` | Hides the category label. |
+| `hideIndicator` | `Boolean` | `false` | Hides the color indicator. |
+| `labelFormatter` | `(@Composable (label: String, items: List<ChartTooltipItem>) -> Unit)?` | `null` | Formats the tooltip label. |
+| `formatter` | `(@Composable RowScope.(item: ChartTooltipItem) -> Unit)?` | `null` | Renders each row yourself. |
+| `color` | `Color?` | `null` | - |
+| `payload` | `List<ChartTooltipItem>` | `items` | - |
+
+</ApiPart>
+
+<ApiPart index={23}>
+
+### ChartLegendContent
+
+Default legend with swatches or icons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `keys` | `List<String>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `hideIcon` | `Boolean` | `false` | Shows a color swatch even when the config entry has an `icon`. |
+
+</ApiPart>
+
+<ApiPart index={24}>
+
+### CartesianChartScope.CartesianGrid
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `strokeDasharray` | `List<Float>?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={25}>
+
+### CartesianChartScope.XAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `(T) -> String` | - | - |
+| `hide` | `Boolean` | `false` | - |
+| `tickMargin` | `Dp` | `2.dp` | - |
+| `interval` | `Int?` | `null` | - |
+| `ticks` | `List<Int>?` | `null` | - |
+| `minTickGap` | `Dp` | `5.dp` | - |
+| `tickFormatter` | `((String) -> String)?` | `null` | - |
+| `domain` | `ClosedFloatingPointRange<Double>?` | `null` | - |
+
+Overloads: `XAxis(label, hide, tickMargin, interval, ticks, minTickGap, tickFormatter)`, `XAxis(domain)`.
+
+</ApiPart>
+
+<ApiPart index={26}>
+
+### CartesianChartScope.YAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `ChartAxisOrientation`: `Left` \| `Right` | `ChartAxisOrientation.Left` | - |
+| `hide` | `Boolean` | `false` | - |
+| `tickMargin` | `Dp` | `2.dp` | - |
+| `width` | `Dp?` | `null` | - |
+| `domain` | `ClosedFloatingPointRange<Double>?` | `null` | - |
+| `ticks` | `List<Double>?` | `null` | - |
+| `tickCount` | `Int` | `5` | - |
+| `tickFormatter` | `((Double) -> String)?` | `null` | - |
+| `label` | `(T) -> String` | - | - |
+| `tickStyle` | `TextStyle?` | `null` | - |
+
+Overloads: `YAxis(hide, domain, ticks, tickCount)`, `YAxis(label, tickStyle)`.
+
+</ApiPart>
+
+<ApiPart index={27}>
+
+### CartesianChartScope.Line
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dataKey` | `String` | - | - |
+| `value` | `(T) -> Double?` | - | - |
+| `curve` | `ChartCurve`: `Natural` \| `Monotone` \| `Linear` \| `Step` | `ChartCurve.Linear` | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `1.dp` | - |
+| `strokeDasharray` | `List<Float>?` | `null` | - |
+| `dot` | `ChartDot?` | `null` | - |
+| `dotColor` | `((T) -> Color)?` | `null` | - |
+| `activeDot` | `ChartDot?` | `ChartDot(4.dp)` | - |
+| `labelList` | `ChartLabelList?` | `null` | - |
+| `isAnimationActive` | `Boolean` | `true` | - |
+| `animationDuration` | `Int` | `1500` | - |
+| `animationEasing` | `ChartEasing`: `Ease` \| `EaseIn` \| `EaseOut` \| `EaseInOut` \| `Linear` | `ChartEasing.Ease` | - |
+
+</ApiPart>
+
+<ApiPart index={28}>
+
+### CartesianChartScope.Area
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dataKey` | `String` | - | - |
+| `value` | `(T) -> Double?` | - | - |
+| `base` | `((T) -> Double)?` | `null` | - |
+| `curve` | `ChartCurve`: `Natural` \| `Monotone` \| `Linear` \| `Step` | `ChartCurve.Linear` | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `1.dp` | - |
+| `fill` | `ChartFill` | `ChartFill.Solid(alpha = 0.6f)` | - |
+| `stackId` | `String?` | `null` | - |
+| `dot` | `ChartDot?` | `null` | - |
+| `activeDot` | `ChartDot?` | `ChartDot(4.dp)` | - |
+| `isAnimationActive` | `Boolean` | `true` | - |
+| `animationDuration` | `Int` | `1500` | - |
+| `animationEasing` | `ChartEasing`: `Ease` \| `EaseIn` \| `EaseOut` \| `EaseInOut` \| `Linear` | `ChartEasing.Ease` | - |
+
+</ApiPart>
+
+<ApiPart index={29}>
+
+### CartesianChartScope.Bar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dataKey` | `String` | - | - |
+| `value` | `(T) -> Double?` | - | - |
+| `base` | `((T) -> Double)?` | `null` | - |
+| `fill` | `ChartFill` | `ChartFill.Solid()` | - |
+| `radius` | `ChartRadius` | `ChartRadius(0.dp)` | - |
+| `barSize` | `Dp?` | `null` | - |
+| `maxBarSize` | `Dp?` | `null` | - |
+| `stackId` | `String?` | `null` | - |
+| `nameKey` | `((T) -> String)?` | `null` | - |
+| `cells` | `((Int) -> ChartCell)?` | `null` | - |
+| `background` | `Color?` | `null` | - |
+| `labelList` | `ChartLabelList?` | `null` | - |
+| `isAnimationActive` | `Boolean` | `true` | - |
+| `animationDuration` | `Int` | `400` | - |
+| `animationEasing` | `ChartEasing`: `Ease` \| `EaseIn` \| `EaseOut` \| `EaseInOut` \| `Linear` | `ChartEasing.Ease` | - |
+
+</ApiPart>
+
+<ApiPart index={30}>
+
+### CartesianChartScope.ReferenceLine
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `y` | `Double` | - | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeDasharray` | `List<Float>?` | `null` | - |
+| `label` | `String?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={31}>
+
+### CartesianChartScope.ReferenceArea
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `x1` | `Int` | - | - |
+| `x2` | `Int` | - | - |
+| `fill` | `Color?` | `null` | - |
+| `fillOpacity` | `Float` | `0.5f` | - |
+
+</ApiPart>
+
+<ApiPart index={32}>
+
+### CartesianChartScope.ChartTooltip
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultIndex` | `Int?` | `null` | - |
+| `cursor` | `ChartCursor?` | `ChartCursor()` | - |
+| `content` | `@Composable ChartTooltipScope.() -> Unit` | `{ ChartTooltipContent() }` | - |
+
+</ApiPart>
+
+<ApiPart index={33}>
+
+### CartesianChartScope.ChartLegend
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hideIcon` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={34}>
+
+### LineChart
+
+Cartesian chart for `Line` series.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `CartesianChartScope<T>.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={35}>
+
+### AreaChart
+
+Cartesian chart for `Area` series, with optional stacking.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `stackOffset` | `ChartStackOffset`: `None` \| `Expand` | `ChartStackOffset.None` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `CartesianChartScope<T>.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={36}>
+
+### BarChart
+
+Cartesian chart for `Bar` series, vertical or horizontal.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `layout` | `ChartLayout`: `Horizontal` \| `Vertical` | `ChartLayout.Horizontal` | - |
+| `barGap` | `Dp` | `4.dp` | - |
+| `barCategoryGap` | `Dp?` | `null` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `CartesianChartScope<T>.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={37}>
+
+### ComposedChart
+
+Cartesian chart that mixes lines, areas and bars.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `CartesianChartScope<T>.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={38}>
+
+### PieChartScope.Pie
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `value` | `(T) -> Double` | - | - |
+| `nameKey` | `(T) -> String` | - | - |
+| `innerRadius` | `Float` | `0f` | - |
+| `outerRadius` | `Float` | `0.8f` | - |
+| `cx` | `Float` | `0.5f` | - |
+| `cy` | `Float` | `0.5f` | - |
+| `startAngle` | `Float` | `0f` | - |
+| `endAngle` | `Float` | `360f` | - |
+| `paddingAngle` | `Float` | `0f` | - |
+| `cornerRadius` | `Dp` | `0.dp` | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `1.dp` | - |
+| `fillOpacity` | `Float` | `1f` | - |
+| `cells` | `((Int) -> ChartCell)?` | `null` | - |
+| `sectors` | `((Int) -> ChartSector)?` | `null` | - |
+| `label` | `((Int) -> String)?` | `null` | - |
+| `labelLine` | `Color?` | `null` | - |
+| `isAnimationActive` | `Boolean` | `true` | - |
+| `animationDuration` | `Int` | `1500` | - |
+| `animationEasing` | `ChartEasing`: `Ease` \| `EaseIn` \| `EaseOut` \| `EaseInOut` \| `Linear` | `ChartEasing.Ease` | - |
+
+</ApiPart>
+
+<ApiPart index={39}>
+
+### PieChartScope.ChartTooltip
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultIndex` | `Int?` | `null` | - |
+| `content` | `@Composable ChartTooltipScope.() -> Unit` | `{ ChartTooltipContent() }` | - |
+
+</ApiPart>
+
+<ApiPart index={40}>
+
+### PieChartScope.ChartLegend
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hideIcon` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={41}>
+
+### RadialBarChartScope.PolarAngleAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `domain` | `ClosedFloatingPointRange<Double>` | - | - |
+
+</ApiPart>
+
+<ApiPart index={42}>
+
+### RadialBarChartScope.RadialBar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dataKey` | `String` | - | - |
+| `value` | `(T) -> Double` | - | - |
+| `nameKey` | `((T) -> String)?` | `null` | - |
+| `fill` | `Color?` | `null` | - |
+| `cornerRadius` | `Dp` | `0.dp` | - |
+| `background` | `Color?` | `null` | - |
+| `stackId` | `String?` | `null` | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `0.dp` | - |
+| `cells` | `((Int) -> ChartCell)?` | `null` | - |
+| `labelList` | `ChartLabelList?` | `null` | - |
+| `isAnimationActive` | `Boolean` | `true` | - |
+| `animationDuration` | `Int` | `1500` | - |
+| `animationEasing` | `ChartEasing`: `Ease` \| `EaseIn` \| `EaseOut` \| `EaseInOut` \| `Linear` | `ChartEasing.Ease` | - |
+
+</ApiPart>
+
+<ApiPart index={43}>
+
+### RadialBarChartScope.ChartTooltip
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultIndex` | `Int?` | `null` | - |
+| `content` | `@Composable ChartTooltipScope.() -> Unit` | `{ ChartTooltipContent() }` | - |
+
+</ApiPart>
+
+<ApiPart index={44}>
+
+### RadialBarChartScope.ChartLegend
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hideIcon` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={45}>
+
+### PieChart
+
+Pie and donut charts built from `Pie`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `PieChartScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={46}>
+
+### RadialBarChart
+
+Circular bars built from `RadialBar`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `innerRadius` | `Float` | `0f` | - |
+| `outerRadius` | `Float` | `0.8f` | - |
+| `cx` | `Float` | `0.5f` | - |
+| `cy` | `Float` | `0.5f` | - |
+| `startAngle` | `Float` | `0f` | - |
+| `endAngle` | `Float` | `360f` | - |
+| `barSize` | `Dp?` | `null` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `RadialBarChartScope<T>.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={47}>
+
+### PolarGridType
+
+Values: `Polygon`, `Circle`.
+
+</ApiPart>
+
+<ApiPart index={48}>
+
+### RadarChartScope.PolarGrid
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `gridType` | `PolarGridType`: `Polygon` \| `Circle` | `PolarGridType.Polygon` | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `1.dp` | - |
+| `fill` | `Color?` | `null` | - |
+| `fillOpacity` | `Float` | `1f` | - |
+
+</ApiPart>
+
+<ApiPart index={49}>
+
+### RadarChartScope.PolarAngleAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `(T) -> String` | - | - |
+| `tickStyle` | `TextStyle?` | `null` | - |
+| `activeTickStyle` | `TextStyle?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={50}>
+
+### RadarChartScope.PolarRadiusAxis
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `angle` | `Float` | `0f` | - |
+| `domain` | `ClosedFloatingPointRange<Double>?` | `null` | - |
+| `tickCount` | `Int` | `5` | - |
+| `tick` | `Boolean` | `true` | - |
+| `tickStyle` | `TextStyle?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={51}>
+
+### RadarChartScope.Radar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dataKey` | `String` | - | - |
+| `value` | `(T) -> Double` | - | - |
+| `fill` | `Color?` | `null` | - |
+| `fillOpacity` | `Float` | `1f` | - |
+| `stroke` | `Color?` | `null` | - |
+| `strokeWidth` | `Dp` | `1.dp` | - |
+| `strokeOpacity` | `Float` | `1f` | - |
+| `dot` | `ChartDot?` | `null` | - |
+| `activeDot` | `ChartDot?` | `ChartDot(4.dp)` | - |
+| `isAnimationActive` | `Boolean` | `true` | - |
+| `animationDuration` | `Int` | `1500` | - |
+| `animationEasing` | `ChartEasing`: `Ease` \| `EaseIn` \| `EaseOut` \| `EaseInOut` \| `Linear` | `ChartEasing.Ease` | - |
+
+</ApiPart>
+
+<ApiPart index={52}>
+
+### RadarChartScope.ChartTooltip
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultIndex` | `Int?` | `null` | - |
+| `cursor` | `ChartCursor?` | `ChartCursor()` | - |
+| `content` | `@Composable ChartTooltipScope.() -> Unit` | `{ ChartTooltipContent() }` | - |
+
+</ApiPart>
+
+<ApiPart index={53}>
+
+### RadarChartScope.ChartLegend
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hideIcon` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={54}>
+
+### RadarChart
+
+Polar chart built from `Radar` and `PolarGrid`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `List<T>` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `margin` | `ChartMargin` | `ChartMargin()` | - |
+| `outerRadius` | `Float` | `0.8f` | - |
+| `cy` | `Float` | `0.5f` | - |
+| `accessibilityLabel` | `String?` | `null` | - |
+| `selectedIndex` | `Int?` | `null` | - |
+| `onSelectedIndexChange` | `((Int?) -> Unit)?` | `null` | - |
+| `content` | `RadarChartScope<T>.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

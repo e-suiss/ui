@@ -223,6 +223,8 @@ The bar moving up with the keyboard while an input is focused.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### BottomBar
@@ -246,6 +248,69 @@ Padded area for the actions.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### BottomBar
+
+Bottom container that follows the safe area and keyboard.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `separator` | `Bool` | `true` | Draws a top border. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### BottomBarContent
+
+Padded area for the actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### BottomBar
+
+Bottom container that follows the safe area and keyboard.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `separator` | `Boolean` | `false` | Draws a top border. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### BottomBarContent
+
+Padded area for the actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.CenterHorizontally` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

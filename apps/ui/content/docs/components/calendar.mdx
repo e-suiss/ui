@@ -404,6 +404,8 @@ Turkish month and weekday names with `locale="tr-TR"`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### CalendarDayButton
@@ -430,6 +432,195 @@ Month grids with caption and navigation.
 Also accepts the props of `React.ComponentProps<typeof CalendarPrimitive.Root>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### DateRange
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `from` | `Date` | - | - |
+| `to` | `Date?` | `nil` | - |
+
+| Property | Type |
+| --- | --- |
+| `from` | `Date` |
+| `to` | `Date?` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DateRange.adding
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ day` | `Date` | - | - |
+| `to` | `DateRange?` | - | - |
+| `calendar` | `Foundation.Calendar` | - | - |
+
+Returns `DateRange?`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CalendarDayModifiers
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `today` | `Bool` | `false` | - |
+| `selected` | `Bool` | `false` | - |
+| `rangeStart` | `Bool` | `false` | - |
+| `rangeMiddle` | `Bool` | `false` | - |
+| `rangeEnd` | `Bool` | `false` | - |
+| `outside` | `Bool` | `false` | - |
+| `disabled` | `Bool` | `false` | - |
+
+| Property | Type |
+| --- | --- |
+| `today` | `Bool` |
+| `selected` | `Bool` |
+| `rangeStart` | `Bool` |
+| `rangeMiddle` | `Bool` |
+| `rangeEnd` | `Bool` |
+| `outside` | `Bool` |
+| `disabled` | `Bool` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DateCalendar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Date?>` | - | The selected value. |
+| `month` | `Binding<Date>?` | `nil` | - |
+| `size` | `Size`: `.sm` \| `.default` \| `.lg` | `.default` | Cell size and type scale: `sm`, `default` or `lg`. |
+| `buttonVariant` | `VariantButtonStyle.Variant` | `.plain` | Button variant for the navigation buttons. |
+| `captionLayout` | `CaptionLayout`: `.label` \| `.dropdown` \| `.dropdownMonths` \| `.dropdownYears` | `.label` | - |
+| `numberOfMonths` | `Int` | `1` | - |
+| `showOutsideDays` | `Bool` | `false` | - |
+| `showWeekNumber` | `Bool` | `false` | Shows week numbers. |
+| `startMonth` | `Date?` | `nil` | - |
+| `endMonth` | `Date?` | `nil` | - |
+| `isDisabled` | `(Date) -> Bool` | `{ _ in false }` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CalendarDayButton
+
+The button rendered for each day, styled by its selection state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `date` | `Date` | - | - |
+| `modifiers` | `CalendarDayModifiers` | - | - |
+| `size` | `DateCalendar.Size`: `.sm` \| `.default` \| `.lg` | `.default` | Cell size and type scale: `sm`, `default` or `lg`. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### CalendarSize
+
+Values: `Sm`, `Default`, `Lg`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CalendarCaptionLayout
+
+Values: `Label`, `Dropdown`, `DropdownMonths`, `DropdownYears`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DateRange
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `from` | `Date?` | - | - |
+| `to` | `Date?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CalendarDayState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `Boolean` | `false` | - |
+| `today` | `Boolean` | `false` | - |
+| `rangeStart` | `Boolean` | `false` | - |
+| `rangeMiddle` | `Boolean` | `false` | - |
+| `rangeEnd` | `Boolean` | `false` | - |
+| `outside` | `Boolean` | `false` | - |
+| `disabled` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### Calendar
+
+Month grids with caption and navigation.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `Date?` | - | - |
+| `onSelect` | `(Date?) -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `defaultMonth` | `Date?` | `null` | - |
+| `numberOfMonths` | `Int` | `1` | - |
+| `startMonth` | `Date?` | `null` | - |
+| `endMonth` | `Date?` | `null` | - |
+| `showOutsideDays` | `Boolean` | `false` | - |
+| `showWeekNumber` | `Boolean` | `false` | Shows week numbers. |
+| `weekStartsOn` | `Int?` | `null` | - |
+| `disabled` | `(Date) -> Boolean` | `{ false }` | - |
+| `today` | `Date` | `remember { Date() }` | - |
+| `locale` | `Locale` | `Locale.getDefault()` | - |
+| `buttonVariant` | `ButtonVariant` | `ButtonVariant.Plain` | Button variant for the navigation buttons. |
+| `size` | `CalendarSize`: `Sm` \| `Default` \| `Lg` | `CalendarSize.Default` | Cell size and type scale: `sm`, `default` or `lg`. |
+| `captionLayout` | `CalendarCaptionLayout`: `Label` \| `Dropdown` \| `DropdownMonths` \| `DropdownYears` | `CalendarCaptionLayout.Label` | - |
+| `dayButton` | `CalendarDayButtonSlot?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CalendarDayButton
+
+The button rendered for each day, styled by its selection state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `date` | `Date` | - | - |
+| `state` | `CalendarDayState` | - | - |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `CalendarSize`: `Sm` \| `Default` \| `Lg` | `CalendarSize.Default` | Cell size and type scale: `sm`, `default` or `lg`. |
+| `locale` | `Locale` | `Locale.getDefault()` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

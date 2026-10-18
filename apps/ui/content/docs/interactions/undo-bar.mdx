@@ -324,6 +324,8 @@ Shows the bar after a swipe-to-delete in a list with swipe actions.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### UndoBarProvider
@@ -338,6 +340,144 @@ Holds the current undo entry and renders the bar in a portal.
 | `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### UndoBarEntry
+
+| Property | Type |
+| --- | --- |
+| `id` | `UUID` |
+| `title` | `LocalizedStringResource` |
+| `actionLabel` | `LocalizedStringResource?` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### UndoBarManager
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `static shared` | `UndoBarManager` |
+| `entry` | `UndoBarEntry?` |
+| `timeout` | `Duration` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### UndoBarManager.show
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `actionLabel` | `LocalizedStringResource?` | `nil` | - |
+| `onUndo` | `() -> Void` | - | - |
+| `onCommit` | `(() -> Void)?` | `nil` | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### UndoBarManager.undo
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### UndoBarManager.dismiss
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### .undoBar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ manager` | `UndoBarManager` | `.shared` | - |
+| `timeout` | `Duration` | `.seconds(5)` | Countdown length in milliseconds. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### UndoBarState
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### UndoBarState.show
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `onUndo` | `() -> Unit` | - | - |
+| `actionLabel` | `String?` | `null` | - |
+| `onCommit` | `(() -> Unit)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### UndoBarState.undo
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### UndoBarState.dismiss
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### rememberUndoBarState
+
+Takes no parameters.
+
+Returns `UndoBarState`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### UndoBarProvider
+
+Holds the current undo entry and renders the bar in a portal.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `UndoBarState` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `timeoutMillis` | `Long` | `5000` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

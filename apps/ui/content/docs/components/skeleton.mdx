@@ -265,6 +265,8 @@ Rows with a thumbnail and two lines of text.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Skeleton
@@ -272,6 +274,41 @@ Rows with a thumbnail and two lines of text.
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Skeleton
+
+A pulsing placeholder block.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `cornerRadius` | `CGFloat` | `Radius.md` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Skeleton
+
+A pulsing placeholder block.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `shape` | `Shape` | `RoundedCornerShape(Radius.md)` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

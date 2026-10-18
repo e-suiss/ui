@@ -455,6 +455,8 @@ A tab bar with one disabled tab.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### TabBar
@@ -489,6 +491,95 @@ One tab with an icon, a label and an optional badge.
 Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Tab>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### TabBarBadge
+
+| Value | Parameters |
+| --- | --- |
+| `.dot` | - |
+| `.count` | `Int` |
+| `.text` | `String` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabBar
+
+Root that holds the active tab, the side inset and the safe area padding.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value>` | - | The selected value. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabBarItem
+
+One tab with an icon, a label and an optional badge.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `value` | `Value` | - | The current value. |
+| `icon` | `Image` | - | Phosphor icon shown above the label. Uses the fill weight when active. |
+| `activeIcon` | `Image?` | `nil` | - |
+| `badge` | `TabBarBadge?` | `nil` | Number, text or `true` for a dot, shown on the icon's corner. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:value:icon:activeIcon:badge:)`, `init(verbatim:value:icon:activeIcon:badge:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TabBar
+
+Root that holds the active tab, the side inset and the safe area padding.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabBarItem
+
+One tab with an icon, a label and an optional badge.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `label` | `String` | - | The label. |
+| `icon` | `ImageVector` | - | Phosphor icon shown above the label. Uses the fill weight when active. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `selectedIcon` | `ImageVector?` | `null` | - |
+| `badge` | `String?` | `null` | Number, text or `true` for a dot, shown on the icon's corner. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

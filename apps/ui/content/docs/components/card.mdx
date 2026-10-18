@@ -420,6 +420,8 @@ The flat `filled` variant.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Card
@@ -494,6 +496,192 @@ Padded row for actions.
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Card
+
+Outer container that sets the size and variant.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.filled` | `.default` | `default` (raised) or `filled`. |
+| `size` | `Size`: `.default` \| `.sm` | `.default` | Inner spacing: `default` or the more compact `sm`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `description` | `LocalizedStringKey?` | `nil` | The supporting text. |
+| `action` | `() -> Action` | - | Called when it is tapped. |
+
+Overloads: `init(_:description:action:)`, `init(_:description:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardTitle
+
+Bold heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardDescription
+
+Secondary text below the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardContent
+
+Padded body.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardFooter
+
+Padded row for actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### CardVariant
+
+Values: `Default`, `Filled`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardSize
+
+Values: `Default`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Card
+
+Outer container that sets the size and variant.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `CardVariant`: `Default` \| `Filled` | `CardVariant.Default` | `default` (raised) or `filled`. |
+| `size` | `CardSize`: `Default` \| `Sm` | `CardSize.Default` | Inner spacing: `default` or the more compact `sm`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | The title text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `description` | `String?` | `null` | The supporting text. |
+| `action` | `(@Composable () -> Unit)?` | `null` | Called when it is tapped. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardTitle
+
+Bold heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardDescription
+
+Secondary text below the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CardContent
+
+Padded body.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CardFooter
+
+Padded row for actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

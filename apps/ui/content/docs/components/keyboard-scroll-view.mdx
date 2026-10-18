@@ -194,6 +194,8 @@ A form above a bottom bar with a full-width button.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### KeyboardScrollView
@@ -205,6 +207,41 @@ A form above a bottom bar with a full-width button.
 Also accepts the props of `ScrollViewProps`, `React.RefAttributes<ScrollView>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### KeyboardScrollView
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showsIndicators` | `Bool` | `true` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### KeyboardScrollView
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `ScrollState` | `rememberScrollState()` | - |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
+| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.Top` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

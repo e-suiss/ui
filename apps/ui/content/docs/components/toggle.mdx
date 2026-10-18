@@ -347,6 +347,8 @@ Disabled toggles in the off and on states.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Toggle
@@ -371,6 +373,83 @@ An icon sized for a toggle.
 Also accepts the props of `React.ComponentProps<typeof Icon>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ToggleVariant
+
+Values: `.default`, `.outline`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleSize
+
+Values: `.default`, `.sm`, `.lg`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### .toggleStyle(.variant)
+
+Style that creates `VariantToggleStyle`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `ToggleVariant`: `.default` \| `.outline` | `.default` | Visual style: `default` or `outline`. |
+| `size` | `ToggleSize`: `.default` \| `.sm` \| `.lg` | `.default` | Height and padding: `default`, `sm` or `lg`. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ToggleVariant
+
+Values: `Default`, `Outline`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleSize
+
+Values: `Default`, `Sm`, `Lg`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Toggle
+
+The pressable two-state button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pressed` | `Boolean` | - | - |
+| `onPressedChange` | `(Boolean) -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ToggleVariant`: `Default` \| `Outline` | `ToggleVariant.Default` | Visual style: `default` or `outline`. |
+| `size` | `ToggleSize`: `Default` \| `Sm` \| `Lg` | `ToggleSize.Default` | Height and padding: `default`, `sm` or `lg`. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `Toggle(pressed, onPressedChange, interactionSource, content)`, `Toggle(text, pressed, onPressedChange)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

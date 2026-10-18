@@ -360,6 +360,8 @@ Items with the `invalid` border.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### RadioGroup
@@ -383,6 +385,79 @@ A single radio button with its checked indicator.
 Also accepts the props of `RadioPrimitive.RootProps<Value>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### RadioGroup
+
+The container that holds the selected value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value?>` | - | The selected value. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### RadioGroupItem
+
+A single radio button with its checked indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The current value. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(value:label:)`, `init(value:)`, `init(_:value:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### RadioGroup
+
+The container that holds the selected value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `T?` | - | The current value. |
+| `onValueChange` | `(T) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows a destructive border while unchecked. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### RadioGroupItem
+
+A single radio button with its checked indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `T` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `invalid` | `Boolean` | `false` | Shows a destructive border while unchecked. |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+| `label` | `(@Composable () -> Unit)?` | `null` | The label. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

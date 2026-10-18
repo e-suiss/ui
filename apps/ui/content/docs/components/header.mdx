@@ -264,6 +264,8 @@ A long back label that truncates.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Header
@@ -347,6 +349,207 @@ Scroll view that drives the header animations.
 Also accepts the props of `ScrollViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Header
+
+Bar that lays out the back button, title and actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `() -> Title` | - | The title text. |
+| `leading` | `() -> Leading` | - | Content before the main content. |
+| `trailing` | `() -> Trailing` | - | Content after the main content. |
+
+Overloads: `init(title:leading:trailing:)`, `init(title:trailing:)`, `init(title:leading:)`, `init(title:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### HeaderTitle
+
+Centered title with optional subtitle.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `subtitle` | `LocalizedStringKey?` | `nil` | Second line under the title. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:subtitle:)`, `init(verbatim:subtitle:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### HeaderLargeTitle
+
+Large title at the top of the scroll content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `subtitle` | `LocalizedStringKey?` | `nil` | Line under the large title. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:subtitle:)`, `init(verbatim:subtitle:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### HeaderBack
+
+Back button with a caret and optional label.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ label` | `LocalizedStringKey?` | `nil` | The label. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `verbatim` | `String` | - | The label. |
+
+Overloads: `init(_:action:)`, `init(verbatim:action:)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### HeaderActions
+
+Row of actions for either side.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### HeaderScrollView
+
+Scroll view that drives the header animations.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `header` | `() -> HeaderContent` | - | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### HeaderActionsSide
+
+Values: `Leading`, `Trailing`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### HeaderState
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `collapsedFraction` | `Float` |
+| `nestedScrollConnection` | `NestedScrollConnection` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### rememberHeaderState
+
+Takes no parameters.
+
+Returns `HeaderState`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### Header
+
+Bar that lays out the back button, title and actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `HeaderState` | `rememberHeaderState()` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### HeaderTitle
+
+Centered title with optional subtitle.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `subtitle` | `String?` | `null` | Second line under the title. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### HeaderLargeTitle
+
+Large title at the top of the scroll content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `subtitle` | `String?` | `null` | Line under the large title. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### HeaderBack
+
+Back button with a caret and optional label.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String?` | `"Back"` | The text. |
+| `contentDescription` | `String` | `text ?: "Back"` | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### HeaderActions
+
+Row of actions for either side.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `side` | `HeaderActionsSide`: `Leading` \| `Trailing` | `HeaderActionsSide.Trailing` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

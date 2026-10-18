@@ -550,6 +550,8 @@ Several triggers sharing one popover through a handle, each passing its own payl
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Popover
@@ -608,6 +610,100 @@ Secondary text under the title.
 Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Description>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### PopoverContent
+
+Animated panel rendered in a portal and positioned next to the trigger.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `width` | `CGFloat?` | `288` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PopoverHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Popover
+
+The root that manages the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | Whether the popover is open, for controlled use. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the popover opens or closes. |
+| `trigger` | `@Composable () -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `side` | `PopupSide` | `PopupSide.Bottom` | - |
+| `align` | `PopupAlign` | `PopupAlign.Center` | - |
+| `sideOffset` | `Dp` | `4.dp` | - |
+| `alignOffset` | `Dp` | `0.dp` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PopoverHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PopoverTitle
+
+Heading that labels the panel.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### PopoverDescription
+
+Secondary text under the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

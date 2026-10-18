@@ -387,6 +387,8 @@ A `MessageGroup` with an incoming and an outgoing message, including a read rece
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### MessageGroup
@@ -450,6 +452,191 @@ Small secondary text below the bubbles, aligned with the message side.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### MessageGroup
+
+Vertical stack of messages.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `spacing` | `CGFloat` | `8` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Message
+
+Row that holds the avatar and content and sets the alignment.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align` | `Align` | `.start` | Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageAvatar
+
+Round slot for an avatar, pinned to the bottom of the row.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageContent
+
+Column of bubbles built on `BubbleGroup`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageHeader
+
+Small secondary text above the bubbles.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### MessageFooter
+
+Small secondary text below the bubbles, aligned with the message side.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### MessageAlign
+
+Values: `Start`, `End`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### MessageGroup
+
+Vertical stack of messages.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Message
+
+Row that holds the avatar and content and sets the alignment.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `align` | `MessageAlign`: `Start` \| `End` | `MessageAlign.Start` | Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageAvatar
+
+Round slot for an avatar, pinned to the bottom of the row.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageContent
+
+Column of bubbles built on `BubbleGroup`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### MessageHeader
+
+Small secondary text above the bubbles.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `MessageHeader(content)`, `MessageHeader(text)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### MessageFooter
+
+Small secondary text below the bubbles, aligned with the message side.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `MessageFooter(content)`, `MessageFooter(text)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

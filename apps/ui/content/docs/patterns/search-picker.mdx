@@ -433,6 +433,8 @@ Detaches the drawer from the screen edges.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SearchPicker
@@ -457,6 +459,93 @@ Detaches the drawer from the screen edges.
 | `accessibilityLabelledBy` | `string` | - | Links the field to a visible label. |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SearchPickerItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+| `label` | `String` | - | - |
+| `group` | `String?` | `nil` | - |
+| `disabled` | `Bool` | `false` | - |
+
+| Property | Type |
+| --- | --- |
+| `value` | `String` |
+| `label` | `String` |
+| `group` | `String?` |
+| `disabled` | `Bool` |
+| `id` | `String` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchPicker
+
+The complete searchable picker, rendered from the `items` array.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `[SearchPickerItem]` | - | The options, each with `value`, `label` and optional `group` and `disabled`. |
+| `selection` | `Binding<String?>` | - | The selected value. |
+| `placeholder` | `LocalizedStringKey?` | `nil` | Text shown in the field when nothing is selected. |
+| `searchPlaceholder` | `LocalizedStringKey` | `"Search..."` | Placeholder and label of the search input. |
+| `emptyText` | `LocalizedStringKey` | `"No results found."` | Text shown when no option matches. |
+| `title` | `LocalizedStringKey?` | `nil` | Heading shown at the top of the drawer. |
+| `showCloseButton` | `Bool` | `false` | Shows a close button in the drawer. |
+| `closeLabel` | `LocalizedStringKey?` | `nil` | Label of the close button. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SearchPickerItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+| `label` | `String` | - | - |
+| `group` | `String?` | `null` | - |
+| `enabled` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchPicker
+
+The complete searchable picker, rendered from the `items` array.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<SearchPickerItem>` | - | The options, each with `value`, `label` and optional `group` and `disabled`. |
+| `value` | `String?` | - | The selected value when controlled, or `null`. |
+| `onValueChange` | `(String) -> Unit` | - | Called with the chosen value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `placeholder` | `String` | `""` | Text shown in the field when nothing is selected. |
+| `searchPlaceholder` | `String` | `"Search..."` | Placeholder and label of the search input. |
+| `emptyText` | `String` | `"No results found."` | Text shown when no option matches. |
+| `title` | `String?` | `null` | Heading shown at the top of the drawer. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `invalid` | `Boolean?` | `null` | Applies the error border and background. |
+| `floating` | `Boolean` | `false` | Insets the drawer from the screen edges. |
+| `showCloseButton` | `Boolean` | `false` | Shows a close button in the drawer. |
+| `closeLabel` | `String?` | `null` | Label of the close button. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -446,6 +446,8 @@ A disabled group.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ToggleGroup
@@ -479,6 +481,92 @@ Icon sized for a toggle group item.
 Also accepts the props of `React.ComponentProps<typeof Icon>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ToggleGroup
+
+Container that holds the shared value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value?>` | - | The selected value. |
+| `variant` | `ToggleVariant` | `.default` | - |
+| `size` | `ToggleSize` | `.default` | - |
+| `spacing` | `Int` | `2` | Gap between items in steps of 4 points. `0` joins the items. |
+| `orientation` | `Axis` | `.horizontal` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleGroupItem
+
+One toggle in the group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The current value. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(value:label:)`, `init(_:value:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ToggleGroup
+
+Container that holds the shared value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String?` | - | The current value. |
+| `onValueChange` | `(String?) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ToggleVariant` | `ToggleVariant.Default` | - |
+| `size` | `ToggleSize` | `ToggleSize.Default` | - |
+| `spacing` | `Int` | `2` | Gap between items in steps of 4 points. `0` joins the items. |
+| `orientation` | `Orientation` | `Orientation.Horizontal` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `values` | `Set<String>` | - | - |
+| `onValuesChange` | `(Set<String>) -> Unit` | - | - |
+
+Overloads: `ToggleGroup(value, onValueChange, content)`, `ToggleGroup(values, onValuesChange, content)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ToggleGroupItem
+
+One toggle in the group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `ToggleGroupItem(value, interactionSource, content)`, `ToggleGroupItem(text, value)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

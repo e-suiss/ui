@@ -407,6 +407,8 @@ Loads earlier messages with `onLoadOlder` when scrolling to the top.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### MessageScrollerProvider
@@ -474,6 +476,228 @@ Floating button that scrolls to the newest or oldest message.
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### MessageScrollerDefaultScrollPosition
+
+Values: `.start`, `.end`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### MessageScrollerScrollDirection
+
+Values: `.start`, `.end`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageScrollerController
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `unreadCount` | `Int` |
+| `isAtEnd` | `Bool` |
+| `isAtStart` | `Bool` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageScrollerController.canScroll
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ direction` | `MessageScrollerScrollDirection`: `.start` \| `.end` | - | - |
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageScrollerController.scrollToEnd
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `animated` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### MessageScrollerController.scrollToStart
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `animated` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### MessageScrollerController.scrollToMessage
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ id` | `ID` | - | - |
+| `anchor` | `UnitPoint` | `.top` | - |
+| `animated` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### MessageScroller
+
+Container that clips the list and positions the button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ data` | `Data` | - | The messages to render. |
+| `id` | `KeyPath<Data.Element, ID>` | - | - |
+| `spacing` | `CGFloat` | `12` | - |
+| `defaultScrollPosition` | `MessageScrollerDefaultScrollPosition`: `.start` \| `.end` | `.end` | - |
+| `autoScroll` | `Bool` | `true` | - |
+| `scrollEdgeThreshold` | `CGFloat` | `8` | Distance in points from an edge that still counts as being at that edge. |
+| `buttons` | `Set<MessageScrollerScrollDirection>` | `[.end]` | - |
+| `controller` | `MessageScrollerController?` | `nil` | - |
+| `onLoadOlder` | `(() -> Void)?` | `nil` | Called near the top so older messages can be loaded. |
+| `row` | `(Data.Element) -> Row` | - | - |
+
+Overloads: `init(_:id:spacing:defaultScrollPosition:autoScroll:scrollEdgeThreshold:buttons:controller:onLoadOlder:row:)`, `init(_:spacing:defaultScrollPosition:autoScroll:scrollEdgeThreshold:buttons:controller:onLoadOlder:row:)`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### MessageScrollerButton
+
+Floating button that scrolls to the newest or oldest message.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction` | `MessageScrollerScrollDirection`: `.start` \| `.end` | `.end` | `end` scrolls to the newest message, `start` to the oldest. |
+| `controller` | `MessageScrollerController?` | `nil` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### MessageScrollerScrollDirection
+
+Values: `Start`, `End`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### MessageScrollerState
+
+| Property | Type |
+| --- | --- |
+| `isAtEnd` | `Boolean` |
+| `canScrollToEnd` | `Boolean` |
+| `canScrollToStart` | `Boolean` |
+| `visibleKeys` | `List<Any>` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### MessageScrollerState.scrollToEnd
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `animated` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### MessageScrollerState.scrollToStart
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `animated` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### MessageScrollerState.scrollToMessage
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `Any` | - | - |
+| `animated` | `Boolean` | `true` | - |
+
+Returns `Boolean`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### rememberMessageScrollerState
+
+Takes no parameters.
+
+Returns `MessageScrollerState`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### MessageScroller
+
+Container that clips the list and positions the button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<T>` | - | - |
+| `key` | `(T) -> Any` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `MessageScrollerState` | `rememberMessageScrollerState()` | - |
+| `onLoadOlder` | `(() -> Unit)?` | `null` | Called near the top so older messages can be loaded. |
+| `loadingOlder` | `Boolean` | `false` | - |
+| `contentPadding` | `PaddingValues` | `PaddingValues(16.dp)` | - |
+| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.spacedBy(12.dp, Alignment.Bottom)` | - |
+| `overlay` | `@Composable BoxScope.() -> Unit` | `{ MessageScrollerButton() }` | - |
+| `content` | `@Composable LazyItemScope.(T) -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### MessageScrollerButton
+
+Floating button that scrolls to the newest or oldest message.
+
+Receiver: `BoxScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `direction` | `MessageScrollerScrollDirection`: `Start` \| `End` | `MessageScrollerScrollDirection.End` | `end` scrolls to the newest message, `start` to the oldest. |
+| `animated` | `Boolean` | `true` | Whether the scroll is animated. |
+| `contentDescription` | `String` | `if (direction == MessageScrollerScrollDirection.End) "Scroll to end" else "Scroll to start"` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

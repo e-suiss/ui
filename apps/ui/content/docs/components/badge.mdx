@@ -315,6 +315,8 @@ Badges with a leading icon.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Badge
@@ -327,6 +329,58 @@ Badges with a leading icon.
 Also accepts the props of `BadgeProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Badge
+
+The inline label element.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.secondary` \| `.destructive` \| `.outline` \| `.ghost` \| `.link` | `.default` | Visual style. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `variant` | `Variant`: `.default` \| `.secondary` \| `.destructive` \| `.outline` \| `.ghost` \| `.link` | `.default` | Visual style. |
+
+Overloads: `init(_:label:)`, `init(_:variant:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### BadgeVariant
+
+Values: `Default`, `Secondary`, `Destructive`, `Outline`, `Ghost`, `Link`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Badge
+
+The inline label element.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `BadgeVariant`: `Default` \| `Secondary` \| `Destructive` \| `Outline` \| `Ghost` \| `Link` | `BadgeVariant.Default` | Visual style. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `Badge(content)`, `Badge(text)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

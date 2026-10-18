@@ -395,6 +395,8 @@ The root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Confirm
@@ -484,6 +486,212 @@ The cancel button, shown separately below the group.
 Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .confirm
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `dismissible` | `Bool` | `false` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ConfirmContent
+
+The sheet that groups the header and actions and places Cancel below.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `AlertDialogContent<Content>.Size` | `.default` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ConfirmHeader
+
+Holds the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ConfirmTitle
+
+The question being asked.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ConfirmDescription
+
+Supporting text about the consequences.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ConfirmFooter
+
+Holds the action and cancel buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ConfirmAction
+
+A confirming action, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `variant` | `AlertSheetActionVariant` | `.default` | - |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ConfirmCancel
+
+The cancel button, shown separately below the group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Cancel"` | The title text. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Confirm
+
+The root that owns the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `dismissible` | `Boolean` | `false` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ConfirmHeader
+
+Holds the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ConfirmTitle
+
+The question being asked.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ConfirmDescription
+
+Supporting text about the consequences.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ConfirmFooter
+
+Holds the action and cancel buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ConfirmAction
+
+A confirming action, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `AlertSheetActionVariant` | `AlertSheetActionVariant.Default` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ConfirmCancel
+
+The cancel button, shown separately below the group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | `"Cancel"` | The text. |
+| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

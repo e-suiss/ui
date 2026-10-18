@@ -453,6 +453,8 @@ Detaches the drawer from the screen edges.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### DatePicker
@@ -477,6 +479,56 @@ Detaches the drawer from the screen edges.
 | `accessibilityLabelledBy` | `string` | - | Links the field to a visible label. |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### DatePickerField
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Date?>` | - | The selected value. |
+| `placeholder` | `LocalizedStringKey` | `"Pick a date"` | Text shown when no date is set. |
+| `fromYear` | `Int?` | `nil` | First year in the year wheel. |
+| `toYear` | `Int?` | `nil` | Last year in the year wheel. |
+| `title` | `LocalizedStringKey?` | `nil` | Heading shown at the top of the drawer. |
+| `showCloseButton` | `Bool` | `false` | Shows a close button in the drawer. |
+| `closeLabel` | `LocalizedStringKey?` | `nil` | Label of the close button. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### DatePicker
+
+The field trigger with its desktop calendar popover and mobile wheel drawer.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Date?` | - | The selected date when controlled, or `null`. |
+| `onValueChange` | `(Date) -> Unit` | - | Called with the new `Date` on every wheel change. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `placeholder` | `String` | `"Pick a date"` | Text shown when no date is set. |
+| `locale` | `Locale` | `Locale.getDefault()` | BCP 47 locale for formatting, month names and wheel order. |
+| `fromYear` | `Int` | `Calendar.getInstance().get(Calendar.YEAR) - 100` | First year in the year wheel. |
+| `toYear` | `Int` | `Calendar.getInstance().get(Calendar.YEAR) + 10` | Last year in the year wheel. |
+| `title` | `String?` | `null` | Heading shown at the top of the drawer. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `invalid` | `Boolean?` | `null` | Applies the error border and background. |
+| `floating` | `Boolean` | `false` | Insets the drawer from the screen edges. |
+| `showCloseButton` | `Boolean` | `false` | Shows a close button in the drawer. |
+| `closeLabel` | `String?` | `null` | Label of the close button. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

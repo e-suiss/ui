@@ -552,6 +552,8 @@ Drawers from the top, bottom, left and right.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### DrawerProvider
@@ -672,6 +674,143 @@ Supporting text.
 Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .drawer
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `detents` | `Set<PresentationDetent>?` | `nil` | - |
+| `selection` | `Binding<PresentationDetent>?` | `nil` | The selected value. |
+| `onDismiss` | `(() -> Void)?` | `nil` | Called when it closes. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DrawerContent
+
+Sliding panel with optional handle and close button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `Bool` | `false` | Shows a corner close button. |
+| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the close button instead of the icon. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DrawerHeader
+
+Area for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DrawerFooter
+
+Area for actions at the end of the panel.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Drawer
+
+Root that holds the open state, direction and snap points.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `snapPoints` | `List<Float>` | `emptyList()` | - |
+| `onSnapPointChange` | `(Float) -> Unit` | `{}` | - |
+| `floating` | `Boolean` | `false` | Insets the panel from the edges. |
+| `showSwipeHandle` | `Boolean` | `false` | Shows a grab handle. |
+| `showCloseButton` | `Boolean` | `false` | Shows a corner close button. |
+| `closeLabel` | `String?` | `null` | Text for the close button instead of the icon. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DrawerHeader
+
+Area for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DrawerFooter
+
+Area for actions at the end of the panel.
+
+Receiver: `ColumnScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DrawerTitle
+
+Drawer heading, centered for top and bottom drawers.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DrawerDescription
+
+Supporting text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -361,6 +361,8 @@ A four-digit code with its own suggestion.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### OtpAutofill
@@ -407,6 +409,146 @@ A bar above the keyboard that fills the suggested code on press.
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### OtpAutofillState
+
+Values: `.idle`, `.filling`, `.verifying`, `.verified`, `.invalid`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### OtpAutofill
+
+The root that holds the code and verification state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `length` | `Int` | - | - |
+| `onVerify` | `(String) async -> Bool` | - | Checks a complete code; return `true` when it is valid. |
+| `content` | `(OtpAutofillState) -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### OtpAutofillInput
+
+The `InputOTP` that shows each state and shakes on an invalid code.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `autoFocus` | `Bool` | `false` | - |
+| `content` | `() -> Content` | - | The content. |
+| `length` | `Int` | - | - |
+
+Overloads: `init(autoFocus:content:)`, `init(length:autoFocus:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### OtpAutofillSuggestion
+
+A bar above the keyboard that fills the suggested code on press.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `String?` | - | The code to suggest, or `null` to hide the bar. |
+| `source` | `LocalizedStringKey` | `"From Messages"` | Label above the code. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### OtpAutofillState
+
+Values: `Idle`, `Filling`, `Verifying`, `Verified`, `Invalid`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### OtpAutofillScope
+
+| Property | Type |
+| --- | --- |
+| `state` | `OtpAutofillState get()` |
+| `value` | `String get()` |
+| `maxLength` | `Int get()` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### OtpAutofillScope.fill
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### OtpAutofill
+
+The root that holds the code and verification state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `maxLength` | `Int` | - | Number of digits in the code. |
+| `onVerify` | `suspend (String) -> Boolean` | - | Checks a complete code; return `true` when it is valid. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable OtpAutofillScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### OtpAutofillInput
+
+The `InputOTP` that shows each state and shakes on an invalid code.
+
+Receiver: `OtpAutofillScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String?` | `null` | - |
+| `autoFocus` | `Boolean` | `false` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `(@Composable RowScope.() -> Unit)?` | `null` | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### OtpAutofillSuggestion
+
+A bar above the keyboard that fills the suggested code on press.
+
+Receiver: `OtpAutofillScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `String?` | - | The code to suggest, or `null` to hide the bar. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `source` | `String` | `"From Messages"` | Label above the code. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

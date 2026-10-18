@@ -336,6 +336,8 @@ Bars at 0, 25, 50, 75 and 100 percent, the last with a custom indicator color.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Progress
@@ -390,6 +392,42 @@ Formatted value text, aligned to the end.
 Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Value>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .progressViewStyle(.bar)
+
+Style that creates `BarProgressViewStyle`.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Progress
+
+Root that holds the value and renders the track and indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Float?` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `max` | `Float` | `100f` | - |
+| `label` | `String?` | `null` | The label. |
+| `showValue` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

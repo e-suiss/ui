@@ -210,6 +210,8 @@ A scrollable form with a bottom bar holding the main action.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Screen
@@ -238,6 +240,91 @@ The padded body, optionally scrollable.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Screen
+
+The root view that pads for safe area insets.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `edges` | `Edge.Set` | `.all` | Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. |
+| `background` | `Background`: `.background` \| `.muted` | `.background` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ScreenContent
+
+The padded body, optionally scrollable.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `scroll` | `Bool` | `true` | - |
+| `padded` | `Bool` | `true` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ScreenEdge
+
+Values: `Top`, `Bottom`, `Left`, `Right`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ScreenVariant
+
+Values: `Default`, `Secondary`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Screen
+
+The root view that pads for safe area insets.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `edges` | `Set<ScreenEdge>` | `AllScreenEdges` | Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. |
+| `variant` | `ScreenVariant`: `Default` \| `Secondary` | `ScreenVariant.Default` | Background: `default` or `secondary`. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ScreenContent
+
+The padded body, optionally scrollable.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `scrollable` | `Boolean` | `false` | Renders a `KeyboardScrollView` instead of a `View`. |
+| `contentPadding` | `PaddingValues` | `PaddingValues(16.dp)` | - |
+| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.spacedBy(16.dp)` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Notes
 

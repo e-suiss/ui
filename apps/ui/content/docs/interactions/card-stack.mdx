@@ -225,6 +225,8 @@ Turns off swiping and the buttons with `disabled`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### CardStack
@@ -291,6 +293,173 @@ A button that restores the last swiped card.
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### CardStackDirection
+
+Values: `.left`, `.right`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardStackController
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `index` | `Int` |
+| `history` | `[CardStackDirection]` |
+| `canSwipe` | `Bool` |
+| `canUndo` | `Bool` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardStackController.swipe
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ direction` | `CardStackDirection`: `.left` \| `.right` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardStackController.undo
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CardStackController.reset
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardStack
+
+The root that renders the deck and handles the drag gesture.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ items` | `[Item]` | - | - |
+| `controller` | `CardStackController` | - | - |
+| `visibleCount` | `Int` | `3` | Cards stacked behind the top card. |
+| `onSwipe` | `((CardStackDirection, Item) -> Void)?` | `nil` | Called with the direction, item and index after a card leaves. |
+| `onUndo` | `((Item) -> Void)?` | `nil` | Called with the item and index after undo. |
+| `card` | `(Item) -> Card` | - | - |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CardStackAction
+
+Values: `.swipeLeft`, `.swipeRight`, `.undo`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CardStackButton
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ action` | `CardStackAction`: `.swipeLeft` \| `.swipeRight` \| `.undo` | - | - |
+| `controller` | `CardStackController` | - | - |
+| `size` | `VariantButtonStyle.Size` | `.iconXl` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### CardStackDirection
+
+Values: `Left`, `Right`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CardStackState
+
+| Property | Type |
+| --- | --- |
+| `canUndo` | `Boolean` |
+| `isEmpty` | `Boolean` |
+| `progress` | `Float` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CardStackState.swipe
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction` | `CardStackDirection`: `Left` \| `Right` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CardStackState.undo
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### rememberCardStackState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `initialIndex` | `Int` | `0` | - |
+
+Returns `CardStackState`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CardStack
+
+The root that renders the deck and handles the drag gesture.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<T>` | - | - |
+| `onSwipe` | `(CardStackDirection, T) -> Unit` | - | Called with the direction, item and index after a card leaves. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `CardStackState` | `rememberCardStackState()` | - |
+| `key` | `((T) -> Any)?` | `null` | - |
+| `visibleCount` | `Int` | `3` | Cards stacked behind the top card. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `onUndo` | `((CardStackDirection, T) -> Unit)?` | `null` | Called with the item and index after undo. |
+| `empty` | `@Composable () -> Unit` | `{}` | - |
+| `content` | `@Composable (T) -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

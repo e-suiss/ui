@@ -220,6 +220,8 @@ A textarea connected through `useInputAccessoryBarInput`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### InputAccessoryBar
@@ -247,6 +249,116 @@ Provider that tracks the inputs and renders the bar.
 Also accepts the props of `React.ComponentProps<typeof Input>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### InputAccessoryBar
+
+Provider that tracks the inputs and renders the bar.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `previousLabel` | `LocalizedStringKey` | `"Previous"` | Label for the previous button. |
+| `nextLabel` | `LocalizedStringKey` | `"Next"` | Label for the next button. |
+| `doneLabel` | `LocalizedStringKey` | `"Done"` | Text or node for the done button. |
+| `onPrevious` | `(() -> Void)?` | `nil` | - |
+| `onNext` | `(() -> Void)?` | `nil` | - |
+| `onDone` | `() -> Void` | - | Called after the keyboard is dismissed with done. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### .inputAccessoryBar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `focus` | `FocusState<Value?>.Binding` | - | - |
+| `order` | `[Value]` | - | - |
+| `previousLabel` | `LocalizedStringKey` | `"Previous"` | Label for the previous button. |
+| `nextLabel` | `LocalizedStringKey` | `"Next"` | Label for the next button. |
+| `doneLabel` | `LocalizedStringKey` | `"Done"` | Text or node for the done button. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### InputAccessoryState
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `hasPrevious` | `Boolean` |
+| `hasNext` | `Boolean` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### InputAccessoryState.previous
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### InputAccessoryState.next
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### rememberInputAccessoryState
+
+Takes no parameters.
+
+Returns `InputAccessoryState`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### Modifier.inputAccessory
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `InputAccessoryState` | - | - |
+| `index` | `Int` | - | - |
+
+Returns `Modifier`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### InputAccessoryBar
+
+Provider that tracks the inputs and renders the bar.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `InputAccessoryState` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `previousLabel` | `String` | `"Previous"` | Label for the previous button. |
+| `nextLabel` | `String` | `"Next"` | Label for the next button. |
+| `doneLabel` | `String` | `"Done"` | Text or node for the done button. |
+| `onDone` | `(() -> Unit)?` | `null` | Called after the keyboard is dismissed with done. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

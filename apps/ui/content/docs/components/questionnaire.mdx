@@ -596,6 +596,8 @@ A required question answered with `QuestionnaireInput`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Questionnaire
@@ -779,6 +781,812 @@ Validates all questions and calls `onSubmit` on the last step.
 Also accepts the props of `QuestionnaireNavigationProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### QuestionnaireItemStatus
+
+Values: `.unanswered`, `.answered`, `.skipped`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### QuestionnaireDirection
+
+Values: `.forward`, `.backward`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### QuestionnaireItemDefinition
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ name` | `String` | - | - |
+| `required` | `Bool` | `false` | - |
+| `multiple` | `Bool` | `false` | - |
+| `disabled` | `Bool` | `false` | - |
+| `invalid` | `Bool` | `false` | - |
+
+| Property | Type |
+| --- | --- |
+| `name` | `String` |
+| `required` | `Bool` |
+| `multiple` | `Bool` |
+| `disabled` | `Bool` |
+| `invalid` | `Bool` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### QuestionnaireController
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `[QuestionnaireItemDefinition]?` | `nil` | - |
+| `defaultItem` | `String?` | `nil` | - |
+| `defaultValues` | `[String: [String]]` | `[:]` | - |
+
+| Property | Type |
+| --- | --- |
+| `activeItem` | `String?` |
+| `direction` | `QuestionnaireDirection` |
+| `values` | `[String: [String]]` |
+| `onItemChange` | `((String) -> Void)?` |
+| `onSubmit` | `(([String: [String]]) -> Void)?` |
+| `sequence` | `[String]` |
+| `total` | `Int` |
+| `current` | `Int` |
+| `isFirst` | `Bool` |
+| `isLast` | `Bool` |
+| `activeItemRequired` | `Bool?` |
+| `activeItemStatus` | `QuestionnaireItemStatus?` |
+| `answers` | `[String: [String]]` |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### QuestionnaireController.status
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `of` | `String` | - | - |
+
+Returns `QuestionnaireItemStatus`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### QuestionnaireController.isInvalid
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ name` | `String` | - | - |
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### QuestionnaireController.isSelected
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ value` | `String` | - | - |
+| `in` | `String` | - | - |
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### QuestionnaireController.select
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ value` | `String` | - | - |
+| `in` | `String` | - | - |
+| `selected` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### QuestionnaireController.toggle
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ value` | `String` | - | - |
+| `in` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### QuestionnaireController.text
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `for` | `String` | - | - |
+
+Returns `String`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### QuestionnaireController.setText
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ text` | `String` | - | - |
+| `for` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### QuestionnaireController.validate
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ name` | `String` | - | - |
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### QuestionnaireController.go
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `to` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### QuestionnaireController.goPrevious
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### QuestionnaireController.goNext
+
+Takes no parameters.
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### QuestionnaireController.advance
+
+Takes no parameters.
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={17}>
+
+### QuestionnaireController.skip
+
+Takes no parameters.
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={18}>
+
+### QuestionnaireController.submit
+
+Takes no parameters.
+
+Returns `Bool`.
+
+</ApiPart>
+
+<ApiPart index={19}>
+
+### QuestionnaireController.reset
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={20}>
+
+### Questionnaire
+
+Root that holds the state and the active question.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `controller` | `QuestionnaireController` | - | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={21}>
+
+### QuestionnaireProgress
+
+Shows the current question number and total.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `(_ current: Int, _ total: Int) -> Label` | - | The label. |
+
+Overloads: `init(label:)`, `init()`.
+
+</ApiPart>
+
+<ApiPart index={22}>
+
+### QuestionnaireItem
+
+One question; shown only while active.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `String` | - | Unique key for the answer. |
+| `required` | `Bool` | `false` | Requires an answer before moving on and hides Skip. |
+| `multiple` | `Bool` | `false` | Allows more than one choice. |
+| `disabled` | `Bool` | `false` | Removes the item from the sequence. |
+| `invalid` | `Bool` | `false` | Forces the invalid state. |
+| `onStatusChange` | `((QuestionnaireItemStatus) -> Void)?` | `nil` | Called when the status changes to `unanswered`, `answered` or `skipped`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={23}>
+
+### QuestionnaireTitle
+
+The question heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={24}>
+
+### QuestionnaireDescription
+
+Secondary text under the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={25}>
+
+### QuestionnaireChoices
+
+Stack of choice rows.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={26}>
+
+### QuestionnaireChoice
+
+A selectable answer row.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | Value stored when the choice is selected. |
+| `disabled` | `Bool` | `false` | Disables the choice. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(value:disabled:label:)`, `init(_:value:disabled:)`, `init(verbatim:value:disabled:)`.
+
+</ApiPart>
+
+<ApiPart index={27}>
+
+### QuestionnaireChoiceDescription
+
+Secondary text inside a choice.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={28}>
+
+### QuestionnaireInput
+
+Text field for a typed answer.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ placeholder` | `LocalizedStringResource` | `""` | Text shown while it is empty. |
+| `keyboard` | `UIKeyboardType` | `.default` | - |
+| `contentType` | `UITextContentType?` | `nil` | - |
+| `disabled` | `Bool` | `false` | Removes the item from the sequence. |
+
+</ApiPart>
+
+<ApiPart index={29}>
+
+### QuestionnaireError
+
+Validation message shown when the item is invalid.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ message` | `LocalizedStringKey` | - | - |
+| `verbatim` | `String` | - | - |
+
+Overloads: `init()`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={30}>
+
+### QuestionnaireActions
+
+Row for the navigation buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={31}>
+
+### QuestionnairePrevious
+
+Goes to the previous question.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Previous"` | The title text. |
+| `variant` | `VariantButtonStyle.Variant` | `.outline` | - |
+| `size` | `VariantButtonStyle.Size` | `.default` | - |
+
+</ApiPart>
+
+<ApiPart index={32}>
+
+### QuestionnaireSkip
+
+Skips the active question when it is optional.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Skip"` | The title text. |
+| `variant` | `VariantButtonStyle.Variant` | `.outline` | - |
+| `size` | `VariantButtonStyle.Size` | `.default` | - |
+
+</ApiPart>
+
+<ApiPart index={33}>
+
+### QuestionnaireNext
+
+Validates and moves to the next question.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Next"` | The title text. |
+| `variant` | `VariantButtonStyle.Variant` | `.default` | - |
+| `size` | `VariantButtonStyle.Size` | `.default` | - |
+
+</ApiPart>
+
+<ApiPart index={34}>
+
+### QuestionnaireSubmit
+
+Validates all questions and calls `onSubmit` on the last step.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Submit"` | The title text. |
+| `variant` | `VariantButtonStyle.Variant` | `.default` | - |
+| `size` | `VariantButtonStyle.Size` | `.default` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### QuestionnaireItemStatus
+
+Values: `Unanswered`, `Answered`, `Skipped`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### QuestionnaireItemDefinition
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `String` | - | - |
+| `required` | `Boolean` | `false` | - |
+| `disabled` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### QuestionnaireState
+
+| Property | Type |
+| --- | --- |
+| `item` | `String?` |
+| `total` | `Int` |
+| `current` | `Int` |
+| `first` | `Boolean` |
+| `last` | `Boolean` |
+| `activeItemRequired` | `Boolean?` |
+| `activeItemStatus` | `QuestionnaireItemStatus?` |
+| `values` | `Map<String, List<String>>` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### QuestionnaireState.status
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `String` | - | - |
+
+Returns `QuestionnaireItemStatus`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### QuestionnaireState.goTo
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### QuestionnaireState.goPrevious
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### QuestionnaireState.goNext
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### QuestionnaireState.skipCurrent
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### QuestionnaireState.submit
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### QuestionnaireState.reset
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### rememberQuestionnaireState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultItem` | `String?` | `null` | - |
+| `items` | `List<QuestionnaireItemDefinition>?` | `null` | - |
+
+Returns `QuestionnaireState`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### useQuestionnaire
+
+Takes no parameters.
+
+Returns `QuestionnaireState`.
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### Questionnaire
+
+Root that holds the state and the active question.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `state` | `QuestionnaireState` | `rememberQuestionnaireState()` | - |
+| `onItemChange` | `((String) -> Unit)?` | `null` | Called when the current question changes. |
+| `onSubmit` | `(Map<String, List<String>>) -> Unit` | `{}` | Called with the answers when the last question is submitted. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### QuestionnaireProgress
+
+Shows the current question number and total.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `(@Composable (current: Int, total: Int) -> Unit)?` | `null` | The content. |
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### QuestionnaireItem
+
+One question; shown only while active.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `String` | - | Unique key for the answer. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `required` | `Boolean` | `false` | Requires an answer before moving on and hides Skip. |
+| `multiple` | `Boolean` | `false` | Allows more than one choice. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `invalid` | `Boolean` | `false` | Forces the invalid state. |
+| `onStatusChange` | `((QuestionnaireItemStatus) -> Unit)?` | `null` | Called when the status changes to `unanswered`, `answered` or `skipped`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={16}>
+
+### QuestionnaireTitle
+
+The question heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={17}>
+
+### QuestionnaireDescription
+
+Secondary text under the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={18}>
+
+### QuestionnaireChoices
+
+Stack of choice rows.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={19}>
+
+### QuestionnaireChoice
+
+A selectable answer row.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | Value stored when the choice is selected. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `checked` | `Boolean?` | `null` | Controlled checked state. |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | `null` | Called with the next checked state. |
+| `defaultChecked` | `Boolean` | `false` | Initial checked state. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `QuestionnaireChoice(value, content)`, `QuestionnaireChoice(text, value)`.
+
+</ApiPart>
+
+<ApiPart index={20}>
+
+### QuestionnaireChoiceDescription
+
+Secondary text inside a choice.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={21}>
+
+### QuestionnaireInput
+
+Text field for a typed answer.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `value` | `String?` | `null` | Value stored when the choice is selected. |
+| `onValueChange` | `((String) -> Unit)?` | `null` | Called when the value changes. |
+| `defaultValue` | `String` | `""` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `placeholder` | `String?` | `null` | Text shown while it is empty. |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
+
+</ApiPart>
+
+<ApiPart index={22}>
+
+### QuestionnaireError
+
+Validation message shown when the item is invalid.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String?` | `null` | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={23}>
+
+### QuestionnaireActions
+
+Row for the navigation buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={24}>
+
+### QuestionnairePrevious
+
+Goes to the previous question.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String` | `"Previous"` | The text. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Outline` | - |
+| `size` | `ButtonSize` | `ButtonSize.Default` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={25}>
+
+### QuestionnaireSkip
+
+Skips the active question when it is optional.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String` | `"Skip"` | The text. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Outline` | - |
+| `size` | `ButtonSize` | `ButtonSize.Default` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={26}>
+
+### QuestionnaireNext
+
+Validates and moves to the next question.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String` | `"Next"` | The text. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` | - |
+| `size` | `ButtonSize` | `ButtonSize.Default` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={27}>
+
+### QuestionnaireSubmit
+
+Validates all questions and calls `onSubmit` on the last step.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String` | `"Submit"` | The text. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` | - |
+| `size` | `ButtonSize` | `ButtonSize.Default` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

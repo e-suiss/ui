@@ -585,6 +585,8 @@ A short list of plain items.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ContextMenu
@@ -708,6 +710,47 @@ Line between sections.
 Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Separator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .contextMenu
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `() -> Items` | - | - |
+| `preview` | `() -> Preview` | - | - |
+| `previewRadius` | `CGFloat` | - | - |
+
+Overloads: `contextMenu(items:preview:previewRadius:)`, `contextMenu(previewRadius:items:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ContextMenu
+
+The root that manages the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `expanded` | `Boolean` | - | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
+| `trigger` | `@Composable () -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -421,6 +421,8 @@ A small message bubble as the trigger, with a custom `cancelLabel`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ContextActions
@@ -490,6 +492,128 @@ Kept for API parity; renders nothing.
 | `className` | `string` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ContextActions
+
+The root that owns the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dismissible` | `Bool` | `true` | When `false`, the sheet ignores outside presses. |
+| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` | Text of the Cancel button. |
+| `onOpenChange` | `((Bool) -> Void)?` | `nil` | Called when the sheet opens or closes. |
+| `content` | `() -> Content` | - | The content. |
+| `label` | `() -> Label` | - | The label. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### .contextActions
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dismissible` | `Bool` | `true` | When `false`, the sheet ignores outside presses. |
+| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` | Text of the Cancel button. |
+| `onOpenChange` | `((Bool) -> Void)?` | `nil` | Called when the sheet opens or closes. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ContextActions
+
+The root that owns the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onOpenChange` | `(Boolean) -> Unit` | `{}` | Called when the sheet opens or closes. |
+| `dismissible` | `Boolean` | `true` | When `false`, the sheet ignores outside presses. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ContextActionsTrigger
+
+The area that opens the actions on right click, or on long press and keyboard on mobile.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `label` | `String` | `"Show actions"` | The label. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ContextActionsContent
+
+The sheet with the grouped items and a Cancel button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `cancelLabel` | `String` | `"Cancel"` | Text of the Cancel button. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ContextActionsLabel
+
+A title shown at the top of the group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ContextActionsItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | Use `destructive` to style the item as a destructive action. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ContextActionsSeparator
+
+Kept for API parity; renders nothing.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

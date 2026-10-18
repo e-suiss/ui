@@ -276,6 +276,8 @@ A disabled label.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Label
@@ -283,6 +285,46 @@ A disabled label.
 Also accepts the props of `React.ComponentProps<typeof LabelPrimitive.Text>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### FieldLabel
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(_:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Label
+
+Renders a `label` element that names and activates its associated control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `Label(content)`, `Label(text)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

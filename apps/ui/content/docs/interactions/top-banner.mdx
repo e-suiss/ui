@@ -231,6 +231,8 @@ A banner with only a title.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### TopBannerProvider
@@ -245,6 +247,168 @@ Holds the banner queue and renders the current banner in a portal.
 | `children` | `React.ReactNode` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### TopBannerAction
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `action` | `() -> Void` | - | - |
+
+| Property | Type |
+| --- | --- |
+| `title` | `LocalizedStringResource` |
+| `action` | `@MainActor @Sendable () -> Void` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TopBannerItem
+
+| Property | Type |
+| --- | --- |
+| `id` | `UUID` |
+| `title` | `LocalizedStringResource` |
+| `description` | `LocalizedStringResource?` |
+| `icon` | `Image?` |
+| `action` | `TopBannerAction?` |
+| `duration` | `Duration?` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TopBannerManager
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `static shared` | `TopBannerManager` |
+| `queue` | `[TopBannerItem]` |
+| `timeout` | `Duration` |
+| `current` | `TopBannerItem?` |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TopBannerManager.show
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - | - |
+| `description` | `LocalizedStringResource?` | `nil` | - |
+| `icon` | `Image?` | `nil` | - |
+| `action` | `TopBannerAction?` | `nil` | - |
+| `duration` | `Duration?` | `nil` | - |
+
+Returns `UUID`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TopBannerManager.dismiss
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ id` | `UUID?` | `nil` | - |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TopBannerManager.dismissAll
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### .topBanner
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ manager` | `TopBannerManager` | `.shared` | - |
+| `timeout` | `Duration` | `.seconds(4)` | Default time in milliseconds before a banner hides. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TopBannerAction
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `String` | - | - |
+| `onClick` | `() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TopBannerState.show
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `icon` | `ImageVector?` | `null` | - |
+| `action` | `TopBannerAction?` | `null` | - |
+| `timeoutMillis` | `Long` | `defaultTimeoutMillis` | - |
+
+Returns `Long`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TopBannerState.dismiss
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### rememberTopBannerState
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultTimeoutMillis` | `Long` | `4000` | - |
+
+Returns `TopBannerState`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TopBannerProvider
+
+Holds the banner queue and renders the current banner in a portal.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `TopBannerState` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

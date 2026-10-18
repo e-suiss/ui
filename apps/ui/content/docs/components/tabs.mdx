@@ -421,6 +421,8 @@ A disabled tab in the `line` variant.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Tabs
@@ -464,6 +466,151 @@ Panel shown when its value is active.
 Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Panel>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Tabs
+
+Root that holds the active value and orientation.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value>` | - | The selected value. |
+| `orientation` | `Axis` | `.horizontal` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TabsListVariant
+
+Values: `.default`, `.line`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabsList
+
+Row or column of triggers with the animated indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.line` | `.default` | `default` for a filled segmented track, or `line` for an underline. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TabsTrigger
+
+A tab that selects its panel.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The current value. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(value:label:)`, `init(_:value:)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TabsContent
+
+Panel shown when its value is active.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The current value. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TabsListVariant
+
+Values: `Default`, `Line`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Tabs
+
+Root that holds the active value and orientation.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `String` | - | - |
+| `onSelectedChange` | `(String) -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TabsList
+
+Row or column of triggers with the animated indicator.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `TabsListVariant`: `Default` \| `Line` | `TabsListVariant.Default` | `default` for a filled segmented track, or `line` for an underline. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TabsTrigger
+
+A tab that selects its panel.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+Overloads: `TabsTrigger(value, text)`, `TabsTrigger(value, content)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TabsContent
+
+Panel shown when its value is active.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

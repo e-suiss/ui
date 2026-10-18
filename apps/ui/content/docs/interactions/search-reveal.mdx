@@ -305,6 +305,8 @@ Starts with a query, so the field is visible and the list is filtered.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SearchReveal
@@ -339,6 +341,95 @@ The list area, at least one screen tall.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchRevealField
+
+The search input with a clear button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `Binding<String>` | - | The text. |
+| `placeholder` | `LocalizedStringKey` | `"Search"` | Text shown while it is empty. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SearchRevealField
+
+The search input with a clear button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current query. |
+| `onValueChange` | `(String) -> Unit` | - | Called with the new query. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `placeholder` | `String` | `"Search"` | Text shown while it is empty. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

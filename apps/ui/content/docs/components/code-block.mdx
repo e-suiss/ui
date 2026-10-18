@@ -628,6 +628,8 @@ A `CodeBlockFooter` with secondary text below the code.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### CodeBlock
@@ -713,6 +715,292 @@ One line of code.
 Secondary text below the code.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### CodeBlockVariant
+
+Values: `.default`, `.destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CodeBlockSize
+
+Values: `.default`, `.sm`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CodeBlockLineVariant
+
+Values: `.default`, `.added`, `.removed`, `.highlighted`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CodeBlockLine
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ text` | `String` | - | - |
+| `variant` | `CodeBlockLineVariant`: `.default` \| `.added` \| `.removed` \| `.highlighted` | `.default` | - |
+
+| Property | Type |
+| --- | --- |
+| `id` | `UUID` |
+| `text` | `String` |
+| `variant` | `CodeBlockLineVariant` |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CodeBlock
+
+The surface that holds the header, code and footer.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `CodeBlockVariant`: `.default` \| `.destructive` | `.default` | Muted surface or a destructive tint for errors. |
+| `size` | `CodeBlockSize`: `.default` \| `.sm` | `.default` | Text size, padding and corner radius. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CodeBlockHeader
+
+A row above the code for an icon, a title and actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CodeBlockTitle
+
+One line of text that truncates, usually a file name.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CodeBlockActions
+
+Holds buttons at the end of the header.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### CodeBlockCopyButton
+
+Copies `value` and shows a check for two seconds.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The text to copy. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### CodeBlockContent
+
+The code, from a string or `CodeBlockLine` children.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ code` | `String` | - | The code to highlight. A trailing newline is ignored. |
+| `language` | `String?` | `nil` | Colors the code: `ts`, `tsx`, `js`, `json`, `bash`, `python`, `swift`, `kotlin` and their aliases. |
+| `wrap` | `Bool` | `false` | Wraps long lines instead of scrolling sideways. |
+| `lineNumbers` | `Bool` | `false` | Shows a number before each line. |
+| `startLine` | `Int` | `1` | The number of the first line. |
+| `lines` | `[CodeBlockLine]` | - | - |
+
+Overloads: `init(_:language:wrap:lineNumbers:startLine:)`, `init(lines:language:wrap:lineNumbers:startLine:)`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### CodeBlockFooter
+
+Secondary text below the code.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### CodeBlockVariant
+
+Values: `Default`, `Destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### CodeBlockSize
+
+Values: `Default`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### CodeBlockLineVariant
+
+Values: `Default`, `Added`, `Removed`, `Highlighted`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### CodeBlockLine
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | - |
+| `variant` | `CodeBlockLineVariant`: `Default` \| `Added` \| `Removed` \| `Highlighted` | `CodeBlockLineVariant.Default` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### CodeBlock
+
+The surface that holds the header, code and footer.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `CodeBlockVariant`: `Default` \| `Destructive` | `CodeBlockVariant.Default` | Muted surface or a destructive tint for errors. |
+| `size` | `CodeBlockSize`: `Default` \| `Sm` | `CodeBlockSize.Default` | Text size, padding and corner radius. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### CodeBlockHeader
+
+A row above the code for an icon, a title and actions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### CodeBlockTitle
+
+One line of text that truncates, usually a file name.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### CodeBlockActions
+
+Holds buttons at the end of the header.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### CodeBlockCopyButton
+
+Copies `value` and shows a check for two seconds.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The text to copy. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### CodeBlockContent
+
+The code, from a string or `CodeBlockLine` children.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `String` | - | The code to highlight. A trailing newline is ignored. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `language` | `String?` | `null` | Colors the code: `ts`, `tsx`, `js`, `json`, `bash`, `python`, `swift`, `kotlin` and their aliases. |
+| `wrap` | `Boolean` | `false` | Wraps long lines instead of scrolling sideways. |
+| `lineNumbers` | `Boolean` | `false` | Shows a number before each line. |
+| `startLine` | `Int` | `1` | The number of the first line. |
+| `lines` | `List<CodeBlockLine>` | - | - |
+
+Overloads: `CodeBlockContent(code)`, `CodeBlockContent(lines)`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### CodeBlockFooter
+
+Secondary text below the code.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -333,6 +333,8 @@ Pressing an action runs `onPress` and closes the row. For a full-swipe action, `
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SwipeActions
@@ -387,6 +389,146 @@ One action button.
 Also accepts the props of `SwipeActionProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SwipeActionVariant
+
+Values: `.default`, `.destructive`, `.archive`, `.neutral`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SwipeActions
+
+The root that handles the swipe gesture.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `background` | `Color` | `EsuissColor.background` | - |
+| `content` | `() -> Content` | - | The content. |
+| `leading` | `() -> Leading` | - | Content before the main content. |
+| `trailing` | `() -> Trailing` | - | Content after the main content. |
+
+Overloads: `init(background:content:leading:trailing:)`, `init(background:content:trailing:)`, `init(background:content:leading:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SwipeAction
+
+One action button.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `variant` | `SwipeActionVariant`: `.default` \| `.destructive` \| `.archive` \| `.neutral` | `.default` | Background color of the action. |
+| `fullSwipe` | `Bool` | `false` | Runs the action when the row is swiped all the way. |
+| `action` | `() -> Void` | - | Called when the action is pressed or fully swiped. |
+| `label` | `() -> Label` | - | The label. |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(_:variant:fullSwipe:action:label:)`, `init(_:icon:variant:fullSwipe:action:)`, `init(_:variant:fullSwipe:action:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SwipeActionsSide
+
+Values: `Leading`, `Trailing`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SwipeActionVariant
+
+Values: `Default`, `Destructive`, `Archive`, `Neutral`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SwipeAction
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `String` | - | - |
+| `onClick` | `() -> Unit` | - | - |
+| `icon` | `ImageVector?` | `null` | - |
+| `variant` | `SwipeActionVariant`: `Default` \| `Destructive` \| `Archive` \| `Neutral` | `SwipeActionVariant.Default` | - |
+| `fullSwipe` | `Boolean` | `false` | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SwipeActionsState
+
+| Property | Type |
+| --- | --- |
+| `openSide` | `SwipeActionsSide?` |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SwipeActionsState.close
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SwipeActionsState.open
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `SwipeActionsSide`: `Leading` \| `Trailing` | - | - |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### rememberSwipeActionsState
+
+Takes no parameters.
+
+Returns `SwipeActionsState`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### SwipeActions
+
+The root that handles the swipe gesture.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `leading` | `List<SwipeAction>` | `emptyList()` | Content before the main content. |
+| `trailing` | `List<SwipeAction>` | `emptyList()` | Content after the main content. |
+| `state` | `SwipeActionsState` | `rememberSwipeActionsState()` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `background` | `Color` | `EsuissTheme.colors.background` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

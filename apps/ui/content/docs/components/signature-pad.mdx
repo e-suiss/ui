@@ -219,6 +219,8 @@ A controlled pad that reads the signature through the ref and exports it with `t
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SignaturePad
@@ -237,6 +239,151 @@ A controlled pad that reads the signature through the ref and exports it with `t
 Also accepts the props of `React.ComponentProps<typeof View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SignatureStroke
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ points` | `[CGPoint]` | - | - |
+
+| Property | Type |
+| --- | --- |
+| `points` | `[CGPoint]` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SignaturePad
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Binding<[SignatureStroke]>` | - | Strokes for controlled use. |
+| `strokeWidth` | `CGFloat` | `2.5` | Line width of the strokes. |
+| `placeholder` | `LocalizedStringKey` | `"Sign here"` | Content shown on the signature line while the pad is empty. |
+| `clearable` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SignaturePad.path
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ strokes` | `[SignatureStroke]` | - | - |
+| `strokeWidth` | `CGFloat` | `2.5` | - |
+
+Returns `Path`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SignaturePad.image
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ strokes` | `[SignatureStroke]` | - | - |
+| `size` | `CGSize` | - | - |
+| `strokeWidth` | `CGFloat` | `2.5` | - |
+| `color` | `Color` | `EsuissColor.foreground` | - |
+| `colorScheme` | `ColorScheme` | `.light` | - |
+| `scale` | `CGFloat` | `3` | - |
+
+Returns `UIImage?`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SignatureStroke
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `points` | `List<Offset>` | - | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### toPath
+
+Receiver: `List<SignatureStroke>`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `scale` | `Float` | `1f` | - |
+
+Returns `Path`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### toSvg
+
+Receiver: `List<SignatureStroke>`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `width` | `Float` | - | - |
+| `height` | `Float` | - | - |
+| `strokeWidth` | `Float` | `2.5f` | - |
+| `color` | `String` | `"#000000"` | - |
+
+Returns `String`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### toImageBitmap
+
+Receiver: `List<SignatureStroke>`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `width` | `Dp` | - | - |
+| `height` | `Dp` | - | - |
+| `density` | `Density` | - | - |
+| `color` | `Color` | `Color.Black` | - |
+| `strokeWidth` | `Dp` | `2.5.dp` | - |
+| `background` | `Color` | `Color.Transparent` | - |
+
+Returns `ImageBitmap`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SignaturePad
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `value` | `List<SignatureStroke>?` | `null` | Strokes for controlled use. |
+| `onValueChange` | `((List<SignatureStroke>) -> Unit)?` | `null` | Called when the value changes. |
+| `defaultValue` | `List<SignatureStroke>` | `emptyList()` | Initial strokes for uncontrolled use. |
+| `strokeWidth` | `Dp` | `2.5.dp` | Line width of the strokes. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `placeholder` | `String` | `"Sign here"` | Content shown on the signature line while the pad is empty. |
+| `clearLabel` | `String` | `"Clear"` | Label of the Clear button. |
+| `showClearButton` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

@@ -597,6 +597,8 @@ Tool calls with their output, including a failed call.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Trace
@@ -684,6 +686,251 @@ The detail of a row, indented under the title with a leading rule.
 | `keepMounted` | `boolean` | `false` | Keeps the detail mounted while closed, so nested rows keep their state. |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### TraceStatus
+
+Values: `.running`, `.error`, `.pending`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Trace
+
+A column of rows.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TraceLine
+
+One row: an icon, a title and an optional description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `status` | `TraceStatus?`: `.running` \| `.error` \| `.pending` | `nil` | The state of the work the row reports. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TraceIcon
+
+A 16 pt icon slot, hidden from assistive technology.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TraceTitle
+
+One line of text that truncates. It pulses while the row is running unless the reader prefers reduced motion.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TraceDescription
+
+Secondary text after the title, with tabular numbers.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TraceCollapsible
+
+A row that expands.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isExpanded` | `Binding<Bool>` | - | The controlled open state. Pass it with `onExpandedChange`. |
+| `content` | `() -> Content` | - | The content. |
+| `initiallyExpanded` | `Bool` | `false` | - |
+
+Overloads: `init(isExpanded:content:)`, `init(initiallyExpanded:content:)`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TraceCollapsibleTrigger
+
+The pressable row that opens and closes the detail. It adds a chevron after the line.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `() -> Label` | - | The label. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TraceCollapsibleContent
+
+The detail of a row, indented under the title with a leading rule.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TraceStatus
+
+Values: `Running`, `Error`, `Pending`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Trace
+
+A column of rows.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TraceLine
+
+One row: an icon, a title and an optional description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `status` | `TraceStatus?`: `Running` \| `Error` \| `Pending` | `null` | The state of the work the row reports. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TraceIcon
+
+A 16 pt icon slot, hidden from assistive technology.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TraceTitle
+
+One line of text that truncates. It pulses while the row is running unless the reader prefers reduced motion.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TraceDescription
+
+Secondary text after the title, with tabular numbers.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TraceCollapsible
+
+A row that expands.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `expanded` | `Boolean` | - | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - | Called when the open state changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+| `initiallyExpanded` | `Boolean` | `false` | - |
+
+Overloads: `TraceCollapsible(expanded, onExpandedChange, content)`, `TraceCollapsible(initiallyExpanded, content)`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TraceCollapsibleTrigger
+
+The pressable row that opens and closes the detail. It adds a chevron after the line.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TraceCollapsibleContent
+
+The detail of a row, indented under the title with a leading rule.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

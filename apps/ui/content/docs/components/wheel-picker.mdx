@@ -356,6 +356,8 @@ Controlled day, hour and minute columns combined into one value.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### WheelPicker
@@ -385,6 +387,107 @@ Single row in a column.
 Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Item>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### WheelPicker
+
+Root row of columns with the selection highlight.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `spacing` | `CGFloat` | `0` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WheelPickerColumn
+
+Snapping scroll column that holds one value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value>` | - | The selected value. |
+| `alignment` | `HorizontalAlignment` | `.center` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WheelPickerItem
+
+Single row in a column.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The string value this item selects; it must be unique in its column. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(value:label:)`, `init(_:value:)`, `init(verbatim:value:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### WheelPickerColumnScope.WheelPickerItem
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+| `enabled` | `Boolean` | `true` | - |
+| `content` | `@Composable () -> Unit` | - | - |
+| `text` | `String` | - | - |
+
+Overloads: `WheelPickerItem(value, content)`, `WheelPickerItem(value, text)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WheelPicker
+
+Root row of columns with the selection highlight.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Center` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WheelPickerColumn
+
+Snapping scroll column that holds one value.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String?` | - | The selected value, for controlled use. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the column settles on a new value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `label` | `String?` | `null` | The label. |
+| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.CenterHorizontally` | - |
+| `itemPadding` | `Dp` | `12.dp` | - |
+| `content` | `WheelPickerColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

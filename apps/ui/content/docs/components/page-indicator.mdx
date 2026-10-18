@@ -234,6 +234,8 @@ Pressable dots that change the page through `onIndexChange`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### PageIndicator
@@ -250,6 +252,80 @@ Pressable dots that change the page through `onIndexChange`.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### PageIndicatorSize
+
+Values: `.sm`, `.default`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PageIndicatorVariant
+
+Values: `.default`, `.accent`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PageIndicator
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `count` | `Int` | - | Total number of pages. Nothing renders when it is `0`. |
+| `index` | `Int` | - | Zero-based index of the current page. |
+| `size` | `Size`: `.sm` \| `.default` | `.default` | Dot size: `default` or `sm`. |
+| `variant` | `Variant`: `.default` \| `.accent` | `.default` | Active dot color: `default` or `accent`. |
+| `maxVisible` | `Int` | `7` | Most dots shown at once. |
+| `onIndexChange` | `((Int) -> Void)?` | `nil` | Called with the new index when a dot is pressed or an accessibility action is used. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### PageIndicatorSize
+
+Values: `Sm`, `Default`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PageIndicatorVariant
+
+Values: `Default`, `Accent`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PageIndicator
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `count` | `Int` | - | Total number of pages. Nothing renders when it is `0`. |
+| `index` | `Int` | - | Zero-based index of the current page. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `onIndexChange` | `((Int) -> Unit)?` | `null` | Called with the new index when a dot is pressed or an accessibility action is used. |
+| `size` | `PageIndicatorSize`: `Sm` \| `Default` | `PageIndicatorSize.Default` | Dot size: `default` or `sm`. |
+| `variant` | `PageIndicatorVariant`: `Default` \| `Accent` | `PageIndicatorVariant.Default` | Active dot color: `default` or `accent`. |
+| `maxVisible` | `Int` | `7` | Most dots shown at once. |
+| `accessibilityLabel` | `String?` | `null` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

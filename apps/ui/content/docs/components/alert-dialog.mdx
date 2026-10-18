@@ -533,6 +533,8 @@ A destructive action button for an irreversible confirmation.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### AlertDialog
@@ -641,6 +643,267 @@ Secondary button that closes the dialog.
 Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Close>`, `React.ComponentProps<typeof Button>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .alertDialog
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertDialogContent
+
+Centered card with scale and fade transitions.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `Size`: `.default` \| `.sm` | `.default` | `default` or `sm` maximum width. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertDialogHeader
+
+Centered column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertDialogMedia
+
+Round badge for an icon above the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AlertDialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AlertDialogDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AlertDialogFooter
+
+Row of actions with equal-width buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AlertDialogAction
+
+Button that confirms and closes the dialog.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.default` | - |
+| `size` | `VariantButtonStyle.Size` | `.default` | `default` or `sm` maximum width. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AlertDialogCancel
+
+Secondary button that closes the dialog.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` | - |
+| `size` | `VariantButtonStyle.Size` | `.default` | `default` or `sm` maximum width. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | `"Cancel"` | The title text. |
+
+Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AlertDialogSize
+
+Values: `Default`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AlertDialog
+
+The root that manages the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | Whether the dialog is open, for controlled use. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the dialog opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `AlertDialogSize`: `Default` \| `Sm` | `AlertDialogSize.Default` | `default` or `sm` maximum width. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AlertDialogHeader
+
+Centered column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### AlertDialogMedia
+
+Round badge for an icon above the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### AlertDialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### AlertDialogDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### AlertDialogFooter
+
+Row of actions with equal-width buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### AlertDialogAction
+
+Button that confirms and closes the dialog.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` | - |
+| `size` | `ButtonSize` | `ButtonSize.Default` | `default` or `sm` maximum width. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### AlertDialogCancel
+
+Secondary button that closes the dialog.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | - |
+| `size` | `ButtonSize` | `ButtonSize.Default` | `default` or `sm` maximum width. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

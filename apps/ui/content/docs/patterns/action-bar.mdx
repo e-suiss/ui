@@ -487,6 +487,8 @@ Detaches the drawer from the screen edges with `floating`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ActionBar
@@ -577,6 +579,143 @@ Kept for API parity; renders nothing.
 | `className` | `string` | - |  |
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ActionBar
+
+The root that renders the More actions button, its drawer and each menu's sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
+| `dismissible` | `Bool` | `true` | When `false`, sheets ignore outside presses and close only through an action or Cancel. |
+| `moreLabel` | `LocalizedStringKey` | `"More actions"` | Accessibility label of the More actions button and drawer. |
+| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` | Text of the Cancel button in each sheet. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ActionBarMenu
+
+One menu; a row in the drawer and an `AlertSheet` for its items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
+| `content` | `() -> Content` | - | The content. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(isPresented:content:label:)`, `init(_:isPresented:content:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ActionBarScope.ActionBarMenu
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean?` | `null` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | `{}` | - |
+| `defaultOpen` | `Boolean` | `false` | - |
+| `content` | `ActionBarMenuScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ActionBarMenuScope.ActionBarTrigger
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | - |
+| `enabled` | `Boolean` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ActionBarMenuScope.ActionBarContent
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | - |
+| `content` | `@Composable () -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ActionBar
+
+The root that renders the More actions button, its drawer and each menu's sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | Controls whether the More actions drawer is open. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the drawer opens or closes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `dismissible` | `Boolean` | `true` | When `false`, sheets ignore outside presses and close only through an action or Cancel. |
+| `floating` | `Boolean` | `false` | Insets the drawer from the screen edges. |
+| `moreLabel` | `String` | `"More actions"` | Accessibility label of the More actions button and drawer. |
+| `cancelLabel` | `String` | `"Cancel"` | Text of the Cancel button in each sheet. |
+| `content` | `ActionBarScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ActionBarLabel
+
+A title shown at the top of the sheet.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ActionBarItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | Use `destructive` to style the item as a destructive action. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ActionBarSeparator
+
+Kept for API parity; renders nothing.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

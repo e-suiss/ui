@@ -345,6 +345,8 @@ Full-width buttons at each size, whose corner radius scales with size.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Button
@@ -358,6 +360,67 @@ Full-width buttons at each size, whose corner radius scales with size.
 Also accepts the props of `ButtonProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .buttonStyle(.variant)
+
+Style that creates `VariantButtonStyle`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `VariantButtonStyle.Variant`: `.default` \| `.outline` \| `.secondary` \| `.tinted` \| `.ghost` \| `.plain` \| `.destructive` \| `.link` | `.default` | Visual style. |
+| `size` | `VariantButtonStyle.Size`: `.default` \| `.xs` \| `.sm` \| `.lg` \| `.xl` \| `.icon` \| `.iconXs` \| `.iconSm` \| `.iconLg` \| `.iconXl` | `.default` | Height and padding; `icon` sizes are square. |
+| `block` | `Bool` | `false` | Stretches the button to the full width of its container. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ButtonVariant
+
+Values: `Default`, `Outline`, `Secondary`, `Tinted`, `Ghost`, `Plain`, `Destructive`, `Link`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ButtonSize
+
+Values: `Default`, `Xs`, `Sm`, `Lg`, `Xl`, `Icon`, `IconXs`, `IconSm`, `IconLg`, `IconXl`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Button
+
+The interactive button element.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ButtonVariant`: `Default` \| `Outline` \| `Secondary` \| `Tinted` \| `Ghost` \| `Plain` \| `Destructive` \| `Link` | `ButtonVariant.Default` | Visual style. |
+| `size` | `ButtonSize`: `Default` \| `Xs` \| `Sm` \| `Lg` \| `Xl` \| `Icon` \| `IconXs` \| `IconSm` \| `IconLg` \| `IconXl` | `ButtonSize.Default` | Height and padding; `icon` sizes are square. |
+| `block` | `Boolean` | `false` | Stretches the button to the full width of its container. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `Button(onClick, content)`, `Button(text, onClick)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

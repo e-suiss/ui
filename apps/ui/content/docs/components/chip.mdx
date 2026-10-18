@@ -284,6 +284,8 @@ A disabled group.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Chip
@@ -318,6 +320,113 @@ Manages selection and layout for several chips.
 Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ChipSize
+
+Values: `.sm`, `.default`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChipGroup
+
+Manages selection and layout for several chips.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value?>` | - | The selected value. |
+| `size` | `ChipSize`: `.sm` \| `.default` | `.default` | Size passed to every chip. |
+| `scrollable` | `Bool` | `false` | Shows chips in a horizontal scroll view instead of wrapping. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Chip
+
+Selectable pill.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isSelected` | `Binding<Bool>?` | `nil` | - |
+| `size` | `ChipSize?`: `.sm` \| `.default` | `nil` | The chip height; inherited from a surrounding group. |
+| `icon` | `Image?` | `nil` | An icon shown before the label. |
+| `onRemove` | `(() -> Void)?` | `nil` | Shows a remove button and is called when it is pressed. |
+| `label` | `() -> Label` | - | The label. |
+| `value` | `Value` | - | The current value. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(isSelected:size:icon:onRemove:label:)`, `init(value:size:icon:onRemove:label:)`, `init(_:isSelected:size:icon:onRemove:)`, `init(_:value:size:icon:onRemove:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ChipSize
+
+Values: `Default`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ChipGroup
+
+Manages selection and layout for several chips.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String?` | - | The current value. |
+| `onValueChange` | `(String?) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `ChipSize`: `Default` \| `Sm` | `ChipSize.Default` | Size passed to every chip. |
+| `scrollable` | `Boolean` | `false` | Shows chips in a horizontal scroll view instead of wrapping. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `values` | `Set<String>` | - | - |
+| `onValuesChange` | `(Set<String>) -> Unit` | - | - |
+
+Overloads: `ChipGroup(value, onValueChange, content)`, `ChipGroup(values, onValuesChange, content)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Chip
+
+Selectable pill.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `value` | `String` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `icon` | `ImageVector?` | `null` | An icon shown before the label. |
+| `onRemove` | `(() -> Unit)?` | `null` | Shows a remove button and is called when it is pressed. |
+| `removeLabel` | `String` | `"Remove $text"` | Accessibility label of the remove button. |
+| `selected` | `Boolean` | - | Whether the chip is selected, for controlled use. |
+| `onSelectedChange` | `(Boolean) -> Unit` | - | Called when the chip is toggled. |
+| `size` | `ChipSize`: `Default` \| `Sm` | `LocalChipGroupState.current?.size ?: ChipSize.Default` | The chip height; inherited from a surrounding group. |
+
+Overloads: `Chip(text, value)`, `Chip(text, selected, onSelectedChange, size)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

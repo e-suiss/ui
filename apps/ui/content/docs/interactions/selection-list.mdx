@@ -362,6 +362,8 @@ A mail list whose bar holds icon-only actions.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SelectionList
@@ -429,6 +431,254 @@ Text showing the number of selected items.
 Also accepts the props of `React.ComponentProps<typeof Text>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SelectionListProxy
+
+| Property | Type |
+| --- | --- |
+| `isEditing` | `Bool` |
+| `count` | `Int` |
+| `total` | `Int` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectionListProxy.setEditing
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ value` | `Bool` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SelectionListProxy.selectAll
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectionListProxy.clear
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectionList
+
+The root that holds the editing state and selection.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isEditing` | `Binding<Bool>?` | `nil` | - |
+| `selection` | `Binding<Set<Value>>?` | `nil` | The selected value. |
+| `defaultEditing` | `Bool` | `false` | Whether editing starts on when uncontrolled. |
+| `defaultSelection` | `Set<Value>` | `[]` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SelectionListTrigger
+
+A plain button that toggles editing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(label:)`, `init()`, `init(_:)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### SelectionListItem
+
+A row that toggles its `value` while editing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The value this row adds to the selection. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### SelectionListBar
+
+A floating toolbar shown while editing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `(SelectionListProxy) -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### SelectionListCount
+
+Text showing the number of selected items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init()`, `init(_:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SelectionListScope
+
+| Property | Type |
+| --- | --- |
+| `editing` | `Boolean` |
+| `selected` | `List<String>` |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SelectionListScope.setEditing
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `editing` | `Boolean` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SelectionListScope.setSelected
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `List<String>` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SelectionListScope.toggle
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SelectionListScope.selectAll
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SelectionListScope.clear
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### SelectionList
+
+The root that holds the editing state and selection.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `editing` | `Boolean` | - | Controls editing mode. |
+| `onEditingChange` | `(Boolean) -> Unit` | - | Called when editing turns on or off. |
+| `value` | `List<String>` | - | Selected item values when controlled. |
+| `onValueChange` | `(List<String>) -> Unit` | - | Called with the new selection. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable SelectionListScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### SelectionListTrigger
+
+A plain button that toggles editing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String?` | `null` | The text. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### SelectionListItem
+
+A row that toggles its `value` while editing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The value this row adds to the selection. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `contentDescription` | `String?` | `null` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### SelectionListBar
+
+A floating toolbar shown while editing.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### SelectionListCount
+
+Text showing the number of selected items.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String?` | `null` | The text. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

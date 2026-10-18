@@ -678,6 +678,8 @@ Page buttons with previous and next arrows.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ButtonGroup
@@ -715,6 +717,106 @@ Divider between joined buttons.
 Also accepts the props of `React.ComponentProps<typeof Separator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ButtonGroup
+
+Container that joins its children.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `Axis` | `.horizontal` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ButtonGroupText
+
+Pill-shaped label or icon slot.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ButtonGroupSeparator
+
+Divider between joined buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ orientation` | `Axis` | `.vertical` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ButtonGroupOrientation
+
+Values: `Horizontal`, `Vertical`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ButtonGroup
+
+Container that joins its children.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `orientation` | `ButtonGroupOrientation`: `Horizontal` \| `Vertical` | `ButtonGroupOrientation.Horizontal` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ButtonGroupText
+
+Pill-shaped label or icon slot.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ButtonGroupSeparator
+
+Divider between joined buttons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `orientation` | `Orientation` | `Orientation.Vertical` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
+| `color` | `Color` | `Color.Unspecified` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

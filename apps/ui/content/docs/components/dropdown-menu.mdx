@@ -787,6 +787,8 @@ Items aligned with `inset`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### DropdownMenu
@@ -911,6 +913,321 @@ Line between sections.
 Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Separator>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### DropdownMenu
+
+The root that manages the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
+| `side` | `Edge` | `.bottom` | - |
+| `align` | `PopupAlignment` | `.start` | - |
+| `sideOffset` | `CGFloat` | `4` | - |
+| `alignOffset` | `CGFloat` | `0` | - |
+| `content` | `() -> Content` | - | The content. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(isPresented:side:align:sideOffset:alignOffset:content:label:)`, `init(_:isPresented:side:align:content:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DropdownMenuItem
+
+Action row.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.destructive` | `.default` | `destructive` colors the item and its icon with the `destructive` color. |
+| `inset` | `Bool` | `false` | Adds start padding to align with icon items. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(variant:inset:action:label:)`, `init(_:variant:inset:action:)`, `init(_:icon:variant:action:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isOn` | `Binding<Bool>` | - | - |
+| `inset` | `Bool` | `false` | Adds start padding. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(isOn:inset:label:)`, `init(_:isOn:inset:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DropdownMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `Binding<Value>` | - | The selected value. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The current value. |
+| `inset` | `Bool` | `false` | Adds start padding. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(value:inset:label:)`, `init(_:value:inset:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `inset` | `Bool` | `false` | Adds start padding. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DropdownMenuGroup
+
+Groups related items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### DropdownMenuSub
+
+The root of a nested submenu.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset` | `Bool` | `false` | Adds start padding. |
+| `content` | `() -> Content` | - | The content. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `icon` | `Image` | - | The icon. |
+
+Overloads: `init(inset:content:label:)`, `init(_:inset:content:)`, `init(_:icon:content:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### MenuItemVariant
+
+Values: `Default`, `Destructive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### DropdownMenu
+
+The root that manages the open state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `expanded` | `Boolean` | - | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
+| `trigger` | `@Composable () -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `side` | `PopupSide` | `PopupSide.Bottom` | - |
+| `align` | `PopupAlign` | `PopupAlign.Start` | - |
+| `sideOffset` | `Dp` | `4.dp` | - |
+| `alignOffset` | `Dp` | `0.dp` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### DropdownMenuItem
+
+Action row.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `MenuItemVariant`: `Default` \| `Destructive` | `MenuItemVariant.Default` | `destructive` colors the item and its icon with the `destructive` color. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `inset` | `Boolean` | `false` | Adds start padding to align with icon items. |
+| `closeOnClick` | `Boolean` | `true` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+
+Overloads: `DropdownMenuItem(onClick, content)`, `DropdownMenuItem(text, onClick, icon)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `Boolean` | - | - |
+| `onCheckedChange` | `(Boolean) -> Unit` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `inset` | `Boolean` | `false` | Adds start padding. |
+| `closeOnClick` | `Boolean` | `false` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `DropdownMenuCheckboxItem(checked, onCheckedChange, closeOnClick, content)`, `DropdownMenuCheckboxItem(text, checked, onCheckedChange)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### DropdownMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String?` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `inset` | `Boolean` | `false` | Adds start padding. |
+| `closeOnClick` | `Boolean` | `false` | - |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `DropdownMenuRadioItem(value, closeOnClick, content)`, `DropdownMenuRadioItem(value, text)`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `inset` | `Boolean` | `false` | Adds start padding. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### DropdownMenuGroup
+
+Groups related items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### DropdownMenuSub
+
+The root of a nested submenu.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `icon` | `ImageVector?` | `null` | The icon. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `inset` | `Boolean` | `false` | Adds start padding. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+| `trigger` | `@Composable RowScope.() -> Unit` | - | - |
+
+Overloads: `DropdownMenuSub(text, icon, content)`, `DropdownMenuSub(trigger, content)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

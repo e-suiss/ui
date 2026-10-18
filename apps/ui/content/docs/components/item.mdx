@@ -511,6 +511,8 @@ Pressable rows in an inset group, with colored icon tiles, separators and traili
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### ItemGroup
@@ -624,6 +626,352 @@ Full-width row below the content.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### ItemVariant
+
+Values: `.default`, `.outline`, `.muted`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ItemSize
+
+Values: `.default`, `.sm`, `.xs`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ItemGroupVariant
+
+Values: `.default`, `.inset`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ItemGroup
+
+List container for items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `ItemGroupVariant`: `.default` \| `.inset` | `.default` | `default` stacks items with a gap; `inset` joins them into one rounded card. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ItemSeparator
+
+Divider between items, inset inside an inset group.
+
+Takes no parameters.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### Item
+
+The row itself, pressable when given a press handler.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `ItemVariant`: `.default` \| `.outline` \| `.muted` | `.default` | Visual style. |
+| `size` | `ItemSize`: `.default` \| `.sm` \| `.xs` | `.default` | Padding and gap. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### ItemMediaVariant
+
+Values: `.default`, `.icon`, `.image`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ItemMedia
+
+Leading icon, image or avatar.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `ItemMediaVariant`: `.default` \| `.icon` \| `.image` | `.default` | `default`, `icon` for 16-point icons, or `image` for a square thumbnail. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ItemContent
+
+Flexible column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ItemTitle
+
+Single-line title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ItemDescription
+
+Secondary text, up to two lines.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ItemActions
+
+Trailing row for values, buttons or chevrons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### ItemHeader
+
+Full-width row above the content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### ItemFooter
+
+Full-width row below the content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### ItemVariant
+
+Values: `Default`, `Outline`, `Muted`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### ItemSize
+
+Values: `Default`, `Sm`, `Xs`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### ItemGroupVariant
+
+Values: `Default`, `Inset`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### ItemMediaVariant
+
+Values: `Default`, `Icon`, `Image`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### ItemGroup
+
+List container for items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ItemGroupVariant`: `Default` \| `Inset` | `ItemGroupVariant.Default` | `default` stacks items with a gap; `inset` joins them into one rounded card. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### ItemSeparator
+
+Divider between items, inset inside an inset group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### Item
+
+The row itself, pressable when given a press handler.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ItemVariant`: `Default` \| `Outline` \| `Muted` | `ItemVariant.Default` | Visual style. |
+| `size` | `ItemSize`: `Default` \| `Sm` \| `Xs` | `ItemSize.Default` | Padding and gap. |
+| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
+| `onLongClick` | `(() -> Unit)?` | `null` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `selected` | `Boolean?` | `null` | - |
+| `role` | `Role?` | `Role.Button` | - |
+| `onClickLabel` | `String?` | `null` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### ItemMedia
+
+Leading icon, image or avatar.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `ItemMediaVariant`: `Default` \| `Icon` \| `Image` | `ItemMediaVariant.Default` | `default`, `icon` for 16-point icons, or `image` for a square thumbnail. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### ItemContent
+
+Flexible column for the title and description.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### ItemTitle
+
+Single-line title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `ItemTitle(content)`, `ItemTitle(text)`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### ItemDescription
+
+Secondary text, up to two lines.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### ItemActions
+
+Trailing row for values, buttons or chevrons.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### ItemHeader
+
+Full-width row above the content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### ItemFooter
+
+Full-width row below the content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

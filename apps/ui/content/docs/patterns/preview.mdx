@@ -370,6 +370,8 @@ Sets `floating` to `false` so the drawer sits on the screen edges.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Preview
@@ -409,6 +411,89 @@ The drawer content with padding for the preview.
 Also accepts the props of `React.ComponentProps<typeof DrawerContent>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .preview
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
+| `arrowEdge` | `Edge` | `.top` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PreviewContent
+
+The drawer content with padding for the preview.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton` | `Bool` | `false` | Shows a close button in the mobile drawer. |
+| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the mobile close button in place of the icon. |
+| `width` | `CGFloat?` | `256` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Preview
+
+The root drawer, floating by default.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `Boolean` | - | Controls whether the preview is open. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the preview opens or closes. |
+| `floating` | `Boolean` | `true` | Insets the drawer from the screen edges. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PreviewTrigger
+
+The link-styled element that opens the preview.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
+| `text` | `String` | - | The text. |
+
+Overloads: `PreviewTrigger(content)`, `PreviewTrigger(text)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### PreviewContent
+
+The drawer content with padding for the preview.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `showCloseButton` | `Boolean` | `false` | Shows a close button in the mobile drawer. |
+| `closeLabel` | `String?` | `null` | Text for the mobile close button in place of the icon. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

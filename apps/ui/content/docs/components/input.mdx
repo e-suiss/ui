@@ -348,6 +348,8 @@ A disabled input.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Input
@@ -359,6 +361,59 @@ A disabled input.
 Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .textFieldStyle(.input)
+
+Style that creates `InputStyle`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `InputStyle.Size`: `.default` \| `.md` \| `.sm` | `.default` | Height and text size: `default`, `md` or `sm`. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### InputSize
+
+Values: `Default`, `Md`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Input
+
+The text field.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `InputSize`: `Default` \| `Md` \| `Sm` | `InputSize.Default` | Height and text size: `default`, `md` or `sm`. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `readOnly` | `Boolean` | `false` | - |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | - |
+| `placeholder` | `String?` | `null` | Text shown while it is empty. |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
+| `visualTransformation` | `VisualTransformation` | `VisualTransformation.None` | - |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

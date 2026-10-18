@@ -355,6 +355,8 @@ A controlled accordion with `multiple`, so several items stay open.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Accordion
@@ -402,6 +404,92 @@ Panel shown while the item is open; fades out upward on close.
 Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Panel>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### Accordion
+
+Root that holds the open state and lays out the items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.filled` | `.default` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
+| `multiple` | `Bool` | `false` | - |
+| `content` | `() -> Content` | - | The content. |
+| `expanded` | `Binding<Set<Value>>` | - | - |
+
+Overloads: `init(_:multiple:content:)`, `init(_:expanded:multiple:content:)`, `init(_:expanded:content:)`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### AccordionItem
+
+One section, separated from the previous one by a hairline.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `Value` | - | The current value. |
+| `content` | `() -> Content` | - | The content. |
+| `label` | `() -> Label` | - | The label. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(value:content:label:)`, `init(_:value:content:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### AccordionVariant
+
+Values: `Default`, `Filled`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Accordion
+
+Root that holds the open state and lays out the items.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `AccordionVariant`: `Default` \| `Filled` | `AccordionVariant.Default` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### AccordionItem
+
+One section, separated from the previous one by a hairline.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `expanded` | `Boolean` | - | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
+| `title` | `String` | - | The title text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+| `trigger` | `@Composable RowScope.() -> Unit` | - | - |
+
+Overloads: `AccordionItem(expanded, onExpandedChange, title, content)`, `AccordionItem(expanded, onExpandedChange, trigger, content)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

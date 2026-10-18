@@ -521,6 +521,8 @@ A complete form with validation and a submit button.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### FieldSet
@@ -640,6 +642,340 @@ Error message shown when validation fails.
 Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Error>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .invalid
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ isInvalid` | `Bool` | `true` | - |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### FieldOrientation
+
+Values: `.vertical`, `.horizontal`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### Field
+
+One field that shares state with its control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `FieldOrientation`: `.vertical` \| `.horizontal` | `.vertical` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
+| `invalid` | `Bool?` | `nil` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### FieldContent
+
+Column for a title and description beside a control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### FieldTitle
+
+Bold text for a field's title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### FieldDescription
+
+Helper text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### FieldError
+
+Error message shown when validation fails.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ message` | `LocalizedStringKey` | - | - |
+| `errors` | `[String?]` | - | Array of `{ message }` objects to show. |
+
+Overloads: `init(_:)`, `init(errors:)`.
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### FieldGroupVariant
+
+Values: `.default`, `.inset`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### FieldGroup
+
+Stack of fields, plain or inset.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ variant` | `FieldGroupVariant`: `.default` \| `.inset` | `.default` | `legend` (heading) or `label`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### FieldSet
+
+Group of related fields.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### FieldLegend
+
+Heading for a fieldset.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `variant` | `Variant`: `.legend` \| `.label` | `.legend` | `legend` (heading) or `label`. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### FieldSeparator
+
+Divider with optional centered text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+
+Overloads: `init(content:)`, `init()`, `init(_:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### FieldOrientation
+
+Values: `Vertical`, `Horizontal`, `Responsive`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### FieldGroupVariant
+
+Values: `Default`, `Inset`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### FieldLegendVariant
+
+Values: `Legend`, `Label`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### FieldScope.weight
+
+Receiver: `Modifier`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `weight` | `Float` | - | - |
+
+Returns `Modifier`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### FieldSet
+
+Group of related fields.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `FieldGroupVariant`: `Default` \| `Inset` | `FieldGroupVariant.Default` | `legend` (heading) or `label`. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### FieldLegend
+
+Heading for a fieldset.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `FieldLegendVariant`: `Legend` \| `Label` | `FieldLegendVariant.Legend` | `legend` (heading) or `label`. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### FieldGroup
+
+Stack of fields, plain or inset.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `variant` | `FieldGroupVariant`: `Default` \| `Inset` | `FieldGroupVariant.Default` | `legend` (heading) or `label`. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### Field
+
+One field that shares state with its control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `orientation` | `FieldOrientation`: `Vertical` \| `Horizontal` \| `Responsive` | `FieldOrientation.Vertical` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `false` | - |
+| `content` | `@Composable FieldScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### FieldContent
+
+Column for a title and description beside a control.
+
+Receiver: `FieldScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### FieldLabel
+
+Label linked to the control.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### FieldTitle
+
+Bold text for a field's title.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### FieldDescription
+
+Helper text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### FieldSeparator
+
+Divider with optional centered text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `text` | `String?` | `null` | The text. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### FieldError
+
+Error message shown when validation fails.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String?` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `errors` | `List<String?>` | - | Array of `{ message }` objects to show. |
+
+Overloads: `FieldError(text)`, `FieldError(errors)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

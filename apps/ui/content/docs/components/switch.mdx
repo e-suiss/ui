@@ -347,6 +347,8 @@ A switch with the `invalid` border next to its label.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Switch
@@ -359,6 +361,52 @@ A switch with the `invalid` border next to its label.
 Also accepts the props of `React.ComponentProps<typeof SwitchPrimitives.Root>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SwitchStyle
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `Size`: `.default` \| `.sm` | `.default` | - |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SwitchSize
+
+Values: `Default`, `Sm`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Switch
+
+The switch track and its sliding thumb.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `Boolean` | - | - |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `SwitchSize`: `Default` \| `Sm` | `SwitchSize.Default` | Sets the switch size: `default` or the smaller `sm`. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Adds a destructive border when not disabled. |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

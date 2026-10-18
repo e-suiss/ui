@@ -199,6 +199,8 @@ The available Phosphor weights.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Icon
@@ -212,6 +214,28 @@ Styled Phosphor icon.
 Also accepts the props of `IconProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Icon
+
+Styled Phosphor icon.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `imageVector` | `ImageVector` | - | - |
+| `contentDescription` | `String?` | - | - |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `Dp` | `LocalIconSize.current` | - |
+| `tint` | `Color` | `LocalContentColor.current.takeOrElse { EsuissTheme.colors.foreground }` | - |
+
+</ApiPart>
+
+</Only>
 
 </Only>
 

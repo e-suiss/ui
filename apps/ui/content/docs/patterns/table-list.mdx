@@ -296,6 +296,8 @@ Builds the grouped list in a `FlatList` with a header, footer and separators.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### TableListTitle
@@ -373,6 +375,292 @@ Renders rows from a column definition, with an optional title and empty state.
 Also accepts the props of `ViewProps`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### TableListSlot
+
+Values: `.title`, `.description`, `.trailing`, `.hidden`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TableListColumn
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ key` | `String` | - | - |
+| `header` | `LocalizedStringKey` | - | - |
+| `slot` | `TableListSlot`: `.title` \| `.description` \| `.trailing` \| `.hidden` | `.hidden` | - |
+| `cell` | `(Row) -> Text` | - | - |
+
+| Property | Type |
+| --- | --- |
+| `key` | `String` |
+| `header` | `LocalizedStringKey` |
+| `slot` | `TableListSlot` |
+| `cell` | `(Row) -> Text` |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TableList
+
+Renders rows from a column definition, with an optional title and empty state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ rows` | `[Row]` | - | The data to render. |
+| `id` | `KeyPath<Row, ID>` | - | - |
+| `columns` | `[TableListColumn<Row>]` | - | Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`. |
+| `title` | `LocalizedStringKey?` | `nil` | Heading shown above the list. |
+| `emptyText` | `LocalizedStringKey` | `"No results."` | Content shown when `rows` is empty. |
+| `action` | `((Row) -> Void)?` | `nil` | Called when it is tapped. |
+
+Overloads: `init(_:id:columns:title:emptyText:action:)`, `init(_:columns:title:emptyText:action:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TableListGroup
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TableListRow
+
+One row with a title, description and trailing content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TableListSection
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `header` | `LocalizedStringKey?` | `nil` | - |
+| `footer` | `LocalizedStringKey?` | `nil` | - |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### TableListSlot
+
+Values: `Title`, `Description`, `Trailing`, `Hidden`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### TableListAlign
+
+Values: `Start`, `End`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### TableListColumn
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `String` | - | - |
+| `header` | `String` | - | - |
+| `slot` | `TableListSlot?`: `Title` \| `Description` \| `Trailing` \| `Hidden` | `null` | - |
+| `align` | `TableListAlign`: `Start` \| `End` | `TableListAlign.Start` | - |
+| `mobileCell` | `(@Composable (T) -> Unit)?` | `null` | - |
+| `cell` | `@Composable (T) -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### TableList
+
+Renders rows from a column definition, with an optional title and empty state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `rows` | `List<T>` | - | The data to render. |
+| `columns` | `List<TableListColumn<T>>` | - | Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `getKey` | `(T, Int) -> Any` | `{ _, index -> index }` | Returns a unique key for a row. |
+| `title` | `String?` | `null` | Heading shown above the list. |
+| `emptyText` | `String` | `"No results."` | Content shown when `rows` is empty. |
+| `onRowClick` | `((T) -> Unit)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### TableListTitle
+
+A large heading above the list.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### TableListHeader
+
+A small uppercase heading above a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### TableListFooter
+
+A note below a group.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### TableListRow
+
+One row with a title, description and trailing content.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `first` | `Boolean` | - | Rounds the top corners. |
+| `last` | `Boolean` | - | Rounds the bottom corners. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
+| `onLongClick` | `(() -> Unit)?` | `null` | - |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `selected` | `Boolean?` | `null` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### TableListRowText
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | The row's main text. |
+| `description` | `String?` | `null` | A single-line secondary text. |
+| `trailing` | `String?` | `null` | Content on the end side; text is shown in secondary color with tabular numbers. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### TableListSectionScope.item
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `Any?` | `null` | - |
+| `onClick` | `(() -> Unit)?` | `null` | - |
+| `content` | `@Composable () -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### TableListSectionScope.row
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String` | - | - |
+| `description` | `String?` | `null` | - |
+| `trailing` | `String?` | `null` | - |
+| `key` | `Any?` | `null` | - |
+| `onClick` | `(() -> Unit)?` | `null` | - |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### TableListSectionScope.items
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `List<T>` | - | - |
+| `key` | `((T) -> Any)?` | `null` | - |
+| `onClick` | `((T) -> Unit)?` | `null` | - |
+| `content` | `@Composable (T) -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### TableListScope.title
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | - |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### TableListScope.section
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `header` | `String?` | `null` | - |
+| `footer` | `String?` | `null` | - |
+| `emptyText` | `String?` | `null` | - |
+| `content` | `TableListSectionScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={15}>
+
+### tableList
+
+Receiver: `LazyListScope`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `String` | `"table-list"` | - |
+| `content` | `TableListScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

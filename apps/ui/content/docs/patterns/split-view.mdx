@@ -400,6 +400,8 @@ Only list and detail panes, without a sidebar.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### SplitView
@@ -473,6 +475,177 @@ A pressable row that moves to the next column.
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### SplitViewColumn
+
+Values: `.sidebar`, `.list`, `.detail`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SplitView
+
+The root that tracks the current column and the layout mode.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `column` | `Binding<SplitViewColumn>` | - | The visible column on phones when controlled: `sidebar`, `list` or `detail`. |
+| `content` | `() -> Content` | - | The content. |
+| `defaultColumn` | `SplitViewColumn`: `.sidebar` \| `.list` \| `.detail` | `.list` | The initial column when uncontrolled. |
+
+Overloads: `init(column:content:)`, `init(defaultColumn:content:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SplitViewSidebar
+
+The first pane, for top-level sections.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey?` | `nil` | The title shown at the top of the column. |
+| `content` | `() -> Content` | - | The content. |
+| `verbatim` | `String` | - | The title shown at the top of the column. |
+
+Overloads: `init(_:content:)`, `init(verbatim:content:)`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SplitViewList
+
+The middle pane, for the items in a section.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey?` | `nil` | The title shown at the top of the column. |
+| `content` | `() -> Content` | - | The content. |
+| `verbatim` | `String` | - | The title shown at the top of the column. |
+
+Overloads: `init(_:content:)`, `init(verbatim:content:)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SplitViewDetail
+
+The last pane, for the selected item.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey?` | `nil` | The title shown at the top of the column. |
+| `content` | `() -> Content` | - | The content. |
+| `verbatim` | `String` | - | The title shown at the top of the column. |
+
+Overloads: `init(_:content:)`, `init(verbatim:content:)`.
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SplitViewItem
+
+A pressable row that moves to the next column.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isActive` | `Bool` | `false` | Highlights the row and marks it as selected. |
+| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
+| `label` | `() -> Label` | - | The label. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### SplitViewColumn
+
+Values: `Sidebar`, `List`, `Detail`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### SplitViewScope.SplitViewSidebar
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String?` | `null` | - |
+| `modifier` | `Modifier` | `Modifier` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### SplitViewScope.SplitViewList
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String?` | `null` | - |
+| `modifier` | `Modifier` | `Modifier` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### SplitViewScope.SplitViewDetail
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `String?` | `null` | - |
+| `modifier` | `Modifier` | `Modifier` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | - |
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### SplitView
+
+The root that tracks the current column and the layout mode.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `column` | `SplitViewColumn?`: `Sidebar` \| `List` \| `Detail` | `null` | The visible column on phones when controlled: `sidebar`, `list` or `detail`. |
+| `defaultColumn` | `SplitViewColumn`: `Sidebar` \| `List` \| `Detail` | `SplitViewColumn.List` | The initial column when uncontrolled. |
+| `onColumnChange` | `(SplitViewColumn) -> Unit` | `{}` | Called with the new column. |
+| `content` | `SplitViewScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### SplitViewItem
+
+A pressable row that moves to the next column.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `isActive` | `Boolean` | `false` | Highlights the row and marks it as selected. |
+| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

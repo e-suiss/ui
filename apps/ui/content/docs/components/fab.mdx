@@ -251,6 +251,8 @@ A speed dial controlled with `open` and `onOpenChange`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Fab
@@ -286,6 +288,107 @@ One action in the speed dial, with an icon and optional label.
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### FabSize
+
+Values: `.default`, `.lg`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ label` | `LocalizedStringKey?` | `nil` | Text or node shown beside the icon. |
+| `size` | `FabSize`: `.default` \| `.lg` | `.default` | - |
+| `isExpanded` | `Binding<Bool>?` | `nil` | - |
+| `icon` | `() -> Icon` | - | Phosphor icon component. |
+| `actions` | `() -> Actions` | - | - |
+| `accessibilityLabel` | `LocalizedStringKey` | - | - |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+
+Overloads: `init(_:size:isExpanded:icon:actions:)`, `init(accessibilityLabel:size:isExpanded:icon:actions:)`, `init(_:size:action:icon:)`, `init(accessibilityLabel:size:action:icon:)`, `init(_:size:isExpanded:actions:)`, `init(accessibilityLabel:size:isExpanded:actions:)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `action` | `() -> Void` | - | Called when it is tapped. |
+| `icon` | `() -> Icon` | - | Phosphor icon component for the action. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:action:icon:)`, `init(verbatim:action:icon:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### FabSize
+
+Values: `Default`, `Lg`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon` | `ImageVector` | - | Phosphor icon component. |
+| `contentDescription` | `String` | - | - |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `FabSize`: `Default` \| `Lg` | `FabSize.Default` | - |
+| `label` | `String?` | `null` | Text or node shown beside the icon. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `open` | `Boolean` | - | Controlled speed dial state. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the speed dial opens or closes. |
+| `actions` | `@Composable ColumnScope.() -> Unit` | - | - |
+
+Overloads: `Fab(icon, contentDescription, onClick)`, `Fab(icon, contentDescription, open, onOpenChange, actions)`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon` | `ImageVector` | - | Phosphor icon component for the action. |
+| `label` | `String` | - | Text or node shown beside the icon. |
+| `onClick` | `() -> Unit` | - | Called when it is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

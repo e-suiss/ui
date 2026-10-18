@@ -267,6 +267,8 @@ Uses `PullToRefreshControl` as the `refreshControl` of a `FlatList`.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### PullToRefreshControl
@@ -295,6 +297,66 @@ A `ScrollView` with built-in pull to refresh.
 Also accepts the props of `React.ComponentProps<typeof ScrollView>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### PullToRefresh
+
+A `ScrollView` with built-in pull to refresh.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onRefresh` | `() async -> Void` | - | Called when the user pulls to refresh; the spinner waits for the returned promise. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### .pullToRefresh
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ action` | `() async -> Void` | - | Called when it is tapped. |
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### PullToRefreshPhase
+
+Values: `Idle`, `Pulling`, `Refreshing`, `Settling`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### PullToRefresh
+
+A `ScrollView` with built-in pull to refresh.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onRefresh` | `suspend () -> Unit` | - | Called when the user pulls to refresh; the spinner waits for the returned promise. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `true` | Whether it responds to input. |
+| `refreshLabel` | `String` | `"Refresh"` | - |
+| `content` | `@Composable () -> Unit` | - | The content. |
+| `refreshing` | `Boolean` | - | Overrides the internal refreshing state. |
+
+Overloads: `PullToRefresh(onRefresh, content)`, `PullToRefresh(refreshing, onRefresh, content)`.
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

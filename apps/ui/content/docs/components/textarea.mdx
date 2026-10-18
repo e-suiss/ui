@@ -326,6 +326,8 @@ A textarea inside an invalid `Field` with an error message.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Textarea
@@ -333,6 +335,49 @@ A textarea inside an invalid `Field` with an error message.
 Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### .textFieldStyle(.textarea)
+
+Style that creates `TextareaStyle`.
+
+Takes no parameters.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### Textarea
+
+The multi-line text field, with an optional resize handle.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `String` | - | The current value. |
+| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
+| `readOnly` | `Boolean` | `false` | - |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | - |
+| `placeholder` | `String?` | `null` | Text shown while it is empty. |
+| `minLines` | `Int` | `1` | - |
+| `maxLines` | `Int` | `Int.MAX_VALUE` | - |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
+| `interactionSource` | `MutableInteractionSource?` | `null` | - |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 

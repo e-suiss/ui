@@ -519,6 +519,8 @@ Several auto-sized widgets arranged in a grid.
 
 ## API Reference
 
+<Only platform="rn">
+
 <ApiPart index={1}>
 
 ### Widget
@@ -642,6 +644,346 @@ Small secondary text and icons pinned to the bottom.
 Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
 </ApiPart>
+
+</Only>
+
+<Only platform="swift">
+
+<ApiPart index={1}>
+
+### WidgetSize
+
+Values: `.small`, `.medium`, `.large`, `.extraLarge`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WidgetAlign
+
+Values: `.start`, `.center`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WidgetHandlePlacement
+
+Values: `.inside`, `.outside`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### Widget
+
+The card surface and optional resize handle.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ size` | `WidgetSize?`: `.small` \| `.medium` \| `.large` \| `.extraLarge` | `.small` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
+| `align` | `WidgetAlign`: `.start` \| `.center` | `.start` | `start` or `center` content alignment. |
+| `content` | `() -> Content` | - | The content. |
+| `size` | `Binding<WidgetSize>` | - | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
+| `sizes` | `[WidgetSize]` | `WidgetSize.allCases` | Sizes the user can resize to. |
+| `editing` | `Bool` | - | - |
+| `handle` | `WidgetHandlePlacement`: `.inside` \| `.outside` | `.outside` | Handle placement: `outside` the corner or `inside` it. |
+| `resetSize` | `WidgetSize?`: `.small` \| `.medium` \| `.large` \| `.extraLarge` | `nil` | - |
+
+Overloads: `init(_:align:content:)`, `init(size:sizes:editing:handle:align:resetSize:content:)`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### WidgetHeader
+
+Row for the icon, title and action.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### WidgetIconSize
+
+Values: `.default`, `.sm`, `.lg`.
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### WidgetIcon
+
+Icon frame in `default`, `sm` or `lg` size.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `WidgetIconSize`: `.default` \| `.sm` \| `.lg` | `.default` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### WidgetTitle
+
+Single-line heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - | The title text. |
+| `verbatim` | `String` | - | The title text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### WidgetAction
+
+Trailing slot in the header; hidden when centered.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### WidgetDescription
+
+Secondary text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - | The supporting text. |
+| `verbatim` | `String` | - | The supporting text. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### WidgetValue
+
+Large number with tabular figures.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `_ value` | `LocalizedStringKey` | - | The current value. |
+| `verbatim` | `String` | - | The current value. |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### WidgetContent
+
+Flexible body area that clips overflow.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### WidgetFooter
+
+Small secondary text and icons pinned to the bottom.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `() -> Content` | - | The content. |
+| `_ text` | `LocalizedStringKey` | - | The text. |
+| `verbatim` | `String` | - | The text. |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</ApiPart>
+
+</Only>
+
+<Only platform="kotlin">
+
+<ApiPart index={1}>
+
+### WidgetSize
+
+Values: `Auto`, `Small`, `Medium`, `Large`, `ExtraLarge`.
+
+</ApiPart>
+
+<ApiPart index={2}>
+
+### WidgetHandlePlacement
+
+Values: `Inside`, `Outside`.
+
+</ApiPart>
+
+<ApiPart index={3}>
+
+### WidgetAlign
+
+Values: `Start`, `Center`.
+
+</ApiPart>
+
+<ApiPart index={4}>
+
+### WidgetIconSize
+
+Values: `Default`, `Sm`, `Lg`.
+
+</ApiPart>
+
+<ApiPart index={5}>
+
+### WidgetScope
+
+| Property | Type |
+| --- | --- |
+| `size` | `WidgetSize` |
+
+</ApiPart>
+
+<ApiPart index={6}>
+
+### Widget
+
+The card surface and optional resize handle.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `WidgetSize?`: `Auto` \| `Small` \| `Medium` \| `Large` \| `ExtraLarge` | `null` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
+| `defaultSize` | `WidgetSize?`: `Auto` \| `Small` \| `Medium` \| `Large` \| `ExtraLarge` | `null` | Initial size when uncontrolled. |
+| `onSizeChange` | `((WidgetSize) -> Unit)?` | `null` | Called with the new size after a resize. |
+| `sizes` | `List<WidgetSize>` | `DefaultWidgetSizes` | Sizes the user can resize to. |
+| `resizable` | `Boolean` | `false` | Shows a drag handle for resizing. |
+| `handle` | `WidgetHandlePlacement`: `Inside` \| `Outside` | `WidgetHandlePlacement.Outside` | Handle placement: `outside` the corner or `inside` it. |
+| `align` | `WidgetAlign`: `Start` \| `Center` | `WidgetAlign.Start` | `start` or `center` content alignment. |
+| `content` | `@Composable WidgetScope.() -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={7}>
+
+### WidgetHeader
+
+Row for the icon, title and action.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={8}>
+
+### WidgetIcon
+
+Icon frame in `default`, `sm` or `lg` size.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `size` | `WidgetIconSize`: `Default` \| `Sm` \| `Lg` | `WidgetIconSize.Default` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={9}>
+
+### WidgetTitle
+
+Single-line heading.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={10}>
+
+### WidgetAction
+
+Trailing slot in the header; hidden when centered.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={11}>
+
+### WidgetDescription
+
+Secondary text.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={12}>
+
+### WidgetValue
+
+Large number with tabular figures.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `text` | `String` | - | The text. |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+
+</ApiPart>
+
+<ApiPart index={13}>
+
+### WidgetContent
+
+Flexible body area that clips overflow.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+<ApiPart index={14}>
+
+### WidgetFooter
+
+Small secondary text and icons pinned to the bottom.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
+| `content` | `@Composable () -> Unit` | - | The content. |
+
+</ApiPart>
+
+</Only>
 
 ## Accessibility
 
