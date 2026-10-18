@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch"
 export default function FieldInset() {
   return (
     <div className="w-96">
-      <FieldSet className="w-96">
+      <FieldSet>
         <FieldLegend>Account</FieldLegend>
         <FieldGroup variant="inset">
           <Field orientation="horizontal">

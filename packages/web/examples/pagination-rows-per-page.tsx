@@ -70,7 +70,7 @@ function Orders({
   const rows = orders.slice((page - 1) * perPage, page * perPage)
 
   return (
-    <div className="flex w-136 flex-col gap-4">
+    <div className="flex w-136 min-w-0 flex-col gap-4">
       <Table>
         <TableHeader>
           <TableRow>

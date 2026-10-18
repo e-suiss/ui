@@ -11,16 +11,18 @@ const slides = [1, 2, 3, 4, 5]
 
 export default function CarouselLoop() {
   return (
-    <div className="mx-12 w-72">
+    <div className="mx-12 w-72 min-w-0">
       <Carousel orientation="horizontal" opts={{ loop: true }}>
         <CarouselContent>
           {slides.map((slide) => (
             <CarouselItem key={slide}>
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center">
-                  <span className="text-4xl font-semibold">{slide}</span>
-                </CardContent>
-              </Card>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center">
+                    <span className="text-4xl font-semibold">{slide}</span>
+                  </CardContent>
+                </Card>
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
