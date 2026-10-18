@@ -10,6 +10,7 @@ import {
 import path from "node:path"
 import { CliError, step } from "../output.mjs"
 import { targetFor } from "../shared/files.mjs"
+import { assertPackageSpecs } from "../shared/project.mjs"
 import { decodePreset } from "../shared/style.mjs"
 
 const DEFAULT_ICON_LIBRARY = "phosphor"
@@ -245,6 +246,9 @@ export async function switchIcons({
 }) {
   const current = detectIconLibrary(platform, root) ?? DEFAULT_ICON_LIBRARY
   if (current === library) return null
+  const dependencies =
+    platform === "rn" ? iconDependencies(registry, [PHOSPHOR_RN], library) : []
+  assertPackageSpecs(dependencies)
   const previous = iconTargets(platform, root, registry, current).filter(
     (target) => existsSync(target)
   )
@@ -282,8 +286,7 @@ export async function switchIcons({
   step(
     `Switched the icons from ${current} to ${library}${rewrites.length ? ` in ${rewrites.length} file${rewrites.length === 1 ? "" : "s"}` : ""}`
   )
-  if (platform !== "rn") return { from: current, dependencies: [], unused: [] }
-  const dependencies = iconDependencies(registry, [PHOSPHOR_RN], library)
+  if (platform !== "rn") return { from: current, dependencies, unused: [] }
   return {
     from: current,
     dependencies,
@@ -291,6 +294,12 @@ export async function switchIcons({
       (dependency) =>
         dependency !== "react-native-svg" && !dependencies.includes(dependency)
     ),
+  }
+}
+
+export function assertIconDependencies(registry, library) {
+  if (library) {
+    assertPackageSpecs(iconDependencies(registry, [PHOSPHOR_RN], library))
   }
 }
 

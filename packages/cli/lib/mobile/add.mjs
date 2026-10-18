@@ -9,6 +9,7 @@ import {
   targetFor,
   writeFiles,
 } from "../shared/files.mjs"
+import { assertPackageSpecs } from "../shared/project.mjs"
 import { chooseNames } from "../shared/select.mjs"
 import { ensureBabelPlugin } from "./babel.mjs"
 import { keepFontModule } from "./fonts.mjs"
@@ -102,19 +103,20 @@ export async function installItems(
   { overwrite = false, styling, iconLibrary }
 ) {
   const items = resolveItems(registry, names)
-  const switched = await useIconLibrary(project, root, registry, iconLibrary)
   const library = iconLibraryFor("rn", root, { iconLibrary })
+  const dependencies = iconDependencies(
+    registry,
+    items.flatMap((item) => item.dependencies[styling]),
+    library
+  )
+  assertPackageSpecs(dependencies)
+  const switched = await useIconLibrary(project, root, registry, iconLibrary)
   const result = writeFiles(
     project.cwd,
     await itemFiles(root, registry, items, styling, library),
     overwrite
   )
 
-  const dependencies = iconDependencies(
-    registry,
-    items.flatMap((item) => item.dependencies[styling]),
-    library
-  )
   const installed = install(project, dependencies)
   const manual = [
     ...switched,

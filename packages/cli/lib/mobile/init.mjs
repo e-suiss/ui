@@ -14,6 +14,7 @@ import {
   hasFonts,
   presetFonts,
 } from "./fonts.mjs"
+import { assertIconDependencies } from "./icons.mjs"
 import {
   detectProject,
   detectStyling,
@@ -470,6 +471,7 @@ export async function init(options) {
   }
 
   const registry = await fetchRegistry()
+  assertIconDependencies(registry, options.iconLibrary)
   const theme = await themeOptionsFor(options, fetchThemes, registry.colors)
   const css = usesCss
     ? themed(
@@ -622,6 +624,7 @@ export async function apply(options) {
   const only = options.only
   const manual = []
   const registry = await fetchRegistry()
+  if (!only) assertIconDependencies(registry, options.iconLibrary)
   const inPlace = options.style === undefined && !options.preset
   if (options.style === undefined && only !== "font") {
     options.style = await currentStyle(project, registry, target)
