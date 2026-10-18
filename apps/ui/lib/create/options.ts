@@ -163,6 +163,9 @@ export function cliCommand(state: CreateState) {
   }
   if (state.platform !== "web") {
     if (state.style !== OWN) flags.push(`--style ${state.style}`)
+    if (state.iconLibrary !== DEFAULT_STATE.iconLibrary) {
+      flags.push(`--icon-library ${state.iconLibrary}`)
+    }
     return `npx @esuiss/ui@latest init ${flags.join(" ")}`
   }
   if (!isDefault(state)) {

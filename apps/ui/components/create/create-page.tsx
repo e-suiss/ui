@@ -229,6 +229,15 @@ export function CreatePage() {
           }))}
           onChange={(style) => update("style", style as StyleName)}
         />
+        <Choice
+          label={strings.iconLibrary}
+          value={state.iconLibrary}
+          options={PRESET_ICON_LIBRARIES.map((value) => ({
+            value,
+            label: ICON_LABELS[value as IconLibrary],
+          }))}
+          onChange={(iconLibrary) => update("iconLibrary", iconLibrary)}
+        />
         <div
           className={cn(
             "flex flex-col gap-6",
@@ -269,15 +278,6 @@ export function CreatePage() {
               }
             />
           </div>
-          <Choice
-            label={strings.iconLibrary}
-            value={state.iconLibrary}
-            options={PRESET_ICON_LIBRARIES.map((value) => ({
-              value,
-              label: ICON_LABELS[value as IconLibrary],
-            }))}
-            onChange={(iconLibrary) => update("iconLibrary", iconLibrary)}
-          />
           <div className="grid grid-cols-2 gap-4">
             <Select
               label={strings.createMenuColor}
