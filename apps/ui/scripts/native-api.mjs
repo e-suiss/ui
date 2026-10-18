@@ -24,7 +24,7 @@ const ONLY_BASE = /<OnlyBase base="([^"]*)">[\s\S]*?<\/OnlyBase>/g
 const SWIFT_DECLARATION =
   /^((?:@[\w.]+(?:\([^)\n]*\))?\s+)*)((?:(?:public|internal|private|fileprivate|final|nonisolated)\s+)*)(struct|enum|class|actor|extension|protocol|func)\s+([\w.]+)/gm
 const SWIFT_MEMBER =
-  /\bpublic\s+((?:(?:static|nonisolated|private\(set\)|final|override|mutating)\s+)*)(init\??|func\s+\w+|var\s+\w+|let\s+\w+|typealias\s+\w+|enum\s+\w+)/g
+  /\bpublic\s+((?:(?:static|nonisolated|private\(set\)|final|override|mutating)\s+)*)(init\??|func\s+`?\w+`?|var\s+\w+|let\s+\w+|typealias\s+\w+|enum\s+\w+)/g
 const SWIFT_REQUIREMENT = /^\s*(func\s+\w+|var\s+\w+)/gm
 const SWIFT_WHERE_SELF = /where\s+Self\s*==\s*([\w.]+)/
 const SWIFT_RETURN = /^\s*(?:async\s+)?(?:throws\s+)?->\s*([^{\n]+)/
@@ -402,7 +402,8 @@ function swiftParts(source) {
     for (const member of inner.matchAll(SWIFT_MEMBER)) {
       if (depthAt(inner, member.index) !== 0) continue
       const isStatic = STATIC.test(member[1])
-      const [word, member_name] = member[2].split(WHITESPACE)
+      const [word, raw_name] = member[2].split(WHITESPACE)
+      const member_name = raw_name?.replace(BACKTICKS, "")
       const at = member.index + member[0].length
       if (word.startsWith("init")) {
         if (styled || isView) continue
@@ -734,7 +735,28 @@ function clean(description) {
   return text
 }
 
-function describe(row, item, references) {
+const NUMERIC_TYPE = /\b(?:Int|Double|Float|CGFloat|Long|Dp|TimeInterval)\b/
+const BOOLEAN_TYPE = /\bBool(?:ean)?\b/
+const STRING_TYPE = /\bString\b/
+const NULL_WORD = /\bnull\b/
+const NUMBER_WORDS = /\bnumber sets\b/i
+const BOOLEAN_LITERAL = /`true`|`false`/
+const STRING_WORD = /\bstring\b/i
+const MILLISECONDS = /millisecond|\bms\b/i
+const WEB_ONLY =
+  /promise|\bchildren\b|\bnode\b|`(?:bg|text|border)-|details|\{ ?\w+|\barray\b|\bweb\b|desktop|\bTailwind\b/i
+
+function fits(text, row, platform) {
+  if (WEB_ONLY.test(text)) return false
+  if (MILLISECONDS.test(text) && !row.key.includes("Millis")) return false
+  if (platform === "swift" && NULL_WORD.test(text)) return false
+  if (NUMBER_WORDS.test(text) && !NUMERIC_TYPE.test(row.type)) return false
+  if (BOOLEAN_LITERAL.test(text) && !BOOLEAN_TYPE.test(row.type)) return false
+  if (STRING_WORD.test(text) && !STRING_TYPE.test(row.type)) return false
+  return true
+}
+
+function describe(row, item, references, platform) {
   if (!item.view && item.kind !== "modifier" && item.kind !== "style")
     return "-"
   const callback = row.key === "action" || HANDLER.test(row.key)
@@ -746,7 +768,7 @@ function describe(row, item, references) {
     for (const scope of [reference.byPart.get(owner), reference.props]) {
       for (const name of names) {
         const found = clean(scope?.get(name))
-        if (found) return found
+        if (found && fits(found, row, platform)) return found
       }
     }
   }
@@ -850,7 +872,7 @@ function render(platform, parsed, references) {
       lines.push(PARAMETERS)
       for (const row of rows) {
         lines.push(
-          `| ${code(row.name).replace("_ ", "_\u00a0")} | ${typeCell(row.type, parsed, item.name, platform)} | ${row.fallback ? code(row.fallback) : "-"} | ${escapePipes(describe(row, item, references))} |`
+          `| ${code(row.name).replace("_ ", "_\u00a0")} | ${typeCell(row.type, parsed, item.name, platform)} | ${row.fallback ? code(row.fallback) : "-"} | ${escapePipes(describe(row, item, references, platform))} |`
         )
       }
       lines.push("")

@@ -949,7 +949,7 @@ Values: `.default`, `.destructive`.
 | `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
 | `aspectRatio` | `CGFloat?` | `nil` | Width-to-height ratio of the lifted preview. |
 | `items` | `() -> Items` | - | - |
-| `preview` | `() -> Preview` | - | Content to show in the preview instead of the trigger's children. |
+| `preview` | `() -> Preview` | - | Custom content to show in the preview instead of the trigger's content. |
 
 Overloads: `previewMenu(isPresented:aspectRatio:items:)`, `previewMenu(isPresented:aspectRatio:items:preview:)`.
 
@@ -963,7 +963,7 @@ A menu action.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `Variant`: `.default` \| `.destructive` | `.default` | `default` or `destructive`, which uses `text-destructive`. |
+| `variant` | `Variant`: `.default` \| `.destructive` | `.default` | The item style; `destructive` renders the label in the destructive color. |
 | `icon` | `Image?` | `nil` | The icon. |
 | `action` | `() -> Void` | - | Called when it is tapped. |
 | `label` | `() -> Label` | - | The label. |
@@ -1000,7 +1000,7 @@ The root that owns the open state and preview size.
 | `onOpenChange` | `(Boolean) -> Unit` | - | Called when the preview opens or closes. |
 | `trigger` | `@Composable () -> Unit` | - | - |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `preview` | `(@Composable () -> Unit)?` | `null` | Content to show in the preview instead of the trigger's children. |
+| `preview` | `(@Composable () -> Unit)?` | `null` | Custom content to show in the preview instead of the trigger's content. |
 | `aspectRatio` | `Float?` | `null` | Width-to-height ratio of the lifted preview. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
 | `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
@@ -1017,7 +1017,7 @@ A menu action.
 | --- | --- | --- | --- |
 | `onClick` | `() -> Unit` | - | Called when it is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | `default` or `destructive`, which uses `text-destructive`. |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | The item style; `destructive` renders the label in the destructive color. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
 | `content` | `@Composable RowScope.() -> Unit` | - | The content. |
 | `text` | `String` | - | The text. |

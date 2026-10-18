@@ -527,7 +527,7 @@ Floating button that also hosts the speed dial.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `_ label` | `LocalizedStringKey?` | `nil` | Text or node shown beside the icon. |
+| `_ label` | `LocalizedStringKey?` | `nil` | The label. |
 | `size` | `FabSize`: `.default` \| `.lg` | `.default` | - |
 | `isExpanded` | `Binding<Bool>?` | `nil` | - |
 | `icon` | `() -> Icon` | - | Phosphor icon component. |
@@ -581,7 +581,7 @@ Floating button that also hosts the speed dial.
 | `onClick` | `() -> Unit` | - | Called when it is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `size` | `FabSize`: `Default` \| `Lg` | `FabSize.Default` | - |
-| `label` | `String?` | `null` | Text or node shown beside the icon. |
+| `label` | `String?` | `null` | The label. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
 | `open` | `Boolean` | - | Controlled speed dial state. |
 | `onOpenChange` | `(Boolean) -> Unit` | - | Called when the speed dial opens or closes. |
@@ -600,7 +600,7 @@ One action in the speed dial, with an icon and optional label.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `icon` | `ImageVector` | - | Phosphor icon component for the action. |
-| `label` | `String` | - | Text or node shown beside the icon. |
+| `label` | `String` | - | The label. |
 | `onClick` | `() -> Unit` | - | Called when it is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 
