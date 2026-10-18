@@ -377,12 +377,23 @@ npx expo install phosphor-react-native react-native-svg
 
 <Only platform="kotlin">
 
-1. Set `minSdk` to 24 or higher and add the dependencies:
+1. Apply the Compose compiler plugin, enable Compose, set `minSdk` to 24 or higher and add the dependencies:
 
 ```kotlin title="build.gradle.kts"
-implementation(platform("androidx.compose:compose-bom:2026.09.00"))
-implementation("androidx.compose.foundation:foundation")
-implementation("androidx.compose.ui:ui")
+plugins {
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+android {
+    defaultConfig { minSdk = 24 }
+    buildFeatures { compose = true }
+}
+
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui")
+}
 ```
 
 2. Copy the theme files every view uses:

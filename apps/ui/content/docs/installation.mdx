@@ -380,6 +380,7 @@ Every color in `Tokens.swift` has a light and a dark value, so views follow the 
 ## Requirements
 
 - `minSdk` 24 or higher.
+- The Compose compiler plugin (`org.jetbrains.kotlin.plugin.compose`) and `buildFeatures { compose = true }`.
 - Jetpack Compose Foundation and UI. The components do not depend on Material.
 - Components with icons use the Phosphor icons library for Android. With another icon library (`--icon-library` or a preset) they need no icon library.
 
@@ -403,13 +404,24 @@ Leave out the names to pick from a list that only shows what exists for Jetpack 
 
 ### Manual setup
 
-1. Add the dependencies:
+1. Apply the Compose compiler plugin, enable Compose and add the dependencies:
 
 ```kotlin title="build.gradle.kts"
-implementation(platform("androidx.compose:compose-bom:2026.09.00"))
-implementation("androidx.compose.foundation:foundation")
-implementation("androidx.compose.ui:ui")
-implementation("com.adamglin:phosphor-icon-android:1.0.0")
+plugins {
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+android {
+    defaultConfig { minSdk = 24 }
+    buildFeatures { compose = true }
+}
+
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui")
+    implementation("com.adamglin:phosphor-icon-android:1.0.0")
+}
 ```
 
 2. Copy the theme files, `Theme.kt` and `Tokens.kt`. Every composable uses them.

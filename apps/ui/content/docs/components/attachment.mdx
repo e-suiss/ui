@@ -487,13 +487,19 @@ npx expo install cn
 
 1. Target iOS 17 or later.
 
-2. Copy the theme files every view uses:
+2. Add the Swift package to your app:
+
+```swift title="Package.swift"
+.package(url: "https://github.com/phosphor-icons/swift", from: "2.1.0")
+```
+
+3. Copy the theme files every view uses:
 
 <ComponentSource path="swift/Theme/Theme.swift" />
 
 <ComponentSource path="swift/Theme/Tokens.swift" />
 
-3. Copy the source and every file it uses:
+4. Copy the source and every file it uses:
 
 <ComponentSource path="swift/Components/Attachment.swift" />
 
@@ -503,18 +509,30 @@ npx expo install cn
 
 <ComponentSource path="swift/Components/ButtonGroup.swift" />
 
-4. Add the files to your app target.
+5. Add the files to your app target.
 
 </Only>
 
 <Only platform="kotlin">
 
-1. Set `minSdk` to 24 or higher and add the dependencies:
+1. Apply the Compose compiler plugin, enable Compose, set `minSdk` to 24 or higher and add the dependencies:
 
 ```kotlin title="build.gradle.kts"
-implementation(platform("androidx.compose:compose-bom:2026.09.00"))
-implementation("androidx.compose.foundation:foundation")
-implementation("androidx.compose.ui:ui")
+plugins {
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+android {
+    defaultConfig { minSdk = 24 }
+    buildFeatures { compose = true }
+}
+
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2026.09.00"))
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui")
+    implementation("com.adamglin:phosphor-icon-android:1.0.0")
+}
 ```
 
 2. Copy the theme files every view uses:

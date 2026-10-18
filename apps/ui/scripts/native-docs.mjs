@@ -81,6 +81,7 @@ const PAGE_SECTIONS = {
 }
 const STYLING_DIRECTORY = new RegExp(`^(?:${Object.keys(STYLINGS).join("|")})/`)
 const ALIAS_PREFIX = /^@/
+const COMPOSE_PLUGIN = "org.jetbrains.kotlin.plugin.compose"
 const TAILWIND_STYLINGS = "uniwind nativewind"
 const STYLESHEET_BLOCK =
   /\n*<OnlyStyling styling="stylesheet">\n[\s\S]*?\n<\/OnlyStyling>\n*/g
@@ -517,8 +518,22 @@ function kotlinManual(relative, texts, spec) {
     `implementation(platform("${bom}"))`,
     ...needed.map((dependency) => `implementation("${dependency}")`),
   ]
+  const gradle = [
+    "plugins {",
+    `    id("${COMPOSE_PLUGIN}")`,
+    "}",
+    "",
+    "android {",
+    `    defaultConfig { minSdk = ${minSdk} }`,
+    "    buildFeatures { compose = true }",
+    "}",
+    "",
+    "dependencies {",
+    ...lines.map((line) => `    ${line}`),
+    "}",
+  ]
   const steps = [
-    `Set \`minSdk\` to ${minSdk} or higher and add the dependencies:\n\n\`\`\`kotlin title="build.gradle.kts"\n${lines.join("\n")}\n\`\`\``,
+    `Apply the Compose compiler plugin, enable Compose, set \`minSdk\` to ${minSdk} or higher and add the dependencies:\n\n\`\`\`kotlin title="build.gradle.kts"\n${gradle.join("\n")}\n\`\`\``,
     `Copy the theme files every view uses:\n\n${spec.base.map((file) => `<ComponentSource path="kotlin/${file}" />`).join("\n\n")}`,
     `Copy the source${relative.length > 1 ? " and every file it uses" : ""}:\n\n${relative.map((file) => `<ComponentSource path="kotlin/${file}" />`).join("\n\n")}`,
     "Update the `com.esuiss.ui` package names to match your project.",
@@ -649,7 +664,7 @@ async function rnManual(native, registries, pages) {
   return `${native.slice(0, from)}${open}\n\n${RN_TABS}\n\n${tabs.join("\n\n")}\n\n</Tabs>\n\n${native.slice(end)}`
 }
 
-async function manual(native, items, registry) {
+async function manual(native, items, registry, examples) {
   const start = native.indexOf(`\n${MANUAL_HEADING}\n`)
   if (start < 0 || !items.length) return native
   let result = native
@@ -660,7 +675,15 @@ async function manual(native, items, registry) {
     const next = result.indexOf("\n## ", start)
     if (from < 0 || (next >= 0 && from > next)) continue
     const end = closingOnly(result, from)
-    const { relative, texts } = await platformFiles(items, platform, registry)
+    const { relative, texts: sources } = await platformFiles(
+      items,
+      platform,
+      registry
+    )
+    const shown = [...native.matchAll(NATIVE_EXAMPLE)]
+      .map((match) => examples.get(match[1])?.[platform])
+      .filter(Boolean)
+    const texts = [...sources, ...shown]
     const spec = registry.platforms[platform]
     const body =
       platform === "swift"
@@ -708,7 +731,7 @@ async function generate(file, context, report) {
     .replace(STYLESHEET_BLOCK, "\n\n")
     .replace(TAILWIND_BLOCK, "$1")
   const items = itemsOf(native, slug, context.registry)
-  native = await manual(native, items, context.registry)
+  native = await manual(native, items, context.registry, context.examples)
   native = await rnManual(native, context.rnRegistries, context.pages)
 
   const vocabularies = {}
