@@ -39,6 +39,15 @@ describe("esuiss-ui command", () => {
     expect(result.stderr).toContain("work with init or apply")
   })
 
+  it("keeps --style to init and apply", () => {
+    const result = run("add", "button", "--style", "vega")
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain("work with init or apply")
+    expect(run("add", "--help").stdout).not.toContain("--style <name>")
+    expect(run("init", "--help").stdout).toContain("--style <name>")
+    expect(run("apply", "--help").stdout).toContain("--style <name>")
+  })
+
   it("lists the apply command in the usage", () => {
     expect(run("--help").stdout).toContain("apply --preset <code>")
     const help = run("apply", "--help").stdout

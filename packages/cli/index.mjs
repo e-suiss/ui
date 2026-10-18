@@ -98,7 +98,6 @@ const ADD_OPTIONS = optionLines(
   "all",
   "yes",
   "base",
-  "style",
   "iconLibrary",
   "platform",
   "styling",
@@ -490,13 +489,14 @@ async function main() {
           "style",
           "preset",
           "primary",
+          "theme",
           "template",
           "name",
           "rtl",
           "pointer",
           "only",
         ],
-        "--style, --preset, --primary, --template, --name, --rtl, --pointer and --only work with init or apply; add keeps the style init set up."
+        "--style, --preset, --primary, --theme, --template, --name, --rtl, --pointer and --only work with init or apply; add keeps the style init set up."
       )
       await resolvePlatform(options)
       if (options.platform === "web") await add(parsed.names, options)
