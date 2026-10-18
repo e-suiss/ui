@@ -201,7 +201,7 @@ function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
 
 function CalendarWeekNumber({ children, week, ...props }: WeekNumberProps) {
   return (
-    <th {...props}>
+    <th data-week={week.weekNumber} {...props}>
       <div className="flex size-(--cell-size) items-center justify-center text-center">
         {children}
       </div>

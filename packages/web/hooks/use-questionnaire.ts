@@ -79,7 +79,7 @@ type QuestionnaireContextValue = QuestionnaireState & {
   activeItemName: string | null
   activeItemRequired: boolean | null
   activeItemStatus: QuestionnaireItemStatus | null
-  domVersion: number
+  documentOrder: typeof compareDocumentOrder
   goNext: () => void
   goPrevious: () => void
   itemDefinitions: Map<string, QuestionnaireItemDefinition> | null
@@ -326,7 +326,9 @@ function useQuestionnaire({
     resolveInitialItem(definitions, defaultItem)
   )
   const [form, setForm] = React.useState<HTMLFormElement | null>(null)
-  const [domVersion, setDomVersion] = React.useState(0)
+  const [documentOrder, setDocumentOrder] = React.useState(
+    () => compareDocumentOrder
+  )
   const pendingFocusRef = React.useRef<{
     name: string
     target: "item" | "invalid"
@@ -339,16 +341,18 @@ function useQuestionnaire({
   React.useLayoutEffect(() => {
     if (!form || typeof MutationObserver === "undefined") return
     const observer = new MutationObserver(() => {
-      setDomVersion((version) => version + 1)
+      setDocumentOrder(
+        () => (a: { element: Node }, b: { element: Node }) =>
+          compareDocumentOrder(a, b)
+      )
     })
     observer.observe(form, { childList: true, subtree: true })
     return () => observer.disconnect()
   }, [form])
 
   const renderedItems = React.useMemo(
-    () =>
-      records.filter((record) => !record.disabled).sort(compareDocumentOrder),
-    [records, domVersion]
+    () => records.filter((record) => !record.disabled).sort(documentOrder),
+    [records, documentOrder]
   )
   const recordByName = React.useMemo(
     () => new Map(renderedItems.map((record) => [record.name, record])),
@@ -599,7 +603,7 @@ function useQuestionnaire({
       activeItemRequired,
       activeItemStatus,
       current,
-      domVersion,
+      documentOrder,
       first,
       goNext,
       goPrevious,
@@ -617,7 +621,7 @@ function useQuestionnaire({
       activeItemStatus,
       current,
       definitions,
-      domVersion,
+      documentOrder,
       first,
       goNext,
       goPrevious,
@@ -688,8 +692,8 @@ function useQuestionnaireItem({
 
   const active = !disabled && root.activeItemName === name
   const sortedControls = React.useMemo(
-    () => [...controls].sort(compareDocumentOrder),
-    [controls, root.domVersion]
+    () => [...controls].sort(root.documentOrder),
+    [controls, root.documentOrder]
   )
   const enabledControls = React.useMemo(
     () => sortedControls.filter((control) => !control.disabled),
@@ -933,9 +937,10 @@ function useQuestionnaireItem({
     [element, enabledControls]
   )
 
+  const { registerItem } = root
   React.useLayoutEffect(() => {
     if (!element) return
-    return root.registerItem({
+    return registerItem({
       disabled,
       element,
       focus,
@@ -961,7 +966,7 @@ function useQuestionnaireItem({
     name,
     required,
     reset,
-    root.registerItem,
+    registerItem,
     skip,
     status,
     validate,

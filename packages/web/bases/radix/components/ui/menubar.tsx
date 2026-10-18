@@ -74,11 +74,14 @@ function MenubarMenu({
     menubar.setValue?.(menuValue)
   }, [defaultOpen, menubar, menuValue])
 
+  const syncedOpen = React.useRef<boolean | undefined>(undefined)
+  const { setValue } = menubar
   React.useEffect(() => {
-    if (open === undefined) return
-    if (open && !isOpen) menubar.setValue?.(menuValue)
-    if (!open && isOpen) menubar.setValue?.("")
-  }, [open])
+    if (open === undefined || syncedOpen.current === open) return
+    syncedOpen.current = open
+    if (open && !isOpen) setValue?.(menuValue)
+    if (!open && isOpen) setValue?.("")
+  }, [open, isOpen, setValue, menuValue])
 
   React.useEffect(() => {
     if (wasOpen.current === isOpen) return

@@ -495,24 +495,19 @@ function CarouselDots({
     else progress.pause()
   }, [autoplay.running])
 
+  const { enabled, playing, delay, elapsed } = autoplay
   React.useEffect(() => {
     progressRef.current = null
-    if (!fill || !autoplay.enabled || !autoplay.playing) return
+    if (!fill || !enabled || !playing) return
     const animation = fill.animate(
       [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
-      { duration: autoplay.delay, easing: "linear", fill: "forwards" }
+      { duration: delay, easing: "linear", fill: "forwards" }
     )
-    animation.currentTime = autoplay.elapsed()
+    animation.currentTime = elapsed()
     if (!runningRef.current) animation.pause()
     progressRef.current = animation
     return () => animation.cancel()
-  }, [
-    fill,
-    autoplay.enabled,
-    autoplay.playing,
-    autoplay.delay,
-    autoplay.elapsed,
-  ])
+  }, [fill, enabled, playing, delay, elapsed])
 
   return (
     <div

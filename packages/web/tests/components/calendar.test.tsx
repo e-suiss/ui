@@ -465,6 +465,7 @@ describe("Calendar week numbers and locale", () => {
       "44",
     ])
     expect(weeks[0]?.getAttribute("aria-label")).toBe("Week 40")
+    expect(weeks[0]?.dataset.week).toBe("40")
     const firstRow = weeks[0]?.parentElement
     expect(firstRow?.firstElementChild).toBe(weeks[0])
     const number = weeks[0]?.getBoundingClientRect()

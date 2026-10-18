@@ -68,6 +68,16 @@ async function press(name: string, key: string) {
 }
 
 describe("DatePicker on desktop", () => {
+  it("shows an invalid state without aria-invalid on the button", async () => {
+    await render(<DatePicker aria-label="Date" aria-invalid />)
+    const element = trigger().element()
+    expect(element.hasAttribute("aria-invalid")).toBe(false)
+    expect(element.hasAttribute("data-invalid")).toBe(true)
+    expect(getComputedStyle(element).borderTopColor).not.toBe(
+      "rgba(0, 0, 0, 0)"
+    )
+  })
+
   it("shows the placeholder until a date is picked", async () => {
     await render(<DatePicker aria-label="Date" placeholder="Pick a date" />)
     await expect.element(trigger()).toHaveTextContent("Pick a date")
