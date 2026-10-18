@@ -38,6 +38,7 @@ import {
   themeOptions,
   toParams,
 } from "@/lib/create/options"
+import { BASE_TITLES } from "@/lib/create/templates"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
@@ -304,7 +305,10 @@ export function CreatePage({
           ])}
           {web &&
             picker("base", strings.primitiveBase, [
-              PRIMITIVE_BASES.map((value) => ({ value, label: value })),
+              PRIMITIVE_BASES.map((value) => ({
+                value,
+                label: BASE_TITLES[value],
+              })),
             ])}
           {picker("baseColor", strings.createBaseColor, [
             options(BASE_COLORS, true),

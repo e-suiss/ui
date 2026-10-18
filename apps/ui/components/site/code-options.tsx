@@ -23,6 +23,7 @@ import {
   STYLES,
   type StyleName,
 } from "@/lib/code-options"
+import { BASE_TITLES } from "@/lib/create/templates"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
 
@@ -95,13 +96,11 @@ function Options({
   value,
   options,
   onChange,
-  mono,
 }: {
   label: string
   value: string
   options: { value: string; label: string }[]
   onChange: (value: string) => void
-  mono?: boolean
 }) {
   const id = React.useId()
   return (
@@ -124,8 +123,7 @@ function Options({
             value={option.value}
             className={cn(
               "inline-flex h-8 cursor-pointer items-center rounded-full px-3.5 text-[13px] font-medium tracking-[-0.01em] outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
-              "bg-foreground/5 text-foreground/70 hover:bg-foreground/10 hover:text-foreground data-checked:bg-foreground data-checked:text-background",
-              mono && "font-mono text-xs tracking-normal"
+              "bg-foreground/5 text-foreground/70 hover:bg-foreground/10 hover:text-foreground data-checked:bg-foreground data-checked:text-background"
             )}
           >
             {option.label}
@@ -184,9 +182,11 @@ export function CodeOptionsMenu() {
           <Options
             label={strings.primitiveBase}
             value={options.base}
-            options={BASES.map((value) => ({ value, label: value }))}
+            options={BASES.map((value) => ({
+              value,
+              label: BASE_TITLES[value as keyof typeof BASE_TITLES] ?? value,
+            }))}
             onChange={(base) => select({ base })}
-            mono
           />
         )}
         <p className="text-[13px] leading-[1.45] tracking-[-0.01em] text-muted-foreground">
