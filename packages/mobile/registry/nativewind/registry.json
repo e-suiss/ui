@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "esuiss-rn-nativewind",
+  "name": "esuiss-nativewind",
   "homepage": "https://suiss.app/ui",
   "items": [
     {
@@ -17,10 +17,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-accordion",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-accordion",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -46,12 +46,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-alert-dialog",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-alert-dialog",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -79,12 +79,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-alert-dialog",
-        "@esuiss-rn/primitives-dialog",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-alert-dialog",
+        "@esuiss/primitives-dialog",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -109,8 +109,8 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -135,10 +135,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/keypad",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/keypad",
+        "@esuiss/primitives-haptics",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -174,7 +174,7 @@
       "title": "Aspect Ratio",
       "description": "A container that keeps its content at a fixed width-to-height ratio.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-aspect-ratio"
+        "@esuiss/primitives-aspect-ratio"
       ],
       "files": [
         {
@@ -197,13 +197,13 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-progress",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/progress",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-progress",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/progress",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -226,10 +226,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-avatar",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-avatar",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -253,10 +253,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -282,9 +282,9 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/primitives-keyboard",
-        "@esuiss-rn/screen"
+        "@esuiss/animated-view",
+        "@esuiss/primitives-keyboard",
+        "@esuiss/screen"
       ],
       "files": [
         {
@@ -309,10 +309,10 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -336,12 +336,12 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/separator",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/separator",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -365,8 +365,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -391,12 +391,12 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-calendar",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/select",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-calendar",
+        "@esuiss/primitives-use-render",
+        "@esuiss/select",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -419,7 +419,7 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/text"
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -446,11 +446,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-carousel",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-carousel",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -475,9 +475,9 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-chart",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -502,9 +502,9 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-checkbox",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/icon",
+        "@esuiss/primitives-checkbox",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -530,11 +530,11 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-toggle",
-        "@esuiss-rn/primitives-toggle-group",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -561,8 +561,8 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -582,7 +582,7 @@
       "title": "Collapsible",
       "description": "A section that people can expand and collapse to show or hide its content.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-collapsible"
+        "@esuiss/primitives-collapsible"
       ],
       "files": [
         {
@@ -611,14 +611,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-combobox",
-        "@esuiss-rn/primitives-field",
-        "@esuiss-rn/primitives-positioner",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-combobox",
+        "@esuiss/primitives-field",
+        "@esuiss/primitives-positioner",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -646,11 +646,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-context-menu",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-context-menu",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -678,12 +678,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-dialog",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-dialog",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -712,12 +712,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-drawer",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-drawer",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -745,11 +745,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-menu",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-menu",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -773,8 +773,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -802,11 +802,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -829,10 +829,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-field",
-        "@esuiss-rn/primitives-fieldset",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/separator"
+        "@esuiss/primitives-field",
+        "@esuiss/primitives-fieldset",
+        "@esuiss/primitives-use-render",
+        "@esuiss/separator"
       ],
       "files": [
         {
@@ -855,7 +855,7 @@
         "expo-haptics"
       ],
       "registryDependencies": [
-        "@esuiss-rn/haptics"
+        "@esuiss/haptics"
       ],
       "files": [
         {
@@ -870,7 +870,7 @@
       "title": "Haptics",
       "description": "A provider that connects components to your haptics library, with a hook to trigger feedback.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-haptics"
+        "@esuiss/primitives-haptics"
       ],
       "files": [
         {
@@ -897,9 +897,9 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -925,7 +925,7 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/text"
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -950,14 +950,14 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-keyboard",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-keyboard",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -981,13 +981,13 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/primitives-field",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text",
-        "@esuiss-rn/textarea"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/primitives-field",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text",
+        "@esuiss/textarea"
       ],
       "files": [
         {
@@ -1014,10 +1014,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-otp-field",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-otp-field",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1041,8 +1041,8 @@
         "nativewind"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-input",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-input",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1066,10 +1066,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1092,8 +1092,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-keyboard"
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-keyboard"
       ],
       "files": [
         {
@@ -1118,8 +1118,8 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1142,8 +1142,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-label",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-label",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1167,10 +1167,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1197,11 +1197,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-hooks",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1224,9 +1224,9 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/bubble",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/bubble",
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1251,8 +1251,8 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/primitives-haptics"
+        "@esuiss/animated-view",
+        "@esuiss/primitives-haptics"
       ],
       "files": [
         {
@@ -1279,10 +1279,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/keypad",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks"
+        "@esuiss/animated-view",
+        "@esuiss/keypad",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks"
       ],
       "files": [
         {
@@ -1308,11 +1308,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/primitives-popover",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/primitives-popover",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1337,8 +1337,8 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-progress",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-progress",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1365,11 +1365,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1396,13 +1396,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1425,9 +1425,9 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-radio",
-        "@esuiss-rn/primitives-radio-group",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-radio",
+        "@esuiss/primitives-radio-group",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1451,7 +1451,7 @@
         "react-native-safe-area-context"
       ],
       "registryDependencies": [
-        "@esuiss-rn/keyboard-scroll-view"
+        "@esuiss/keyboard-scroll-view"
       ],
       "files": [
         {
@@ -1479,13 +1479,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-field",
-        "@esuiss-rn/primitives-positioner",
-        "@esuiss-rn/primitives-select",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-field",
+        "@esuiss/primitives-positioner",
+        "@esuiss/primitives-select",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1508,8 +1508,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-separator",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-separator",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1538,12 +1538,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-drawer",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-drawer",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1569,9 +1569,9 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1616,8 +1616,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-slider",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-slider",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1663,8 +1663,8 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-switch",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-switch",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1690,12 +1690,12 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-tabs",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-tabs",
+        "@esuiss/primitives-use-render",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1721,9 +1721,9 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-tabs",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/primitives-tabs",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1747,9 +1747,9 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-font",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-font",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1773,8 +1773,8 @@
         "nativewind"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-input",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-input",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -1800,10 +1800,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -1833,12 +1833,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-toast",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-toast",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1864,13 +1864,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-toggle",
-        "@esuiss-rn/primitives-toggle-group",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle"
+        "@esuiss/icon",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-toggle-group",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text",
+        "@esuiss/toggle"
       ],
       "files": [
         {
@@ -1894,10 +1894,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-toggle",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-toggle",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1924,10 +1924,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-collapsible",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/icon",
+        "@esuiss/primitives-collapsible",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1950,9 +1950,9 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/primitives-wheel-picker",
-        "@esuiss-rn/text"
+        "@esuiss/primitives-use-render",
+        "@esuiss/primitives-wheel-picker",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -1980,10 +1980,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-haptics",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2008,11 +2008,11 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/alert-sheet",
-        "@esuiss-rn/button",
-        "@esuiss-rn/drawer",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/alert-sheet",
+        "@esuiss/button",
+        "@esuiss/drawer",
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2036,7 +2036,7 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/alert-sheet"
+        "@esuiss/alert-sheet"
       ],
       "files": [
         {
@@ -2057,7 +2057,7 @@
       "title": "Context Actions",
       "description": "Actions for an element that open as a context menu on right click, or an action sheet on long press on mobile.",
       "registryDependencies": [
-        "@esuiss-rn/alert-sheet"
+        "@esuiss/alert-sheet"
       ],
       "files": [
         {
@@ -2083,10 +2083,10 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/drawer",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text",
-        "@esuiss-rn/wheel-picker"
+        "@esuiss/drawer",
+        "@esuiss/icon",
+        "@esuiss/text",
+        "@esuiss/wheel-picker"
       ],
       "files": [
         {
@@ -2110,8 +2110,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2132,7 +2132,7 @@
       "title": "Picker",
       "description": "A single-choice picker that renders a custom Select on desktop and a native select on mobile.",
       "registryDependencies": [
-        "@esuiss-rn/select"
+        "@esuiss/select"
       ],
       "files": [
         {
@@ -2156,9 +2156,9 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/drawer",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/drawer",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2185,9 +2185,9 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/drawer",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/text"
+        "@esuiss/drawer",
+        "@esuiss/icon",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2215,10 +2215,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-hooks",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2242,8 +2242,8 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/item",
-        "@esuiss-rn/text"
+        "@esuiss/item",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2272,11 +2272,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-haptics",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2306,11 +2306,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-image-viewer",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-image-viewer",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2340,11 +2340,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2371,11 +2371,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/input-otp",
-        "@esuiss-rn/primitives-keyboard",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/input-otp",
+        "@esuiss/primitives-keyboard",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2403,11 +2403,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-preview-menu",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-preview-menu",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2432,7 +2432,7 @@
         "nativewind"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-haptics"
+        "@esuiss/primitives-haptics"
       ],
       "files": [
         {
@@ -2461,10 +2461,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/primitives-haptics"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/primitives-haptics"
       ],
       "files": [
         {
@@ -2493,7 +2493,7 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon"
+        "@esuiss/icon"
       ],
       "files": [
         {
@@ -2519,10 +2519,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/primitives-section-index",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/primitives-section-index",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2551,12 +2551,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2583,9 +2583,9 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-number-field",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/icon",
+        "@esuiss/primitives-number-field",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -2613,10 +2613,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-haptics",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2645,12 +2645,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-popover",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/primitives-popover",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2680,11 +2680,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2711,10 +2711,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/primitives-portal",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2742,14 +2742,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/radio-group",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/radio-group",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2779,12 +2779,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/screen",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -2813,12 +2813,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/stepper",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/screen",
+        "@esuiss/stepper",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2849,19 +2849,19 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/bubble",
-        "@esuiss-rn/button",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-group",
-        "@esuiss-rn/message",
-        "@esuiss-rn/message-scroller",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/swipe-actions",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/bottom-bar",
+        "@esuiss/bubble",
+        "@esuiss/button",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/input-group",
+        "@esuiss/message",
+        "@esuiss/message-scroller",
+        "@esuiss/screen",
+        "@esuiss/swipe-actions",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2892,16 +2892,16 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/bubble",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-group",
-        "@esuiss-rn/message",
-        "@esuiss-rn/message-scroller",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/bubble",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input-group",
+        "@esuiss/message",
+        "@esuiss/message-scroller",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2932,18 +2932,18 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/attachment",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/bubble",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-group",
-        "@esuiss-rn/message",
-        "@esuiss-rn/message-scroller",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/attachment",
+        "@esuiss/avatar",
+        "@esuiss/bottom-bar",
+        "@esuiss/bubble",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input-group",
+        "@esuiss/message",
+        "@esuiss/message-scroller",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -2972,16 +2972,16 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/dropdown-menu",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/button",
+        "@esuiss/chart",
+        "@esuiss/dropdown-menu",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/screen",
+        "@esuiss/tab-bar",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3013,14 +3013,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3052,19 +3052,19 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/dropdown-menu",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/chart",
+        "@esuiss/chip",
+        "@esuiss/dropdown-menu",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/screen",
+        "@esuiss/tab-bar",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3096,12 +3096,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/empty",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/empty",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3132,13 +3132,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/empty",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/spinner",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/empty",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/spinner",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3170,13 +3170,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/empty",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/empty",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3208,12 +3208,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/chip",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3242,11 +3242,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/carousel",
-        "@esuiss-rn/page-indicator",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/carousel",
+        "@esuiss/page-indicator",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3276,11 +3276,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/screen",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3312,16 +3312,16 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/split-view",
-        "@esuiss-rn/swipe-actions",
-        "@esuiss-rn/text",
-        "@esuiss-rn/textarea",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/split-view",
+        "@esuiss/swipe-actions",
+        "@esuiss/text",
+        "@esuiss/textarea",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3353,16 +3353,16 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-group",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/split-view",
-        "@esuiss-rn/swipe-actions",
-        "@esuiss-rn/text",
-        "@esuiss-rn/textarea"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input-group",
+        "@esuiss/screen",
+        "@esuiss/split-view",
+        "@esuiss/swipe-actions",
+        "@esuiss/text",
+        "@esuiss/textarea"
       ],
       "files": [
         {
@@ -3394,15 +3394,15 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/split-view",
-        "@esuiss-rn/text",
-        "@esuiss-rn/textarea",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/split-view",
+        "@esuiss/text",
+        "@esuiss/textarea",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3434,15 +3434,15 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/collapsible",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/chip",
+        "@esuiss/collapsible",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/tab-bar",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3474,14 +3474,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/tab-bar",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3513,14 +3513,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/chip",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/tab-bar",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3552,17 +3552,17 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/checkbox",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/label",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/spinner",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/checkbox",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/label",
+        "@esuiss/screen",
+        "@esuiss/spinner",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3594,13 +3594,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/dialog",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/dialog",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3630,13 +3630,13 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/button",
-        "@esuiss-rn/drawer",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/radio-group",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/spinner",
-        "@esuiss-rn/text"
+        "@esuiss/button",
+        "@esuiss/drawer",
+        "@esuiss/icon",
+        "@esuiss/radio-group",
+        "@esuiss/screen",
+        "@esuiss/spinner",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3665,10 +3665,10 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/chip",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3698,13 +3698,13 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/carousel",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/page-indicator",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/carousel",
+        "@esuiss/icon",
+        "@esuiss/page-indicator",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3733,11 +3733,11 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3769,12 +3769,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3804,14 +3804,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/radio-group",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/radio-group",
+        "@esuiss/screen",
+        "@esuiss/switch",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3843,14 +3843,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/radio-group",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/radio-group",
+        "@esuiss/screen",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -3881,15 +3881,15 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/split-view",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/screen",
+        "@esuiss/split-view",
+        "@esuiss/switch",
+        "@esuiss/tab-bar",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3921,17 +3921,17 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/empty",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/picker",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/swipe-actions",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/empty",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/picker",
+        "@esuiss/screen",
+        "@esuiss/swipe-actions",
+        "@esuiss/tab-bar",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -3963,16 +3963,16 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/item",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/item",
+        "@esuiss/screen",
+        "@esuiss/switch",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4002,14 +4002,14 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-group",
-        "@esuiss-rn/item",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/text"
+        "@esuiss/avatar",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/input-group",
+        "@esuiss/item",
+        "@esuiss/screen",
+        "@esuiss/switch",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4041,15 +4041,15 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/picker",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/picker",
+        "@esuiss/screen",
+        "@esuiss/switch",
+        "@esuiss/text",
+        "@esuiss/toggle",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -4081,15 +4081,15 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-accessory-bar",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/picker",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input-accessory-bar",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/picker",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4121,14 +4121,14 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4160,16 +4160,16 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/checkbox",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-accessory-bar",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/label",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/checkbox",
+        "@esuiss/icon",
+        "@esuiss/input-accessory-bar",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/label",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4200,18 +4200,18 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/item",
-        "@esuiss-rn/picker",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/split-view",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/animated-view",
+        "@esuiss/avatar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/item",
+        "@esuiss/picker",
+        "@esuiss/screen",
+        "@esuiss/split-view",
+        "@esuiss/switch",
+        "@esuiss/tab-bar",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -4242,20 +4242,20 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/button",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input",
-        "@esuiss-rn/item",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/picker",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/switch",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toast"
+        "@esuiss/animated-view",
+        "@esuiss/button",
+        "@esuiss/chip",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/input",
+        "@esuiss/item",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/picker",
+        "@esuiss/screen",
+        "@esuiss/switch",
+        "@esuiss/tab-bar",
+        "@esuiss/text",
+        "@esuiss/toast"
       ],
       "files": [
         {
@@ -4285,17 +4285,17 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/avatar",
-        "@esuiss-rn/badge",
-        "@esuiss-rn/button",
-        "@esuiss-rn/chip",
-        "@esuiss-rn/header",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-group",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/selection-list",
-        "@esuiss-rn/tab-bar",
-        "@esuiss-rn/text"
+        "@esuiss/avatar",
+        "@esuiss/badge",
+        "@esuiss/button",
+        "@esuiss/chip",
+        "@esuiss/header",
+        "@esuiss/icon",
+        "@esuiss/input-group",
+        "@esuiss/screen",
+        "@esuiss/selection-list",
+        "@esuiss/tab-bar",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4327,12 +4327,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-otp",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/input-otp",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4364,13 +4364,13 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/input-otp",
-        "@esuiss-rn/keyboard-scroll-view",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/spinner",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/icon",
+        "@esuiss/input-otp",
+        "@esuiss/keyboard-scroll-view",
+        "@esuiss/screen",
+        "@esuiss/spinner",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4401,12 +4401,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/animated-view",
-        "@esuiss-rn/bottom-bar",
-        "@esuiss-rn/button",
-        "@esuiss-rn/icon",
-        "@esuiss-rn/screen",
-        "@esuiss-rn/text"
+        "@esuiss/animated-view",
+        "@esuiss/bottom-bar",
+        "@esuiss/button",
+        "@esuiss/icon",
+        "@esuiss/screen",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4431,8 +4431,8 @@
       "title": "Area Chart Axes",
       "description": "A gradient area with visible dots and a value axis on the right edge of the plot.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4457,8 +4457,8 @@
       "title": "Area Chart Default",
       "description": "A single filled area with a smooth curve showing one series across six months.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4483,8 +4483,8 @@
       "title": "Area Chart Gradient",
       "description": "Two overlapping areas whose fills fade out toward the bottom using SVG linear gradients.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4512,10 +4512,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -4540,8 +4540,8 @@
       "title": "Area Chart Linear",
       "description": "A single filled area whose points are joined by straight segments instead of a smoothed curve.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4566,9 +4566,9 @@
       "title": "Area Chart Range",
       "description": "A heart-rate band showing each hour's low-to-high range as a shaded area with an average line through it.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4596,9 +4596,9 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4623,8 +4623,8 @@
       "title": "Area Chart Stacked Expand",
       "description": "Two stacked areas normalized so every month fills 100%, showing each series' share rather than its value.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4649,8 +4649,8 @@
       "title": "Area Chart Stacked",
       "description": "Two areas stacked on top of each other so the top edge shows the combined total, with a legend.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4675,8 +4675,8 @@
       "title": "Area Chart Step",
       "description": "A single filled area drawn as steps, holding each value flat until the next reading.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4701,9 +4701,9 @@
       "title": "Bar Chart Active",
       "description": "A week of step counts where clicking a bar selects it, dims the others and updates the header.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4728,8 +4728,8 @@
       "title": "Bar Chart Default",
       "description": "A single series of rounded vertical bars, one per month.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4754,8 +4754,8 @@
       "title": "Bar Chart Horizontal",
       "description": "Horizontal bars with category names on the left and a distinct color for each category.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4780,9 +4780,9 @@
       "title": "Bar Chart Hourly",
       "description": "Twenty-four thin bars of screen time per hour, with a dashed line marking the hourly average.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4810,10 +4810,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -4838,8 +4838,8 @@
       "title": "Bar Chart Labeled",
       "description": "A single bar series with each value printed above its bar and no grid lines.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4864,8 +4864,8 @@
       "title": "Bar Chart Multiple",
       "description": "Two series drawn as grouped bars side by side for each month.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4890,8 +4890,8 @@
       "title": "Bar Chart Negative",
       "description": "Monthly cash flow bars that turn green above zero and red below it, with a zero baseline.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4916,9 +4916,9 @@
       "title": "Bar Chart Range",
       "description": "A weather forecast where each horizontal pill spans the day's low and high on a shared gradient scale.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -4943,8 +4943,8 @@
       "title": "Bar Chart Stacked",
       "description": "Two series stacked into one bar per month, with a legend below the plot.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4969,8 +4969,8 @@
       "title": "Line Chart Default",
       "description": "A single smooth line through six months of values, without point markers.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -4995,9 +4995,9 @@
       "title": "Line Chart Dots",
       "description": "A weight trend with a dot at every monthly reading and a fixed value axis on the right.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5022,8 +5022,8 @@
       "title": "Line Chart Forecast",
       "description": "A solid line for actual values that continues as a dashed forecast over a shaded future range.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5048,9 +5048,9 @@
       "title": "Line Chart Goal Dots",
       "description": "Nightly sleep hours with a goal line and dots colored green or orange depending on whether the goal was met.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5075,9 +5075,9 @@
       "title": "Line Chart Goal",
       "description": "Daily step counts plotted against a labeled dashed goal line at 10,000 steps.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5105,11 +5105,11 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text",
+        "@esuiss/toggle",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -5134,8 +5134,8 @@
       "title": "Line Chart Labeled",
       "description": "A single line with a dot and a printed value at every point, and no grid.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5160,8 +5160,8 @@
       "title": "Line Chart Linear",
       "description": "A single line drawn with straight segments between readings instead of a smoothed curve.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5186,8 +5186,8 @@
       "title": "Line Chart Multiple",
       "description": "Two lines compared on the same axes, with a legend identifying each series.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5212,8 +5212,8 @@
       "title": "Line Chart Step",
       "description": "A single line drawn as horizontal steps, holding each value until the next reading.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5238,8 +5238,8 @@
       "title": "Pie Chart Active",
       "description": "A donut where one slice is enlarged and outlined with an outer arc to highlight it.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5264,8 +5264,8 @@
       "title": "Pie Chart Default",
       "description": "A full pie split into five device slices, separated by thin card-colored borders.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5290,9 +5290,9 @@
       "title": "Pie Chart Donut Text",
       "description": "A donut with the total number of users displayed in the center of the ring.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5317,8 +5317,8 @@
       "title": "Pie Chart Donut",
       "description": "A donut chart with a hollow center and small gaps between slices.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5343,9 +5343,9 @@
       "title": "Pie Chart Half",
       "description": "A semicircular gauge-style pie showing battery share by device, with a caption under the arc.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5373,10 +5373,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -5401,8 +5401,8 @@
       "title": "Pie Chart Label",
       "description": "A pie with each category name drawn outside its slice and joined by a leader line.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5427,8 +5427,8 @@
       "title": "Pie Chart Legend",
       "description": "A donut with a legend beneath it that lists every category and its color.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5453,8 +5453,8 @@
       "title": "Pie Chart Nested",
       "description": "Two concentric pies: an inner ring of grouped totals surrounded by an outer ring of individual categories.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5479,8 +5479,8 @@
       "title": "Pie Chart Separated",
       "description": "A donut whose slices are pulled apart with wide gaps and rounded corners.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5505,8 +5505,8 @@
       "title": "Radar Chart Default",
       "description": "A single filled radar shape showing this month's scores across six training skills.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5531,8 +5531,8 @@
       "title": "Radar Chart Dots",
       "description": "A single radar shape with a solid dot marking the value on every axis.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5557,8 +5557,8 @@
       "title": "Radar Chart Grid Circle",
       "description": "A single radar shape drawn over circular rings instead of polygonal grid lines.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5583,8 +5583,8 @@
       "title": "Radar Chart Grid Filled",
       "description": "A borderless radar shape over shaded circular rings separated by card-colored lines.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5609,8 +5609,8 @@
       "title": "Radar Chart Grid None",
       "description": "A single solid radar shape with no grid and no outline, leaving only the shape and axis labels.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5638,10 +5638,10 @@
         "cn"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text",
+        "@esuiss/toggle"
       ],
       "files": [
         {
@@ -5666,8 +5666,8 @@
       "title": "Radar Chart Legend",
       "description": "Two overlapping radar shapes with a legend beneath that names each series.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5692,8 +5692,8 @@
       "title": "Radar Chart Lines Only",
       "description": "Two radar outlines with no fill, comparing this month and last month by stroke alone.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5718,8 +5718,8 @@
       "title": "Radar Chart Multiple",
       "description": "Two overlapping radar shapes comparing this month with last month.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5744,8 +5744,8 @@
       "title": "Radar Chart Radius Axis",
       "description": "A single radar shape with a visible 0 to 100 value scale along the vertical axis.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5770,9 +5770,9 @@
       "title": "Radial Chart Batteries",
       "description": "A row of small battery rings, one per device, that turn red when charge is at or below 20%.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5797,8 +5797,8 @@
       "title": "Radial Chart Default",
       "description": "Concentric radial bars, one per device, each running around a gray background track.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5823,9 +5823,9 @@
       "title": "Radial Chart Gauge",
       "description": "A 240-degree gauge arc showing an air quality reading with its value and rating below the center.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5854,10 +5854,10 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text",
-        "@esuiss-rn/toggle-group"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text",
+        "@esuiss/toggle-group"
       ],
       "files": [
         {
@@ -5882,8 +5882,8 @@
       "title": "Radial Chart Label",
       "description": "Concentric radial bars with each category's name printed at the start of its bar.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5908,9 +5908,9 @@
       "title": "Radial Chart Progress",
       "description": "A three-quarter arc tracking progress toward a goal, with the count shown in the center.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5938,8 +5938,8 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -5964,9 +5964,9 @@
       "title": "Radial Chart Stacked",
       "description": "A half-circle arc with two series stacked end to end and the combined total beneath it.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -5991,9 +5991,9 @@
       "title": "Radial Chart Text",
       "description": "A single full-circle progress ring with a percentage and caption centered inside.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart",
-        "@esuiss-rn/text"
+        "@esuiss/card",
+        "@esuiss/chart",
+        "@esuiss/text"
       ],
       "files": [
         {
@@ -6018,8 +6018,8 @@
       "title": "Radial Chart Tinted",
       "description": "Concentric radial bars whose unfilled track is a soft tint of each bar's own color.",
       "registryDependencies": [
-        "@esuiss-rn/card",
-        "@esuiss-rn/chart"
+        "@esuiss/card",
+        "@esuiss/chart"
       ],
       "files": [
         {
@@ -6044,10 +6044,10 @@
       "title": "Accordion Primitive",
       "description": "The headless accordion behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6063,8 +6063,8 @@
       "title": "Alert Dialog Primitive",
       "description": "The headless alert dialog behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-dialog",
-        "@esuiss-rn/primitives-floating-root"
+        "@esuiss/primitives-dialog",
+        "@esuiss/primitives-floating-root"
       ],
       "files": [
         {
@@ -6080,8 +6080,8 @@
       "title": "Aspect Ratio Primitive",
       "description": "The headless aspect ratio behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6097,9 +6097,9 @@
       "title": "Avatar Primitive",
       "description": "The headless avatar behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6115,10 +6115,10 @@
       "title": "Calendar Primitive",
       "description": "The headless calendar behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6134,9 +6134,9 @@
       "title": "Carousel Primitive",
       "description": "The headless carousel behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6156,7 +6156,7 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-haptics"
+        "@esuiss/primitives-haptics"
       ],
       "files": [
         {
@@ -6172,10 +6172,10 @@
       "title": "Checkbox Group Primitive",
       "description": "The headless checkbox group behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6191,12 +6191,12 @@
       "title": "Checkbox Primitive",
       "description": "The headless checkbox behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-checkbox-group",
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-checkbox-group",
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6212,10 +6212,10 @@
       "title": "Collapsible Primitive",
       "description": "The headless collapsible behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6231,13 +6231,13 @@
       "title": "Combobox Primitive",
       "description": "The headless combobox behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-font",
-        "@esuiss-rn/primitives-positioner",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-font",
+        "@esuiss/primitives-positioner",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6253,12 +6253,12 @@
       "title": "Context Menu Primitive",
       "description": "The headless context menu behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-menu",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-menu",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6274,10 +6274,10 @@
       "title": "Dialog Primitive",
       "description": "The headless dialog behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6298,11 +6298,11 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-dialog",
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-dialog",
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6318,7 +6318,7 @@
       "title": "Event Details Primitive",
       "description": "The headless event details behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-types"
+        "@esuiss/primitives-types"
       ],
       "files": [
         {
@@ -6334,14 +6334,14 @@
       "title": "Field Primitive",
       "description": "The headless field behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-fieldset",
-        "@esuiss-rn/primitives-font",
-        "@esuiss-rn/primitives-form",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-fieldset",
+        "@esuiss/primitives-font",
+        "@esuiss/primitives-form",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6357,8 +6357,8 @@
       "title": "Fieldset Primitive",
       "description": "The headless fieldset behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6374,11 +6374,11 @@
       "title": "Floating Root Primitive",
       "description": "The headless floating root behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state"
       ],
       "files": [
         {
@@ -6407,10 +6407,10 @@
       "title": "Form Primitive",
       "description": "The headless form behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6457,12 +6457,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6478,7 +6478,7 @@
       "title": "Input Primitive",
       "description": "The headless input behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-field"
+        "@esuiss/primitives-field"
       ],
       "files": [
         {
@@ -6507,8 +6507,8 @@
       "title": "Label Primitive",
       "description": "The headless label behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6524,12 +6524,12 @@
       "title": "Menu Primitive",
       "description": "The headless menu behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-positioner",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-positioner",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6558,12 +6558,12 @@
       "title": "Number Field Primitive",
       "description": "The headless number field behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-font",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-font",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6579,10 +6579,10 @@
       "title": "OTP Field Primitive",
       "description": "The headless otp field behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6598,11 +6598,11 @@
       "title": "Popover Primitive",
       "description": "The headless popover behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-positioner",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-positioner",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6618,7 +6618,7 @@
       "title": "Portal Primitive",
       "description": "The headless portal behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-haptics"
+        "@esuiss/primitives-haptics"
       ],
       "files": [
         {
@@ -6634,10 +6634,10 @@
       "title": "Positioner Primitive",
       "description": "The headless positioner behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6657,12 +6657,12 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-menu",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-menu",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6678,8 +6678,8 @@
       "title": "Progress Primitive",
       "description": "The headless progress behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6695,10 +6695,10 @@
       "title": "Radio Group Primitive",
       "description": "The headless radio group behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6714,11 +6714,11 @@
       "title": "Radio Primitive",
       "description": "The headless radio behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-radio-group",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-radio-group",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6734,9 +6734,9 @@
       "title": "Section Index Primitive",
       "description": "The headless section index behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6752,12 +6752,12 @@
       "title": "Select Primitive",
       "description": "The headless select behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-floating-root",
-        "@esuiss-rn/primitives-positioner",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-floating-root",
+        "@esuiss/primitives-positioner",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6773,8 +6773,8 @@
       "title": "Separator Primitive",
       "description": "The headless separator behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6790,12 +6790,12 @@
       "title": "Slider Primitive",
       "description": "The headless slider behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6811,11 +6811,11 @@
       "title": "Switch Primitive",
       "description": "The headless switch behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6831,10 +6831,10 @@
       "title": "Tabs Primitive",
       "description": "The headless tabs behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6855,9 +6855,9 @@
         "react-native-worklets"
       ],
       "registryDependencies": [
-        "@esuiss-rn/primitives-portal",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-portal",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6873,10 +6873,10 @@
       "title": "Toggle Group Primitive",
       "description": "The headless toggle group behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6892,12 +6892,12 @@
       "title": "Toggle Primitive",
       "description": "The headless toggle behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-toggle-group",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-toggle-group",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {
@@ -6926,8 +6926,8 @@
       "title": "Use Controllable State Primitive",
       "description": "The headless use controllable state behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types"
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types"
       ],
       "files": [
         {
@@ -6943,9 +6943,9 @@
       "title": "Use Render Primitive",
       "description": "The headless use render behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-merge-props",
-        "@esuiss-rn/primitives-types"
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-merge-props",
+        "@esuiss/primitives-types"
       ],
       "files": [
         {
@@ -6961,12 +6961,12 @@
       "title": "Wheel Picker Primitive",
       "description": "The headless wheel picker behavior the components build on.",
       "registryDependencies": [
-        "@esuiss-rn/primitives-event-details",
-        "@esuiss-rn/primitives-haptics",
-        "@esuiss-rn/primitives-hooks",
-        "@esuiss-rn/primitives-types",
-        "@esuiss-rn/primitives-use-controllable-state",
-        "@esuiss-rn/primitives-use-render"
+        "@esuiss/primitives-event-details",
+        "@esuiss/primitives-haptics",
+        "@esuiss/primitives-hooks",
+        "@esuiss/primitives-types",
+        "@esuiss/primitives-use-controllable-state",
+        "@esuiss/primitives-use-render"
       ],
       "files": [
         {

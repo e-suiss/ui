@@ -176,7 +176,7 @@ Running `add` for a component you already have keeps your file and tells you whe
 
 ## Add components
 
-The React Native components are published as a registry too, once per styling library. Add a `components.json` to the root of your project and point the `@esuiss-rn` namespace at the registry for your styling:
+The React Native components are published as a registry too, once per styling library. Add a `components.json` to the root of your project and point the `@esuiss` namespace at the registry for your styling:
 
 ```json title="components.json"
 {
@@ -198,12 +198,12 @@ The React Native components are published as a registry too, once per styling li
     "hooks": "@/hooks"
   },
   "registries": {
-    "@esuiss-rn": "https://suiss.app/ui/r/rn-uniwind/{name}.json"
+    "@esuiss": "https://suiss.app/ui/r/rn-uniwind/{name}.json"
   }
 }
 ```
 
-| Styling | `@esuiss-rn` registry | `tailwind` in `components.json` |
+| Styling | `@esuiss` registry | `tailwind` in `components.json` |
 | --- | --- | --- |
 | Uniwind | `https://suiss.app/ui/r/rn-uniwind/{name}.json` | `"css": "global.css"` |
 | NativeWind v4 | `https://suiss.app/ui/r/rn-nativewind/{name}.json` | `"css": "global.css"`, `"config": "tailwind.config.js"` |
@@ -212,7 +212,7 @@ The React Native components are published as a registry too, once per styling li
 Then add components with the registry CLI:
 
 ```bash title="Terminal"
-npx shadcn@latest add @esuiss-rn/button @esuiss-rn/dialog @esuiss-rn/select
+npx shadcn@latest add @esuiss/button @esuiss/dialog @esuiss/select
 ```
 
 Each item comes with the components, primitives and npm packages it depends on. In Expo projects packages are installed with `expo install`, so native modules match the Expo SDK. Components go to `components/ui/`, the primitives they build on to `components/primitives/`, patterns to `components/patterns/`, interactions to `components/interactions/`, charts to `components/charts/` and blocks to `components/blocks/`. Icons use `phosphor-react-native`.
@@ -220,14 +220,14 @@ Each item comes with the components, primitives and npm packages it depends on. 
 ### Add the theme
 
 ```bash title="Terminal"
-npx shadcn@latest add @esuiss-rn/theme-suiss
+npx shadcn@latest add @esuiss/theme-suiss
 ```
 
 - Uniwind: writes `theme-suiss.css` to the root of your project and imports it from `global.css`. If `global.css` lives in another folder, fix the path of that import.
 - NativeWind: adds the color variables to `global.css` and the colors, type scale, shadows and radius scale to `tailwind.config.js`.
 - StyleSheet: writes `components/ui/theme.ts` with the colors and a `useTheme()` hook. Every component that needs it adds it on its own.
 
-For another [style](/docs/theming#styles), add `@esuiss-rn/theme-vega`, `@esuiss-rn/theme-luma` and so on instead of `theme-suiss`, or use `https://suiss.app/ui/r/rn-uniwind-vega/{name}.json` as the `@esuiss-rn` registry so the theme that components pull in matches the style.
+For another [style](/docs/theming#styles), add `@esuiss/theme-vega`, `@esuiss/theme-luma` and so on instead of `theme-suiss`, or use `https://suiss.app/ui/r/rn-uniwind-vega/{name}.json` as the `@esuiss` registry so the theme that components pull in matches the style.
 
 ### Render the portal host
 

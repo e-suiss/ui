@@ -205,7 +205,7 @@ function components(origin, styling) {
       lib: "@/lib",
       hooks: "@/hooks",
     },
-    registries: { "@esuiss-rn": `${origin}/r/rn-${styling}/{name}.json` },
+    registries: { "@esuiss": `${origin}/r/rn-${styling}/{name}.json` },
   }
 }
 
@@ -307,7 +307,7 @@ async function check(styling, fresh, origin) {
       "--yes",
       REGISTRY_CLI,
       "add",
-      ...ITEMS.map((name) => `@esuiss-rn/${name}`),
+      ...ITEMS.map((name) => `@esuiss/${name}`),
       "--yes",
       "--overwrite",
     ],

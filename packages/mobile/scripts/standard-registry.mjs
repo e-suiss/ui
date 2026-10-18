@@ -16,7 +16,7 @@ import {
 } from "../../../scripts/lib/registry.mjs"
 
 const SITE = "https://suiss.app/ui"
-const NAMESPACE = "@esuiss-rn"
+const NAMESPACE = "@esuiss"
 const DOCS = path.resolve(import.meta.dirname, "../../../apps/ui/content/docs")
 const THEME = "theme-suiss"
 export const UNIWIND_THEME = "registry/uniwind/theme-suiss.css"
@@ -271,7 +271,7 @@ export async function buildStandardRegistries(
   for (const styling of STANDARD_STYLINGS) {
     registries[styling] = {
       $schema: `${SCHEMA_URL}/registry.json`,
-      name: `esuiss-rn-${styling}`,
+      name: `esuiss-${styling}`,
       homepage: SITE,
       items: [
         ...(await Promise.all(
