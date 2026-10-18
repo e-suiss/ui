@@ -9,6 +9,7 @@ const ARGS_PARAMETER = /\(args\)/
 const TYPE_KEYWORD = /^type\s+/
 
 const STORYBOOK = "@storybook/react-native"
+const COMPOSABLE = "androidx.compose.runtime.Composable"
 
 function parse(file, source) {
   return ts.createSourceFile(
@@ -639,6 +640,10 @@ function kotlinStories(file) {
         return BY_KEYWORD.test(code)
       return found.has(last)
     })
+    if (found.has("Composable") && !header.includes(COMPOSABLE)) {
+      header.push(COMPOSABLE)
+      header.sort()
+    }
     result.push({
       id: `${prefix}--${sanitize(startCase(match[1]))}`,
       code: `${header.map((name) => `import ${name}`).join("\n")}\n\n${code}`,
