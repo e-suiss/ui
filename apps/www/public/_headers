@@ -36,3 +36,6 @@
 
 /ui/opengraph-image
   Content-Type: image/png
+
+/ui/create/opengraph-image
+  Content-Type: image/png
