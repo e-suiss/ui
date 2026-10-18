@@ -800,8 +800,8 @@ Container that holds the shared value.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `selection` | `Binding<Value?>` | - | The selected value. |
-| `variant` | `ToggleVariant` | `.default` | - |
-| `size` | `ToggleSize` | `.default` | - |
+| `variant` | `ToggleVariant` | `.default` | Styles every item: borderless `default`, or `outline` with a border. |
+| `size` | `ToggleSize` | `.default` | Sets the height and padding of every item. |
 | `spacing` | `Int` | `2` | Gap between items in steps of 4 points. `0` joins the items. |
 | `orientation` | `Axis` | `.horizontal` | Lays items out in a row or a column, and sets which arrow keys move focus. |
 | `content` | `() -> Content` | - | The content. |
@@ -816,7 +816,7 @@ One toggle in the group.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Value` | - | The current value. |
+| `value` | `Value` | - | Identifies the item in the group's value. |
 | `label` | `() -> Label` | - | The label. |
 | `_ title` | `LocalizedStringKey` | - | The title text. |
 
@@ -836,11 +836,11 @@ Container that holds the shared value.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `String?` | - | The current value. |
-| `onValueChange` | `(String?) -> Unit` | - | Called when the value changes. |
+| `value` | `String?` | - | The controlled pressed items. Pass it with `onValueChange`. |
+| `onValueChange` | `(String?) -> Unit` | - | Called when the pressed items change. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ToggleVariant` | `ToggleVariant.Default` | - |
-| `size` | `ToggleSize` | `ToggleSize.Default` | - |
+| `variant` | `ToggleVariant` | `ToggleVariant.Default` | Styles every item: borderless `default`, or `outline` with a border. |
+| `size` | `ToggleSize` | `ToggleSize.Default` | Sets the height and padding of every item. |
 | `spacing` | `Int` | `2` | Gap between items in steps of 4 points. `0` joins the items. |
 | `orientation` | `Orientation` | `Orientation.Horizontal` | Lays items out in a row or a column, and sets which arrow keys move focus. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
@@ -860,7 +860,7 @@ One toggle in the group.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
+| `value` | `String` | - | Identifies the item in the group's value. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
 | `interactionSource` | `MutableInteractionSource?` | `null` | - |

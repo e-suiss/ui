@@ -511,9 +511,9 @@ Also accepts the props of `SliderPrimitive.RootProps<Value>`.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Binding<Value>` | - | The current value. |
+| `value` | `Binding<Value>` | - | The controlled values. Pass it with `onValueChange`. |
 | `in` | `ClosedRange<Value>` | `0...1` | - |
-| `step` | `Value.Stride?` | `nil` | - |
+| `step` | `Value.Stride?` | `nil` | The increment the thumbs snap to. |
 | `onEditingChanged` | `(Bool) -> Void` | `{ _ in }` | - |
 
 </ApiPart>
@@ -524,9 +524,9 @@ Also accepts the props of `SliderPrimitive.RootProps<Value>`.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Binding<ClosedRange<Value>>` | - | The current value. |
+| `value` | `Binding<ClosedRange<Value>>` | - | The controlled values. Pass it with `onValueChange`. |
 | `in` | `ClosedRange<Value>` | `0...1` | - |
-| `step` | `Value.Stride?` | `nil` | - |
+| `step` | `Value.Stride?` | `nil` | The increment the thumbs snap to. |
 | `onEditingChanged` | `(Bool) -> Void` | `{ _ in }` | - |
 
 </ApiPart>
@@ -543,12 +543,12 @@ The complete slider: track, filled range and thumbs.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Float` | - | The current value. |
-| `onValueChange` | `(Float) -> Unit` | - | Called when the value changes. |
+| `value` | `Float` | - | The controlled values. Pass it with `onValueChange`. |
+| `onValueChange` | `(Float) -> Unit` | - | Called when a thumb moves. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
 | `valueRange` | `ClosedFloatingPointRange<Float>` | `0f..100f` | - |
-| `step` | `Float` | `1f` | - |
+| `step` | `Float` | `1f` | The increment the thumbs snap to. |
 | `onValueChangeFinished` | `(() -> Unit)?` | `null` | - |
 | `contentDescription` | `String?` | `null` | - |
 
@@ -560,12 +560,12 @@ The complete slider: track, filled range and thumbs.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `ClosedFloatingPointRange<Float>` | - | The current value. |
-| `onValueChange` | `(ClosedFloatingPointRange<Float>) -> Unit` | - | Called when the value changes. |
+| `value` | `ClosedFloatingPointRange<Float>` | - | The controlled values. Pass it with `onValueChange`. |
+| `onValueChange` | `(ClosedFloatingPointRange<Float>) -> Unit` | - | Called when a thumb moves. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
 | `valueRange` | `ClosedFloatingPointRange<Float>` | `0f..100f` | - |
-| `step` | `Float` | `1f` | - |
+| `step` | `Float` | `1f` | The increment the thumbs snap to. |
 | `onValueChangeFinished` | `(() -> Unit)?` | `null` | - |
 | `contentDescription` | `String?` | `null` | - |
 

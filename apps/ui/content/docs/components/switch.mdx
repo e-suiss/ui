@@ -518,8 +518,8 @@ The switch track and its sliding thumb.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `checked` | `Boolean` | - | - |
-| `onCheckedChange` | `((Boolean) -> Unit)?` | - | - |
+| `checked` | `Boolean` | - | The controlled state. Pass it with `onCheckedChange`. |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | - | Called when the switch is toggled. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `size` | `SwitchSize`: `Default` \| `Sm` | `SwitchSize.Default` | Sets the switch size: `default` or the smaller `sm`. |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |

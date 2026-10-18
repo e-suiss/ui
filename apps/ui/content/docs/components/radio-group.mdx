@@ -645,7 +645,7 @@ A single radio button with its checked indicator.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Value` | - | The current value. |
+| `value` | `Value` | - | Identifies the item in the group's value. |
 | `label` | `() -> Label` | - | The label. |
 | `_ title` | `LocalizedStringKey` | - | The title text. |
 
@@ -665,8 +665,8 @@ The container that holds the selected value.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `T?` | - | The current value. |
-| `onValueChange` | `(T) -> Unit` | - | Called when the value changes. |
+| `value` | `T?` | - | The controlled selected item. Pass it with `onValueChange`. |
+| `onValueChange` | `(T) -> Unit` | - | Called when the selected item changes. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
 | `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows a destructive border while unchecked. |
@@ -682,7 +682,7 @@ A single radio button with its checked indicator.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `T` | - | The current value. |
+| `value` | `T` | - | Identifies the item in the group's value. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
 | `invalid` | `Boolean` | `false` | Shows a destructive border while unchecked. |

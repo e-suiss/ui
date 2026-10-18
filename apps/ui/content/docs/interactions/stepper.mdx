@@ -624,8 +624,8 @@ The root that holds the value and limits.
 | `value` | `Double` | - | The current value when controlled. |
 | `onValueChange` | `(Double) -> Unit` | - | Called with the new number and change details. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `min` | `Double` | `Double.NEGATIVE_INFINITY` | - |
-| `max` | `Double` | `Double.POSITIVE_INFINITY` | - |
+| `min` | `Double` | `Double.NEGATIVE_INFINITY` | The lowest value. No limit by default. |
+| `max` | `Double` | `Double.POSITIVE_INFINITY` | The highest value. No limit by default. |
 | `step` | `Double` | `1.0` | The amount each press adds or subtracts. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
 | `format` | `NumberFormat` | `remember { NumberFormat.getNumberInstance() }` | - |

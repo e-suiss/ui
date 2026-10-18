@@ -804,10 +804,10 @@ The root that manages the open state.
 | `onOpenChange` | `(Boolean) -> Unit` | - | Called when the popover opens or closes. |
 | `trigger` | `@Composable () -> Unit` | - | - |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `PopupSide` | `PopupSide.Bottom` | - |
-| `align` | `PopupAlign` | `PopupAlign.Center` | - |
-| `sideOffset` | `Dp` | `4.dp` | - |
-| `alignOffset` | `Dp` | `0.dp` | - |
+| `side` | `PopupSide` | `PopupSide.Bottom` | The side of the trigger the panel opens on. |
+| `align` | `PopupAlign` | `PopupAlign.Center` | How the panel lines up with the trigger along that side. |
+| `sideOffset` | `Dp` | `4.dp` | The gap in pixels between the trigger and the panel. |
+| `alignOffset` | `Dp` | `0.dp` | The offset in pixels along the alignment axis. |
 | `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
 
 </ApiPart>

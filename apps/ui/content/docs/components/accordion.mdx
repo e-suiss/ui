@@ -729,7 +729,7 @@ Root that holds the open state and lays out the items.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `_ variant` | `Variant`: `.default` \| `.filled` | `.default` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
-| `multiple` | `Bool` | `false` | - |
+| `multiple` | `Bool` | `false` | Lets several panels stay open at once. |
 | `content` | `() -> Content` | - | The content. |
 | `expanded` | `Binding<Set<Value>>` | - | - |
 
@@ -745,7 +745,7 @@ One section, separated from the previous one by a hairline.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Value` | - | The current value. |
+| `value` | `Value` | - | Identifies the item in the open state. |
 | `content` | `() -> Content` | - | The content. |
 | `label` | `() -> Label` | - | The label. |
 | `_ title` | `LocalizedStringKey` | - | The title text. |

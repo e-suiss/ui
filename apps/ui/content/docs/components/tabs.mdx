@@ -863,7 +863,7 @@ Root that holds the active value and orientation.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `selection` | `Binding<Value>` | - | The selected value. |
-| `orientation` | `Axis` | `.horizontal` | - |
+| `orientation` | `Axis` | `.horizontal` | Lays the tabs out in a row or a column. |
 | `content` | `() -> Content` | - | The content. |
 
 </ApiPart>
@@ -897,7 +897,7 @@ A tab that selects its panel.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Value` | - | The current value. |
+| `value` | `Value` | - | Matches the `value` of the panel it shows. |
 | `label` | `() -> Label` | - | The label. |
 | `_ title` | `LocalizedStringKey` | - | The title text. |
 
@@ -913,7 +913,7 @@ Panel shown when its value is active.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `Value` | - | The current value. |
+| `value` | `Value` | - | Matches the `value` of its tab. |
 | `content` | `() -> Content` | - | The content. |
 
 </ApiPart>
@@ -969,7 +969,7 @@ Receiver: `RowScope`.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
+| `value` | `String` | - | Matches the `value` of the panel it shows. |
 | `text` | `String` | - | The text. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `enabled` | `Boolean` | `true` | Whether it responds to input. |
@@ -987,7 +987,7 @@ Panel shown when its value is active.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
+| `value` | `String` | - | Matches the `value` of its tab. |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
 | `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
 

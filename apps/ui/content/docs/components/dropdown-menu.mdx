@@ -1145,10 +1145,10 @@ The root that manages the open state.
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
-| `side` | `Edge` | `.bottom` | - |
-| `align` | `PopupAlignment` | `.start` | - |
-| `sideOffset` | `CGFloat` | `4` | - |
-| `alignOffset` | `CGFloat` | `0` | - |
+| `side` | `Edge` | `.bottom` | The side of the trigger the menu opens on. |
+| `align` | `PopupAlignment` | `.start` | How the menu lines up with the trigger along that side. |
+| `sideOffset` | `CGFloat` | `4` | The gap in pixels between the trigger and the menu. |
+| `alignOffset` | `CGFloat` | `0` | The offset in pixels along the alignment axis. |
 | `content` | `() -> Content` | - | The content. |
 | `label` | `() -> Label` | - | The label. |
 | `_ title` | `LocalizedStringKey` | - | The title text. |
@@ -1300,10 +1300,10 @@ The root that manages the open state.
 | `onExpandedChange` | `(Boolean) -> Unit` | - | - |
 | `trigger` | `@Composable () -> Unit` | - | - |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `PopupSide` | `PopupSide.Bottom` | - |
-| `align` | `PopupAlign` | `PopupAlign.Start` | - |
-| `sideOffset` | `Dp` | `4.dp` | - |
-| `alignOffset` | `Dp` | `0.dp` | - |
+| `side` | `PopupSide` | `PopupSide.Bottom` | The side of the trigger the menu opens on. |
+| `align` | `PopupAlign` | `PopupAlign.Start` | How the menu lines up with the trigger along that side. |
+| `sideOffset` | `Dp` | `4.dp` | The gap in pixels between the trigger and the menu. |
+| `alignOffset` | `Dp` | `0.dp` | The offset in pixels along the alignment axis. |
 | `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
 
 </ApiPart>

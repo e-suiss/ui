@@ -20,6 +20,7 @@ const SOURCE_PATH = /<ComponentSource path="((?:swift|kotlin)\/[^"]+)"/g
 const PART_HEADING = /^### (.+)$/
 const TABLE_ROW = /^\| `([^`]+)` \|.*\| ([^|]*) \|$/
 const ONLY_TAG = /<Only platform="[^"]*">|<\/Only>/g
+const ONLY_BASE = /<OnlyBase base="([^"]*)">[\s\S]*?<\/OnlyBase>/g
 const SWIFT_DECLARATION =
   /^((?:@[\w.]+(?:\([^)\n]*\))?\s+)*)((?:(?:public|internal|private|fileprivate|final|nonisolated)\s+)*)(struct|enum|class|actor|extension|protocol|func)\s+([\w.]+)/gm
 const SWIFT_MEMBER =
@@ -945,6 +946,12 @@ function rnPart(api) {
   return trimmed.slice('<Only platform="rn">'.length, end).trim()
 }
 
+function onlyBases(text, bases) {
+  return text.replace(ONLY_BASE, (block, list) =>
+    list.split(" ").some((base) => bases.includes(base)) ? block : ""
+  )
+}
+
 function webApi(source, nativeStart) {
   const web = source.slice(0, nativeStart)
   const start = web.indexOf(`\n${API_HEADING}\n`)
@@ -965,7 +972,12 @@ async function generate(file, report) {
   if (!rnApi.includes("<ApiPart")) return null
   const name = path.relative(DOCS, file)
   const title = source.match(TITLE)?.[1].replace(QUOTES, "").trim() ?? ""
-  const references = [reference(rnApi), reference(webApi(source, nativeStart))]
+  const web = webApi(source, nativeStart)
+  const references = [
+    reference(rnApi),
+    reference(onlyBases(web, ["base"])),
+    reference(onlyBases(web, ["base", "radix"])),
+  ]
   const sections = [`<Only platform="rn">\n\n${rnApi}\n\n</Only>`]
   for (const [platform, label] of Object.entries(PLATFORMS)) {
     if (!split.scope.includes(platform)) continue

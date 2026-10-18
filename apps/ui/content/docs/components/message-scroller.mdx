@@ -1462,8 +1462,8 @@ Container that clips the list and positions the button.
 | `_ data` | `Data` | - | The messages to render. |
 | `id` | `KeyPath<Data.Element, ID>` | - | - |
 | `spacing` | `CGFloat` | `12` | - |
-| `defaultScrollPosition` | `MessageScrollerDefaultScrollPosition`: `.start` \| `.end` | `.end` | - |
-| `autoScroll` | `Bool` | `true` | - |
+| `defaultScrollPosition` | `MessageScrollerDefaultScrollPosition`: `.start` \| `.end` | `.end` | Where the scroller opens: the first item, the last item, or the last item marked with `scrollAnchor`. |
+| `autoScroll` | `Bool` | `true` | Follows new content at the bottom until the user scrolls away. |
 | `scrollEdgeThreshold` | `CGFloat` | `8` | Distance in points from an edge that still counts as being at that edge. |
 | `buttons` | `Set<MessageScrollerScrollDirection>` | `[.end]` | - |
 | `controller` | `MessageScrollerController?` | `nil` | - |
