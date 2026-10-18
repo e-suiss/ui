@@ -344,7 +344,8 @@ export async function themeOptionsFor(options, fetchThemes, ownColors) {
   let palette = withPrimary(presetPalette, options.primary)
   const complete = presetPalette && options.theme !== OWN_THEME
   const menus =
-    complete || (ownColors && (presetPalette || !isDefaultMenu(preset)))
+    preset &&
+    (complete || (ownColors && (presetPalette || !isDefaultMenu(preset))))
   if (preset && menus) {
     const colors = withPrimary(
       Object.fromEntries(

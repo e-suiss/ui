@@ -340,3 +340,14 @@ describe("preset StyleSheet themes", () => {
     }
   )
 })
+
+describe("a primary without a preset", () => {
+  it("themes the primary over the registry colors", async () => {
+    const options = await themeOptionsFor(
+      { primary: "oklch(0.7 0.15 162)" },
+      async () => THEMES,
+      OWN
+    )
+    expect(options.palette.light.primary).toBe("oklch(0.7 0.15 162)")
+  })
+})

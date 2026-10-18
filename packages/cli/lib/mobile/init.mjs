@@ -23,6 +23,7 @@ import {
   STYLINGS,
 } from "./project.mjs"
 import {
+  detectStyle,
   fetchRegistry,
   fetchStylesheet,
   fetchText,
@@ -576,6 +577,32 @@ export async function init(options) {
   step("Ready. Add components with npx @esuiss/ui add <name>")
 }
 
+function currentStyle(project, registry, target) {
+  if (project.styling === "nativewind") {
+    const config = TAILWIND_CONFIGS.map((name) =>
+      path.join(project.cwd, name)
+    ).find(existsSync)
+    return config
+      ? detectStyle(
+          registry,
+          "nativewind",
+          registry.styles.nativewind.config,
+          readFileSync(config, "utf8")
+        )
+      : undefined
+  }
+  const fallback =
+    project.styling === "uniwind"
+      ? registry.styles.uniwind.stylesheet
+      : registry.styles.stylesheet.theme
+  return detectStyle(
+    registry,
+    project.styling,
+    fallback,
+    readFileSync(target, "utf8")
+  )
+}
+
 export async function apply(options) {
   const project = detectProject(options.cwd)
   project.styling = detectStyling(project, options.styling) ?? "stylesheet"
@@ -595,22 +622,30 @@ export async function apply(options) {
   const only = options.only
   const manual = []
   const registry = await fetchRegistry()
+  const inPlace = options.style === undefined && !options.preset
+  if (options.style === undefined && only !== "font") {
+    options.style = await currentStyle(project, registry, target)
+  }
 
   if (only !== "font") {
     const theme = await themeOptionsFor(options, fetchThemes, registry.colors)
     const format = THEME_FORMATS[project.styling]
-    const fresh = usesCss
-      ? await fetchStylesheet(registry, project.styling, options.style)
-      : await fetchText(
-          presetFile(registry, "stylesheet", options.style) ??
-            registry.styles.stylesheet.theme
-        )
+    const current = readFileSync(target, "utf8")
+    let fresh = current
+    if (!inPlace) {
+      fresh = usesCss
+        ? await fetchStylesheet(registry, project.styling, options.style)
+        : await fetchText(
+            presetFile(registry, "stylesheet", options.style) ??
+              registry.styles.stylesheet.theme
+          )
+    }
     const text = theme
       ? themed(fresh, format, theme)
-      : keepColors(fresh, readFileSync(target, "utf8"), format)
+      : keepColors(fresh, current, format)
     writeFileSync(target, text)
     step(`Updated ${relative(project, target)}`)
-    if (project.styling === "nativewind") {
+    if (project.styling === "nativewind" && !inPlace) {
       await writeTailwindConfig(project, registry, options, theme, {
         keep: true,
       })

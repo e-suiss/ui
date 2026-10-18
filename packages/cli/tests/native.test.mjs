@@ -524,4 +524,19 @@ describe("native apply", () => {
       'Add resources: [.process("EsuissUI/Fonts")] to the App target in Package.swift'
     )
   })
+
+  it("keeps the style of the tokens with --only theme", async () => {
+    serveRegistry({
+      ...files,
+      [`${SWIFT_SOURCES}/Theme/Tokens.swift`]: tokens,
+      "styles/presets/vega/Tokens.swift": `${tokens}public enum Vega {}\n`,
+      "registry/themes.json": [],
+    })
+    const cwd = xcodeProject()
+    await initNative({ cwd, platform: "swift", style: "vega" })
+    await applyNative({ cwd, platform: "swift", preset: plain, only: "theme" })
+    expect(read(cwd, "EsuissUI/Theme/Tokens.swift")).toContain(
+      "public enum Vega {}"
+    )
+  })
 })

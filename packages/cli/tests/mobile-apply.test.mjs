@@ -85,7 +85,7 @@ describe("React Native apply", () => {
   it("rewrites the Uniwind stylesheet with the new primary", async () => {
     const cwd = expoProject(
       { uniwind: "1.0.0" },
-      { "global.css": "old\n", "App.tsx": "" }
+      { "global.css": uniwind, "App.tsx": "" }
     )
     await apply({ cwd, primary: "oklch(0.7 0.15 162)" })
     const css = read(cwd, "global.css")
@@ -108,7 +108,7 @@ describe("React Native apply", () => {
       {},
       { "components/ui/theme.ts": "old\n", "App.tsx": "" }
     )
-    await apply({ cwd, primary: "#e11d48" })
+    await apply({ cwd, primary: "#e11d48", style: "suiss" })
     expect(read(cwd, "components/ui/theme.ts")).toBe(
       "export const theme = {}\n"
     )
@@ -255,12 +255,51 @@ describe("NativeWind apply", () => {
         "tailwind.config.js": "module.exports = { mine: true }\n",
       }
     )
-    await apply({ cwd, primary: "#e11d48" })
+    await apply({ cwd, primary: "#e11d48", style: "suiss" })
     expect(read(cwd, "tailwind.config.js")).toBe(
       "module.exports = { mine: true }\n"
     )
     expect(output()).toContain("Kept tailwind.config.js")
-    await apply({ cwd, primary: "#e11d48", yes: true })
+    await apply({ cwd, primary: "#e11d48", style: "suiss", yes: true })
     expect(read(cwd, "tailwind.config.js")).toBe("module.exports = {}\n")
+  })
+})
+
+describe("apply without a style", () => {
+  const vega = uniwind.replace(
+    "--radius-md: 0.5rem;",
+    "--radius-md: 0.25rem;\n  --font-weight-title: 500;"
+  )
+
+  beforeEach(() => {
+    serveRegistry({
+      ...files,
+      "registry.json": {
+        ...files["registry.json"],
+        presets: { vega: { uniwind: "styles/presets/vega/uniwind.css" } },
+      },
+      "styles/presets/vega/uniwind.css": vega,
+    })
+  })
+
+  it("keeps the style the project uses", async () => {
+    const cwd = expoProject({ uniwind: "1.0.0" }, { "global.css": vega })
+    await apply({ cwd, primary: "oklch(0.7 0.15 162)", only: "theme" })
+    const css = read(cwd, "global.css")
+    expect(css).toContain("--font-weight-title: 500;")
+    expect(css).toContain("--color-primary: oklch(0.7 0.15 162);")
+  })
+
+  it("keeps the radius of an earlier preset with only --primary", async () => {
+    const large = vega.replace("0.25rem", "0.35rem")
+    const cwd = expoProject({ uniwind: "1.0.0" }, { "global.css": large })
+    await apply({ cwd, primary: "oklch(0.7 0.15 162)" })
+    expect(read(cwd, "global.css")).toContain("--radius-md: 0.35rem;")
+  })
+
+  it("keeps the suiss style", async () => {
+    const cwd = expoProject({ uniwind: "1.0.0" }, { "global.css": uniwind })
+    await apply({ cwd, primary: "oklch(0.7 0.15 162)" })
+    expect(read(cwd, "global.css")).not.toContain("--font-weight-title")
   })
 })

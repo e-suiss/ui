@@ -33,7 +33,12 @@ import {
   usesCustomIcons,
   withIcons,
 } from "./icons.mjs"
-import { fetchRegistry, fetchText, presetFile } from "./registry.mjs"
+import {
+  detectStyle,
+  fetchRegistry,
+  fetchText,
+  presetFile,
+} from "./registry.mjs"
 import { keepColors, themed, themeOptionsFor } from "./theme.mjs"
 
 const ANDROID_PLUGIN =
@@ -210,15 +215,17 @@ async function setup(options) {
   if (!spec) {
     throw new CliError(`The registry has no ${platform.title} files.`)
   }
-  const tokens = presetFile(registry, options.platform, options.style)
-  const entries = (files) =>
-    files.map((file) => ({
+  presetFile(registry, options.platform, options.style)
+  const entries = (files) => {
+    const tokens = presetFile(registry, options.platform, options.style)
+    return files.map((file) => ({
       file,
       source:
         tokens && path.posix.basename(file).startsWith("Tokens.")
           ? tokens
           : `${spec.directory}/${file}`,
     }))
+  }
   step(
     `${platform.title} files go to ${path.relative(project.cwd, project.root) || "."}`
   )
@@ -438,6 +445,15 @@ export async function applyNative(options) {
     )
   }
   const only = options.only
+  const inPlace = options.style === undefined && !options.preset
+  if (options.style === undefined && only !== "font") {
+    options.style = await detectStyle(
+      context.registry,
+      options.platform,
+      `${spec.directory}/${tokens[0]}`,
+      readFileSync(targetFor(project.root, tokens[0], options.platform), "utf8")
+    )
+  }
   const theme =
     only === "font"
       ? null
@@ -452,7 +468,11 @@ export async function applyNative(options) {
     .filter((file) => targets.has(file.target))
     .map((file) => {
       const current = readFileSync(file.target, "utf8")
-      let base = themed(file.content, options.platform, theme)
+      let base = themed(
+        inPlace ? current : file.content,
+        options.platform,
+        theme
+      )
       if (only === "font") base = current
       else {
         if (!theme) base = keepColors(base, current, options.platform)

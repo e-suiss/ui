@@ -45,3 +45,31 @@ export function sourceOf(registry, item, file, styling) {
     ? `${directory}/${file}`
     : file
 }
+
+function missingLines(candidate, current) {
+  const lines = new Set(candidate.split("\n").map((line) => line.trim()))
+  return current
+    .split("\n")
+    .filter((line) => line.trim() && !lines.has(line.trim())).length
+}
+
+export async function detectStyle(registry, kind, fallback, current) {
+  const styles = [
+    DEFAULT_STYLE,
+    ...Object.keys(registry.presets ?? {}).filter(
+      (style) => registry.presets[style]?.[kind]
+    ),
+  ]
+  const scored = await Promise.all(
+    styles.map(async (style) => ({
+      style,
+      score: missingLines(
+        await fetchText(presetFile(registry, kind, style) ?? fallback),
+        current
+      ),
+    }))
+  )
+  return scored.reduce((best, entry) =>
+    entry.score < best.score ? entry : best
+  ).style
+}

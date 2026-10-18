@@ -481,7 +481,9 @@ async function main() {
           "--style changes components and themes; drop --only font to use it."
         )
       }
+      const keepsStyle = options.style === undefined && !options.preset
       await resolvePlatform(options)
+      if (keepsStyle && options.platform !== "web") options.style = undefined
       if (options.platform === "web") await apply(options)
       else if (options.platform === "rn") await applyMobile(options)
       else await applyNative(options)
