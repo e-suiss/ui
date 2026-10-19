@@ -15,13 +15,6 @@ import {
 } from "@/components/interactions/tip"
 import { Button } from "@/components/ui/button"
 
-const notes = [
-  { id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee" },
-  { id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road" },
-  { id: 3, title: "Book list", preview: "Three novels for the summer" },
-  { id: 4, title: "Meeting notes", preview: "Ship the beta on Friday" },
-]
-
 const TIP_IDS = ["notes-pin", "notes-compose"]
 
 function NotesPage() {
@@ -108,20 +101,54 @@ function NotesPage() {
           </TipCard>
         </Tip>
         <ul className="overflow-hidden rounded-2xl border">
-          {notes.map((note) => (
-            <li key={note.id} className="not-first:border-t">
-              <button
-                type="button"
-                onClick={() => setLog(`Opened ${note.title}`)}
-                className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
-              >
-                <span className="truncate font-semibold">{note.title}</span>
-                <span className="truncate text-sm text-muted-foreground">
-                  {note.preview}
-                </span>
-              </button>
-            </li>
-          ))}
+          <li className="not-first:border-t">
+            <button
+              type="button"
+              onClick={() => setLog("Opened Groceries")}
+              className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+            >
+              <span className="truncate font-semibold">Groceries</span>
+              <span className="truncate text-sm text-muted-foreground">
+                Milk, eggs, bread, coffee
+              </span>
+            </button>
+          </li>
+          <li className="not-first:border-t">
+            <button
+              type="button"
+              onClick={() => setLog("Opened Trip ideas")}
+              className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+            >
+              <span className="truncate font-semibold">Trip ideas</span>
+              <span className="truncate text-sm text-muted-foreground">
+                Lisbon, Porto, the coast road
+              </span>
+            </button>
+          </li>
+          <li className="not-first:border-t">
+            <button
+              type="button"
+              onClick={() => setLog("Opened Book list")}
+              className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+            >
+              <span className="truncate font-semibold">Book list</span>
+              <span className="truncate text-sm text-muted-foreground">
+                Three novels for the summer
+              </span>
+            </button>
+          </li>
+          <li className="not-first:border-t">
+            <button
+              type="button"
+              onClick={() => setLog("Opened Meeting notes")}
+              className="flex w-full flex-col px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+            >
+              <span className="truncate font-semibold">Meeting notes</span>
+              <span className="truncate text-sm text-muted-foreground">
+                Ship the beta on Friday
+              </span>
+            </button>
+          </li>
         </ul>
         <p role="status" className="min-h-5 text-sm text-muted-foreground">
           {log}
@@ -131,7 +158,7 @@ function NotesPage() {
   )
 }
 
-function TipsExample() {
+export default function TipDemo() {
   const [key, setKey] = React.useState(0)
 
   return (
@@ -150,8 +177,4 @@ function TipsExample() {
       </Button>
     </div>
   )
-}
-
-export default function TipDemo() {
-  return <TipsExample />
 }

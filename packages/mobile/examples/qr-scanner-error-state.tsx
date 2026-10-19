@@ -3,7 +3,7 @@ import * as React from "react"
 import { View } from "react-native"
 import Svg, { Path } from "react-native-svg"
 import { Icon } from "@/components/ui/icon"
-import { QRScanner, type QRScannerState } from "@/components/ui/qr-scanner"
+import { QRScanner } from "@/components/ui/qr-scanner"
 
 const MODULES = 21
 
@@ -60,41 +60,22 @@ function QRCode({ color }: PhosphorIconProps) {
   )
 }
 
-function CameraPlaceholder() {
-  return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <View className="mb-12 -rotate-6 rounded-xl bg-white p-2.5">
-        <Icon as={QRCode} className="text-black" />
-      </View>
-    </View>
-  )
-}
-
-function Scanner({
-  state,
-  description,
-  scanLine,
-}: {
-  state?: QRScannerState
-  description?: string
-  scanLine?: boolean
-}) {
+export default function QrScannerErrorState() {
   const [torch, setTorch] = React.useState(false)
   return (
     <QRScanner
       className="flex-1"
-      state={state}
-      scanLine={scanLine}
+      state="error"
       title="Scan QR code"
-      description={description}
+      description="This code is not supported."
       torch={torch}
       onTorchToggle={setTorch}
     >
-      <CameraPlaceholder />
+      <View className="flex-1 items-center justify-center bg-black">
+        <View className="mb-12 -rotate-6 rounded-xl bg-white p-2.5">
+          <Icon as={QRCode} className="text-black" />
+        </View>
+      </View>
     </QRScanner>
   )
-}
-
-export default function QrScannerErrorState() {
-  return <Scanner state="error" description="This code is not supported." />
 }

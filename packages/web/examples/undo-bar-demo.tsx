@@ -12,7 +12,7 @@ const initialNotes = [
 
 type Note = (typeof initialNotes)[number]
 
-function useNotes() {
+function NotesList() {
   const [notes, setNotes] = React.useState(initialNotes)
   const [log, setLog] = React.useState("Delete a note.")
   const { show } = useUndoBar()
@@ -34,12 +34,6 @@ function useNotes() {
       onCommit: () => setLog(`Deleted “${note.title}” permanently`),
     })
   }
-
-  return { notes, remove, log }
-}
-
-function NotesList() {
-  const { notes, remove, log } = useNotes()
 
   return (
     <div className="mx-auto flex w-full max-w-md flex-col gap-3">

@@ -10,55 +10,61 @@ import {
 } from "@/components/interactions/stepper"
 import { Text } from "@/components/ui/text"
 
-function StepperRow({
-  label,
-  ...props
-}: React.ComponentProps<typeof Stepper> & { label: string }) {
-  const labelId = React.useId()
-
-  return (
-    <View className="min-h-11 flex-row items-center justify-between gap-4 px-4 py-1.5">
-      <Text nativeID={labelId} className="text-base">
-        {label}
-      </Text>
-      <Stepper {...props}>
-        <StepperInput accessibilityLabelledBy={labelId} />
-        <StepperGroup>
-          <StepperDecrement />
-          <StepperSeparator />
-          <StepperIncrement />
-        </StepperGroup>
-      </Stepper>
-    </View>
-  )
-}
-
-function PrintExample() {
+export default function StepperPrint() {
   const [copies, setCopies] = React.useState(1)
   const [scale, setScale] = React.useState(100)
 
   return (
     <View className="w-full gap-3">
       <View className="overflow-hidden rounded-2xl border border-border">
-        <StepperRow
-          label="Copies"
-          value={copies}
-          onValueChange={setCopies}
-          min={1}
-          max={999}
-        />
+        <View className="min-h-11 flex-row items-center justify-between gap-4 px-4 py-1.5">
+          <Text nativeID="copies-label" className="text-base">
+            Copies
+          </Text>
+          <Stepper value={copies} onValueChange={setCopies} min={1} max={999}>
+            <StepperInput accessibilityLabelledBy="copies-label" />
+            <StepperGroup>
+              <StepperDecrement />
+              <StepperSeparator />
+              <StepperIncrement />
+            </StepperGroup>
+          </Stepper>
+        </View>
         <View className="h-px bg-border" />
-        <StepperRow
-          label="Scale"
-          value={scale}
-          onValueChange={setScale}
-          min={25}
-          max={400}
-          step={5}
-          format={{ style: "unit", unit: "percent" }}
-        />
+        <View className="min-h-11 flex-row items-center justify-between gap-4 px-4 py-1.5">
+          <Text nativeID="scale-label" className="text-base">
+            Scale
+          </Text>
+          <Stepper
+            value={scale}
+            onValueChange={setScale}
+            min={25}
+            max={400}
+            step={5}
+            format={{ style: "unit", unit: "percent" }}
+          >
+            <StepperInput accessibilityLabelledBy="scale-label" />
+            <StepperGroup>
+              <StepperDecrement />
+              <StepperSeparator />
+              <StepperIncrement />
+            </StepperGroup>
+          </Stepper>
+        </View>
         <View className="h-px bg-border" />
-        <StepperRow label="Pages per sheet" defaultValue={1} disabled />
+        <View className="min-h-11 flex-row items-center justify-between gap-4 px-4 py-1.5">
+          <Text nativeID="pages-label" className="text-base">
+            Pages per sheet
+          </Text>
+          <Stepper defaultValue={1} disabled>
+            <StepperInput accessibilityLabelledBy="pages-label" />
+            <StepperGroup>
+              <StepperDecrement />
+              <StepperSeparator />
+              <StepperIncrement />
+            </StepperGroup>
+          </Stepper>
+        </View>
       </View>
       <Text
         accessibilityLiveRegion="polite"
@@ -68,8 +74,4 @@ function PrintExample() {
       </Text>
     </View>
   )
-}
-
-export default function StepperPrint() {
-  return <PrintExample />
 }

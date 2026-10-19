@@ -11,6 +11,14 @@ import { Text } from "@/components/ui/text"
 function Triggers() {
   const { show, dismiss } = useTopBanner()
   const [log, setLog] = React.useState("")
+  const shownRef = React.useRef(false)
+
+  React.useEffect(() => {
+    if (shownRef.current) return
+    shownRef.current = true
+    show({ title: "Copied to clipboard" })
+  }, [show])
+
   return (
     <View className="w-full gap-3">
       <Button
@@ -57,28 +65,10 @@ function Triggers() {
   )
 }
 
-function ShowOnMount({
-  options,
-}: {
-  options: Parameters<ReturnType<typeof useTopBanner>["show"]>[0]
-}) {
-  const { show } = useTopBanner()
-  const shownRef = React.useRef(false)
-  const optionsRef = React.useRef(options)
-
-  React.useEffect(() => {
-    if (shownRef.current) return
-    shownRef.current = true
-    show(optionsRef.current)
-  }, [show])
-
-  return <Triggers />
-}
-
 export default function TopBannerTitleOnly() {
   return (
     <TopBannerProvider timeout={600000}>
-      <ShowOnMount options={{ title: "Copied to clipboard" }} />
+      <Triggers />
     </TopBannerProvider>
   )
 }

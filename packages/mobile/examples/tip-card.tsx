@@ -12,7 +12,7 @@ import {
 } from "@/components/interactions/tip"
 import { Icon } from "@/components/ui/icon"
 
-function CardExample() {
+export default function TipCardExample() {
   const [ready, setReady] = React.useState(false)
 
   React.useEffect(() => {
@@ -37,8 +37,4 @@ function CardExample() {
       </TipCard>
     </Tip>
   )
-}
-
-export default function TipCardExample() {
-  return <CardExample />
 }

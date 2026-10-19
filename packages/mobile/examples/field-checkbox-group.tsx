@@ -7,7 +7,7 @@ import { Text } from "@/components/ui/text"
 
 const TOPPINGS = ["cheese", "olives", "peppers"]
 
-function ToppingsDemo() {
+export default function FieldCheckboxGroup() {
   const [value, setValue] = React.useState<string[]>(["cheese"])
   return (
     <FieldSet>
@@ -32,8 +32,4 @@ function ToppingsDemo() {
       </CheckboxGroupPrimitive.Root>
     </FieldSet>
   )
-}
-
-export default function FieldCheckboxGroup() {
-  return <ToppingsDemo />
 }

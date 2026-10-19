@@ -1,23 +1,21 @@
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-const options = [
-  { value: "email", label: "Email" },
-  { value: "sms", label: "Text message" },
-  { value: "push", label: "Push notification" },
-]
-
 export default function RadioGroupInvalid() {
   return (
-    <div className="w-64">
-      <RadioGroup aria-label="Notification method" isInvalid>
-        {options.map((option) => (
-          <Label key={option.value}>
-            <RadioGroupItem value={option.value} />
-            {option.label}
-          </Label>
-        ))}
-      </RadioGroup>
-    </div>
+    <RadioGroup className="w-64" aria-label="Notification method" isInvalid>
+      <Label>
+        <RadioGroupItem value="email" />
+        Email
+      </Label>
+      <Label>
+        <RadioGroupItem value="sms" />
+        Text message
+      </Label>
+      <Label>
+        <RadioGroupItem value="push" />
+        Push notification
+      </Label>
+    </RadioGroup>
   )
 }

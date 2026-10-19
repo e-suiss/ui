@@ -39,33 +39,31 @@ const places: Place[] = [
   },
 ]
 
-function PlaceCard({ place }: { place: Place }) {
-  return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle>{place.name}</CardTitle>
-        <CardDescription>{place.city}</CardDescription>
-      </CardHeader>
-      <CardContent className="grow">
-        <View className="grow rounded-xl bg-muted" />
-      </CardContent>
-      <CardContent>
-        <Text className="text-sm text-muted-foreground">{place.detail}</Text>
-      </CardContent>
-    </Card>
-  )
-}
-
-function Demo({ disabled = false }: { disabled?: boolean }) {
+export default function CardStackDisabled() {
   const [log, setLog] = React.useState("")
   return (
     <View className="gap-3">
       <CardStack
         data={places}
         keyExtractor={(place) => place.id}
-        renderItem={(place) => <PlaceCard place={place} />}
+        renderItem={(place) => (
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle>{place.name}</CardTitle>
+              <CardDescription>{place.city}</CardDescription>
+            </CardHeader>
+            <CardContent className="grow">
+              <View className="grow rounded-xl bg-muted" />
+            </CardContent>
+            <CardContent>
+              <Text className="text-sm text-muted-foreground">
+                {place.detail}
+              </Text>
+            </CardContent>
+          </Card>
+        )}
         itemAccessibilityLabel={(place) => `${place.name}, ${place.city}`}
-        disabled={disabled}
+        disabled
         onSwipe={(direction, place) =>
           setLog(`${direction === "left" ? "Skipped" : "Liked"} ${place.name}`)
         }
@@ -83,8 +81,4 @@ function Demo({ disabled = false }: { disabled?: boolean }) {
       </Text>
     </View>
   )
-}
-
-export default function CardStackDisabled() {
-  return <Demo disabled />
 }

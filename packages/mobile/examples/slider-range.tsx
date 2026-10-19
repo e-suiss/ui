@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Slider } from "@/components/ui/slider"
 import { Text } from "@/components/ui/text"
 
-function RangeDemo() {
+export default function SliderRange() {
   const [value, setValue] = React.useState<readonly number[]>([25, 75])
   return (
     <View className="w-full gap-3">
@@ -22,8 +22,4 @@ function RangeDemo() {
       />
     </View>
   )
-}
-
-export default function SliderRange() {
-  return <RangeDemo />
 }

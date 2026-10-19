@@ -9,21 +9,9 @@ import {
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
-const _photos = [
-  "bg-blue-500",
-  "bg-orange-500",
-  "bg-green-500",
-  "bg-indigo-500",
-  "bg-yellow-500",
-  "bg-pink-500",
-  "bg-teal-500",
-  "bg-purple-500",
-  "bg-teal-400",
-]
-
-function AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {
+export default function PreviewMenuCustomPreviewOpen() {
   return (
-    <PreviewMenu aspectRatio={4 / 3} defaultOpen={defaultOpen}>
+    <PreviewMenu aspectRatio={4 / 3} defaultOpen>
       <PreviewMenuTrigger className="flex-row items-center gap-3 rounded-xl bg-muted p-3">
         <View className="size-12 rounded-lg bg-blue-500" />
         <View>
@@ -54,8 +42,4 @@ function AlbumPreview({ defaultOpen }: { defaultOpen?: boolean }) {
       </PreviewMenuContent>
     </PreviewMenu>
   )
-}
-
-export default function PreviewMenuCustomPreviewOpen() {
-  return <AlbumPreview defaultOpen />
 }

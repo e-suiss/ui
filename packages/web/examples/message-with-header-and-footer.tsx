@@ -10,23 +10,21 @@ import {
 
 export default function MessageWithHeaderAndFooter() {
   return (
-    <div className="w-96">
-      <Message align="start">
-        <MessageAvatar>
-          <Avatar>
-            <AvatarFallback>JL</AvatarFallback>
-          </Avatar>
-        </MessageAvatar>
-        <MessageContent>
-          <MessageHeader>Jordan Lee</MessageHeader>
-          <Bubble variant="muted">
-            <BubbleContent>
-              I pushed the updated designs to the shared folder.
-            </BubbleContent>
-          </Bubble>
-          <MessageFooter>9:41 AM</MessageFooter>
-        </MessageContent>
-      </Message>
-    </div>
+    <Message align="start" className="w-96">
+      <MessageAvatar>
+        <Avatar>
+          <AvatarFallback>JL</AvatarFallback>
+        </Avatar>
+      </MessageAvatar>
+      <MessageContent>
+        <MessageHeader>Jordan Lee</MessageHeader>
+        <Bubble variant="muted">
+          <BubbleContent>
+            I pushed the updated designs to the shared folder.
+          </BubbleContent>
+        </Bubble>
+        <MessageFooter>9:41 AM</MessageFooter>
+      </MessageContent>
+    </Message>
   )
 }

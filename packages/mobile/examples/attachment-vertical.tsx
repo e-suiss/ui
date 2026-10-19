@@ -1,5 +1,5 @@
 import { FilePdfIcon, XIcon } from "phosphor-react-native"
-import { Image as NativeImage, View } from "react-native"
+import { Image, View } from "react-native"
 import {
   Attachment,
   AttachmentAction,
@@ -11,26 +11,19 @@ import {
 } from "@/components/ui/attachment"
 import { Icon } from "@/components/ui/icon"
 
-const imageUrl =
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
-function Thumbnail() {
-  return (
-    <NativeImage
-      source={{ uri: imageUrl }}
-      accessibilityLabel="Mountain lake"
-      className="size-full"
-      resizeMode="cover"
-    />
-  )
-}
-
 export default function AttachmentVertical() {
   return (
     <View className="flex-row items-start gap-3">
       <Attachment orientation="vertical" state="done">
         <AttachmentMedia variant="image">
-          <Thumbnail />
+          <Image
+            source={{
+              uri: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80",
+            }}
+            accessibilityLabel="Mountain lake"
+            className="size-full"
+            resizeMode="cover"
+          />
         </AttachmentMedia>
         <AttachmentActions>
           <AttachmentAction accessibilityLabel="Remove">

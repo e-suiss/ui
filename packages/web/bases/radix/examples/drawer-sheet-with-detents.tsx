@@ -27,7 +27,7 @@ const weekdays = [
   "Saturday",
 ]
 
-function CalendarExample() {
+export default function DrawerSheetWithDetents() {
   const [open, setOpen] = React.useState(false)
   const [allDay, setAllDay] = React.useState(false)
 
@@ -154,8 +154,4 @@ function CalendarExample() {
       </DrawerIndent>
     </DrawerProvider>
   )
-}
-
-export default function DrawerSheetWithDetents() {
-  return <CalendarExample />
 }

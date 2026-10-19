@@ -42,64 +42,62 @@ export default function CodeBlockDemo() {
   const lines = useHighlightedCode(code, "ts")
 
   return (
-    <div className="w-full max-w-lg">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>
+    <CodeBlock className="w-full max-w-lg">
+      <CodeBlockHeader>
+        <CodeBlockTitle>
+          <IconPlaceholder
+            lucide="FileCodeIcon"
+            tabler="IconFileCode"
+            hugeicons="FileCodeIcon"
+            phosphor="FileCodeIcon"
+            remixicon="RiFileCodeLine"
+          />
+          app/api/chat/route.ts
+        </CodeBlockTitle>
+        <CodeBlockActions>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            aria-label="Wrap lines"
+            aria-pressed={wrap}
+            className="aria-pressed:text-foreground"
+            onClick={() => setWrap(!wrap)}
+          >
             <IconPlaceholder
-              lucide="FileCodeIcon"
-              tabler="IconFileCode"
-              hugeicons="FileCodeIcon"
-              phosphor="FileCodeIcon"
-              remixicon="RiFileCodeLine"
+              lucide="WrapTextIcon"
+              tabler="IconTextWrap"
+              hugeicons="TextWrapIcon"
+              phosphor="TextIndentIcon"
+              remixicon="RiTextWrap"
             />
-            app/api/chat/route.ts
-          </CodeBlockTitle>
-          <CodeBlockActions>
-            <Button
-              variant="ghost"
-              size="icon-xs"
-              aria-label="Wrap lines"
-              aria-pressed={wrap}
-              className="aria-pressed:text-foreground"
-              onClick={() => setWrap(!wrap)}
-            >
-              <IconPlaceholder
-                lucide="WrapTextIcon"
-                tabler="IconTextWrap"
-                hugeicons="TextWrapIcon"
-                phosphor="TextIndentIcon"
-                remixicon="RiTextWrap"
-              />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon-xs"
-              aria-label="Download"
-              onClick={() => download(code, "route.ts")}
-            >
-              <IconPlaceholder
-                lucide="DownloadIcon"
-                tabler="IconDownload"
-                hugeicons="Download01Icon"
-                phosphor="DownloadSimpleIcon"
-                remixicon="RiDownloadLine"
-              />
-            </Button>
-            <CodeBlockCopyButton value={code} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent wrap={wrap} lineNumbers>
-          {lines.map((line, index) => (
-            <CodeBlockLine
-              key={index}
-              variant={index >= 5 && index <= 9 ? "highlighted" : "default"}
-            >
-              {line}
-            </CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            aria-label="Download"
+            onClick={() => download(code, "route.ts")}
+          >
+            <IconPlaceholder
+              lucide="DownloadIcon"
+              tabler="IconDownload"
+              hugeicons="Download01Icon"
+              phosphor="DownloadSimpleIcon"
+              remixicon="RiDownloadLine"
+            />
+          </Button>
+          <CodeBlockCopyButton value={code} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent wrap={wrap} lineNumbers>
+        {lines.map((line, index) => (
+          <CodeBlockLine
+            key={index}
+            variant={index >= 5 && index <= 9 ? "highlighted" : "default"}
+          >
+            {line}
+          </CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

@@ -15,18 +15,16 @@ const logs = Array.from(
 
 export default function CodeBlockHeight() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>Logs</CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={logs} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent className="max-h-48 scroll-fade-y">
-          {logs}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>Logs</CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={logs} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent className="max-h-48 scroll-fade-y">
+        {logs}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

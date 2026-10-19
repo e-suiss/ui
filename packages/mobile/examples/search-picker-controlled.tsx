@@ -15,28 +15,24 @@ const frameworks: SearchPickerItem[] = [
   { value: "gatsby", label: "Gatsby", disabled: true },
 ]
 
-function ControlledExample(args: React.ComponentProps<typeof SearchPicker>) {
+export default function SearchPickerControlled() {
   const [value, setValue] = React.useState<string | null>("next")
 
   return (
     <View className="items-start gap-2">
-      <SearchPicker {...args} value={value} onValueChange={setValue} />
+      <SearchPicker
+        items={frameworks}
+        placeholder="Select a framework"
+        searchPlaceholder="Search frameworks..."
+        emptyText="No framework found."
+        accessibilityLabel="Framework"
+        className="w-56"
+        value={value}
+        onValueChange={setValue}
+      />
       <Text className="text-sm text-muted-foreground">
         Selected: {value ?? "none"}
       </Text>
     </View>
-  )
-}
-
-export default function SearchPickerControlled() {
-  return (
-    <ControlledExample
-      items={frameworks}
-      placeholder="Select a framework"
-      searchPlaceholder="Search frameworks..."
-      emptyText="No framework found."
-      accessibilityLabel="Framework"
-      className="w-56"
-    />
   )
 }

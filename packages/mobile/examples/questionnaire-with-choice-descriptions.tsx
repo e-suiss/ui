@@ -14,17 +14,6 @@ import {
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire"
 
-function Actions() {
-  return (
-    <QuestionnaireActions>
-      <QuestionnairePrevious />
-      <QuestionnaireSkip />
-      <QuestionnaireNext />
-      <QuestionnaireSubmit />
-    </QuestionnaireActions>
-  )
-}
-
 export default function QuestionnaireWithChoiceDescriptions() {
   return (
     <Questionnaire>
@@ -53,7 +42,12 @@ export default function QuestionnaireWithChoiceDescriptions() {
         </QuestionnaireChoices>
         <QuestionnaireError />
       </QuestionnaireItem>
-      <Actions />
+      <QuestionnaireActions>
+        <QuestionnairePrevious />
+        <QuestionnaireSkip />
+        <QuestionnaireNext />
+        <QuestionnaireSubmit />
+      </QuestionnaireActions>
     </Questionnaire>
   )
 }

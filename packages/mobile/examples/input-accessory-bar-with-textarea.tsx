@@ -9,15 +9,6 @@ import { KeyboardScrollView } from "@/components/ui/keyboard-scroll-view"
 import { Text } from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 
-function Field({ label, autoFocus }: { label: string; autoFocus?: boolean }) {
-  return (
-    <View className="gap-1.5">
-      <Text variant="small">{label}</Text>
-      <InputAccessoryBarInput placeholder={label} autoFocus={autoFocus} />
-    </View>
-  )
-}
-
 function MessageField() {
   const accessory = useInputAccessoryBarInput()
   return (
@@ -34,7 +25,7 @@ function MessageField() {
   )
 }
 
-function DoneLogDemo() {
+export default function InputAccessoryBarWithTextarea() {
   const [log, setLog] = React.useState("Tap Done.")
   return (
     <InputAccessoryBar onDone={() => setLog("Done pressed")}>
@@ -42,7 +33,10 @@ function DoneLogDemo() {
         className="-m-4"
         contentContainerClassName="gap-4 p-4"
       >
-        <Field label="Subject" autoFocus />
+        <View className="gap-1.5">
+          <Text variant="small">Subject</Text>
+          <InputAccessoryBarInput placeholder="Subject" autoFocus />
+        </View>
         <MessageField />
         <Text role="status" className="text-sm text-muted-foreground">
           {log}
@@ -50,8 +44,4 @@ function DoneLogDemo() {
       </KeyboardScrollView>
     </InputAccessoryBar>
   )
-}
-
-export default function InputAccessoryBarWithTextarea() {
-  return <DoneLogDemo />
 }

@@ -12,15 +12,6 @@ import {
 } from "@/components/ui/input-group"
 import { Message, MessageContent } from "@/components/ui/message"
 
-const suggestions = [
-  "Add a dark mode toggle",
-  "Fix the failing build",
-  "Write tests for the form",
-  "Upgrade to Next.js 16",
-  "Add a loading state",
-  "Find unused dependencies",
-]
-
 const replies: Record<string, string> = {
   "Add a dark mode toggle":
     "Added a ModeToggle to the site header. It calls setTheme from next-themes.",
@@ -83,17 +74,54 @@ export default function SuggestionDemo() {
       )}
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 overflow-x-auto overscroll-x-contain [scrollbar-width:none]">
-          {suggestions.map((suggestion) => (
-            <Button
-              key={suggestion}
-              variant="outline"
-              size="sm"
-              className="shrink-0"
-              onPress={() => send(suggestion)}
-            >
-              {suggestion}
-            </Button>
-          ))}
+          <Button
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            onPress={() => send("Add a dark mode toggle")}
+          >
+            Add a dark mode toggle
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            onPress={() => send("Fix the failing build")}
+          >
+            Fix the failing build
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            onPress={() => send("Write tests for the form")}
+          >
+            Write tests for the form
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            onPress={() => send("Upgrade to Next.js 16")}
+          >
+            Upgrade to Next.js 16
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            onPress={() => send("Add a loading state")}
+          >
+            Add a loading state
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            onPress={() => send("Find unused dependencies")}
+          >
+            Find unused dependencies
+          </Button>
         </div>
         <form ref={formRef} onSubmit={onSubmit}>
           <InputGroup>

@@ -18,19 +18,17 @@ const highlighted = [2, 3]
 
 export default function CodeBlockHighlightedLines() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockContent lineNumbers>
-          {code.split("\n").map((line, index) => (
-            <CodeBlockLine
-              key={index}
-              variant={highlighted.includes(index) ? "highlighted" : "default"}
-            >
-              {line}
-            </CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockContent lineNumbers>
+        {code.split("\n").map((line, index) => (
+          <CodeBlockLine
+            key={index}
+            variant={highlighted.includes(index) ? "highlighted" : "default"}
+          >
+            {line}
+          </CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

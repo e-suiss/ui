@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 
-function WithLabelDemo() {
+export default function SwitchWithLabel() {
   const [checked, setChecked] = React.useState(false)
   return (
     <View className="flex-row items-center gap-2">
@@ -17,8 +17,4 @@ function WithLabelDemo() {
       </Label>
     </View>
   )
-}
-
-export default function SwitchWithLabel() {
-  return <WithLabelDemo />
 }

@@ -1,17 +1,6 @@
 import * as React from "react"
 import { PullToRefresh } from "@/components/interactions/pull-to-refresh"
 
-const senders: [from: string, subject: string][] = [
-  ["Acme Store", "Your order has shipped"],
-  ["Jordan Lee", "Tomorrow's meeting"],
-  ["Cloud Drive", "Your storage is almost full"],
-  ["Taylor Kim", "Weekend plans"],
-  ["Design Team", "New mockups are ready"],
-  ["Sam Rivera", "Lunch on Thursday?"],
-  ["Bank Alerts", "Your statement is available"],
-  ["Riley Park", "Photos from the trip"],
-]
-
 const incoming: [from: string, subject: string][] = [
   ["Morgan Diaz", "Quick question about the brief"],
   ["Travel Desk", "Your flight is confirmed"],
@@ -25,17 +14,8 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-function InboxExample({ empty = false }: { empty?: boolean }) {
-  const [messages, setMessages] = React.useState<Message[]>(() =>
-    empty
-      ? []
-      : senders.map(([from, subject], index) => ({
-          id: index,
-          from,
-          subject,
-          fresh: false,
-        }))
-  )
+export default function PullToRefreshEmptyList() {
+  const [messages, setMessages] = React.useState<Message[]>([])
   const [log, setLog] = React.useState("Pull down from the top to refresh.")
   const count = React.useRef(0)
 
@@ -99,8 +79,4 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
       </p>
     </div>
   )
-}
-
-export default function PullToRefreshEmptyList() {
-  return <InboxExample empty />
 }

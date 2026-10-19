@@ -1,5 +1,4 @@
 import { CashRegisterIcon } from "phosphor-react-native"
-import type * as React from "react"
 import { View } from "react-native"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
@@ -18,16 +17,6 @@ import {
 const hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14].map(
   (value, hour) => ({ hour: hour + 10, value })
 )
-
-const topItems = [
-  { name: "Grilled meatballs", count: 38 },
-  { name: "Lahmacun", count: 31 },
-  { name: "Adana kebab", count: 24 },
-]
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <Text className="mt-6 text-xs text-muted-foreground">{children}</Text>
-}
 
 function SalesBody() {
   const { size } = useWidget()
@@ -79,17 +68,18 @@ function SalesBody() {
       </View>
       {size === "large" || size === "extra-large" ? (
         <View className="min-h-0 shrink overflow-hidden">
-          {topItems.map((item) => (
-            <View
-              key={item.name}
-              className="flex-row items-center justify-between border-b border-border py-1.5"
-            >
-              <Text className="text-sm">{item.name}</Text>
-              <Text className="text-sm text-muted-foreground">
-                {item.count}
-              </Text>
-            </View>
-          ))}
+          <View className="flex-row items-center justify-between border-b border-border py-1.5">
+            <Text className="text-sm">Grilled meatballs</Text>
+            <Text className="text-sm text-muted-foreground">38</Text>
+          </View>
+          <View className="flex-row items-center justify-between border-b border-border py-1.5">
+            <Text className="text-sm">Lahmacun</Text>
+            <Text className="text-sm text-muted-foreground">31</Text>
+          </View>
+          <View className="flex-row items-center justify-between border-b border-border py-1.5">
+            <Text className="text-sm">Adana kebab</Text>
+            <Text className="text-sm text-muted-foreground">24</Text>
+          </View>
         </View>
       ) : null}
       <WidgetFooter>42 orders · 18:42</WidgetFooter>
@@ -103,9 +93,9 @@ export default function WidgetEditing() {
       <Widget resizable defaultSize="large">
         <SalesBody />
       </Widget>
-      <Hint>
+      <Text className="mt-6 text-xs text-muted-foreground">
         Drag the corner handle to snap between sizes. Double tap it to reset.
-      </Hint>
+      </Text>
     </View>
   )
 }

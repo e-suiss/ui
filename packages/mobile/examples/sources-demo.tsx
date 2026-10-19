@@ -14,18 +14,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const sources = [
-  {
-    title: "Install Astro | docs.astro.build",
-    url: "https://docs.astro.build/en/install-and-setup/",
-  },
-  {
-    title: "create-astro | npmjs.com",
-    url: "https://www.npmjs.com/package/create-astro",
-  },
-  { title: "pnpm create | pnpm.io", url: "https://pnpm.io/cli/create" },
-]
-
 export default function SourcesDemo() {
   return (
     <View className="w-full gap-4">
@@ -47,24 +35,57 @@ export default function SourcesDemo() {
         </TraceCollapsibleTrigger>
         <TraceCollapsibleContent>
           <Trace>
-            {sources.map((source) => (
-              <Pressable
-                key={source.url}
-                accessibilityRole="link"
-                onPress={() => Linking.openURL(source.url)}
-                className="self-start active:opacity-70"
-              >
-                <TraceLine>
-                  <TraceIcon>
-                    <Icon as={GlobeIcon} />
-                  </TraceIcon>
-                  <TraceTitle>{source.title}</TraceTitle>
-                  <TraceIcon>
-                    <Icon as={ArrowUpRightIcon} />
-                  </TraceIcon>
-                </TraceLine>
-              </Pressable>
-            ))}
+            <Pressable
+              accessibilityRole="link"
+              onPress={() =>
+                Linking.openURL(
+                  "https://docs.astro.build/en/install-and-setup/"
+                )
+              }
+              className="self-start active:opacity-70"
+            >
+              <TraceLine>
+                <TraceIcon>
+                  <Icon as={GlobeIcon} />
+                </TraceIcon>
+                <TraceTitle>Install Astro | docs.astro.build</TraceTitle>
+                <TraceIcon>
+                  <Icon as={ArrowUpRightIcon} />
+                </TraceIcon>
+              </TraceLine>
+            </Pressable>
+            <Pressable
+              accessibilityRole="link"
+              onPress={() =>
+                Linking.openURL("https://www.npmjs.com/package/create-astro")
+              }
+              className="self-start active:opacity-70"
+            >
+              <TraceLine>
+                <TraceIcon>
+                  <Icon as={GlobeIcon} />
+                </TraceIcon>
+                <TraceTitle>create-astro | npmjs.com</TraceTitle>
+                <TraceIcon>
+                  <Icon as={ArrowUpRightIcon} />
+                </TraceIcon>
+              </TraceLine>
+            </Pressable>
+            <Pressable
+              accessibilityRole="link"
+              onPress={() => Linking.openURL("https://pnpm.io/cli/create")}
+              className="self-start active:opacity-70"
+            >
+              <TraceLine>
+                <TraceIcon>
+                  <Icon as={GlobeIcon} />
+                </TraceIcon>
+                <TraceTitle>pnpm create | pnpm.io</TraceTitle>
+                <TraceIcon>
+                  <Icon as={ArrowUpRightIcon} />
+                </TraceIcon>
+              </TraceLine>
+            </Pressable>
           </Trace>
         </TraceCollapsibleContent>
       </TraceCollapsible>

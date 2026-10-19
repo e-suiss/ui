@@ -3,11 +3,9 @@ import { Textarea } from "@/components/ui/textarea"
 
 export default function TextareaWithLabel() {
   return (
-    <div className="w-80">
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="feedback">Feedback</Label>
-        <Textarea id="feedback" placeholder="Tell us what you think." />
-      </div>
+    <div className="flex w-80 flex-col gap-2">
+      <Label htmlFor="feedback">Feedback</Label>
+      <Textarea id="feedback" placeholder="Tell us what you think." />
     </div>
   )
 }

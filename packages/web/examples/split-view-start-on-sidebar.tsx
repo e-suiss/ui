@@ -7,8 +7,6 @@ import {
   SplitViewSidebar,
 } from "@/components/patterns/split-view"
 
-const mailboxes = ["Inbox", "Sent", "Drafts", "Archive"]
-
 const messages = [
   {
     id: "order",
@@ -33,35 +31,39 @@ const messages = [
   },
 ] as const
 
-function MailExample({
-  withSidebar = true,
-  defaultColumn,
-}: {
-  withSidebar?: boolean
-  defaultColumn?: "sidebar" | "list" | "detail"
-}) {
+export default function SplitViewStartOnSidebar() {
   const [mailbox, setMailbox] = React.useState("Inbox")
   const [messageId, setMessageId] = React.useState("order")
   const message = messages.find((item) => item.id === messageId) ?? messages[0]
 
   return (
-    <SplitView
-      defaultColumn={defaultColumn}
-      className="h-[30rem] max-md:h-auto"
-    >
-      {withSidebar && (
-        <SplitViewSidebar title="Mailboxes">
-          {mailboxes.map((name) => (
-            <SplitViewItem
-              key={name}
-              isActive={mailbox === name}
-              onClick={() => setMailbox(name)}
-            >
-              {name}
-            </SplitViewItem>
-          ))}
-        </SplitViewSidebar>
-      )}
+    <SplitView defaultColumn="sidebar" className="h-[30rem] max-md:h-auto">
+      <SplitViewSidebar title="Mailboxes">
+        <SplitViewItem
+          isActive={mailbox === "Inbox"}
+          onClick={() => setMailbox("Inbox")}
+        >
+          Inbox
+        </SplitViewItem>
+        <SplitViewItem
+          isActive={mailbox === "Sent"}
+          onClick={() => setMailbox("Sent")}
+        >
+          Sent
+        </SplitViewItem>
+        <SplitViewItem
+          isActive={mailbox === "Drafts"}
+          onClick={() => setMailbox("Drafts")}
+        >
+          Drafts
+        </SplitViewItem>
+        <SplitViewItem
+          isActive={mailbox === "Archive"}
+          onClick={() => setMailbox("Archive")}
+        >
+          Archive
+        </SplitViewItem>
+      </SplitViewSidebar>
       <SplitViewList title={mailbox}>
         {messages.map((item) => (
           <SplitViewItem
@@ -90,8 +92,4 @@ function MailExample({
       </SplitViewDetail>
     </SplitView>
   )
-}
-
-export default function SplitViewStartOnSidebar() {
-  return <MailExample defaultColumn="sidebar" />
 }

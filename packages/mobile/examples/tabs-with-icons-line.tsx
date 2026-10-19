@@ -4,13 +4,11 @@ import { Icon } from "@/components/ui/icon"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Text } from "@/components/ui/text"
 
-type ListVariant = "default" | "line"
-
-function WithIconsDemo({ variant }: { variant?: ListVariant }) {
+export default function TabsWithIconsLine() {
   const [value, setValue] = React.useState("profile")
   return (
     <Tabs value={value} onValueChange={setValue}>
-      <TabsList variant={variant}>
+      <TabsList variant="line">
         <TabsTrigger value="profile">
           <Icon as={UserIcon} className="size-4" />
           <Text>Profile</Text>
@@ -32,8 +30,4 @@ function WithIconsDemo({ variant }: { variant?: ListVariant }) {
       </TabsContent>
     </Tabs>
   )
-}
-
-export default function TabsWithIconsLine() {
-  return <WithIconsDemo variant="line" />
 }

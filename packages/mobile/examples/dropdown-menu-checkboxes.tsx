@@ -11,22 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Text } from "@/components/ui/text"
 
-function OpenButton({ label = "Open menu" }: { label?: string }) {
-  return (
-    <DropdownMenuTrigger render={<Button variant="outline" />}>
-      <Text>{label}</Text>
-    </DropdownMenuTrigger>
-  )
-}
-
-function CheckboxesDemo() {
+export default function DropdownMenuCheckboxes() {
   const [statusBar, setStatusBar] = React.useState(true)
   const [activityBar, setActivityBar] = React.useState(false)
   const [panel, setPanel] = React.useState(false)
   return (
     <View className="items-start">
       <DropdownMenu>
-        <OpenButton label="View" />
+        <DropdownMenuTrigger render={<Button variant="outline" />}>
+          <Text>View</Text>
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuLabel>Appearance</DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -50,8 +44,4 @@ function CheckboxesDemo() {
       </DropdownMenu>
     </View>
   )
-}
-
-export default function DropdownMenuCheckboxes() {
-  return <CheckboxesDemo />
 }

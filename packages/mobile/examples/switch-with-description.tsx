@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Text } from "@/components/ui/text"
 
-function WithDescriptionDemo() {
+export default function SwitchWithDescription() {
   const [checked, setChecked] = React.useState(true)
   return (
     <View className="flex-row items-center justify-between gap-4 rounded-2xl bg-muted p-4">
@@ -23,8 +23,4 @@ function WithDescriptionDemo() {
       />
     </View>
   )
-}
-
-export default function SwitchWithDescription() {
-  return <WithDescriptionDemo />
 }

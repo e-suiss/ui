@@ -12,30 +12,28 @@ import {
 
 export default function TraceCollapsibleDemo() {
   return (
-    <div className="w-full max-w-sm">
-      <TraceCollapsible>
-        <TraceCollapsibleTrigger>
-          <TraceLine>
-            <TraceIcon>
-              <IconPlaceholder
-                lucide="TerminalIcon"
-                tabler="IconTerminal"
-                hugeicons="ComputerTerminal01Icon"
-                phosphor="TerminalIcon"
-                remixicon="RiTerminalLine"
-              />
-            </TraceIcon>
-            <TraceTitle>Ran node --version</TraceTitle>
-          </TraceLine>
-        </TraceCollapsibleTrigger>
-        <TraceCollapsibleContent>
-          <CodeBlock size="sm">
-            <CodeBlockContent wrap className="max-h-64">
-              {"$ node --version\nv24.18.0"}
-            </CodeBlockContent>
-          </CodeBlock>
-        </TraceCollapsibleContent>
-      </TraceCollapsible>
-    </div>
+    <TraceCollapsible className="w-full max-w-sm">
+      <TraceCollapsibleTrigger>
+        <TraceLine>
+          <TraceIcon>
+            <IconPlaceholder
+              lucide="TerminalIcon"
+              tabler="IconTerminal"
+              hugeicons="ComputerTerminal01Icon"
+              phosphor="TerminalIcon"
+              remixicon="RiTerminalLine"
+            />
+          </TraceIcon>
+          <TraceTitle>Ran node --version</TraceTitle>
+        </TraceLine>
+      </TraceCollapsibleTrigger>
+      <TraceCollapsibleContent>
+        <CodeBlock size="sm">
+          <CodeBlockContent wrap className="max-h-64">
+            {"$ node --version\nv24.18.0"}
+          </CodeBlockContent>
+        </CodeBlock>
+      </TraceCollapsibleContent>
+    </TraceCollapsible>
   )
 }

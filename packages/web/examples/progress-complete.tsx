@@ -6,11 +6,9 @@ import {
 
 export default function ProgressComplete() {
   return (
-    <div className="w-80">
-      <Progress value={100}>
-        <ProgressLabel>Uploading files</ProgressLabel>
-        <ProgressValue />
-      </Progress>
-    </div>
+    <Progress className="w-80" value={100}>
+      <ProgressLabel>Uploading files</ProgressLabel>
+      <ProgressValue />
+    </Progress>
   )
 }

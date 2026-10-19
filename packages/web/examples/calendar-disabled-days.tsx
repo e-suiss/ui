@@ -1,24 +1,19 @@
 import * as React from "react"
 import { Calendar } from "@/components/ui/calendar"
 
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
+export default function CalendarDisabledDays() {
   const today = new Date()
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
   )
   return (
     <Calendar
-      {...props}
       mode="single"
       selected={date}
       onSelect={setDate}
+      buttonVariant="plain"
+      disabled={{ dayOfWeek: [0, 6] }}
       className="rounded-2xl border"
     />
-  )
-}
-
-export default function CalendarDisabledDays() {
-  return (
-    <SingleCalendar buttonVariant="plain" disabled={{ dayOfWeek: [0, 6] }} />
   )
 }

@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Chip } from "@/components/ui/chip"
 import { Text } from "@/components/ui/text"
 
-function RemovableDemo() {
+export default function ChipRemovable() {
   const [tags, setTags] = React.useState([
     "Design",
     "Mobile",
@@ -28,8 +28,4 @@ function RemovableDemo() {
       <Text variant="muted">{tags.length} tags</Text>
     </View>
   )
-}
-
-export default function ChipRemovable() {
-  return <RemovableDemo />
 }

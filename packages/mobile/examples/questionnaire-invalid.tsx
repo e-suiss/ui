@@ -19,39 +19,13 @@ import {
 } from "@/components/ui/questionnaire"
 import { Text } from "@/components/ui/text"
 
-function Actions() {
-  return (
-    <QuestionnaireActions>
-      <QuestionnairePrevious />
-      <QuestionnaireSkip />
-      <QuestionnaireNext />
-      <QuestionnaireSubmit />
-    </QuestionnaireActions>
-  )
-}
-
-function Result({ values }: { values: QuestionnaireValues | null }) {
-  if (!values) return null
-  return (
-    <Text role="status" className="text-sm text-muted-foreground">
-      {`Submitted: ${JSON.stringify(values)}`}
-    </Text>
-  )
-}
-
-function Onboarding({
-  defaultItem,
-  attempted = false,
-}: {
-  defaultItem?: string
-  attempted?: boolean
-}) {
+export default function QuestionnaireInvalid() {
   const [values, setValues] = React.useState<QuestionnaireValues | null>(null)
   return (
     <View className="w-full gap-4">
-      <Questionnaire defaultItem={defaultItem} onSubmit={setValues}>
+      <Questionnaire onSubmit={setValues}>
         <QuestionnaireProgress />
-        <QuestionnaireItem name="role" required invalid={attempted}>
+        <QuestionnaireItem name="role" required invalid>
           <QuestionnaireTitle>
             What best describes your role?
           </QuestionnaireTitle>
@@ -93,13 +67,18 @@ function Onboarding({
             Enter a company name to continue.
           </QuestionnaireError>
         </QuestionnaireItem>
-        <Actions />
+        <QuestionnaireActions>
+          <QuestionnairePrevious />
+          <QuestionnaireSkip />
+          <QuestionnaireNext />
+          <QuestionnaireSubmit />
+        </QuestionnaireActions>
       </Questionnaire>
-      <Result values={values} />
+      {values ? (
+        <Text role="status" className="text-sm text-muted-foreground">
+          {`Submitted: ${JSON.stringify(values)}`}
+        </Text>
+      ) : null}
     </View>
   )
-}
-
-export default function QuestionnaireInvalid() {
-  return <Onboarding attempted />
 }

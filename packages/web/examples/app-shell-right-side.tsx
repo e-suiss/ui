@@ -80,45 +80,40 @@ const brand = (
   </SidebarMenu>
 )
 
-function Page({ title }: { title: string }) {
-  return (
-    <>
-      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-4">
-        <AppShellTrigger className="-ms-1" />
-        <h1 className="text-base font-semibold">{title}</h1>
-      </header>
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        <div className="grid grid-cols-3 gap-3 md:gap-4">
-          {["Revenue", "Active users", "Open issues"].map((label) => (
-            <div
-              key={label}
-              className="flex h-20 flex-col justify-end rounded-2xl bg-muted p-3 md:aspect-video md:h-auto md:p-4"
-            >
-              <span className="text-sm text-muted-foreground">{label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="min-h-64 flex-1 rounded-2xl bg-muted" />
-      </div>
-    </>
-  )
-}
-
-function ShellExample(props: React.ComponentProps<typeof AppShell>) {
-  const [value, setValue] = React.useState(props.defaultValue ?? "home")
-  const title = props.items.find((item) => item.value === value)?.label ?? ""
-
-  return (
-    <AppShell {...props} value={value} onValueChange={setValue}>
-      <Page title={title} />
-    </AppShell>
-  )
-}
-
 export default function AppShellRightSide() {
+  const [value, setValue] = React.useState("home")
+  const title = items.find((item) => item.value === value)?.label ?? ""
+
   return (
     <div className="min-h-svh">
-      <ShellExample items={items} side="right" header={brand} />
+      <AppShell
+        items={items}
+        side="right"
+        header={brand}
+        value={value}
+        onValueChange={setValue}
+      >
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-4">
+          <AppShellTrigger className="-ms-1" />
+          <h1 className="text-base font-semibold">{title}</h1>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <div className="grid grid-cols-3 gap-3 md:gap-4">
+            <div className="flex h-20 flex-col justify-end rounded-2xl bg-muted p-3 md:aspect-video md:h-auto md:p-4">
+              <span className="text-sm text-muted-foreground">Revenue</span>
+            </div>
+            <div className="flex h-20 flex-col justify-end rounded-2xl bg-muted p-3 md:aspect-video md:h-auto md:p-4">
+              <span className="text-sm text-muted-foreground">
+                Active users
+              </span>
+            </div>
+            <div className="flex h-20 flex-col justify-end rounded-2xl bg-muted p-3 md:aspect-video md:h-auto md:p-4">
+              <span className="text-sm text-muted-foreground">Open issues</span>
+            </div>
+          </div>
+          <div className="min-h-64 flex-1 rounded-2xl bg-muted" />
+        </div>
+      </AppShell>
     </div>
   )
 }

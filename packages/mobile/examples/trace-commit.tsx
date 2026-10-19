@@ -15,12 +15,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const files = [
-  { icon: NotePencilIcon, path: "app/login/page.tsx", stat: "+12 −4" },
-  { icon: NotePencilIcon, path: "lib/auth/redirect.ts", stat: "+31 −9" },
-  { icon: FilePlusIcon, path: "lib/auth/redirect.test.ts", stat: "+58" },
-]
-
 export default function TraceCommit() {
   return (
     <TraceCollapsible defaultOpen>
@@ -34,15 +28,27 @@ export default function TraceCommit() {
       </TraceCollapsibleTrigger>
       <TraceCollapsibleContent>
         <Trace>
-          {files.map((file) => (
-            <TraceLine key={file.path}>
-              <TraceIcon>
-                <Icon as={file.icon} />
-              </TraceIcon>
-              <TraceTitle>{file.path}</TraceTitle>
-              <TraceDescription>{file.stat}</TraceDescription>
-            </TraceLine>
-          ))}
+          <TraceLine>
+            <TraceIcon>
+              <Icon as={NotePencilIcon} />
+            </TraceIcon>
+            <TraceTitle>app/login/page.tsx</TraceTitle>
+            <TraceDescription>+12 −4</TraceDescription>
+          </TraceLine>
+          <TraceLine>
+            <TraceIcon>
+              <Icon as={NotePencilIcon} />
+            </TraceIcon>
+            <TraceTitle>lib/auth/redirect.ts</TraceTitle>
+            <TraceDescription>+31 −9</TraceDescription>
+          </TraceLine>
+          <TraceLine>
+            <TraceIcon>
+              <Icon as={FilePlusIcon} />
+            </TraceIcon>
+            <TraceTitle>lib/auth/redirect.test.ts</TraceTitle>
+            <TraceDescription>+58</TraceDescription>
+          </TraceLine>
         </Trace>
       </TraceCollapsibleContent>
     </TraceCollapsible>

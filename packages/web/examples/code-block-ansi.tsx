@@ -27,29 +27,27 @@ export default function CodeBlockAnsi() {
   const lines = useHighlightedCode(output, "ansi")
 
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>
-            <IconPlaceholder
-              lucide="TerminalIcon"
-              tabler="IconTerminal2"
-              hugeicons="ComputerTerminal01Icon"
-              phosphor="TerminalWindowIcon"
-              remixicon="RiTerminalBoxLine"
-            />
-            Terminal
-          </CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={output.replace(ANSI_CODES, "")} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent wrap>
-          {lines.map((line, index) => (
-            <CodeBlockLine key={index}>{line}</CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>
+          <IconPlaceholder
+            lucide="TerminalIcon"
+            tabler="IconTerminal2"
+            hugeicons="ComputerTerminal01Icon"
+            phosphor="TerminalWindowIcon"
+            remixicon="RiTerminalBoxLine"
+          />
+          Terminal
+        </CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={output.replace(ANSI_CODES, "")} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent wrap>
+        {lines.map((line, index) => (
+          <CodeBlockLine key={index}>{line}</CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

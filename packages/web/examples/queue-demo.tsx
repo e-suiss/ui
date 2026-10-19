@@ -11,67 +11,7 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-type Todo = {
-  content: string
-  status: "pending" | "in_progress" | "completed"
-}
-
-const todos: Todo[] = [
-  { content: "Add a dark variant to the theme tokens", status: "completed" },
-  { content: "Read the theme from a cookie", status: "completed" },
-  { content: "Add a toggle to the settings page", status: "in_progress" },
-  { content: "Check contrast on the charts", status: "pending" },
-]
-
-function TodoIcon({ status }: { status: Todo["status"] }) {
-  if (status === "completed") {
-    return (
-      <IconPlaceholder
-        lucide="CircleCheckIcon"
-        tabler="IconCircleCheck"
-        hugeicons="CheckmarkCircle02Icon"
-        phosphor="CheckCircleIcon"
-        remixicon="RiCheckboxCircleLine"
-      />
-    )
-  }
-  if (status === "in_progress") {
-    return (
-      <IconPlaceholder
-        lucide="CircleDotIcon"
-        tabler="IconCircleDot"
-        hugeicons="RecordIcon"
-        phosphor="RecordIcon"
-        remixicon="RiRecordCircleLine"
-      />
-    )
-  }
-  return (
-    <IconPlaceholder
-      lucide="CircleIcon"
-      tabler="IconCircle"
-      hugeicons="CircleIcon"
-      phosphor="CircleIcon"
-      remixicon="RiCircleLine"
-    />
-  )
-}
-
-function TodoLine({ todo }: { todo: Todo }) {
-  return (
-    <TraceLine status={todo.status === "in_progress" ? "running" : undefined}>
-      <TraceIcon>
-        <TodoIcon status={todo.status} />
-      </TraceIcon>
-      <TraceTitle>{todo.content}</TraceTitle>
-    </TraceLine>
-  )
-}
-
 export default function QueueDemo() {
-  const pending = todos.filter((todo) => todo.status !== "completed")
-  const completed = todos.filter((todo) => todo.status === "completed")
-
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
       <Message align="end">
@@ -96,14 +36,35 @@ export default function QueueDemo() {
                       remixicon="RiTodoLine"
                     />
                   </TraceIcon>
-                  <TraceTitle>{pending.length} to do</TraceTitle>
+                  <TraceTitle>2 to do</TraceTitle>
                 </TraceLine>
               </TraceCollapsibleTrigger>
               <TraceCollapsibleContent>
                 <Trace>
-                  {pending.map((todo) => (
-                    <TodoLine key={todo.content} todo={todo} />
-                  ))}
+                  <TraceLine status="running">
+                    <TraceIcon>
+                      <IconPlaceholder
+                        lucide="CircleDotIcon"
+                        tabler="IconCircleDot"
+                        hugeicons="RecordIcon"
+                        phosphor="RecordIcon"
+                        remixicon="RiRecordCircleLine"
+                      />
+                    </TraceIcon>
+                    <TraceTitle>Add a toggle to the settings page</TraceTitle>
+                  </TraceLine>
+                  <TraceLine>
+                    <TraceIcon>
+                      <IconPlaceholder
+                        lucide="CircleIcon"
+                        tabler="IconCircle"
+                        hugeicons="CircleIcon"
+                        phosphor="CircleIcon"
+                        remixicon="RiCircleLine"
+                      />
+                    </TraceIcon>
+                    <TraceTitle>Check contrast on the charts</TraceTitle>
+                  </TraceLine>
                 </Trace>
               </TraceCollapsibleContent>
             </TraceCollapsible>
@@ -119,14 +80,37 @@ export default function QueueDemo() {
                       remixicon="RiListCheck3"
                     />
                   </TraceIcon>
-                  <TraceTitle>{completed.length} completed</TraceTitle>
+                  <TraceTitle>2 completed</TraceTitle>
                 </TraceLine>
               </TraceCollapsibleTrigger>
               <TraceCollapsibleContent>
                 <Trace>
-                  {completed.map((todo) => (
-                    <TodoLine key={todo.content} todo={todo} />
-                  ))}
+                  <TraceLine>
+                    <TraceIcon>
+                      <IconPlaceholder
+                        lucide="CircleCheckIcon"
+                        tabler="IconCircleCheck"
+                        hugeicons="CheckmarkCircle02Icon"
+                        phosphor="CheckCircleIcon"
+                        remixicon="RiCheckboxCircleLine"
+                      />
+                    </TraceIcon>
+                    <TraceTitle>
+                      Add a dark variant to the theme tokens
+                    </TraceTitle>
+                  </TraceLine>
+                  <TraceLine>
+                    <TraceIcon>
+                      <IconPlaceholder
+                        lucide="CircleCheckIcon"
+                        tabler="IconCircleCheck"
+                        hugeicons="CheckmarkCircle02Icon"
+                        phosphor="CheckCircleIcon"
+                        remixicon="RiCheckboxCircleLine"
+                      />
+                    </TraceIcon>
+                    <TraceTitle>Read the theme from a cookie</TraceTitle>
+                  </TraceLine>
                 </Trace>
               </TraceCollapsibleContent>
             </TraceCollapsible>

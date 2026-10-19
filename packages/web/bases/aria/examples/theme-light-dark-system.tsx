@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { type Theme, ThemeProvider, useTheme } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -11,16 +10,6 @@ function clearStoredTheme() {
   } catch {
     return false
   }
-}
-
-function ExampleTheme({ children }: { children?: React.ReactNode }) {
-  clearStoredTheme()
-
-  return (
-    <ThemeProvider defaultTheme="light" storageKey={STORAGE_KEY}>
-      {children}
-    </ThemeProvider>
-  )
 }
 
 function ThemePicker() {
@@ -40,18 +29,24 @@ function ThemePicker() {
       }}
       aria-label="Appearance"
     >
-      {(["light", "dark", "system"] as const).map((item) => (
-        <ToggleGroupItem key={item} id={item} className="px-5 capitalize">
-          {item}
-        </ToggleGroupItem>
-      ))}
+      <ToggleGroupItem id="light" className="px-5 capitalize">
+        light
+      </ToggleGroupItem>
+      <ToggleGroupItem id="dark" className="px-5 capitalize">
+        dark
+      </ToggleGroupItem>
+      <ToggleGroupItem id="system" className="px-5 capitalize">
+        system
+      </ToggleGroupItem>
     </ToggleGroup>
   )
 }
 
 export default function ThemeLightDarkSystem() {
+  clearStoredTheme()
+
   return (
-    <ExampleTheme>
+    <ThemeProvider defaultTheme="light" storageKey={STORAGE_KEY}>
       <div className="flex min-h-svh flex-col items-center justify-center gap-8 bg-background px-6 py-16 text-center text-foreground">
         <div className="flex max-w-md flex-col gap-3">
           <h1 className="text-4xl font-semibold tracking-tight">
@@ -64,6 +59,6 @@ export default function ThemeLightDarkSystem() {
         </div>
         <ThemePicker />
       </div>
-    </ExampleTheme>
+    </ThemeProvider>
   )
 }

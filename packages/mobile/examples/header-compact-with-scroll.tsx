@@ -30,22 +30,7 @@ const messages = [
   "Recipe you asked for",
 ]
 
-function MessageRows() {
-  return (
-    <View className="px-4">
-      {messages.map((message, index) => (
-        <View
-          key={message}
-          className={index > 0 ? "border-t border-border py-3" : "py-3"}
-        >
-          <Text numberOfLines={1}>{message}</Text>
-        </View>
-      ))}
-    </View>
-  )
-}
-
-function CompactScrollDemo() {
+export default function HeaderCompactWithScroll() {
   const scroll = useHeaderScroll()
   return (
     <View className="-m-4 flex-1">
@@ -59,12 +44,17 @@ function CompactScrollDemo() {
         </HeaderActions>
       </Header>
       <HeaderScrollView scroll={scroll}>
-        <MessageRows />
+        <View className="px-4">
+          {messages.map((message, index) => (
+            <View
+              key={message}
+              className={index > 0 ? "border-t border-border py-3" : "py-3"}
+            >
+              <Text numberOfLines={1}>{message}</Text>
+            </View>
+          ))}
+        </View>
       </HeaderScrollView>
     </View>
   )
-}
-
-export default function HeaderCompactWithScroll() {
-  return <CompactScrollDemo />
 }

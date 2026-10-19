@@ -27,33 +27,29 @@ const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
   replies: (index * 7) % 23,
 }))
 
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <IconPlaceholder
-          lucide="MessageCircleIcon"
-          tabler="IconMessageCircle"
-          hugeicons="BubbleChatIcon"
-          phosphor="ChatCircleIcon"
-          remixicon="RiChat1Line"
-        />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
 export default function PagedListPageLinks() {
   return (
     <PagedList<Topic>
       items={topics}
       pageSize={10}
       getKey={(topic: Topic) => topic.id}
-      renderItem={(topic: Topic) => <TopicRow topic={topic} />}
+      renderItem={(topic: Topic) => (
+        <Item render={<a href={`#topic-${topic.id}`} />}>
+          <ItemMedia variant="icon">
+            <IconPlaceholder
+              lucide="MessageCircleIcon"
+              tabler="IconMessageCircle"
+              hugeicons="BubbleChatIcon"
+              phosphor="ChatCircleIcon"
+              remixicon="RiChat1Line"
+            />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>{topic.title}</ItemTitle>
+            <ItemDescription>{topic.replies} replies</ItemDescription>
+          </ItemContent>
+        </Item>
+      )}
       className="mx-auto w-full max-w-2xl"
       getPageHref={(page: number) => `#page-${page}`}
     />

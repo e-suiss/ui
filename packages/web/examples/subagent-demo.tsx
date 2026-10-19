@@ -12,23 +12,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const steps = [
-  {
-    command: "grep -rn cacheKey scripts",
-    stdout:
-      "scripts/optimize-images.ts:14:  const cacheKey = process.env.COMMIT_SHA",
-  },
-  {
-    command: "sed -n 13,15p scripts/optimize-images.ts",
-    stdout:
-      'const cacheDir = ".next/cache/images"\nconst cacheKey = process.env.COMMIT_SHA\nconst cached = await restoreCache(cacheDir, cacheKey)',
-  },
-  {
-    command: "ls public/images | wc -l",
-    stdout: "1240",
-  },
-]
-
 export default function SubagentDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
@@ -61,31 +44,81 @@ export default function SubagentDemo() {
               </TraceCollapsibleTrigger>
               <TraceCollapsibleContent className="flex flex-col gap-3">
                 <Trace>
-                  {steps.map((step) => (
-                    <TraceCollapsible key={step.command}>
-                      <TraceCollapsibleTrigger>
-                        <TraceLine>
-                          <TraceIcon>
-                            <IconPlaceholder
-                              lucide="CircleCheckIcon"
-                              tabler="IconCircleCheck"
-                              hugeicons="CheckmarkCircle02Icon"
-                              phosphor="CheckCircleIcon"
-                              remixicon="RiCheckboxCircleLine"
-                            />
-                          </TraceIcon>
-                          <TraceTitle>Ran {step.command}</TraceTitle>
-                        </TraceLine>
-                      </TraceCollapsibleTrigger>
-                      <TraceCollapsibleContent>
-                        <CodeBlock size="sm">
-                          <CodeBlockContent wrap className="max-h-64">
-                            {step.stdout}
-                          </CodeBlockContent>
-                        </CodeBlock>
-                      </TraceCollapsibleContent>
-                    </TraceCollapsible>
-                  ))}
+                  <TraceCollapsible>
+                    <TraceCollapsibleTrigger>
+                      <TraceLine>
+                        <TraceIcon>
+                          <IconPlaceholder
+                            lucide="CircleCheckIcon"
+                            tabler="IconCircleCheck"
+                            hugeicons="CheckmarkCircle02Icon"
+                            phosphor="CheckCircleIcon"
+                            remixicon="RiCheckboxCircleLine"
+                          />
+                        </TraceIcon>
+                        <TraceTitle>Ran grep -rn cacheKey scripts</TraceTitle>
+                      </TraceLine>
+                    </TraceCollapsibleTrigger>
+                    <TraceCollapsibleContent>
+                      <CodeBlock size="sm">
+                        <CodeBlockContent wrap className="max-h-64">
+                          {
+                            "scripts/optimize-images.ts:14:  const cacheKey = process.env.COMMIT_SHA"
+                          }
+                        </CodeBlockContent>
+                      </CodeBlock>
+                    </TraceCollapsibleContent>
+                  </TraceCollapsible>
+                  <TraceCollapsible>
+                    <TraceCollapsibleTrigger>
+                      <TraceLine>
+                        <TraceIcon>
+                          <IconPlaceholder
+                            lucide="CircleCheckIcon"
+                            tabler="IconCircleCheck"
+                            hugeicons="CheckmarkCircle02Icon"
+                            phosphor="CheckCircleIcon"
+                            remixicon="RiCheckboxCircleLine"
+                          />
+                        </TraceIcon>
+                        <TraceTitle>
+                          Ran sed -n 13,15p scripts/optimize-images.ts
+                        </TraceTitle>
+                      </TraceLine>
+                    </TraceCollapsibleTrigger>
+                    <TraceCollapsibleContent>
+                      <CodeBlock size="sm">
+                        <CodeBlockContent wrap className="max-h-64">
+                          {
+                            'const cacheDir = ".next/cache/images"\nconst cacheKey = process.env.COMMIT_SHA\nconst cached = await restoreCache(cacheDir, cacheKey)'
+                          }
+                        </CodeBlockContent>
+                      </CodeBlock>
+                    </TraceCollapsibleContent>
+                  </TraceCollapsible>
+                  <TraceCollapsible>
+                    <TraceCollapsibleTrigger>
+                      <TraceLine>
+                        <TraceIcon>
+                          <IconPlaceholder
+                            lucide="CircleCheckIcon"
+                            tabler="IconCircleCheck"
+                            hugeicons="CheckmarkCircle02Icon"
+                            phosphor="CheckCircleIcon"
+                            remixicon="RiCheckboxCircleLine"
+                          />
+                        </TraceIcon>
+                        <TraceTitle>Ran ls public/images | wc -l</TraceTitle>
+                      </TraceLine>
+                    </TraceCollapsibleTrigger>
+                    <TraceCollapsibleContent>
+                      <CodeBlock size="sm">
+                        <CodeBlockContent wrap className="max-h-64">
+                          1240
+                        </CodeBlockContent>
+                      </CodeBlock>
+                    </TraceCollapsibleContent>
+                  </TraceCollapsible>
                 </Trace>
                 <p>
                   The cache is keyed on the commit SHA, so every deploy misses

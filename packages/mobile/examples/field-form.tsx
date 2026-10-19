@@ -13,7 +13,7 @@ import { Text } from "@/components/ui/text"
 
 const DIGIT = /\d/
 
-function FormDemo() {
+export default function FieldForm() {
   const actionsRef = React.useRef<FormPrimitive.Actions | null>(null)
   const [errors, setErrors] = React.useState<FormPrimitive.Errors>({})
   const [submitted, setSubmitted] = React.useState<string | null>(null)
@@ -57,8 +57,4 @@ function FormDemo() {
       {submitted ? <Text variant="muted">Submitted: {submitted}</Text> : null}
     </FormPrimitive.Root>
   )
-}
-
-export default function FieldForm() {
-  return <FormDemo />
 }

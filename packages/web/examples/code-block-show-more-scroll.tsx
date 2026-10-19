@@ -56,47 +56,45 @@ export default function CodeBlockShowMoreScroll() {
   const id = React.useId()
 
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>components/chat.tsx</CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={code} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent
-          id={id}
-          lineNumbers
-          className={
-            expanded
-              ? "max-h-96 scroll-fade-y"
-              : "max-h-64 scroll-fade-y overflow-y-hidden"
-          }
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>components/chat.tsx</CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={code} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent
+        id={id}
+        lineNumbers
+        className={
+          expanded
+            ? "max-h-96 scroll-fade-y"
+            : "max-h-64 scroll-fade-y overflow-y-hidden"
+        }
+      >
+        {lines.map((line, index) => (
+          <CodeBlockLine key={index}>{line}</CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+      <CodeBlockFooter className="justify-center">
+        <Button
+          variant="ghost"
+          size="xs"
+          aria-expanded={expanded}
+          aria-controls={id}
+          onClick={() => setExpanded(!expanded)}
         >
-          {lines.map((line, index) => (
-            <CodeBlockLine key={index}>{line}</CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-        <CodeBlockFooter className="justify-center">
-          <Button
-            variant="ghost"
-            size="xs"
-            aria-expanded={expanded}
-            aria-controls={id}
-            onClick={() => setExpanded(!expanded)}
-          >
-            <IconPlaceholder
-              lucide="ChevronDownIcon"
-              tabler="IconChevronDown"
-              hugeicons="ArrowDown01Icon"
-              phosphor="CaretDownIcon"
-              remixicon="RiArrowDownSLine"
-              className="transition-transform in-aria-expanded:rotate-180"
-            />
-            {expanded ? "Show less" : "Show more"}
-          </Button>
-        </CodeBlockFooter>
-      </CodeBlock>
-    </div>
+          <IconPlaceholder
+            lucide="ChevronDownIcon"
+            tabler="IconChevronDown"
+            hugeicons="ArrowDown01Icon"
+            phosphor="CaretDownIcon"
+            remixicon="RiArrowDownSLine"
+            className="transition-transform in-aria-expanded:rotate-180"
+          />
+          {expanded ? "Show less" : "Show more"}
+        </Button>
+      </CodeBlockFooter>
+    </CodeBlock>
   )
 }

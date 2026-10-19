@@ -10,19 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Text } from "@/components/ui/text"
 
-function OpenButton({ label = "Open menu" }: { label?: string }) {
-  return (
-    <DropdownMenuTrigger render={<Button variant="outline" />}>
-      <Text>{label}</Text>
-    </DropdownMenuTrigger>
-  )
-}
-
 export default function DropdownMenuInset() {
   return (
     <View className="items-start">
       <DropdownMenu>
-        <OpenButton />
+        <DropdownMenuTrigger render={<Button variant="outline" />}>
+          <Text>Open menu</Text>
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuLabel inset>Actions</DropdownMenuLabel>
           <DropdownMenuItem inset>

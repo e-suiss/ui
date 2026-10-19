@@ -14,19 +14,15 @@ Generated 12 static pages`
 
 export default function CodeBlockFooterExample() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>Logs</CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={output} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent>{output}</CodeBlockContent>
-        <CodeBlockFooter className="text-sm">
-          Exited with code 0
-        </CodeBlockFooter>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>Logs</CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={output} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent>{output}</CodeBlockContent>
+      <CodeBlockFooter className="text-sm">Exited with code 0</CodeBlockFooter>
+    </CodeBlock>
   )
 }

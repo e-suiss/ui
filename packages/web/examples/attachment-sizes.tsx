@@ -12,39 +12,84 @@ import {
 export default function AttachmentSizes() {
   return (
     <div className="flex flex-col items-start gap-3">
-      {(["default", "sm", "xs"] as const).map((size) => (
-        <Attachment
-          key={size}
-          orientation="horizontal"
-          state="done"
-          size={size}
-        >
-          <AttachmentMedia>
+      <Attachment orientation="horizontal" state="done" size="default">
+        <AttachmentMedia>
+          <IconPlaceholder
+            lucide="FileTextIcon"
+            tabler="IconFileText"
+            hugeicons="File02Icon"
+            phosphor="FileTextIcon"
+            remixicon="RiFileTextLine"
+          />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Meeting notes.docx</AttachmentTitle>
+          <AttachmentDescription>184 KB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
             <IconPlaceholder
-              lucide="FileTextIcon"
-              tabler="IconFileText"
-              hugeicons="File02Icon"
-              phosphor="FileTextIcon"
-              remixicon="RiFileTextLine"
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
             />
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Meeting notes.docx</AttachmentTitle>
-            <AttachmentDescription>184 KB</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Remove">
-              <IconPlaceholder
-                lucide="XIcon"
-                tabler="IconX"
-                hugeicons="Cancel01Icon"
-                phosphor="XIcon"
-                remixicon="RiCloseLine"
-              />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-      ))}
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment orientation="horizontal" state="done" size="sm">
+        <AttachmentMedia>
+          <IconPlaceholder
+            lucide="FileTextIcon"
+            tabler="IconFileText"
+            hugeicons="File02Icon"
+            phosphor="FileTextIcon"
+            remixicon="RiFileTextLine"
+          />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Meeting notes.docx</AttachmentTitle>
+          <AttachmentDescription>184 KB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment orientation="horizontal" state="done" size="xs">
+        <AttachmentMedia>
+          <IconPlaceholder
+            lucide="FileTextIcon"
+            tabler="IconFileText"
+            hugeicons="File02Icon"
+            phosphor="FileTextIcon"
+            remixicon="RiFileTextLine"
+          />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Meeting notes.docx</AttachmentTitle>
+          <AttachmentDescription>184 KB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
     </div>
   )
 }

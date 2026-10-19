@@ -12,25 +12,23 @@ const settings = [
 
 export default function TabsManyTabs() {
   return (
-    <div className="w-full">
-      <Tabs
-        orientation="horizontal"
-        defaultSelectedKey="general"
-        className="w-full max-w-3xl"
-      >
-        <TabsList variant="default">
-          {settings.map((tab) => (
-            <TabsTrigger key={tab.value} id={tab.value}>
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+    <Tabs
+      orientation="horizontal"
+      defaultSelectedKey="general"
+      className="w-full max-w-3xl"
+    >
+      <TabsList variant="default">
         {settings.map((tab) => (
-          <TabsContent key={tab.value} id={tab.value}>
-            <p className="text-muted-foreground">{tab.label} settings</p>
-          </TabsContent>
+          <TabsTrigger key={tab.value} id={tab.value}>
+            {tab.label}
+          </TabsTrigger>
         ))}
-      </Tabs>
-    </div>
+      </TabsList>
+      {settings.map((tab) => (
+        <TabsContent key={tab.value} id={tab.value}>
+          <p className="text-muted-foreground">{tab.label} settings</p>
+        </TabsContent>
+      ))}
+    </Tabs>
   )
 }

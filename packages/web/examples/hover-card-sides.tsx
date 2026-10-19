@@ -8,21 +8,58 @@ import {
 export default function HoverCardSides() {
   return (
     <div className="flex flex-wrap items-center gap-3 p-24">
-      {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <HoverCard key={side}>
-          <HoverCardTrigger
-            href="#"
-            className={buttonVariants({ variant: "outline" })}
-          >
-            {side.charAt(0).toUpperCase() + side.slice(1)}
-          </HoverCardTrigger>
-          <HoverCardContent side={side} className="w-56">
-            <p className="text-sm">
-              This card opens on the {side} side of its trigger.
-            </p>
-          </HoverCardContent>
-        </HoverCard>
-      ))}
+      <HoverCard>
+        <HoverCardTrigger
+          href="#"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Top
+        </HoverCardTrigger>
+        <HoverCardContent side="top" className="w-56">
+          <p className="text-sm">
+            This card opens on the top side of its trigger.
+          </p>
+        </HoverCardContent>
+      </HoverCard>
+      <HoverCard>
+        <HoverCardTrigger
+          href="#"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Right
+        </HoverCardTrigger>
+        <HoverCardContent side="right" className="w-56">
+          <p className="text-sm">
+            This card opens on the right side of its trigger.
+          </p>
+        </HoverCardContent>
+      </HoverCard>
+      <HoverCard>
+        <HoverCardTrigger
+          href="#"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Bottom
+        </HoverCardTrigger>
+        <HoverCardContent side="bottom" className="w-56">
+          <p className="text-sm">
+            This card opens on the bottom side of its trigger.
+          </p>
+        </HoverCardContent>
+      </HoverCard>
+      <HoverCard>
+        <HoverCardTrigger
+          href="#"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Left
+        </HoverCardTrigger>
+        <HoverCardContent side="left" className="w-56">
+          <p className="text-sm">
+            This card opens on the left side of its trigger.
+          </p>
+        </HoverCardContent>
+      </HoverCard>
     </div>
   )
 }

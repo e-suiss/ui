@@ -34,7 +34,7 @@ function Status() {
   )
 }
 
-function VerificationExample({ incoming }: { incoming: string }) {
+export default function OtpAutofillWrongCode() {
   const [suggestion, setSuggestion] = React.useState<string | null>(null)
   const [sending, setSending] = React.useState(false)
 
@@ -42,9 +42,9 @@ function VerificationExample({ incoming }: { incoming: string }) {
     setSending(true)
     setSuggestion(null)
     await wait(1200)
-    setSuggestion(incoming)
+    setSuggestion("113355")
     setSending(false)
-  }, [incoming])
+  }, [])
 
   React.useEffect(() => {
     send()
@@ -85,8 +85,4 @@ function VerificationExample({ incoming }: { incoming: string }) {
       </Button>
     </div>
   )
-}
-
-export default function OtpAutofillWrongCode() {
-  return <VerificationExample incoming="113355" />
 }

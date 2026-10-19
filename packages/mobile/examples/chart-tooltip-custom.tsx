@@ -43,7 +43,7 @@ const stepsConfig = {
   steps: { label: "Steps", color: "chart-4" },
 } satisfies ChartConfig
 
-function CustomDemo() {
+export default function ChartTooltipCustom() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader>
@@ -98,8 +98,4 @@ function CustomDemo() {
       </CardContent>
     </Card>
   )
-}
-
-export default function ChartTooltipCustom() {
-  return <CustomDemo />
 }

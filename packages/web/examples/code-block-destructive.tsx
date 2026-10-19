@@ -13,16 +13,14 @@ const error = `TypeError: Cannot read properties of undefined (reading 'map')
 
 export default function CodeBlockDestructive() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock variant="destructive">
-        <CodeBlockHeader>
-          <CodeBlockTitle>Error</CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={error} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent wrap>{error}</CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md" variant="destructive">
+      <CodeBlockHeader>
+        <CodeBlockTitle>Error</CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={error} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent wrap>{error}</CodeBlockContent>
+    </CodeBlock>
   )
 }

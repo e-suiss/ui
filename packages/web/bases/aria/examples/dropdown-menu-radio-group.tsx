@@ -8,11 +8,11 @@ import {
   DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu"
 
-function RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {
+export default function DropdownMenuRadioGroupExample() {
   const [position, setPosition] = React.useState("bottom")
 
   return (
-    <DropdownMenu {...props}>
+    <DropdownMenu>
       <Button variant="outline">Panel position</Button>
       <DropdownMenuContent className="w-56">
         <DropdownMenuRadioGroup value={position} onChange={setPosition}>
@@ -24,8 +24,4 @@ function RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
-
-export default function DropdownMenuRadioGroupExample() {
-  return <RadioGroupExample />
 }

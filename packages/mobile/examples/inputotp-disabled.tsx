@@ -4,17 +4,16 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 
-function slotIndexes(length: number) {
-  return Array.from({ length }, (_, index) => index)
-}
-
 export default function InputotpDisabled() {
   return (
     <InputOTP length={6} disabled defaultValue="123">
       <InputOTPGroup>
-        {slotIndexes(6).map((index) => (
-          <InputOTPSlot key={index} index={index} />
-        ))}
+        <InputOTPSlot index={0} />
+        <InputOTPSlot index={1} />
+        <InputOTPSlot index={2} />
+        <InputOTPSlot index={3} />
+        <InputOTPSlot index={4} />
+        <InputOTPSlot index={5} />
       </InputOTPGroup>
     </InputOTP>
   )

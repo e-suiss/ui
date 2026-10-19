@@ -12,41 +12,29 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const commands = [
-  {
-    command: "pnpm lint",
-    output: ["> acme-chat@0.1.0 lint", "> eslint ."],
-  },
-  {
-    command: "pnpm test",
-    output: [
-      "> acme-chat@0.1.0 test",
-      "> vitest run",
-      "",
-      " ✓ lib/ai.test.ts (6 tests) 41ms",
-      " ✓ components/chat.test.tsx (9 tests) 212ms",
-      "",
-      " Test Files  2 passed (2)",
-      "      Tests  15 passed (15)",
-    ],
-  },
-  {
-    command: "pnpm build",
-    output: [
-      "> acme-chat@0.1.0 build",
-      "> next build",
-      "",
-      "   ▲ Next.js 16.3.0",
-      "   Creating an optimized production build ...",
-      " ✓ Compiled successfully in 4.2s",
-      " ✓ Generating static pages (12/12)",
-      "",
-      "Route (app)                Size  First Load JS",
-      "┌ ○ /                     1.9 kB       112 kB",
-      "└ ƒ /api/chat              141 B       102 kB",
-    ],
-  },
-]
+const LINT_OUTPUT = `> acme-chat@0.1.0 lint
+> eslint .`
+
+const TEST_OUTPUT = `> acme-chat@0.1.0 test
+> vitest run
+
+ ✓ lib/ai.test.ts (6 tests) 41ms
+ ✓ components/chat.test.tsx (9 tests) 212ms
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)`
+
+const BUILD_OUTPUT = `> acme-chat@0.1.0 build
+> next build
+
+   ▲ Next.js 16.3.0
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.2s
+ ✓ Generating static pages (12/12)
+
+Route (app)                Size  First Load JS
+┌ ○ /                     1.9 kB       112 kB
+└ ƒ /api/chat              141 B       102 kB`
 
 export default function TerminalDemo() {
   return (
@@ -61,34 +49,75 @@ export default function TerminalDemo() {
       <Message>
         <MessageContent className="gap-4">
           <Trace>
-            {commands.map((item, index) => (
-              <TraceCollapsible
-                key={item.command}
-                defaultExpanded={index === commands.length - 1}
-              >
-                <TraceCollapsibleTrigger>
-                  <TraceLine>
-                    <TraceIcon>
-                      <IconPlaceholder
-                        lucide="TerminalIcon"
-                        tabler="IconTerminal"
-                        hugeicons="ComputerTerminal01Icon"
-                        phosphor="TerminalIcon"
-                        remixicon="RiTerminalLine"
-                      />
-                    </TraceIcon>
-                    <TraceTitle>Ran {item.command}</TraceTitle>
-                  </TraceLine>
-                </TraceCollapsibleTrigger>
-                <TraceCollapsibleContent>
-                  <CodeBlock size="sm">
-                    <CodeBlockContent wrap className="max-h-64">
-                      {item.output.join("\n")}
-                    </CodeBlockContent>
-                  </CodeBlock>
-                </TraceCollapsibleContent>
-              </TraceCollapsible>
-            ))}
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="TerminalIcon"
+                      tabler="IconTerminal"
+                      hugeicons="ComputerTerminal01Icon"
+                      phosphor="TerminalIcon"
+                      remixicon="RiTerminalLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran pnpm lint</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm">
+                  <CodeBlockContent wrap className="max-h-64">
+                    {LINT_OUTPUT}
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="TerminalIcon"
+                      tabler="IconTerminal"
+                      hugeicons="ComputerTerminal01Icon"
+                      phosphor="TerminalIcon"
+                      remixicon="RiTerminalLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran pnpm test</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm">
+                  <CodeBlockContent wrap className="max-h-64">
+                    {TEST_OUTPUT}
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible defaultExpanded>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="TerminalIcon"
+                      tabler="IconTerminal"
+                      hugeicons="ComputerTerminal01Icon"
+                      phosphor="TerminalIcon"
+                      remixicon="RiTerminalLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran pnpm build</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm">
+                  <CodeBlockContent wrap className="max-h-64">
+                    {BUILD_OUTPUT}
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
           </Trace>
           <p>Lint and tests pass, and the build compiled both routes.</p>
         </MessageContent>

@@ -19,52 +19,6 @@ const initialNotes = [
   { id: "recipes", title: "Recipes", preview: "Lemon pasta and a quick curry" },
 ]
 
-type Note = (typeof initialNotes)[number]
-
-function NoteRows({
-  notes,
-  onOpen,
-}: {
-  notes: Note[]
-  onOpen: (note: Note) => void
-}) {
-  return (
-    <div className="overflow-hidden rounded-2xl border">
-      {notes.map((note) => (
-        <SelectionListItem
-          key={note.id}
-          value={note.id}
-          className="not-first:border-t"
-        >
-          <button
-            type="button"
-            onClick={() => onOpen(note)}
-            className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
-          >
-            <span className="flex min-w-0 flex-1 flex-col">
-              <span className="truncate text-base font-semibold">
-                {note.title}
-              </span>
-              <span className="truncate text-sm text-muted-foreground">
-                {note.preview}
-              </span>
-            </span>
-            <IconPlaceholder
-              lucide="ChevronRightIcon"
-              tabler="IconChevronRight"
-              hugeicons="ArrowRight01Icon"
-              phosphor="CaretRightIcon"
-              remixicon="RiArrowRightSLine"
-              aria-hidden
-              className="size-4 shrink-0 text-muted-foreground transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0"
-            />
-          </button>
-        </SelectionListItem>
-      ))}
-    </div>
-  )
-}
-
 function SelectAllButton() {
   const { selected, selectAll, clear } = useSelectionList()
   const all = selected.length > 0
@@ -100,27 +54,19 @@ function DeleteButton({ onDelete }: { onDelete: (ids: string[]) => void }) {
   )
 }
 
-function useNotes() {
+export default function SelectionListDemo() {
   const [notes, setNotes] = React.useState(initialNotes)
   const [log, setLog] = React.useState("Tap Select to choose notes.")
 
-  return {
-    notes,
-    log,
-    setLog,
-    remove: (ids: string[]) => {
-      setNotes((current) => current.filter((note) => !ids.includes(note.id)))
-      setLog(`Deleted ${ids.length} ${ids.length === 1 ? "note" : "notes"}`)
-    },
-    reset: () => {
-      setNotes(initialNotes)
-      setLog("Tap Select to choose notes.")
-    },
+  const remove = (ids: string[]) => {
+    setNotes((current) => current.filter((note) => !ids.includes(note.id)))
+    setLog(`Deleted ${ids.length} ${ids.length === 1 ? "note" : "notes"}`)
   }
-}
 
-function NotesExample() {
-  const { notes, log, setLog, remove, reset } = useNotes()
+  const reset = () => {
+    setNotes(initialNotes)
+    setLog("Tap Select to choose notes.")
+  }
 
   return (
     <SelectionList className="mx-auto flex w-full max-w-md flex-col gap-3 pb-24">
@@ -128,10 +74,39 @@ function NotesExample() {
         <h2 className="text-3xl font-bold tracking-tight">Notes</h2>
         <SelectionListTrigger />
       </div>
-      <NoteRows
-        notes={notes}
-        onOpen={(note) => setLog(`Opened ${note.title}`)}
-      />
+      <div className="overflow-hidden rounded-2xl border">
+        {notes.map((note) => (
+          <SelectionListItem
+            key={note.id}
+            value={note.id}
+            className="not-first:border-t"
+          >
+            <button
+              type="button"
+              onClick={() => setLog(`Opened ${note.title}`)}
+              className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+            >
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate text-base font-semibold">
+                  {note.title}
+                </span>
+                <span className="truncate text-sm text-muted-foreground">
+                  {note.preview}
+                </span>
+              </span>
+              <IconPlaceholder
+                lucide="ChevronRightIcon"
+                tabler="IconChevronRight"
+                hugeicons="ArrowRight01Icon"
+                phosphor="CaretRightIcon"
+                remixicon="RiArrowRightSLine"
+                aria-hidden
+                className="size-4 shrink-0 text-muted-foreground transition-opacity duration-200 rtl:rotate-180 group-data-editing/selection-list:opacity-0"
+              />
+            </button>
+          </SelectionListItem>
+        ))}
+      </div>
       <div className="flex items-center justify-between gap-3">
         <p role="status" className="text-sm text-muted-foreground">
           {log}
@@ -147,8 +122,4 @@ function NotesExample() {
       </SelectionListBar>
     </SelectionList>
   )
-}
-
-export default function SelectionListDemo() {
-  return <NotesExample />
 }

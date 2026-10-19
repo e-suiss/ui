@@ -11,25 +11,23 @@ import {
 
 export default function ItemWithAvatar() {
   return (
-    <div className="w-96">
-      <Item variant="outline">
-        <ItemMedia>
-          <Avatar size="lg">
-            <AvatarImage
-              src="https://i.pravatar.cc/96?img=12"
-              alt="Olivia Martin"
-            />
-            <AvatarFallback>OM</AvatarFallback>
-          </Avatar>
-        </ItemMedia>
-        <ItemContent>
-          <ItemTitle>Olivia Martin</ItemTitle>
-          <ItemDescription>Last seen 5 minutes ago</ItemDescription>
-        </ItemContent>
-        <ItemActions>
-          <Button size="sm">Message</Button>
-        </ItemActions>
-      </Item>
-    </div>
+    <Item variant="outline" className="w-96">
+      <ItemMedia>
+        <Avatar size="lg">
+          <AvatarImage
+            src="https://i.pravatar.cc/96?img=12"
+            alt="Olivia Martin"
+          />
+          <AvatarFallback>OM</AvatarFallback>
+        </Avatar>
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>Olivia Martin</ItemTitle>
+        <ItemDescription>Last seen 5 minutes ago</ItemDescription>
+      </ItemContent>
+      <ItemActions>
+        <Button size="sm">Message</Button>
+      </ItemActions>
+    </Item>
   )
 }

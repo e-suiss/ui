@@ -72,11 +72,11 @@ function groupByLetter() {
   })
 }
 
-function ContactsExample({ className }: { className: string }) {
+export default function SectionIndexCompact() {
   const [log, setLog] = React.useState("Tap or drag the letters.")
   return (
     <View className="gap-3">
-      <SectionIndex className={className}>
+      <SectionIndex className="h-64">
         <SectionIndexScrollView className="rounded-2xl border border-border">
           {groupByLetter().map(([letter, group]) => (
             <SectionIndexSection key={letter} value={letter}>
@@ -100,8 +100,4 @@ function ContactsExample({ className }: { className: string }) {
       <Text variant="muted">{log}</Text>
     </View>
   )
-}
-
-export default function SectionIndexCompact() {
-  return <ContactsExample className="h-64" />
 }

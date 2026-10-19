@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
@@ -8,10 +7,6 @@ import {
   WidgetTitle,
   WidgetValue,
 } from "@/components/ui/widget"
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
-}
 
 export default function WidgetReservations() {
   return (
@@ -48,7 +43,9 @@ export default function WidgetReservations() {
           </div>
         </div>
       </Widget>
-      <Hint>Snaps between small and medium only.</Hint>
+      <p className="mt-6 text-xs text-muted-foreground">
+        Snaps between small and medium only.
+      </p>
     </div>
   )
 }

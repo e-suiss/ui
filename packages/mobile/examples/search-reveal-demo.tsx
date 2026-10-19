@@ -26,21 +26,13 @@ const allNotes = [
   { id: 12, title: "Budget", preview: "Rent, groceries, savings" },
 ]
 
-function NotesExample({
-  count,
-  defaultQuery = "",
-}: {
-  count: number
-  defaultQuery?: string
-}) {
-  const [query, setQuery] = React.useState(defaultQuery)
-  const notes = allNotes
-    .slice(0, count)
-    .filter((note) =>
-      `${note.title} ${note.preview}`
-        .toLowerCase()
-        .includes(query.trim().toLowerCase())
-    )
+export default function SearchRevealDemo() {
+  const [query, setQuery] = React.useState("")
+  const notes = allNotes.filter((note) =>
+    `${note.title} ${note.preview}`
+      .toLowerCase()
+      .includes(query.trim().toLowerCase())
+  )
 
   return (
     <View className="flex-1 overflow-hidden rounded-2xl border border-border">
@@ -85,8 +77,4 @@ function NotesExample({
       </SearchReveal>
     </View>
   )
-}
-
-export default function SearchRevealDemo() {
-  return <NotesExample count={12} />
 }

@@ -8,31 +8,29 @@ import {
 
 export default function InputGroupButtonSizes() {
   return (
-    <div className="w-96">
-      <InputGroup>
-        <InputGroupInput placeholder="Type a command..." />
-        <InputGroupAddon align="inline-end">
-          <InputGroupButton size="xs">Extra small</InputGroupButton>
-          <InputGroupButton size="icon-xs" aria-label="Copy">
-            <IconPlaceholder
-              lucide="CopyIcon"
-              tabler="IconCopy"
-              hugeicons="Copy01Icon"
-              phosphor="CopyIcon"
-              remixicon="RiFileCopyLine"
-            />
-          </InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Attach">
-            <IconPlaceholder
-              lucide="PaperclipIcon"
-              tabler="IconPaperclip"
-              hugeicons="AttachmentIcon"
-              phosphor="PaperclipIcon"
-              remixicon="RiAttachment2"
-            />
-          </InputGroupButton>
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
+    <InputGroup className="w-96">
+      <InputGroupInput placeholder="Type a command..." />
+      <InputGroupAddon align="inline-end">
+        <InputGroupButton size="xs">Extra small</InputGroupButton>
+        <InputGroupButton size="icon-xs" aria-label="Copy">
+          <IconPlaceholder
+            lucide="CopyIcon"
+            tabler="IconCopy"
+            hugeicons="Copy01Icon"
+            phosphor="CopyIcon"
+            remixicon="RiFileCopyLine"
+          />
+        </InputGroupButton>
+        <InputGroupButton size="icon-sm" aria-label="Attach">
+          <IconPlaceholder
+            lucide="PaperclipIcon"
+            tabler="IconPaperclip"
+            hugeicons="AttachmentIcon"
+            phosphor="PaperclipIcon"
+            remixicon="RiAttachment2"
+          />
+        </InputGroupButton>
+      </InputGroupAddon>
+    </InputGroup>
   )
 }

@@ -11,7 +11,7 @@ function wait(ms: number) {
 
 const toastManager = createToastManager()
 
-function PromiseExample({ fail = false }: { fail?: boolean }) {
+function PromiseExample() {
   const toast = useToastManager()
 
   return (
@@ -20,11 +20,7 @@ function PromiseExample({ fail = false }: { fail?: boolean }) {
       onClick={() =>
         toast
           .promise(
-            fail
-              ? wait(2000).then(() =>
-                  Promise.reject(new Error("Network error"))
-                )
-              : wait(2000),
+            wait(2000).then(() => Promise.reject(new Error("Network error"))),
             {
               loading: {
                 title: "Publishing post",
@@ -52,7 +48,7 @@ function PromiseExample({ fail = false }: { fail?: boolean }) {
 export default function ToastPromiseRejected() {
   return (
     <Toaster toastManager={toastManager}>
-      <PromiseExample fail />
+      <PromiseExample />
     </Toaster>
   )
 }

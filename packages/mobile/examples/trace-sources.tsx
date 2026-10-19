@@ -11,35 +11,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const sources = [
-  { title: "pnpm install | pnpm.io", url: "https://pnpm.io/cli/install" },
-  {
-    title: "Continuous Integration | pnpm.io",
-    url: "https://pnpm.io/continuous-integration",
-  },
-]
-
-function SourceRow({ title, url }: { title: string; url: string }) {
-  return (
-    <Pressable
-      accessibilityRole="link"
-      accessibilityHint="Opens in the browser"
-      onPress={() => Linking.openURL(url)}
-      className="self-start active:opacity-70"
-    >
-      <TraceLine>
-        <TraceIcon>
-          <Icon as={GlobeIcon} />
-        </TraceIcon>
-        <TraceTitle>{title}</TraceTitle>
-        <TraceIcon>
-          <Icon as={ArrowUpRightIcon} />
-        </TraceIcon>
-      </TraceLine>
-    </Pressable>
-  )
-}
-
 export default function TraceSources() {
   return (
     <TraceCollapsible defaultOpen>
@@ -48,14 +19,45 @@ export default function TraceSources() {
           <TraceIcon>
             <Icon as={GlobeIcon} />
           </TraceIcon>
-          <TraceTitle>Used {sources.length} sources</TraceTitle>
+          <TraceTitle>Used 2 sources</TraceTitle>
         </TraceLine>
       </TraceCollapsibleTrigger>
       <TraceCollapsibleContent>
         <Trace>
-          {sources.map((source) => (
-            <SourceRow key={source.url} {...source} />
-          ))}
+          <Pressable
+            accessibilityRole="link"
+            accessibilityHint="Opens in the browser"
+            onPress={() => Linking.openURL("https://pnpm.io/cli/install")}
+            className="self-start active:opacity-70"
+          >
+            <TraceLine>
+              <TraceIcon>
+                <Icon as={GlobeIcon} />
+              </TraceIcon>
+              <TraceTitle>pnpm install | pnpm.io</TraceTitle>
+              <TraceIcon>
+                <Icon as={ArrowUpRightIcon} />
+              </TraceIcon>
+            </TraceLine>
+          </Pressable>
+          <Pressable
+            accessibilityRole="link"
+            accessibilityHint="Opens in the browser"
+            onPress={() =>
+              Linking.openURL("https://pnpm.io/continuous-integration")
+            }
+            className="self-start active:opacity-70"
+          >
+            <TraceLine>
+              <TraceIcon>
+                <Icon as={GlobeIcon} />
+              </TraceIcon>
+              <TraceTitle>Continuous Integration | pnpm.io</TraceTitle>
+              <TraceIcon>
+                <Icon as={ArrowUpRightIcon} />
+              </TraceIcon>
+            </TraceLine>
+          </Pressable>
         </Trace>
       </TraceCollapsibleContent>
     </TraceCollapsible>

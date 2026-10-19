@@ -15,14 +15,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-function Output({ children, error }: { children: string; error?: boolean }) {
-  return (
-    <CodeBlock size="sm" variant={error ? "destructive" : "default"}>
-      <CodeBlockContent wrap>{children}</CodeBlockContent>
-    </CodeBlock>
-  )
-}
-
 export default function TraceDemo() {
   return (
     <View className="w-full gap-4">
@@ -66,11 +58,13 @@ export default function TraceDemo() {
             </TraceLine>
           </TraceCollapsibleTrigger>
           <TraceCollapsibleContent>
-            <Output error>
-              ERR_PNPM_OUTDATED_LOCKFILE Cannot install with
-              &quot;frozen-lockfile&quot; because pnpm-lock.yaml is not up to
-              date with package.json
-            </Output>
+            <CodeBlock size="sm" variant="destructive">
+              <CodeBlockContent wrap>
+                ERR_PNPM_OUTDATED_LOCKFILE Cannot install with
+                &quot;frozen-lockfile&quot; because pnpm-lock.yaml is not up to
+                date with package.json
+              </CodeBlockContent>
+            </CodeBlock>
           </TraceCollapsibleContent>
         </TraceCollapsible>
       </Trace>

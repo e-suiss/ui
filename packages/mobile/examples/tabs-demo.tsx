@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Text } from "@/components/ui/text"
 
-function TabsDemo() {
+export default function TabsDemoExample() {
   const [value, setValue] = React.useState("account")
   return (
     <Tabs value={value} onValueChange={setValue} className="w-full">
@@ -85,8 +85,4 @@ function TabsDemo() {
       </TabsContent>
     </Tabs>
   )
-}
-
-export default function TabsDemoExample() {
-  return <TabsDemo />
 }

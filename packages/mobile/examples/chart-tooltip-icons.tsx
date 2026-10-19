@@ -30,7 +30,7 @@ const iconConfig = {
   mobile: { label: "Mobile", color: "chart-2", icon: DeviceMobileIcon },
 } satisfies ChartConfig
 
-function IconsDemo() {
+export default function ChartTooltipIcons() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader>
@@ -75,8 +75,4 @@ function IconsDemo() {
       </CardContent>
     </Card>
   )
-}
-
-export default function ChartTooltipIcons() {
-  return <IconsDemo />
 }

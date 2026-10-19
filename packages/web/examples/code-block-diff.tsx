@@ -29,22 +29,20 @@ function getVariant(line: string) {
 
 export default function CodeBlockDiff() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>components/greeting.tsx</CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={patch} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent>
-          {patch.split("\n").map((line, index) => (
-            <CodeBlockLine key={index} variant={getVariant(line)}>
-              {line.slice(1)}
-            </CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>components/greeting.tsx</CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={patch} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent>
+        {patch.split("\n").map((line, index) => (
+          <CodeBlockLine key={index} variant={getVariant(line)}>
+            {line.slice(1)}
+          </CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

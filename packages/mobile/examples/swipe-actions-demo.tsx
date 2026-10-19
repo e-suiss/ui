@@ -5,7 +5,6 @@ import {
   TrashIcon,
 } from "phosphor-react-native"
 import * as React from "react"
-import { View } from "react-native"
 import {
   SwipeAction,
   SwipeActions,
@@ -29,7 +28,7 @@ const MESSAGES = [
   { id: "3", from: "Isabella Nguyen", subject: "Design review notes" },
 ]
 
-function Inbox() {
+export default function SwipeActionsDemo() {
   const [messages, setMessages] = React.useState(MESSAGES)
   const remove = (id: string) =>
     setMessages((current) => current.filter((message) => message.id !== id))
@@ -75,13 +74,5 @@ function Inbox() {
         </React.Fragment>
       ))}
     </ItemGroup>
-  )
-}
-
-export default function SwipeActionsDemo() {
-  return (
-    <View>
-      <Inbox />
-    </View>
   )
 }

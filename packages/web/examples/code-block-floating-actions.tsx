@@ -15,13 +15,11 @@ Done in 2.8s using pnpm v10.18.0`
 
 export default function CodeBlockFloatingActions() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockActions>
-          <CodeBlockCopyButton value={output} />
-        </CodeBlockActions>
-        <CodeBlockContent>{output}</CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockActions>
+        <CodeBlockCopyButton value={output} />
+      </CodeBlockActions>
+      <CodeBlockContent>{output}</CodeBlockContent>
+    </CodeBlock>
   )
 }

@@ -13,15 +13,7 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-function Output({ children, error }: { children: string; error?: boolean }) {
-  return (
-    <CodeBlock size="sm" variant={error ? "destructive" : "default"}>
-      <CodeBlockContent wrap>{children}</CodeBlockContent>
-    </CodeBlock>
-  )
-}
-
-function ControlledExample() {
+export default function TraceControlled() {
   const [open, setOpen] = React.useState(false)
   return (
     <View className="items-start gap-4">
@@ -35,7 +27,11 @@ function ControlledExample() {
           </TraceLine>
         </TraceCollapsibleTrigger>
         <TraceCollapsibleContent>
-          <Output>{"$ pnpm --version\n10.33.4"}</Output>
+          <CodeBlock size="sm">
+            <CodeBlockContent wrap>
+              {"$ pnpm --version\n10.33.4"}
+            </CodeBlockContent>
+          </CodeBlock>
         </TraceCollapsibleContent>
       </TraceCollapsible>
       <Button variant="outline" size="sm" onPress={() => setOpen(!open)}>
@@ -43,8 +39,4 @@ function ControlledExample() {
       </Button>
     </View>
   )
-}
-
-export default function TraceControlled() {
-  return <ControlledExample />
 }

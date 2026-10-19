@@ -31,12 +31,6 @@ function formatTotal(value: number) {
 
 type Indicator = "dot" | "line" | "dashed"
 
-const INDICATORS: Record<Indicator, string> = {
-  dot: "Dot",
-  line: "Line",
-  dashed: "Dashed",
-}
-
 const revenueData = [
   ["Q1 25", 69.1, 9, 26.3],
   ["Q2 25", 46.8, 8, 26.6],
@@ -59,33 +53,7 @@ const revenueConfig = {
   services: { label: "Services", color: "purple-500" },
 } satisfies ChartConfig
 
-function Setting({
-  id,
-  label,
-  checked,
-  onCheckedChange,
-}: {
-  id: string
-  label: string
-  checked: boolean
-  onCheckedChange: (checked: boolean) => void
-}) {
-  return (
-    <View className="flex-row items-center gap-2.5">
-      <Switch
-        size="sm"
-        checked={checked}
-        onCheckedChange={onCheckedChange}
-        accessibilityLabelledBy={id}
-      />
-      <Label nativeID={id} onPress={() => onCheckedChange(!checked)}>
-        <Text className="text-sm">{label}</Text>
-      </Label>
-    </View>
-  )
-}
-
-function InteractiveDemo() {
+export default function ChartTooltipInteractive() {
   const [indicator, setIndicator] = React.useState<Indicator>("dot")
   const [showTotal, setShowTotal] = React.useState(true)
   const [hideLabel, setHideLabel] = React.useState(false)
@@ -114,32 +82,60 @@ function InteractiveDemo() {
               }}
               accessibilityLabel="Indicator"
             >
-              {(Object.keys(INDICATORS) as Indicator[]).map((key) => (
-                <ToggleGroupItem key={key} value={key} size="sm">
-                  <Text>{INDICATORS[key]}</Text>
-                </ToggleGroupItem>
-              ))}
+              <ToggleGroupItem value="dot" size="sm">
+                <Text>Dot</Text>
+              </ToggleGroupItem>
+              <ToggleGroupItem value="line" size="sm">
+                <Text>Line</Text>
+              </ToggleGroupItem>
+              <ToggleGroupItem value="dashed" size="sm">
+                <Text>Dashed</Text>
+              </ToggleGroupItem>
             </ToggleGroup>
           </View>
           <View className="flex-row flex-wrap gap-x-5 gap-y-2.5 pb-1">
-            <Setting
-              id="tooltip-total"
-              label="Total in title"
-              checked={showTotal}
-              onCheckedChange={setShowTotal}
-            />
-            <Setting
-              id="tooltip-hide-title"
-              label="Hide title"
-              checked={hideLabel}
-              onCheckedChange={setHideLabel}
-            />
-            <Setting
-              id="tooltip-hide-indicator"
-              label="Hide indicator"
-              checked={hideIndicator}
-              onCheckedChange={setHideIndicator}
-            />
+            <View className="flex-row items-center gap-2.5">
+              <Switch
+                size="sm"
+                checked={showTotal}
+                onCheckedChange={setShowTotal}
+                accessibilityLabelledBy="tooltip-total"
+              />
+              <Label
+                nativeID="tooltip-total"
+                onPress={() => setShowTotal(!showTotal)}
+              >
+                <Text className="text-sm">Total in title</Text>
+              </Label>
+            </View>
+            <View className="flex-row items-center gap-2.5">
+              <Switch
+                size="sm"
+                checked={hideLabel}
+                onCheckedChange={setHideLabel}
+                accessibilityLabelledBy="tooltip-hide-title"
+              />
+              <Label
+                nativeID="tooltip-hide-title"
+                onPress={() => setHideLabel(!hideLabel)}
+              >
+                <Text className="text-sm">Hide title</Text>
+              </Label>
+            </View>
+            <View className="flex-row items-center gap-2.5">
+              <Switch
+                size="sm"
+                checked={hideIndicator}
+                onCheckedChange={setHideIndicator}
+                accessibilityLabelledBy="tooltip-hide-indicator"
+              />
+              <Label
+                nativeID="tooltip-hide-indicator"
+                onPress={() => setHideIndicator(!hideIndicator)}
+              >
+                <Text className="text-sm">Hide indicator</Text>
+              </Label>
+            </View>
           </View>
         </View>
         <ChartContainer
@@ -207,8 +203,4 @@ function InteractiveDemo() {
       </CardContent>
     </Card>
   )
-}
-
-export default function ChartTooltipInteractive() {
-  return <InteractiveDemo />
 }

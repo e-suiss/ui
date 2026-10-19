@@ -12,58 +12,28 @@ import { Text } from "@/components/ui/text"
 const items = [
   { value: "home", label: "Home", icon: HouseIcon },
   { value: "search", label: "Search", icon: MagnifyingGlassIcon },
-  { value: "messages", label: "Messages", icon: ChatCircleIcon, badge: 3 },
-  { value: "profile", label: "Profile", icon: UserIcon, badge: true },
+  { value: "messages", label: "Messages", icon: ChatCircleIcon },
+  { value: "profile", label: "Profile", icon: UserIcon },
 ]
 
-function Page({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <View className="-m-4 flex-1 bg-background">
-      <View className="flex-1 gap-2 p-4">
-        <Text variant="h3">{title}</Text>
-        <Text variant="muted">Tap a tab to switch screens.</Text>
-      </View>
-      {children}
-    </View>
-  )
-}
-
-function TabBarExample({
-  badges = true,
-  disabled,
-}: {
-  badges?: boolean
-  disabled?: string
-}) {
+export default function TabBarWithoutBadges() {
   const [value, setValue] = React.useState("home")
   const current = items.find((item) => item.value === value)
   return (
-    <Page title={current?.label ?? ""}>
+    <View className="-m-4 flex-1 bg-background">
+      <View className="flex-1 gap-2 p-4">
+        <Text variant="h3">{current?.label ?? ""}</Text>
+        <Text variant="muted">Tap a tab to switch screens.</Text>
+      </View>
       <TabBar value={value} onValueChange={setValue}>
         <TabBarList>
           {items.map((item) => (
-            <TabBarItem
-              key={item.value}
-              value={item.value}
-              icon={item.icon}
-              badge={badges ? item.badge : undefined}
-              disabled={item.value === disabled}
-            >
+            <TabBarItem key={item.value} value={item.value} icon={item.icon}>
               {item.label}
             </TabBarItem>
           ))}
         </TabBarList>
       </TabBar>
-    </Page>
+    </View>
   )
-}
-
-export default function TabBarWithoutBadges() {
-  return <TabBarExample badges={false} />
 }

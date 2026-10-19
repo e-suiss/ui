@@ -11,37 +11,31 @@ import {
 } from "@/components/ui/input-group"
 import { Spinner } from "@/components/ui/spinner"
 
-function SearchDemo() {
+export default function InputGroupDemo() {
   const [value, setValue] = React.useState("")
   return (
-    <InputGroup>
-      <InputGroupInput
-        placeholder="Search"
-        value={value}
-        onValueChange={setValue}
-      />
-      <InputGroupAddon>
-        <Icon as={MagnifyingGlassIcon} />
-      </InputGroupAddon>
-      {value ? (
-        <InputGroupAddon align="inline-end">
-          <InputGroupButton
-            size="icon-xs"
-            accessibilityLabel="Clear"
-            onPress={() => setValue("")}
-          >
-            <Icon as={XIcon} />
-          </InputGroupButton>
-        </InputGroupAddon>
-      ) : null}
-    </InputGroup>
-  )
-}
-
-export default function InputGroupDemo() {
-  return (
     <View className="gap-4">
-      <SearchDemo />
+      <InputGroup>
+        <InputGroupInput
+          placeholder="Search"
+          value={value}
+          onValueChange={setValue}
+        />
+        <InputGroupAddon>
+          <Icon as={MagnifyingGlassIcon} />
+        </InputGroupAddon>
+        {value ? (
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton
+              size="icon-xs"
+              accessibilityLabel="Clear"
+              onPress={() => setValue("")}
+            >
+              <Icon as={XIcon} />
+            </InputGroupButton>
+          </InputGroupAddon>
+        ) : null}
+      </InputGroup>
       <InputGroup>
         <InputGroupAddon>
           <InputGroupText>https://</InputGroupText>

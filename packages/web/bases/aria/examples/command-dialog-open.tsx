@@ -13,91 +13,11 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 
-function CommandItems() {
-  return (
-    <>
-      <CommandEmpty>No results found.</CommandEmpty>
-      <CommandGroup heading="Suggestions">
-        <CommandItem>
-          <IconPlaceholder
-            lucide="CalendarIcon"
-            tabler="IconCalendar"
-            hugeicons="Calendar01Icon"
-            phosphor="CalendarBlankIcon"
-            remixicon="RiCalendarLine"
-          />
-          Calendar
-        </CommandItem>
-        <CommandItem>
-          <IconPlaceholder
-            lucide="SmileIcon"
-            tabler="IconMoodSmile"
-            hugeicons="SmileIcon"
-            phosphor="SmileyIcon"
-            remixicon="RiEmotionLine"
-          />
-          Search emoji
-        </CommandItem>
-        <CommandItem disabled>
-          <IconPlaceholder
-            lucide="CalculatorIcon"
-            tabler="IconCalculator"
-            hugeicons="CalculatorIcon"
-            phosphor="CalculatorIcon"
-            remixicon="RiCalculatorLine"
-          />
-          Calculator
-        </CommandItem>
-      </CommandGroup>
-      <CommandSeparator />
-      <CommandGroup heading="Settings">
-        <CommandItem>
-          <IconPlaceholder
-            lucide="UserIcon"
-            tabler="IconUser"
-            hugeicons="UserIcon"
-            phosphor="UserIcon"
-            remixicon="RiUserLine"
-          />
-          Profile
-          <CommandShortcut mod>P</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <IconPlaceholder
-            lucide="CreditCardIcon"
-            tabler="IconCreditCard"
-            hugeicons="CreditCardIcon"
-            phosphor="CreditCardIcon"
-            remixicon="RiBankCardLine"
-          />
-          Billing
-          <CommandShortcut mod>B</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <IconPlaceholder
-            lucide="SettingsIcon"
-            tabler="IconSettings"
-            hugeicons="Settings01Icon"
-            phosphor="GearIcon"
-            remixicon="RiSettingsLine"
-          />
-          Settings
-          <CommandShortcut mod>S</CommandShortcut>
-        </CommandItem>
-      </CommandGroup>
-    </>
-  )
-}
-
-function CommandDialogExample({
-  defaultOpen = false,
-}: {
-  defaultOpen?: boolean
-}) {
-  const [open, setOpen] = React.useState(defaultOpen)
+export default function CommandDialogOpen() {
+  const [open, setOpen] = React.useState(true)
 
   return (
-    <>
+    <div className="w-140">
       <Button variant="outline" onClick={() => setOpen(true)}>
         Open command palette
       </Button>
@@ -105,18 +25,78 @@ function CommandDialogExample({
         <Command>
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
-            <CommandItems />
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Suggestions">
+              <CommandItem>
+                <IconPlaceholder
+                  lucide="CalendarIcon"
+                  tabler="IconCalendar"
+                  hugeicons="Calendar01Icon"
+                  phosphor="CalendarBlankIcon"
+                  remixicon="RiCalendarLine"
+                />
+                Calendar
+              </CommandItem>
+              <CommandItem>
+                <IconPlaceholder
+                  lucide="SmileIcon"
+                  tabler="IconMoodSmile"
+                  hugeicons="SmileIcon"
+                  phosphor="SmileyIcon"
+                  remixicon="RiEmotionLine"
+                />
+                Search emoji
+              </CommandItem>
+              <CommandItem disabled>
+                <IconPlaceholder
+                  lucide="CalculatorIcon"
+                  tabler="IconCalculator"
+                  hugeicons="CalculatorIcon"
+                  phosphor="CalculatorIcon"
+                  remixicon="RiCalculatorLine"
+                />
+                Calculator
+              </CommandItem>
+            </CommandGroup>
+            <CommandSeparator />
+            <CommandGroup heading="Settings">
+              <CommandItem>
+                <IconPlaceholder
+                  lucide="UserIcon"
+                  tabler="IconUser"
+                  hugeicons="UserIcon"
+                  phosphor="UserIcon"
+                  remixicon="RiUserLine"
+                />
+                Profile
+                <CommandShortcut mod>P</CommandShortcut>
+              </CommandItem>
+              <CommandItem>
+                <IconPlaceholder
+                  lucide="CreditCardIcon"
+                  tabler="IconCreditCard"
+                  hugeicons="CreditCardIcon"
+                  phosphor="CreditCardIcon"
+                  remixicon="RiBankCardLine"
+                />
+                Billing
+                <CommandShortcut mod>B</CommandShortcut>
+              </CommandItem>
+              <CommandItem>
+                <IconPlaceholder
+                  lucide="SettingsIcon"
+                  tabler="IconSettings"
+                  hugeicons="Settings01Icon"
+                  phosphor="GearIcon"
+                  remixicon="RiSettingsLine"
+                />
+                Settings
+                <CommandShortcut mod>S</CommandShortcut>
+              </CommandItem>
+            </CommandGroup>
           </CommandList>
         </Command>
       </CommandDialog>
-    </>
-  )
-}
-
-export default function CommandDialogOpen() {
-  return (
-    <div className="w-140">
-      <CommandDialogExample defaultOpen />
     </div>
   )
 }

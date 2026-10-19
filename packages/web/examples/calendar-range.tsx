@@ -2,7 +2,7 @@ import * as React from "react"
 import type { DateRange } from "react-day-picker"
 import { Calendar } from "@/components/ui/calendar"
 
-function RangeCalendar(props: React.ComponentProps<typeof Calendar>) {
+export default function CalendarRange() {
   const today = new Date()
   const [range, setRange] = React.useState<DateRange | undefined>({
     from: today,
@@ -10,16 +10,12 @@ function RangeCalendar(props: React.ComponentProps<typeof Calendar>) {
   })
   return (
     <Calendar
-      {...props}
       mode="range"
       selected={range}
       onSelect={setRange}
       numberOfMonths={2}
+      buttonVariant="plain"
       className="rounded-2xl border"
     />
   )
-}
-
-export default function CalendarRange() {
-  return <RangeCalendar buttonVariant="plain" />
 }

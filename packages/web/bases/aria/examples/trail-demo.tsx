@@ -1,13 +1,6 @@
 import * as React from "react"
 import { Trail, type TrailItem } from "@/components/patterns/trail"
 
-const article: TrailItem[] = [
-  { label: "Support", href: "#support" },
-  { label: "Account", href: "#account" },
-  { label: "Security", href: "#security" },
-  { label: "Turn on two-factor authentication" },
-]
-
 type Page = { label: string; parent?: string; children: string[] }
 
 const pages: Record<string, Page> = {
@@ -52,7 +45,7 @@ function trailTo(id: string): TrailItem[] {
   )
 }
 
-function TrailExample(props: Partial<React.ComponentProps<typeof Trail>>) {
+export default function TrailDemo() {
   const [page, setPage] = React.useState("two-factor")
   const current = pageOf(page)
 
@@ -68,7 +61,6 @@ function TrailExample(props: Partial<React.ComponentProps<typeof Trail>>) {
   return (
     <div className="flex flex-col gap-6">
       <Trail
-        {...props}
         items={trailTo(page)}
         render={(link) => (
           <a
@@ -107,8 +99,4 @@ function TrailExample(props: Partial<React.ComponentProps<typeof Trail>>) {
       </section>
     </div>
   )
-}
-
-export default function TrailDemo() {
-  return <TrailExample items={article} />
 }

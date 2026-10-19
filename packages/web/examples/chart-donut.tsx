@@ -27,25 +27,21 @@ const browsersConfig = {
 
 export default function ChartDonut() {
   return (
-    <div className="w-[min(32rem,calc(100vw-2rem))]">
-      <ChartContainer
-        config={browsersConfig}
-        className="mx-auto aspect-square w-full max-w-72"
-      >
-        {
-          <PieChart>
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            <Pie
-              data={browsers}
-              dataKey="visitors"
-              nameKey="browser"
-              innerRadius={60}
-              strokeWidth={4}
-            />
-            <ChartLegend content={<ChartLegendContent nameKey="browser" />} />
-          </PieChart>
-        }
-      </ChartContainer>
-    </div>
+    <ChartContainer
+      config={browsersConfig}
+      className="mx-auto aspect-square w-full max-w-72"
+    >
+      <PieChart>
+        <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+        <Pie
+          data={browsers}
+          dataKey="visitors"
+          nameKey="browser"
+          innerRadius={60}
+          strokeWidth={4}
+        />
+        <ChartLegend content={<ChartLegendContent nameKey="browser" />} />
+      </PieChart>
+    </ChartContainer>
   )
 }

@@ -1,19 +1,5 @@
 import { Picker, PickerItem } from "@/components/patterns/picker"
 
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
 export default function PickerInvalid() {
   return (
     <Picker
@@ -22,7 +8,11 @@ export default function PickerInvalid() {
       className="w-48"
       aria-invalid
     >
-      {fruitItems}
+      <PickerItem value="apple">Apple</PickerItem>
+      <PickerItem value="banana">Banana</PickerItem>
+      <PickerItem value="blueberry">Blueberry</PickerItem>
+      <PickerItem value="grapes">Grapes</PickerItem>
+      <PickerItem value="pineapple">Pineapple</PickerItem>
     </Picker>
   )
 }

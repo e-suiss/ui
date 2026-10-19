@@ -1,6 +1,5 @@
 import * as React from "react"
 import {
-  type Option,
   Select,
   SelectContent,
   SelectGroup,
@@ -10,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const fruits: Option[] = [
+const fruits = [
   { value: "mango", label: "Mango" },
   { value: "banana", label: "Banana" },
   { value: "blueberry", label: "Blueberry" },
@@ -18,38 +17,11 @@ const fruits: Option[] = [
   { value: "pineapple", label: "Pineapple" },
 ]
 
-function SelectDemo({
-  initial,
-  size,
-  disabled = false,
-  invalid = false,
-  labelledBy,
-  defaultOpen,
-}: {
-  initial?: Option
-  size?: "default" | "sm"
-  disabled?: boolean
-  invalid?: boolean
-  labelledBy?: string
-  defaultOpen?: boolean
-}) {
-  const [value, setValue] = React.useState<string | null>(
-    initial?.value ?? null
-  )
+export default function SelectWithValue() {
+  const [value, setValue] = React.useState<string | null>("blueberry")
   return (
-    <Select
-      items={fruits}
-      value={value}
-      onValueChange={setValue}
-      disabled={disabled}
-      defaultOpen={defaultOpen}
-    >
-      <SelectTrigger
-        size={size}
-        accessibilityLabelledBy={labelledBy}
-        invalid={invalid}
-        className="w-48"
-      >
+    <Select items={fruits} value={value} onValueChange={setValue}>
+      <SelectTrigger className="w-48">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent className="w-48">
@@ -66,8 +38,4 @@ function SelectDemo({
       </SelectContent>
     </Select>
   )
-}
-
-export default function SelectWithValue() {
-  return <SelectDemo initial={fruits[2]} />
 }

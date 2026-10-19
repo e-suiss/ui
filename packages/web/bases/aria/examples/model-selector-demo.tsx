@@ -61,132 +61,130 @@ export default function ModelSelectorDemo() {
   }
 
   return (
-    <div className="w-full max-w-lg py-6">
-      <form ref={formRef} onSubmit={onSubmit}>
-        <InputGroup>
-          <InputGroupTextarea
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            placeholder="Ask the agent to change your code..."
-            aria-label="Message"
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault()
-                formRef.current?.requestSubmit()
-              }
-            }}
-            className="p-3"
-          />
-          <InputGroupAddon align="block-end">
+    <form ref={formRef} onSubmit={onSubmit} className="w-full max-w-lg py-6">
+      <InputGroup>
+        <InputGroupTextarea
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+          placeholder="Ask the agent to change your code..."
+          aria-label="Message"
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault()
+              formRef.current?.requestSubmit()
+            }
+          }}
+          className="p-3"
+        />
+        <InputGroupAddon align="block-end">
+          <InputGroupButton
+            size="icon-sm"
+            variant="outline"
+            className="rounded-full"
+            aria-label="Attach files"
+          >
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+            />
+          </InputGroupButton>
+          <DropdownMenu>
             <InputGroupButton
-              size="icon-sm"
+              size="sm"
               variant="outline"
-              className="rounded-full"
-              aria-label="Attach files"
+              aria-label={`Model: ${modelName}`}
+              className="ms-auto min-w-0 shrink"
             >
+              <span className="truncate">{modelName}</span>
               <IconPlaceholder
-                lucide="PlusIcon"
-                tabler="IconPlus"
-                hugeicons="PlusSignIcon"
-                phosphor="PlusIcon"
-                remixicon="RiAddLine"
+                lucide="ChevronDownIcon"
+                tabler="IconChevronDown"
+                hugeicons="ArrowDown01Icon"
+                phosphor="CaretDownIcon"
+                remixicon="RiArrowDownSLine"
               />
             </InputGroupButton>
-            <DropdownMenu>
-              <InputGroupButton
-                size="sm"
-                variant="outline"
-                aria-label={`Model: ${modelName}`}
-                className="ms-auto min-w-0 shrink"
-              >
-                <span className="truncate">{modelName}</span>
-                <IconPlaceholder
-                  lucide="ChevronDownIcon"
-                  tabler="IconChevronDown"
-                  hugeicons="ArrowDown01Icon"
-                  phosphor="CaretDownIcon"
-                  remixicon="RiArrowDownSLine"
-                />
-              </InputGroupButton>
-              <DropdownMenuContent className="w-52">
-                {providers.map((provider, index) => (
-                  <React.Fragment key={provider.name}>
-                    {index > 0 && <DropdownMenuSeparator />}
-                    <DropdownMenuRadioGroup
-                      value={
-                        provider.models.some((item) => item.id === model)
-                          ? model
-                          : ""
-                      }
-                      onChange={setModel}
-                    >
-                      <DropdownMenuLabel>{provider.name}</DropdownMenuLabel>
-                      {provider.models.map((item) => (
-                        <DropdownMenuRadioItem
-                          key={item.id}
-                          value={item.id}
-                          shouldCloseOnSelect
-                        >
-                          {item.name}
-                        </DropdownMenuRadioItem>
-                      ))}
-                    </DropdownMenuRadioGroup>
-                  </React.Fragment>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <InputGroupButton
-                size="sm"
-                variant="outline"
-                aria-label={`Effort: ${effortName}`}
-              >
-                <span className="text-muted-foreground max-sm:hidden">
-                  Effort
-                </span>
-                {effortName}
-                <IconPlaceholder
-                  lucide="ChevronDownIcon"
-                  tabler="IconChevronDown"
-                  hugeicons="ArrowDown01Icon"
-                  phosphor="CaretDownIcon"
-                  remixicon="RiArrowDownSLine"
-                />
-              </InputGroupButton>
-              <DropdownMenuContent className="w-40">
-                <DropdownMenuRadioGroup value={effort} onChange={setEffort}>
-                  <DropdownMenuLabel>Effort</DropdownMenuLabel>
-                  {efforts.map((item) => (
-                    <DropdownMenuRadioItem
-                      key={item.id}
-                      value={item.id}
-                      shouldCloseOnSelect
-                    >
-                      {item.name}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <DropdownMenuContent className="w-52">
+              {providers.map((provider, index) => (
+                <React.Fragment key={provider.name}>
+                  {index > 0 && <DropdownMenuSeparator />}
+                  <DropdownMenuRadioGroup
+                    value={
+                      provider.models.some((item) => item.id === model)
+                        ? model
+                        : ""
+                    }
+                    onChange={setModel}
+                  >
+                    <DropdownMenuLabel>{provider.name}</DropdownMenuLabel>
+                    {provider.models.map((item) => (
+                      <DropdownMenuRadioItem
+                        key={item.id}
+                        value={item.id}
+                        shouldCloseOnSelect
+                      >
+                        {item.name}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </React.Fragment>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
             <InputGroupButton
-              type="submit"
-              size="icon-sm"
-              variant="default"
-              className="rounded-full"
-              disabled={!canSend}
-              aria-label="Send"
+              size="sm"
+              variant="outline"
+              aria-label={`Effort: ${effortName}`}
             >
+              <span className="text-muted-foreground max-sm:hidden">
+                Effort
+              </span>
+              {effortName}
               <IconPlaceholder
-                lucide="ArrowUpIcon"
-                tabler="IconArrowUp"
-                hugeicons="ArrowUp01Icon"
-                phosphor="ArrowUpIcon"
-                remixicon="RiArrowUpLine"
+                lucide="ChevronDownIcon"
+                tabler="IconChevronDown"
+                hugeicons="ArrowDown01Icon"
+                phosphor="CaretDownIcon"
+                remixicon="RiArrowDownSLine"
               />
             </InputGroupButton>
-          </InputGroupAddon>
-        </InputGroup>
-      </form>
-    </div>
+            <DropdownMenuContent className="w-40">
+              <DropdownMenuRadioGroup value={effort} onChange={setEffort}>
+                <DropdownMenuLabel>Effort</DropdownMenuLabel>
+                {efforts.map((item) => (
+                  <DropdownMenuRadioItem
+                    key={item.id}
+                    value={item.id}
+                    shouldCloseOnSelect
+                  >
+                    {item.name}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <InputGroupButton
+            type="submit"
+            size="icon-sm"
+            variant="default"
+            className="rounded-full"
+            disabled={!canSend}
+            aria-label="Send"
+          >
+            <IconPlaceholder
+              lucide="ArrowUpIcon"
+              tabler="IconArrowUp"
+              hugeicons="ArrowUp01Icon"
+              phosphor="ArrowUpIcon"
+              remixicon="RiArrowUpLine"
+            />
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+    </form>
   )
 }

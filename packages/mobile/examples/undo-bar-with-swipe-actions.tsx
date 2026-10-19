@@ -20,7 +20,7 @@ const initialNotes = [
 
 type Note = (typeof initialNotes)[number]
 
-function useNotes() {
+function NotesList() {
   const [notes, setNotes] = React.useState(initialNotes)
   const [log, setLog] = React.useState("Delete a note.")
   const { show } = useUndoBar()
@@ -43,24 +43,6 @@ function useNotes() {
     })
   }
 
-  return { notes, remove, log }
-}
-
-function NoteText({ note }: { note: Note }) {
-  return (
-    <View className="min-w-0 flex-1 py-2">
-      <Text numberOfLines={1} className="font-semibold">
-        {note.title}
-      </Text>
-      <Text numberOfLines={1} className="text-sm text-muted-foreground">
-        {note.preview}
-      </Text>
-    </View>
-  )
-}
-
-function SwipeNotesList() {
-  const { notes, remove, log } = useNotes()
   return (
     <View className="w-full gap-3">
       <View className="overflow-hidden rounded-2xl border border-border">
@@ -71,7 +53,17 @@ function SwipeNotesList() {
           >
             <SwipeActions>
               <SwipeActionsContent className="bg-background px-4 py-1">
-                <NoteText note={note} />
+                <View className="min-w-0 flex-1 py-2">
+                  <Text numberOfLines={1} className="font-semibold">
+                    {note.title}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    className="text-sm text-muted-foreground"
+                  >
+                    {note.preview}
+                  </Text>
+                </View>
               </SwipeActionsContent>
               <SwipeActionsActions side="trailing">
                 <SwipeAction
@@ -97,7 +89,7 @@ function SwipeNotesList() {
 export default function UndoBarWithSwipeActions() {
   return (
     <UndoBarProvider>
-      <SwipeNotesList />
+      <NotesList />
     </UndoBarProvider>
   )
 }

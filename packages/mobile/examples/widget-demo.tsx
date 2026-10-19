@@ -11,9 +11,9 @@ import {
   WidgetValue,
 } from "@/components/ui/widget"
 
-function Weather() {
+export default function WidgetDemo() {
   return (
-    <>
+    <Widget size="small" align="start">
       <WidgetHeader>
         <WidgetIcon>
           <Icon as={SunIcon} weight="fill" />
@@ -25,14 +25,6 @@ function Weather() {
         <WidgetDescription>Partly cloudy</WidgetDescription>
       </WidgetContent>
       <WidgetFooter>H 27° · L 18°</WidgetFooter>
-    </>
-  )
-}
-
-export default function WidgetDemo() {
-  return (
-    <Widget size="small" align="start">
-      <Weather />
     </Widget>
   )
 }

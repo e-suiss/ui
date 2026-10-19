@@ -36,7 +36,7 @@ const SIGNATURE: SignaturePadStroke[] = [
   ],
 ]
 
-function ExportDemo() {
+export default function SignaturePadControlled() {
   const ref = React.useRef<SignaturePadHandle>(null)
   const [strokes, setStrokes] = React.useState<SignaturePadStroke[]>(SIGNATURE)
   const [size, setSize] = React.useState("")
@@ -56,8 +56,4 @@ function ExportDemo() {
       </Text>
     </View>
   )
-}
-
-export default function SignaturePadControlled() {
-  return <ExportDemo />
 }

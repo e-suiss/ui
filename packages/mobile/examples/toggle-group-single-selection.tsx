@@ -10,7 +10,7 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 
-function AlignmentDemo() {
+export default function ToggleGroupSingleSelection() {
   const [value, setValue] = React.useState<string[]>(["left"])
   return (
     <ToggleGroup value={value} onValueChange={setValue} variant="outline">
@@ -25,8 +25,4 @@ function AlignmentDemo() {
       </ToggleGroupItem>
     </ToggleGroup>
   )
-}
-
-export default function ToggleGroupSingleSelection() {
-  return <AlignmentDemo />
 }

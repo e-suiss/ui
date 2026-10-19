@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { AmountInput } from "@/components/ui/amount-input"
 import { Text } from "@/components/ui/text"
 
-function ControlledDemo() {
+export default function AmountInputControlled() {
   const [value, setValue] = React.useState("")
   const [amount, setAmount] = React.useState(0)
   return (
@@ -22,8 +22,4 @@ function ControlledDemo() {
       </Text>
     </View>
   )
-}
-
-export default function AmountInputControlled() {
-  return <ControlledDemo />
 }

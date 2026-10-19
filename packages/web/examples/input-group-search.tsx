@@ -7,10 +7,10 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 
-function SearchField() {
+export default function InputGroupSearch() {
   const [query, setQuery] = React.useState("MacBook")
   return (
-    <InputGroup>
+    <InputGroup className="w-96">
       <InputGroupInput
         aria-label="Search"
         placeholder="Search"
@@ -46,13 +46,5 @@ function SearchField() {
         </InputGroupAddon>
       )}
     </InputGroup>
-  )
-}
-
-export default function InputGroupSearch() {
-  return (
-    <div className="w-96">
-      <SearchField />
-    </div>
   )
 }

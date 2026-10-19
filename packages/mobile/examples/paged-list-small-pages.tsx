@@ -28,27 +28,23 @@ const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
   replies: (index * 7) % 23,
 }))
 
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item onPress={() => undefined}>
-      <ItemMedia variant="icon">
-        <Icon as={ChatCircleIcon} />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
 export default function PagedListSmallPages() {
   return (
     <PagedList<Topic>
       items={topics}
       pageSize={3}
       getKey={(topic: Topic) => topic.id}
-      renderItem={(topic: Topic) => <TopicRow topic={topic} />}
+      renderItem={(topic: Topic) => (
+        <Item onPress={() => undefined}>
+          <ItemMedia variant="icon">
+            <Icon as={ChatCircleIcon} />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>{topic.title}</ItemTitle>
+            <ItemDescription>{topic.replies} replies</ItemDescription>
+          </ItemContent>
+        </Item>
+      )}
     />
   )
 }

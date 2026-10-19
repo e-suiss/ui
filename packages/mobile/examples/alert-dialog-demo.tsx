@@ -13,28 +13,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 
-function AlertDialogBody() {
-  return (
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-        <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel>
-          <Text>Cancel</Text>
-        </AlertDialogCancel>
-        <AlertDialogAction>
-          <Text>Continue</Text>
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  )
-}
-
 export default function AlertDialogDemo() {
   return (
     <View className="items-start">
@@ -42,7 +20,23 @@ export default function AlertDialogDemo() {
         <AlertDialogTrigger render={<Button variant="outline" />}>
           <Text>Show dialog</Text>
         </AlertDialogTrigger>
-        <AlertDialogBody />
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              <Text>Cancel</Text>
+            </AlertDialogCancel>
+            <AlertDialogAction>
+              <Text>Continue</Text>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
       </AlertDialog>
     </View>
   )

@@ -22,31 +22,26 @@ const visitorsConfig = {
   mobile: { label: "Mobile", color: "var(--color-green-500)" },
 } satisfies ChartConfig
 
-const shortMonth = (value: string) => value.slice(0, 3)
-
 export default function ChartMultipleSeries() {
   return (
-    <div className="w-[min(32rem,calc(100vw-2rem))]">
-      <ChartContainer config={visitorsConfig} className="w-full">
-        {
-          <BarChart accessibilityLayer data={visitors}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={shortMonth}
-            />
-            <ChartTooltip
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <ChartLegend content={<ChartLegendContent />} />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={6} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={6} />
-          </BarChart>
-        }
-      </ChartContainer>
-    </div>
+    <ChartContainer
+      config={visitorsConfig}
+      className="w-[min(32rem,calc(100vw-2rem))]"
+    >
+      <BarChart accessibilityLayer data={visitors}>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip content={<ChartTooltipContent indicator="dashed" />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={6} />
+        <Bar dataKey="mobile" fill="var(--color-mobile)" radius={6} />
+      </BarChart>
+    </ChartContainer>
   )
 }

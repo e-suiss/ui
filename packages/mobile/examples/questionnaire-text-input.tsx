@@ -13,17 +13,6 @@ import {
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire"
 
-function Actions() {
-  return (
-    <QuestionnaireActions>
-      <QuestionnairePrevious />
-      <QuestionnaireSkip />
-      <QuestionnaireNext />
-      <QuestionnaireSubmit />
-    </QuestionnaireActions>
-  )
-}
-
 export default function QuestionnaireTextInput() {
   return (
     <Questionnaire>
@@ -40,7 +29,12 @@ export default function QuestionnaireTextInput() {
           Enter an email address to continue.
         </QuestionnaireError>
       </QuestionnaireItem>
-      <Actions />
+      <QuestionnaireActions>
+        <QuestionnairePrevious />
+        <QuestionnaireSkip />
+        <QuestionnaireNext />
+        <QuestionnaireSubmit />
+      </QuestionnaireActions>
     </Questionnaire>
   )
 }

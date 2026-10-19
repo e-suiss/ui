@@ -13,24 +13,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 
-function SheetBody() {
-  return (
-    <AlertSheetContent>
-      <AlertSheetGroup>
-        <AlertSheetHeader>
-          <AlertSheetTitle>Delete this photo?</AlertSheetTitle>
-          <AlertSheetDescription>
-            This photo will be deleted from all of your devices.
-          </AlertSheetDescription>
-        </AlertSheetHeader>
-        <AlertSheetAction>Save to Files</AlertSheetAction>
-        <AlertSheetAction variant="destructive">Delete Photo</AlertSheetAction>
-      </AlertSheetGroup>
-      <AlertSheetCancel>Cancel</AlertSheetCancel>
-    </AlertSheetContent>
-  )
-}
-
 export default function AlertSheetOpenByDefault() {
   return (
     <View className="items-start">
@@ -38,7 +20,21 @@ export default function AlertSheetOpenByDefault() {
         <AlertSheetTrigger render={<Button variant="outline" />}>
           <Text>Show sheet</Text>
         </AlertSheetTrigger>
-        <SheetBody />
+        <AlertSheetContent>
+          <AlertSheetGroup>
+            <AlertSheetHeader>
+              <AlertSheetTitle>Delete this photo?</AlertSheetTitle>
+              <AlertSheetDescription>
+                This photo will be deleted from all of your devices.
+              </AlertSheetDescription>
+            </AlertSheetHeader>
+            <AlertSheetAction>Save to Files</AlertSheetAction>
+            <AlertSheetAction variant="destructive">
+              Delete Photo
+            </AlertSheetAction>
+          </AlertSheetGroup>
+          <AlertSheetCancel>Cancel</AlertSheetCancel>
+        </AlertSheetContent>
       </AlertSheet>
     </View>
   )

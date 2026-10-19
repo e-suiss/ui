@@ -42,65 +42,63 @@ const minutes = Array.from({ length: 12 }, (_, step) =>
   String(step * 5).padStart(2, "0")
 )
 
-function DateTimeExample() {
+export default function WheelPickerDateTime() {
   const [day, setDay] = React.useState(toDayValue(today))
   const [hour, setHour] = React.useState("19")
   const [minute, setMinute] = React.useState("30")
 
   return (
-    <View className="gap-3">
-      <WheelPicker>
-        <WheelPickerColumn
-          accessibilityLabel="Day"
-          value={day}
-          onValueChange={setDay}
-          className="grow-[1.6]"
-        >
-          {days.map(({ value, label }) => (
-            <WheelPickerItem key={value} value={value} className="justify-end">
-              {label}
-            </WheelPickerItem>
-          ))}
-        </WheelPickerColumn>
-        <WheelPickerColumn
-          accessibilityLabel="Hour"
-          value={hour}
-          onValueChange={setHour}
-        >
-          {hours.map((value) => (
-            <WheelPickerItem key={value} value={value}>
-              {value}
-            </WheelPickerItem>
-          ))}
-        </WheelPickerColumn>
-        <WheelPickerColumn
-          accessibilityLabel="Minute"
-          value={minute}
-          onValueChange={setMinute}
-          className="grow"
-        >
-          {minutes.map((value) => (
-            <WheelPickerItem
-              key={value}
-              value={value}
-              className="justify-start"
-            >
-              {value}
-            </WheelPickerItem>
-          ))}
-        </WheelPickerColumn>
-      </WheelPicker>
-      <Text className="text-center text-sm text-muted-foreground tabular-nums">
-        {day} {hour}:{minute}
-      </Text>
-    </View>
-  )
-}
-
-export default function WheelPickerDateTime() {
-  return (
     <View className="w-80 rounded-2xl border border-foreground/5 bg-card p-4 shadow-md dark:border-foreground/10">
-      <DateTimeExample />
+      <View className="gap-3">
+        <WheelPicker>
+          <WheelPickerColumn
+            accessibilityLabel="Day"
+            value={day}
+            onValueChange={setDay}
+            className="grow-[1.6]"
+          >
+            {days.map(({ value, label }) => (
+              <WheelPickerItem
+                key={value}
+                value={value}
+                className="justify-end"
+              >
+                {label}
+              </WheelPickerItem>
+            ))}
+          </WheelPickerColumn>
+          <WheelPickerColumn
+            accessibilityLabel="Hour"
+            value={hour}
+            onValueChange={setHour}
+          >
+            {hours.map((value) => (
+              <WheelPickerItem key={value} value={value}>
+                {value}
+              </WheelPickerItem>
+            ))}
+          </WheelPickerColumn>
+          <WheelPickerColumn
+            accessibilityLabel="Minute"
+            value={minute}
+            onValueChange={setMinute}
+            className="grow"
+          >
+            {minutes.map((value) => (
+              <WheelPickerItem
+                key={value}
+                value={value}
+                className="justify-start"
+              >
+                {value}
+              </WheelPickerItem>
+            ))}
+          </WheelPickerColumn>
+        </WheelPicker>
+        <Text className="text-center text-sm text-muted-foreground tabular-nums">
+          {day} {hour}:{minute}
+        </Text>
+      </View>
     </View>
   )
 }

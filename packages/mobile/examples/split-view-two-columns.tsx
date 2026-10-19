@@ -2,15 +2,11 @@ import * as React from "react"
 import { View } from "react-native"
 import {
   SplitView,
-  type SplitViewColumn,
   SplitViewDetail,
   SplitViewItem,
   SplitViewList,
-  SplitViewSidebar,
 } from "@/components/patterns/split-view"
 import { Text } from "@/components/ui/text"
-
-const mailboxes = ["Inbox", "Sent", "Drafts", "Archive"]
 
 const messages = [
   {
@@ -36,33 +32,13 @@ const messages = [
   },
 ] as const
 
-function MailExample({
-  withSidebar = true,
-  defaultColumn,
-}: {
-  withSidebar?: boolean
-  defaultColumn?: SplitViewColumn
-}) {
-  const [mailbox, setMailbox] = React.useState("Inbox")
+export default function SplitViewTwoColumns() {
   const [messageId, setMessageId] = React.useState<string>("order")
   const message = messages.find((item) => item.id === messageId) ?? messages[0]
 
   return (
-    <SplitView defaultColumn={defaultColumn}>
-      {withSidebar ? (
-        <SplitViewSidebar title="Mailboxes">
-          {mailboxes.map((name) => (
-            <SplitViewItem
-              key={name}
-              isActive={mailbox === name}
-              onPress={() => setMailbox(name)}
-            >
-              {name}
-            </SplitViewItem>
-          ))}
-        </SplitViewSidebar>
-      ) : null}
-      <SplitViewList title={mailbox}>
+    <SplitView>
+      <SplitViewList title="Inbox">
         {messages.map((item) => (
           <SplitViewItem
             key={item.id}
@@ -90,8 +66,4 @@ function MailExample({
       </SplitViewDetail>
     </SplitView>
   )
-}
-
-export default function SplitViewTwoColumns() {
-  return <MailExample withSidebar={false} />
 }

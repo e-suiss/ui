@@ -12,12 +12,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const calls = [
-  { command: "node --version", output: "v24.18.0" },
-  { command: "npm --version", output: "11.6.2" },
-  { command: "pnpm --version", error: "command not found: pnpm" },
-]
-
 export default function TraceToolCalls() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
@@ -31,33 +25,75 @@ export default function TraceToolCalls() {
       <Message>
         <MessageContent className="gap-4">
           <Trace>
-            {calls.map((call) => (
-              <TraceCollapsible key={call.command}>
-                <TraceCollapsibleTrigger>
-                  <TraceLine status={call.error ? "error" : undefined}>
-                    <TraceIcon>
-                      <IconPlaceholder
-                        lucide="TerminalIcon"
-                        tabler="IconTerminal"
-                        hugeicons="ComputerTerminal01Icon"
-                        phosphor="TerminalIcon"
-                        remixicon="RiTerminalLine"
-                      />
-                    </TraceIcon>
-                    <TraceTitle>
-                      {call.error ? "Failed to run" : "Ran"} {call.command}
-                    </TraceTitle>
-                  </TraceLine>
-                </TraceCollapsibleTrigger>
-                <TraceCollapsibleContent>
-                  <CodeBlock size="sm">
-                    <CodeBlockContent wrap className="max-h-64">
-                      {call.error ?? call.output}
-                    </CodeBlockContent>
-                  </CodeBlock>
-                </TraceCollapsibleContent>
-              </TraceCollapsible>
-            ))}
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="TerminalIcon"
+                      tabler="IconTerminal"
+                      hugeicons="ComputerTerminal01Icon"
+                      phosphor="TerminalIcon"
+                      remixicon="RiTerminalLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran node --version</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm">
+                  <CodeBlockContent wrap className="max-h-64">
+                    v24.18.0
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="TerminalIcon"
+                      tabler="IconTerminal"
+                      hugeicons="ComputerTerminal01Icon"
+                      phosphor="TerminalIcon"
+                      remixicon="RiTerminalLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran npm --version</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm">
+                  <CodeBlockContent wrap className="max-h-64">
+                    11.6.2
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine status="error">
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="TerminalIcon"
+                      tabler="IconTerminal"
+                      hugeicons="ComputerTerminal01Icon"
+                      phosphor="TerminalIcon"
+                      remixicon="RiTerminalLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Failed to run pnpm --version</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm">
+                  <CodeBlockContent wrap className="max-h-64">
+                    command not found: pnpm
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
           </Trace>
           <p>Node 24 and npm 11 are installed. pnpm is not.</p>
         </MessageContent>

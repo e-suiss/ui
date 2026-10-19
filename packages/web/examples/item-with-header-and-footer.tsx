@@ -10,24 +10,22 @@ import {
 
 export default function ItemWithHeaderAndFooter() {
   return (
-    <div className="w-96">
-      <Item variant="outline">
-        <ItemHeader>
-          <ItemTitle>Pro plan</ItemTitle>
-          <span className="text-sm font-medium">$24/mo</span>
-        </ItemHeader>
-        <ItemContent>
-          <ItemDescription>
-            Unlimited projects, priority support, and advanced analytics.
-          </ItemDescription>
-        </ItemContent>
-        <ItemFooter>
-          <span className="text-muted-foreground text-xs">Renews on May 1</span>
-          <Button variant="outline" size="sm">
-            Manage
-          </Button>
-        </ItemFooter>
-      </Item>
-    </div>
+    <Item variant="outline" className="w-96">
+      <ItemHeader>
+        <ItemTitle>Pro plan</ItemTitle>
+        <span className="text-sm font-medium">$24/mo</span>
+      </ItemHeader>
+      <ItemContent>
+        <ItemDescription>
+          Unlimited projects, priority support, and advanced analytics.
+        </ItemDescription>
+      </ItemContent>
+      <ItemFooter>
+        <span className="text-muted-foreground text-xs">Renews on May 1</span>
+        <Button variant="outline" size="sm">
+          Manage
+        </Button>
+      </ItemFooter>
+    </Item>
   )
 }

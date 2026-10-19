@@ -4,10 +4,7 @@ import {
   SplitViewDetail,
   SplitViewItem,
   SplitViewList,
-  SplitViewSidebar,
 } from "@/components/patterns/split-view"
-
-const mailboxes = ["Inbox", "Sent", "Drafts", "Archive"]
 
 const messages = [
   {
@@ -33,36 +30,13 @@ const messages = [
   },
 ] as const
 
-function MailExample({
-  withSidebar = true,
-  defaultColumn,
-}: {
-  withSidebar?: boolean
-  defaultColumn?: "sidebar" | "list" | "detail"
-}) {
-  const [mailbox, setMailbox] = React.useState("Inbox")
+export default function SplitViewTwoColumns() {
   const [messageId, setMessageId] = React.useState("order")
   const message = messages.find((item) => item.id === messageId) ?? messages[0]
 
   return (
-    <SplitView
-      defaultColumn={defaultColumn}
-      className="h-[30rem] max-md:h-auto"
-    >
-      {withSidebar && (
-        <SplitViewSidebar title="Mailboxes">
-          {mailboxes.map((name) => (
-            <SplitViewItem
-              key={name}
-              isActive={mailbox === name}
-              onClick={() => setMailbox(name)}
-            >
-              {name}
-            </SplitViewItem>
-          ))}
-        </SplitViewSidebar>
-      )}
-      <SplitViewList title={mailbox}>
+    <SplitView className="h-[30rem] max-md:h-auto">
+      <SplitViewList title="Inbox">
         {messages.map((item) => (
           <SplitViewItem
             key={item.id}
@@ -90,8 +64,4 @@ function MailExample({
       </SplitViewDetail>
     </SplitView>
   )
-}
-
-export default function SplitViewTwoColumns() {
-  return <MailExample withSidebar={false} />
 }

@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Slider } from "@/components/ui/slider"
 import { Text } from "@/components/ui/text"
 
-function ControlledDemo() {
+export default function SliderControlled() {
   const [value, setValue] = React.useState(30)
   const [committed, setCommitted] = React.useState(30)
   return (
@@ -22,8 +22,4 @@ function ControlledDemo() {
       />
     </View>
   )
-}
-
-export default function SliderControlled() {
-  return <ControlledDemo />
 }

@@ -20,60 +20,25 @@ const fruits: Option[] = [
   { value: "pineapple", label: "Pineapple" },
 ]
 
-function SelectDemo({
-  initial,
-  size,
-  disabled = false,
-  invalid = false,
-  labelledBy,
-  defaultOpen,
-}: {
-  initial?: Option
-  size?: "default" | "sm"
-  disabled?: boolean
-  invalid?: boolean
-  labelledBy?: string
-  defaultOpen?: boolean
-}) {
-  const [value, setValue] = React.useState<string | null>(
-    initial?.value ?? null
-  )
-  return (
-    <Select
-      items={fruits}
-      value={value}
-      onValueChange={setValue}
-      disabled={disabled}
-      defaultOpen={defaultOpen}
-    >
-      <SelectTrigger
-        size={size}
-        accessibilityLabelledBy={labelledBy}
-        invalid={invalid}
-        className="w-48"
-      >
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent className="w-48">
-        <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          {fruits.map((fruit) => (
-            <SelectItem
-              key={fruit.value}
-              value={fruit.value}
-              label={fruit.label}
-            />
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
-
 export default function SelectInvalid() {
+  const [value, setValue] = React.useState<string | null>(null)
   return (
     <View className="gap-2">
-      <SelectDemo invalid />
+      <Select items={fruits} value={value} onValueChange={setValue}>
+        <SelectTrigger invalid className="w-48">
+          <SelectValue placeholder="Select a fruit" />
+        </SelectTrigger>
+        <SelectContent className="w-48">
+          <SelectGroup>
+            <SelectLabel>Fruits</SelectLabel>
+            <SelectItem value="mango" label="Mango" />
+            <SelectItem value="banana" label="Banana" />
+            <SelectItem value="blueberry" label="Blueberry" />
+            <SelectItem value="grapes" label="Grapes" />
+            <SelectItem value="pineapple" label="Pineapple" />
+          </SelectGroup>
+        </SelectContent>
+      </Select>
       <Text className="text-sm text-destructive">Please select a fruit.</Text>
     </View>
   )

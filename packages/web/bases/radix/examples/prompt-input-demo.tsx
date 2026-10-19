@@ -97,184 +97,182 @@ export default function PromptInputDemo() {
   }
 
   return (
-    <div className="w-full max-w-lg py-6">
-      <form ref={formRef} onSubmit={onSubmit}>
-        <input
-          ref={inputRef}
-          type="file"
-          multiple
-          aria-label="Files"
-          className="sr-only"
-          tabIndex={-1}
-          onChange={onAttach}
-        />
-        <InputGroup>
-          {files.length > 0 && (
-            <InputGroupAddon align="block-start" className="flex-wrap">
-              {files.map((file) => (
-                <Attachment key={file.id} size="sm">
-                  <AttachmentMedia>
-                    <IconPlaceholder
-                      lucide="FileTextIcon"
-                      tabler="IconFileText"
-                      hugeicons="File01Icon"
-                      phosphor="FileTextIcon"
-                      remixicon="RiFileTextLine"
-                    />
-                  </AttachmentMedia>
-                  <AttachmentContent>
-                    <AttachmentTitle>{file.name}</AttachmentTitle>
-                  </AttachmentContent>
-                  <AttachmentActions>
-                    <AttachmentAction
-                      aria-label={`Remove ${file.name}`}
-                      onClick={() =>
-                        setFiles((current) =>
-                          current.filter((item) => item.id !== file.id)
-                        )
-                      }
-                    >
-                      <IconPlaceholder
-                        lucide="XIcon"
-                        tabler="IconX"
-                        hugeicons="Cancel01Icon"
-                        phosphor="XIcon"
-                        remixicon="RiCloseLine"
-                      />
-                    </AttachmentAction>
-                  </AttachmentActions>
-                </Attachment>
-              ))}
-            </InputGroupAddon>
-          )}
-          <InputGroupTextarea
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            placeholder="Ask the agent to change your code..."
-            aria-label="Message"
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault()
-                formRef.current?.requestSubmit()
-              }
-            }}
-            className="p-3"
-          />
-          <InputGroupAddon align="block-end">
-            <InputGroupButton
-              size="icon-sm"
-              variant="outline"
-              className="rounded-full"
-              aria-label="Attach files"
-              onClick={() => inputRef.current?.click()}
-            >
-              <IconPlaceholder
-                lucide="PlusIcon"
-                tabler="IconPlus"
-                hugeicons="PlusSignIcon"
-                phosphor="PlusIcon"
-                remixicon="RiAddLine"
-              />
-            </InputGroupButton>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <InputGroupButton
-                  size="sm"
-                  variant="outline"
-                  aria-label={`Model: ${modelName}`}
-                  className="ms-auto min-w-0 shrink"
-                >
-                  <span className="truncate">{modelName}</span>
+    <form ref={formRef} onSubmit={onSubmit} className="w-full max-w-lg py-6">
+      <input
+        ref={inputRef}
+        type="file"
+        multiple
+        aria-label="Files"
+        className="sr-only"
+        tabIndex={-1}
+        onChange={onAttach}
+      />
+      <InputGroup>
+        {files.length > 0 && (
+          <InputGroupAddon align="block-start" className="flex-wrap">
+            {files.map((file) => (
+              <Attachment key={file.id} size="sm">
+                <AttachmentMedia>
                   <IconPlaceholder
-                    lucide="ChevronDownIcon"
-                    tabler="IconChevronDown"
-                    hugeicons="ArrowDown01Icon"
-                    phosphor="CaretDownIcon"
-                    remixicon="RiArrowDownSLine"
+                    lucide="FileTextIcon"
+                    tabler="IconFileText"
+                    hugeicons="File01Icon"
+                    phosphor="FileTextIcon"
+                    remixicon="RiFileTextLine"
                   />
-                </InputGroupButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-52">
-                <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
-                  {providers.map((provider, index) => (
-                    <React.Fragment key={provider.name}>
-                      {index > 0 && <DropdownMenuSeparator />}
-                      <DropdownMenuGroup>
-                        <DropdownMenuLabel>{provider.name}</DropdownMenuLabel>
-                        {provider.models.map((item) => (
-                          <DropdownMenuRadioItem
-                            key={item.id}
-                            value={item.id}
-                            closeOnClick
-                          >
-                            {item.name}
-                          </DropdownMenuRadioItem>
-                        ))}
-                      </DropdownMenuGroup>
-                    </React.Fragment>
+                </AttachmentMedia>
+                <AttachmentContent>
+                  <AttachmentTitle>{file.name}</AttachmentTitle>
+                </AttachmentContent>
+                <AttachmentActions>
+                  <AttachmentAction
+                    aria-label={`Remove ${file.name}`}
+                    onClick={() =>
+                      setFiles((current) =>
+                        current.filter((item) => item.id !== file.id)
+                      )
+                    }
+                  >
+                    <IconPlaceholder
+                      lucide="XIcon"
+                      tabler="IconX"
+                      hugeicons="Cancel01Icon"
+                      phosphor="XIcon"
+                      remixicon="RiCloseLine"
+                    />
+                  </AttachmentAction>
+                </AttachmentActions>
+              </Attachment>
+            ))}
+          </InputGroupAddon>
+        )}
+        <InputGroupTextarea
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+          placeholder="Ask the agent to change your code..."
+          aria-label="Message"
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault()
+              formRef.current?.requestSubmit()
+            }
+          }}
+          className="p-3"
+        />
+        <InputGroupAddon align="block-end">
+          <InputGroupButton
+            size="icon-sm"
+            variant="outline"
+            className="rounded-full"
+            aria-label="Attach files"
+            onClick={() => inputRef.current?.click()}
+          >
+            <IconPlaceholder
+              lucide="PlusIcon"
+              tabler="IconPlus"
+              hugeicons="PlusSignIcon"
+              phosphor="PlusIcon"
+              remixicon="RiAddLine"
+            />
+          </InputGroupButton>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <InputGroupButton
+                size="sm"
+                variant="outline"
+                aria-label={`Model: ${modelName}`}
+                className="ms-auto min-w-0 shrink"
+              >
+                <span className="truncate">{modelName}</span>
+                <IconPlaceholder
+                  lucide="ChevronDownIcon"
+                  tabler="IconChevronDown"
+                  hugeicons="ArrowDown01Icon"
+                  phosphor="CaretDownIcon"
+                  remixicon="RiArrowDownSLine"
+                />
+              </InputGroupButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-52">
+              <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
+                {providers.map((provider, index) => (
+                  <React.Fragment key={provider.name}>
+                    {index > 0 && <DropdownMenuSeparator />}
+                    <DropdownMenuGroup>
+                      <DropdownMenuLabel>{provider.name}</DropdownMenuLabel>
+                      {provider.models.map((item) => (
+                        <DropdownMenuRadioItem
+                          key={item.id}
+                          value={item.id}
+                          closeOnClick
+                        >
+                          {item.name}
+                        </DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuGroup>
+                  </React.Fragment>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <InputGroupButton
+                size="sm"
+                variant="outline"
+                aria-label={`Effort: ${effortName}`}
+              >
+                <span className="text-muted-foreground max-sm:hidden">
+                  Effort
+                </span>
+                {effortName}
+                <IconPlaceholder
+                  lucide="ChevronDownIcon"
+                  tabler="IconChevronDown"
+                  hugeicons="ArrowDown01Icon"
+                  phosphor="CaretDownIcon"
+                  remixicon="RiArrowDownSLine"
+                />
+              </InputGroupButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-40">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Effort</DropdownMenuLabel>
+                <DropdownMenuRadioGroup
+                  value={effort}
+                  onValueChange={setEffort}
+                >
+                  {efforts.map((item) => (
+                    <DropdownMenuRadioItem
+                      key={item.id}
+                      value={item.id}
+                      closeOnClick
+                    >
+                      {item.name}
+                    </DropdownMenuRadioItem>
                   ))}
                 </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <InputGroupButton
-                  size="sm"
-                  variant="outline"
-                  aria-label={`Effort: ${effortName}`}
-                >
-                  <span className="text-muted-foreground max-sm:hidden">
-                    Effort
-                  </span>
-                  {effortName}
-                  <IconPlaceholder
-                    lucide="ChevronDownIcon"
-                    tabler="IconChevronDown"
-                    hugeicons="ArrowDown01Icon"
-                    phosphor="CaretDownIcon"
-                    remixicon="RiArrowDownSLine"
-                  />
-                </InputGroupButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-40">
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>Effort</DropdownMenuLabel>
-                  <DropdownMenuRadioGroup
-                    value={effort}
-                    onValueChange={setEffort}
-                  >
-                    {efforts.map((item) => (
-                      <DropdownMenuRadioItem
-                        key={item.id}
-                        value={item.id}
-                        closeOnClick
-                      >
-                        {item.name}
-                      </DropdownMenuRadioItem>
-                    ))}
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <InputGroupButton
-              type="submit"
-              size="icon-sm"
-              variant="default"
-              className="rounded-full"
-              disabled={!canSend}
-              aria-label="Send"
-            >
-              <IconPlaceholder
-                lucide="ArrowUpIcon"
-                tabler="IconArrowUp"
-                hugeicons="ArrowUp01Icon"
-                phosphor="ArrowUpIcon"
-                remixicon="RiArrowUpLine"
-              />
-            </InputGroupButton>
-          </InputGroupAddon>
-        </InputGroup>
-      </form>
-    </div>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <InputGroupButton
+            type="submit"
+            size="icon-sm"
+            variant="default"
+            className="rounded-full"
+            disabled={!canSend}
+            aria-label="Send"
+          >
+            <IconPlaceholder
+              lucide="ArrowUpIcon"
+              tabler="IconArrowUp"
+              hugeicons="ArrowUp01Icon"
+              phosphor="ArrowUpIcon"
+              remixicon="RiArrowUpLine"
+            />
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+    </form>
   )
 }

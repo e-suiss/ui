@@ -5,7 +5,7 @@ import { Text } from "@/components/ui/text"
 
 const PASSCODE = "123456"
 
-function VerifyDemo() {
+export default function PinPadVerify() {
   const [value, setValue] = React.useState("")
   const [error, setError] = React.useState(false)
   const [status, setStatus] = React.useState("Enter 123456")
@@ -39,8 +39,4 @@ function VerifyDemo() {
       />
     </View>
   )
-}
-
-export default function PinPadVerify() {
-  return <VerifyDemo />
 }

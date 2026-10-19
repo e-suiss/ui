@@ -8,16 +8,15 @@ export default function ScreenSecondary() {
       <ScreenContent>
         <Text variant="h2">Settings</Text>
         <View className="overflow-hidden rounded-2xl bg-background">
-          {["General", "Privacy", "Notifications"].map((label, index) => (
-            <View
-              key={label}
-              className={
-                index > 0 ? "border-t border-border px-4 py-3" : "px-4 py-3"
-              }
-            >
-              <Text>{label}</Text>
-            </View>
-          ))}
+          <View className="px-4 py-3">
+            <Text>General</Text>
+          </View>
+          <View className="border-t border-border px-4 py-3">
+            <Text>Privacy</Text>
+          </View>
+          <View className="border-t border-border px-4 py-3">
+            <Text>Notifications</Text>
+          </View>
         </View>
       </ScreenContent>
     </Screen>

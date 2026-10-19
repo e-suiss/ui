@@ -10,14 +10,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-function Output({ children, error }: { children: string; error?: boolean }) {
-  return (
-    <CodeBlock size="sm" variant={error ? "destructive" : "default"}>
-      <CodeBlockContent wrap>{children}</CodeBlockContent>
-    </CodeBlock>
-  )
-}
-
 export default function TraceCollapsibleExample() {
   return (
     <TraceCollapsible>
@@ -30,7 +22,11 @@ export default function TraceCollapsibleExample() {
         </TraceLine>
       </TraceCollapsibleTrigger>
       <TraceCollapsibleContent>
-        <Output>{"$ node --version\nv24.18.0"}</Output>
+        <CodeBlock size="sm">
+          <CodeBlockContent wrap>
+            {"$ node --version\nv24.18.0"}
+          </CodeBlockContent>
+        </CodeBlock>
       </TraceCollapsibleContent>
     </TraceCollapsible>
   )

@@ -1,5 +1,4 @@
 import * as React from "react"
-import { View } from "react-native"
 import { PullToRefresh } from "@/components/interactions/pull-to-refresh"
 import {
   Item,
@@ -14,7 +13,7 @@ import { Text } from "@/components/ui/text"
 const wait = (ms: number) =>
   new Promise<void>((resolve) => setTimeout(resolve, ms))
 
-function Feed() {
+export default function PullToRefreshDemo() {
   const [count, setCount] = React.useState(3)
   return (
     <PullToRefresh
@@ -43,13 +42,5 @@ function Feed() {
         )}
       </ItemGroup>
     </PullToRefresh>
-  )
-}
-
-export default function PullToRefreshDemo() {
-  return (
-    <View className="flex-1">
-      <Feed />
-    </View>
   )
 }

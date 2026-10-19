@@ -12,20 +12,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Text } from "@/components/ui/text"
 
-function OpenButton({ label = "Open menu" }: { label?: string }) {
-  return (
-    <DropdownMenuTrigger render={<Button variant="outline" />}>
-      <Text>{label}</Text>
-    </DropdownMenuTrigger>
-  )
-}
-
-function RadioGroupDemo() {
+export default function DropdownMenuRadioGroupExample() {
   const [position, setPosition] = React.useState("bottom")
   return (
     <View className="items-start">
       <DropdownMenu>
-        <OpenButton label="Panel position" />
+        <DropdownMenuTrigger render={<Button variant="outline" />}>
+          <Text>Panel position</Text>
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuLabel>Panel position</DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -44,8 +38,4 @@ function RadioGroupDemo() {
       </DropdownMenu>
     </View>
   )
-}
-
-export default function DropdownMenuRadioGroupExample() {
-  return <RadioGroupDemo />
 }

@@ -12,7 +12,6 @@ import {
   SelectionListCount,
   SelectionListItem,
   SelectionListTrigger,
-  useSelectionList,
 } from "@/components/interactions/selection-list"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
@@ -27,94 +26,32 @@ const initialNotes = [
   { id: "recipes", title: "Recipes", preview: "Lemon pasta and a quick curry" },
 ]
 
-type Note = (typeof initialNotes)[number]
-
-function NoteRows({
-  notes,
-  onOpen,
-}: {
-  notes: Note[]
-  onOpen: (note: Note) => void
-}) {
-  const { editing } = useSelectionList()
-  return (
-    <View className="overflow-hidden rounded-2xl border border-border">
-      {notes.map((note, index) => (
-        <SelectionListItem
-          key={note.id}
-          value={note.id}
-          className={index > 0 ? "border-t border-border" : undefined}
-        >
-          <Pressable
-            onPress={() => onOpen(note)}
-            className="min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:opacity-80"
-          >
-            <View className="min-w-0 flex-1">
-              <Text numberOfLines={1} className="font-semibold">
-                {note.title}
-              </Text>
-              <Text numberOfLines={1} className="text-sm text-muted-foreground">
-                {note.preview}
-              </Text>
-            </View>
-            <Icon
-              as={CaretRightIcon}
-              className={
-                editing
-                  ? "size-4 shrink-0 text-muted-foreground opacity-0"
-                  : "size-4 shrink-0 text-muted-foreground"
-              }
-            />
-          </Pressable>
-        </SelectionListItem>
-      ))}
-    </View>
-  )
-}
-
-function useNotes() {
+export default function SelectionListIconActions() {
   const [notes, setNotes] = React.useState(initialNotes)
   const [log, setLog] = React.useState("Tap Select to choose notes.")
-  return {
-    notes,
-    log,
-    setLog,
-    remove: (ids: string[]) => {
-      setNotes((current) => current.filter((note) => !ids.includes(note.id)))
-      setLog(`Deleted ${ids.length} ${ids.length === 1 ? "note" : "notes"}`)
-    },
-    reset: () => {
-      setNotes(initialNotes)
-      setLog("Tap Select to choose notes.")
-    },
-  }
-}
-
-function Footer({ log, onReset }: { log: string; onReset: () => void }) {
-  return (
-    <View className="flex-row items-center justify-between gap-3">
-      <Text
-        role="status"
-        className="min-w-0 flex-1 text-sm text-muted-foreground"
-      >
-        {log}
-      </Text>
-      <Button size="sm" variant="secondary" onPress={onReset}>
-        <Text>Reset</Text>
-      </Button>
-    </View>
-  )
-}
-
-function MailExample() {
-  const { notes, log, setLog, remove, reset } = useNotes()
+  const [editing, setEditing] = React.useState(false)
   const [selected, setSelected] = React.useState<string[]>([])
   const disabled = selected.length === 0
 
   const act = (verb: string) => setLog(`${verb} ${selected.join(", ")}`)
 
+  const remove = () => {
+    setNotes((current) => current.filter((note) => !selected.includes(note.id)))
+    setLog(
+      `Deleted ${selected.length} ${selected.length === 1 ? "note" : "notes"}`
+    )
+    setSelected([])
+  }
+
+  const reset = () => {
+    setNotes(initialNotes)
+    setLog("Tap Select to choose notes.")
+  }
+
   return (
     <SelectionList
+      editing={editing}
+      onEditingChange={setEditing}
       value={selected}
       onValueChange={setSelected}
       className="w-full gap-3"
@@ -123,11 +60,51 @@ function MailExample() {
         <Text variant="h1">Inbox</Text>
         <SelectionListTrigger />
       </View>
-      <NoteRows
-        notes={notes}
-        onOpen={(note) => setLog(`Opened ${note.title}`)}
-      />
-      <Footer log={log} onReset={reset} />
+      <View className="overflow-hidden rounded-2xl border border-border">
+        {notes.map((note, index) => (
+          <SelectionListItem
+            key={note.id}
+            value={note.id}
+            className={index > 0 ? "border-t border-border" : undefined}
+          >
+            <Pressable
+              onPress={() => setLog(`Opened ${note.title}`)}
+              className="min-w-0 flex-1 flex-row items-center gap-3 px-4 py-3 active:opacity-80"
+            >
+              <View className="min-w-0 flex-1">
+                <Text numberOfLines={1} className="font-semibold">
+                  {note.title}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  className="text-sm text-muted-foreground"
+                >
+                  {note.preview}
+                </Text>
+              </View>
+              <Icon
+                as={CaretRightIcon}
+                className={
+                  editing
+                    ? "size-4 shrink-0 text-muted-foreground opacity-0"
+                    : "size-4 shrink-0 text-muted-foreground"
+                }
+              />
+            </Pressable>
+          </SelectionListItem>
+        ))}
+      </View>
+      <View className="flex-row items-center justify-between gap-3">
+        <Text
+          role="status"
+          className="min-w-0 flex-1 text-sm text-muted-foreground"
+        >
+          {log}
+        </Text>
+        <Button size="sm" variant="secondary" onPress={reset}>
+          <Text>Reset</Text>
+        </Button>
+      </View>
       <SelectionListBar accessibilityLabel="Selection actions">
         <Button
           variant="plain"
@@ -153,10 +130,7 @@ function MailExample() {
           size="icon-lg"
           accessibilityLabel="Delete"
           disabled={disabled}
-          onPress={() => {
-            remove(selected)
-            setSelected([])
-          }}
+          onPress={remove}
         >
           <Icon
             as={TrashIcon}
@@ -170,8 +144,4 @@ function MailExample() {
       </SelectionListBar>
     </SelectionList>
   )
-}
-
-export default function SelectionListIconActions() {
-  return <MailExample />
 }

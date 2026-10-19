@@ -12,54 +12,36 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-type Side = "top" | "right" | "bottom" | "left"
-
-function ProfileSheet({
-  side = "right",
-  showCloseButton = true,
-  closeLabel,
-}: {
-  side?: Side
-  showCloseButton?: boolean
-  closeLabel?: string
-}) {
-  return (
-    <SheetContent
-      side={side}
-      showCloseButton={showCloseButton}
-      closeLabel={closeLabel}
-    >
-      <SheetHeader>
-        <SheetTitle>Edit profile</SheetTitle>
-        <SheetDescription>
-          Update your details and save when you are done.
-        </SheetDescription>
-      </SheetHeader>
-      <div className="grid gap-4 px-6">
-        <div className="grid gap-2">
-          <Label htmlFor="sheet-name">Name</Label>
-          <Input id="sheet-name" defaultValue="Jordan Lee" />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="sheet-username">Username</Label>
-          <Input id="sheet-username" defaultValue="@jordanlee" />
-        </div>
-      </div>
-      <SheetFooter>
-        <Button type="submit">Save changes</Button>
-        <SheetClose render={<Button variant="secondary" />}>Cancel</SheetClose>
-      </SheetFooter>
-    </SheetContent>
-  )
-}
-
 export default function SheetDemo() {
   return (
     <Sheet>
       <SheetTrigger render={<Button variant="outline" />}>
         Open sheet
       </SheetTrigger>
-      <ProfileSheet />
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Edit profile</SheetTitle>
+          <SheetDescription>
+            Update your details and save when you are done.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="grid gap-4 px-6">
+          <div className="grid gap-2">
+            <Label htmlFor="sheet-name">Name</Label>
+            <Input id="sheet-name" defaultValue="Jordan Lee" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="sheet-username">Username</Label>
+            <Input id="sheet-username" defaultValue="@jordanlee" />
+          </div>
+        </div>
+        <SheetFooter>
+          <Button type="submit">Save changes</Button>
+          <SheetClose render={<Button variant="secondary" />}>
+            Cancel
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
     </Sheet>
   )
 }

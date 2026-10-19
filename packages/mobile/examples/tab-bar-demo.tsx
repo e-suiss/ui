@@ -16,35 +16,15 @@ const items = [
   { value: "profile", label: "Profile", icon: UserIcon, badge: true },
 ]
 
-function Page({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <View className="-m-4 flex-1 bg-background">
-      <View className="flex-1 gap-2 p-4">
-        <Text variant="h3">{title}</Text>
-        <Text variant="muted">Tap a tab to switch screens.</Text>
-      </View>
-      {children}
-    </View>
-  )
-}
-
-function TabBarExample({
-  badges = true,
-  disabled,
-}: {
-  badges?: boolean
-  disabled?: string
-}) {
+export default function TabBarDemo() {
   const [value, setValue] = React.useState("home")
   const current = items.find((item) => item.value === value)
   return (
-    <Page title={current?.label ?? ""}>
+    <View className="-m-4 flex-1 bg-background">
+      <View className="flex-1 gap-2 p-4">
+        <Text variant="h3">{current?.label ?? ""}</Text>
+        <Text variant="muted">Tap a tab to switch screens.</Text>
+      </View>
       <TabBar value={value} onValueChange={setValue}>
         <TabBarList>
           {items.map((item) => (
@@ -52,18 +32,13 @@ function TabBarExample({
               key={item.value}
               value={item.value}
               icon={item.icon}
-              badge={badges ? item.badge : undefined}
-              disabled={item.value === disabled}
+              badge={item.badge}
             >
               {item.label}
             </TabBarItem>
           ))}
         </TabBarList>
       </TabBar>
-    </Page>
+    </View>
   )
-}
-
-export default function TabBarDemo() {
-  return <TabBarExample />
 }

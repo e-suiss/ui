@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { ThemeProvider, ThemeToggle } from "@/components/ui/theme"
 
 const STORAGE_KEY = "esuiss-theme-example"
@@ -12,19 +11,11 @@ function clearStoredTheme() {
   }
 }
 
-function ExampleTheme({ children }: { children?: React.ReactNode }) {
+export default function ThemeSizes() {
   clearStoredTheme()
 
   return (
     <ThemeProvider defaultTheme="light" storageKey={STORAGE_KEY}>
-      {children}
-    </ThemeProvider>
-  )
-}
-
-export default function ThemeSizes() {
-  return (
-    <ExampleTheme>
       <div className="flex min-h-svh flex-col items-center justify-center gap-8 bg-background px-6 py-16 text-center text-foreground">
         <div className="flex max-w-md flex-col gap-3">
           <h1 className="text-4xl font-semibold tracking-tight">
@@ -41,6 +32,6 @@ export default function ThemeSizes() {
           <ThemeToggle size="icon-xl" />
         </div>
       </div>
-    </ExampleTheme>
+    </ThemeProvider>
   )
 }

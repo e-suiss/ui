@@ -28,13 +28,7 @@ const photos = [
   "bg-teal-400",
 ]
 
-function PhotoGrid({
-  withDisabled = false,
-  openIndex,
-}: {
-  withDisabled?: boolean
-  openIndex?: number
-}) {
+export default function PreviewMenuDemo() {
   const [log, setLog] = React.useState("Touch and hold a photo.")
   return (
     <View className="gap-3">
@@ -42,7 +36,7 @@ function PhotoGrid({
         {photos.map((tone, index) => {
           const label = `Photo ${index + 1}`
           return (
-            <PreviewMenu key={tone} defaultOpen={index === openIndex}>
+            <PreviewMenu key={tone}>
               <PreviewMenuTrigger
                 accessibilityLabel={label}
                 className="aspect-square w-[31%] overflow-hidden rounded-2xl"
@@ -58,10 +52,7 @@ function PhotoGrid({
                   Share
                   <Icon as={ShareNetworkIcon} />
                 </PreviewMenuItem>
-                <PreviewMenuItem
-                  disabled={withDisabled}
-                  onPress={() => setLog(`Favorited ${label}`)}
-                >
+                <PreviewMenuItem onPress={() => setLog(`Favorited ${label}`)}>
                   Favorite
                   <Icon as={HeartIcon} />
                 </PreviewMenuItem>
@@ -81,8 +72,4 @@ function PhotoGrid({
       <Text variant="muted">{log}</Text>
     </View>
   )
-}
-
-export default function PreviewMenuDemo() {
-  return <PhotoGrid />
 }

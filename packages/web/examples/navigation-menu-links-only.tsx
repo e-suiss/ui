@@ -11,19 +11,39 @@ export default function NavigationMenuLinksOnly() {
     <div className="flex min-h-96 items-start justify-center">
       <NavigationMenu align="start">
         <NavigationMenuList>
-          {["Overview", "Customers", "Changelog", "Blog"].map(
-            (label, index) => (
-              <NavigationMenuItem key={label}>
-                <NavigationMenuLink
-                  href="#"
-                  active={index === 0}
-                  className={navigationMenuTriggerStyle()}
-                >
-                  {label}
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            )
-          )}
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="#"
+              active
+              className={navigationMenuTriggerStyle()}
+            >
+              Overview
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="#"
+              className={navigationMenuTriggerStyle()}
+            >
+              Customers
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="#"
+              className={navigationMenuTriggerStyle()}
+            >
+              Changelog
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="#"
+              className={navigationMenuTriggerStyle()}
+            >
+              Blog
+            </NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </div>

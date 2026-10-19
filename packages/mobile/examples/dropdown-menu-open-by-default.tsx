@@ -24,19 +24,13 @@ import {
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
-function OpenButton({ label = "Open menu" }: { label?: string }) {
-  return (
-    <DropdownMenuTrigger render={<Button variant="outline" />}>
-      <Text>{label}</Text>
-    </DropdownMenuTrigger>
-  )
-}
-
 export default function DropdownMenuOpenByDefault() {
   return (
     <View className="items-start">
       <DropdownMenu defaultOpen>
-        <OpenButton />
+        <DropdownMenuTrigger render={<Button variant="outline" />}>
+          <Text>Open menu</Text>
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuLabel>My account</DropdownMenuLabel>
           <DropdownMenuGroup>

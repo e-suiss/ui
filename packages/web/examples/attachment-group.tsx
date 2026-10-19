@@ -13,98 +13,96 @@ import {
 } from "@/components/ui/attachment"
 import { Spinner } from "@/components/ui/spinner"
 
-const imageUrl =
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
 export default function AttachmentGroupExample() {
   return (
-    <div className="w-96">
-      <AttachmentGroup>
-        <Attachment orientation="horizontal" state="uploading">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
-            <AttachmentProgress value={64} aria-label="Uploading" />
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Cancel upload">
-              <IconPlaceholder
-                lucide="XIcon"
-                tabler="IconX"
-                hugeicons="Cancel01Icon"
-                phosphor="XIcon"
-                remixicon="RiCloseLine"
-              />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="processing">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-blue-600">docx</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Contract.docx</AttachmentTitle>
-            <AttachmentDescription>Processing…</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <Spinner className="size-5 text-muted-foreground" />
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="done">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
-            <AttachmentDescription>2.4 MB</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
+    <AttachmentGroup className="w-96">
+      <Attachment orientation="horizontal" state="uploading">
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
+          <AttachmentProgress value={64} aria-label="Uploading" />
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Cancel upload">
             <IconPlaceholder
-              lucide="CircleCheckIcon"
-              tabler="IconCircleCheck"
-              hugeicons="CheckmarkCircle02Icon"
-              phosphor="CheckCircleIcon"
-              remixicon="RiCheckboxCircleLine"
-              aria-label="Uploaded"
-              className="size-6 fill-green-600 text-white dark:fill-green-400"
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
             />
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="done">
-          <AttachmentMedia variant="image">
-            <img src={imageUrl} alt="Mountain lake" />
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Table_12.jpg</AttachmentTitle>
-            <AttachmentDescription>1.8 MB</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Remove">
-              <IconPlaceholder
-                lucide="XIcon"
-                tabler="IconX"
-                hugeicons="Cancel01Icon"
-                phosphor="XIcon"
-                remixicon="RiCloseLine"
-              />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="error">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
-            <AttachmentDescription>Upload failed</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction variant="link">Try Again</AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-      </AttachmentGroup>
-    </div>
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment orientation="horizontal" state="processing">
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-blue-600">docx</AttachmentLabel>
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Contract.docx</AttachmentTitle>
+          <AttachmentDescription>Processing…</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <Spinner className="size-5 text-muted-foreground" />
+        </AttachmentActions>
+      </Attachment>
+      <Attachment orientation="horizontal" state="done">
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
+          <AttachmentDescription>2.4 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <IconPlaceholder
+            lucide="CircleCheckIcon"
+            tabler="IconCircleCheck"
+            hugeicons="CheckmarkCircle02Icon"
+            phosphor="CheckCircleIcon"
+            remixicon="RiCheckboxCircleLine"
+            aria-label="Uploaded"
+            className="size-6 fill-green-600 text-white dark:fill-green-400"
+          />
+        </AttachmentActions>
+      </Attachment>
+      <Attachment orientation="horizontal" state="done">
+        <AttachmentMedia variant="image">
+          <img
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
+            alt="Mountain lake"
+          />
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Table_12.jpg</AttachmentTitle>
+          <AttachmentDescription>1.8 MB</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction aria-label="Remove">
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+            />
+          </AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+      <Attachment orientation="horizontal" state="error">
+        <AttachmentMedia variant="document">
+          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
+        </AttachmentMedia>
+        <AttachmentContent>
+          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
+          <AttachmentDescription>Upload failed</AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+          <AttachmentAction variant="link">Try Again</AttachmentAction>
+        </AttachmentActions>
+      </Attachment>
+    </AttachmentGroup>
   )
 }

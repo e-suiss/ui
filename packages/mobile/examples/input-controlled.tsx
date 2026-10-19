@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Input } from "@/components/ui/input"
 import { Text } from "@/components/ui/text"
 
-function ControlledDemo() {
+export default function InputControlled() {
   const [value, setValue] = React.useState("")
   return (
     <View className="gap-2">
@@ -16,8 +16,4 @@ function ControlledDemo() {
       <Text variant="muted">Value: {value}</Text>
     </View>
   )
-}
-
-export default function InputControlled() {
-  return <ControlledDemo />
 }

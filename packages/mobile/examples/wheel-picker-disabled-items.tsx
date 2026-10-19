@@ -12,10 +12,6 @@ const slots = Array.from({ length: 11 }, (_, index) => {
 
 const booked = new Set(["19:30", "20:00", "20:30"])
 
-const _minutes = Array.from({ length: 12 }, (_, step) =>
-  String(step * 5).padStart(2, "0")
-)
-
 export default function WheelPickerDisabledItems() {
   return (
     <View className="w-80 rounded-2xl border border-foreground/5 bg-card p-4 shadow-md dark:border-foreground/10">

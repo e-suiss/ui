@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { Button } from "@/components/ui/button"
 import { ThemeProvider, useTheme } from "@/components/ui/theme"
 
@@ -11,16 +10,6 @@ function clearStoredTheme() {
   } catch {
     return false
   }
-}
-
-function ExampleTheme({ children }: { children?: React.ReactNode }) {
-  clearStoredTheme()
-
-  return (
-    <ThemeProvider defaultTheme="light" storageKey={STORAGE_KEY}>
-      {children}
-    </ThemeProvider>
-  )
 }
 
 function InstantSwitch() {
@@ -37,8 +26,10 @@ function InstantSwitch() {
 }
 
 export default function ThemeWithoutTransition() {
+  clearStoredTheme()
+
   return (
-    <ExampleTheme>
+    <ThemeProvider defaultTheme="light" storageKey={STORAGE_KEY}>
       <div className="flex min-h-svh flex-col items-center justify-center gap-8 bg-background px-6 py-16 text-center text-foreground">
         <div className="flex max-w-md flex-col gap-3">
           <h1 className="text-4xl font-semibold tracking-tight">
@@ -51,6 +42,6 @@ export default function ThemeWithoutTransition() {
         </div>
         <InstantSwitch />
       </div>
-    </ExampleTheme>
+    </ThemeProvider>
   )
 }

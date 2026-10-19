@@ -40,14 +40,14 @@ const minutes = Array.from({ length: 12 }, (_, step) =>
   String(step * 5).padStart(2, "0")
 )
 
-function DateTimeExample(props: React.ComponentProps<typeof WheelPicker>) {
+export default function WheelPickerDateTime() {
   const [day, setDay] = React.useState(toDayValue(today))
   const [hour, setHour] = React.useState("19")
   const [minute, setMinute] = React.useState("30")
 
   return (
-    <div className="flex flex-col gap-3">
-      <WheelPicker {...props}>
+    <div className="flex w-80 flex-col gap-3 rounded-2xl bg-card p-4 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10">
+      <WheelPicker>
         <WheelPickerColumn
           aria-label="Day"
           value={day}
@@ -87,14 +87,6 @@ function DateTimeExample(props: React.ComponentProps<typeof WheelPicker>) {
       <p className="text-center text-sm text-muted-foreground tabular-nums">
         {day} {hour}:{minute}
       </p>
-    </div>
-  )
-}
-
-export default function WheelPickerDateTime() {
-  return (
-    <div className="w-80 rounded-2xl bg-card p-4 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10">
-      <DateTimeExample />
     </div>
   )
 }

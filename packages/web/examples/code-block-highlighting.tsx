@@ -20,17 +20,15 @@ export default function CodeBlockHighlighting() {
   const lines = useHighlightedCode(code, "json")
 
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>getWeather output</CodeBlockTitle>
-        </CodeBlockHeader>
-        <CodeBlockContent>
-          {lines.map((line, index) => (
-            <CodeBlockLine key={index}>{line}</CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>getWeather output</CodeBlockTitle>
+      </CodeBlockHeader>
+      <CodeBlockContent>
+        {lines.map((line, index) => (
+          <CodeBlockLine key={index}>{line}</CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

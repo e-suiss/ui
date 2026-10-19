@@ -5,7 +5,7 @@ import {
   ProgressValue,
 } from "@/components/ui/progress"
 
-function WithLabelDemo() {
+export default function ProgressWithLabel() {
   const [value, setValue] = React.useState(0)
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -19,8 +19,4 @@ function WithLabelDemo() {
       <ProgressValue />
     </Progress>
   )
-}
-
-export default function ProgressWithLabel() {
-  return <WithLabelDemo />
 }

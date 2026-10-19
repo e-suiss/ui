@@ -11,21 +11,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const tasks = [
-  {
-    title: "Found the project files",
-    steps: [
-      "Searched for generateMetadata",
-      "Read app/layout.tsx",
-      "Read app/page.tsx",
-    ],
-  },
-  {
-    title: "Updated the page metadata",
-    steps: ["Edited app/layout.tsx", "Edited app/page.tsx"],
-  },
-]
-
 export default function TaskDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
@@ -41,36 +26,61 @@ export default function TaskDemo() {
       <Message>
         <MessageContent className="gap-4">
           <Trace>
-            {tasks.map((task, index) => (
-              <TraceCollapsible
-                key={task.title}
-                defaultExpanded={index === tasks.length - 1}
-              >
-                <TraceCollapsibleTrigger>
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="CircleCheckIcon"
+                      tabler="IconCircleCheck"
+                      hugeicons="CheckmarkCircle02Icon"
+                      phosphor="CheckCircleIcon"
+                      remixicon="RiCheckboxCircleLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Found the project files</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <Trace>
                   <TraceLine>
-                    <TraceIcon>
-                      <IconPlaceholder
-                        lucide="CircleCheckIcon"
-                        tabler="IconCircleCheck"
-                        hugeicons="CheckmarkCircle02Icon"
-                        phosphor="CheckCircleIcon"
-                        remixicon="RiCheckboxCircleLine"
-                      />
-                    </TraceIcon>
-                    <TraceTitle>{task.title}</TraceTitle>
+                    <TraceTitle>Searched for generateMetadata</TraceTitle>
                   </TraceLine>
-                </TraceCollapsibleTrigger>
-                <TraceCollapsibleContent>
-                  <Trace>
-                    {task.steps.map((step) => (
-                      <TraceLine key={step}>
-                        <TraceTitle>{step}</TraceTitle>
-                      </TraceLine>
-                    ))}
-                  </Trace>
-                </TraceCollapsibleContent>
-              </TraceCollapsible>
-            ))}
+                  <TraceLine>
+                    <TraceTitle>Read app/layout.tsx</TraceTitle>
+                  </TraceLine>
+                  <TraceLine>
+                    <TraceTitle>Read app/page.tsx</TraceTitle>
+                  </TraceLine>
+                </Trace>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible defaultExpanded>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="CircleCheckIcon"
+                      tabler="IconCircleCheck"
+                      hugeicons="CheckmarkCircle02Icon"
+                      phosphor="CheckCircleIcon"
+                      remixicon="RiCheckboxCircleLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Updated the page metadata</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <Trace>
+                  <TraceLine>
+                    <TraceTitle>Edited app/layout.tsx</TraceTitle>
+                  </TraceLine>
+                  <TraceLine>
+                    <TraceTitle>Edited app/page.tsx</TraceTitle>
+                  </TraceLine>
+                </Trace>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
           </Trace>
           <p>
             Added Open Graph defaults to app/layout.tsx and a title, description

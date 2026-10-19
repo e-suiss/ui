@@ -11,10 +11,8 @@ const code = `{
 
 export default function CodeBlockLineNumbers() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockContent lineNumbers>{code}</CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockContent lineNumbers>{code}</CodeBlockContent>
+    </CodeBlock>
   )
 }

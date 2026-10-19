@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
@@ -18,12 +17,6 @@ const week = [
   { day: "Sun", value: 70 },
 ]
 
-const channels = [
-  { name: "Dine-in", amount: "₺64,200", tint: "bg-blue-500" },
-  { name: "Takeaway", amount: "₺38,900", tint: "bg-orange-500" },
-  { name: "Pickup", amount: "₺18,800", tint: "bg-green-500" },
-]
-
 const bestSellers = [
   { name: "Grilled meatballs", count: 238 },
   { name: "Lahmacun", count: 201 },
@@ -32,10 +25,6 @@ const bestSellers = [
   { name: "Ayran", count: 120 },
   { name: "Lentil soup", count: 96 },
 ] as const
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
-}
 
 export default function WidgetWeeklyReport() {
   return (
@@ -94,21 +83,36 @@ export default function WidgetWeeklyReport() {
             </div>
           </div>
           <ul className="flex flex-col group-data-[size=medium]/widget:hidden group-data-[size=small]/widget:hidden">
-            {channels.map((channel) => (
-              <li
-                key={channel.name}
-                className="flex items-center gap-2 border-t py-1.5 text-sm"
-              >
-                <span
-                  aria-hidden="true"
-                  className={`size-2 rounded-full ${channel.tint}`}
-                />
-                <span className="flex-1">{channel.name}</span>
-                <span className="text-muted-foreground tabular-nums">
-                  {channel.amount}
-                </span>
-              </li>
-            ))}
+            <li className="flex items-center gap-2 border-t py-1.5 text-sm">
+              <span
+                aria-hidden="true"
+                className="size-2 rounded-full bg-blue-500"
+              />
+              <span className="flex-1">Dine-in</span>
+              <span className="text-muted-foreground tabular-nums">
+                ₺64,200
+              </span>
+            </li>
+            <li className="flex items-center gap-2 border-t py-1.5 text-sm">
+              <span
+                aria-hidden="true"
+                className="size-2 rounded-full bg-orange-500"
+              />
+              <span className="flex-1">Takeaway</span>
+              <span className="text-muted-foreground tabular-nums">
+                ₺38,900
+              </span>
+            </li>
+            <li className="flex items-center gap-2 border-t py-1.5 text-sm">
+              <span
+                aria-hidden="true"
+                className="size-2 rounded-full bg-green-500"
+              />
+              <span className="flex-1">Pickup</span>
+              <span className="text-muted-foreground tabular-nums">
+                ₺18,800
+              </span>
+            </li>
           </ul>
         </div>
         <div className="hidden w-72 shrink-0 flex-col gap-2 group-data-[size=extra-large]/widget:flex">
@@ -135,7 +139,9 @@ export default function WidgetWeeklyReport() {
           ))}
         </div>
       </Widget>
-      <Hint>Extra large shows best sellers, large hides them.</Hint>
+      <p className="mt-6 text-xs text-muted-foreground">
+        Extra large shows best sellers, large hides them.
+      </p>
     </div>
   )
 }

@@ -13,10 +13,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 
-function ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {
+export default function ConfirmOpenByDefault() {
   return (
     <View className="items-start">
-      <Confirm defaultOpen={defaultOpen}>
+      <Confirm defaultOpen>
         <ConfirmTrigger render={<Button variant="destructive" />}>
           <Text>Delete account</Text>
         </ConfirmTrigger>
@@ -35,8 +35,4 @@ function ConfirmDemo({ defaultOpen }: { defaultOpen?: boolean }) {
       </Confirm>
     </View>
   )
-}
-
-export default function ConfirmOpenByDefault() {
-  return <ConfirmDemo defaultOpen />
 }

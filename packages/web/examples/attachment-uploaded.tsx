@@ -9,9 +9,6 @@ import {
   AttachmentTitle,
 } from "@/components/ui/attachment"
 
-const imageUrl =
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
 export default function AttachmentUploaded() {
   return (
     <div className="flex w-96 flex-col gap-3">
@@ -37,7 +34,10 @@ export default function AttachmentUploaded() {
       </Attachment>
       <Attachment orientation="horizontal" state="done" className="w-full">
         <AttachmentMedia variant="image">
-          <img src={imageUrl} alt="Mountain lake" />
+          <img
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
+            alt="Mountain lake"
+          />
         </AttachmentMedia>
         <AttachmentContent>
           <AttachmentTitle>Table_12.jpg</AttachmentTitle>

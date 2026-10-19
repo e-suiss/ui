@@ -11,6 +11,17 @@ import { Text } from "@/components/ui/text"
 function Triggers() {
   const { show, dismiss } = useTopBanner()
   const [log, setLog] = React.useState("")
+  const shownRef = React.useRef(false)
+
+  React.useEffect(() => {
+    if (shownRef.current) return
+    shownRef.current = true
+    show({
+      title: "Message sent",
+      description: "Alex will see it the next time they open the app.",
+    })
+  }, [show])
+
   return (
     <View className="w-full gap-3">
       <Button
@@ -57,33 +68,10 @@ function Triggers() {
   )
 }
 
-function ShowOnMount({
-  options,
-}: {
-  options: Parameters<ReturnType<typeof useTopBanner>["show"]>[0]
-}) {
-  const { show } = useTopBanner()
-  const shownRef = React.useRef(false)
-  const optionsRef = React.useRef(options)
-
-  React.useEffect(() => {
-    if (shownRef.current) return
-    shownRef.current = true
-    show(optionsRef.current)
-  }, [show])
-
-  return <Triggers />
-}
-
 export default function TopBannerShowing() {
   return (
     <TopBannerProvider timeout={600000}>
-      <ShowOnMount
-        options={{
-          title: "Message sent",
-          description: "Alex will see it the next time they open the app.",
-        }}
-      />
+      <Triggers />
     </TopBannerProvider>
   )
 }

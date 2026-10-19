@@ -175,46 +175,44 @@ function Composer({ onSend }: { onSend: (text: string) => void }) {
   )
 }
 
-type ChatReady = (
-  append: (messages: ChatMessage[]) => void,
-  scroller: ReturnType<typeof useMessageScroller>
-) => void
-
-function ReadyEffect({
+function NewMessages({
   append,
-  onReady,
 }: {
   append: (messages: ChatMessage[]) => void
-  onReady?: ChatReady
 }) {
   const scroller = useMessageScroller()
-  const readyRef = React.useRef(onReady)
   const scrollerRef = React.useRef(scroller)
 
   React.useEffect(() => {
-    readyRef.current?.(append, scrollerRef.current)
+    setTimeout(
+      () => scrollerRef.current.scrollToStart({ animated: false }),
+      300
+    )
+    setTimeout(
+      () =>
+        append([
+          { id: "n1", from: "them", texts: ["Are you there?"] },
+          { id: "n2", from: "them", texts: ["The build is green."] },
+          { id: "n3", from: "them", texts: ["Merging now."] },
+        ]),
+      900
+    )
   }, [append])
 
   return null
 }
 
-function Chat({
-  initial,
-  empty,
-  onReady,
-}: {
-  initial: ChatMessage[]
-  empty?: React.ReactElement
-  onReady?: ChatReady
-}) {
-  const [messages, setMessages] = React.useState(initial)
+export default function MessageScrollerUnreadWhileScrolledUp() {
+  const [messages, setMessages] = React.useState<ChatMessage[]>(() =>
+    longThread(40)
+  )
   const append = React.useCallback((next: ChatMessage[]) => {
     setMessages((current) => [...current, ...next])
   }, [])
 
   return (
     <MessageScrollerProvider>
-      <ReadyEffect append={append} onReady={onReady} />
+      <NewMessages append={append} />
       <View className="-m-4 flex-1">
         <MessageScroller>
           <MessageScrollerViewport
@@ -222,7 +220,6 @@ function Chat({
             keyExtractor={(message) => message.id}
             renderItem={({ item }) => <ChatRow message={item} />}
             contentContainerClassName="gap-4 py-4"
-            ListEmptyComponent={empty}
           />
           <MessageScrollerButton />
         </MessageScroller>
@@ -233,25 +230,5 @@ function Chat({
         />
       </View>
     </MessageScrollerProvider>
-  )
-}
-
-export default function MessageScrollerUnreadWhileScrolledUp() {
-  return (
-    <Chat
-      initial={longThread(40)}
-      onReady={(append, scroller) => {
-        setTimeout(() => scroller.scrollToStart({ animated: false }), 300)
-        setTimeout(
-          () =>
-            append([
-              { id: "n1", from: "them", texts: ["Are you there?"] },
-              { id: "n2", from: "them", texts: ["The build is green."] },
-              { id: "n3", from: "them", texts: ["Merging now."] },
-            ]),
-          900
-        )
-      }}
-    />
   )
 }

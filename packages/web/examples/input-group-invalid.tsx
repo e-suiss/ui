@@ -7,20 +7,18 @@ import {
 
 export default function InputGroupInvalid() {
   return (
-    <div className="w-96">
-      <InputGroup>
-        <InputGroupInput defaultValue="jane@" aria-label="Email" aria-invalid />
-        <InputGroupAddon align="inline-end">
-          <IconPlaceholder
-            lucide="InfoIcon"
-            tabler="IconInfoCircle"
-            hugeicons="InformationCircleIcon"
-            phosphor="InfoIcon"
-            remixicon="RiInformationLine"
-            className="text-destructive"
-          />
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
+    <InputGroup className="w-96">
+      <InputGroupInput defaultValue="jane@" aria-label="Email" aria-invalid />
+      <InputGroupAddon align="inline-end">
+        <IconPlaceholder
+          lucide="InfoIcon"
+          tabler="IconInfoCircle"
+          hugeicons="InformationCircleIcon"
+          phosphor="InfoIcon"
+          remixicon="RiInformationLine"
+          className="text-destructive"
+        />
+      </InputGroupAddon>
+    </InputGroup>
   )
 }

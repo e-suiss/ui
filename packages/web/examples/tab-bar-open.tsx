@@ -10,8 +10,6 @@ import {
   TabBarTrigger,
 } from "@/components/ui/tab-bar"
 
-const defaultItems = ["Home", "Nominees", "Directory", "Collections"]
-
 const sections = [
   { title: "Awards", links: ["Winners", "Site of the Day", "Nominees"] },
   { title: "Inspiration", links: ["Collections", "Elements", "Resources"] },
@@ -19,35 +17,53 @@ const sections = [
   { title: "Market", links: ["Jobs", "New Events", "Products"] },
 ]
 
-function TabBarExample({
-  defaultOpen,
-  items = defaultItems,
-  withSections = true,
-}: {
-  defaultOpen?: boolean
-  items?: string[]
-  withSections?: boolean
-}) {
+export default function TabBarOpen() {
   const [value, setValue] = React.useState("Home")
 
   return (
-    <div className="h-full min-h-svh bg-background">
-      <Backdrop />
-      <TabBar aria-label="Main" defaultOpen={defaultOpen}>
-        <TabBarList>
-          {items.map((item) => (
+    <div className="h-[32rem] transform-gpu overflow-hidden">
+      <div className="h-full min-h-svh bg-background">
+        <div className="grid grid-cols-2 gap-3 p-4 md:grid-cols-4">
+          {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(
+            (card) => (
+              <div
+                key={card}
+                className="flex aspect-[4/3] items-end rounded-2xl bg-primary/15 p-4 text-sm font-semibold text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] odd:bg-secondary odd:text-foreground"
+              >
+                {card}
+              </div>
+            )
+          )}
+        </div>
+        <TabBar aria-label="Main" defaultOpen>
+          <TabBarList>
             <TabBarItem
-              key={item}
-              isActive={value === item}
-              onClick={() => setValue(item)}
+              isActive={value === "Home"}
+              onClick={() => setValue("Home")}
             >
-              {item}
+              Home
             </TabBarItem>
-          ))}
-        </TabBarList>
-        <TabBarContent>
-          {withSections &&
-            sections.map((section) => (
+            <TabBarItem
+              isActive={value === "Nominees"}
+              onClick={() => setValue("Nominees")}
+            >
+              Nominees
+            </TabBarItem>
+            <TabBarItem
+              isActive={value === "Directory"}
+              onClick={() => setValue("Directory")}
+            >
+              Directory
+            </TabBarItem>
+            <TabBarItem
+              isActive={value === "Collections"}
+              onClick={() => setValue("Collections")}
+            >
+              Collections
+            </TabBarItem>
+          </TabBarList>
+          <TabBarContent>
+            {sections.map((section) => (
               <TabBarSection key={section.title}>
                 <TabBarSectionTitle>{section.title}</TabBarSectionTitle>
                 {section.links.map((link) => (
@@ -62,34 +78,10 @@ function TabBarExample({
                 ))}
               </TabBarSection>
             ))}
-        </TabBarContent>
-        <TabBarTrigger>More</TabBarTrigger>
-      </TabBar>
-    </div>
-  )
-}
-
-function Backdrop() {
-  return (
-    <div className="grid grid-cols-2 gap-3 p-4 md:grid-cols-4">
-      {Array.from({ length: 16 }, (_, index) => `Card ${index + 1}`).map(
-        (card) => (
-          <div
-            key={card}
-            className="flex aspect-[4/3] items-end rounded-2xl bg-primary/15 p-4 text-sm font-semibold text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] odd:bg-secondary odd:text-foreground"
-          >
-            {card}
-          </div>
-        )
-      )}
-    </div>
-  )
-}
-
-export default function TabBarOpen() {
-  return (
-    <div className="h-[32rem] transform-gpu overflow-hidden">
-      <TabBarExample defaultOpen />
+          </TabBarContent>
+          <TabBarTrigger>More</TabBarTrigger>
+        </TabBar>
+      </div>
     </div>
   )
 }

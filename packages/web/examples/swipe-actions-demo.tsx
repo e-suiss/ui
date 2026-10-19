@@ -35,9 +35,8 @@ const initialMessages = [
   },
 ]
 
-function MailExample({ withLeading = false }: { withLeading?: boolean }) {
+export default function SwipeActionsDemo() {
   const [messages, setMessages] = React.useState(initialMessages)
-  const [unread, setUnread] = React.useState<number[]>([])
   const [log, setLog] = React.useState("Swipe a message to the left.")
 
   const remove = (id: number, action: string) => {
@@ -51,34 +50,8 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
         {messages.map((message) => (
           <li key={message.id} className="not-first:border-t">
             <SwipeActions>
-              {withLeading && (
-                <SwipeActionsActions side="leading">
-                  <SwipeAction
-                    onClick={() => {
-                      setUnread((current) =>
-                        current.includes(message.id)
-                          ? current.filter((id) => id !== message.id)
-                          : [...current, message.id]
-                      )
-                      setLog(`Toggled unread on message ${message.id}`)
-                    }}
-                  >
-                    <IconPlaceholder
-                      lucide="MailIcon"
-                      tabler="IconMail"
-                      hugeicons="Mail01Icon"
-                      phosphor="EnvelopeSimpleIcon"
-                      remixicon="RiMailLine"
-                    />
-                    Unread
-                  </SwipeAction>
-                </SwipeActionsActions>
-              )}
               <SwipeActionsContent className="flex flex-col gap-0.5 px-4 py-3">
                 <span className="flex items-center gap-2 font-semibold">
-                  {unread.includes(message.id) && (
-                    <span className="size-2 rounded-full bg-primary" />
-                  )}
                   {message.from}
                 </span>
                 <span className="text-sm">{message.subject}</span>
@@ -128,7 +101,6 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
           variant="secondary"
           onClick={() => {
             setMessages(initialMessages)
-            setUnread([])
             setLog("Swipe a message to the left.")
           }}
         >
@@ -137,8 +109,4 @@ function MailExample({ withLeading = false }: { withLeading?: boolean }) {
       </div>
     </div>
   )
-}
-
-export default function SwipeActionsDemo() {
-  return <MailExample />
 }

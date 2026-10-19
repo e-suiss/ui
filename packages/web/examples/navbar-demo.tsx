@@ -100,12 +100,13 @@ const items: NavbarItem[] = [
   { label: "Blog", href: "#blog" },
 ]
 
-const brand = <span className="text-base font-semibold">Acme</span>
-
 export default function NavbarDemo() {
   return (
     <div className="min-h-96">
-      <Navbar items={items} brand={brand} />
+      <Navbar
+        items={items}
+        brand={<span className="text-base font-semibold">Acme</span>}
+      />
     </div>
   )
 }

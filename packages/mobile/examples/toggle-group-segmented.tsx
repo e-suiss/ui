@@ -2,17 +2,7 @@ import * as React from "react"
 import { Text } from "@/components/ui/text"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-type GroupProps = Omit<
-  React.ComponentProps<typeof ToggleGroup>,
-  "value" | "onValueChange" | "children"
->
-
-const views = ["day", "week", "month", "year"]
-
-function SegmentedDemo({
-  items = views,
-  ...props
-}: GroupProps & { items?: string[] }) {
+export default function ToggleGroupSegmented() {
   const [value, setValue] = React.useState<string[]>(["week"])
   return (
     <ToggleGroup
@@ -20,17 +10,19 @@ function SegmentedDemo({
       value={value}
       onValueChange={setValue}
       accessibilityLabel="Calendar view"
-      {...props}
     >
-      {items.map((item) => (
-        <ToggleGroupItem key={item} value={item}>
-          <Text className="capitalize">{item}</Text>
-        </ToggleGroupItem>
-      ))}
+      <ToggleGroupItem value="day">
+        <Text>Day</Text>
+      </ToggleGroupItem>
+      <ToggleGroupItem value="week">
+        <Text>Week</Text>
+      </ToggleGroupItem>
+      <ToggleGroupItem value="month">
+        <Text>Month</Text>
+      </ToggleGroupItem>
+      <ToggleGroupItem value="year">
+        <Text>Year</Text>
+      </ToggleGroupItem>
     </ToggleGroup>
   )
-}
-
-export default function ToggleGroupSegmented() {
-  return <SegmentedDemo />
 }

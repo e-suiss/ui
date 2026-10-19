@@ -18,37 +18,19 @@ const frameworks = [
   "Expo",
 ]
 
-function ComboboxDemo({
-  defaultValue = null,
-  defaultOpen,
-  disabled,
-  showClear,
-  labelledBy,
-  invalid,
-}: {
-  defaultValue?: string | null
-  defaultOpen?: boolean
-  disabled?: boolean
-  showClear?: boolean
-  labelledBy?: string
-  invalid?: boolean
-}) {
-  const [value, setValue] = React.useState<string | null>(defaultValue)
+export default function ComboboxDisabled() {
+  const [value, setValue] = React.useState<string | null>("Astro")
   return (
     <Combobox
       items={frameworks}
       value={value}
       onValueChange={setValue}
-      defaultOpen={defaultOpen}
-      disabled={disabled}
+      disabled
     >
       <ComboboxInput
         className="w-64"
         placeholder="Select a framework"
-        showClear={showClear}
-        disabled={disabled}
-        invalid={invalid}
-        accessibilityLabelledBy={labelledBy}
+        disabled
       />
       <ComboboxContent>
         <ComboboxEmpty>No framework found.</ComboboxEmpty>
@@ -62,8 +44,4 @@ function ComboboxDemo({
       </ComboboxContent>
     </Combobox>
   )
-}
-
-export default function ComboboxDisabled() {
-  return <ComboboxDemo defaultValue="Astro" disabled />
 }

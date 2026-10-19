@@ -2,19 +2,11 @@ import * as React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Text } from "@/components/ui/text"
 
-type ListVariant = "default" | "line"
-
-function SectionsDemo({
-  variant,
-  orientation,
-}: {
-  variant?: ListVariant
-  orientation?: "horizontal" | "vertical"
-}) {
+export default function TabsLine() {
   const [value, setValue] = React.useState("overview")
   return (
-    <Tabs value={value} onValueChange={setValue} orientation={orientation}>
-      <TabsList variant={variant}>
+    <Tabs value={value} onValueChange={setValue}>
+      <TabsList variant="line">
         <TabsTrigger value="overview">
           <Text>Overview</Text>
         </TabsTrigger>
@@ -42,8 +34,4 @@ function SectionsDemo({
       </TabsContent>
     </Tabs>
   )
-}
-
-export default function TabsLine() {
-  return <SectionsDemo variant="line" />
 }

@@ -9,26 +9,46 @@ import {
 
 export default function ItemVariants() {
   return (
-    <div className="w-96">
-      <div className="flex flex-col gap-4">
-        {(["default", "outline", "muted"] as const).map((variant) => (
-          <Item key={variant} variant={variant}>
-            <ItemContent>
-              <ItemTitle>
-                {variant.charAt(0).toUpperCase() + variant.slice(1)} item
-              </ItemTitle>
-              <ItemDescription>
-                A short description of this list entry.
-              </ItemDescription>
-            </ItemContent>
-            <ItemActions>
-              <Button variant="outline" size="sm">
-                Open
-              </Button>
-            </ItemActions>
-          </Item>
-        ))}
-      </div>
+    <div className="flex w-96 flex-col gap-4">
+      <Item variant="default">
+        <ItemContent>
+          <ItemTitle>Default item</ItemTitle>
+          <ItemDescription>
+            A short description of this list entry.
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button variant="outline" size="sm">
+            Open
+          </Button>
+        </ItemActions>
+      </Item>
+      <Item variant="outline">
+        <ItemContent>
+          <ItemTitle>Outline item</ItemTitle>
+          <ItemDescription>
+            A short description of this list entry.
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button variant="outline" size="sm">
+            Open
+          </Button>
+        </ItemActions>
+      </Item>
+      <Item variant="muted">
+        <ItemContent>
+          <ItemTitle>Muted item</ItemTitle>
+          <ItemDescription>
+            A short description of this list entry.
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button variant="outline" size="sm">
+            Open
+          </Button>
+        </ItemActions>
+      </Item>
     </div>
   )
 }

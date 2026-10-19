@@ -66,7 +66,7 @@ const week = energyValues.slice(-7).map((energy, index) => ({
   energy,
 }))
 
-function FormatterDemo() {
+export default function ChartTooltipFormatter() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader>
@@ -119,8 +119,4 @@ function FormatterDemo() {
       </CardContent>
     </Card>
   )
-}
-
-export default function ChartTooltipFormatter() {
-  return <FormatterDemo />
 }

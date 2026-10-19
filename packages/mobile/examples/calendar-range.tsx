@@ -3,7 +3,7 @@ import { ScrollView } from "react-native"
 import type { DateRange } from "@/components/primitives/calendar"
 import { Calendar } from "@/components/ui/calendar"
 
-function RangeCalendar() {
+export default function CalendarRange() {
   const today = new Date()
   const [range, setRange] = React.useState<DateRange | undefined>({
     from: today,
@@ -20,8 +20,4 @@ function RangeCalendar() {
       />
     </ScrollView>
   )
-}
-
-export default function CalendarRange() {
-  return <RangeCalendar />
 }

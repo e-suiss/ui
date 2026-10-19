@@ -1,5 +1,4 @@
 import { CalendarBlankIcon } from "phosphor-react-native"
-import type * as React from "react"
 import { View } from "react-native"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
@@ -13,17 +12,6 @@ import {
   WidgetTitle,
   WidgetValue,
 } from "@/components/ui/widget"
-
-const reservations = [
-  { time: "18:00", place: "Table 4" },
-  { time: "19:00", place: "Garden 3" },
-  { time: "20:00", place: "Table 12" },
-  { time: "21:00", place: "Table 7" },
-]
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <Text className="mt-6 text-xs text-muted-foreground">{children}</Text>
-}
 
 function ReservationsBody() {
   const { size } = useWidget()
@@ -42,16 +30,24 @@ function ReservationsBody() {
         </WidgetContent>
         {size === "medium" ? (
           <View className="flex-1 gap-1">
-            {reservations.slice(0, 3).map((item) => (
-              <View key={item.time} className="flex-row gap-3">
-                <Text className="w-11 text-sm text-muted-foreground">
-                  {item.time}
-                </Text>
-                <Text className="flex-1 text-sm" numberOfLines={1}>
-                  {item.place}
-                </Text>
-              </View>
-            ))}
+            <View className="flex-row gap-3">
+              <Text className="w-11 text-sm text-muted-foreground">18:00</Text>
+              <Text className="flex-1 text-sm" numberOfLines={1}>
+                Table 4
+              </Text>
+            </View>
+            <View className="flex-row gap-3">
+              <Text className="w-11 text-sm text-muted-foreground">19:00</Text>
+              <Text className="flex-1 text-sm" numberOfLines={1}>
+                Garden 3
+              </Text>
+            </View>
+            <View className="flex-row gap-3">
+              <Text className="w-11 text-sm text-muted-foreground">20:00</Text>
+              <Text className="flex-1 text-sm" numberOfLines={1}>
+                Table 12
+              </Text>
+            </View>
           </View>
         ) : null}
       </View>
@@ -65,7 +61,9 @@ export default function WidgetLimitedSizes() {
       <Widget resizable defaultSize="medium" sizes={["small", "medium"]}>
         <ReservationsBody />
       </Widget>
-      <Hint>Only small and medium are offered.</Hint>
+      <Text className="mt-6 text-xs text-muted-foreground">
+        Only small and medium are offered.
+      </Text>
     </View>
   )
 }

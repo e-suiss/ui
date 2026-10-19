@@ -31,7 +31,7 @@ function StepperRow({
   )
 }
 
-function PrintExample() {
+export default function StepperPrint() {
   const [copies, setCopies] = React.useState(1)
   const [scale, setScale] = React.useState(100)
 
@@ -61,8 +61,4 @@ function PrintExample() {
       </p>
     </div>
   )
-}
-
-export default function StepperPrint() {
-  return <PrintExample />
 }

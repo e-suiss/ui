@@ -40,19 +40,9 @@ const images: ImageViewerImage[] = [
   },
 ]
 
-function Gallery({
-  defaultOpen,
-  defaultIndex,
-}: {
-  defaultOpen?: boolean
-  defaultIndex?: number
-}) {
+export default function ImageViewerOpenByDefault() {
   return (
-    <ImageViewer
-      images={images}
-      defaultOpen={defaultOpen}
-      defaultIndex={defaultIndex}
-    >
+    <ImageViewer images={images} defaultOpen defaultIndex={1}>
       <View className="gap-3">
         <View className="flex-row flex-wrap gap-2">
           {images.map((image, index) => (
@@ -73,8 +63,4 @@ function Gallery({
       <ImageViewerContent />
     </ImageViewer>
   )
-}
-
-export default function ImageViewerOpenByDefault() {
-  return <Gallery defaultOpen defaultIndex={1} />
 }

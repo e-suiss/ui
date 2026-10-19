@@ -3,69 +3,60 @@ import {
   FullscreenMenu,
   FullscreenMenuContent,
   FullscreenMenuGroup,
-  FullscreenMenuLabel,
   FullscreenMenuLink,
   FullscreenMenuTitle,
   FullscreenMenuTrigger,
 } from "@/components/ui/fullscreen-menu"
 
-const primary = ["Store", "Products", "Services", "Company", "Support"]
-
-const sections = [
-  { label: "Explore", links: ["Overview", "Compare", "Accessories"] },
-  { label: "Shop", links: ["Shop online", "Find a store", "Order status"] },
-]
-
-function MenuExample({
-  defaultOpen,
-  closeLabel,
-  withSections = true,
-}: {
-  defaultOpen?: boolean
-  closeLabel?: string
-  withSections?: boolean
-}) {
+export default function FullscreenMenuLinksOnly() {
   const [active, setActive] = React.useState("Store")
 
   return (
     <div className="flex h-14 items-center justify-between px-4">
       <span className="font-semibold">Acme</span>
-      <FullscreenMenu defaultOpen={defaultOpen}>
+      <FullscreenMenu>
         <FullscreenMenuTrigger aria-label="Menu" />
-        <FullscreenMenuContent closeLabel={closeLabel}>
+        <FullscreenMenuContent>
           <FullscreenMenuTitle>Menu</FullscreenMenuTitle>
           <FullscreenMenuGroup>
-            {primary.map((link) => (
-              <FullscreenMenuLink
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                isActive={active === link}
-                onClick={() => setActive(link)}
-              >
-                {link}
-              </FullscreenMenuLink>
-            ))}
+            <FullscreenMenuLink
+              href="#store"
+              isActive={active === "Store"}
+              onClick={() => setActive("Store")}
+            >
+              Store
+            </FullscreenMenuLink>
+            <FullscreenMenuLink
+              href="#products"
+              isActive={active === "Products"}
+              onClick={() => setActive("Products")}
+            >
+              Products
+            </FullscreenMenuLink>
+            <FullscreenMenuLink
+              href="#services"
+              isActive={active === "Services"}
+              onClick={() => setActive("Services")}
+            >
+              Services
+            </FullscreenMenuLink>
+            <FullscreenMenuLink
+              href="#company"
+              isActive={active === "Company"}
+              onClick={() => setActive("Company")}
+            >
+              Company
+            </FullscreenMenuLink>
+            <FullscreenMenuLink
+              href="#support"
+              isActive={active === "Support"}
+              onClick={() => setActive("Support")}
+            >
+              Support
+            </FullscreenMenuLink>
           </FullscreenMenuGroup>
-          {withSections &&
-            sections.map((section) => (
-              <FullscreenMenuGroup key={section.label}>
-                <FullscreenMenuLabel>{section.label}</FullscreenMenuLabel>
-                {section.links.map((link) => (
-                  <FullscreenMenuLink
-                    key={link}
-                    href={`#${link.toLowerCase().replaceAll(" ", "-")}`}
-                  >
-                    {link}
-                  </FullscreenMenuLink>
-                ))}
-              </FullscreenMenuGroup>
-            ))}
         </FullscreenMenuContent>
       </FullscreenMenu>
     </div>
   )
-}
-
-export default function FullscreenMenuLinksOnly() {
-  return <MenuExample withSections={false} />
 }

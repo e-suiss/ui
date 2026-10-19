@@ -70,12 +70,12 @@ function groupByLetter() {
   })
 }
 
-function ContactsExample({ className }: { className: string }) {
+export default function SectionIndexDemo() {
   const [log, setLog] = React.useState("Tap or drag the letters.")
 
   return (
     <div className="mx-auto flex w-[min(28rem,calc(100vw-2rem))] flex-col gap-3">
-      <SectionIndex className={className}>
+      <SectionIndex className="h-[min(36rem,calc(100dvh-7rem))]">
         <ScrollArea className="h-full rounded-2xl border [clip-path:inset(0_round_var(--radius-2xl))]">
           {groupByLetter().map(([letter, group]) => (
             <SectionIndexSection key={letter} value={letter}>
@@ -108,8 +108,4 @@ function ContactsExample({ className }: { className: string }) {
       </p>
     </div>
   )
-}
-
-export default function SectionIndexDemo() {
-  return <ContactsExample className="h-[min(36rem,calc(100dvh-7rem))]" />
 }

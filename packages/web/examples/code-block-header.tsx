@@ -17,25 +17,23 @@ Done in 2.8s using pnpm v10.18.0`
 
 export default function CodeBlockHeaderExample() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>
-            <IconPlaceholder
-              lucide="TerminalIcon"
-              tabler="IconTerminal2"
-              hugeicons="ComputerTerminal01Icon"
-              phosphor="TerminalWindowIcon"
-              remixicon="RiTerminalBoxLine"
-            />
-            Terminal
-          </CodeBlockTitle>
-          <CodeBlockActions>
-            <CodeBlockCopyButton value={command} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent>{output}</CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>
+          <IconPlaceholder
+            lucide="TerminalIcon"
+            tabler="IconTerminal2"
+            hugeicons="ComputerTerminal01Icon"
+            phosphor="TerminalWindowIcon"
+            remixicon="RiTerminalBoxLine"
+          />
+          Terminal
+        </CodeBlockTitle>
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={command} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent>{output}</CodeBlockContent>
+    </CodeBlock>
   )
 }

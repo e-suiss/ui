@@ -18,21 +18,17 @@ const fields = [
   "Notes",
 ]
 
-function Fields() {
-  return fields.map((label) => (
-    <View key={label} className="gap-1.5">
-      <Text variant="small">{label}</Text>
-      <Input placeholder={label} />
-    </View>
-  ))
-}
-
 export default function KeyboardScrollViewWithBottomBar() {
   return (
     <View className="-m-4 flex-1">
       <KeyboardScrollView contentContainerClassName="gap-4 p-4">
         <Text variant="h3">Shipping address</Text>
-        <Fields />
+        {fields.map((label) => (
+          <View key={label} className="gap-1.5">
+            <Text variant="small">{label}</Text>
+            <Input placeholder={label} />
+          </View>
+        ))}
       </KeyboardScrollView>
       <BottomBar separator>
         <BottomBarContent>

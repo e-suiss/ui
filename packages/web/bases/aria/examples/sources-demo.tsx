@@ -11,21 +11,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const sources = [
-  {
-    url: "https://docs.astro.build/en/install-and-setup/",
-    title: "Install Astro | docs.astro.build",
-  },
-  {
-    url: "https://www.npmjs.com/package/create-astro",
-    title: "create-astro | npmjs.com",
-  },
-  {
-    url: "https://pnpm.io/cli/create",
-    title: "pnpm create | pnpm.io",
-  },
-]
-
 export default function SourcesDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
@@ -57,35 +42,74 @@ export default function SourcesDemo() {
                       remixicon="RiGlobalLine"
                     />
                   </TraceIcon>
-                  <TraceTitle>Used {sources.length} sources</TraceTitle>
+                  <TraceTitle>Used 3 sources</TraceTitle>
                 </TraceLine>
               </TraceCollapsibleTrigger>
               <TraceCollapsibleContent>
                 <Trace>
-                  {sources.map((source) => (
-                    <a
-                      key={source.url}
-                      href={source.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <TraceLine>
-                        <TraceTitle>
-                          {source.title}
-                          <span className="sr-only"> (opens in a new tab)</span>
-                        </TraceTitle>
-                        <TraceIcon>
-                          <IconPlaceholder
-                            lucide="ArrowUpRightIcon"
-                            tabler="IconArrowUpRight"
-                            hugeicons="ArrowUpRight01Icon"
-                            phosphor="ArrowUpRightIcon"
-                            remixicon="RiArrowRightUpLine"
-                          />
-                        </TraceIcon>
-                      </TraceLine>
-                    </a>
-                  ))}
+                  <a
+                    href="https://docs.astro.build/en/install-and-setup/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <TraceLine>
+                      <TraceTitle>
+                        Install Astro | docs.astro.build
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </TraceTitle>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="ArrowUpRightIcon"
+                          tabler="IconArrowUpRight"
+                          hugeicons="ArrowUpRight01Icon"
+                          phosphor="ArrowUpRightIcon"
+                          remixicon="RiArrowRightUpLine"
+                        />
+                      </TraceIcon>
+                    </TraceLine>
+                  </a>
+                  <a
+                    href="https://www.npmjs.com/package/create-astro"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <TraceLine>
+                      <TraceTitle>
+                        create-astro | npmjs.com
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </TraceTitle>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="ArrowUpRightIcon"
+                          tabler="IconArrowUpRight"
+                          hugeicons="ArrowUpRight01Icon"
+                          phosphor="ArrowUpRightIcon"
+                          remixicon="RiArrowRightUpLine"
+                        />
+                      </TraceIcon>
+                    </TraceLine>
+                  </a>
+                  <a
+                    href="https://pnpm.io/cli/create"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <TraceLine>
+                      <TraceTitle>
+                        pnpm create | pnpm.io
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </TraceTitle>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="ArrowUpRightIcon"
+                          tabler="IconArrowUpRight"
+                          hugeicons="ArrowUpRight01Icon"
+                          phosphor="ArrowUpRightIcon"
+                          remixicon="RiArrowRightUpLine"
+                        />
+                      </TraceIcon>
+                    </TraceLine>
+                  </a>
                 </Trace>
               </TraceCollapsibleContent>
             </TraceCollapsible>

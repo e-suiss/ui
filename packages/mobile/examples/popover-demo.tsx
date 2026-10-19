@@ -12,12 +12,6 @@ import {
 } from "@/components/ui/popover"
 import { Text } from "@/components/ui/text"
 
-const dimensions = [
-  { id: "width", label: "Width", value: "100%" },
-  { id: "max-width", label: "Max. width", value: "300px" },
-  { id: "height", label: "Height", value: "25px" },
-]
-
 export default function PopoverDemo() {
   return (
     <View className="items-start">
@@ -34,21 +28,36 @@ export default function PopoverDemo() {
               </PopoverDescription>
             </PopoverHeader>
             <View className="gap-2">
-              {dimensions.map((dimension) => (
-                <View
-                  key={dimension.id}
-                  className="flex-row items-center gap-4"
-                >
-                  <Label nativeID={`popover-${dimension.id}`} className="w-24">
-                    {dimension.label}
-                  </Label>
-                  <Input
-                    accessibilityLabelledBy={`popover-${dimension.id}`}
-                    defaultValue={dimension.value}
-                    className="h-8 flex-1"
-                  />
-                </View>
-              ))}
+              <View className="flex-row items-center gap-4">
+                <Label nativeID="popover-width" className="w-24">
+                  Width
+                </Label>
+                <Input
+                  accessibilityLabelledBy="popover-width"
+                  defaultValue="100%"
+                  className="h-8 flex-1"
+                />
+              </View>
+              <View className="flex-row items-center gap-4">
+                <Label nativeID="popover-max-width" className="w-24">
+                  Max. width
+                </Label>
+                <Input
+                  accessibilityLabelledBy="popover-max-width"
+                  defaultValue="300px"
+                  className="h-8 flex-1"
+                />
+              </View>
+              <View className="flex-row items-center gap-4">
+                <Label nativeID="popover-height" className="w-24">
+                  Height
+                </Label>
+                <Input
+                  accessibilityLabelledBy="popover-height"
+                  defaultValue="25px"
+                  className="h-8 flex-1"
+                />
+              </View>
             </View>
           </View>
         </PopoverContent>

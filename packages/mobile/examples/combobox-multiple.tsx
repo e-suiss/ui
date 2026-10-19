@@ -21,7 +21,7 @@ const frameworks = [
   "Expo",
 ]
 
-function MultipleDemo() {
+export default function ComboboxMultiple() {
   const anchor = useComboboxAnchor()
   const [value, setValue] = React.useState<string[]>(["Expo", "Astro"])
   return (
@@ -51,8 +51,4 @@ function MultipleDemo() {
       </ComboboxContent>
     </Combobox>
   )
-}
-
-export default function ComboboxMultiple() {
-  return <MultipleDemo />
 }

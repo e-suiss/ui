@@ -8,13 +8,13 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 
-function CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {
+export default function DropdownMenuCheckboxes() {
   const [statusBar, setStatusBar] = React.useState(true)
   const [activityBar, setActivityBar] = React.useState(false)
   const [panel, setPanel] = React.useState(false)
 
   return (
-    <DropdownMenu {...props}>
+    <DropdownMenu>
       <Button variant="outline">View</Button>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
@@ -42,8 +42,4 @@ function CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
-
-export default function DropdownMenuCheckboxes() {
-  return <CheckboxesExample />
 }

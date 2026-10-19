@@ -205,46 +205,14 @@ function Composer({ onSend }: { onSend: (text: string) => void }) {
   )
 }
 
-type ChatReady = (
-  append: (messages: ChatMessage[]) => void,
-  scroller: ReturnType<typeof useMessageScroller>
-) => void
-
-function ReadyEffect({
-  append,
-  onReady,
-}: {
-  append: (messages: ChatMessage[]) => void
-  onReady?: ChatReady
-}) {
-  const scroller = useMessageScroller()
-  const readyRef = React.useRef(onReady)
-  const scrollerRef = React.useRef(scroller)
-
-  React.useEffect(() => {
-    readyRef.current?.(append, scrollerRef.current)
-  }, [append])
-
-  return null
-}
-
-function Chat({
-  initial,
-  empty,
-  onReady,
-}: {
-  initial: ChatMessage[]
-  empty?: React.ReactElement
-  onReady?: ChatReady
-}) {
-  const [messages, setMessages] = React.useState(initial)
+export default function MessageScrollerDemo() {
+  const [messages, setMessages] = React.useState<ChatMessage[]>(thread)
   const append = React.useCallback((next: ChatMessage[]) => {
     setMessages((current) => [...current, ...next])
   }, [])
 
   return (
     <MessageScrollerProvider>
-      <ReadyEffect append={append} onReady={onReady} />
       <View className="-m-4 flex-1">
         <MessageScroller>
           <MessageScrollerViewport
@@ -252,7 +220,6 @@ function Chat({
             keyExtractor={(message) => message.id}
             renderItem={({ item }) => <ChatRow message={item} />}
             contentContainerClassName="gap-4 py-4"
-            ListEmptyComponent={empty}
           />
           <MessageScrollerButton />
         </MessageScroller>
@@ -264,8 +231,4 @@ function Chat({
       </View>
     </MessageScrollerProvider>
   )
-}
-
-export default function MessageScrollerDemo() {
-  return <Chat initial={thread} />
 }

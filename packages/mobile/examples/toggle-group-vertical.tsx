@@ -10,18 +10,17 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 
-type GroupProps = Omit<
-  React.ComponentProps<typeof ToggleGroup>,
-  "value" | "onValueChange" | "children"
->
-
-function FormattingDemo({
-  initial = ["bold"],
-  ...props
-}: GroupProps & { initial?: string[] }) {
-  const [value, setValue] = React.useState<string[]>(initial)
+export default function ToggleGroupVertical() {
+  const [value, setValue] = React.useState<string[]>(["bold"])
   return (
-    <ToggleGroup multiple value={value} onValueChange={setValue} {...props}>
+    <ToggleGroup
+      multiple
+      value={value}
+      onValueChange={setValue}
+      orientation="vertical"
+      variant="outline"
+      spacing={0}
+    >
       <ToggleGroupItem value="bold" accessibilityLabel="Toggle bold">
         <ToggleGroupIcon as={TextBIcon} />
       </ToggleGroupItem>
@@ -33,8 +32,4 @@ function FormattingDemo({
       </ToggleGroupItem>
     </ToggleGroup>
   )
-}
-
-export default function ToggleGroupVertical() {
-  return <FormattingDemo orientation="vertical" variant="outline" spacing={0} />
 }

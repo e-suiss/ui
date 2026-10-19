@@ -9,13 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-function CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {
+export default function DropdownMenuCheckboxes() {
   const [statusBar, setStatusBar] = React.useState(true)
   const [activityBar, setActivityBar] = React.useState(false)
   const [panel, setPanel] = React.useState(false)
 
   return (
-    <DropdownMenu {...props}>
+    <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline" />}>
         View
       </DropdownMenuTrigger>
@@ -45,8 +45,4 @@ function CheckboxesExample(props: React.ComponentProps<typeof DropdownMenu>) {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
-
-export default function DropdownMenuCheckboxes() {
-  return <CheckboxesExample />
 }

@@ -2,13 +2,11 @@ import * as React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Text } from "@/components/ui/text"
 
-type ListVariant = "default" | "line"
-
-function DisabledTabDemo({ variant }: { variant?: ListVariant }) {
+export default function TabsDisabledTab() {
   const [value, setValue] = React.useState("overview")
   return (
     <Tabs value={value} onValueChange={setValue}>
-      <TabsList variant={variant}>
+      <TabsList>
         <TabsTrigger value="overview">
           <Text>Overview</Text>
         </TabsTrigger>
@@ -31,8 +29,4 @@ function DisabledTabDemo({ variant }: { variant?: ListVariant }) {
       </TabsContent>
     </Tabs>
   )
-}
-
-export default function TabsDisabledTab() {
-  return <DisabledTabDemo />
 }

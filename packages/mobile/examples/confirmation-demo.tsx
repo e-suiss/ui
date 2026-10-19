@@ -11,7 +11,7 @@ import { Trace, TraceIcon, TraceLine, TraceTitle } from "@/components/ui/trace"
 
 type Decision = "pending" | "approved" | "denied"
 
-function ConfirmationExample() {
+export default function ConfirmationDemo() {
   const [decision, setDecision] = React.useState<Decision>("pending")
   return (
     <View className="w-full gap-4">
@@ -80,8 +80,4 @@ function ConfirmationExample() {
       )}
     </View>
   )
-}
-
-export default function ConfirmationDemo() {
-  return <ConfirmationExample />
 }

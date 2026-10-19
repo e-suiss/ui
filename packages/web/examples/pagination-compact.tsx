@@ -49,15 +49,22 @@ function go(setPage: (page: number) => void, page: number, disabled: boolean) {
   }
 }
 
-function Orders({
-  page,
-  perPage,
-  children,
-}: {
-  page: number
-  perPage: number
-  children: React.ReactNode
-}) {
+export default function PaginationCompact() {
+  const [page, setPage] = React.useState(3)
+  const [draft, setDraft] = React.useState("3")
+  const perPage = 5
+  const count = Math.ceil(orders.length / perPage)
+
+  const change = (next: number) => {
+    setPage(next)
+    setDraft(String(next))
+  }
+
+  const commit = () => {
+    const next = Number.parseInt(draft, 10)
+    if (Number.isNaN(next)) return setDraft(String(page))
+    change(Math.min(Math.max(next, 1), count))
+  }
   const rows = orders.slice((page - 1) * perPage, page * perPage)
 
   return (
@@ -84,30 +91,6 @@ function Orders({
           ))}
         </TableBody>
       </Table>
-      {children}
-    </div>
-  )
-}
-
-function CompactExample() {
-  const [page, setPage] = React.useState(3)
-  const [draft, setDraft] = React.useState("3")
-  const perPage = 5
-  const count = Math.ceil(orders.length / perPage)
-
-  const change = (next: number) => {
-    setPage(next)
-    setDraft(String(next))
-  }
-
-  const commit = () => {
-    const next = Number.parseInt(draft, 10)
-    if (Number.isNaN(next)) return setDraft(String(page))
-    change(Math.min(Math.max(next, 1), count))
-  }
-
-  return (
-    <Orders page={page} perPage={perPage}>
       <Pagination className="justify-between">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <label htmlFor="orders-page">Page</label>
@@ -125,10 +108,6 @@ function CompactExample() {
           <PaginationNext text="" {...go(change, page + 1, page === count)} />
         </PaginationGroup>
       </Pagination>
-    </Orders>
+    </div>
   )
-}
-
-export default function PaginationCompact() {
-  return <CompactExample />
 }

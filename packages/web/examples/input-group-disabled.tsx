@@ -7,19 +7,17 @@ import {
 
 export default function InputGroupDisabled() {
   return (
-    <div className="w-96">
-      <InputGroup data-disabled="true">
-        <InputGroupInput placeholder="Search..." disabled />
-        <InputGroupAddon>
-          <IconPlaceholder
-            lucide="SearchIcon"
-            tabler="IconSearch"
-            hugeicons="Search01Icon"
-            phosphor="MagnifyingGlassIcon"
-            remixicon="RiSearchLine"
-          />
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
+    <InputGroup data-disabled="true" className="w-96">
+      <InputGroupInput placeholder="Search..." disabled />
+      <InputGroupAddon>
+        <IconPlaceholder
+          lucide="SearchIcon"
+          tabler="IconSearch"
+          hugeicons="Search01Icon"
+          phosphor="MagnifyingGlassIcon"
+          remixicon="RiSearchLine"
+        />
+      </InputGroupAddon>
+    </InputGroup>
   )
 }

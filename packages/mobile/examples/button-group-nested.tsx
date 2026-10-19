@@ -8,11 +8,21 @@ export default function ButtonGroupNested() {
   return (
     <ButtonGroup>
       <ButtonGroup>
-        {["1", "2", "3", "4", "5"].map((page) => (
-          <Button key={page} variant="outline" size="sm">
-            <Text>{page}</Text>
-          </Button>
-        ))}
+        <Button variant="outline" size="sm">
+          <Text>1</Text>
+        </Button>
+        <Button variant="outline" size="sm">
+          <Text>2</Text>
+        </Button>
+        <Button variant="outline" size="sm">
+          <Text>3</Text>
+        </Button>
+        <Button variant="outline" size="sm">
+          <Text>4</Text>
+        </Button>
+        <Button variant="outline" size="sm">
+          <Text>5</Text>
+        </Button>
       </ButtonGroup>
       <ButtonGroup>
         <Button variant="outline" size="icon-sm" accessibilityLabel="Previous">

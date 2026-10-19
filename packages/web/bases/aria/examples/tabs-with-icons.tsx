@@ -1,76 +1,57 @@
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    icon: (
-      <IconPlaceholder
-        lucide="UserIcon"
-        tabler="IconUser"
-        hugeicons="UserIcon"
-        phosphor="UserIcon"
-        remixicon="RiUserLine"
-        data-icon="inline-start"
-      />
-    ),
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    icon: (
-      <IconPlaceholder
-        lucide="BellIcon"
-        tabler="IconBell"
-        hugeicons="Notification03Icon"
-        phosphor="BellIcon"
-        remixicon="RiNotificationLine"
-        data-icon="inline-start"
-      />
-    ),
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: (
-      <IconPlaceholder
-        lucide="SettingsIcon"
-        tabler="IconSettings"
-        hugeicons="Settings01Icon"
-        phosphor="GearIcon"
-        remixicon="RiSettingsLine"
-        data-icon="inline-start"
-      />
-    ),
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
 export default function TabsWithIcons() {
   return (
-    <div className="w-full max-w-96">
-      <Tabs defaultSelectedKey="account" orientation="horizontal">
-        <TabsList variant="default">
-          {tabs.map((tab) => (
-            <TabsTrigger key={tab.value} id={tab.value}>
-              {tab.icon}
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {tabs.map((tab) => (
-          <TabsContent
-            key={tab.value}
-            id={tab.value}
-            className="text-muted-foreground"
-          >
-            {tab.content}
-          </TabsContent>
-        ))}
-      </Tabs>
-    </div>
+    <Tabs
+      defaultSelectedKey="account"
+      orientation="horizontal"
+      className="w-full max-w-96"
+    >
+      <TabsList variant="default">
+        <TabsTrigger id="account">
+          <IconPlaceholder
+            lucide="UserIcon"
+            tabler="IconUser"
+            hugeicons="UserIcon"
+            phosphor="UserIcon"
+            remixicon="RiUserLine"
+            data-icon="inline-start"
+          />
+          Account
+        </TabsTrigger>
+        <TabsTrigger id="notifications">
+          <IconPlaceholder
+            lucide="BellIcon"
+            tabler="IconBell"
+            hugeicons="Notification03Icon"
+            phosphor="BellIcon"
+            remixicon="RiNotificationLine"
+            data-icon="inline-start"
+          />
+          Notifications
+        </TabsTrigger>
+        <TabsTrigger id="settings">
+          <IconPlaceholder
+            lucide="SettingsIcon"
+            tabler="IconSettings"
+            hugeicons="Settings01Icon"
+            phosphor="GearIcon"
+            remixicon="RiSettingsLine"
+            data-icon="inline-start"
+          />
+          Settings
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent id="account" className="text-muted-foreground">
+        Update your name, email address, and profile photo.
+      </TabsContent>
+      <TabsContent id="notifications" className="text-muted-foreground">
+        Choose which updates you receive by email and push.
+      </TabsContent>
+      <TabsContent id="settings" className="text-muted-foreground">
+        Manage language, time zone, and privacy preferences.
+      </TabsContent>
+    </Tabs>
   )
 }

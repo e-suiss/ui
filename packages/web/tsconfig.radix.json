@@ -205,7 +205,6 @@
     "examples/sidebar-demo.tsx",
     "examples/sidebar-floating.tsx",
     "examples/sidebar-inset.tsx",
-    "examples/sidebar-loading.tsx",
     "examples/sidebar-offcanvas.tsx",
     "examples/sidebar-right-side.tsx",
     "examples/stack-trace-frames.tsx",

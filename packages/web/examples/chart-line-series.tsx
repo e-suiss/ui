@@ -20,44 +20,41 @@ const visitorsConfig = {
   mobile: { label: "Mobile", color: "var(--color-green-500)" },
 } satisfies ChartConfig
 
-const shortMonth = (value: string) => value.slice(0, 3)
-
 export default function ChartLineSeries() {
   return (
-    <div className="w-[min(32rem,calc(100vw-2rem))]">
-      <ChartContainer config={visitorsConfig} className="w-full">
-        {
-          <LineChart
-            accessibilityLayer
-            data={visitors}
-            margin={{ left: 12, right: 12 }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={shortMonth}
-            />
-            <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
-            <Line
-              dataKey="desktop"
-              type="monotone"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              dataKey="mobile"
-              type="monotone"
-              stroke="var(--color-mobile)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        }
-      </ChartContainer>
-    </div>
+    <ChartContainer
+      config={visitorsConfig}
+      className="w-[min(32rem,calc(100vw-2rem))]"
+    >
+      <LineChart
+        accessibilityLayer
+        data={visitors}
+        margin={{ left: 12, right: 12 }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
+        <Line
+          dataKey="desktop"
+          type="monotone"
+          stroke="var(--color-desktop)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="mobile"
+          type="monotone"
+          stroke="var(--color-mobile)"
+          strokeWidth={2}
+          dot={false}
+        />
+      </LineChart>
+    </ChartContainer>
   )
 }

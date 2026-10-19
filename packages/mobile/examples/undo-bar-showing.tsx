@@ -15,7 +15,7 @@ const initialNotes = [
 
 type Note = (typeof initialNotes)[number]
 
-function useNotes() {
+function NotesList() {
   const [notes, setNotes] = React.useState(initialNotes)
   const [log, setLog] = React.useState("Delete a note.")
   const { show } = useUndoBar()
@@ -38,33 +38,15 @@ function useNotes() {
     })
   }
 
-  return { notes, remove, log }
-}
-
-function NoteText({ note }: { note: Note }) {
-  return (
-    <View className="min-w-0 flex-1 py-2">
-      <Text numberOfLines={1} className="font-semibold">
-        {note.title}
-      </Text>
-      <Text numberOfLines={1} className="text-sm text-muted-foreground">
-        {note.preview}
-      </Text>
-    </View>
-  )
-}
-
-function NotesList({ deleteFirst = false }: { deleteFirst?: boolean }) {
-  const { notes, remove, log } = useNotes()
   const removeRef = React.useRef(remove)
   const deletedRef = React.useRef(false)
   removeRef.current = remove
 
   React.useEffect(() => {
-    if (!deleteFirst || deletedRef.current) return
+    if (deletedRef.current) return
     deletedRef.current = true
     removeRef.current(initialNotes[0])
-  }, [deleteFirst])
+  }, [])
 
   return (
     <View className="w-full gap-3">
@@ -78,7 +60,14 @@ function NotesList({ deleteFirst = false }: { deleteFirst?: boolean }) {
                 : "flex-row items-center gap-3 py-1 ps-4 pe-1"
             }
           >
-            <NoteText note={note} />
+            <View className="min-w-0 flex-1 py-2">
+              <Text numberOfLines={1} className="font-semibold">
+                {note.title}
+              </Text>
+              <Text numberOfLines={1} className="text-sm text-muted-foreground">
+                {note.preview}
+              </Text>
+            </View>
             <Button
               variant="ghost"
               size="icon-lg"
@@ -100,7 +89,7 @@ function NotesList({ deleteFirst = false }: { deleteFirst?: boolean }) {
 export default function UndoBarShowing() {
   return (
     <UndoBarProvider timeout={60000}>
-      <NotesList deleteFirst />
+      <NotesList />
     </UndoBarProvider>
   )
 }

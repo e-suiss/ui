@@ -110,11 +110,7 @@ const menu = [
   },
 ]
 
-function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
-}
-
-function FreeResizeExample() {
+export default function WidgetFreeResize() {
   const ref = React.useRef<HTMLDivElement>(null)
   const [box, setBox] = React.useState({ width: 0, height: 0, columns: 0 })
 
@@ -179,13 +175,9 @@ function FreeResizeExample() {
           </div>
         </ScrollArea>
       </Widget>
-      <Hint>
+      <p className="mt-6 text-xs text-muted-foreground">
         Free resize · {box.width} × {box.height}
-      </Hint>
+      </p>
     </div>
   )
-}
-
-export default function WidgetFreeResize() {
-  return <FreeResizeExample />
 }

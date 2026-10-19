@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
@@ -10,17 +9,6 @@ import {
 } from "@/components/ui/widget"
 
 const hourly = [12, 18, 14, 30, 44, 34, 22, 40, 100, 46, 30, 14]
-
-const topItems = [
-  { name: "Grilled meatballs", count: 38 },
-  { name: "Lahmacun", count: 31 },
-  { name: "Adana kebab", count: 24 },
-  { name: "Künefe", count: 19 },
-]
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
-}
 
 export default function WidgetSales() {
   return (
@@ -60,22 +48,27 @@ export default function WidgetSales() {
           </div>
         </div>
         <ul className="flex flex-col group-data-[size=medium]/widget:hidden group-data-[size=small]/widget:hidden">
-          {topItems.map((item) => (
-            <li
-              key={item.name}
-              className="flex items-center justify-between border-t py-1.5 text-sm"
-            >
-              {item.name}
-              <span className="text-muted-foreground tabular-nums">
-                {item.count}
-              </span>
-            </li>
-          ))}
+          <li className="flex items-center justify-between border-t py-1.5 text-sm">
+            Grilled meatballs
+            <span className="text-muted-foreground tabular-nums">38</span>
+          </li>
+          <li className="flex items-center justify-between border-t py-1.5 text-sm">
+            Lahmacun
+            <span className="text-muted-foreground tabular-nums">31</span>
+          </li>
+          <li className="flex items-center justify-between border-t py-1.5 text-sm">
+            Adana kebab
+            <span className="text-muted-foreground tabular-nums">24</span>
+          </li>
+          <li className="flex items-center justify-between border-t py-1.5 text-sm">
+            Künefe
+            <span className="text-muted-foreground tabular-nums">19</span>
+          </li>
         </ul>
       </Widget>
-      <Hint>
+      <p className="mt-6 text-xs text-muted-foreground">
         Hover the corner and drag the handle. Double-click it to reset.
-      </Hint>
+      </p>
     </div>
   )
 }

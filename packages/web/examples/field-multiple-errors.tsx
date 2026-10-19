@@ -3,22 +3,20 @@ import { Input } from "@/components/ui/input"
 
 export default function FieldMultipleErrors() {
   return (
-    <div className="w-96">
-      <Field orientation="vertical" data-invalid>
-        <FieldLabel htmlFor="field-password">Password</FieldLabel>
-        <Input
-          id="field-password"
-          type="password"
-          defaultValue="abc"
-          aria-invalid
-        />
-        <FieldError
-          errors={[
-            { message: "Password must be at least 8 characters." },
-            { message: "Password must contain a number." },
-          ]}
-        />
-      </Field>
-    </div>
+    <Field orientation="vertical" data-invalid className="w-96">
+      <FieldLabel htmlFor="field-password">Password</FieldLabel>
+      <Input
+        id="field-password"
+        type="password"
+        defaultValue="abc"
+        aria-invalid
+      />
+      <FieldError
+        errors={[
+          { message: "Password must be at least 8 characters." },
+          { message: "Password must contain a number." },
+        ]}
+      />
+    </Field>
   )
 }

@@ -8,7 +8,7 @@ import {
 } from "@/components/patterns/picker"
 import { Text } from "@/components/ui/text"
 
-function PickerDemo() {
+export default function PickerDemoExample() {
   const [value, setValue] = React.useState<string>()
   return (
     <View className="gap-2">
@@ -37,8 +37,4 @@ function PickerDemo() {
       </Text>
     </View>
   )
-}
-
-export default function PickerDemoExample() {
-  return <PickerDemo />
 }

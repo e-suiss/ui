@@ -24,33 +24,27 @@ function HighlightedMatch({ text, query }: { text: string; query: string }) {
   )
 }
 
-function HighlightMatchCombobox() {
+export default function ComboboxHighlightMatch() {
   const [query, setQuery] = React.useState("")
   return (
-    <Combobox
-      items={frameworks}
-      inputValue={query}
-      onInputValueChange={setQuery}
-    >
-      <ComboboxInput placeholder="Type to filter" />
-      <ComboboxContent>
-        <ComboboxEmpty>No framework found.</ComboboxEmpty>
-        <ComboboxList>
-          {(item: string) => (
-            <ComboboxItem key={item} value={item}>
-              <HighlightedMatch text={item} query={query} />
-            </ComboboxItem>
-          )}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
-  )
-}
-
-export default function ComboboxHighlightMatch() {
-  return (
     <div className="w-72">
-      <HighlightMatchCombobox />
+      <Combobox
+        items={frameworks}
+        inputValue={query}
+        onInputValueChange={setQuery}
+      >
+        <ComboboxInput placeholder="Type to filter" />
+        <ComboboxContent>
+          <ComboboxEmpty>No framework found.</ComboboxEmpty>
+          <ComboboxList>
+            {(item: string) => (
+              <ComboboxItem key={item} value={item}>
+                <HighlightedMatch text={item} query={query} />
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
     </div>
   )
 }

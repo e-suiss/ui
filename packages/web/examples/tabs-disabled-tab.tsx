@@ -1,41 +1,25 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
 export default function TabsDisabledTab() {
   return (
-    <div className="w-full max-w-96">
-      <Tabs defaultValue="account" orientation="horizontal">
-        <TabsList variant="default">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="billing" disabled>
-            Billing
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="account" className="text-muted-foreground">
-          {tabs[0].content}
-        </TabsContent>
-        <TabsContent value="notifications" className="text-muted-foreground">
-          {tabs[1].content}
-        </TabsContent>
-      </Tabs>
-    </div>
+    <Tabs
+      defaultValue="account"
+      orientation="horizontal"
+      className="w-full max-w-96"
+    >
+      <TabsList variant="default">
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="notifications">Notifications</TabsTrigger>
+        <TabsTrigger value="billing" disabled>
+          Billing
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="account" className="text-muted-foreground">
+        Update your name, email address, and profile photo.
+      </TabsContent>
+      <TabsContent value="notifications" className="text-muted-foreground">
+        Choose which updates you receive by email and push.
+      </TabsContent>
+    </Tabs>
   )
 }

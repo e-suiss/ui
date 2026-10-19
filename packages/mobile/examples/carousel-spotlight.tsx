@@ -9,26 +9,34 @@ import {
 } from "@/components/ui/carousel"
 import { Text } from "@/components/ui/text"
 
-const features = [
-  { title: "Take orders at the table." },
-  { title: "Every ticket, right on time." },
-  { title: "A full room, every night." },
-]
-
 export default function CarouselSpotlight() {
   return (
     <Carousel opts={{ loop: true }}>
       <CarouselContent>
-        {features.map((feature) => (
-          <CarouselItem key={feature.title}>
-            <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-muted p-8">
-              <Text className="text-3xl font-bold">Hestia POS</Text>
-              <Text className="text-center text-muted-foreground">
-                {feature.title}
-              </Text>
-            </View>
-          </CarouselItem>
-        ))}
+        <CarouselItem>
+          <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-muted p-8">
+            <Text className="text-3xl font-bold">Hestia POS</Text>
+            <Text className="text-center text-muted-foreground">
+              Take orders at the table.
+            </Text>
+          </View>
+        </CarouselItem>
+        <CarouselItem>
+          <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-muted p-8">
+            <Text className="text-3xl font-bold">Hestia POS</Text>
+            <Text className="text-center text-muted-foreground">
+              Every ticket, right on time.
+            </Text>
+          </View>
+        </CarouselItem>
+        <CarouselItem>
+          <View className="aspect-[10/7] items-center justify-center gap-3 rounded-3xl bg-muted p-8">
+            <Text className="text-3xl font-bold">Hestia POS</Text>
+            <Text className="text-center text-muted-foreground">
+              A full room, every night.
+            </Text>
+          </View>
+        </CarouselItem>
       </CarouselContent>
       <CarouselControls className="justify-center">
         <CarouselDots />

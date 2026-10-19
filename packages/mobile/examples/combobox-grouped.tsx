@@ -36,7 +36,7 @@ const produce: { value: string; items: Produce[] }[] = [
   },
 ]
 
-function GroupedDemo() {
+export default function ComboboxGrouped() {
   return (
     <Combobox items={produce} itemToStringLabel={(item: Produce) => item.label}>
       <ComboboxInput className="w-64" placeholder="Select produce" />
@@ -62,8 +62,4 @@ function GroupedDemo() {
       </ComboboxContent>
     </Combobox>
   )
-}
-
-export default function ComboboxGrouped() {
-  return <GroupedDemo />
 }

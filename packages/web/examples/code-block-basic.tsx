@@ -13,10 +13,8 @@ Route (app)                Size  First Load JS
 
 export default function CodeBlockBasic() {
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockContent>{output}</CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockContent>{output}</CodeBlockContent>
+    </CodeBlock>
   )
 }

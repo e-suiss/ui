@@ -5,38 +5,33 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-const items = [
-  {
-    value: "shipping",
-    title: "How long does shipping take?",
-    content:
-      "Orders ship within two business days and arrive in three to five days.",
-  },
-  {
-    value: "returns",
-    title: "Can I return an item?",
-    content:
-      "Items can be returned within 14 days of delivery for a full refund.",
-  },
-  {
-    value: "support",
-    title: "How do I contact support?",
-    content:
-      "Reach the support team from the help center, available around the clock.",
-  },
-]
-
 export default function AccordionOpenByDefault() {
   return (
-    <div className="w-96">
-      <Accordion type="single" collapsible defaultValue="shipping">
-        {items.map((item) => (
-          <AccordionItem key={item.value} value={item.value}>
-            <AccordionTrigger>{item.title}</AccordionTrigger>
-            <AccordionContent>{item.content}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
+    <Accordion
+      type="single"
+      collapsible
+      defaultValue="shipping"
+      className="w-96"
+    >
+      <AccordionItem value="shipping">
+        <AccordionTrigger>How long does shipping take?</AccordionTrigger>
+        <AccordionContent>
+          Orders ship within two business days and arrive in three to five days.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="returns">
+        <AccordionTrigger>Can I return an item?</AccordionTrigger>
+        <AccordionContent>
+          Items can be returned within 14 days of delivery for a full refund.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="support">
+        <AccordionTrigger>How do I contact support?</AccordionTrigger>
+        <AccordionContent>
+          Reach the support team from the help center, available around the
+          clock.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   )
 }

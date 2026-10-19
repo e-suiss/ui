@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
-function WithLabelDemo() {
+export default function CheckboxWithLabel() {
   const [checked, setChecked] = React.useState(false)
   return (
     <View className="flex-row items-center gap-3">
@@ -17,8 +17,4 @@ function WithLabelDemo() {
       </Label>
     </View>
   )
-}
-
-export default function CheckboxWithLabel() {
-  return <WithLabelDemo />
 }

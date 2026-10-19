@@ -25,17 +25,15 @@ export default function CodeBlockStartLine() {
   const lines = useHighlightedCode(code, "tsx")
 
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>app/dashboard/page.tsx</CodeBlockTitle>
-        </CodeBlockHeader>
-        <CodeBlockContent lineNumbers startLine={995}>
-          {lines.map((line, index) => (
-            <CodeBlockLine key={index}>{line}</CodeBlockLine>
-          ))}
-        </CodeBlockContent>
-      </CodeBlock>
-    </div>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>app/dashboard/page.tsx</CodeBlockTitle>
+      </CodeBlockHeader>
+      <CodeBlockContent lineNumbers startLine={995}>
+        {lines.map((line, index) => (
+          <CodeBlockLine key={index}>{line}</CodeBlockLine>
+        ))}
+      </CodeBlockContent>
+    </CodeBlock>
   )
 }

@@ -19,7 +19,7 @@ const turns = [
   },
 ]
 
-function CheckpointExample() {
+export default function CheckpointDemo() {
   const [restored, setRestored] = React.useState(false)
   const shown = restored ? turns.slice(0, 1) : turns
   return (
@@ -53,8 +53,4 @@ function CheckpointExample() {
       </View>
     </View>
   )
-}
-
-export default function CheckpointDemo() {
-  return <CheckpointExample />
 }

@@ -135,71 +135,65 @@ function TestRow({ test }: { test: Test }) {
   )
 }
 
-function TestResults({ suites }: { suites: Suite[] }) {
+export default function TestResultsSuites() {
   const summary = countTests(suites.flatMap((suite) => suite.tests))
 
   return (
-    <TraceCollapsible defaultOpen={summary.failed > 0}>
-      <TraceCollapsibleTrigger>
-        <TraceLine status={summary.failed > 0 ? "error" : undefined}>
-          <TraceIcon>
-            <IconPlaceholder
-              lucide="FlaskConicalIcon"
-              tabler="IconFlask"
-              hugeicons="FlaskConicalIcon"
-              phosphor="FlaskIcon"
-              remixicon="RiFlaskLine"
-            />
-          </TraceIcon>
-          <TraceTitle>Ran {formatCounts(summary)}</TraceTitle>
-        </TraceLine>
-      </TraceCollapsibleTrigger>
-      <TraceCollapsibleContent keepMounted>
-        <Trace>
-          {suites.map((suite) => {
-            const counts = countTests(suite.tests)
-
-            return (
-              <TraceCollapsible
-                key={suite.name}
-                defaultOpen={counts.failed > 0}
-              >
-                <TraceCollapsibleTrigger>
-                  <TraceLine status={counts.failed > 0 ? "error" : undefined}>
-                    <TraceIcon>
-                      <IconPlaceholder
-                        lucide="FileCodeIcon"
-                        tabler="IconFileCode"
-                        hugeicons="FileScriptIcon"
-                        phosphor="FileCodeIcon"
-                        remixicon="RiFileCodeLine"
-                      />
-                    </TraceIcon>
-                    <TraceTitle>
-                      {suite.name}, {formatCounts(counts)}
-                    </TraceTitle>
-                  </TraceLine>
-                </TraceCollapsibleTrigger>
-                <TraceCollapsibleContent keepMounted>
-                  <Trace>
-                    {suite.tests.map((test) => (
-                      <TestRow key={test.name} test={test} />
-                    ))}
-                  </Trace>
-                </TraceCollapsibleContent>
-              </TraceCollapsible>
-            )
-          })}
-        </Trace>
-      </TraceCollapsibleContent>
-    </TraceCollapsible>
-  )
-}
-
-export default function TestResultsSuites() {
-  return (
     <Trace className="max-w-sm">
-      <TestResults suites={suites} />
+      <TraceCollapsible defaultOpen={summary.failed > 0}>
+        <TraceCollapsibleTrigger>
+          <TraceLine status={summary.failed > 0 ? "error" : undefined}>
+            <TraceIcon>
+              <IconPlaceholder
+                lucide="FlaskConicalIcon"
+                tabler="IconFlask"
+                hugeicons="FlaskConicalIcon"
+                phosphor="FlaskIcon"
+                remixicon="RiFlaskLine"
+              />
+            </TraceIcon>
+            <TraceTitle>Ran {formatCounts(summary)}</TraceTitle>
+          </TraceLine>
+        </TraceCollapsibleTrigger>
+        <TraceCollapsibleContent keepMounted>
+          <Trace>
+            {suites.map((suite) => {
+              const counts = countTests(suite.tests)
+
+              return (
+                <TraceCollapsible
+                  key={suite.name}
+                  defaultOpen={counts.failed > 0}
+                >
+                  <TraceCollapsibleTrigger>
+                    <TraceLine status={counts.failed > 0 ? "error" : undefined}>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="FileCodeIcon"
+                          tabler="IconFileCode"
+                          hugeicons="FileScriptIcon"
+                          phosphor="FileCodeIcon"
+                          remixicon="RiFileCodeLine"
+                        />
+                      </TraceIcon>
+                      <TraceTitle>
+                        {suite.name}, {formatCounts(counts)}
+                      </TraceTitle>
+                    </TraceLine>
+                  </TraceCollapsibleTrigger>
+                  <TraceCollapsibleContent keepMounted>
+                    <Trace>
+                      {suite.tests.map((test) => (
+                        <TestRow key={test.name} test={test} />
+                      ))}
+                    </Trace>
+                  </TraceCollapsibleContent>
+                </TraceCollapsible>
+              )
+            })}
+          </Trace>
+        </TraceCollapsibleContent>
+      </TraceCollapsible>
     </Trace>
   )
 }

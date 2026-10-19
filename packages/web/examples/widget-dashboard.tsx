@@ -10,16 +10,6 @@ import {
   WidgetValue,
 } from "@/components/ui/widget"
 
-const tickets = [
-  { id: "#1042", place: "Table 4", minutes: 18 },
-  { id: "#1043", place: "Takeaway", minutes: 15 },
-  { id: "#1044", place: "Table 12", minutes: 9 },
-  { id: "#1045", place: "Pickup", minutes: 7 },
-  { id: "#1046", place: "Garden 3", minutes: 5 },
-  { id: "#1047", place: "Table 7", minutes: 3 },
-  { id: "#1048", place: "Takeaway", minutes: 1 },
-]
-
 export default function WidgetDashboard() {
   return (
     <div className="grid max-w-4xl auto-rows-[10.5rem] grid-cols-2 gap-4 md:grid-cols-4">
@@ -85,14 +75,36 @@ export default function WidgetDashboard() {
           <WidgetTitle>Reservations</WidgetTitle>
         </WidgetHeader>
         <WidgetContent className="gap-2">
-          {tickets.slice(0, 5).map((ticket, index) => (
-            <div key={ticket.id} className="flex items-baseline gap-3 text-sm">
-              <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
-                {`${18 + index}:00`}
-              </span>
-              <span className="truncate">{ticket.place}</span>
-            </div>
-          ))}
+          <div className="flex items-baseline gap-3 text-sm">
+            <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
+              18:00
+            </span>
+            <span className="truncate">Table 4</span>
+          </div>
+          <div className="flex items-baseline gap-3 text-sm">
+            <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
+              19:00
+            </span>
+            <span className="truncate">Takeaway</span>
+          </div>
+          <div className="flex items-baseline gap-3 text-sm">
+            <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
+              20:00
+            </span>
+            <span className="truncate">Table 12</span>
+          </div>
+          <div className="flex items-baseline gap-3 text-sm">
+            <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
+              21:00
+            </span>
+            <span className="truncate">Pickup</span>
+          </div>
+          <div className="flex items-baseline gap-3 text-sm">
+            <span className="w-11 shrink-0 text-muted-foreground tabular-nums">
+              22:00
+            </span>
+            <span className="truncate">Garden 3</span>
+          </div>
         </WidgetContent>
       </Widget>
       <Widget className="col-span-2 row-span-2" align="center">

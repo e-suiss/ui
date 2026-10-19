@@ -4,7 +4,7 @@ import { View } from "react-native"
 import { PinPad } from "@/components/ui/pin-pad"
 import { Text } from "@/components/ui/text"
 
-function BiometricDemo({ faceId = false }: { faceId?: boolean }) {
+export default function PinPadFaceBiometric() {
   const [log, setLog] = React.useState(0)
   return (
     <View className="items-center gap-6">
@@ -12,14 +12,10 @@ function BiometricDemo({ faceId = false }: { faceId?: boolean }) {
         {log > 0 ? `Biometric requested (${log})` : "Biometric key"}
       </Text>
       <PinPad
-        biometricIcon={faceId ? ScanSmileyIcon : undefined}
-        biometricLabel={faceId ? "Use Face ID" : "Use Touch ID"}
+        biometricIcon={ScanSmileyIcon}
+        biometricLabel="Use Face ID"
         onBiometric={() => setLog((count) => count + 1)}
       />
     </View>
   )
-}
-
-export default function PinPadFaceBiometric() {
-  return <BiometricDemo faceId />
 }

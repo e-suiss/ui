@@ -19,55 +19,53 @@ Error: listen EADDRINUSE: address already in use :::3000
 
 export default function CodeBlockTrace() {
   return (
-    <div className="w-full max-w-md">
-      <Trace>
-        <TraceCollapsible defaultExpanded>
-          <TraceCollapsibleTrigger>
-            <TraceLine>
-              <TraceIcon>
-                <IconPlaceholder
-                  lucide="TerminalIcon"
-                  tabler="IconTerminal2"
-                  hugeicons="ComputerTerminal01Icon"
-                  phosphor="TerminalWindowIcon"
-                  remixicon="RiTerminalBoxLine"
-                />
-              </TraceIcon>
-              <TraceTitle>Ran node --version</TraceTitle>
-            </TraceLine>
-          </TraceCollapsibleTrigger>
-          <TraceCollapsibleContent>
-            <CodeBlock size="sm">
-              <CodeBlockContent wrap className="max-h-64">
-                {output}
-              </CodeBlockContent>
-            </CodeBlock>
-          </TraceCollapsibleContent>
-        </TraceCollapsible>
-        <TraceCollapsible defaultExpanded>
-          <TraceCollapsibleTrigger>
-            <TraceLine status="error">
-              <TraceIcon>
-                <IconPlaceholder
-                  lucide="TerminalIcon"
-                  tabler="IconTerminal2"
-                  hugeicons="ComputerTerminal01Icon"
-                  phosphor="TerminalWindowIcon"
-                  remixicon="RiTerminalBoxLine"
-                />
-              </TraceIcon>
-              <TraceTitle>Failed to run pnpm dev</TraceTitle>
-            </TraceLine>
-          </TraceCollapsibleTrigger>
-          <TraceCollapsibleContent>
-            <CodeBlock size="sm" variant="destructive">
-              <CodeBlockContent wrap className="max-h-64">
-                {error}
-              </CodeBlockContent>
-            </CodeBlock>
-          </TraceCollapsibleContent>
-        </TraceCollapsible>
-      </Trace>
-    </div>
+    <Trace className="w-full max-w-md">
+      <TraceCollapsible defaultExpanded>
+        <TraceCollapsibleTrigger>
+          <TraceLine>
+            <TraceIcon>
+              <IconPlaceholder
+                lucide="TerminalIcon"
+                tabler="IconTerminal2"
+                hugeicons="ComputerTerminal01Icon"
+                phosphor="TerminalWindowIcon"
+                remixicon="RiTerminalBoxLine"
+              />
+            </TraceIcon>
+            <TraceTitle>Ran node --version</TraceTitle>
+          </TraceLine>
+        </TraceCollapsibleTrigger>
+        <TraceCollapsibleContent>
+          <CodeBlock size="sm">
+            <CodeBlockContent wrap className="max-h-64">
+              {output}
+            </CodeBlockContent>
+          </CodeBlock>
+        </TraceCollapsibleContent>
+      </TraceCollapsible>
+      <TraceCollapsible defaultExpanded>
+        <TraceCollapsibleTrigger>
+          <TraceLine status="error">
+            <TraceIcon>
+              <IconPlaceholder
+                lucide="TerminalIcon"
+                tabler="IconTerminal2"
+                hugeicons="ComputerTerminal01Icon"
+                phosphor="TerminalWindowIcon"
+                remixicon="RiTerminalBoxLine"
+              />
+            </TraceIcon>
+            <TraceTitle>Failed to run pnpm dev</TraceTitle>
+          </TraceLine>
+        </TraceCollapsibleTrigger>
+        <TraceCollapsibleContent>
+          <CodeBlock size="sm" variant="destructive">
+            <CodeBlockContent wrap className="max-h-64">
+              {error}
+            </CodeBlockContent>
+          </CodeBlock>
+        </TraceCollapsibleContent>
+      </TraceCollapsible>
+    </Trace>
   )
 }

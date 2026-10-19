@@ -11,12 +11,6 @@ import {
 import { Progress } from "@/components/ui/progress"
 import { Text } from "@/components/ui/text"
 
-const usage = [
-  { label: "Input", value: "11,200" },
-  { label: "Output", value: "3,900" },
-  { label: "Reasoning", value: "1,300" },
-]
-
 export default function ContextDemo() {
   return (
     <View className="items-start">
@@ -32,14 +26,18 @@ export default function ContextDemo() {
             </PopoverHeader>
             <Progress value={8} />
             <View className="gap-1.5">
-              {usage.map((row) => (
-                <View key={row.label} className="flex-row justify-between">
-                  <Text className="text-sm text-muted-foreground">
-                    {row.label}
-                  </Text>
-                  <Text className="text-sm tabular-nums">{row.value}</Text>
-                </View>
-              ))}
+              <View className="flex-row justify-between">
+                <Text className="text-sm text-muted-foreground">Input</Text>
+                <Text className="text-sm tabular-nums">11,200</Text>
+              </View>
+              <View className="flex-row justify-between">
+                <Text className="text-sm text-muted-foreground">Output</Text>
+                <Text className="text-sm tabular-nums">3,900</Text>
+              </View>
+              <View className="flex-row justify-between">
+                <Text className="text-sm text-muted-foreground">Reasoning</Text>
+                <Text className="text-sm tabular-nums">1,300</Text>
+              </View>
             </View>
           </View>
         </PopoverContent>

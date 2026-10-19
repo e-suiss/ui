@@ -15,21 +15,15 @@ import {
 } from "@/components/ui/context-menu"
 import { Text } from "@/components/ui/text"
 
-function TriggerArea() {
-  return (
-    <ContextMenuTrigger className="border-border h-36 w-full items-center justify-center rounded-md border border-dashed">
-      <Text className="text-sm text-muted-foreground">Long press here</Text>
-    </ContextMenuTrigger>
-  )
-}
-
-function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
+export default function ContextMenuOpenByDefault() {
   const [showBookmarks, setShowBookmarks] = React.useState(true)
   const [showUrls, setShowUrls] = React.useState(false)
   const [person, setPerson] = React.useState("pedro")
   return (
-    <ContextMenu defaultOpen={defaultOpen}>
-      <TriggerArea />
+    <ContextMenu defaultOpen>
+      <ContextMenuTrigger className="border-border h-36 w-full items-center justify-center rounded-md border border-dashed">
+        <Text className="text-sm text-muted-foreground">Long press here</Text>
+      </ContextMenuTrigger>
       <ContextMenuContent className="w-64">
         <ContextMenuItem inset>
           <Text>Back</Text>
@@ -83,8 +77,4 @@ function ContextMenuDemo({ defaultOpen }: { defaultOpen?: boolean }) {
       </ContextMenuContent>
     </ContextMenu>
   )
-}
-
-export default function ContextMenuOpenByDefault() {
-  return <ContextMenuDemo defaultOpen />
 }

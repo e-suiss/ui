@@ -32,55 +32,53 @@ export default function CodeBlockActionsExample() {
   const [wrap, setWrap] = React.useState(true)
 
   return (
-    <div className="w-full max-w-md">
-      <CodeBlock>
-        <CodeBlockHeader>
-          <CodeBlockTitle>
+    <CodeBlock className="w-full max-w-md">
+      <CodeBlockHeader>
+        <CodeBlockTitle>
+          <IconPlaceholder
+            lucide="TerminalIcon"
+            tabler="IconTerminal2"
+            hugeicons="ComputerTerminal01Icon"
+            phosphor="TerminalWindowIcon"
+            remixicon="RiTerminalBoxLine"
+          />
+          Terminal
+        </CodeBlockTitle>
+        <CodeBlockActions>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            aria-label="Wrap lines"
+            aria-pressed={wrap}
+            className="aria-pressed:text-foreground"
+            onClick={() => setWrap(!wrap)}
+          >
             <IconPlaceholder
-              lucide="TerminalIcon"
-              tabler="IconTerminal2"
-              hugeicons="ComputerTerminal01Icon"
-              phosphor="TerminalWindowIcon"
-              remixicon="RiTerminalBoxLine"
+              lucide="WrapTextIcon"
+              tabler="IconTextWrap"
+              hugeicons="TextWrapIcon"
+              phosphor="TextIndentIcon"
+              remixicon="RiTextWrap"
             />
-            Terminal
-          </CodeBlockTitle>
-          <CodeBlockActions>
-            <Button
-              variant="ghost"
-              size="icon-xs"
-              aria-label="Wrap lines"
-              aria-pressed={wrap}
-              className="aria-pressed:text-foreground"
-              onClick={() => setWrap(!wrap)}
-            >
-              <IconPlaceholder
-                lucide="WrapTextIcon"
-                tabler="IconTextWrap"
-                hugeicons="TextWrapIcon"
-                phosphor="TextIndentIcon"
-                remixicon="RiTextWrap"
-              />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon-xs"
-              aria-label="Download"
-              onClick={() => download(output, "lint.log")}
-            >
-              <IconPlaceholder
-                lucide="DownloadIcon"
-                tabler="IconDownload"
-                hugeicons="Download01Icon"
-                phosphor="DownloadSimpleIcon"
-                remixicon="RiDownloadLine"
-              />
-            </Button>
-            <CodeBlockCopyButton value={output} />
-          </CodeBlockActions>
-        </CodeBlockHeader>
-        <CodeBlockContent wrap={wrap}>{output}</CodeBlockContent>
-      </CodeBlock>
-    </div>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            aria-label="Download"
+            onClick={() => download(output, "lint.log")}
+          >
+            <IconPlaceholder
+              lucide="DownloadIcon"
+              tabler="IconDownload"
+              hugeicons="Download01Icon"
+              phosphor="DownloadSimpleIcon"
+              remixicon="RiDownloadLine"
+            />
+          </Button>
+          <CodeBlockCopyButton value={output} />
+        </CodeBlockActions>
+      </CodeBlockHeader>
+      <CodeBlockContent wrap={wrap}>{output}</CodeBlockContent>
+    </CodeBlock>
   )
 }

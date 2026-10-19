@@ -25,16 +25,14 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-function InboxExample({ empty = false }: { empty?: boolean }) {
+export default function PullToRefreshDemo() {
   const [messages, setMessages] = React.useState<Message[]>(() =>
-    empty
-      ? []
-      : senders.map(([from, subject], index) => ({
-          id: index,
-          from,
-          subject,
-          fresh: false,
-        }))
+    senders.map(([from, subject], index) => ({
+      id: index,
+      from,
+      subject,
+      fresh: false,
+    }))
   )
   const [log, setLog] = React.useState("Pull down from the top to refresh.")
   const count = React.useRef(0)
@@ -99,8 +97,4 @@ function InboxExample({ empty = false }: { empty?: boolean }) {
       </p>
     </div>
   )
-}
-
-export default function PullToRefreshDemo() {
-  return <InboxExample />
 }

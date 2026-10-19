@@ -42,34 +42,30 @@ const messages = [
   { id: "14", from: "me", text: "Sounds good, see you then." },
 ]
 
-function Messages() {
-  return messages.map((message) => (
-    <MessageScrollerItem key={message.id} messageId={message.id}>
-      <Message align={message.from === "me" ? "end" : "start"}>
-        <MessageContent>
-          <Bubble variant={message.from === "me" ? "default" : "muted"}>
-            <BubbleContent>{message.text}</BubbleContent>
-          </Bubble>
-        </MessageContent>
-      </Message>
-    </MessageScrollerItem>
-  ))
-}
-
 export default function MessageScrollerStartAtTop() {
   return (
-    <div className="h-96 w-96 overflow-hidden rounded-2xl border">
-      <MessageScrollerProvider defaultScrollPosition="start">
-        <MessageScroller>
-          <MessageScrollerViewport>
-            <MessageScrollerContent className="gap-3 p-4">
-              <Messages />
-            </MessageScrollerContent>
-          </MessageScrollerViewport>
-          <MessageScrollerButton direction="start" />
-          <MessageScrollerButton />
-        </MessageScroller>
-      </MessageScrollerProvider>
-    </div>
+    <MessageScrollerProvider defaultScrollPosition="start">
+      <MessageScroller className="h-96 w-96 rounded-2xl border">
+        <MessageScrollerViewport>
+          <MessageScrollerContent className="gap-3 p-4">
+            {messages.map((message) => (
+              <MessageScrollerItem key={message.id} messageId={message.id}>
+                <Message align={message.from === "me" ? "end" : "start"}>
+                  <MessageContent>
+                    <Bubble
+                      variant={message.from === "me" ? "default" : "muted"}
+                    >
+                      <BubbleContent>{message.text}</BubbleContent>
+                    </Bubble>
+                  </MessageContent>
+                </Message>
+              </MessageScrollerItem>
+            ))}
+          </MessageScrollerContent>
+        </MessageScrollerViewport>
+        <MessageScrollerButton />
+        <MessageScrollerButton direction="start" />
+      </MessageScroller>
+    </MessageScrollerProvider>
   )
 }

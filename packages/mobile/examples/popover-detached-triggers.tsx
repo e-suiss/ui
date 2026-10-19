@@ -11,28 +11,35 @@ import {
 } from "@/components/ui/popover"
 import { Text } from "@/components/ui/text"
 
-const members = [
-  { id: "ada", name: "Ada", role: "Design lead" },
-  { id: "linus", name: "Linus", role: "Platform engineer" },
-  { id: "grace", name: "Grace", role: "Product manager" },
-]
-
-const memberPopover = createHandle<(typeof members)[number]>()
+const memberPopover = createHandle<{ id: string; name: string; role: string }>()
 
 export default function PopoverDetachedTriggers() {
   return (
     <View className="flex-row items-start gap-2">
-      {members.map((member) => (
-        <PopoverTrigger
-          key={member.id}
-          id={member.id}
-          handle={memberPopover}
-          payload={member}
-          render={<Button variant="outline" />}
-        >
-          <Text>{member.name}</Text>
-        </PopoverTrigger>
-      ))}
+      <PopoverTrigger
+        id="ada"
+        handle={memberPopover}
+        payload={{ id: "ada", name: "Ada", role: "Design lead" }}
+        render={<Button variant="outline" />}
+      >
+        <Text>Ada</Text>
+      </PopoverTrigger>
+      <PopoverTrigger
+        id="linus"
+        handle={memberPopover}
+        payload={{ id: "linus", name: "Linus", role: "Platform engineer" }}
+        render={<Button variant="outline" />}
+      >
+        <Text>Linus</Text>
+      </PopoverTrigger>
+      <PopoverTrigger
+        id="grace"
+        handle={memberPopover}
+        payload={{ id: "grace", name: "Grace", role: "Product manager" }}
+        render={<Button variant="outline" />}
+      >
+        <Text>Grace</Text>
+      </PopoverTrigger>
       <Popover handle={memberPopover}>
         {({ payload }) => (
           <PopoverContent align="start">

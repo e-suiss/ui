@@ -66,7 +66,7 @@ const fortnight = energyValues.map((energy, index) => ({
   energy,
 }))
 
-function LabelFormatterDemo() {
+export default function ChartTooltipLabelFormatter() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader>
@@ -117,8 +117,4 @@ function LabelFormatterDemo() {
       </CardContent>
     </Card>
   )
-}
-
-export default function ChartTooltipLabelFormatter() {
-  return <LabelFormatterDemo />
 }

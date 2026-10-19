@@ -19,7 +19,7 @@ const tasks: Record<string, { title: string; detail?: string }> = {
 
 const initialOrder = Object.keys(tasks)
 
-function LeadingHandleDemo() {
+export default function ReorderListLeadingHandle() {
   const [value, setValue] = React.useState(initialOrder)
   return (
     <ReorderList
@@ -40,8 +40,4 @@ function LeadingHandleDemo() {
       ))}
     </ReorderList>
   )
-}
-
-export default function ReorderListLeadingHandle() {
-  return <LeadingHandleDemo />
 }

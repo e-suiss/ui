@@ -6,11 +6,6 @@ import {
   CodeBlockTitle,
 } from "@/components/ui/code-block"
 
-const _greeting = `export function Greeting({ name }: { name: string }) {
-  // Say hello to the person signing in
-  return <Text>Hello, {name}!</Text>
-}`
-
 export default function CodeBlockDiff() {
   return (
     <CodeBlock>

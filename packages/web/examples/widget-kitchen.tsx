@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
   Widget,
@@ -18,10 +17,6 @@ const tickets = [
   { id: "#1047", place: "Table 7", minutes: 3 },
   { id: "#1048", place: "Takeaway", minutes: 1 },
 ]
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 text-xs text-muted-foreground">{children}</p>
-}
 
 export default function WidgetKitchen() {
   return (
@@ -78,7 +73,9 @@ export default function WidgetKitchen() {
           ))}
         </ul>
       </Widget>
-      <Hint>Handle inside the corner. Hover the corner to reveal it.</Hint>
+      <p className="mt-6 text-xs text-muted-foreground">
+        Handle inside the corner. Hover the corner to reveal it.
+      </p>
     </div>
   )
 }

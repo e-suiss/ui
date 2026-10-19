@@ -14,12 +14,7 @@ import {
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 
-const providers = [
-  { name: "Anthropic", models: ["Claude Opus 5.5", "Claude Sonnet 5.5"] },
-  { name: "OpenAI", models: ["GPT-5", "GPT-5 mini"] },
-]
-
-function ModelSelector() {
+export default function ModelSelectorDemo() {
   const [model, setModel] = React.useState("Claude Opus 5.5")
   return (
     <View className="items-start">
@@ -29,25 +24,27 @@ function ModelSelector() {
           <Icon as={CaretDownIcon} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
-          {providers.map((provider, index) => (
-            <View key={provider.name}>
-              {index > 0 ? <DropdownMenuSeparator /> : null}
-              <DropdownMenuLabel>{provider.name}</DropdownMenuLabel>
-              <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
-                {provider.models.map((name) => (
-                  <DropdownMenuRadioItem key={name} value={name}>
-                    <Text>{name}</Text>
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-            </View>
-          ))}
+          <DropdownMenuLabel>Anthropic</DropdownMenuLabel>
+          <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
+            <DropdownMenuRadioItem value="Claude Opus 5.5">
+              <Text>Claude Opus 5.5</Text>
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="Claude Sonnet 5.5">
+              <Text>Claude Sonnet 5.5</Text>
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>OpenAI</DropdownMenuLabel>
+          <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
+            <DropdownMenuRadioItem value="GPT-5">
+              <Text>GPT-5</Text>
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="GPT-5 mini">
+              <Text>GPT-5 mini</Text>
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
     </View>
   )
-}
-
-export default function ModelSelectorDemo() {
-  return <ModelSelector />
 }

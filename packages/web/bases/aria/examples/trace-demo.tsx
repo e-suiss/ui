@@ -14,31 +14,6 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const commands = [
-  { command: "pnpm --version", output: "10.18.0" },
-  {
-    command: "git diff --stat HEAD~1 -- package.json pnpm-lock.yaml",
-    output:
-      " package.json | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
-  },
-  {
-    command: "pnpm install --frozen-lockfile",
-    error:
-      'ERR_PNPM_OUTDATED_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.yaml is not up to date with package.json',
-  },
-]
-
-const sources = [
-  {
-    url: "https://pnpm.io/cli/install#--frozen-lockfile",
-    title: "pnpm install | pnpm.io",
-  },
-  {
-    url: "https://pnpm.io/continuous-integration",
-    title: "Continuous Integration | pnpm.io",
-  },
-]
-
 export default function TraceDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
@@ -73,49 +48,83 @@ export default function TraceDemo() {
                 the last commit changed, then reproduce the install.
               </TraceCollapsibleContent>
             </TraceCollapsible>
-            {commands.map((item) => (
-              <TraceCollapsible
-                key={item.command}
-                defaultExpanded={Boolean(item.error)}
-              >
-                <TraceCollapsibleTrigger>
-                  <TraceLine status={item.error ? "error" : undefined}>
-                    <TraceIcon>
-                      {item.error ? (
-                        <IconPlaceholder
-                          lucide="CircleAlertIcon"
-                          tabler="IconAlertCircle"
-                          hugeicons="AlertCircleIcon"
-                          phosphor="WarningCircleIcon"
-                          remixicon="RiErrorWarningLine"
-                        />
-                      ) : (
-                        <IconPlaceholder
-                          lucide="CircleCheckIcon"
-                          tabler="IconCircleCheck"
-                          hugeicons="CheckmarkCircle02Icon"
-                          phosphor="CheckCircleIcon"
-                          remixicon="RiCheckboxCircleLine"
-                        />
-                      )}
-                    </TraceIcon>
-                    <TraceTitle>
-                      {item.error ? "Failed to run" : "Ran"} {item.command}
-                    </TraceTitle>
-                  </TraceLine>
-                </TraceCollapsibleTrigger>
-                <TraceCollapsibleContent>
-                  <CodeBlock
-                    size="sm"
-                    variant={item.error ? "destructive" : "default"}
-                  >
-                    <CodeBlockContent wrap className="max-h-64">
-                      {item.error ?? item.output}
-                    </CodeBlockContent>
-                  </CodeBlock>
-                </TraceCollapsibleContent>
-              </TraceCollapsible>
-            ))}
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="CircleCheckIcon"
+                      tabler="IconCircleCheck"
+                      hugeicons="CheckmarkCircle02Icon"
+                      phosphor="CheckCircleIcon"
+                      remixicon="RiCheckboxCircleLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran pnpm --version</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm" variant="default">
+                  <CodeBlockContent wrap className="max-h-64">
+                    10.18.0
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible>
+              <TraceCollapsibleTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="CircleCheckIcon"
+                      tabler="IconCircleCheck"
+                      hugeicons="CheckmarkCircle02Icon"
+                      phosphor="CheckCircleIcon"
+                      remixicon="RiCheckboxCircleLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>
+                    Ran git diff --stat HEAD~1 -- package.json pnpm-lock.yaml
+                  </TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm" variant="default">
+                  <CodeBlockContent wrap className="max-h-64">
+                    {
+                      " package.json | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)"
+                    }
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
+            <TraceCollapsible defaultExpanded>
+              <TraceCollapsibleTrigger>
+                <TraceLine status="error">
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="CircleAlertIcon"
+                      tabler="IconAlertCircle"
+                      hugeicons="AlertCircleIcon"
+                      phosphor="WarningCircleIcon"
+                      remixicon="RiErrorWarningLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>
+                    Failed to run pnpm install --frozen-lockfile
+                  </TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent>
+                <CodeBlock size="sm" variant="destructive">
+                  <CodeBlockContent wrap className="max-h-64">
+                    {
+                      'ERR_PNPM_OUTDATED_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.yaml is not up to date with package.json'
+                    }
+                  </CodeBlockContent>
+                </CodeBlock>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
             <TraceCollapsible>
               <TraceCollapsibleTrigger>
                 <TraceLine>
@@ -128,44 +137,71 @@ export default function TraceDemo() {
                       remixicon="RiGlobalLine"
                     />
                   </TraceIcon>
-                  <TraceTitle>Used {sources.length} sources</TraceTitle>
+                  <TraceTitle>Used 2 sources</TraceTitle>
                 </TraceLine>
               </TraceCollapsibleTrigger>
               <TraceCollapsibleContent>
                 <Trace>
-                  {sources.map((source) => (
-                    <a
-                      key={source.url}
-                      href={source.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <TraceLine>
-                        <TraceIcon>
-                          <IconPlaceholder
-                            lucide="GlobeIcon"
-                            tabler="IconWorld"
-                            hugeicons="Globe02Icon"
-                            phosphor="GlobeIcon"
-                            remixicon="RiGlobalLine"
-                          />
-                        </TraceIcon>
-                        <TraceTitle>
-                          {source.title}
-                          <span className="sr-only"> (opens in a new tab)</span>
-                        </TraceTitle>
-                        <TraceIcon>
-                          <IconPlaceholder
-                            lucide="ArrowUpRightIcon"
-                            tabler="IconArrowUpRight"
-                            hugeicons="ArrowUpRight01Icon"
-                            phosphor="ArrowUpRightIcon"
-                            remixicon="RiArrowRightUpLine"
-                          />
-                        </TraceIcon>
-                      </TraceLine>
-                    </a>
-                  ))}
+                  <a
+                    href="https://pnpm.io/cli/install#--frozen-lockfile"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <TraceLine>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="GlobeIcon"
+                          tabler="IconWorld"
+                          hugeicons="Globe02Icon"
+                          phosphor="GlobeIcon"
+                          remixicon="RiGlobalLine"
+                        />
+                      </TraceIcon>
+                      <TraceTitle>
+                        pnpm install | pnpm.io
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </TraceTitle>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="ArrowUpRightIcon"
+                          tabler="IconArrowUpRight"
+                          hugeicons="ArrowUpRight01Icon"
+                          phosphor="ArrowUpRightIcon"
+                          remixicon="RiArrowRightUpLine"
+                        />
+                      </TraceIcon>
+                    </TraceLine>
+                  </a>
+                  <a
+                    href="https://pnpm.io/continuous-integration"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <TraceLine>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="GlobeIcon"
+                          tabler="IconWorld"
+                          hugeicons="Globe02Icon"
+                          phosphor="GlobeIcon"
+                          remixicon="RiGlobalLine"
+                        />
+                      </TraceIcon>
+                      <TraceTitle>
+                        Continuous Integration | pnpm.io
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </TraceTitle>
+                      <TraceIcon>
+                        <IconPlaceholder
+                          lucide="ArrowUpRightIcon"
+                          tabler="IconArrowUpRight"
+                          hugeicons="ArrowUpRight01Icon"
+                          phosphor="ArrowUpRightIcon"
+                          remixicon="RiArrowRightUpLine"
+                        />
+                      </TraceIcon>
+                    </TraceLine>
+                  </a>
                 </Trace>
               </TraceCollapsibleContent>
             </TraceCollapsible>

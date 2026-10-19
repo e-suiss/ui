@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
-function InvalidDemo() {
+export default function CheckboxInvalid() {
   const [checked, setChecked] = React.useState(false)
   return (
     <View className="flex-row items-center gap-3">
@@ -21,8 +21,4 @@ function InvalidDemo() {
       </Label>
     </View>
   )
-}
-
-export default function CheckboxInvalid() {
-  return <InvalidDemo />
 }

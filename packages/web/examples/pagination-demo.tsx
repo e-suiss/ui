@@ -63,15 +63,10 @@ function go(setPage: (page: number) => void, page: number, disabled: boolean) {
   }
 }
 
-function Orders({
-  page,
-  perPage,
-  children,
-}: {
-  page: number
-  perPage: number
-  children: React.ReactNode
-}) {
+export default function PaginationDemo() {
+  const [page, setPage] = React.useState(2)
+  const perPage = 5
+  const count = Math.ceil(orders.length / perPage)
   const rows = orders.slice((page - 1) * perPage, page * perPage)
 
   return (
@@ -98,18 +93,6 @@ function Orders({
           ))}
         </TableBody>
       </Table>
-      {children}
-    </div>
-  )
-}
-
-function NumberedExample() {
-  const [page, setPage] = React.useState(2)
-  const perPage = 5
-  const count = Math.ceil(orders.length / perPage)
-
-  return (
-    <Orders page={page} perPage={perPage}>
       <Pagination className="justify-between">
         <PaginationSummary>
           {(page - 1) * perPage + 1}–{Math.min(page * perPage, orders.length)} /{" "}
@@ -146,10 +129,6 @@ function NumberedExample() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-    </Orders>
+    </div>
   )
-}
-
-export default function PaginationDemo() {
-  return <NumberedExample />
 }

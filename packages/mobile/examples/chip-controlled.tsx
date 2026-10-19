@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { Chip } from "@/components/ui/chip"
 import { Text } from "@/components/ui/text"
 
-function ControlledDemo() {
+export default function ChipControlled() {
   const [selected, setSelected] = React.useState(true)
   return (
     <View className="gap-3">
@@ -13,8 +13,4 @@ function ControlledDemo() {
       <Text variant="muted">{selected ? "Selected" : "Not selected"}</Text>
     </View>
   )
-}
-
-export default function ChipControlled() {
-  return <ControlledDemo />
 }

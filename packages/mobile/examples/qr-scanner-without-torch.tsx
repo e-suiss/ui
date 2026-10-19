@@ -59,16 +59,6 @@ function QRCode({ color }: PhosphorIconProps) {
   )
 }
 
-function CameraPlaceholder() {
-  return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <View className="mb-12 -rotate-6 rounded-xl bg-white p-2.5">
-        <Icon as={QRCode} className="text-black" />
-      </View>
-    </View>
-  )
-}
-
 export default function QrScannerWithoutTorch() {
   return (
     <QRScanner
@@ -76,7 +66,11 @@ export default function QrScannerWithoutTorch() {
       title="Scan to sign in"
       description="Open Settings on your other device."
     >
-      <CameraPlaceholder />
+      <View className="flex-1 items-center justify-center bg-black">
+        <View className="mb-12 -rotate-6 rounded-xl bg-white p-2.5">
+          <Icon as={QRCode} className="text-black" />
+        </View>
+      </View>
     </QRScanner>
   )
 }

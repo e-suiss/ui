@@ -11,36 +11,15 @@ const allNotes = [
   { id: 1, title: "Groceries", preview: "Milk, eggs, bread, coffee" },
   { id: 2, title: "Trip ideas", preview: "Lisbon, Porto, the coast road" },
   { id: 3, title: "Book list", preview: "Three novels for the summer" },
-  { id: 4, title: "Meeting notes", preview: "Ship the beta on Friday" },
-  { id: 5, title: "Gift ideas", preview: "Headphones, a plant, a scarf" },
-  { id: 6, title: "Recipes", preview: "Lemon pasta and a quick curry" },
-  { id: 7, title: "Workout plan", preview: "Run on Monday, swim on Thursday" },
-  {
-    id: 8,
-    title: "Movies to watch",
-    preview: "Two documentaries and a classic",
-  },
-  { id: 9, title: "Garden", preview: "Plant tomatoes after the frost" },
-  { id: 10, title: "Packing list", preview: "Charger, passport, rain jacket" },
-  { id: 11, title: "Podcast notes", preview: "Episode about city design" },
-  { id: 12, title: "Budget", preview: "Rent, groceries, savings" },
 ]
 
-function NotesExample({
-  count,
-  defaultQuery = "",
-}: {
-  count: number
-  defaultQuery?: string
-}) {
-  const [query, setQuery] = React.useState(defaultQuery)
-  const notes = allNotes
-    .slice(0, count)
-    .filter((note) =>
-      `${note.title} ${note.preview}`
-        .toLowerCase()
-        .includes(query.trim().toLowerCase())
-    )
+export default function SearchRevealShortList() {
+  const [query, setQuery] = React.useState("")
+  const notes = allNotes.filter((note) =>
+    `${note.title} ${note.preview}`
+      .toLowerCase()
+      .includes(query.trim().toLowerCase())
+  )
 
   return (
     <View className="flex-1 overflow-hidden rounded-2xl border border-border">
@@ -85,8 +64,4 @@ function NotesExample({
       </SearchReveal>
     </View>
   )
-}
-
-export default function SearchRevealShortList() {
-  return <NotesExample count={3} />
 }

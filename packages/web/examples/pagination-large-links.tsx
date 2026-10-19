@@ -9,13 +9,31 @@ export default function PaginationLargeLinks() {
   return (
     <Pagination>
       <PaginationContent>
-        {[1, 2, 3, 4, 5].map((page) => (
-          <PaginationItem key={page}>
-            <PaginationLink href="#" size="icon" isActive={page === 1}>
-              {page}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+        <PaginationItem>
+          <PaginationLink href="#" size="icon" isActive>
+            1
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" size="icon">
+            2
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" size="icon">
+            3
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" size="icon">
+            4
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" size="icon">
+            5
+          </PaginationLink>
+        </PaginationItem>
       </PaginationContent>
     </Pagination>
   )

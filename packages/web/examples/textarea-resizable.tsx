@@ -2,10 +2,7 @@ import * as React from "react"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-function ResizableExample({
-  resizable,
-  ...props
-}: React.ComponentProps<typeof Textarea>) {
+export default function TextareaResizable() {
   const ref = React.useRef<HTMLTextAreaElement>(null)
   const [rows, setRows] = React.useState(0)
 
@@ -27,42 +24,25 @@ function ResizableExample({
   }, [])
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-80 flex-col gap-2">
       <div className="flex items-baseline justify-between">
-        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>
+        <Label htmlFor="campaign-inside">Campaign copy</Label>
         <span className="text-xs text-muted-foreground tabular-nums">
           {rows} rows
         </span>
       </div>
       <Textarea
-        {...props}
+        placeholder="Type your message here."
+        rows={5}
+        defaultValue="Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders."
         ref={ref}
-        id={`campaign-${resizable}`}
-        resizable={resizable}
-        aria-describedby={`campaign-${resizable}-hint`}
+        id="campaign-inside"
+        resizable="inside"
+        aria-describedby="campaign-inside-hint"
       />
-      <p
-        id={`campaign-${resizable}-hint`}
-        className="text-xs text-muted-foreground"
-      >
+      <p id="campaign-inside-hint" className="text-xs text-muted-foreground">
         Drag the bottom corner to resize. Double-click it to reset.
       </p>
-    </div>
-  )
-}
-
-const campaign =
-  "Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders."
-
-export default function TextareaResizable() {
-  return (
-    <div className="w-80">
-      <ResizableExample
-        placeholder="Type your message here."
-        resizable="inside"
-        rows={5}
-        defaultValue={campaign}
-      />
     </div>
   )
 }

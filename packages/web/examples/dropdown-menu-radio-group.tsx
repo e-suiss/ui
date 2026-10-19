@@ -10,11 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-function RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {
+export default function DropdownMenuRadioGroupExample() {
   const [position, setPosition] = React.useState("bottom")
 
   return (
-    <DropdownMenu {...props}>
+    <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline" />}>
         Panel position
       </DropdownMenuTrigger>
@@ -30,8 +30,4 @@ function RadioGroupExample(props: React.ComponentProps<typeof DropdownMenu>) {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
-
-export default function DropdownMenuRadioGroupExample() {
-  return <RadioGroupExample />
 }

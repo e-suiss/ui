@@ -1,7 +1,5 @@
 import { Navbar } from "@/components/patterns/navbar"
 
-const brand = <span className="text-base font-semibold">Acme</span>
-
 export default function NavbarMegaPanel() {
   return (
     <div className="min-h-96">
@@ -38,7 +36,7 @@ export default function NavbarMegaPanel() {
           { label: "Pricing", href: "#pricing" },
           { label: "Blog", href: "#blog" },
         ]}
-        brand={brand}
+        brand={<span className="text-base font-semibold">Acme</span>}
         layout="panel"
       />
     </div>

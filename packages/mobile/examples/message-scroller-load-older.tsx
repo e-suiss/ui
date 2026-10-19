@@ -130,7 +130,7 @@ function ChatRow({ message }: { message: ChatMessage }) {
   )
 }
 
-function LoadOlderDemo() {
+export default function MessageScrollerLoadOlder() {
   const [messages, setMessages] = React.useState(() => longThread(15, 45))
   const [loading, setLoading] = React.useState(false)
   const oldest = Number(messages[0]?.id.slice(1) ?? 0)
@@ -147,29 +147,23 @@ function LoadOlderDemo() {
   }
   return (
     <MessageScrollerProvider>
-      <View className="-m-4 flex-1">
-        <MessageScroller>
-          <MessageScrollerViewport
-            data={messages}
-            keyExtractor={(message) => message.id}
-            renderItem={({ item }) => <ChatRow message={item} />}
-            contentContainerClassName="gap-4 py-4"
-            onLoadOlder={loadOlder}
-            ListFooterComponent={
-              loading ? (
-                <View className="items-center py-2">
-                  <Spinner />
-                </View>
-              ) : null
-            }
-          />
-          <MessageScrollerButton />
-        </MessageScroller>
-      </View>
+      <MessageScroller className="-m-4">
+        <MessageScrollerViewport
+          data={messages}
+          keyExtractor={(message) => message.id}
+          renderItem={({ item }) => <ChatRow message={item} />}
+          contentContainerClassName="gap-4 py-4"
+          onLoadOlder={loadOlder}
+          ListFooterComponent={
+            loading ? (
+              <View className="items-center py-2">
+                <Spinner />
+              </View>
+            ) : null
+          }
+        />
+        <MessageScrollerButton />
+      </MessageScroller>
     </MessageScrollerProvider>
   )
-}
-
-export default function MessageScrollerLoadOlder() {
-  return <LoadOlderDemo />
 }

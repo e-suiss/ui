@@ -7,11 +7,7 @@ import {
 } from "@/components/ui/input-otp"
 import { Text } from "@/components/ui/text"
 
-function slotIndexes(length: number) {
-  return Array.from({ length }, (_, index) => index)
-}
-
-function ControlledDemo() {
+export default function InputotpControlled() {
   const [value, setValue] = React.useState("")
   const [completed, setCompleted] = React.useState<string | null>(null)
   return (
@@ -23,9 +19,10 @@ function ControlledDemo() {
         onValueComplete={setCompleted}
       >
         <InputOTPGroup>
-          {slotIndexes(4).map((index) => (
-            <InputOTPSlot key={index} index={index} />
-          ))}
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
         </InputOTPGroup>
       </InputOTP>
       <Text variant="muted">
@@ -33,8 +30,4 @@ function ControlledDemo() {
       </Text>
     </View>
   )
-}
-
-export default function InputotpControlled() {
-  return <ControlledDemo />
 }

@@ -58,15 +58,10 @@ function go(setPage: (page: number) => void, page: number, disabled: boolean) {
   }
 }
 
-function Orders({
-  page,
-  perPage,
-  children,
-}: {
-  page: number
-  perPage: number
-  children: React.ReactNode
-}) {
+export default function PaginationRowsPerPage() {
+  const [page, setPage] = React.useState(1)
+  const [perPage, setPerPage] = React.useState(5)
+  const count = Math.ceil(orders.length / perPage)
   const rows = orders.slice((page - 1) * perPage, page * perPage)
 
   return (
@@ -93,18 +88,6 @@ function Orders({
           ))}
         </TableBody>
       </Table>
-      {children}
-    </div>
-  )
-}
-
-function RowsPerPageExample() {
-  const [page, setPage] = React.useState(1)
-  const [perPage, setPerPage] = React.useState(5)
-  const count = Math.ceil(orders.length / perPage)
-
-  return (
-    <Orders page={page} perPage={perPage}>
       <Pagination className="justify-between">
         <Select
           aria-label="Rows per page"
@@ -122,11 +105,9 @@ function RowsPerPageExample() {
             <SelectValue>{() => `${perPage} rows`}</SelectValue>
           </SelectTrigger>
           <SelectContent placement="top">
-            {[5, 10, 20].map((value) => (
-              <SelectItem key={value} value={String(value)}>
-                {value} rows
-              </SelectItem>
-            ))}
+            <SelectItem value="5">5 rows</SelectItem>
+            <SelectItem value="10">10 rows</SelectItem>
+            <SelectItem value="20">20 rows</SelectItem>
           </SelectContent>
         </Select>
         <PaginationSummary>
@@ -140,10 +121,6 @@ function RowsPerPageExample() {
           <PaginationLast {...go(setPage, count, page === count)} />
         </PaginationGroup>
       </Pagination>
-    </Orders>
+    </div>
   )
-}
-
-export default function PaginationRowsPerPage() {
-  return <RowsPerPageExample />
 }

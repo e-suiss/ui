@@ -24,13 +24,7 @@ import {
   TraceTitle,
 } from "@/components/ui/trace"
 
-const files = [
-  {
-    path: "app/login/page.tsx",
-    added: false,
-    additions: 2,
-    deletions: 2,
-    diff: `@@ -14,7 +14,7 @@ export default async function LoginPage({
+const LOGIN_PAGE_DIFF = `@@ -14,7 +14,7 @@ export default async function LoginPage({
    searchParams,
  }) {
    const { next } = await searchParams
@@ -39,23 +33,16 @@ const files = [
 +  const redirectTo = safeRedirect(next)
 +
    return <LoginForm redirectTo={redirectTo} />
- }`,
-  },
-  {
-    path: "lib/auth/redirect.ts",
-    added: true,
-    additions: 7,
-    deletions: 0,
-    diff: `@@ -0,0 +1,7 @@
+ }`
+
+const REDIRECT_DIFF = `@@ -0,0 +1,7 @@
 +export function safeRedirect(next: string | undefined) {
 +  if (!next || !next.startsWith("/") || next.startsWith("//")) {
 +    return "/"
 +  }
 +
 +  return next
-+}`,
-  },
-]
++}`
 
 function lineVariant(line: string) {
   if (line.startsWith("+")) return "added"
@@ -101,61 +88,88 @@ export default function TraceCommit() {
         </TraceCollapsibleTrigger>
         <TraceCollapsibleContent>
           <Trace>
-            {files.map((file) => (
-              <Sheet key={file.path}>
-                <SheetTrigger>
-                  <TraceLine>
-                    <TraceIcon>
-                      {file.added ? (
-                        <IconPlaceholder
-                          lucide="FilePlusIcon"
-                          tabler="IconFilePlus"
-                          hugeicons="FileAddIcon"
-                          phosphor="FilePlusIcon"
-                          remixicon="RiFileAddLine"
-                        />
-                      ) : (
-                        <IconPlaceholder
-                          lucide="FilePenIcon"
-                          tabler="IconFilePencil"
-                          hugeicons="FileEditIcon"
-                          phosphor="NotePencilIcon"
-                          remixicon="RiFileEditLine"
-                        />
-                      )}
-                    </TraceIcon>
-                    <TraceTitle>
-                      {file.added ? "Added" : "Edited"} {file.path}
-                    </TraceTitle>
-                    <TraceDescription className="font-mono">
-                      +{file.additions} −{file.deletions}
-                    </TraceDescription>
-                    <TraceIcon>
-                      <IconPlaceholder
-                        lucide="ChevronRightIcon"
-                        tabler="IconChevronRight"
-                        hugeicons="ArrowRight01Icon"
-                        phosphor="CaretRightIcon"
-                        remixicon="RiArrowRightSLine"
-                      />
-                    </TraceIcon>
-                  </TraceLine>
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle className="font-mono">{file.path}</SheetTitle>
-                    <SheetDescription>
-                      {file.additions} additions, {file.deletions} deletions
-                    </SheetDescription>
-                  </SheetHeader>
-                  <CodeBlock className="mx-6 mb-6 w-auto">
-                    <CodeBlockContent>
-                      <DiffLines diff={file.diff} />
-                    </CodeBlockContent>
-                  </CodeBlock>
-                </SheetContent>
-              </Sheet>
-            ))}
+            <Sheet>
+              <SheetTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="FilePenIcon"
+                      tabler="IconFilePencil"
+                      hugeicons="FileEditIcon"
+                      phosphor="NotePencilIcon"
+                      remixicon="RiFileEditLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Edited app/login/page.tsx</TraceTitle>
+                  <TraceDescription className="font-mono">
+                    +2 −2
+                  </TraceDescription>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="ChevronRightIcon"
+                      tabler="IconChevronRight"
+                      hugeicons="ArrowRight01Icon"
+                      phosphor="CaretRightIcon"
+                      remixicon="RiArrowRightSLine"
+                    />
+                  </TraceIcon>
+                </TraceLine>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle className="font-mono">
+                    app/login/page.tsx
+                  </SheetTitle>
+                  <SheetDescription>2 additions, 2 deletions</SheetDescription>
+                </SheetHeader>
+                <CodeBlock className="mx-6 mb-6 w-auto">
+                  <CodeBlockContent>
+                    <DiffLines diff={LOGIN_PAGE_DIFF} />
+                  </CodeBlockContent>
+                </CodeBlock>
+              </SheetContent>
+            </Sheet>
+            <Sheet>
+              <SheetTrigger>
+                <TraceLine>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="FilePlusIcon"
+                      tabler="IconFilePlus"
+                      hugeicons="FileAddIcon"
+                      phosphor="FilePlusIcon"
+                      remixicon="RiFileAddLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Added lib/auth/redirect.ts</TraceTitle>
+                  <TraceDescription className="font-mono">
+                    +7 −0
+                  </TraceDescription>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="ChevronRightIcon"
+                      tabler="IconChevronRight"
+                      hugeicons="ArrowRight01Icon"
+                      phosphor="CaretRightIcon"
+                      remixicon="RiArrowRightSLine"
+                    />
+                  </TraceIcon>
+                </TraceLine>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle className="font-mono">
+                    lib/auth/redirect.ts
+                  </SheetTitle>
+                  <SheetDescription>7 additions, 0 deletions</SheetDescription>
+                </SheetHeader>
+                <CodeBlock className="mx-6 mb-6 w-auto">
+                  <CodeBlockContent>
+                    <DiffLines diff={REDIRECT_DIFF} />
+                  </CodeBlockContent>
+                </CodeBlock>
+              </SheetContent>
+            </Sheet>
           </Trace>
         </TraceCollapsibleContent>
       </TraceCollapsible>

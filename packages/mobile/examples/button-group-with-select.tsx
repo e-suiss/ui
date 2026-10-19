@@ -21,7 +21,7 @@ const currencies: Option[] = [
   { value: "try", label: "₺" },
 ]
 
-function CurrencyExample() {
+export default function ButtonGroupWithSelect() {
   const [value, setValue] = React.useState<string | null>("usd")
   return (
     <ButtonGroup className="self-stretch">
@@ -56,8 +56,4 @@ function CurrencyExample() {
       </ButtonGroup>
     </ButtonGroup>
   )
-}
-
-export default function ButtonGroupWithSelect() {
-  return <CurrencyExample />
 }

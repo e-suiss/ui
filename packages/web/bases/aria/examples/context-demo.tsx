@@ -22,12 +22,6 @@ function formatTokens(value: number) {
   return `${(value / 1000).toFixed(1).replace(TRAILING_ZERO, "")}k`
 }
 
-const rows = [
-  { label: "Input", value: usage.input },
-  { label: "Output", value: usage.output },
-  { label: "Reasoning", value: usage.reasoning },
-]
-
 export default function ContextDemo() {
   return (
     <div className="flex justify-center py-12">
@@ -44,12 +38,18 @@ export default function ContextDemo() {
           </div>
           <Progress value={percent} aria-label="Context used" />
           <div className="flex flex-col gap-1 text-sm">
-            {rows.map((row) => (
-              <div key={row.label} className="flex justify-between gap-3">
-                <span className="text-muted-foreground">{row.label}</span>
-                <span>{formatTokens(row.value)}</span>
-              </div>
-            ))}
+            <div className="flex justify-between gap-3">
+              <span className="text-muted-foreground">Input</span>
+              <span>{formatTokens(usage.input)}</span>
+            </div>
+            <div className="flex justify-between gap-3">
+              <span className="text-muted-foreground">Output</span>
+              <span>{formatTokens(usage.output)}</span>
+            </div>
+            <div className="flex justify-between gap-3">
+              <span className="text-muted-foreground">Reasoning</span>
+              <span>{formatTokens(usage.reasoning)}</span>
+            </div>
           </div>
         </HoverCardContent>
       </HoverCard>

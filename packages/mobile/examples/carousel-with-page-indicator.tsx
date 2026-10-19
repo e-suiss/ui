@@ -8,17 +8,6 @@ import {
 import { PageIndicator } from "@/components/ui/page-indicator"
 import { Text } from "@/components/ui/text"
 
-const picks = [
-  {
-    eyebrow: "Today's pick",
-    title: "Weekend breakfast",
-    tint: "bg-orange-500",
-  },
-  { eyebrow: "New", title: "Grilled meatballs", tint: "bg-red-500" },
-  { eyebrow: "Chef's special", title: "Lentil soup", tint: "bg-teal-500" },
-  { eyebrow: "Dessert", title: "Künefe", tint: "bg-purple-500" },
-]
-
 function CarouselPageIndicator() {
   const { scrollSnaps, selectedIndex, scrollTo } = useCarousel()
   return (
@@ -35,20 +24,46 @@ export default function CarouselWithPageIndicator() {
   return (
     <Carousel>
       <CarouselContent>
-        {picks.map((pick) => (
-          <CarouselItem key={pick.title}>
-            <View
-              className={`aspect-[4/5] justify-end gap-1 rounded-3xl p-5 ${pick.tint}`}
-            >
-              <Text className="text-xs font-semibold text-primary-foreground uppercase">
-                {pick.eyebrow}
-              </Text>
-              <Text className="text-2xl font-bold text-primary-foreground">
-                {pick.title}
-              </Text>
-            </View>
-          </CarouselItem>
-        ))}
+        <CarouselItem>
+          <View className="aspect-[4/5] justify-end gap-1 rounded-3xl p-5 bg-orange-500">
+            <Text className="text-xs font-semibold text-primary-foreground uppercase">
+              Today's pick
+            </Text>
+            <Text className="text-2xl font-bold text-primary-foreground">
+              Weekend breakfast
+            </Text>
+          </View>
+        </CarouselItem>
+        <CarouselItem>
+          <View className="aspect-[4/5] justify-end gap-1 rounded-3xl p-5 bg-red-500">
+            <Text className="text-xs font-semibold text-primary-foreground uppercase">
+              New
+            </Text>
+            <Text className="text-2xl font-bold text-primary-foreground">
+              Grilled meatballs
+            </Text>
+          </View>
+        </CarouselItem>
+        <CarouselItem>
+          <View className="aspect-[4/5] justify-end gap-1 rounded-3xl p-5 bg-teal-500">
+            <Text className="text-xs font-semibold text-primary-foreground uppercase">
+              Chef's special
+            </Text>
+            <Text className="text-2xl font-bold text-primary-foreground">
+              Lentil soup
+            </Text>
+          </View>
+        </CarouselItem>
+        <CarouselItem>
+          <View className="aspect-[4/5] justify-end gap-1 rounded-3xl p-5 bg-purple-500">
+            <Text className="text-xs font-semibold text-primary-foreground uppercase">
+              Dessert
+            </Text>
+            <Text className="text-2xl font-bold text-primary-foreground">
+              Künefe
+            </Text>
+          </View>
+        </CarouselItem>
       </CarouselContent>
       <CarouselPageIndicator />
     </Carousel>

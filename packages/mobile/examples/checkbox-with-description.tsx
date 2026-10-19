@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 
-function WithDescriptionDemo() {
+export default function CheckboxWithDescription() {
   const [checked, setChecked] = React.useState(true)
   return (
     <View className="flex-row items-start gap-3">
@@ -26,8 +26,4 @@ function WithDescriptionDemo() {
       </View>
     </View>
   )
-}
-
-export default function CheckboxWithDescription() {
-  return <WithDescriptionDemo />
 }

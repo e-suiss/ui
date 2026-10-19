@@ -8,7 +8,7 @@ import {
 import { type HapticsAdapter, HapticsProvider } from "@/components/ui/haptics"
 import { Text } from "@/components/ui/text"
 
-function useLoggingAdapter() {
+export default function HapticsReorder() {
   const [log, setLog] = React.useState({ last: "None", count: 0 })
   const adapter = React.useMemo<HapticsAdapter>(() => {
     const record = (event: string) =>
@@ -19,33 +19,25 @@ function useLoggingAdapter() {
       notification: (type) => record(`notification ${type}`),
     }
   }, [])
-  return { adapter, log }
-}
-
-function HapticLog({ last, count }: { last: string; count: number }) {
-  return (
-    <View className="flex-row items-center justify-between rounded-xl bg-muted px-4 py-3">
-      <Text className="text-sm text-muted-foreground">Last haptic</Text>
-      <Text
-        role="status"
-        accessibilityLiveRegion="polite"
-        className="text-sm font-medium"
-      >
-        {count > 0 ? `${last} (${count})` : last}
-      </Text>
-    </View>
-  )
-}
-
-const tasks = ["Inbox", "Today", "Upcoming", "Someday"]
-
-function ReorderDemo() {
-  const { adapter, log } = useLoggingAdapter()
-  const [value, setValue] = React.useState(tasks)
+  const [value, setValue] = React.useState([
+    "Inbox",
+    "Today",
+    "Upcoming",
+    "Someday",
+  ])
   return (
     <HapticsProvider adapter={adapter}>
       <View className="w-full gap-4">
-        <HapticLog {...log} />
+        <View className="flex-row items-center justify-between rounded-xl bg-muted px-4 py-3">
+          <Text className="text-sm text-muted-foreground">Last haptic</Text>
+          <Text
+            role="status"
+            accessibilityLiveRegion="polite"
+            className="text-sm font-medium"
+          >
+            {log.count > 0 ? `${log.last} (${log.count})` : log.last}
+          </Text>
+        </View>
         <ReorderList
           value={value}
           onValueChange={setValue}
@@ -63,8 +55,4 @@ function ReorderDemo() {
       </View>
     </HapticsProvider>
   )
-}
-
-export default function HapticsReorder() {
-  return <ReorderDemo />
 }

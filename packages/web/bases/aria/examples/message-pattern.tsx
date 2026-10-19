@@ -16,21 +16,6 @@ ${command}
 
 Wrap the button in a DialogTrigger and put the settings form in DialogContent. Focus moves into the dialog when it opens, and Esc closes it.`
 
-function MessageAction({
-  label,
-  children,
-  ...props
-}: React.ComponentProps<typeof Button> & { label: string }) {
-  return (
-    <Tooltip>
-      <Button variant="ghost" size="icon-sm" aria-label={label} {...props}>
-        {children}
-      </Button>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
-  )
-}
-
 export default function MessagePattern() {
   const [copied, setCopied] = React.useState(false)
   const [feedback, setFeedback] = React.useState<"like" | "dislike" | null>(
@@ -57,24 +42,30 @@ export default function MessagePattern() {
             </BubbleContent>
           </Bubble>
           <MessageFooter>
-            <MessageAction label="Copy">
-              <IconPlaceholder
-                lucide="CopyIcon"
-                tabler="IconCopy"
-                hugeicons="Copy01Icon"
-                phosphor="CopyIcon"
-                remixicon="RiFileCopyLine"
-              />
-            </MessageAction>
-            <MessageAction label="Edit">
-              <IconPlaceholder
-                lucide="PencilIcon"
-                tabler="IconPencil"
-                hugeicons="PencilEdit01Icon"
-                phosphor="PencilSimpleIcon"
-                remixicon="RiPencilLine"
-              />
-            </MessageAction>
+            <Tooltip>
+              <Button variant="ghost" size="icon-sm" aria-label="Copy">
+                <IconPlaceholder
+                  lucide="CopyIcon"
+                  tabler="IconCopy"
+                  hugeicons="Copy01Icon"
+                  phosphor="CopyIcon"
+                  remixicon="RiFileCopyLine"
+                />
+              </Button>
+              <TooltipContent>Copy</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <Button variant="ghost" size="icon-sm" aria-label="Edit">
+                <IconPlaceholder
+                  lucide="PencilIcon"
+                  tabler="IconPencil"
+                  hugeicons="PencilEdit01Icon"
+                  phosphor="PencilSimpleIcon"
+                  remixicon="RiPencilLine"
+                />
+              </Button>
+              <TooltipContent>Edit</TooltipContent>
+            </Tooltip>
           </MessageFooter>
         </MessageContent>
       </Message>
@@ -93,70 +84,90 @@ export default function MessagePattern() {
             it opens, and Esc closes it.
           </p>
           <MessageFooter className="px-0">
-            <MessageAction
-              label={copied ? "Copied" : "Copy"}
-              onPress={() => {
-                navigator.clipboard?.writeText(reply).catch(() => undefined)
-                setCopied(true)
-              }}
-            >
-              {copied ? (
+            <Tooltip>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label={copied ? "Copied" : "Copy"}
+                onPress={() => {
+                  navigator.clipboard?.writeText(reply).catch(() => undefined)
+                  setCopied(true)
+                }}
+              >
+                {copied ? (
+                  <IconPlaceholder
+                    lucide="CheckIcon"
+                    tabler="IconCheck"
+                    hugeicons="Tick02Icon"
+                    phosphor="CheckIcon"
+                    remixicon="RiCheckLine"
+                  />
+                ) : (
+                  <IconPlaceholder
+                    lucide="CopyIcon"
+                    tabler="IconCopy"
+                    hugeicons="Copy01Icon"
+                    phosphor="CopyIcon"
+                    remixicon="RiFileCopyLine"
+                  />
+                )}
+              </Button>
+              <TooltipContent>{copied ? "Copied" : "Copy"}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Good response"
+                aria-pressed={feedback === "like"}
+                onPress={() => setFeedback(feedback === "like" ? null : "like")}
+              >
                 <IconPlaceholder
-                  lucide="CheckIcon"
-                  tabler="IconCheck"
-                  hugeicons="Tick02Icon"
-                  phosphor="CheckIcon"
-                  remixicon="RiCheckLine"
+                  lucide="ThumbsUpIcon"
+                  tabler="IconThumbUp"
+                  hugeicons="ThumbsUpIcon"
+                  phosphor="ThumbsUpIcon"
+                  remixicon="RiThumbUpLine"
+                  className={feedback === "like" ? "fill-current" : undefined}
                 />
-              ) : (
+              </Button>
+              <TooltipContent>Good response</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Bad response"
+                aria-pressed={feedback === "dislike"}
+                onPress={() =>
+                  setFeedback(feedback === "dislike" ? null : "dislike")
+                }
+              >
                 <IconPlaceholder
-                  lucide="CopyIcon"
-                  tabler="IconCopy"
-                  hugeicons="Copy01Icon"
-                  phosphor="CopyIcon"
-                  remixicon="RiFileCopyLine"
+                  lucide="ThumbsDownIcon"
+                  tabler="IconThumbDown"
+                  hugeicons="ThumbsDownIcon"
+                  phosphor="ThumbsDownIcon"
+                  remixicon="RiThumbDownLine"
+                  className={
+                    feedback === "dislike" ? "fill-current" : undefined
+                  }
                 />
-              )}
-            </MessageAction>
-            <MessageAction
-              label="Good response"
-              aria-pressed={feedback === "like"}
-              onPress={() => setFeedback(feedback === "like" ? null : "like")}
-            >
-              <IconPlaceholder
-                lucide="ThumbsUpIcon"
-                tabler="IconThumbUp"
-                hugeicons="ThumbsUpIcon"
-                phosphor="ThumbsUpIcon"
-                remixicon="RiThumbUpLine"
-                className={feedback === "like" ? "fill-current" : undefined}
-              />
-            </MessageAction>
-            <MessageAction
-              label="Bad response"
-              aria-pressed={feedback === "dislike"}
-              onPress={() =>
-                setFeedback(feedback === "dislike" ? null : "dislike")
-              }
-            >
-              <IconPlaceholder
-                lucide="ThumbsDownIcon"
-                tabler="IconThumbDown"
-                hugeicons="ThumbsDownIcon"
-                phosphor="ThumbsDownIcon"
-                remixicon="RiThumbDownLine"
-                className={feedback === "dislike" ? "fill-current" : undefined}
-              />
-            </MessageAction>
-            <MessageAction label="Retry">
-              <IconPlaceholder
-                lucide="RefreshCcwIcon"
-                tabler="IconRefresh"
-                hugeicons="RefreshIcon"
-                phosphor="ArrowsClockwiseIcon"
-                remixicon="RiRefreshLine"
-              />
-            </MessageAction>
+              </Button>
+              <TooltipContent>Bad response</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <Button variant="ghost" size="icon-sm" aria-label="Retry">
+                <IconPlaceholder
+                  lucide="RefreshCcwIcon"
+                  tabler="IconRefresh"
+                  hugeicons="RefreshIcon"
+                  phosphor="ArrowsClockwiseIcon"
+                  remixicon="RiRefreshLine"
+                />
+              </Button>
+              <TooltipContent>Retry</TooltipContent>
+            </Tooltip>
           </MessageFooter>
         </MessageContent>
       </Message>

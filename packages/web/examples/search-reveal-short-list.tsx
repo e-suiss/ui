@@ -24,10 +24,10 @@ const allNotes = [
   { id: 12, title: "Budget", preview: "Rent, groceries, savings" },
 ]
 
-function NotesExample({ count }: { count: number }) {
+export default function SearchRevealShortList() {
   const [query, setQuery] = React.useState("")
   const notes = allNotes
-    .slice(0, count)
+    .slice(0, 3)
     .filter((note) =>
       `${note.title} ${note.preview}`
         .toLowerCase()
@@ -70,8 +70,4 @@ function NotesExample({ count }: { count: number }) {
       </SearchReveal>
     </div>
   )
-}
-
-export default function SearchRevealShortList() {
-  return <NotesExample count={3} />
 }

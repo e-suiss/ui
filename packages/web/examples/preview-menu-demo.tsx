@@ -21,17 +21,7 @@ const photos = [
   "from-teal-400 to-green-500",
 ]
 
-function Photo({ tone, label }: { tone: string; label: string }) {
-  return (
-    <div
-      role="img"
-      aria-label={label}
-      className={cn("aspect-square size-full bg-linear-to-br", tone)}
-    />
-  )
-}
-
-function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
+export default function PreviewMenuDemo() {
   const [log, setLog] = React.useState(
     "Touch and hold a photo, or right-click it."
   )
@@ -44,7 +34,14 @@ function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
           return (
             <PreviewMenu key={tone}>
               <PreviewMenuTrigger className="aspect-square overflow-hidden rounded-2xl">
-                <Photo tone={tone} label={label} />
+                <div
+                  role="img"
+                  aria-label={label}
+                  className={cn(
+                    "aspect-square size-full bg-linear-to-br",
+                    tone
+                  )}
+                />
               </PreviewMenuTrigger>
               <PreviewMenuContent>
                 <PreviewMenuItem onClick={() => setLog(`Copied ${label}`)}>
@@ -67,10 +64,7 @@ function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
                     remixicon="RiShareLine"
                   />
                 </PreviewMenuItem>
-                <PreviewMenuItem
-                  disabled={withDisabled}
-                  onClick={() => setLog(`Favorited ${label}`)}
-                >
+                <PreviewMenuItem onClick={() => setLog(`Favorited ${label}`)}>
                   Favorite
                   <IconPlaceholder
                     lucide="HeartIcon"
@@ -104,8 +98,4 @@ function PhotoGrid({ withDisabled = false }: { withDisabled?: boolean }) {
       </p>
     </div>
   )
-}
-
-export default function PreviewMenuDemo() {
-  return <PhotoGrid />
 }

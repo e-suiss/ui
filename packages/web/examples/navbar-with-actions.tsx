@@ -101,14 +101,12 @@ const items: NavbarItem[] = [
   { label: "Blog", href: "#blog" },
 ]
 
-const brand = <span className="text-base font-semibold">Acme</span>
-
 export default function NavbarWithActions() {
   return (
     <div className="min-h-96">
       <Navbar
         items={items}
-        brand={brand}
+        brand={<span className="text-base font-semibold">Acme</span>}
         actions={
           <Button size="sm" variant="secondary">
             Sign in

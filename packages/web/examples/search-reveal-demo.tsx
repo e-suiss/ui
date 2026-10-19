@@ -24,15 +24,13 @@ const allNotes = [
   { id: 12, title: "Budget", preview: "Rent, groceries, savings" },
 ]
 
-function NotesExample({ count }: { count: number }) {
+export default function SearchRevealDemo() {
   const [query, setQuery] = React.useState("")
-  const notes = allNotes
-    .slice(0, count)
-    .filter((note) =>
-      `${note.title} ${note.preview}`
-        .toLowerCase()
-        .includes(query.trim().toLowerCase())
-    )
+  const notes = allNotes.filter((note) =>
+    `${note.title} ${note.preview}`
+      .toLowerCase()
+      .includes(query.trim().toLowerCase())
+  )
 
   return (
     <div className="mx-auto flex h-[min(36rem,calc(100dvh-4rem))] w-[min(28rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border">
@@ -70,8 +68,4 @@ function NotesExample({ count }: { count: number }) {
       </SearchReveal>
     </div>
   )
-}
-
-export default function SearchRevealDemo() {
-  return <NotesExample count={12} />
 }

@@ -123,68 +123,9 @@ function TestRow({ test }: { test: Test }) {
   )
 }
 
-function TestResults({ suites }: { suites: Suite[] }) {
+export default function TestResultsDemo() {
   const summary = countTests(suites.flatMap((suite) => suite.tests))
 
-  return (
-    <TraceCollapsible defaultOpen={summary.failed > 0}>
-      <TraceCollapsibleTrigger>
-        <TraceLine status={summary.failed > 0 ? "error" : undefined}>
-          <TraceIcon>
-            <IconPlaceholder
-              lucide="FlaskConicalIcon"
-              tabler="IconFlask"
-              hugeicons="FlaskConicalIcon"
-              phosphor="FlaskIcon"
-              remixicon="RiFlaskLine"
-            />
-          </TraceIcon>
-          <TraceTitle>Ran {formatCounts(summary)}</TraceTitle>
-        </TraceLine>
-      </TraceCollapsibleTrigger>
-      <TraceCollapsibleContent keepMounted>
-        <Trace>
-          {suites.map((suite) => {
-            const counts = countTests(suite.tests)
-
-            return (
-              <TraceCollapsible
-                key={suite.name}
-                defaultOpen={counts.failed > 0}
-              >
-                <TraceCollapsibleTrigger>
-                  <TraceLine status={counts.failed > 0 ? "error" : undefined}>
-                    <TraceIcon>
-                      <IconPlaceholder
-                        lucide="FileCodeIcon"
-                        tabler="IconFileCode"
-                        hugeicons="FileScriptIcon"
-                        phosphor="FileCodeIcon"
-                        remixicon="RiFileCodeLine"
-                      />
-                    </TraceIcon>
-                    <TraceTitle>
-                      {suite.name}, {formatCounts(counts)}
-                    </TraceTitle>
-                  </TraceLine>
-                </TraceCollapsibleTrigger>
-                <TraceCollapsibleContent keepMounted>
-                  <Trace>
-                    {suite.tests.map((test) => (
-                      <TestRow key={test.name} test={test} />
-                    ))}
-                  </Trace>
-                </TraceCollapsibleContent>
-              </TraceCollapsible>
-            )
-          })}
-        </Trace>
-      </TraceCollapsibleContent>
-    </TraceCollapsible>
-  )
-}
-
-export default function TestResultsDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4 py-6 text-sm">
       <Message align="end">
@@ -197,7 +138,62 @@ export default function TestResultsDemo() {
       <Message>
         <MessageContent className="gap-4">
           <Trace>
-            <TestResults suites={suites} />
+            <TraceCollapsible defaultOpen={summary.failed > 0}>
+              <TraceCollapsibleTrigger>
+                <TraceLine status={summary.failed > 0 ? "error" : undefined}>
+                  <TraceIcon>
+                    <IconPlaceholder
+                      lucide="FlaskConicalIcon"
+                      tabler="IconFlask"
+                      hugeicons="FlaskConicalIcon"
+                      phosphor="FlaskIcon"
+                      remixicon="RiFlaskLine"
+                    />
+                  </TraceIcon>
+                  <TraceTitle>Ran {formatCounts(summary)}</TraceTitle>
+                </TraceLine>
+              </TraceCollapsibleTrigger>
+              <TraceCollapsibleContent keepMounted>
+                <Trace>
+                  {suites.map((suite) => {
+                    const counts = countTests(suite.tests)
+
+                    return (
+                      <TraceCollapsible
+                        key={suite.name}
+                        defaultOpen={counts.failed > 0}
+                      >
+                        <TraceCollapsibleTrigger>
+                          <TraceLine
+                            status={counts.failed > 0 ? "error" : undefined}
+                          >
+                            <TraceIcon>
+                              <IconPlaceholder
+                                lucide="FileCodeIcon"
+                                tabler="IconFileCode"
+                                hugeicons="FileScriptIcon"
+                                phosphor="FileCodeIcon"
+                                remixicon="RiFileCodeLine"
+                              />
+                            </TraceIcon>
+                            <TraceTitle>
+                              {suite.name}, {formatCounts(counts)}
+                            </TraceTitle>
+                          </TraceLine>
+                        </TraceCollapsibleTrigger>
+                        <TraceCollapsibleContent keepMounted>
+                          <Trace>
+                            {suite.tests.map((test) => (
+                              <TestRow key={test.name} test={test} />
+                            ))}
+                          </Trace>
+                        </TraceCollapsibleContent>
+                      </TraceCollapsible>
+                    )
+                  })}
+                </Trace>
+              </TraceCollapsibleContent>
+            </TraceCollapsible>
           </Trace>
           <p>
             One test failed. The payment client does not retry a declined card,

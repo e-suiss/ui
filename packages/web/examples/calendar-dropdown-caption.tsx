@@ -1,22 +1,19 @@
 import * as React from "react"
 import { Calendar } from "@/components/ui/calendar"
 
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
+export default function CalendarDropdownCaption() {
   const today = new Date()
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
   )
   return (
     <Calendar
-      {...props}
       mode="single"
       selected={date}
       onSelect={setDate}
+      buttonVariant="plain"
+      captionLayout="dropdown"
       className="rounded-2xl border"
     />
   )
-}
-
-export default function CalendarDropdownCaption() {
-  return <SingleCalendar buttonVariant="plain" captionLayout="dropdown" />
 }

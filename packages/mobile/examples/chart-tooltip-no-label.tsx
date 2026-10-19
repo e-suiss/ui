@@ -1,4 +1,3 @@
-import type * as React from "react"
 import {
   Card,
   CardContent,
@@ -30,27 +29,17 @@ const deviceConfig = {
   mobile: { label: "Mobile", color: "chart-2" },
 } satisfies ChartConfig
 
-function StackedTooltipChart({
-  title,
-  description,
-  defaultIndex,
-  content,
-}: {
-  title: string
-  description: string
-  defaultIndex: number
-  content: React.ReactElement
-}) {
+export default function ChartTooltipNoLabel() {
   return (
     <Card variant="filled" size="sm">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle>No label</CardTitle>
+        <CardDescription>The month is hidden</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer
           config={deviceConfig}
-          accessibilityLabel={title}
+          accessibilityLabel="No label"
           className="h-52 w-full"
         >
           <BarChart
@@ -64,9 +53,9 @@ function StackedTooltipChart({
               tickFormatter={(value: string) => value.slice(0, 3)}
             />
             <ChartTooltip
-              defaultIndex={defaultIndex}
+              defaultIndex={2}
               cursor={false}
-              content={content}
+              content={<ChartTooltipContent hideLabel />}
             />
             <Bar
               dataKey="desktop"
@@ -84,16 +73,5 @@ function StackedTooltipChart({
         </ChartContainer>
       </CardContent>
     </Card>
-  )
-}
-
-export default function ChartTooltipNoLabel() {
-  return (
-    <StackedTooltipChart
-      title="No label"
-      description="The month is hidden"
-      defaultIndex={2}
-      content={<ChartTooltipContent hideLabel />}
-    />
   )
 }
