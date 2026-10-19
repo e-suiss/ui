@@ -56,9 +56,9 @@ const OPTIONS = {
                    React Native styling (detected from the project when omitted)`,
   path: `  --path <dir>     where SwiftUI or Compose files go, relative to --cwd
                    (defaults to EsuissUI/ or src/main/kotlin/com/esuiss/ui/)`,
-  template: `  -t, --template <next|vite|expo>
-                   create a Next.js, Vite or Expo app in a new folder first,
-                   then set it up`,
+  template: `  -t, --template <next|vite|expo|react-native>
+                   create a Next.js, Vite, Expo or React Native app
+                   in a new folder first, then set it up`,
   name: "  -n, --name <name> the folder of the new app (defaults to <template>-app)",
   rtl: "  --rtl            note how to run React components right to left",
   pointer: "  --pointer        show the pointer cursor on buttons (React only)",

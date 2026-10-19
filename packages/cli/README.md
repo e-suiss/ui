@@ -100,12 +100,12 @@ Every item is published for three primitive bases under the same name. A `radix-
 
 ```bash
 npx @esuiss/ui@latest init [options]
-npx @esuiss/ui@latest init --template <next|vite|expo> [--name <name>] [options]
+npx @esuiss/ui@latest init --template <next|vite|expo|react-native> [--name <name>] [options]
 ```
 
-With `--template`, `init` first creates the app in a new folder (`<template>-app`, or `--name`) inside `--cwd` with the official creator, run through the package manager that runs the CLI (`npx`, `pnpm dlx`, `yarn dlx` or `bunx`): `create-next-app` (TypeScript, Tailwind CSS, App Router, `src/`), `create-vite` (`react-ts`) or `create-expo-app` (`blank-typescript`). It then sets the new app up with the rest of the options, replacing the starter stylesheet without asking.
+With `--template`, `init` first creates the app in a new folder (`<template>-app`, or `--name`) inside `--cwd` with the official creator, run through the package manager that runs the CLI (`npx`, `pnpm dlx`, `yarn dlx` or `bunx`): `create-next-app` (TypeScript, Tailwind CSS, App Router, `src/`), `create-vite` (`react-ts`), `create-expo-app` (`blank-typescript`) or the React Native Community CLI (`init`, without CocoaPods or git; with pnpm it installs the packages itself). It then sets the new app up with the rest of the options, replacing the starter stylesheet without asking.
 
-`next` and `vite` create React apps and `expo` a React Native app. TanStack Start, React Router, Astro and Laravel templates are not available yet, since `init` sets up Next.js and Vite projects; create those apps yourself and run `init` in them. `--monorepo` is not available yet either. SwiftUI and Compose have no templates: create the app in Xcode or Android Studio, then run `init` in it.
+`next` and `vite` create React apps, `expo` an Expo app and `react-native` a bare React Native app. TanStack Start, React Router, Astro and Laravel templates are not available yet, since `init` sets up Next.js and Vite projects; create those apps yourself and run `init` in them. `--monorepo` is not available yet either. SwiftUI and Compose have no templates: create the app in Xcode or Android Studio, then run `init` in it.
 
 ### `apply`
 
@@ -152,7 +152,7 @@ Components are written to `components/ui/`, patterns to `components/patterns/`, 
 | `--primary <color>` | `init` and `apply`: a custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. It replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | React Native, SwiftUI and Compose icons: `phosphor` (default), `lucide`, `tabler`, `hugeicons` or `remixicon`; read from `--preset` or the installed icons file when omitted |
 | `--path <dir>` | Where SwiftUI or Compose files go, relative to the project |
-| `-t, --template <next\|vite\|expo>` | `init` only: create a Next.js, Vite or Expo app in a new folder first |
+| `-t, --template <next\|vite\|expo\|react-native>` | `init` only: create a Next.js, Vite, Expo or React Native app in a new folder first |
 | `-n, --name <name>` | `init --template` only: the folder of the new app, `<template>-app` by default |
 | `--only <theme\|font>` | `apply` only: apply just the colors and radius, or just the fonts |
 | `--pointer` | React `init` and `apply`: show the pointer cursor on enabled buttons with a base layer rule in the stylesheet |

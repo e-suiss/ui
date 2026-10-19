@@ -8,6 +8,7 @@ export const TEMPLATES = {
   next: { title: "Next.js", platform: "web" },
   vite: { title: "Vite", platform: "web" },
   expo: { title: "Expo", platform: "rn" },
+  "react-native": { title: "React Native", platform: "rn" },
 }
 
 const UNSUPPORTED_TEMPLATES = {
@@ -24,8 +25,21 @@ const RUNNERS = {
   bun: ["bunx", []],
 }
 
+const REACT_NATIVE_MANAGERS = ["npm", "yarn", "bun"]
+
 const PROJECT_NAME = /^[a-z0-9][a-z0-9._-]*$/
+const NAME_PARTS = /[^a-z0-9]+/
+const LEADING_DIGIT = /^[0-9]/
 const WINDOWS_RESERVED = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/
+
+export function appNameOf(name) {
+  const pascal = name
+    .split(NAME_PARTS)
+    .filter(Boolean)
+    .map((part) => `${part[0].toUpperCase()}${part.slice(1)}`)
+    .join("")
+  return LEADING_DIGIT.test(pascal) ? `App${pascal}` : pascal
+}
 
 function creatorArgs(template, name, packageManager) {
   if (template === "next") {
@@ -51,6 +65,21 @@ function creatorArgs(template, name, packageManager) {
       "--template",
       "react-ts",
       "--no-interactive",
+    ]
+  }
+  if (template === "react-native") {
+    return [
+      "@react-native-community/cli@latest",
+      "init",
+      appNameOf(name),
+      "--directory",
+      name,
+      "--skip-git-init",
+      "--install-pods",
+      "false",
+      ...(REACT_NATIVE_MANAGERS.includes(packageManager)
+        ? ["--pm", packageManager]
+        : ["--skip-install"]),
     ]
   }
   return [
@@ -108,7 +137,11 @@ export function createProject(
   if (!run(command, args, cwd)) {
     throw new CliError(`${command} ${args.join(" ")} failed.`)
   }
-  if (template === "vite" && !run(packageManager, ["install"], target)) {
+  const installs =
+    template === "vite" ||
+    (template === "react-native" &&
+      !REACT_NATIVE_MANAGERS.includes(packageManager))
+  if (installs && !run(packageManager, ["install"], target)) {
     throw new CliError(`${packageManager} install failed in ${projectName}.`)
   }
   return target

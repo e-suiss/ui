@@ -73,7 +73,7 @@ describe("esuiss-ui command", () => {
 
   it("lists --template in the init help", () => {
     const help = run("init", "--help").stdout
-    expect(help).toContain("--template <next|vite|expo>")
+    expect(help).toContain("--template <next|vite|expo|react-native>")
     expect(help).toContain("--rtl")
   })
 
@@ -82,7 +82,7 @@ describe("esuiss-ui command", () => {
     ["start", "The TanStack Start template is not available yet."],
     ["react-router", "The React Router template is not available yet."],
     ["laravel", "The Laravel template is not available yet."],
-    ["remix", "--template needs next, vite, expo."],
+    ["remix", "--template needs next, vite, expo, react-native."],
   ])("rejects --template %s", (template, message) => {
     const result = run("init", "--template", template)
     expect(result.code).not.toBe(0)

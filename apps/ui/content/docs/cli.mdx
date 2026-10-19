@@ -35,7 +35,7 @@ npx @esuiss/ui@latest init [options]
 npx @esuiss/ui@latest init --template next --name my-app
 ```
 
-`next` runs `create-next-app` (TypeScript, Tailwind CSS, App Router, `src/`), `vite` runs `create-vite` with `react-ts`, and `expo` runs `create-expo-app` with `blank-typescript` for React Native. TanStack Start, React Router, Astro and Laravel templates and `--monorepo` are not available yet: create those apps yourself and run `init` in them. SwiftUI and Compose apps start in Xcode or Android Studio.
+`next` runs `create-next-app` (TypeScript, Tailwind CSS, App Router, `src/`), `vite` runs `create-vite` with `react-ts`, `expo` runs `create-expo-app` with `blank-typescript`, and `react-native` runs the React Native Community CLI `init` for a bare React Native app, without CocoaPods or git. That CLI cannot install with pnpm, so with pnpm the packages are installed after the app is created. TanStack Start, React Router, Astro and Laravel templates and `--monorepo` are not available yet: create those apps yourself and run `init` in them. SwiftUI and Compose apps start in Xcode or Android Studio.
 
 | Option | Description |
 | --- | --- |
@@ -47,7 +47,7 @@ npx @esuiss/ui@latest init --template next --name my-app
 | `--theme suiss` | Keep the suiss/ui grays when applying a preset; a colored theme in the preset still sets the primary, chart and accent colors |
 | `--primary <color>` | A custom primary color as hex (`#2563eb`), `rgb(37 99 235)` or `oklch(0.55 0.2 260)`. Replaces the primary, its foreground (white or near-black, whichever contrasts more), the focus ring, the sidebar primary and ring, and `chart-1` in light and dark, after any preset, on every platform |
 | `--icon-library <name>` | Icons of React Native, SwiftUI and Compose components: `phosphor` (the default), `lucide`, `tabler`, `hugeicons` or `remixicon`. Read from `--preset` or the installed icons file when omitted |
-| `-t, --template <next\|vite\|expo>` | Create a Next.js, Vite or Expo app in a new folder first |
+| `-t, --template <next\|vite\|expo\|react-native>` | Create a Next.js, Vite, Expo or React Native app in a new folder first |
 | `-n, --name <name>` | The folder of the new app, `<template>-app` by default |
 | `--pointer` | React only: show the pointer cursor on enabled buttons |
 | `--rtl` | React only: the components use logical properties and already work right to left; set `dir="rtl"` on `<html>` |

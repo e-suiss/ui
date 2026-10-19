@@ -205,7 +205,7 @@ const RUNNERS: Record<PackageManager, string> = {
 
 export const TEMPLATES = {
   web: ["next", "vite"],
-  rn: ["expo"],
+  rn: ["expo", "react-native"],
   swift: [],
   kotlin: [],
 } as const satisfies Record<Platform, readonly string[]>
