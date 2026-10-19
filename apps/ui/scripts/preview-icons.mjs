@@ -4,7 +4,12 @@ import path from "node:path"
 const ROOT = path.resolve(import.meta.dirname, "..")
 const WEB = path.resolve(ROOT, "../../packages/web")
 const OUTPUT = path.join(ROOT, "lib/icons")
-const SOURCES = ["components", "examples", "bases"]
+const SOURCES = [
+  ...["components", "examples", "bases"].map((source) =>
+    path.join(WEB, source)
+  ),
+  path.join(ROOT, "components/create/cards"),
+]
 const LIBRARIES = {
   lucide: [{ from: "lucide-react", icons: true }],
   tabler: [{ from: "@tabler/icons-react", icons: true }],
@@ -35,7 +40,7 @@ function exportText(names, from) {
 }
 
 const sources = (
-  await Promise.all(SOURCES.map((source) => files(path.join(WEB, source))))
+  await Promise.all(SOURCES.map((source) => files(source)))
 ).flat()
 const placeholders = []
 for (const file of sources)

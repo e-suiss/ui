@@ -35,7 +35,7 @@ function load(library: IconLibrary) {
   return promise
 }
 
-const PreviewIcons = React.createContext<IconLibrary>(DEFAULT_ICONS)
+const PreviewIcons = React.createContext<IconLibrary | undefined>(undefined)
 
 export function PreviewIconsProvider({
   children,
@@ -45,7 +45,12 @@ export function PreviewIconsProvider({
   icons?: IconLibrary
 }) {
   const options = useCodeOptions()
-  return <PreviewIcons value={icons ?? options.icons}>{children}</PreviewIcons>
+  const parent = React.useContext(PreviewIcons)
+  return (
+    <PreviewIcons value={icons ?? parent ?? options.icons}>
+      {children}
+    </PreviewIcons>
+  )
 }
 
 function useIconSet(library: IconLibrary) {
@@ -68,7 +73,7 @@ export function IconPlaceholder({
   remixicon,
   ...props
 }: IconProps & Record<IconLibrary, string>) {
-  const library = React.useContext(PreviewIcons)
+  const library = React.useContext(PreviewIcons) ?? DEFAULT_ICONS
   const icons = useIconSet(library)
   const name = { lucide, tabler, hugeicons, phosphor, remixicon }[library]
   const icon = icons?.[name]

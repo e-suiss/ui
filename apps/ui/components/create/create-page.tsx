@@ -5,8 +5,9 @@ import { RadioGroup } from "@base-ui/react/radio-group"
 import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
 import { ColorPicker } from "@/components/create/color-picker"
-import { FRAME_HEIGHT, FRAME_MESSAGE } from "@/components/create/frame"
+import { FRAME_MESSAGE } from "@/components/create/frame"
 import { GetCode } from "@/components/create/get-code"
+import { ItemExplorer } from "@/components/create/item-explorer"
 import {
   Popover,
   PopoverContent,
@@ -16,7 +17,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { withBase } from "@/lib/base-path"
 import { ICON_LABELS, type IconLibrary, STYLE_LABELS } from "@/lib/code-options"
+import { BOARDS, DEFAULT_ITEM, isBoard } from "@/lib/create/boards"
 import { parseColor } from "@/lib/create/color"
+import type { CreateGroup } from "@/lib/create/items"
 import {
   BASE_COLORS,
   type CreateState,
@@ -167,7 +170,6 @@ const options = (values: readonly string[], swatches = false): Option[] =>
 
 function useFrame(state: CreateState) {
   const ref = React.useRef<HTMLIFrameElement>(null)
-  const [height, setHeight] = React.useState(720)
   const latest = React.useRef(state)
   latest.current = state
 
@@ -192,7 +194,6 @@ function useFrame(state: CreateState) {
       if (event.origin !== window.location.origin) return
       if (event.source !== ref.current?.contentWindow) return
       if (event.data?.type === FRAME_MESSAGE) send()
-      if (event.data?.type === FRAME_HEIGHT) setHeight(event.data.height)
     }
     window.addEventListener("message", onMessage)
     const observer = new MutationObserver(send)
@@ -206,15 +207,20 @@ function useFrame(state: CreateState) {
     }
   }, [send])
 
-  return { ref, height, send }
+  return { ref, send }
 }
+
+const ITEM_PARAM = "item"
 
 export function CreatePage({
   themeDefaults,
+  groups,
 }: {
   themeDefaults: ThemeDefaults
+  groups: CreateGroup[]
 }) {
   const [state, setState] = React.useState<CreateState>(DEFAULT_STATE)
+  const [item, setItem] = React.useState(DEFAULT_ITEM)
   const [preview, setPreview] = React.useState<Partial<CreateState>>({})
   const [ready, setReady] = React.useState(false)
   const shown = { ...state, ...preview }
@@ -222,19 +228,31 @@ export function CreatePage({
   React.useEffect(() => {
     const root = document.documentElement
     root.dataset.create = ""
-    setState(fromParams(new URLSearchParams(window.location.search)))
+    const params = new URLSearchParams(window.location.search)
+    setState(fromParams(params))
+    const requested = params.get(ITEM_PARAM)
+    if (
+      requested &&
+      (isBoard(requested) ||
+        groups.some((group) =>
+          group.items.some((entry) => entry.name === requested)
+        ))
+    )
+      setItem(requested)
     setReady(true)
     return () => {
       delete root.dataset.create
     }
-  }, [])
+  }, [groups])
 
   React.useEffect(() => {
     if (!ready) return
-    const query = toParams(state).toString()
+    const params = toParams(state)
+    if (item !== DEFAULT_ITEM) params.set(ITEM_PARAM, item)
+    const query = params.toString()
     const url = `${window.location.pathname}${query ? `?${query}` : ""}`
     window.history.replaceState(window.history.state, "", url)
-  }, [ready, state])
+  }, [ready, state, item])
 
   const frame = useFrame(shown)
 
@@ -285,9 +303,22 @@ export function CreatePage({
   const web = state.platform === "web"
   const [defaultTheme, ...colorThemes] = themeOptions(state.baseColor)
 
+  const itemGroups: Option[][] = [
+    BOARDS.map((board) => ({
+      value: board.name,
+      label: `${strings.createBoard} ${board.title}`,
+    })),
+    ...groups.map((group) =>
+      group.items.map((entry) => ({
+        value: entry.name,
+        label: `${group.title} / ${entry.title}`,
+      }))
+    ),
+  ]
+
   return (
-    <div className="flex w-full flex-col gap-10 px-5 py-10 md:px-10 lg:flex-row">
-      <aside className="flex w-full shrink-0 flex-col gap-6 lg:sticky lg:top-24 lg:w-64 lg:self-start">
+    <div className="flex w-full flex-col gap-6 px-5 py-6 md:px-10 lg:h-[calc(100svh-4rem)] lg:flex-row">
+      <aside className="flex w-full shrink-0 flex-col gap-6 lg:w-64 lg:overflow-y-auto">
         <div className="flex flex-col gap-2 px-3">
           <h1 className="text-4xl font-semibold tracking-[-0.03em]">
             {strings.createTitle}
@@ -297,6 +328,15 @@ export function CreatePage({
           </p>
         </div>
         <div className="flex flex-col gap-1.5">
+          <div className="xl:hidden">
+            <Picker
+              label={strings.createItem}
+              value={item}
+              groups={itemGroups}
+              onChange={setItem}
+              onPreview={() => undefined}
+            />
+          </div>
           {picker("platform", strings.createPlatform, [
             PLATFORMS.map((item) => ({ value: item.value, label: item.label })),
           ])}
@@ -365,7 +405,8 @@ export function CreatePage({
           ])}
         </div>
       </aside>
-      <div className="flex min-w-0 flex-1 flex-col gap-8">
+      <ItemExplorer groups={groups} value={item} onChange={setItem} />
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4">
         <div className="flex items-center justify-between gap-3">
           <p className="font-mono text-[11px] tracking-[0.02em] text-muted-foreground uppercase">
             {strings.createInstall}
@@ -376,14 +417,31 @@ export function CreatePage({
             onBaseChange={(base) => update("base", base)}
           />
         </div>
-        <iframe
-          ref={frame.ref}
-          src={withBase("/preview/create")}
-          title={strings.createPreview}
-          onLoad={frame.send}
-          style={{ height: frame.height }}
-          className="w-full rounded-3xl border-0 bg-transparent"
-        />
+        <div className="relative h-[80svh] overflow-hidden rounded-3xl ring-1 ring-foreground/10 lg:h-auto lg:flex-1">
+          <iframe
+            key={item}
+            ref={frame.ref}
+            src={withBase(`/preview/create/${item}`)}
+            title={strings.createPreview}
+            onLoad={frame.send}
+            className="absolute inset-0 size-full border-0 bg-transparent"
+          />
+          {isBoard(item) && (
+            <div className="absolute end-3 bottom-3 flex items-center gap-1 rounded-xl bg-background/90 p-1 shadow-lg ring-1 ring-foreground/10 backdrop-blur-xl">
+              {BOARDS.map((board) => (
+                <button
+                  key={board.name}
+                  type="button"
+                  aria-pressed={board.name === item}
+                  onClick={() => setItem(board.name)}
+                  className="h-7 min-w-8 rounded-lg px-2.5 font-mono text-xs text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-pressed:bg-foreground/8 aria-pressed:text-foreground"
+                >
+                  {board.title}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

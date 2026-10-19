@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { CreatePreview } from "@/components/create/preview"
 import { PreviewIconsProvider } from "@/components/site/icon-placeholder"
 import { showStyle } from "@/components/site/style-sheet"
 import type { IconLibrary } from "@/lib/code-options"
@@ -13,7 +12,6 @@ import {
 } from "@/lib/create/options"
 
 export const FRAME_MESSAGE = "suiss:create"
-export const FRAME_HEIGHT = "suiss:create-height"
 
 export type FrameMessage = {
   type: typeof FRAME_MESSAGE
@@ -23,7 +21,6 @@ export type FrameMessage = {
 
 const THEME_STYLE = "create-theme"
 const FONT_LINK = "create-font"
-const MENU_ROOM = 220
 
 function declarations(variables: Record<string, string>) {
   return Object.entries(variables)
@@ -91,9 +88,8 @@ function invertMenus(inverted: boolean) {
   }
 }
 
-export function CreateFrame() {
+export function CreateFrame({ children }: { children: React.ReactNode }) {
   const [state, setState] = React.useState<CreateState>(DEFAULT_STATE)
-  const content = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     const onMessage = (event: MessageEvent<FrameMessage>) => {
@@ -126,28 +122,9 @@ export function CreateFrame() {
     return () => observer.disconnect()
   }, [inverted])
 
-  React.useEffect(() => {
-    const element = content.current
-    if (!element) return
-    const report = () =>
-      window.parent.postMessage(
-        {
-          type: FRAME_HEIGHT,
-          height: Math.ceil(element.getBoundingClientRect().height) + MENU_ROOM,
-        },
-        window.location.origin
-      )
-    const observer = new ResizeObserver(report)
-    observer.observe(element)
-    report()
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <div ref={content} className="bg-background p-2">
-      <PreviewIconsProvider icons={state.iconLibrary as IconLibrary}>
-        <CreatePreview />
-      </PreviewIconsProvider>
-    </div>
+    <PreviewIconsProvider icons={state.iconLibrary as IconLibrary}>
+      {children}
+    </PreviewIconsProvider>
   )
 }

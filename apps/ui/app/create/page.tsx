@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { CreatePage } from "@/components/create/create-page"
+import { createGroups } from "@/lib/create/items"
 import { themeDefaults } from "@/lib/create/theme-defaults"
 import { absolute, site } from "@/lib/site"
 import { strings } from "@/lib/strings"
@@ -24,5 +25,10 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  return <CreatePage themeDefaults={await themeDefaults()} />
+  return (
+    <CreatePage
+      themeDefaults={await themeDefaults()}
+      groups={await createGroups()}
+    />
+  )
 }
