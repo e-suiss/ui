@@ -9,6 +9,8 @@ const ICON_LIBRARIES = {
   remixicon: { package: "@remixicon/react" },
 }
 
+export const ICON_LIBRARY_NAMES = Object.keys(ICON_LIBRARIES)
+
 export function iconPackages(library = "phosphor") {
   const entry = ICON_LIBRARIES[library] ?? ICON_LIBRARIES.phosphor
   return [entry.package, ...(entry.wrapper ? [entry.wrapper.package] : [])]

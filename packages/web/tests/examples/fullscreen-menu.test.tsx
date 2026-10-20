@@ -97,7 +97,7 @@ test("Default", async () => {
     async () => {
       await userEvent.keyboard("{Escape}")
       await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
-      await expect(trigger).toHaveFocus()
+      await waitFor(() => expect(trigger).toHaveFocus())
     }
   )
 

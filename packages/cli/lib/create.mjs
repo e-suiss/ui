@@ -25,6 +25,8 @@ const RUNNERS = {
   bun: ["bunx", []],
 }
 
+export const PACKAGE_MANAGERS = Object.keys(RUNNERS)
+
 const REACT_NATIVE_MANAGERS = ["npm", "yarn", "bun"]
 
 const PROJECT_NAME = /^[a-z0-9][a-z0-9._-]*$/

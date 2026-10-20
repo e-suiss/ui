@@ -39,6 +39,8 @@ jobs:
 
       - run: pnpm registry:check
 
+      - run: pnpm matrix --check
+
   test:
     name: Tests
     runs-on: ubuntu-latest

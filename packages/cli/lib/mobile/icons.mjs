@@ -14,7 +14,7 @@ import { assertPackageSpecs } from "../shared/project.mjs"
 import { decodePreset } from "../shared/style.mjs"
 
 const DEFAULT_ICON_LIBRARY = "phosphor"
-const ICON_LIBRARY_NAMES = [
+export const ICON_LIBRARY_NAMES = [
   "phosphor",
   "lucide",
   "tabler",

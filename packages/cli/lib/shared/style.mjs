@@ -111,6 +111,9 @@ const FIELDS = [
   { key: "chartColor", values: THEMES, bits: 6 },
   { key: "fontHeading", values: ["inherit", ...FONTS], bits: 5 },
 ]
+export const PRESET_VALUES = Object.fromEntries(
+  FIELDS.map((field) => [field.key, field.values])
+)
 const ALPHABET =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 const VERSIONS = ["a", "b"]

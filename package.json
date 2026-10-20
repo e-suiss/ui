@@ -19,6 +19,7 @@
     "release": "node scripts/release.mjs",
     "compat": "node scripts/compat.mjs",
     "compat:rn": "node scripts/compat-rn.mjs",
+    "matrix": "node scripts/matrix.mjs",
     "indexnow": "node scripts/indexnow.mjs",
     "prepare": "lefthook install"
   },
