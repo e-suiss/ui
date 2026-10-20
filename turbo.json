@@ -81,5 +81,12 @@
       "persistent": true
     }
   },
-  "globalPassThroughEnv": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ZONE_ID"]
+  "globalPassThroughEnv": [
+    "CLOUDFLARE_API_TOKEN",
+    "CLOUDFLARE_ZONE_ID",
+    "COMPAT_CACHE",
+    "COMPAT_LOGS",
+    "GITHUB_STEP_SUMMARY",
+    "RUNS"
+  ]
 }

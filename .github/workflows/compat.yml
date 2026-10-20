@@ -8,6 +8,9 @@ on:
       - "packages/web/**"
       - "packages/cli/**"
       - "scripts/compat.mjs"
+      - "scripts/compat-batch.mjs"
+      - "scripts/matrix.mjs"
+      - "worker.js"
       - "apps/ui/next.config.ts"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -17,6 +20,9 @@ on:
       - "packages/web/**"
       - "packages/cli/**"
       - "scripts/compat.mjs"
+      - "scripts/compat-batch.mjs"
+      - "scripts/matrix.mjs"
+      - "worker.js"
       - "apps/ui/next.config.ts"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -24,6 +30,11 @@ on:
   schedule:
     - cron: "17 4 * * 1"
   workflow_dispatch:
+    inputs:
+      full:
+        description: Also install every item with every style, icon library, base, framework and CLI
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -36,7 +47,8 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs.matrix }}
+      options: ${{ steps.matrix.outputs.options }}
+      install: ${{ steps.matrix.outputs.install }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
@@ -45,16 +57,18 @@ jobs:
           node-version: 24
 
       - id: matrix
-        run: echo "matrix=$(node scripts/compat.mjs --matrix)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "options=$(node scripts/matrix.mjs web-options --group=base,framework)" >> "$GITHUB_OUTPUT"
+          echo "install=$(node scripts/matrix.mjs web-install --group=base,framework,cli)" >> "$GITHUB_OUTPUT"
 
-  compat:
+  options:
     needs: matrix
-    name: ${{ matrix.name }}
+    name: Options (${{ matrix.name }})
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 90
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.matrix.outputs.options) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
@@ -65,21 +79,72 @@ jobs:
           node-version: 24
           cache: pnpm
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-          path: ~/.npm
-          key: compat-npm-${{ runner.os }}-${{ contains(matrix.args, 'vite') && 'vite' || 'next' }}-${{ hashFiles('scripts/compat.mjs') }}
-          restore-keys: compat-npm-${{ runner.os }}-${{ contains(matrix.args, 'vite') && 'vite' || 'next' }}-
+      - name: Install Yarn and Bun
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          corepack enable --install-directory "$RUNNER_TEMP/bin" yarn
+          corepack install --global yarn@4.18.1
+          npm install --global bun@1.4.3
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
 
       - name: Install the registry tools
         run: pnpm install --frozen-lockfile --ignore-scripts --filter @esuiss/web
 
-      - name: Install the items in a new app
-        env:
-          ARGS: ${{ matrix.args }}
+      - name: Install Google Chrome
         run: |
-          read -ra args <<< "$ARGS"
-          node scripts/compat.mjs "${args[@]}"
+          if command -v google-chrome > /dev/null; then
+            google-chrome --version
+          else
+            pnpm --filter @esuiss/web exec playwright install --with-deps chrome
+          fi
+
+      - name: Install every item with ${{ matrix.count }} sets of options
+        env:
+          RUNS: ${{ matrix.runs }}
+        run: node scripts/compat-batch.mjs
+
+  install:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.full)
+    needs: matrix
+    name: Every style and icon library (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.install) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install Yarn and Bun
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          corepack enable --install-directory "$RUNNER_TEMP/bin" yarn
+          corepack install --global yarn@4.18.1
+          npm install --global bun@1.4.3
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Install the registry tools
+        run: pnpm install --frozen-lockfile --ignore-scripts --filter @esuiss/web
+
+      - name: Install Google Chrome
+        run: |
+          if command -v google-chrome > /dev/null; then
+            google-chrome --version
+          else
+            pnpm --filter @esuiss/web exec playwright install --with-deps chrome
+          fi
+
+      - name: Install every item in ${{ matrix.count }} apps
+        env:
+          RUNS: ${{ matrix.runs }}
+        run: node scripts/compat-batch.mjs
 
   compat-rn:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

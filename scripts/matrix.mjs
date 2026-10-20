@@ -127,9 +127,31 @@ function eachOnce(rows, dimensions) {
   }))
 }
 
+const PALETTES = new Set(
+  JSON.parse(
+    readFileSync(path.join(ROOT, "packages/web/registry/themes.json"), "utf8")
+  ).map((palette) => palette.name)
+)
+const BASE_COLORS = PRESET_VALUES.baseColor.filter((name) => PALETTES.has(name))
+const THEMES_WITH_PALETTE = PRESET_VALUES.theme.filter((name) =>
+  PALETTES.has(name)
+)
+const GRAYS = new Set(BASE_COLORS)
+
+const withBaseColor = (rows) =>
+  rows.map((row, index) => ({
+    ...row,
+    baseColor: GRAYS.has(row.theme)
+      ? row.theme
+      : BASE_COLORS[index % BASE_COLORS.length],
+  }))
+
+const validTokens = (row) =>
+  !GRAYS.has(row.theme) || row.baseColor === row.theme
+
 const TOKENS = {
-  baseColor: PRESET_VALUES.baseColor,
-  theme: PRESET_VALUES.theme,
+  baseColor: BASE_COLORS,
+  theme: THEMES_WITH_PALETTE,
   font: PRESET_VALUES.font,
   radius: PRESET_VALUES.radius,
   menuAccent: PRESET_VALUES.menuAccent,
@@ -137,7 +159,13 @@ const TOKENS = {
 }
 
 const webOnly = (row) =>
-  row.framework !== "vite" || (row.tsx !== false && row.rsc !== true)
+  (row.framework !== "vite" || (row.tsx !== false && row.rsc !== true)) &&
+  (row.cli !== "esuiss" ||
+    (row.prefix !== "tw" &&
+      row.cssVariables !== false &&
+      row.tsx !== false &&
+      row.aliases !== "custom" &&
+      !(row.framework === "next" && row.rsc === false)))
 
 const WEB_OPTIONS = {
   base: BASES,
@@ -175,7 +203,8 @@ const SUITES = {
       framework: WEB_FRAMEWORKS,
       cli: CLIS,
     }),
-  "web-options": () => eachOnce(pairwise(WEB_OPTIONS, webOnly), TOKENS),
+  "web-options": () =>
+    withBaseColor(eachOnce(pairwise(WEB_OPTIONS, webOnly), TOKENS)),
   "web-visual": () =>
     product({ base: BASES, style: STYLES, theme: THEMES, rtl: BOOLEAN }),
   "web-icons": () => product({ base: BASES, icons: WEB_ICONS }),
@@ -216,6 +245,16 @@ function suite(name) {
   if (!build) throw new Error(`Unknown suite ${name}`)
   return build()
 }
+
+const FLAG = /[A-Z]/g
+
+const argsOf = (row) =>
+  Object.entries(row)
+    .map(
+      ([key, value]) =>
+        `--${key.replace(FLAG, (letter) => `-${letter.toLowerCase()}`)}=${value}`
+    )
+    .join(" ")
 
 const nameOf = (row) =>
   Object.entries(row)
@@ -273,7 +312,9 @@ function check() {
       }
     }
     for (const row of rows) {
-      if (!allowed(row)) throw new Error(`${name} has ${nameOf(row)}`)
+      if (!(allowed(row) && validTokens(row))) {
+        throw new Error(`${name} has ${nameOf(row)}`)
+      }
     }
     for (const [key, values] of Object.entries(tokens)) {
       const missing = values.filter(
@@ -299,6 +340,8 @@ function summary() {
 
 const USAGE = `Usage:
   node scripts/matrix.mjs <suite>      GitHub Actions matrix for a suite
+  node scripts/matrix.mjs <suite> --group=<key,...>
+                                       one job per group, its rows as runs
   node scripts/matrix.mjs items <name> item names of a registry
   node scripts/matrix.mjs --summary    row and item counts
   node scripts/matrix.mjs --check      verify the matrices and registries
@@ -306,8 +349,30 @@ const USAGE = `Usage:
 Suites: ${Object.keys(SUITES).join(", ")}
 Registries: ${Object.keys(REGISTRIES).join(", ")}`
 
+const GROUP_FLAG = "--group="
+
+function grouped(rows, keys) {
+  const groups = new Map()
+  for (const row of rows) {
+    const key = keys.map((name) => row[name]).join(" · ")
+    groups.set(key, [...(groups.get(key) ?? []), argsOf(row)])
+  }
+  return [...groups].map(([name, runs]) => ({
+    name,
+    count: runs.length,
+    runs: runs.join("\n"),
+  }))
+}
+
 if (import.meta.main) {
-  const [command, argument] = process.argv.slice(2)
+  const flags = process.argv.slice(2)
+  const group = flags
+    .find((flag) => flag.startsWith(GROUP_FLAG))
+    ?.slice(GROUP_FLAG.length)
+    .split(",")
+  const [command, argument] = flags.filter(
+    (flag) => !flag.startsWith(GROUP_FLAG)
+  )
   if (command === "--check") {
     check()
     console.log("The matrices and registries are consistent.")
@@ -315,10 +380,16 @@ if (import.meta.main) {
     console.log(summary())
   } else if (command === "items" && argument) {
     console.log(JSON.stringify(items(argument)))
+  } else if (command && command in SUITES && group) {
+    console.log(JSON.stringify({ include: grouped(suite(command), group) }))
   } else if (command && command in SUITES) {
     console.log(
       JSON.stringify({
-        include: suite(command).map((row) => ({ name: nameOf(row), ...row })),
+        include: suite(command).map((row) => ({
+          name: nameOf(row),
+          args: argsOf(row),
+          ...row,
+        })),
       })
     )
   } else {
