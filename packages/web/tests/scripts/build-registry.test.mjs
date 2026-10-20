@@ -619,10 +619,22 @@ describe("the published registry", () => {
   const manifest = JSON.parse(
     readFileSync(path.join(repo, "package.json"), "utf8")
   )
-  const declared = new Set([
+  const installed = [
     ...Object.keys(manifest.dependencies),
     ...Object.keys(manifest.devDependencies),
-  ])
+  ]
+  const peersOf = (name) => {
+    const { peerDependencies = {}, peerDependenciesMeta = {} } = JSON.parse(
+      readFileSync(
+        path.join(repo, "node_modules", name, "package.json"),
+        "utf8"
+      )
+    )
+    return Object.keys(peerDependencies).filter(
+      (peer) => !peerDependenciesMeta[peer]?.optional
+    )
+  }
+  const declared = new Set([...installed, ...installed.flatMap(peersOf)])
 
   it("only asks users to install packages the library itself depends on", () => {
     const missing = registry.items.flatMap((entry) =>

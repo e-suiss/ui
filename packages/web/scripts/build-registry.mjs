@@ -1,6 +1,7 @@
-import { existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
+import { fileURLToPath } from "node:url"
 import Ajv from "ajv"
 import postcss from "postcss"
 
@@ -32,6 +33,37 @@ const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks|lib)\/([\w-]+)$/
 const SOURCE_FILE = /\.(tsx?|jsx?)$/
 const FRONTMATTER = /^---\n([\s\S]*?)\n---/
+
+function isInstalled(pkg) {
+  try {
+    import.meta.resolve(pkg)
+    return true
+  } catch {
+    return false
+  }
+}
+
+function manifestOf(pkg) {
+  let dir = path.dirname(fileURLToPath(import.meta.resolve(pkg)))
+  while (dir !== path.dirname(dir)) {
+    const file = path.join(dir, "package.json")
+    if (existsSync(file)) {
+      const manifest = JSON.parse(readFileSync(file, "utf8"))
+      if (manifest.name === pkg) return manifest
+    }
+    dir = path.dirname(dir)
+  }
+  throw new Error(`Cannot find the package.json of ${pkg}`)
+}
+
+function requiredPeers(pkg) {
+  if (!isInstalled(pkg)) return []
+  const { peerDependencies = {}, peerDependenciesMeta = {} } = manifestOf(pkg)
+  return Object.keys(peerDependencies).filter(
+    (peer) =>
+      !(IGNORED_PACKAGES.has(peer) || peerDependenciesMeta[peer]?.optional)
+  )
+}
 
 const THEME = {
   name: "theme-suiss",
@@ -153,6 +185,10 @@ async function collect(source, file, base) {
       const pkg = packageName(specifier)
       if (!IGNORED_PACKAGES.has(pkg)) dependencies.add(pkg)
     }
+  }
+
+  for (const pkg of [...dependencies]) {
+    for (const peer of requiredPeers(pkg)) dependencies.add(peer)
   }
 
   return {
