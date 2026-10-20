@@ -12,12 +12,6 @@ const UPPERCASE = /[A-Z]/
 const LOWERCASE = /[a-z]/
 const DIGIT = /\d/
 
-const stackClass =
-  "overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input"
-
-const inputClass =
-  "h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
-
 const rules = [
   {
     label: "At least 8 characters",
@@ -151,24 +145,24 @@ export function SignupForm() {
         <fieldset className="mt-5.5 flex flex-col gap-2 text-start">
           <legend className="mb-2 text-sm font-semibold">Your name</legend>
           <div className="grid grid-cols-2 gap-3">
-            <div className={stackClass}>
+            <div className="overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input">
               <Input
                 value={form.first}
                 onChange={update("first")}
                 placeholder="First name"
                 aria-label="First name"
                 autoComplete="given-name"
-                className={inputClass}
+                className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
               />
             </div>
-            <div className={stackClass}>
+            <div className="overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input">
               <Input
                 value={form.last}
                 onChange={update("last")}
                 placeholder="Last name"
                 aria-label="Last name"
                 autoComplete="family-name"
-                className={inputClass}
+                className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
               />
             </div>
           </div>
@@ -177,7 +171,7 @@ export function SignupForm() {
           <legend className="mb-2 text-sm font-semibold">
             Country or region and birthday
           </legend>
-          <div className={stackClass}>
+          <div className="overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input">
             <NativeSelect
               value={form.country}
               onChange={update("country")}
@@ -202,13 +196,13 @@ export function SignupForm() {
               aria-label="Birthday"
               autoComplete="bday"
               inputMode="numeric"
-              className={inputClass}
+              className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
             />
           </div>
         </fieldset>
         <fieldset className="mt-5.5 flex flex-col text-start">
           <legend className="mb-2 text-sm font-semibold">suiss Account</legend>
-          <div className={stackClass}>
+          <div className="overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input">
             <Input
               type="email"
               value={form.email}
@@ -217,7 +211,7 @@ export function SignupForm() {
               aria-label="Email"
               aria-describedby={`${idPrefix}-email-hint`}
               autoComplete="email"
-              className={inputClass}
+              className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
             />
           </div>
           <p
@@ -229,7 +223,10 @@ export function SignupForm() {
         </fieldset>
         <fieldset className="mt-5.5 flex flex-col text-start">
           <legend className="mb-2 text-sm font-semibold">Password</legend>
-          <div data-invalid={mismatch ? "" : undefined} className={stackClass}>
+          <div
+            data-invalid={mismatch ? "" : undefined}
+            className="overflow-hidden rounded-xl border border-input bg-background transition-[border-color,background-color] duration-200 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:bg-destructive/5 dark:data-invalid:bg-destructive/10 *:not-first:border-t *:not-first:border-t-input"
+          >
             <Input
               type="password"
               value={form.password}
@@ -237,7 +234,7 @@ export function SignupForm() {
               placeholder="Password"
               aria-label="Password"
               autoComplete="new-password"
-              className={inputClass}
+              className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
             />
             <Input
               type="password"
@@ -247,7 +244,7 @@ export function SignupForm() {
               aria-label="Confirm password"
               aria-invalid={mismatch || undefined}
               autoComplete="new-password"
-              className={inputClass}
+              className="h-13 rounded-none bg-transparent px-4 text-lg focus-visible:border-transparent focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:border-x-transparent aria-invalid:border-b-transparent aria-invalid:bg-transparent dark:aria-invalid:bg-transparent"
             />
           </div>
           <div

@@ -7,18 +7,17 @@ import {
   PreviewMenuSeparator,
   PreviewMenuTrigger,
 } from "@/components/interactions/preview-menu"
-import { cn } from "@/lib/utils"
 
 const photos = [
-  "from-blue-500 to-purple-500",
-  "from-orange-500 to-pink-500",
-  "from-green-500 to-teal-500",
-  "from-indigo-500 to-blue-500",
-  "from-yellow-500 to-orange-500",
-  "from-pink-500 to-red-500",
-  "from-teal-500 to-cyan-500",
-  "from-purple-500 to-indigo-500",
-  "from-teal-400 to-green-500",
+  { from: "var(--color-blue-500)", to: "var(--color-purple-500)" },
+  { from: "var(--color-orange-500)", to: "var(--color-pink-500)" },
+  { from: "var(--color-green-500)", to: "var(--color-teal-500)" },
+  { from: "var(--color-indigo-500)", to: "var(--color-blue-500)" },
+  { from: "var(--color-yellow-500)", to: "var(--color-orange-500)" },
+  { from: "var(--color-pink-500)", to: "var(--color-red-500)" },
+  { from: "var(--color-teal-500)", to: "var(--color-cyan-500)" },
+  { from: "var(--color-purple-500)", to: "var(--color-indigo-500)" },
+  { from: "var(--color-teal-400)", to: "var(--color-green-500)" },
 ]
 
 export default function PreviewMenuDisabledItem() {
@@ -29,18 +28,21 @@ export default function PreviewMenuDisabledItem() {
   return (
     <div className="mx-auto flex w-full max-w-md flex-col gap-3">
       <div className="grid grid-cols-3 gap-2">
-        {photos.map((tone, index) => {
+        {photos.map((photo, index) => {
           const label = `Photo ${index + 1}`
           return (
-            <PreviewMenu key={tone}>
+            <PreviewMenu key={label}>
               <PreviewMenuTrigger className="aspect-square overflow-hidden rounded-2xl">
                 <div
                   role="img"
                   aria-label={label}
-                  className={cn(
-                    "aspect-square size-full bg-linear-to-br",
-                    tone
-                  )}
+                  style={
+                    {
+                      "--from": photo.from,
+                      "--to": photo.to,
+                    } as React.CSSProperties
+                  }
+                  className="aspect-square size-full bg-linear-to-br from-(--from) to-(--to)"
                 />
               </PreviewMenuTrigger>
               <PreviewMenuContent>

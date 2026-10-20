@@ -190,9 +190,6 @@ const groups = [
   },
 ]
 
-const gridClass =
-  "grid grid-cols-[minmax(7rem,1.5fr)_repeat(4,minmax(3.5rem,1fr))] items-center"
-
 export function RolesMatrix() {
   const [matrix, setMatrix] = React.useState(() =>
     groups.map((group) =>
@@ -252,7 +249,10 @@ export function RolesMatrix() {
           </div>
           <div className="-mx-5 overflow-x-auto px-5 md:mx-0 md:px-0">
             <div className="flex min-w-120 flex-col gap-4.5">
-              <div className={`${gridClass} -mb-3 px-4`} aria-hidden>
+              <div
+                className="grid grid-cols-[minmax(7rem,1.5fr)_repeat(4,minmax(3.5rem,1fr))] items-center -mb-3 px-4"
+                aria-hidden
+              >
                 <span />
                 {roles.map((role) => (
                   <span
@@ -270,7 +270,7 @@ export function RolesMatrix() {
                     {group.permissions.map((permission, p) => (
                       <li
                         key={permission.name}
-                        className={`${gridClass} min-h-10 px-4 not-first:border-t not-first:border-border`}
+                        className="grid grid-cols-[minmax(7rem,1.5fr)_repeat(4,minmax(3.5rem,1fr))] items-center min-h-10 px-4 not-first:border-t not-first:border-border"
                       >
                         <span className="text-sm">{permission.name}</span>
                         {roles.map((role, r) => (

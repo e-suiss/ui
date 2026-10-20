@@ -393,11 +393,11 @@ function CarouselPrevious({
         hugeicons="ArrowLeft01Icon"
         phosphor="CaretLeftIcon"
         remixicon="RiArrowLeftSLine"
-        className={
+        className={cn(
           orientation === "horizontal"
             ? "rtl:rotate-180"
             : "rtl:in-data-[slot=carousel-controls]:rotate-180"
-        }
+        )}
       />
       <span className="sr-only">Previous slide</span>
     </Button>
@@ -434,11 +434,11 @@ function CarouselNext({
         hugeicons="ArrowRight01Icon"
         phosphor="CaretRightIcon"
         remixicon="RiArrowRightSLine"
-        className={
+        className={cn(
           orientation === "horizontal"
             ? "rtl:rotate-180"
             : "rtl:in-data-[slot=carousel-controls]:rotate-180"
-        }
+        )}
       />
       <span className="sr-only">Next slide</span>
     </Button>

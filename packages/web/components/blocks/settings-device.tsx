@@ -50,7 +50,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-orange-500",
+      tint: "var(--color-orange-500)",
       toggle: "airplane",
     },
     {
@@ -65,7 +65,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-blue-500",
+      tint: "var(--color-blue-500)",
       detail: (toggles) => (toggles.wifi ? "Home" : "Off"),
     },
     {
@@ -80,7 +80,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-blue-500",
+      tint: "var(--color-blue-500)",
       detail: (toggles) => (toggles.bluetooth ? "On" : "Off"),
     },
     {
@@ -95,7 +95,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-green-500",
+      tint: "var(--color-green-500)",
       detail: (toggles) => (toggles.airplane ? "Off" : ""),
     },
   ],
@@ -112,7 +112,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-red-500",
+      tint: "var(--color-red-500)",
     },
     {
       label: "Sounds & Haptics",
@@ -126,7 +126,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-pink-500",
+      tint: "var(--color-pink-500)",
     },
     {
       label: "Focus",
@@ -140,7 +140,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-indigo-500",
+      tint: "var(--color-indigo-500)",
       toggle: "focus",
     },
     {
@@ -155,7 +155,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-indigo-500",
+      tint: "var(--color-indigo-500)",
     },
   ],
   [
@@ -171,7 +171,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-zinc-500",
+      tint: "var(--color-zinc-500)",
     },
     {
       label: "Display & Brightness",
@@ -185,7 +185,7 @@ const groups: Row[][] = [
           className="size-4.25"
         />
       ),
-      tint: "bg-blue-500",
+      tint: "var(--color-blue-500)",
     },
   ],
 ]
@@ -193,8 +193,6 @@ const groups: Row[][] = [
 function RowLink(props: React.ComponentProps<"a">) {
   return <a {...props} />
 }
-
-const groupClass = "shrink-0 bg-background dark:bg-muted"
 
 export function SettingsDevice() {
   const idPrefix = React.useId()
@@ -277,7 +275,10 @@ export function SettingsDevice() {
             />
           </InputGroup>
           {!query && (
-            <ItemGroup variant="inset" className={groupClass}>
+            <ItemGroup
+              variant="inset"
+              className="shrink-0 bg-background dark:bg-muted"
+            >
               <div role="listitem" className="contents">
                 <Item
                   size="sm"
@@ -313,7 +314,7 @@ export function SettingsDevice() {
             <ItemGroup
               key={rows[0].label}
               variant="inset"
-              className={`${groupClass} **:data-[slot=item-separator]:ms-14.25`}
+              className="shrink-0 bg-background dark:bg-muted **:data-[slot=item-separator]:ms-14.25"
             >
               {rows.map((row, index) => {
                 const detail = row.detail?.(toggles)
@@ -333,7 +334,8 @@ export function SettingsDevice() {
                       className="min-h-11 gap-3.5 py-1.5"
                     >
                       <ItemMedia
-                        className={`size-7.25 rounded-[7px] text-white ${row.tint}`}
+                        style={{ "--tint": row.tint } as React.CSSProperties}
+                        className="size-7.25 rounded-[7px] bg-(--tint) text-white"
                       >
                         {row.icon}
                       </ItemMedia>

@@ -123,13 +123,6 @@ const views: { value: Status | "All"; icon: React.ReactNode }[] = [
   },
 ]
 
-const priorityClass: Record<Priority, string> = {
-  High: "bg-destructive/14 text-[color-mix(in_oklab,var(--destructive),var(--foreground)_30%)] dark:text-destructive",
-  Medium:
-    "bg-orange-500/14 text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_50%)] dark:text-orange-500",
-  Low: "bg-secondary text-muted-foreground",
-}
-
 function Requester({
   ticket,
   className,
@@ -212,7 +205,8 @@ export function InboxSupport() {
                 {ticket.id} · {ticket.device}
               </span>
               <span
-                className={`rounded-md px-2 py-0.5 text-xs font-semibold ${priorityClass[ticket.priority]}`}
+                data-priority={ticket.priority.toLowerCase()}
+                className="rounded-md px-2 py-0.5 text-xs font-semibold data-[priority=high]:bg-destructive/14 data-[priority=high]:text-[color-mix(in_oklab,var(--destructive),var(--foreground)_30%)] data-[priority=low]:bg-secondary data-[priority=low]:text-muted-foreground data-[priority=medium]:bg-orange-500/14 data-[priority=medium]:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_50%)] dark:data-[priority=high]:text-destructive dark:data-[priority=medium]:text-orange-500"
               >
                 {ticket.priority}
               </span>

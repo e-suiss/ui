@@ -32,9 +32,6 @@ const copy = {
   },
 }
 
-const slotClass =
-  "h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive"
-
 function AlertAction({
   children,
   primary,
@@ -152,7 +149,7 @@ export function VerifyDevice() {
                     <InputOTPSlot
                       key={index}
                       index={index}
-                      className={slotClass}
+                      className="h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive"
                     />
                   ))}
                 </InputOTPGroup>

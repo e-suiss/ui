@@ -23,6 +23,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { cn } from "@/lib/utils"
 
 type NavItem = {
   value: string
@@ -163,25 +164,10 @@ const nav: NavItem[] = [
 
 type Severity = "High" | "Medium" | "Low"
 
-const severity: Record<
-  Severity,
-  { tint: string; text: string; weight: number }
-> = {
-  High: {
-    tint: "bg-red-500",
-    text: "text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] dark:text-red-500",
-    weight: 18,
-  },
-  Medium: {
-    tint: "bg-orange-500",
-    text: "text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500",
-    weight: 8,
-  },
-  Low: {
-    tint: "bg-yellow-500",
-    text: "text-[color-mix(in_oklab,var(--color-yellow-500),var(--foreground)_55%)] dark:text-yellow-500",
-    weight: 3,
-  },
+const severity: Record<Severity, { weight: number }> = {
+  High: { weight: 18 },
+  Medium: { weight: 8 },
+  Low: { weight: 3 },
 }
 
 const initialAlerts: {
@@ -253,9 +239,9 @@ const initialAlerts: {
 ]
 
 function scoreTone(score: number) {
-  if (score > 85) return "text-green-500"
-  if (score > 65) return "text-orange-500"
-  return "text-red-500"
+  if (score > 85) return "good"
+  if (score > 65) return "fair"
+  return "poor"
 }
 
 export function LogSecurity() {
@@ -315,7 +301,8 @@ export function LogSecurity() {
             <svg
               aria-hidden
               viewBox="0 0 54 54"
-              className={`size-13.5 -rotate-90 transition-colors duration-400 ${tone}`}
+              data-tone={tone}
+              className="size-13.5 -rotate-90 transition-colors duration-400 data-[tone=fair]:text-orange-500 data-[tone=good]:text-green-500 data-[tone=poor]:text-red-500"
             >
               <circle
                 cx="27"
@@ -348,7 +335,13 @@ export function LogSecurity() {
                 <div key={level} className="flex flex-col items-center">
                   <dt className="text-xs text-muted-foreground">{level}</dt>
                   <dd
-                    className={`text-xl font-semibold tabular-nums ${count(level) ? severity[level].text : "text-muted-foreground"}`}
+                    data-severity={level.toLowerCase()}
+                    className={cn(
+                      "text-xl font-semibold tabular-nums",
+                      count(level)
+                        ? "data-[severity=high]:text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] data-[severity=low]:text-[color-mix(in_oklab,var(--color-yellow-500),var(--foreground)_55%)] data-[severity=medium]:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:data-[severity=high]:text-red-500 dark:data-[severity=low]:text-yellow-500 dark:data-[severity=medium]:text-orange-500"
+                        : "text-muted-foreground"
+                    )}
                   >
                     {count(level)}
                   </dd>
@@ -385,7 +378,13 @@ export function LogSecurity() {
                     className="relative flex min-h-13 items-center gap-3 px-4 py-2.5 not-first:before:absolute not-first:before:inset-e-0 not-first:before:inset-s-14.5 not-first:before:top-0 not-first:before:h-px not-first:before:bg-border"
                   >
                     <span
-                      className={`flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300 ${alert.resolved ? "bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_20%)] dark:bg-green-500" : severity[alert.severity].tint}`}
+                      data-severity={alert.severity.toLowerCase()}
+                      className={cn(
+                        "flex size-7.5 shrink-0 items-center justify-center rounded-[7px] text-white transition-colors duration-300",
+                        alert.resolved
+                          ? "bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_20%)] dark:bg-green-500"
+                          : "data-[severity=high]:bg-red-500 data-[severity=low]:bg-yellow-500 data-[severity=medium]:bg-orange-500"
+                      )}
                     >
                       {alert.resolved ? (
                         <IconPlaceholder

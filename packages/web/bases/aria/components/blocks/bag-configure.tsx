@@ -48,9 +48,6 @@ const storage: [StorageOption, ...StorageOption[]] = [
   { size: "1 TB", extra: 400 },
 ]
 
-const choiceClass =
-  "cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-selected:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
-
 const money = (value: number, digits = 2) =>
   value.toLocaleString("en-US", {
     style: "currency",
@@ -107,7 +104,7 @@ export function BagConfigure() {
           {models.map((item) => (
             <Label
               key={item.name}
-              className={`${choiceClass} flex items-center justify-between gap-0 px-4 py-3.5`}
+              className="cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-selected:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50 flex items-center justify-between gap-0 px-4 py-3.5"
             >
               <RadioGroupItem value={item.name} className="absolute sr-only" />
               <span className="flex-1 text-base font-semibold">
@@ -158,7 +155,7 @@ export function BagConfigure() {
           {storage.map((item) => (
             <Label
               key={item.size}
-              className={`${choiceClass} flex flex-col items-center gap-0.5 px-1.5 py-3`}
+              className="cursor-pointer rounded-[0.875rem] font-normal shadow-[inset_0_0_0_1px_var(--color-input)] transition-shadow duration-200 has-data-selected:shadow-[inset_0_0_0_2px_var(--color-primary)] has-focus-visible:ring-3 has-focus-visible:ring-ring/50 flex flex-col items-center gap-0.5 px-1.5 py-3"
             >
               <RadioGroupItem value={item.size} className="absolute sr-only" />
               <span className="text-base font-semibold whitespace-nowrap">

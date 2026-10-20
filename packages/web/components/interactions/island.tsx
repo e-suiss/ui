@@ -1,5 +1,6 @@
 "use client"
 
+import { cva } from "class-variance-authority"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -36,8 +37,9 @@ function useIsland() {
 
 const NOTICE_DURATION = 4000
 const HIDDEN_SIZE = { width: 126, height: 36 }
-const PART =
+const islandPartVariants = cva(
   "shrink-0 transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-active:delay-100 data-active:duration-450 not-data-active:pointer-events-none not-data-active:invisible not-data-active:absolute not-data-active:top-0 not-data-active:left-1/2 not-data-active:-translate-x-1/2 not-data-active:scale-90 not-data-active:opacity-0 not-data-active:blur-sm not-data-active:duration-150 motion-reduce:transition-none"
+)
 
 function islandView(
   notice: IslandNotice | null,
@@ -186,7 +188,7 @@ function Island({
           aria-hidden={view !== "notice"}
           onClick={dismiss}
           className={cn(
-            PART,
+            islandPartVariants(),
             "flex w-[min(calc(100vw-(--spacing(6))),24rem)] items-center gap-3 p-3.5 text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50 rounded-[inherit] in-data-[slot=island]:focus-visible:ring-inset [&_svg:not([class*='size-'])]:size-6"
           )}
         >
@@ -250,7 +252,7 @@ function IslandCompact({
         )
       }}
       className={cn(
-        PART,
+        islandPartVariants(),
         "flex h-9 min-w-36 items-center justify-between gap-6 px-2.5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 rounded-[inherit] in-data-[slot=island]:focus-visible:ring-inset [&_svg:not([class*='size-'])]:size-5",
         className
       )}
@@ -272,7 +274,7 @@ function IslandExpanded({ className, ...props }: React.ComponentProps<"div">) {
       data-active={view === "expanded" ? "" : undefined}
       inert={view !== "expanded"}
       className={cn(
-        PART,
+        islandPartVariants(),
         "flex w-[min(calc(100vw-(--spacing(6))),24rem)] flex-col gap-3 p-4",
         className
       )}

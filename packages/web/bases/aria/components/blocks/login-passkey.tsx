@@ -14,9 +14,6 @@ import {
 
 type Status = "idle" | "scan" | "ok" | "done"
 
-const avatarClass =
-  "bg-linear-to-br from-[oklch(0.78_0.1_250)] to-[oklch(0.6_0.15_280)] text-white dark:from-[oklch(0.78_0.1_250)] dark:to-[oklch(0.6_0.15_280)]"
-
 function ScanGlyph({ verified }: { verified: boolean }) {
   return (
     <div className="relative size-18">
@@ -80,7 +77,7 @@ export function LoginPasskey() {
       <section className="flex min-h-150 items-center justify-center p-6">
         <div className="flex flex-col items-center gap-3.5 text-center transition-[opacity,translate] duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-y-4.5 starting:opacity-0 motion-reduce:transition-none">
           <Avatar className="size-21">
-            <AvatarFallback className={`${avatarClass} text-3xl`}>
+            <AvatarFallback className="bg-linear-to-br from-[oklch(0.78_0.1_250)] to-[oklch(0.6_0.15_280)] text-white dark:from-[oklch(0.78_0.1_250)] dark:to-[oklch(0.6_0.15_280)] text-3xl">
               JR
             </AvatarFallback>
           </Avatar>
@@ -124,7 +121,7 @@ export function LoginPasskey() {
         </p>
         <div className="mt-7 flex items-center gap-2.5 rounded-full bg-muted py-2 ps-2 pe-4">
           <Avatar size="sm" className="size-7">
-            <AvatarFallback className={`${avatarClass} text-xs`}>
+            <AvatarFallback className="bg-linear-to-br from-[oklch(0.78_0.1_250)] to-[oklch(0.6_0.15_280)] text-white dark:from-[oklch(0.78_0.1_250)] dark:to-[oklch(0.6_0.15_280)] text-xs">
               JR
             </AvatarFallback>
           </Avatar>

@@ -20,7 +20,8 @@ const services = [
         className="fill-current size-3.25"
       />
     ),
-    tint: "bg-red-500 text-white",
+    tint: "var(--color-red-500)",
+    tintForeground: "var(--color-white)",
   },
   {
     name: "suiss TV",
@@ -34,7 +35,8 @@ const services = [
         className="size-3.25"
       />
     ),
-    tint: "bg-foreground text-background",
+    tint: "var(--foreground)",
+    tintForeground: "var(--background)",
   },
   {
     name: "suiss Arcade",
@@ -48,7 +50,8 @@ const services = [
         className="size-3.25"
       />
     ),
-    tint: "bg-red-500 text-white",
+    tint: "var(--color-red-500)",
+    tintForeground: "var(--color-white)",
   },
   {
     name: "suiss Cloud+",
@@ -62,7 +65,8 @@ const services = [
         className="fill-current size-3.25"
       />
     ),
-    tint: "bg-blue-500 text-white",
+    tint: "var(--color-blue-500)",
+    tintForeground: "var(--color-white)",
   },
   {
     name: "Fitness+",
@@ -76,7 +80,8 @@ const services = [
         className="fill-current size-3.25"
       />
     ),
-    tint: "bg-green-500 text-white",
+    tint: "var(--color-green-500)",
+    tintForeground: "var(--color-white)",
   },
   {
     name: "News+",
@@ -90,7 +95,8 @@ const services = [
         className="size-3.25"
       />
     ),
-    tint: "bg-pink-500 text-white",
+    tint: "var(--color-pink-500)",
+    tintForeground: "var(--color-white)",
   },
 ]
 
@@ -173,9 +179,15 @@ export function PriceBundle() {
                     className="group/service flex items-center gap-2 text-sm text-muted-foreground line-through data-included:text-foreground data-included:no-underline"
                   >
                     <span
+                      style={
+                        {
+                          "--tint": service.tint,
+                          "--tint-foreground": service.tintForeground,
+                        } as React.CSSProperties
+                      }
                       className={cn(
                         "flex size-5.5 items-center justify-center rounded-md bg-secondary text-muted-foreground transition-colors duration-300",
-                        included && service.tint
+                        included && "bg-(--tint) text-(--tint-foreground)"
                       )}
                     >
                       {service.icon}

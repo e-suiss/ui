@@ -30,7 +30,6 @@ type CategoryStyle = {
   value: Category
   icon: React.ReactNode
   tint: string
-  text: string
 }
 
 const categories: [CategoryStyle, ...CategoryStyle[]] = [
@@ -46,8 +45,7 @@ const categories: [CategoryStyle, ...CategoryStyle[]] = [
         className="fill-current"
       />
     ),
-    tint: "bg-orange-500",
-    text: "text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] dark:text-orange-500",
+    tint: "var(--color-orange-500)",
   },
   {
     value: "Heart",
@@ -61,8 +59,7 @@ const categories: [CategoryStyle, ...CategoryStyle[]] = [
         className="fill-current"
       />
     ),
-    tint: "bg-red-500",
-    text: "text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] dark:text-red-500",
+    tint: "var(--color-red-500)",
   },
   {
     value: "Sleep",
@@ -76,8 +73,7 @@ const categories: [CategoryStyle, ...CategoryStyle[]] = [
         className="fill-current"
       />
     ),
-    tint: "bg-cyan-500",
-    text: "text-[color-mix(in_oklab,var(--color-cyan-500),var(--foreground)_50%)] dark:text-cyan-500",
+    tint: "var(--color-cyan-500)",
   },
   {
     value: "Mobility",
@@ -90,8 +86,7 @@ const categories: [CategoryStyle, ...CategoryStyle[]] = [
         remixicon="RiBarChartLine"
       />
     ),
-    tint: "bg-green-500",
-    text: "text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] dark:text-green-500",
+    tint: "var(--color-green-500)",
   },
 ]
 
@@ -159,7 +154,8 @@ const metrics: {
 function Tile({ icon, tint }: { icon: React.ReactNode; tint: string }) {
   return (
     <span
-      className={`flex size-6 shrink-0 items-center justify-center rounded-md text-white [&_svg]:size-3.5 ${tint}`}
+      style={{ "--tint": tint } as React.CSSProperties}
+      className="flex size-6 shrink-0 items-center justify-center rounded-md bg-(--tint) text-white [&_svg]:size-3.5"
     >
       {icon}
     </span>
@@ -255,7 +251,7 @@ const items: NavItem[] = [
             className="fill-current"
           />
         }
-        tint="bg-pink-500"
+        tint="var(--color-pink-500)"
       />
     ),
   },
@@ -273,7 +269,7 @@ const items: NavItem[] = [
             remixicon="RiGroupLine"
           />
         }
-        tint="bg-blue-500"
+        tint="var(--color-blue-500)"
       />
     ),
   },
@@ -452,7 +448,8 @@ export function DashHealth() {
                       className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl bg-background px-4 py-3 outline-none transition-opacity duration-200 focus-visible:ring-3 focus-visible:ring-ring/50 data-dimmed:opacity-55 dark:bg-muted"
                     >
                       <span
-                        className={`flex items-center gap-1.5 text-base font-semibold [&_svg:not([class*='size-'])]:size-4 ${category.text}`}
+                        data-category={category.value.toLowerCase()}
+                        className="flex items-center gap-1.5 text-base font-semibold data-[category=activity]:text-[color-mix(in_oklab,var(--color-orange-500),var(--foreground)_45%)] data-[category=heart]:text-[color-mix(in_oklab,var(--color-red-500),var(--foreground)_25%)] data-[category=mobility]:text-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_45%)] data-[category=sleep]:text-[color-mix(in_oklab,var(--color-cyan-500),var(--foreground)_50%)] dark:data-[category=activity]:text-orange-500 dark:data-[category=heart]:text-red-500 dark:data-[category=mobility]:text-green-500 dark:data-[category=sleep]:text-cyan-500 [&_svg:not([class*='size-'])]:size-4"
                       >
                         {category.icon}
                         <span className="flex-1">{metric.label}</span>

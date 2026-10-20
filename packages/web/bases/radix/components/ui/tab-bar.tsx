@@ -1,5 +1,6 @@
 "use client"
 
+import { cva } from "class-variance-authority"
 import { Slot } from "radix-ui"
 import * as React from "react"
 import { flushSync } from "react-dom"
@@ -29,8 +30,9 @@ const TabBarContext = React.createContext<TabBarContextProps | null>(null)
 
 const TabBarOverflowContext = React.createContext(false)
 
-const tabBarLinkClassName =
+const tabBarLinkVariants = cva(
   "relative ms-0.5 flex min-h-9 items-center border-s border-dotted border-input ps-3.25 text-sm text-foreground md:text-base outline-none transition-colors select-none hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:text-primary"
+)
 
 function useTabBar() {
   const context = React.useContext(TabBarContext)
@@ -293,11 +295,11 @@ function TabBarItem({
       aria-current={isActive ? "page" : undefined}
       className={cn(
         inOverflow
-          ? cn(tabBarLinkClassName, "text-start")
-          : cn(
-              buttonVariants({ variant: "ghost" }),
-              "shrink-0 font-medium text-muted-foreground transition-[color,background-color] duration-200 data-active:bg-secondary data-active:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1 disabled:opacity-50"
-            ),
+          ? tabBarLinkVariants()
+          : buttonVariants({ variant: "ghost" }),
+        inOverflow
+          ? "text-start"
+          : "shrink-0 font-medium text-muted-foreground transition-[color,background-color] duration-200 data-active:bg-secondary data-active:text-[color-mix(in_oklab,var(--primary)_80%,var(--foreground))] data-overflow:invisible data-overflow:absolute group-data-overflowing/tab-bar:flex-1 disabled:opacity-50",
         className
       )}
       {...props}
@@ -460,7 +462,7 @@ function TabBarLink({
       data-slot="tab-bar-link"
       data-active={isActive ? "" : undefined}
       aria-current={isActive ? "page" : undefined}
-      className={cn(tabBarLinkClassName, className)}
+      className={cn(tabBarLinkVariants(), className)}
       {...props}
       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
         onClick?.(event)

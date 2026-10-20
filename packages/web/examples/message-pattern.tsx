@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
 
 const command = "npx @esuiss/ui@latest add dialog"
 
@@ -152,7 +153,7 @@ export default function MessagePattern() {
                   hugeicons="ThumbsUpIcon"
                   phosphor="ThumbsUpIcon"
                   remixicon="RiThumbUpLine"
-                  className={feedback === "like" ? "fill-current" : undefined}
+                  className={cn(feedback === "like" && "fill-current")}
                 />
               </TooltipTrigger>
               <TooltipContent>Good response</TooltipContent>
@@ -177,9 +178,7 @@ export default function MessagePattern() {
                   hugeicons="ThumbsDownIcon"
                   phosphor="ThumbsDownIcon"
                   remixicon="RiThumbDownLine"
-                  className={
-                    feedback === "dislike" ? "fill-current" : undefined
-                  }
+                  className={cn(feedback === "dislike" && "fill-current")}
                 />
               </TooltipTrigger>
               <TooltipContent>Bad response</TooltipContent>

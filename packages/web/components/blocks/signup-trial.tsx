@@ -17,14 +17,6 @@ const SYMBOL = /[^A-Za-z0-9]/
 const image =
   "https://images.unsplash.com/photo-1599669454699-248893623440?w=1200&q=80&auto=format&fit=crop"
 
-const levels = [
-  "bg-red-500",
-  "bg-orange-500",
-  "bg-yellow-500",
-  "bg-green-500",
-  "bg-green-500",
-] as const
-
 const strength = (value: string) =>
   [
     value.length >= 8,
@@ -145,7 +137,8 @@ export function SignupTrial() {
             {[0, 1, 2, 3].map((bar) => (
               <span
                 key={bar}
-                className={`h-1 rounded-full transition-colors duration-300 ${bar < Math.max(1, score) ? levels[score] : "bg-secondary"}`}
+                data-level={bar < Math.max(1, score) ? score : undefined}
+                className="h-1 rounded-full bg-secondary transition-colors duration-300 data-[level=0]:bg-red-500 data-[level=1]:bg-orange-500 data-[level=2]:bg-yellow-500 data-[level=3]:bg-green-500 data-[level=4]:bg-green-500"
               />
             ))}
           </div>

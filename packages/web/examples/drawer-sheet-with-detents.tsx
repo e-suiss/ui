@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
+import { cn } from "@/lib/utils"
 
 const days = Array.from({ length: 35 }, (_, index) => index - 2)
 
@@ -137,11 +138,11 @@ export default function DrawerSheetWithDetents() {
             {days.map((day) => (
               <span
                 key={day}
-                className={
+                className={cn(
                   day === 14
                     ? "mx-auto flex size-9 items-center justify-center rounded-full bg-destructive font-semibold text-background"
                     : "flex h-9 items-center justify-center"
-                }
+                )}
               >
                 {day > 0 && day <= 31 ? day : ""}
               </span>

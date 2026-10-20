@@ -14,6 +14,7 @@ import {
   CodeBlockTitle,
 } from "@/components/ui/code-block"
 import { useHighlightedCode } from "@/hooks/use-highlighted-code"
+import { cn } from "@/lib/utils"
 
 const code = `"use client"
 
@@ -66,9 +67,7 @@ export default function CodeBlockShowMore() {
       <CodeBlockContent
         id={id}
         lineNumbers
-        className={
-          expanded ? undefined : "max-h-64 scroll-fade-y overflow-y-hidden"
-        }
+        className={cn(!expanded && "max-h-64 scroll-fade-y overflow-y-hidden")}
       >
         {lines.map((line, index) => (
           <CodeBlockLine key={index}>{line}</CodeBlockLine>

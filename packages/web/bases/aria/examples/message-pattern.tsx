@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { CodeBlock, CodeBlockContent } from "@/components/ui/code-block"
 import { Message, MessageContent, MessageFooter } from "@/components/ui/message"
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
 
 const command = "npx @esuiss/ui@latest add dialog"
 
@@ -128,7 +129,7 @@ export default function MessagePattern() {
                   hugeicons="ThumbsUpIcon"
                   phosphor="ThumbsUpIcon"
                   remixicon="RiThumbUpLine"
-                  className={feedback === "like" ? "fill-current" : undefined}
+                  className={cn(feedback === "like" && "fill-current")}
                 />
               </Button>
               <TooltipContent>Good response</TooltipContent>
@@ -149,9 +150,7 @@ export default function MessagePattern() {
                   hugeicons="ThumbsDownIcon"
                   phosphor="ThumbsDownIcon"
                   remixicon="RiThumbDownLine"
-                  className={
-                    feedback === "dislike" ? "fill-current" : undefined
-                  }
+                  className={cn(feedback === "dislike" && "fill-current")}
                 />
               </Button>
               <TooltipContent>Bad response</TooltipContent>

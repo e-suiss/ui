@@ -97,7 +97,7 @@ const initialMail: Mail[] = [
   },
 ]
 
-const categories: { value: Category; icon: React.ReactNode; tint: string }[] = [
+const categories: { value: Category; icon: React.ReactNode }[] = [
   {
     value: "Primary",
     icon: (
@@ -110,7 +110,6 @@ const categories: { value: Category; icon: React.ReactNode; tint: string }[] = [
         className="size-4"
       />
     ),
-    tint: "data-selected:bg-primary",
   },
   {
     value: "Transactions",
@@ -124,7 +123,6 @@ const categories: { value: Category; icon: React.ReactNode; tint: string }[] = [
         className="size-4"
       />
     ),
-    tint: "data-selected:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] dark:data-selected:bg-[color-mix(in_oklab,var(--color-green-500),black_40%)]",
   },
   {
     value: "Updates",
@@ -138,7 +136,6 @@ const categories: { value: Category; icon: React.ReactNode; tint: string }[] = [
         className="size-4"
       />
     ),
-    tint: "data-selected:bg-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_20%)] dark:data-selected:bg-[color-mix(in_oklab,var(--color-purple-500),black_30%)]",
   },
   {
     value: "Promotions",
@@ -152,7 +149,6 @@ const categories: { value: Category; icon: React.ReactNode; tint: string }[] = [
         className="size-4"
       />
     ),
-    tint: "data-selected:bg-[color-mix(in_oklab,var(--color-pink-500),var(--foreground)_20%)] dark:data-selected:bg-[color-mix(in_oklab,var(--color-pink-500),black_25%)]",
   },
 ]
 
@@ -373,7 +369,8 @@ export function InboxCategories() {
                 key={item.value}
                 id={item.value}
                 aria-label={item.value}
-                className={`relative h-8.5 gap-1.5 bg-secondary px-2.75 font-semibold text-muted-foreground transition-[padding,background-color,color] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] hover:bg-secondary/80 data-selected:px-3.5 data-selected:text-white data-selected:hover:text-white ${item.tint}`}
+                data-category={item.value.toLowerCase()}
+                className="relative h-8.5 gap-1.5 bg-secondary px-2.75 font-semibold text-muted-foreground transition-[padding,background-color,color] duration-350 ease-[cubic-bezier(0.3,1.25,0.5,1)] hover:bg-secondary/80 data-selected:px-3.5 data-selected:text-white data-selected:hover:text-white data-selected:data-[category=primary]:bg-primary data-selected:data-[category=transactions]:bg-[color-mix(in_oklab,var(--color-green-500),var(--foreground)_40%)] data-selected:data-[category=updates]:bg-[color-mix(in_oklab,var(--color-purple-500),var(--foreground)_20%)] data-selected:data-[category=promotions]:bg-[color-mix(in_oklab,var(--color-pink-500),var(--foreground)_20%)] dark:data-selected:data-[category=transactions]:bg-[color-mix(in_oklab,var(--color-green-500),black_40%)] dark:data-selected:data-[category=updates]:bg-[color-mix(in_oklab,var(--color-purple-500),black_30%)] dark:data-selected:data-[category=promotions]:bg-[color-mix(in_oklab,var(--color-pink-500),black_25%)]"
               >
                 {item.icon}
                 {pressed && <span aria-hidden>{item.value}</span>}

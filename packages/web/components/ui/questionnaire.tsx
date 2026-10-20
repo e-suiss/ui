@@ -2,6 +2,7 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
+import { cva } from "class-variance-authority"
 import * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { type Button, buttonVariants } from "@/components/ui/button"
@@ -507,6 +508,16 @@ function QuestionnaireActions({
   )
 }
 
+const questionnaireNavigationVariants = cva("row-start-1 min-h-11 sm:min-h-0", {
+  variants: {
+    placement: {
+      start: "col-start-1 justify-self-start",
+      middle: "col-start-2 justify-self-end",
+      end: "col-start-3 justify-self-end",
+    },
+  },
+})
+
 function useNavigationButton({
   action,
   children,
@@ -527,7 +538,7 @@ function useNavigationButton({
 }: QuestionnaireNavigationProps & {
   action?: () => void
   label: string
-  placement: string
+  placement: "start" | "middle" | "end"
   shortcut?: "Enter" | null
   slot: string
   visible: boolean
@@ -565,7 +576,11 @@ function useNavigationButton({
       "data-slot": slot,
       "data-size": size,
       "data-variant": variant,
-      className: cn(buttonVariants({ size, variant }), placement, className),
+      className: cn(
+        buttonVariants({ size, variant }),
+        questionnaireNavigationVariants({ placement }),
+        className
+      ),
       ...props,
     },
   })
@@ -586,7 +601,7 @@ function QuestionnairePrevious({
     action: goPrevious,
     children: children ?? "Previous",
     label: "QuestionnairePrevious",
-    placement: "col-start-1 row-start-1 min-h-11 justify-self-start sm:min-h-0",
+    placement: "start",
     size,
     slot: "questionnaire-previous",
     variant,
@@ -608,7 +623,7 @@ function QuestionnaireSkip({
     action: skipCurrent,
     children: children ?? "Skip",
     label: "QuestionnaireSkip",
-    placement: "col-start-2 row-start-1 min-h-11 justify-self-end sm:min-h-0",
+    placement: "middle",
     size,
     slot: "questionnaire-skip",
     variant,
@@ -629,7 +644,7 @@ function QuestionnaireNext({
     action: goNext,
     children: children ?? "Next",
     label: "QuestionnaireNext",
-    placement: "col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
+    placement: "end",
     shortcut: "Enter",
     size,
     slot: "questionnaire-next",
@@ -651,7 +666,7 @@ function QuestionnaireSubmit({
     ...props,
     children: children ?? "Submit",
     label: "QuestionnaireSubmit",
-    placement: "col-start-3 row-start-1 min-h-11 justify-self-end sm:min-h-0",
+    placement: "end",
     shortcut: "Enter",
     size,
     slot: "questionnaire-submit",

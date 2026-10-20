@@ -145,7 +145,7 @@ function FullscreenMenuHeader({ closeLabel }: { closeLabel?: string }) {
         data-label={closeLabel ? "" : undefined}
         variant={closeLabel ? "link" : "ghost"}
         size={closeLabel ? undefined : "icon"}
-        className={closeLabel ? "text-base" : undefined}
+        className={cn(closeLabel && "text-base")}
       >
         {closeLabel ?? (
           <>

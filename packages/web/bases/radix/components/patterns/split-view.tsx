@@ -1,5 +1,6 @@
 "use client"
 
+import { cva } from "class-variance-authority"
 import { Slot } from "radix-ui"
 import * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
@@ -34,11 +35,15 @@ function useSplitView() {
   return context
 }
 
-const TITLE_CLASS: Record<SplitViewColumn, string> = {
-  sidebar: "px-3 pt-3 pb-2 text-xs font-semibold text-muted-foreground",
-  list: "sr-only",
-  detail: "pb-1 text-2xl font-semibold",
-}
+const splitViewTitleVariants = cva("", {
+  variants: {
+    column: {
+      sidebar: "px-3 pt-3 pb-2 text-xs font-semibold text-muted-foreground",
+      list: "sr-only",
+      detail: "pb-1 text-2xl font-semibold",
+    },
+  },
+})
 
 const NEXT: Record<SplitViewColumn, SplitViewColumn> = {
   sidebar: "list",
@@ -223,7 +228,7 @@ function SplitViewPane({
             "outline-none",
             isMobile
               ? "pb-2 text-3xl font-bold tracking-tight"
-              : TITLE_CLASS[kind]
+              : splitViewTitleVariants({ column: kind })
           )}
         >
           {title}

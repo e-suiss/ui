@@ -184,7 +184,7 @@ const kinds = {
         className="size-4"
       />
     ),
-    tint: "bg-orange-500",
+    tint: "var(--color-orange-500)",
   },
   Content: {
     icon: (
@@ -197,7 +197,7 @@ const kinds = {
         className="size-4"
       />
     ),
-    tint: "bg-blue-500",
+    tint: "var(--color-blue-500)",
   },
   Security: {
     icon: (
@@ -210,7 +210,7 @@ const kinds = {
         className="size-4"
       />
     ),
-    tint: "bg-red-500",
+    tint: "var(--color-red-500)",
   },
   Order: {
     icon: (
@@ -223,7 +223,7 @@ const kinds = {
         className="size-4"
       />
     ),
-    tint: "bg-green-500",
+    tint: "var(--color-green-500)",
   },
   User: {
     icon: (
@@ -236,7 +236,7 @@ const kinds = {
         className="size-4"
       />
     ),
-    tint: "bg-purple-500",
+    tint: "var(--color-purple-500)",
   },
 }
 
@@ -308,7 +308,8 @@ function EventRow({ event }: { event: (typeof events)[number] }) {
   const body = (
     <>
       <span
-        className={`flex size-7 shrink-0 items-center justify-center rounded-[7px] text-white ${kind.tint}`}
+        style={{ "--tint": kind.tint } as React.CSSProperties}
+        className="flex size-7 shrink-0 items-center justify-center rounded-[7px] bg-(--tint) text-white"
       >
         {kind.icon}
       </span>

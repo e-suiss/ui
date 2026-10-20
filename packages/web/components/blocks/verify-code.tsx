@@ -15,9 +15,6 @@ const SHAKE = [0, -10, 9, -6, 4, 0].map((x) => ({
   transform: `translateX(${x}px)`,
 }))
 
-const slotClass =
-  "h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl transition-[border-color,box-shadow,scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive group-data-[status=ok]/code:border-green-500"
-
 export function VerifyCode() {
   const idPrefix = React.useId()
   const [code, setCode] = React.useState("")
@@ -116,7 +113,7 @@ export function VerifyCode() {
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    className={slotClass}
+                    className="h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl transition-[border-color,box-shadow,scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive group-data-[status=ok]/code:border-green-500"
                   />
                 ))}
               </InputOTPGroup>
@@ -125,7 +122,7 @@ export function VerifyCode() {
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    className={slotClass}
+                    className="h-14 w-11 rounded-xl sm:h-15.5 sm:w-12.5 border border-input bg-transparent text-3xl transition-[border-color,box-shadow,scale] duration-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] data-[active=true]:border-primary data-[active=true]:ring-3 data-[active=true]:ring-primary/25 group-data-[status=error]/code:border-destructive group-data-[status=ok]/code:border-green-500"
                   />
                 ))}
               </InputOTPGroup>
