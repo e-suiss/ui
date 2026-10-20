@@ -98,6 +98,9 @@ function Frame({
           !wide &&
             layout === "centered" &&
             "flex min-h-56 flex-wrap items-center justify-center gap-3 p-10",
+          !wide &&
+            layout === "top" &&
+            "flex min-h-56 flex-wrap items-start justify-center gap-3 p-10",
           !wide && layout === "padded" && "min-h-56 p-6"
         )}
       >
@@ -209,6 +212,8 @@ export function PreviewCanvas({
           "min-h-svh",
           layout === "centered" &&
             "flex flex-wrap items-center justify-center gap-3 p-6 sm:p-10",
+          layout === "top" &&
+            "flex flex-wrap items-start justify-center gap-3 p-6 sm:p-10",
           layout === "padded" && "p-4 sm:p-6"
         )}
       >

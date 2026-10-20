@@ -1,7 +1,12 @@
 import { contentPages } from "@/lib/highlight"
 
 export type PreviewType = "example" | "chart" | "block"
-export type PreviewLayout = "centered" | "padded" | "fullscreen" | "panel"
+export type PreviewLayout =
+  | "centered"
+  | "top"
+  | "padded"
+  | "fullscreen"
+  | "panel"
 
 export type Preview = {
   name: string
