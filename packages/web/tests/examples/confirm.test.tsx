@@ -88,6 +88,11 @@ test("Default", async () => {
     await userEvent.click(document.body, { pointerEventsCheck: 0 })
     await expect(dialog).toBeInTheDocument()
     await expect(dialog).toHaveAttribute(...openState)
+    if (byBase({ base: false, radix: false, aria: true })) {
+      await waitFor(() =>
+        expect(dialog).toContainElement(document.activeElement as HTMLElement)
+      )
+    }
     await userEvent.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
   })
