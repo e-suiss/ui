@@ -8,6 +8,7 @@ const TIMEOUT = 30_000
 const LOCAL_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
 const REDIRECTS = [301, 302, 303, 307, 308]
 const MAX_REDIRECTS = 5
+const RETRIES = 1
 
 const DEFAULT_BRANCH = "main"
 const TAG = `v${version}`
@@ -39,13 +40,17 @@ function checkOverride(override, env) {
 }
 
 async function fetchOnce(url, file, signal) {
-  try {
-    return await fetch(url, { signal, redirect: "manual" })
-  } catch (error) {
-    if (error?.name === "TimeoutError") {
-      throw new CliError(`Timed out downloading ${file} from the registry.`)
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await fetch(url, { signal, redirect: "manual" })
+    } catch (error) {
+      if (error?.name === "TimeoutError") {
+        throw new CliError(`Timed out downloading ${file} from the registry.`)
+      }
+      if (attempt >= RETRIES) {
+        throw new CliError(`Could not reach the registry to download ${file}.`)
+      }
     }
-    throw new CliError(`Could not reach the registry to download ${file}.`)
   }
 }
 

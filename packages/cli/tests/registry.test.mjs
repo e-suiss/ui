@@ -60,6 +60,18 @@ describe("fetchText", () => {
     )
   })
 
+  it("retries once when the connection drops", async () => {
+    const fetch = vi
+      .fn()
+      .mockRejectedValueOnce(new TypeError("fetch failed"))
+      .mockResolvedValueOnce(new Response("export {}"))
+    vi.stubGlobal("fetch", fetch)
+    await expect(fetchText("components/ui/button.tsx")).resolves.toBe(
+      "export {}"
+    )
+    expect(fetch).toHaveBeenCalledTimes(2)
+  })
+
   it("reports an unreachable registry", async () => {
     vi.stubGlobal(
       "fetch",
