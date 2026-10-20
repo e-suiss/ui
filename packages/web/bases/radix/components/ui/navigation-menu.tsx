@@ -9,6 +9,18 @@ import { cn } from "@/lib/utils"
 
 const NavigationMenuContext = React.createContext({ open: false })
 
+function subscribeMounted() {
+  return () => undefined
+}
+
+function useMounted() {
+  return React.useSyncExternalStore(
+    subscribeMounted,
+    () => true,
+    () => false
+  )
+}
+
 function NavigationMenu({
   align = "start",
   layout = "popover",
@@ -162,6 +174,7 @@ function NavigationMenuPositioner({
 }) {
   const { open } = React.useContext(NavigationMenuContext)
   const rect = useAnchorRect(anchor, open)
+  const mounted = useMounted()
 
   const positioner = (
     <div
@@ -188,7 +201,7 @@ function NavigationMenuPositioner({
   )
 
   if (!anchor) return positioner
-  if (typeof document === "undefined") return null
+  if (!mounted) return null
   return createPortal(positioner, document.body)
 }
 
@@ -235,8 +248,9 @@ function NavigationMenuPanel({
 }) {
   const { open } = React.useContext(NavigationMenuContext)
   const rect = useAnchorRect(anchor, open)
+  const mounted = useMounted()
 
-  if (typeof document === "undefined") return null
+  if (!mounted) return null
 
   return createPortal(
     <>

@@ -140,11 +140,13 @@ function AttachmentDescription({
 
 function AttachmentProgress({
   className,
+  locale = "en-US",
   ...props
 }: ProgressPrimitive.Root.Props) {
   return (
     <ProgressPrimitive.Root
       data-slot="attachment-progress"
+      locale={locale}
       className={cn("cn-attachment-progress", className)}
       {...props}
     >

@@ -7,20 +7,24 @@ import { cn } from "@/lib/utils"
 const ProgressContext = React.createContext<{
   value: number | null
   max: number
+  locale: Intl.LocalesArgument
   setLabelId?: (id: string | undefined) => void
-}>({ value: null, max: 100 })
+}>({ value: null, max: 100, locale: "en-US" })
 
 function Progress({
   className,
   children,
   value = null,
   max = 100,
+  locale = "en-US",
   ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+}: React.ComponentProps<typeof ProgressPrimitive.Root> & {
+  locale?: Intl.LocalesArgument
+}) {
   const [labelId, setLabelId] = React.useState<string>()
 
   return (
-    <ProgressContext.Provider value={{ value, max, setLabelId }}>
+    <ProgressContext.Provider value={{ value, max, locale, setLabelId }}>
       <ProgressPrimitive.Root
         value={value}
         max={max}
@@ -97,7 +101,7 @@ function ProgressValue({
   children,
   ...props
 }: React.ComponentProps<"span">) {
-  const { value, max } = React.useContext(ProgressContext)
+  const { value, max, locale } = React.useContext(ProgressContext)
 
   return (
     <span
@@ -109,7 +113,7 @@ function ProgressValue({
       {children ??
         (value === null
           ? null
-          : new Intl.NumberFormat(undefined, { style: "percent" }).format(
+          : new Intl.NumberFormat(locale, { style: "percent" }).format(
               value / max
             ))}
     </span>

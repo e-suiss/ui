@@ -16,13 +16,13 @@ const DAY_1 = /\b1(st)?\b/
 const DAY_10 = /\b10(th)?\b/
 const DAY_20 = /\b20(th)?\b/
 const NEXT_MONTH = /next/i
-function monthOf(date: Date, locale?: string) {
+function monthOf(date: Date, locale = "en-US") {
   return new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",
   }).format(date)
 }
-function formatDate(date: Date, locale?: string) {
+function formatDate(date: Date, locale = "en-US") {
   return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(date)
 }
 async function openCalendar(trigger: HTMLElement) {

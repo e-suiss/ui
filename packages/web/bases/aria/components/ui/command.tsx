@@ -1,6 +1,6 @@
 "use client"
 
-import { Command as CommandPrimitive } from "cmdk"
+import { Command as CommandPrimitive, useCommandState } from "cmdk"
 import type * as React from "react"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import {
@@ -136,17 +136,18 @@ function CommandGroup({
 
 function CommandSeparator({
   className,
+  alwaysRender,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Separator>) {
+  const search = useCommandState((state) => state.search)
+  if (search && !alwaysRender) return null
   return (
-    <CommandPrimitive.Separator
+    <div
+      role="none"
       data-slot="command-separator"
       className={cn("cn-command-separator", className)}
       {...props}
-      asChild
-    >
-      <div role="none" />
-    </CommandPrimitive.Separator>
+    />
   )
 }
 

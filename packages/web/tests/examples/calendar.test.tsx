@@ -9,7 +9,7 @@ import CalendarSizes from "@/examples/calendar-sizes"
 import CalendarWeekNumbers from "@/examples/calendar-week-numbers"
 import { renderExample } from "@/tests/render-example"
 
-const TODAY = /^Today/
+const DAY = /January 20th, 2026/
 const NEXT_MONTH = /next month/i
 const PREVIOUS_MONTH = /previous month/i
 const MONTH_DROPDOWN = /month/i
@@ -19,12 +19,12 @@ const WEEK_NUMBER = /^\d{1,2}$/
 test("Default", async () => {
   const { canvas, step } = await renderExample(<CalendarDemo />)
 
-  const today = canvas.getByRole("button", { name: TODAY })
+  const day = canvas.getByRole("button", { name: DAY })
 
   await step("selects a day on click", async () => {
-    await userEvent.click(today)
+    await userEvent.click(day)
     await waitFor(() =>
-      expect(today.closest("td")).toHaveAttribute("aria-selected", "true")
+      expect(day.closest("td")).toHaveAttribute("aria-selected", "true")
     )
     await expect(
       canvas
@@ -34,12 +34,12 @@ test("Default", async () => {
   })
 
   await step("moves focus between days with the arrow keys", async () => {
-    await expect(today).toHaveFocus()
+    await expect(day).toHaveFocus()
     await userEvent.keyboard("{ArrowRight}")
-    await waitFor(() => expect(today).not.toHaveFocus())
+    await waitFor(() => expect(day).not.toHaveFocus())
     await userEvent.keyboard("{ArrowLeft}")
     await waitFor(() =>
-      expect(canvas.getByRole("button", { name: TODAY })).toHaveFocus()
+      expect(canvas.getByRole("button", { name: DAY })).toHaveFocus()
     )
   })
 
@@ -73,12 +73,12 @@ test("Sizes", async () => {
       "default",
       "lg",
     ])
-    const todays = canvas.getAllByRole("button", { name: TODAY })
-    await expect(todays).toHaveLength(3)
-    for (const today of todays) {
-      await userEvent.click(today)
+    const days = canvas.getAllByRole("button", { name: DAY })
+    await expect(days).toHaveLength(3)
+    for (const day of days) {
+      await userEvent.click(day)
       await waitFor(() =>
-        expect(today.closest("td")).toHaveAttribute("aria-selected", "true")
+        expect(day.closest("td")).toHaveAttribute("aria-selected", "true")
       )
     }
   })
@@ -96,15 +96,13 @@ test("Range", async () => {
 test("Dropdown Caption", async () => {
   const { canvas, step } = await renderExample(<CalendarDropdownCaption />)
 
-  const today = new Date()
-  const otherMonth = new Date(today.getFullYear(), (today.getMonth() + 6) % 12)
-  const monthName = otherMonth.toLocaleString("en-US", { month: "long" })
-  const lastYear = String(today.getFullYear() - 1)
+  const monthName = "July"
+  const lastYear = "2025"
 
   await step("jumps to another month from the month dropdown", async () => {
     await userEvent.selectOptions(
       canvas.getByRole("combobox", { name: MONTH_DROPDOWN }),
-      String(otherMonth.getMonth())
+      "6"
     )
     await waitFor(() =>
       expect(canvas.getByRole("grid").getAttribute("aria-label")).toContain(

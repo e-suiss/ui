@@ -140,8 +140,11 @@ function AttachmentProgress({
   className,
   value = null,
   max = 100,
+  locale = "en-US",
   ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+}: React.ComponentProps<typeof ProgressPrimitive.Root> & {
+  locale?: Intl.LocalesArgument
+}) {
   return (
     <ProgressPrimitive.Root
       data-slot="attachment-progress"
@@ -156,7 +159,7 @@ function AttachmentProgress({
       >
         {value === null
           ? null
-          : new Intl.NumberFormat(undefined, { style: "percent" }).format(
+          : new Intl.NumberFormat(locale, { style: "percent" }).format(
               value / max
             )}
       </span>

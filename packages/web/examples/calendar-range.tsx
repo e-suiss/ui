@@ -3,16 +3,17 @@ import type { DateRange } from "react-day-picker"
 import { Calendar } from "@/components/ui/calendar"
 
 export default function CalendarRange() {
-  const today = new Date()
   const [range, setRange] = React.useState<DateRange | undefined>({
-    from: today,
-    to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6),
+    from: new Date(2026, 0, 15),
+    to: new Date(2026, 0, 21),
   })
   return (
     <Calendar
       mode="range"
       selected={range}
       onSelect={setRange}
+      defaultMonth={new Date(2026, 0)}
+      today={new Date(2026, 0, 15)}
       numberOfMonths={2}
       buttonVariant="plain"
       className="rounded-2xl border"

@@ -144,6 +144,7 @@ Also accepts the props of `DayButtonProps` from `react-day-picker`.
 - Cell size and radius come from the `--cell-size` and `--cell-radius` custom properties, which `size` adjusts.
 - Pass `classNames` to override any `react-day-picker` class key; your values replace the defaults for that key.
 - Navigation chevrons flip in right-to-left layouts.
+- The calendar reads today's date while it renders, and so does `new Date()` in your own state. In a Next.js app with `cacheComponents`, that stops the prerender of the page: wrap the calendar in `<Suspense>`, or pass `today` and fixed dates.
 
 </Only>
 

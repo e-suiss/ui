@@ -363,6 +363,7 @@
       "title": "Chart",
       "description": "Themed building blocks for Recharts charts, with a shared color config, tooltip and legend.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -1062,7 +1063,8 @@
       "title": "Questionnaire",
       "description": "A step-by-step form that shows one question at a time, with validation, skipping and keyboard shortcuts.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority"
       ],
       "registryDependencies": [
         "@esuiss/button",
@@ -1346,7 +1348,8 @@
       "title": "Tab Bar",
       "description": "A floating bottom navigation bar whose overflow and extra sections expand from a More button.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority"
       ],
       "registryDependencies": [
         "@esuiss/button",
@@ -2110,7 +2113,8 @@
       "title": "Split View",
       "description": "A two- or three-column sidebar, list and detail layout that becomes a push navigation stack on mobile.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority"
       ],
       "registryDependencies": [
         "@esuiss/resizable",
@@ -2193,6 +2197,9 @@
       "type": "registry:component",
       "title": "Island",
       "description": "A floating pill at the top of the screen that shows live activities and brief notifications, like the Dynamic Island.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
       "registryDependencies": [
         "@esuiss/utils"
       ],
@@ -2475,6 +2482,7 @@
       "title": "Area Chart Axes",
       "description": "A gradient area with visible dots and a value axis on the right edge of the plot.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2504,6 +2512,7 @@
       "title": "Area Chart Default",
       "description": "A single filled area with a smooth curve showing one series across six months.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2533,6 +2542,7 @@
       "title": "Area Chart Gradient",
       "description": "Two overlapping areas whose fills fade out toward the bottom using SVG linear gradients.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2562,6 +2572,7 @@
       "title": "Area Chart Interactive",
       "description": "A stock price chart with time-range toggles, a scrubbing cursor that updates the header, and animated transitions between ranges.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2592,6 +2603,7 @@
       "title": "Area Chart Linear",
       "description": "A single filled area whose points are joined by straight segments instead of a smoothed curve.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2621,6 +2633,7 @@
       "title": "Area Chart Range",
       "description": "A heart-rate band showing each hour's low-to-high range as a shaded area with an average line through it.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2650,6 +2663,7 @@
       "title": "Area Chart Sparkline",
       "description": "A watchlist with a tiny gradient area chart beside each price, colored by whether the stock is rising or falling.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2679,6 +2693,7 @@
       "title": "Area Chart Stacked Expand",
       "description": "Two stacked areas normalized so every month fills 100%, showing each series' share rather than its value.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2708,6 +2723,7 @@
       "title": "Area Chart Stacked",
       "description": "Two areas stacked on top of each other so the top edge shows the combined total, with a legend.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2737,6 +2753,7 @@
       "title": "Area Chart Step",
       "description": "A single filled area drawn as steps, holding each value flat until the next reading.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2766,6 +2783,7 @@
       "title": "Bar Chart Active",
       "description": "A week of step counts where clicking a bar selects it, dims the others and updates the header.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2795,6 +2813,7 @@
       "title": "Bar Chart Default",
       "description": "A single series of rounded vertical bars, one per month.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2824,6 +2843,7 @@
       "title": "Bar Chart Horizontal",
       "description": "Horizontal bars with category names on the left and a distinct color for each category.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2853,6 +2873,7 @@
       "title": "Bar Chart Hourly",
       "description": "Twenty-four thin bars of screen time per hour, with a dashed line marking the hourly average.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2882,6 +2903,7 @@
       "title": "Bar Chart Interactive",
       "description": "A screen-time report with stacked category bars, a week and day toggle, selectable days and a most-used apps list.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2912,6 +2934,7 @@
       "title": "Bar Chart Labeled",
       "description": "A single bar series with each value printed above its bar and no grid lines.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2941,6 +2964,7 @@
       "title": "Bar Chart Multiple",
       "description": "Two series drawn as grouped bars side by side for each month.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2970,6 +2994,7 @@
       "title": "Bar Chart Negative",
       "description": "Monthly cash flow bars that turn green above zero and red below it, with a zero baseline.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -2999,6 +3024,7 @@
       "title": "Bar Chart Range",
       "description": "A weather forecast where each horizontal pill spans the day's low and high on a shared gradient scale.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3028,6 +3054,7 @@
       "title": "Bar Chart Stacked",
       "description": "Two series stacked into one bar per month, with a legend below the plot.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3057,6 +3084,7 @@
       "title": "Line Chart Default",
       "description": "A single smooth line through six months of values, without point markers.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3086,6 +3114,7 @@
       "title": "Line Chart Dots",
       "description": "A weight trend with a dot at every monthly reading and a fixed value axis on the right.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3115,6 +3144,7 @@
       "title": "Line Chart Forecast",
       "description": "A solid line for actual values that continues as a dashed forecast over a shaded future range.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3144,6 +3174,7 @@
       "title": "Line Chart Goal Dots",
       "description": "Nightly sleep hours with a goal line and dots colored green or orange depending on whether the goal was met.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3173,6 +3204,7 @@
       "title": "Line Chart Goal",
       "description": "Daily step counts plotted against a labeled dashed goal line at 10,000 steps.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3202,6 +3234,7 @@
       "title": "Line Chart Interactive",
       "description": "Monthly temperatures for several cities, with chips to show or hide each city and an average, high or low switch.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3233,6 +3266,7 @@
       "title": "Line Chart Labeled",
       "description": "A single line with a dot and a printed value at every point, and no grid.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3262,6 +3296,7 @@
       "title": "Line Chart Linear",
       "description": "A single line drawn with straight segments between readings instead of a smoothed curve.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3291,6 +3326,7 @@
       "title": "Line Chart Multiple",
       "description": "Two lines compared on the same axes, with a legend identifying each series.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3320,6 +3356,7 @@
       "title": "Line Chart Step",
       "description": "A single line drawn as horizontal steps, holding each value until the next reading.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3349,6 +3386,7 @@
       "title": "Pie Chart Active",
       "description": "A donut where one slice is enlarged and outlined with an outer arc to highlight it.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3378,6 +3416,7 @@
       "title": "Pie Chart Default",
       "description": "A full pie split into five device slices, separated by thin card-colored borders.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3407,6 +3446,7 @@
       "title": "Pie Chart Donut Text",
       "description": "A donut with the total number of users displayed in the center of the ring.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3436,6 +3476,7 @@
       "title": "Pie Chart Donut",
       "description": "A donut chart with a hollow center and small gaps between slices.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3465,6 +3506,7 @@
       "title": "Pie Chart Half",
       "description": "A semicircular gauge-style pie showing battery share by device, with a caption under the arc.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3494,6 +3536,7 @@
       "title": "Pie Chart Interactive",
       "description": "A storage breakdown donut with a device switch, hover-linked list and lifted slices, plus a linear usage bar.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3524,6 +3567,7 @@
       "title": "Pie Chart Label",
       "description": "A pie with each category name drawn outside its slice and joined by a leader line.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3553,6 +3597,7 @@
       "title": "Pie Chart Legend",
       "description": "A donut with a legend beneath it that lists every category and its color.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3582,6 +3627,7 @@
       "title": "Pie Chart Nested",
       "description": "Two concentric pies: an inner ring of grouped totals surrounded by an outer ring of individual categories.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3611,6 +3657,7 @@
       "title": "Pie Chart Separated",
       "description": "A donut whose slices are pulled apart with wide gaps and rounded corners.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3640,6 +3687,7 @@
       "title": "Radar Chart Default",
       "description": "A single filled radar shape showing this month's scores across six training skills.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3669,6 +3717,7 @@
       "title": "Radar Chart Dots",
       "description": "A single radar shape with a solid dot marking the value on every axis.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3698,6 +3747,7 @@
       "title": "Radar Chart Grid Circle",
       "description": "A single radar shape drawn over circular rings instead of polygonal grid lines.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3727,6 +3777,7 @@
       "title": "Radar Chart Grid Filled",
       "description": "A borderless radar shape over shaded circular rings separated by card-colored lines.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3756,6 +3807,7 @@
       "title": "Radar Chart Grid None",
       "description": "A single solid radar shape with no grid and no outline, leaving only the shape and axis labels.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3785,6 +3837,7 @@
       "title": "Radar Chart Interactive",
       "description": "A phone model comparison where toggle chips show up to three models, which grow in and out of the radar.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3815,6 +3868,7 @@
       "title": "Radar Chart Legend",
       "description": "Two overlapping radar shapes with a legend beneath that names each series.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3844,6 +3898,7 @@
       "title": "Radar Chart Lines Only",
       "description": "Two radar outlines with no fill, comparing this month and last month by stroke alone.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3873,6 +3928,7 @@
       "title": "Radar Chart Multiple",
       "description": "Two overlapping radar shapes comparing this month with last month.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3902,6 +3958,7 @@
       "title": "Radar Chart Radius Axis",
       "description": "A single radar shape with a visible 0 to 100 value scale along the vertical axis.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3931,6 +3988,7 @@
       "title": "Radial Chart Batteries",
       "description": "A row of small battery rings, one per device, that turn red when charge is at or below 20%.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3960,6 +4018,7 @@
       "title": "Radial Chart Default",
       "description": "Concentric radial bars, one per device, each running around a gray background track.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -3989,6 +4048,7 @@
       "title": "Radial Chart Gauge",
       "description": "A 240-degree gauge arc showing an air quality reading with its value and rating below the center.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4044,6 +4104,7 @@
       "title": "Radial Chart Label",
       "description": "Concentric radial bars with each category's name printed at the start of its bar.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4073,6 +4134,7 @@
       "title": "Radial Chart Progress",
       "description": "A three-quarter arc tracking progress toward a goal, with the count shown in the center.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4127,6 +4189,7 @@
       "title": "Radial Chart Stacked",
       "description": "A half-circle arc with two series stacked end to end and the combined total beneath it.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4156,6 +4219,7 @@
       "title": "Radial Chart Text",
       "description": "A single full-circle progress ring with a percentage and caption centered inside.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4185,6 +4249,7 @@
       "title": "Radial Chart Tinted",
       "description": "Concentric radial bars whose unfilled track is a soft tint of each bar's own color.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4214,6 +4279,7 @@
       "title": "Tooltip Chart Custom",
       "description": "A bar chart whose tooltip is fully custom markup, showing a large total, a unit and the day.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4243,6 +4309,7 @@
       "title": "Tooltip Chart Dashed",
       "description": "A stacked bar chart whose tooltip marks each series with a dashed outline indicator.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4272,6 +4339,7 @@
       "title": "Tooltip Chart Dot",
       "description": "A stacked bar chart showing the default tooltip indicator, a small colored square for each series.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4301,6 +4369,7 @@
       "title": "Tooltip Chart Formatter",
       "description": "A bar chart of daily active energy whose tooltip shows a name, value and kcal unit through a custom formatter.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4330,6 +4399,7 @@
       "title": "Tooltip Chart Icons",
       "description": "A stacked bar chart whose tooltip shows an icon for each series in place of a color swatch.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4359,6 +4429,7 @@
       "title": "Tooltip Chart Interactive",
       "description": "A tooltip playground on quarterly revenue bars, with controls for indicator, trigger, title total and hidden parts.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4390,6 +4461,7 @@
       "title": "Tooltip Chart Label Formatter",
       "description": "A gradient area chart whose tooltip heading shows a longer date than the axis ticks.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4419,6 +4491,7 @@
       "title": "Tooltip Chart Line",
       "description": "A stacked bar chart whose tooltip marks each series with a thin vertical color bar.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4448,6 +4521,7 @@
       "title": "Tooltip Chart No Indicator",
       "description": "A stacked bar chart whose tooltip lists series names and values without color indicators.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4477,6 +4551,7 @@
       "title": "Tooltip Chart No Label",
       "description": "A stacked bar chart whose tooltip omits the category heading and shows only the series rows.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4749,6 +4824,7 @@
       "title": "Dash Analytics",
       "description": "An app analytics dashboard with a metric switcher, an interactive area chart, and a regional breakdown.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -4807,6 +4883,7 @@
       "title": "Dash Store",
       "description": "A store admin overview with sales stats, an online versus in-store bar chart, and a filterable orders list.",
       "dependencies": [
+        "react-is",
         "recharts"
       ],
       "registryDependencies": [
@@ -5293,7 +5370,8 @@
       "registryDependencies": [
         "@esuiss/button",
         "@esuiss/sidebar",
-        "@esuiss/toggle-group"
+        "@esuiss/toggle-group",
+        "@esuiss/utils"
       ],
       "files": [
         {

@@ -78,7 +78,7 @@ function DatePicker({
   defaultValue,
   onValueChange,
   placeholder = "Pick a date",
-  locale,
+  locale = "en-US",
   fromYear,
   toYear,
   title,
