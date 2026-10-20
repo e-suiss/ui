@@ -14,6 +14,7 @@ import {
 import { STYLES, type StyleName } from "@/lib/code-options"
 import { foregroundFor, oklchString, parseColor } from "@/lib/create/color"
 import type { PackageManager } from "@/lib/package-managers"
+import { site } from "@/lib/site"
 import fonts from "../../../../packages/cli/lib/fonts.json"
 import themes from "../../../../packages/web/registry/themes.json"
 
@@ -277,6 +278,27 @@ export function applyCommand(
   const flags = [`--platform ${state.platform}`, ...presetFlags(state, mode)]
   if (mode !== "full") flags.push(`--only ${mode}`)
   return `${RUNNERS[packageManager]} ${CLI} apply ${flags.join(" ")}`
+}
+
+export function shadcnRegistries(state: CreateState) {
+  if (state.style !== OWN) return null
+  return `${JSON.stringify(
+    {
+      registries: {
+        "@esuiss": `${site.url}/r/${state.base}-${OWN}/{name}.json`,
+      },
+    },
+    null,
+    2
+  )}\n`
+}
+
+export function shadcnThemeCommand(
+  state: CreateState,
+  packageManager: PackageManager
+) {
+  if (state.baseColor !== OWN && state.theme !== OWN) return null
+  return `${RUNNERS[packageManager]} shadcn@latest add @esuiss/theme-suiss`
 }
 
 export function shadcnCommand(

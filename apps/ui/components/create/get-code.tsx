@@ -44,6 +44,8 @@ import {
   newProjectCommand,
   PRIMITIVE_BASES,
   shadcnCommand,
+  shadcnRegistries,
+  shadcnThemeCommand,
   TEMPLATES,
   type Template,
   type ThemeDefaults,
@@ -303,6 +305,8 @@ export function GetCode({
     ? chosenTemplate
     : templates[0]
   const options = { pointer, rtl }
+  const registries = shadcnRegistries(state)
+  const themeCommand = shadcnThemeCommand(state, manager)
 
   const commandsFor = (build: (manager: PackageManager) => string) =>
     Object.fromEntries(
@@ -471,6 +475,41 @@ export function GetCode({
                       {strings.createShadcnNote}
                     </p>
                     <CommandLine command={shadcnCommand(state, manager)} />
+                    {registries && (
+                      <>
+                        <p className="text-[13px] leading-[1.5] text-muted-foreground">
+                          {strings.createShadcnRegistries}
+                        </p>
+                        <div className="w-full min-w-0 overflow-hidden rounded-xl ring-1 ring-border">
+                          <div className="flex items-center gap-2 py-1 ps-3 pe-1.5">
+                            <span className="min-w-0 truncate font-mono text-sm text-muted-foreground">
+                              components.json
+                            </span>
+                            <CopyIconButton
+                              copied={copied === "registries"}
+                              label={strings.getCodeCopyRegistries}
+                              onClick={() => copy("registries", registries)}
+                            />
+                          </div>
+                          <div className="overflow-auto border-t border-border bg-muted p-3">
+                            <pre
+                              dir="ltr"
+                              className="min-w-max font-mono text-[13px] leading-normal"
+                            >
+                              <code>{registries}</code>
+                            </pre>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    {themeCommand && (
+                      <>
+                        <p className="text-[13px] leading-[1.5] text-muted-foreground">
+                          {strings.createShadcnTheme}
+                        </p>
+                        <CommandLine command={themeCommand} />
+                      </>
+                    )}
                     {state.primary && (
                       <p className="text-[13px] leading-[1.5] text-muted-foreground">
                         {strings.createCustomNote}

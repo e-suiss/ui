@@ -96,7 +96,11 @@ export const strings = {
     "Copy the CSS variables for this preset into your stylesheet.",
   getCodeCopyTheme: "Copy theme",
   createShadcnNote:
-    "The shadcn CLI resolves a preset code on ui.shadcn.com, so it installs the shadcn/ui design system, not suiss/ui. Use it only for a project without suiss/ui components; the suiss/ui CLI below reads the same code.",
+    "The shadcn CLI resolves a preset code on ui.shadcn.com, so it sets up the shadcn/ui design system with this preset. suiss/ui components added with it come in the style saved in components.json. The suiss/ui CLI below reads the same code.",
+  createShadcnRegistries:
+    "The suiss style is not a shadcn/ui style, so point the @esuiss registry at it in components.json:",
+  createShadcnTheme: "Then add the suiss/ui colors:",
+  getCodeCopyRegistries: "Copy registries",
   createNativeNote:
     "The CLI writes the colors, radius, menus, fonts and icon library into your app. Fonts are embedded at build time, so rebuild the app after init.",
   createItems: "Preview items",

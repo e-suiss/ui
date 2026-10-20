@@ -58,6 +58,20 @@ npx shadcn@latest init --base radix
 npx shadcn@latest init --base aria
 ```
 
+### Choose the style
+
+The registry also reads the [style](/docs/theming#styles) from the part of `style` after the base, so `base-vega` installs the components in the vega style and `radix-luma` in the luma style. The suiss style is not a shadcn/ui style, so a project set up with `shadcn init` never has it. To get the components in the suiss style and keep the shadcn/ui style for shadcn/ui's own components, point the namespace at the suiss style in `components.json`:
+
+```json title="components.json"
+{
+  "registries": {
+    "@esuiss": "https://suiss.app/ui/r/base-suiss/{name}.json"
+  }
+}
+```
+
+Use `radix-suiss` or `aria-suiss` for the other bases. Add [`@esuiss/theme-suiss`](#use-the-suissui-theme) for the suiss/ui colors as well.
+
 ### Register the namespace
 
 Once `@esuiss` is listed in the public registry directory, the namespace works without any setup. Until then, add it to `components.json` once:
